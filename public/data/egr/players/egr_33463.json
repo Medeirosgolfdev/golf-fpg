@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 174,
-  "egrPoints": 10037.2,
-  "avgScore": 74,
-  "avgToCR": 70.49,
+  "tournamentsPlayed": 7,
+  "egrRank": 123,
+  "egrPoints": 12357.8,
+  "avgScore": 73.94,
+  "avgToCR": 70.51,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "13",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2320.55
+    },
     {
       "eventId": "12909",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:17.495Z",
+  "scrapedAt": "2026-10-05T14:17:43.714Z",
   "url": "https://www.europeangolfrankings.com/players/33463"
 }

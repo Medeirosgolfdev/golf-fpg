@@ -8,11 +8,25 @@
   "club": "Lyon Salvagny",
   "ageGroup": "U14",
   "tournamentsPlayed": 15,
-  "egrRank": 774,
-  "egrPoints": 8260.97,
-  "avgScore": 73.32,
-  "avgToCR": 73,
+  "egrRank": 706,
+  "egrPoints": 8937.63,
+  "avgScore": 72.37,
+  "avgToCR": 72.24,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 70,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1140.59
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -221,10 +235,11 @@
       "r2": 78,
       "r3": 74,
       "r4": null,
-      "egrPoints": 463.93
+      "egrPoints": 463.93,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.001Z",
+  "scrapedAt": "2026-10-05T14:22:32.276Z",
   "url": "https://www.europeangolfrankings.com/players/48377"
 }

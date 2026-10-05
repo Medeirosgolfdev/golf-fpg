@@ -8,10 +8,10 @@
   "club": "Frankfurt",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 114,
-  "egrPoints": 13307.9,
-  "avgScore": 74.95,
-  "avgToCR": 71.72,
+  "egrRank": 124,
+  "egrPoints": 12183.1,
+  "avgScore": 75.05,
+  "avgToCR": 72.02,
   "events": [
     {
       "eventId": "12909",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "114",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -137,11 +137,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 373.39
+      "egrPoints": 0
     },
     {
       "eventId": "11653",
-      "counting": false,
+      "counting": true,
       "pos": "103",
       "event": "Spanish International Women's Amateur (Copa S. M. La Reina) 2026",
       "venue": "La Reserva de Sotogrande",
@@ -169,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:02.345Z",
+  "scrapedAt": "2026-10-05T14:16:58.430Z",
   "url": "https://www.europeangolfrankings.com/players/31797"
 }

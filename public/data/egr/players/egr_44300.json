@@ -1,18 +1,32 @@
 {
   "id": "44300",
   "egrId": "MCZE44300",
-  "name": "Tobias Brejnik",
-  "lastName": "BREJNIK",
+  "name": "Tobias Brejník",
+  "lastName": "BREJNÍK",
   "firstName": "Tobias",
   "country": "Czech",
   "club": "Albatross",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 488,
-  "egrPoints": 11082.6,
-  "avgScore": 73.78,
-  "avgToCR": 71.84,
+  "tournamentsPlayed": 10,
+  "egrRank": 401,
+  "egrPoints": 12542,
+  "avgScore": 73.61,
+  "avgToCR": 71.18,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "35",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1536.2
+    },
     {
       "eventId": "12818",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11470",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Santa Clara Masters (Snowy) 2025",
       "venue": "Santa Clara Golf Club",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:51.900Z",
+  "scrapedAt": "2026-10-05T14:21:13.514Z",
   "url": "https://www.europeangolfrankings.com/players/44300"
 }

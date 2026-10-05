@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Bercuit",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 3322,
-  "egrPoints": 1334.7,
-  "avgScore": 77.39,
-  "avgToCR": 77.77,
+  "tournamentsPlayed": 12,
+  "egrRank": 3034,
+  "egrPoints": 1581.18,
+  "avgScore": 77.58,
+  "avgToCR": 77.53,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "32",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 303.67
+    },
     {
       "eventId": "11756",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "11788",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Junior U14 (No.4) 2026",
       "venue": "Koksijde Golf ter Hille",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:07.480Z",
+  "scrapedAt": "2026-10-05T14:22:48.008Z",
   "url": "https://www.europeangolfrankings.com/players/49224"
 }

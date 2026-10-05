@@ -8,11 +8,25 @@
   "club": "Mionnay",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 486,
+  "egrRank": 495,
   "egrPoints": 11105.7,
   "avgScore": 73.08,
   "avgToCR": 72.12,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": false,
+      "pos": "83",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 79,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12177",
       "counting": false,
@@ -221,10 +235,11 @@
       "r2": 72,
       "r3": 75,
       "r4": null,
-      "egrPoints": 509.03
+      "egrPoints": 509.03,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:17.234Z",
+  "scrapedAt": "2026-10-05T14:20:13.292Z",
   "url": "https://www.europeangolfrankings.com/players/40496"
 }

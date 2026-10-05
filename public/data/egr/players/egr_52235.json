@@ -7,12 +7,26 @@
   "country": "Portugal",
   "club": "Oporto",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 1407,
-  "egrPoints": 4576.33,
-  "avgScore": 76.5,
-  "avgToCR": 75.75,
+  "tournamentsPlayed": 8,
+  "egrRank": 1307,
+  "egrPoints": 5086.96,
+  "avgScore": 75.95,
+  "avgToCR": 74.98,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "8",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 703.62
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:03.126Z",
+  "scrapedAt": "2026-10-05T14:23:56.509Z",
   "url": "https://www.europeangolfrankings.com/players/52235"
 }

@@ -8,11 +8,39 @@
   "club": "Oslo",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 395,
-  "egrPoints": 12521,
-  "avgScore": 72.17,
-  "avgToCR": 70.43,
+  "egrRank": 384,
+  "egrPoints": 12922.6,
+  "avgScore": 71.46,
+  "avgToCR": 69.9,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": true,
+      "pos": "4",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 67,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 750.13
+    },
+    {
+      "eventId": "12927",
+      "counting": true,
+      "pos": "1",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 70,
+      "r2": 72,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 446.39
+    },
     {
       "eventId": "12329",
       "counting": false,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12319",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Srixon Tour #6 (U19) 2026",
       "venue": "Kongsvingers GK",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12802",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Stenson Sunesson Junior Challenge by Case 2026",
       "venue": "The National",
@@ -207,7 +235,8 @@
       "r2": 76,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -221,10 +250,11 @@
       "r2": 79,
       "r3": 74,
       "r4": null,
-      "egrPoints": 161.04
+      "egrPoints": 161.04,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:41.789Z",
+  "scrapedAt": "2026-10-05T14:21:00.169Z",
   "url": "https://www.europeangolfrankings.com/players/43539"
 }

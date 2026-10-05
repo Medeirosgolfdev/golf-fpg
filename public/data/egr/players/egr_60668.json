@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Lanark",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3294,
+  "tournamentsPlayed": 8,
+  "egrRank": 3314,
   "egrPoints": 1353,
   "avgScore": 79.81,
   "avgToCR": 78.76,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11482",
-      "counting": false,
+      "counting": true,
       "pos": "73",
       "event": "Barrie Douglas Scottish Junior Masters 2026",
       "venue": "Strathmore GC",
@@ -137,10 +137,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:10:30.105Z",
+  "scrapedAt": "2026-10-05T14:27:27.723Z",
   "url": "https://www.europeangolfrankings.com/players/60668"
 }

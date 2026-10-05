@@ -7,12 +7,26 @@
   "country": "France",
   "club": "La Porcelaine",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 744,
+  "tournamentsPlayed": 13,
+  "egrRank": 754,
   "egrPoints": 8509.16,
   "avgScore": 73.84,
   "avgToCR": 73.31,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": false,
+      "pos": "17",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 281.42
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:31.744Z",
+  "scrapedAt": "2026-10-05T14:20:44.432Z",
   "url": "https://www.europeangolfrankings.com/players/42601"
 }

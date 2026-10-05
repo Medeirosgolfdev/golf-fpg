@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 1509,
-  "egrPoints": 4256.68,
-  "avgScore": 75.45,
-  "avgToCR": 74.58,
+  "tournamentsPlayed": 12,
+  "egrRank": 1537,
+  "egrPoints": 4229.36,
+  "avgScore": 75.41,
+  "avgToCR": 74.54,
   "events": [
     {
       "eventId": "11717",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12816",
-      "counting": false,
+      "counting": true,
       "pos": "34",
       "event": "Pro DreamUSA Junior Masters 2026",
       "venue": "Pollok Golf Club",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12763",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "The Foundatons Trophy 2026",
       "venue": "Alyth GC",
@@ -193,7 +193,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 526.09
+      "egrPoints": 526.09,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -207,10 +208,11 @@
       "r2": 79,
       "r3": 79,
       "r4": null,
-      "egrPoints": 181.85
+      "egrPoints": 181.85,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:15.302Z",
+  "scrapedAt": "2026-10-05T14:20:10.210Z",
   "url": "https://www.europeangolfrankings.com/players/40329"
 }

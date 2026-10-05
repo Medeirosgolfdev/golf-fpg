@@ -1,18 +1,32 @@
 {
   "id": "52471",
-  "egrId": "MSWE52471",
+  "egrId": "MDEU52471",
   "name": "Philip Dahlström",
   "lastName": "DAHLSTRÖM",
   "firstName": "Philip",
-  "country": "Sweden",
+  "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 9473,
+  "tournamentsPlayed": 4,
+  "egrRank": 9596,
   "egrPoints": 42.21,
-  "avgScore": 90.11,
-  "avgToCR": 89.08,
+  "avgScore": 87.27,
+  "avgToCR": 86.1,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "12",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 92,
+      "r2": 79,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12640",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:38.762Z",
+  "scrapedAt": "2026-10-05T14:24:02.419Z",
   "url": "https://www.europeangolfrankings.com/players/52471"
 }

@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Torino",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 1076,
-  "egrPoints": 6093.31,
-  "avgScore": 73.88,
-  "avgToCR": 72.24,
+  "tournamentsPlayed": 14,
+  "egrRank": 1116,
+  "egrPoints": 5934.97,
+  "avgScore": 74.21,
+  "avgToCR": 72.3,
   "events": [
     {
       "eventId": "11995",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11955",
-      "counting": false,
+      "counting": true,
       "pos": "70",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -221,10 +221,11 @@
       "r2": 73,
       "r3": 74,
       "r4": null,
-      "egrPoints": 352.93
+      "egrPoints": 352.93,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:30.114Z",
+  "scrapedAt": "2026-10-05T14:18:24.878Z",
   "url": "https://www.europeangolfrankings.com/players/35686"
 }

@@ -7,11 +7,11 @@
   "country": "Finland",
   "club": "Lahden",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1899,
-  "egrPoints": 3179.03,
-  "avgScore": 76.46,
-  "avgToCR": 74.7,
+  "tournamentsPlayed": 10,
+  "egrRank": 1905,
+  "egrPoints": 3170.82,
+  "avgScore": 76.43,
+  "avgToCR": 74.72,
   "events": [
     {
       "eventId": "12372",
@@ -42,20 +42,6 @@
       "egrPoints": 378.66
     },
     {
-      "eventId": "12364",
-      "counting": true,
-      "pos": "7",
-      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
-      "venue": "Aulangon Golfklubi (Eversti)",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 75,
-      "r2": 78,
-      "r3": 73,
-      "r4": null,
-      "egrPoints": 431.29
-    },
-    {
       "eventId": "12915",
       "counting": true,
       "pos": "7",
@@ -84,6 +70,20 @@
       "egrPoints": 357.46
     },
     {
+      "eventId": "12364",
+      "counting": true,
+      "pos": "7",
+      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
+      "venue": "Aulangon Golfklubi (Eversti)",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 75,
+      "r2": 78,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 431.29
+    },
+    {
       "eventId": "12353",
       "counting": true,
       "pos": "47",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12360",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "Footjoy FJT 5 National Match Play Championship (U16) 2026",
       "venue": "Muurame Golf (58)",
@@ -165,10 +165,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 272.25
+      "egrPoints": 272.25,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:56.673Z",
+  "scrapedAt": "2026-10-05T14:22:46.024Z",
   "url": "https://www.europeangolfrankings.com/players/49172"
 }

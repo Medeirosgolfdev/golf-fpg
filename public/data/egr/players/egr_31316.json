@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Robinie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 963,
-  "egrPoints": 1525.89,
-  "avgScore": 79.13,
-  "avgToCR": 76.17,
+  "tournamentsPlayed": 14,
+  "egrRank": 967,
+  "egrPoints": 1519.42,
+  "avgScore": 79.3,
+  "avgToCR": 76.5,
   "events": [
     {
       "eventId": "12003",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11918",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -221,10 +221,11 @@
       "r2": 79,
       "r3": 77,
       "r4": null,
-      "egrPoints": 69.17
+      "egrPoints": 69.17,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:58.441Z",
+  "scrapedAt": "2026-10-05T14:16:46.587Z",
   "url": "https://www.europeangolfrankings.com/players/31316"
 }

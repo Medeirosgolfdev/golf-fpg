@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Walton Heath",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 199,
-  "egrPoints": 9134.93,
-  "avgScore": 77.78,
-  "avgToCR": 74.52,
+  "tournamentsPlayed": 11,
+  "egrRank": 209,
+  "egrPoints": 8504.91,
+  "avgScore": 77.94,
+  "avgToCR": 74.68,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": false,
+      "pos": "33",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "101",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -123,7 +137,7 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 630.01
+      "egrPoints": 0
     },
     {
       "eventId": "11822",
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11645",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "Lauro Finnish Open 2026",
       "venue": "Lauro Golf Resort",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:22.134Z",
+  "scrapedAt": "2026-10-05T14:17:59.951Z",
   "url": "https://www.europeangolfrankings.com/players/34093"
 }

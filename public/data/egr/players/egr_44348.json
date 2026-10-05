@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Royal Saint Barbara",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 547,
-  "egrPoints": 3407.44,
-  "avgScore": 78.52,
-  "avgToCR": 75.83,
+  "tournamentsPlayed": 13,
+  "egrRank": 589,
+  "egrPoints": 3180.33,
+  "avgScore": 78.65,
+  "avgToCR": 76.07,
   "events": [
     {
       "eventId": "12912",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11577",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Dortmund Junior International (GJG) 2026",
       "venue": "Dortmunder Golf Club",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "12718",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "KIFFE Youth Open 2026",
       "venue": "Golfclub Issum-Niederrhein",
@@ -207,10 +207,11 @@
       "r2": 79,
       "r3": 82,
       "r4": null,
-      "egrPoints": 215.2
+      "egrPoints": 215.2,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:52.998Z",
+  "scrapedAt": "2026-10-05T14:21:14.685Z",
   "url": "https://www.europeangolfrankings.com/players/44348"
 }

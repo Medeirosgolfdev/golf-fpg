@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U14",
-  "tournamentsPlayed": 13,
-  "egrRank": 581,
+  "tournamentsPlayed": 12,
+  "egrRank": 593,
   "egrPoints": 3151.26,
   "avgScore": 75.89,
   "avgToCR": 75.15,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "75",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 81,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -179,7 +193,8 @@
       "r2": 79,
       "r3": 80,
       "r4": null,
-      "egrPoints": 36.95
+      "egrPoints": 36.95,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -193,10 +208,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.720Z",
+  "scrapedAt": "2026-10-05T14:23:27.880Z",
   "url": "https://www.europeangolfrankings.com/players/50630"
 }

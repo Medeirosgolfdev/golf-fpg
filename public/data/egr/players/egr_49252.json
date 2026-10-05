@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Keerbergen",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1061,
-  "egrPoints": 6168.57,
+  "tournamentsPlayed": 12,
+  "egrRank": 1053,
+  "egrPoints": 6248.24,
   "avgScore": 74.17,
   "avgToCR": 73.95,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "7",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": null,
+      "r4": 78,
+      "egrPoints": 371.23
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11731",
-      "counting": true,
+      "counting": false,
       "pos": "31",
       "event": "Federal Spring Prize 2026",
       "venue": "Royal Golf Club des Fagnes",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:58.275Z",
+  "scrapedAt": "2026-10-05T14:22:49.331Z",
   "url": "https://www.europeangolfrankings.com/players/49252"
 }

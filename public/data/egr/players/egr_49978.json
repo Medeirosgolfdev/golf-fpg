@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Stirling",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 4292,
-  "egrPoints": 836.26,
-  "avgScore": 79.3,
-  "avgToCR": 79.33,
+  "tournamentsPlayed": 14,
+  "egrRank": 4188,
+  "egrPoints": 889.93,
+  "avgScore": 79.17,
+  "avgToCR": 79.18,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "23",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 80,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 53.68
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -207,7 +221,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -221,10 +236,11 @@
       "r2": 86,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:12.957Z",
+  "scrapedAt": "2026-10-05T14:23:11.319Z",
   "url": "https://www.europeangolfrankings.com/players/49978"
 }

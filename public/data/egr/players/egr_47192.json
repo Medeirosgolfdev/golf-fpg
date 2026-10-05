@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U14",
-  "tournamentsPlayed": 13,
-  "egrRank": 272,
-  "egrPoints": 6945.56,
-  "avgScore": 73.47,
-  "avgToCR": 72.59,
+  "tournamentsPlayed": 12,
+  "egrRank": 261,
+  "egrPoints": 7072.1,
+  "avgScore": 73.21,
+  "avgToCR": 72.16,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "17",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 71,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 676.7
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12237",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Internationaux de France Girls U14 2026",
       "venue": "Golf de Chantilly",
@@ -179,7 +193,8 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 153.88
+      "egrPoints": 153.88,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -193,10 +208,11 @@
       "r2": 76,
       "r3": 77,
       "r4": null,
-      "egrPoints": 344.94
+      "egrPoints": 344.94,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.089Z",
+  "scrapedAt": "2026-10-05T14:22:03.959Z",
   "url": "https://www.europeangolfrankings.com/players/47192"
 }

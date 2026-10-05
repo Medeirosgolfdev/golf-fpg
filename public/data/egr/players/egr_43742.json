@@ -8,11 +8,25 @@
   "club": "Trinec",
   "ageGroup": "U18",
   "tournamentsPlayed": 7,
-  "egrRank": 214,
-  "egrPoints": 8513.89,
-  "avgScore": 73.06,
-  "avgToCR": 68.97,
+  "egrRank": 223,
+  "egrPoints": 8103.42,
+  "avgScore": 73.61,
+  "avgToCR": 69.89,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "19",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 436.28
+    },
     {
       "eventId": "12819",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 74,
       "r3": 68,
       "r4": null,
-      "egrPoints": 846.75
+      "egrPoints": 846.75,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:44.801Z",
+  "scrapedAt": "2026-10-05T14:21:04.414Z",
   "url": "https://www.europeangolfrankings.com/players/43742"
 }

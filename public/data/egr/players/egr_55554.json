@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Augwil",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 1728,
-  "egrPoints": 417.66,
-  "avgScore": 81.2,
-  "avgToCR": 79.02,
+  "tournamentsPlayed": 6,
+  "egrRank": 1651,
+  "egrPoints": 470.55,
+  "avgScore": 81.15,
+  "avgToCR": 78.99,
   "events": [
+    {
+      "eventId": "12919",
+      "counting": true,
+      "pos": "7",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 79,
+      "r2": 88,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 52.89
+    },
     {
       "eventId": "12474",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:24.696Z",
+  "scrapedAt": "2026-10-05T14:25:21.251Z",
   "url": "https://www.europeangolfrankings.com/players/55554"
 }

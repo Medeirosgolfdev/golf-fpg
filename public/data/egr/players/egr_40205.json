@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 20,
-  "egrRank": 2264,
+  "tournamentsPlayed": 19,
+  "egrRank": 2275,
   "egrPoints": 2446.66,
   "avgScore": 76.88,
   "avgToCR": 75.94,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11929",
-      "counting": false,
+      "counting": true,
       "pos": "32",
       "event": "Trofeo Giovanile U18 2026",
       "venue": "Parco di Roma Golf & CC",
@@ -291,10 +291,11 @@
       "r2": 80,
       "r3": 81,
       "r4": null,
-      "egrPoints": 130.52
+      "egrPoints": 130.52,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:14.696Z",
+  "scrapedAt": "2026-10-05T14:20:08.442Z",
   "url": "https://www.europeangolfrankings.com/players/40205"
 }

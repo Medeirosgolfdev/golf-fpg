@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Hainaut",
   "ageGroup": "U14",
-  "tournamentsPlayed": 15,
-  "egrRank": 310,
-  "egrPoints": 6104.7,
-  "avgScore": 71.71,
-  "avgToCR": 71.56,
+  "tournamentsPlayed": 16,
+  "egrRank": 302,
+  "egrPoints": 6290.36,
+  "avgScore": 71.84,
+  "avgToCR": 71.59,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "19",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 644.59
+    },
     {
       "eventId": "12917",
       "counting": false,
@@ -211,7 +225,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "109",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -221,10 +235,10 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 458.93
+      "egrPoints": 0
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.107Z",
+  "scrapedAt": "2026-10-05T14:20:03.296Z",
   "url": "https://www.europeangolfrankings.com/players/39949"
 }

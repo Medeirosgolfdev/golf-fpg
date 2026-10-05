@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Lanark",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1438,
+  "tournamentsPlayed": 13,
+  "egrRank": 1455,
   "egrPoints": 4478.52,
   "avgScore": 75.09,
   "avgToCR": 74.92,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "12",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 157.2
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:35.780Z",
+  "scrapedAt": "2026-10-05T14:25:38.993Z",
   "url": "https://www.europeangolfrankings.com/players/56061"
 }

@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Migros",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 100,
-  "egrPoints": 14471.5,
-  "avgScore": 73.96,
-  "avgToCR": 70.7,
+  "tournamentsPlayed": 15,
+  "egrRank": 94,
+  "egrPoints": 14664.5,
+  "avgScore": 73.32,
+  "avgToCR": 70.29,
   "events": [
     {
       "eventId": "12003",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12462",
-      "counting": false,
+      "counting": true,
       "pos": "1",
       "event": "Swiss Golf Junior Tour (Leuk) 2026",
       "venue": "Links Leuk Golfresort",
@@ -193,7 +193,7 @@
       "r2": 69,
       "r3": null,
       "r4": null,
-      "egrPoints": 4029.9
+      "egrPoints": 4427.5
     },
     {
       "eventId": "12440",
@@ -235,7 +235,8 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -249,10 +250,11 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 688.13
+      "egrPoints": 688.13,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:35.521Z",
+  "scrapedAt": "2026-10-05T14:18:39.369Z",
   "url": "https://www.europeangolfrankings.com/players/36325"
 }

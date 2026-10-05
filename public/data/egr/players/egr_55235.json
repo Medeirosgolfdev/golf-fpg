@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Roskilde",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 5597,
-  "egrPoints": 455.89,
-  "avgScore": 80.28,
-  "avgToCR": 79.89,
+  "tournamentsPlayed": 13,
+  "egrRank": 5297,
+  "egrPoints": 538.45,
+  "avgScore": 79.89,
+  "avgToCR": 79.36,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "51",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 78,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 82.56
+    },
     {
       "eventId": "12603",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12579",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Kronberg Masters 2026",
       "venue": "Helsingør Golf Club (59)",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:18.400Z",
+  "scrapedAt": "2026-10-05T14:25:12.103Z",
   "url": "https://www.europeangolfrankings.com/players/55235"
 }

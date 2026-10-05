@@ -7,15 +7,15 @@
   "country": "Germany",
   "club": "Stolper Heide",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 359,
+  "tournamentsPlayed": 13,
+  "egrRank": 356,
   "egrPoints": 5432.5,
   "avgScore": 76.3,
   "avgToCR": 73.37,
   "events": [
     {
       "eventId": "12909",
-      "counting": false,
+      "counting": true,
       "pos": "28",
       "event": "DM AK18 Mädchen 2026",
       "venue": "Westfälischer GC Gütersloh",
@@ -207,10 +207,11 @@
       "r2": 77,
       "r3": 85,
       "r4": null,
-      "egrPoints": 98.62
+      "egrPoints": 98.62,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:19.680Z",
+  "scrapedAt": "2026-10-05T14:21:53.328Z",
   "url": "https://www.europeangolfrankings.com/players/46164"
 }

@@ -8,11 +8,25 @@
   "club": "Cannes-Mougins",
   "ageGroup": "U12",
   "tournamentsPlayed": 6,
-  "egrRank": 4039,
-  "egrPoints": 939.11,
-  "avgScore": 76.55,
-  "avgToCR": 78.06,
+  "egrRank": 3617,
+  "egrPoints": 1165.14,
+  "avgScore": 76,
+  "avgToCR": 77.18,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 290
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 63.97
+      "egrPoints": 63.97,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:10.889Z",
+  "scrapedAt": "2026-10-05T14:23:22.937Z",
   "url": "https://www.europeangolfrankings.com/players/50468"
 }

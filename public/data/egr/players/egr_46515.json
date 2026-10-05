@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 18,
-  "egrRank": 283,
+  "tournamentsPlayed": 19,
+  "egrRank": 288,
   "egrPoints": 15497,
   "avgScore": 72.71,
   "avgToCR": 70.84,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": false,
+      "pos": "45",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 83,
+      "r2": 81,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 297.41
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -267,6 +281,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:23.779Z",
+  "scrapedAt": "2026-10-05T14:21:58.964Z",
   "url": "https://www.europeangolfrankings.com/players/46515"
 }

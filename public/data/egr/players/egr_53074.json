@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Bad Ems",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 83.07,
-  "avgToCR": 82.87,
+  "tournamentsPlayed": 6,
+  "egrRank": 10172,
+  "egrPoints": 15.89,
+  "avgScore": 84.18,
+  "avgToCR": 83.79,
   "events": [
+    {
+      "eventId": "12922",
+      "counting": true,
+      "pos": "14",
+      "event": "DGV-RP/S Meisterschaft AKOffen Herren 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 95,
+      "r2": 88,
+      "r3": 92,
+      "r4": null,
+      "egrPoints": 15.89
+    },
     {
       "eventId": "12890",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:46.371Z",
+  "scrapedAt": "2026-10-05T14:24:14.463Z",
   "url": "https://www.europeangolfrankings.com/players/53074"
 }

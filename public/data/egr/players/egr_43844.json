@@ -7,15 +7,29 @@
   "country": "Sweden",
   "club": "Abbekas",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1136,
-  "egrPoints": 5783.68,
-  "avgScore": 74.04,
-  "avgToCR": 72.33,
+  "tournamentsPlayed": 11,
+  "egrRank": 1102,
+  "egrPoints": 5977.57,
+  "avgScore": 73.92,
+  "avgToCR": 72.3,
   "events": [
     {
-      "eventId": "12394",
+      "eventId": "12396",
       "counting": true,
+      "pos": "19",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 544.24
+    },
+    {
+      "eventId": "12394",
+      "counting": false,
       "pos": "32",
       "event": "Swedish Junior Tour Elite #6 2026",
       "venue": "Golfstar International (64)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:46.874Z",
+  "scrapedAt": "2026-10-05T14:21:06.792Z",
   "url": "https://www.europeangolfrankings.com/players/43844"
 }

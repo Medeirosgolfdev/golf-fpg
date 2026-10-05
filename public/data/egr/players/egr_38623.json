@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Hillerod",
   "ageGroup": "U25",
-  "tournamentsPlayed": 10,
-  "egrRank": 1632,
+  "tournamentsPlayed": 11,
+  "egrRank": 1651,
   "egrPoints": 3837.76,
   "avgScore": 76.26,
   "avgToCR": 74.77,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": false,
+      "pos": "46",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-18T22:05:59.910Z",
+  "scrapedAt": "2026-10-05T14:19:37.326Z",
   "url": "https://www.europeangolfrankings.com/players/38623"
 }

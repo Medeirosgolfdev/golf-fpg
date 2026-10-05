@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 360,
-  "egrPoints": 13415.5,
-  "avgScore": 73.31,
-  "avgToCR": 71.18,
+  "tournamentsPlayed": 9,
+  "egrRank": 397,
+  "egrPoints": 12650.6,
+  "avgScore": 74.15,
+  "avgToCR": 71.85,
   "events": [
     {
       "eventId": "12463",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11658",
-      "counting": false,
+      "counting": true,
       "pos": "112",
       "event": "Italian International Amateur Championship 2026",
       "venue": "Circolo Golf Villa d'Este",
@@ -151,10 +151,11 @@
       "r2": 72,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1128.07
+      "egrPoints": 1128.07,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:33.733Z",
+  "scrapedAt": "2026-10-05T14:18:35.065Z",
   "url": "https://www.europeangolfrankings.com/players/36064"
 }

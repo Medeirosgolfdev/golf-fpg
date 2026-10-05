@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 685,
-  "egrPoints": 9105.7,
-  "avgScore": 72.19,
-  "avgToCR": 70.93,
+  "tournamentsPlayed": 8,
+  "egrRank": 614,
+  "egrPoints": 9621.21,
+  "avgScore": 72.83,
+  "avgToCR": 71.37,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "65",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 81,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 515.51
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:15.113Z",
+  "scrapedAt": "2026-10-05T14:13:01.621Z",
   "url": "https://www.europeangolfrankings.com/players/22272"
 }

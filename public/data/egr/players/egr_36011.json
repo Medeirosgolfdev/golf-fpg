@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Maison Blanche",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 411,
-  "egrPoints": 12299.1,
-  "avgScore": 72.42,
-  "avgToCR": 71.82,
+  "tournamentsPlayed": 9,
+  "egrRank": 498,
+  "egrPoints": 11037.1,
+  "avgScore": 72.78,
+  "avgToCR": 72.13,
   "events": [
     {
       "eventId": "11671",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12630",
-      "counting": false,
+      "counting": true,
       "pos": "88",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12073",
-      "counting": false,
+      "counting": true,
       "pos": "54",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -151,10 +151,11 @@
       "r2": 69,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1777.57
+      "egrPoints": 1777.57,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:32.579Z",
+  "scrapedAt": "2026-10-05T14:18:33.077Z",
   "url": "https://www.europeangolfrankings.com/players/36011"
 }

@@ -8,11 +8,25 @@
   "club": "Brigode",
   "ageGroup": "U18",
   "tournamentsPlayed": 8,
-  "egrRank": 1402,
+  "egrRank": 1409,
   "egrPoints": 710.7,
-  "avgScore": 78.94,
-  "avgToCR": 76.2,
+  "avgScore": 79.29,
+  "avgToCR": 76.7,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "100",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 89,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12160",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:05.375Z",
+  "scrapedAt": "2026-10-05T14:19:46.607Z",
   "url": "https://www.europeangolfrankings.com/players/38938"
 }

@@ -7,15 +7,15 @@
   "country": "Scotland",
   "club": "Crieff",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1498,
+  "tournamentsPlayed": 9,
+  "egrRank": 1518,
   "egrPoints": 4281.09,
   "avgScore": 74.71,
   "avgToCR": 73.63,
   "events": [
     {
       "eventId": "11721",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "Junior Tour Fraserburgh Boys 2026",
       "venue": "Fraserburgh GC",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11719",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "Junior Tour Kilspindie Boys 2026",
       "venue": "Kilspindie GC",
@@ -151,10 +151,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 355.47
+      "egrPoints": 355.47,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:21.731Z",
+  "scrapedAt": "2026-10-05T14:23:31.892Z",
   "url": "https://www.europeangolfrankings.com/players/50972"
 }

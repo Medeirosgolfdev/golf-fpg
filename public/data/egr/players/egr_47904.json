@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Bercuit",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1246,
-  "egrPoints": 928.02,
+  "tournamentsPlayed": 12,
+  "egrRank": 1224,
+  "egrPoints": 969.22,
   "avgScore": 77.41,
-  "avgToCR": 78.9,
+  "avgToCR": 78.36,
   "events": [
+    {
+      "eventId": "11757",
+      "counting": true,
+      "pos": "8",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 87,
+      "r2": 76,
+      "r3": null,
+      "r4": 89,
+      "egrPoints": 12.43
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11730",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Junior Open Wallonie - Vlaandere 2026",
       "venue": "Royal Waterloo Golf Club",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:39.080Z",
+  "scrapedAt": "2026-10-05T14:22:19.712Z",
   "url": "https://www.europeangolfrankings.com/players/47904"
 }

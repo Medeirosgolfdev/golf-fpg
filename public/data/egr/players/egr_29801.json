@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "U25",
-  "tournamentsPlayed": 13,
-  "egrRank": 228,
-  "egrPoints": 17084.5,
-  "avgScore": 71.86,
-  "avgToCR": 70.44,
+  "tournamentsPlayed": 15,
+  "egrRank": 99,
+  "egrPoints": 25894,
+  "avgScore": 72.24,
+  "avgToCR": 69.85,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "1",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 68,
+      "r2": 66,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 8809.5
+    },
+    {
+      "eventId": "12606",
+      "counting": false,
+      "pos": "5",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 793.32
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -197,6 +225,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:36:33.439Z",
+  "scrapedAt": "2026-10-05T14:16:12.382Z",
   "url": "https://www.europeangolfrankings.com/players/29801"
 }

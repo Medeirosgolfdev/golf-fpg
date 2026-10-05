@@ -8,11 +8,25 @@
   "club": "Nokia River",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 1862,
-  "egrPoints": 3256.32,
-  "avgScore": 76.74,
-  "avgToCR": 74.81,
+  "egrRank": 1808,
+  "egrPoints": 3398.22,
+  "avgScore": 77.35,
+  "avgToCR": 75.17,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "32",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 82,
+      "r2": 80,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 377.48
+    },
     {
       "eventId": "12372",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12905",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "FootJoy Finnish Junior Tour 8 (U18) 2026",
       "venue": "Nurmijärven Golfklubi",
@@ -54,6 +68,20 @@
       "r3": 74,
       "r4": null,
       "egrPoints": 235.58
+    },
+    {
+      "eventId": "12915",
+      "counting": true,
+      "pos": "13",
+      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
+      "venue": "Tahkon Golfseura",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 79,
+      "r2": 74,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 371.66
     },
     {
       "eventId": "12364",
@@ -82,20 +110,6 @@
       "r3": 77,
       "r4": null,
       "egrPoints": 244.26
-    },
-    {
-      "eventId": "12915",
-      "counting": true,
-      "pos": "13",
-      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
-      "venue": "Tahkon Golfseura",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 79,
-      "r2": 74,
-      "r3": 77,
-      "r4": null,
-      "egrPoints": 371.66
     },
     {
       "eventId": "12353",
@@ -193,10 +207,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:52.992Z",
+  "scrapedAt": "2026-10-05T14:24:26.295Z",
   "url": "https://www.europeangolfrankings.com/players/53429"
 }

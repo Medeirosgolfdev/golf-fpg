@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 4,
-  "egrRank": 278,
-  "egrPoints": 6855.52,
-  "avgScore": 72.7,
-  "avgToCR": 68.8,
+  "tournamentsPlayed": 5,
+  "egrRank": 220,
+  "egrPoints": 8228.65,
+  "avgScore": 72.62,
+  "avgToCR": 68.97,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "4",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 69,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1373.13
+    },
     {
       "eventId": "11765",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:16.888Z",
+  "scrapedAt": "2026-10-05T14:12:43.244Z",
   "url": "https://www.europeangolfrankings.com/players/21369"
 }

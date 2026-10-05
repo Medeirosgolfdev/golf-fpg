@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 89.5,
-  "avgToCR": 88.53,
+  "tournamentsPlayed": 5,
+  "egrRank": 9567,
+  "egrPoints": 44.23,
+  "avgScore": 88.54,
+  "avgToCR": 87.88,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "14",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 89,
+      "r2": 88,
+      "r3": 93,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "12",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 94,
+      "r2": 83,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 44.23
+    },
     {
       "eventId": "11574",
       "counting": true,
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:21.701Z",
+  "scrapedAt": "2026-10-05T14:24:37.809Z",
   "url": "https://www.europeangolfrankings.com/players/54012"
 }

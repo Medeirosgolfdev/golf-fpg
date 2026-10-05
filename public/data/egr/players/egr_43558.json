@@ -8,10 +8,10 @@
   "club": "Stolper Heide",
   "ageGroup": "U21",
   "tournamentsPlayed": 8,
-  "egrRank": 2754,
-  "egrPoints": 1864.2,
-  "avgScore": 77.22,
-  "avgToCR": 75.51,
+  "egrRank": 2261,
+  "egrPoints": 2465.67,
+  "avgScore": 77.15,
+  "avgToCR": 75.47,
   "events": [
     {
       "eventId": "11672",
@@ -70,6 +70,20 @@
       "egrPoints": 120.4
     },
     {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "8",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 601.47
+    },
+    {
       "eventId": "11589",
       "counting": true,
       "pos": "3",
@@ -123,10 +137,11 @@
       "r2": 90,
       "r3": 77,
       "r4": null,
-      "egrPoints": 71.45
+      "egrPoints": 71.45,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:06:42.103Z",
+  "scrapedAt": "2026-10-05T14:21:00.951Z",
   "url": "https://www.europeangolfrankings.com/players/43558"
 }

@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Puntaldia",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 6119,
-  "egrPoints": 359.02,
-  "avgScore": 81.67,
-  "avgToCR": 82.67,
+  "tournamentsPlayed": 6,
+  "egrRank": 6112,
+  "egrPoints": 372.13,
+  "avgScore": 82.36,
+  "avgToCR": 83.36,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "16",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 87,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 13.12
+    },
     {
       "eventId": "11989",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:20.316Z",
+  "scrapedAt": "2026-10-05T14:25:07.727Z",
   "url": "https://www.europeangolfrankings.com/players/55103"
 }

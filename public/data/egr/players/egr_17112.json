@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Ravenstein",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 15,
-  "egrRank": 327,
-  "egrPoints": 13789.4,
-  "avgScore": 71.75,
-  "avgToCR": 69.5,
+  "tournamentsPlayed": 16,
+  "egrRank": 292,
+  "egrPoints": 15382.2,
+  "avgScore": 72.09,
+  "avgToCR": 70.09,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "1",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 69,
+      "r2": 76,
+      "r3": null,
+      "r4": 71,
+      "egrPoints": 1592.85
+    },
     {
       "eventId": "11756",
       "counting": true,
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:00.027Z",
+  "scrapedAt": "2026-10-05T14:11:45.597Z",
   "url": "https://www.europeangolfrankings.com/players/17112"
 }

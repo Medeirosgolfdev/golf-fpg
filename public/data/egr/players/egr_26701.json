@@ -8,11 +8,25 @@
   "club": "Kirkhill",
   "ageGroup": "Adult",
   "tournamentsPlayed": 8,
-  "egrRank": 1399,
-  "egrPoints": 718.42,
-  "avgScore": 82.58,
-  "avgToCR": 81.47,
+  "egrRank": 1431,
+  "egrPoints": 686.69,
+  "avgScore": 82.84,
+  "avgToCR": 81.86,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "12",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11722",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 82,
       "r3": 81,
       "r4": null,
-      "egrPoints": 31.73
+      "egrPoints": 31.73,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-18T22:04:34.090Z",
+  "scrapedAt": "2026-10-05T14:14:34.142Z",
   "url": "https://www.europeangolfrankings.com/players/26701"
 }

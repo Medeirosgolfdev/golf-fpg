@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Bad Griesbach",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 22,
-  "egrPoints": 26470.6,
-  "avgScore": 72.79,
-  "avgToCR": 69.34,
+  "tournamentsPlayed": 9,
+  "egrRank": 29,
+  "egrPoints": 25047,
+  "avgScore": 73.58,
+  "avgToCR": 69.3,
   "events": [
     {
       "eventId": "12625",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12500",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "3. AJGT presented by Bernd Wiesberger U14-U18 2026",
       "venue": "Golfanlage Millstätter See",
@@ -123,7 +123,7 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 2127.65
+      "egrPoints": 958.63
     },
     {
       "eventId": "11000",
@@ -151,10 +151,11 @@
       "r2": 70,
       "r3": 70,
       "r4": null,
-      "egrPoints": 347.76
+      "egrPoints": 347.76,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:14.012Z",
+  "scrapedAt": "2026-10-05T14:13:00.174Z",
   "url": "https://www.europeangolfrankings.com/players/22176"
 }

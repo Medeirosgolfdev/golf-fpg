@@ -7,9 +7,9 @@
   "country": "Switzerland",
   "club": "St Nom-La-Breteche",
   "ageGroup": "U25",
-  "tournamentsPlayed": 14,
-  "egrRank": 30,
-  "egrPoints": 25103.8,
+  "tournamentsPlayed": 13,
+  "egrRank": 35,
+  "egrPoints": 24109,
   "avgScore": 72.39,
   "avgToCR": 68.86,
   "events": [
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12792",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "French National Championships (Closed) 2026",
       "venue": "Dinard Golf",
@@ -165,7 +165,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 2249.85
+      "egrPoints": 1255.12
     },
     {
       "eventId": "11653",
@@ -207,10 +207,11 @@
       "r2": 76,
       "r3": 77,
       "r4": null,
-      "egrPoints": 168.62
+      "egrPoints": 168.62,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:36:50.897Z",
+  "scrapedAt": "2026-10-05T14:16:28.131Z",
   "url": "https://www.europeangolfrankings.com/players/30395"
 }

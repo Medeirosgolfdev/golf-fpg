@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
+  "tournamentsPlayed": 13,
   "egrRank": 32,
-  "egrPoints": 37318.2,
-  "avgScore": 71.28,
-  "avgToCR": 68.4,
+  "egrPoints": 36793.6,
+  "avgScore": 71.16,
+  "avgToCR": 68.16,
   "events": [
     {
       "eventId": "12876",
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "11909",
-      "counting": false,
+      "counting": true,
       "pos": "1",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -207,10 +207,11 @@
       "r2": 71,
       "r3": 68,
       "r4": null,
-      "egrPoints": 3346.01
+      "egrPoints": 3346.01,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:42.382Z",
+  "scrapedAt": "2026-10-05T14:15:28.862Z",
   "url": "https://www.europeangolfrankings.com/players/28529"
 }

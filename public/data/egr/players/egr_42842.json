@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1217,
+  "tournamentsPlayed": 12,
+  "egrRank": 1216,
   "egrPoints": 976.82,
   "avgScore": 80,
   "avgToCR": 77.79,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "87",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12184",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11584",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "GJG Algarve Juniors International 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:34.843Z",
+  "scrapedAt": "2026-10-05T14:20:49.232Z",
   "url": "https://www.europeangolfrankings.com/players/42842"
 }

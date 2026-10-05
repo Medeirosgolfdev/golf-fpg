@@ -7,12 +7,40 @@
   "country": "Norway",
   "club": "Kongsvinger",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 4765,
-  "egrPoints": 666.1,
-  "avgScore": 80.45,
-  "avgToCR": 78.8,
+  "tournamentsPlayed": 11,
+  "egrRank": 4731,
+  "egrPoints": 689.24,
+  "avgScore": 80,
+  "avgToCR": 78.4,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": true,
+      "pos": "43",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12927",
+      "counting": true,
+      "pos": "11",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 84,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 23.14
+    },
     {
       "eventId": "12329",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12286",
-      "counting": true,
+      "counting": false,
       "pos": "49",
       "event": "Srixon Winter Open (Norway) 2026",
       "venue": "Alhama Signature Golf Course",
@@ -151,10 +179,11 @@
       "r2": 88,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:32.255Z",
+  "scrapedAt": "2026-10-05T14:20:45.296Z",
   "url": "https://www.europeangolfrankings.com/players/42696"
 }

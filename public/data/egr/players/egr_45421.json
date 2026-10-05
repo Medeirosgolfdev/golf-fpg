@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Fontainebleau",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 3308,
+  "tournamentsPlayed": 5,
+  "egrRank": 3338,
   "egrPoints": 0,
-  "avgScore": 84.5,
-  "avgToCR": 83.13,
+  "avgScore": 82.89,
+  "avgToCR": 81.06,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "81",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 78,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12184",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:09.086Z",
+  "scrapedAt": "2026-10-05T14:21:36.553Z",
   "url": "https://www.europeangolfrankings.com/players/45421"
 }

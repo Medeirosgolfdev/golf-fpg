@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Bois D'Arlon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 9693,
+  "tournamentsPlayed": 3,
+  "egrRank": 9827,
   "egrPoints": 32.36,
-  "avgScore": 77.4,
-  "avgToCR": 78.22,
+  "avgScore": 79.5,
+  "avgToCR": 80.18,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "48",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 90,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11752",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:10:34.691Z",
+  "scrapedAt": "2026-10-05T14:27:36.728Z",
   "url": "https://www.europeangolfrankings.com/players/61013"
 }

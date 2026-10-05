@@ -7,26 +7,12 @@
   "country": "France",
   "club": "Combles En Bar",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 1468,
-  "egrPoints": 633.2,
-  "avgScore": 77.67,
-  "avgToCR": 76.56,
+  "tournamentsPlayed": 3,
+  "egrRank": 1488,
+  "egrPoints": 625.93,
+  "avgScore": 77.38,
+  "avgToCR": 75.25,
   "events": [
-    {
-      "eventId": "12172",
-      "counting": true,
-      "pos": "2",
-      "event": "Grand Prix de la Grange aux Ormes 2026",
-      "venue": "Golf de la Grange aux Ormes",
-      "country": "France",
-      "startDateRaw": "21. Aug 26",
-      "r1": 73,
-      "r2": 75,
-      "r3": 76,
-      "r4": null,
-      "egrPoints": 255.36
-    },
     {
       "eventId": "12171",
       "counting": true,
@@ -40,6 +26,20 @@
       "r3": 76,
       "r4": null,
       "egrPoints": 210.41
+    },
+    {
+      "eventId": "12172",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de la Grange aux Ormes 2026",
+      "venue": "Golf de la Grange aux Ormes",
+      "country": "France",
+      "startDateRaw": "21. Aug 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 255.36
     },
     {
       "eventId": "12242",
@@ -67,10 +67,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 7.27
+      "egrPoints": 7.27,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:46.690Z",
+  "scrapedAt": "2026-10-05T14:23:29.015Z",
   "url": "https://www.europeangolfrankings.com/players/50654"
 }

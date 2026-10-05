@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 2975,
-  "egrPoints": 1624.07,
-  "avgScore": 77.22,
-  "avgToCR": 77.29,
+  "tournamentsPlayed": 9,
+  "egrRank": 3977,
+  "egrPoints": 982.66,
+  "avgScore": 77.77,
+  "avgToCR": 77.98,
   "events": [
     {
       "eventId": "12900",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12692",
-      "counting": false,
+      "counting": true,
       "pos": "89",
       "event": "Preis von Refrtah Offene NRW Meisterschaft 2026",
       "venue": "Golf- und Land-Club Köln",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11660",
-      "counting": false,
+      "counting": true,
       "pos": "150",
       "event": "International Austrian Amateur 2026",
       "venue": "Fontana Golf",
@@ -151,7 +151,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 230.31
+      "egrPoints": 230.31,
+      "_mantido": true
     },
     {
       "eventId": "11020",
@@ -165,10 +166,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 641.41
+      "egrPoints": 641.41,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:16.576Z",
+  "scrapedAt": "2026-10-05T14:17:42.559Z",
   "url": "https://www.europeangolfrankings.com/players/33433"
 }

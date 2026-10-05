@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Millennium",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 2957,
-  "egrPoints": 1655.07,
-  "avgScore": 78.35,
-  "avgToCR": 78.02,
+  "tournamentsPlayed": 9,
+  "egrRank": 2933,
+  "egrPoints": 1693,
+  "avgScore": 78.42,
+  "avgToCR": 78.13,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "35",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 75,
+      "r2": 83,
+      "r3": null,
+      "r4": 89,
+      "egrPoints": 37.93
+    },
     {
       "eventId": "11756",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:58.106Z",
+  "scrapedAt": "2026-10-05T14:22:49.211Z",
   "url": "https://www.europeangolfrankings.com/players/49250"
 }

@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Glenbervie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 14,
-  "egrRank": 95,
-  "egrPoints": 25764.4,
-  "avgScore": 71.24,
-  "avgToCR": 68.66,
+  "tournamentsPlayed": 13,
+  "egrRank": 100,
+  "egrPoints": 25820.9,
+  "avgScore": 72.58,
+  "avgToCR": 69.43,
   "events": [
     {
       "eventId": "12882",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11646",
-      "counting": false,
+      "counting": true,
       "pos": "58",
       "event": "Portuguese International Amateur Championship 2026",
       "venue": "Amendoeira Golf Resort (Faldo)",
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "11774",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "R&A Student Tour Series (Malone) 2025",
       "venue": "Malone Golf Club",
@@ -207,10 +207,11 @@
       "r2": 71,
       "r3": 69,
       "r4": null,
-      "egrPoints": 2028.6
+      "egrPoints": 2028.6,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:07.538Z",
+  "scrapedAt": "2026-10-05T14:12:36.171Z",
   "url": "https://www.europeangolfrankings.com/players/20644"
 }

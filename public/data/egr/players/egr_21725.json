@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U21",
   "tournamentsPlayed": 12,
-  "egrRank": 801,
-  "egrPoints": 7980.19,
-  "avgScore": 74.65,
-  "avgToCR": 72.47,
+  "egrRank": 796,
+  "egrPoints": 8160.97,
+  "avgScore": 75.12,
+  "avgToCR": 72.8,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "30",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 86,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 412.78
+    },
     {
       "eventId": "12914",
       "counting": true,
@@ -28,11 +42,11 @@
       "egrPoints": 341.21
     },
     {
-      "eventId": "12364",
+      "eventId": "12915",
       "counting": true,
       "pos": "1",
-      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
-      "venue": "Aulangon Golfklubi (Eversti)",
+      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
+      "venue": "Tahkon Golfseura",
       "country": "Finland",
       "startDateRaw": "08. Aug 26",
       "r1": 68,
@@ -42,11 +56,11 @@
       "egrPoints": 1792.73
     },
     {
-      "eventId": "12915",
+      "eventId": "12364",
       "counting": true,
       "pos": "1",
-      "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
-      "venue": "Tahkon Golfseura",
+      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
+      "venue": "Aulangon Golfklubi (Eversti)",
       "country": "Finland",
       "startDateRaw": "08. Aug 26",
       "r1": 68,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11644",
-      "counting": true,
+      "counting": false,
       "pos": "14",
       "event": "Lauro Finnish Open 2026",
       "venue": "Lauro Golf Resort",
@@ -179,10 +193,11 @@
       "r2": 73,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:12.371Z",
+  "scrapedAt": "2026-10-05T14:12:50.400Z",
   "url": "https://www.europeangolfrankings.com/players/21725"
 }

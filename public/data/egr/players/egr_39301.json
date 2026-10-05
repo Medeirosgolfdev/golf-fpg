@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Carnoustie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 21,
-  "egrRank": 710,
-  "egrPoints": 2427.09,
-  "avgScore": 78.32,
-  "avgToCR": 77.43,
+  "tournamentsPlayed": 22,
+  "egrRank": 701,
+  "egrPoints": 2510.73,
+  "avgScore": 78.48,
+  "avgToCR": 77.6,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "3",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 173.5
+    },
     {
       "eventId": "11722",
       "counting": false,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11720",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Junior Tour Kilspindie Girls 2026",
       "venue": "Kilspindie GC",
@@ -309,6 +323,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:09.697Z",
+  "scrapedAt": "2026-10-05T14:19:55.481Z",
   "url": "https://www.europeangolfrankings.com/players/39301"
 }

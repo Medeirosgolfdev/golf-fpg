@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Nairn",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 844,
+  "tournamentsPlayed": 10,
+  "egrRank": 854,
   "egrPoints": 7640,
   "avgScore": 74.1,
   "avgToCR": 72.66,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11703",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Junior Tour Royal Dornoch Boys 2026",
       "venue": "Royal Dornoch GC",
@@ -165,10 +165,11 @@
       "r2": 78,
       "r3": 72,
       "r4": null,
-      "egrPoints": 252.39
+      "egrPoints": 252.39,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:14.237Z",
+  "scrapedAt": "2026-10-05T14:17:37.733Z",
   "url": "https://www.europeangolfrankings.com/players/33214"
 }

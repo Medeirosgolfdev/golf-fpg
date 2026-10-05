@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Portmarnock",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 274,
+  "tournamentsPlayed": 10,
+  "egrRank": 277,
   "egrPoints": 15754,
   "avgScore": 74.1,
   "avgToCR": 71.87,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": false,
+      "pos": "50",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12633",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "European Boys' Team Championship, Division 2 2026",
       "venue": "Costa Navarino",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:09.105Z",
+  "scrapedAt": "2026-10-05T14:17:20.682Z",
   "url": "https://www.europeangolfrankings.com/players/32612"
 }

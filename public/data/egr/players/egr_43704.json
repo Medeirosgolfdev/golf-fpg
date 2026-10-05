@@ -8,11 +8,25 @@
   "club": "Tapiola",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 596,
-  "egrPoints": 9787.51,
-  "avgScore": 75.33,
-  "avgToCR": 74.38,
+  "egrRank": 573,
+  "egrPoints": 10103.2,
+  "avgScore": 75.76,
+  "avgToCR": 74.73,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "36",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 86,
+      "r2": 79,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 315.71
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 77,
       "r3": 74,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:43.728Z",
+  "scrapedAt": "2026-10-05T14:21:03.026Z",
   "url": "https://www.europeangolfrankings.com/players/43704"
 }

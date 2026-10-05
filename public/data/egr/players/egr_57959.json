@@ -5,14 +5,28 @@
   "lastName": "LARDY GAILLOT",
   "firstName": "Valentin",
   "country": "France",
-  "club": "Palmola",
+  "club": "UGOLF Albi",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 4222,
-  "egrPoints": 864.42,
-  "avgScore": 79,
-  "avgToCR": 77.8,
+  "tournamentsPlayed": 4,
+  "egrRank": 3285,
+  "egrPoints": 1365.69,
+  "avgScore": 77.91,
+  "avgToCR": 76.85,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "32",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 72,
+      "r2": 79,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 501.27
+    },
     {
       "eventId": "12155",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:10:04.031Z",
+  "scrapedAt": "2026-10-05T14:26:25.666Z",
   "url": "https://www.europeangolfrankings.com/players/57959"
 }

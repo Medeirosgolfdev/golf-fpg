@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "La Canada",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 286,
-  "egrPoints": 6603.35,
-  "avgScore": 73.64,
-  "avgToCR": 71.74,
+  "tournamentsPlayed": 10,
+  "egrRank": 251,
+  "egrPoints": 7421.4,
+  "avgScore": 73.58,
+  "avgToCR": 71.54,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "8",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 946.66
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11645",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Lauro Finnish Open 2026",
       "venue": "Lauro Golf Resort",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.078Z",
+  "scrapedAt": "2026-10-05T14:20:14.853Z",
   "url": "https://www.europeangolfrankings.com/players/40659"
 }

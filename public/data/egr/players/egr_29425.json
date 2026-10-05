@@ -7,11 +7,11 @@
   "country": "Poland",
   "club": "Rosa",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 87,
-  "egrPoints": 27728.9,
-  "avgScore": 71.95,
-  "avgToCR": 69.69,
+  "tournamentsPlayed": 10,
+  "egrRank": 88,
+  "egrPoints": 27609.7,
+  "avgScore": 72.19,
+  "avgToCR": 70.15,
   "events": [
     {
       "eventId": "12876",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12533",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12220",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Triple A European Open 2026",
       "venue": "San Roque Golf Resort (Old)",
@@ -165,7 +165,8 @@
       "r2": 75,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1835.2
+      "egrPoints": 1835.2,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -179,10 +180,11 @@
       "r2": 69,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1015.78
+      "egrPoints": 1015.78,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:49.728Z",
+  "scrapedAt": "2026-10-05T14:15:58.921Z",
   "url": "https://www.europeangolfrankings.com/players/29425"
 }

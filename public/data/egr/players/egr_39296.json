@@ -8,11 +8,25 @@
   "club": "Dunbraken Ladies",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 988,
-  "egrPoints": 1448.77,
-  "avgScore": 74.95,
-  "avgToCR": 75.16,
+  "egrRank": 998,
+  "egrPoints": 1438.37,
+  "avgScore": 75.36,
+  "avgToCR": 75.3,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "5",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 84,
+      "r2": 74,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 73.74
+    },
     {
       "eventId": "11722",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 84.13
+      "egrPoints": 84.13,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:09.540Z",
+  "scrapedAt": "2026-10-05T14:19:55.148Z",
   "url": "https://www.europeangolfrankings.com/players/39296"
 }

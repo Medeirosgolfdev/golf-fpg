@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Rigenee",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 1989,
-  "egrPoints": 271.51,
-  "avgScore": 80.27,
-  "avgToCR": 80.29,
+  "tournamentsPlayed": 8,
+  "egrRank": 2013,
+  "egrPoints": 258.96,
+  "avgScore": 81.28,
+  "avgToCR": 80.38,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "50",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 87,
+      "r2": 83,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11755",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:28.092Z",
+  "scrapedAt": "2026-10-05T14:20:38.219Z",
   "url": "https://www.europeangolfrankings.com/players/42351"
 }

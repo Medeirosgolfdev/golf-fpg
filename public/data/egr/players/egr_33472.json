@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 85,
-  "egrPoints": 15295.4,
-  "avgScore": 74.3,
-  "avgToCR": 70.87,
+  "tournamentsPlayed": 10,
+  "egrRank": 95,
+  "egrPoints": 14533.8,
+  "avgScore": 74.83,
+  "avgToCR": 71.24,
   "events": [
     {
       "eventId": "12909",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11571",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "GJG Mühlheim Junior Open 2026",
       "venue": "Golfclub Mühlheim a.d. Ruhr",
@@ -165,10 +165,11 @@
       "r2": 78,
       "r3": 70,
       "r4": null,
-      "egrPoints": 759.28
+      "egrPoints": 759.28,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:17.604Z",
+  "scrapedAt": "2026-10-05T14:17:44.143Z",
   "url": "https://www.europeangolfrankings.com/players/33472"
 }

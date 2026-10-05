@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 42,
+  "tournamentsPlayed": 13,
+  "egrRank": 41,
   "egrPoints": 22280.3,
   "avgScore": 72.47,
   "avgToCR": 69.28,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": false,
+      "pos": "6",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 1144.08
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -123,7 +137,7 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 862.19
+      "egrPoints": 0
     },
     {
       "eventId": "12049",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:40.613Z",
+  "scrapedAt": "2026-10-05T14:21:00.758Z",
   "url": "https://www.europeangolfrankings.com/players/43549"
 }

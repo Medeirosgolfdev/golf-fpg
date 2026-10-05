@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Essen-Heidhausen",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 13,
-  "egrRank": 216,
-  "egrPoints": 17615.9,
-  "avgScore": 72.42,
-  "avgToCR": 70.49,
+  "tournamentsPlayed": 14,
+  "egrRank": 186,
+  "egrPoints": 19418,
+  "avgScore": 73.18,
+  "avgToCR": 70.5,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "25",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1802.08
+    },
     {
       "eventId": "12887",
       "counting": false,
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:32.508Z",
+  "scrapedAt": "2026-10-05T14:12:55.158Z",
   "url": "https://www.europeangolfrankings.com/players/21915"
 }

@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "La Bruyere",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 1396,
-  "egrPoints": 718.52,
-  "avgScore": 71.17,
-  "avgToCR": 74.95,
+  "tournamentsPlayed": 5,
+  "egrRank": 1436,
+  "egrPoints": 683.25,
+  "avgScore": 73.67,
+  "avgToCR": 76.31,
   "events": [
+    {
+      "eventId": "11757",
+      "counting": true,
+      "pos": "7",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": null,
+      "r4": 83,
+      "egrPoints": 12.42
+    },
     {
       "eventId": "11755",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:36:35.637Z",
+  "scrapedAt": "2026-10-05T14:16:14.395Z",
   "url": "https://www.europeangolfrankings.com/players/29919"
 }

@@ -8,11 +8,25 @@
   "club": "Terre Blanche",
   "ageGroup": "U12",
   "tournamentsPlayed": 5,
-  "egrRank": 1521,
-  "egrPoints": 585.94,
-  "avgScore": 79.78,
-  "avgToCR": 81.03,
+  "egrRank": 1313,
+  "egrPoints": 829.44,
+  "avgScore": 77.78,
+  "avgToCR": 78.14,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 243.5
+    },
     {
       "eventId": "12285",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": 84,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:46.943Z",
+  "scrapedAt": "2026-10-05T14:25:31.695Z",
   "url": "https://www.europeangolfrankings.com/players/55882"
 }

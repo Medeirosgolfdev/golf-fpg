@@ -7,11 +7,11 @@
   "country": "Poland",
   "club": "Kalinowe Pola",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 8373,
+  "tournamentsPlayed": 9,
+  "egrRank": 8490,
   "egrPoints": 109.35,
   "avgScore": 85.56,
-  "avgToCR": 85.09,
+  "avgToCR": 84.68,
   "events": [
     {
       "eventId": "11461",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11390",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "Triple A European Classic 2025",
       "venue": "San Roque Golf Club",
@@ -151,10 +151,11 @@
       "r2": 92,
       "r3": 89,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:58.313Z",
+  "scrapedAt": "2026-10-05T14:26:17.184Z",
   "url": "https://www.europeangolfrankings.com/players/57300"
 }

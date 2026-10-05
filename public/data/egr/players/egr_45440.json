@@ -7,12 +7,26 @@
   "country": "France",
   "club": "La Pree La Rochelle",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 431,
-  "egrPoints": 4478.7,
+  "tournamentsPlayed": 11,
+  "egrRank": 426,
+  "egrPoints": 4476.31,
   "avgScore": 75.42,
-  "avgToCR": 73.48,
+  "avgToCR": 73.3,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "61",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 78,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12154",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12134",
-      "counting": false,
+      "counting": true,
       "pos": "32",
       "event": "Grand Prix de Chiberta 2026",
       "venue": "Golf de Chiberta",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:09.629Z",
+  "scrapedAt": "2026-10-05T14:21:37.534Z",
   "url": "https://www.europeangolfrankings.com/players/45440"
 }

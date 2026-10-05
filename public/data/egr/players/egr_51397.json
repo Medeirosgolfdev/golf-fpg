@@ -7,12 +7,26 @@
   "country": "Estonia",
   "club": "Estonian CC",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 8510,
+  "tournamentsPlayed": 3,
+  "egrRank": 8624,
   "egrPoints": 99.94,
-  "avgScore": 91.2,
-  "avgToCR": 88.58,
+  "avgScore": 91.5,
+  "avgToCR": 88.85,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "49",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 86,
+      "r2": 94,
+      "r3": 96,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12424",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:27.947Z",
+  "scrapedAt": "2026-10-05T14:23:41.608Z",
   "url": "https://www.europeangolfrankings.com/players/51397"
 }

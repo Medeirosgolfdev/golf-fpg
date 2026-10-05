@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Keimola",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 987,
+  "tournamentsPlayed": 11,
+  "egrRank": 992,
   "egrPoints": 6576.5,
   "avgScore": 76.14,
   "avgToCR": 74.52,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": false,
+      "pos": "41",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 85,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 122.56
+    },
     {
       "eventId": "12372",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:44.020Z",
+  "scrapedAt": "2026-10-05T14:21:03.465Z",
   "url": "https://www.europeangolfrankings.com/players/43712"
 }

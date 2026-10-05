@@ -1,18 +1,32 @@
 {
   "id": "37527",
   "egrId": "MISL37527",
-  "name": "Markus Marelsson",
+  "name": "Markús Marelsson",
   "lastName": "MARELSSON",
-  "firstName": "Markus",
+  "firstName": "Markús",
   "country": "Iceland",
   "club": "Great Northern",
   "ageGroup": "U21",
   "tournamentsPlayed": 11,
-  "egrRank": 977,
-  "egrPoints": 6652.08,
-  "avgScore": 73.5,
-  "avgToCR": 72.59,
+  "egrRank": 841,
+  "egrPoints": 7756.95,
+  "avgScore": 73.43,
+  "avgToCR": 72.23,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "40",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 1429.85
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12545",
-      "counting": true,
+      "counting": false,
       "pos": "23",
       "event": "Carlsberg Viborg Open 2026",
       "venue": "Viborg Golfklub (61)",
@@ -165,10 +179,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:45.619Z",
+  "scrapedAt": "2026-10-05T14:19:06.707Z",
   "url": "https://www.europeangolfrankings.com/players/37527"
 }

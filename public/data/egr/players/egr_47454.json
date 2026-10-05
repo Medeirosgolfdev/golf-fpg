@@ -8,10 +8,10 @@
   "club": "Stolper Heide",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 997,
-  "egrPoints": 1438.46,
-  "avgScore": 80.53,
-  "avgToCR": 77.74,
+  "egrRank": 1001,
+  "egrPoints": 1432.73,
+  "avgScore": 80.18,
+  "avgToCR": 77.58,
   "events": [
     {
       "eventId": "12912",
@@ -26,6 +26,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 142.01
+    },
+    {
+      "eventId": "12931",
+      "counting": true,
+      "pos": "6",
+      "event": "GVBB AK16-18 Meisterschaft Mädchen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 83.12
     },
     {
       "eventId": "11569",
@@ -123,10 +137,11 @@
       "r2": 89,
       "r3": 83,
       "r4": null,
-      "egrPoints": 61.12
+      "egrPoints": 61.12,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:30.521Z",
+  "scrapedAt": "2026-10-05T14:22:07.504Z",
   "url": "https://www.europeangolfrankings.com/players/47454"
 }

@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 2263,
+  "tournamentsPlayed": 11,
+  "egrRank": 2274,
   "egrPoints": 2447.5,
   "avgScore": 76.32,
   "avgToCR": 76.83,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12456",
-      "counting": false,
+      "counting": true,
       "pos": "29",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -179,7 +179,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 45
+      "egrPoints": 45,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -193,10 +194,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:56.749Z",
+  "scrapedAt": "2026-10-05T14:19:32.066Z",
   "url": "https://www.europeangolfrankings.com/players/38522"
 }

@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 5507,
-  "egrPoints": 474.51,
-  "avgScore": 75.12,
-  "avgToCR": 75.34,
+  "tournamentsPlayed": 4,
+  "egrRank": 3354,
+  "egrPoints": 1326.11,
+  "avgScore": 74.4,
+  "avgToCR": 74.22,
   "events": [
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "13",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 72,
+      "r2": 67,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 851.6
+    },
     {
       "eventId": "12387",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:40:04.625Z",
+  "scrapedAt": "2026-10-05T14:20:16.151Z",
   "url": "https://www.europeangolfrankings.com/players/40875"
 }

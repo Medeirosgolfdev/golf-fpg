@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Koksijde",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 2871,
-  "egrPoints": 46.38,
-  "avgScore": 90.33,
-  "avgToCR": 91.67,
+  "tournamentsPlayed": 4,
+  "egrRank": 2712,
+  "egrPoints": 72.38,
+  "avgScore": 92.25,
+  "avgToCR": 93.15,
   "events": [
+    {
+      "eventId": "12928",
+      "counting": true,
+      "pos": "3",
+      "event": "Finals Junior U12 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 97,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 26
+    },
     {
       "eventId": "12859",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:58:03.512Z",
+  "scrapedAt": "2026-10-05T14:26:34.130Z",
   "url": "https://www.europeangolfrankings.com/players/58265"
 }

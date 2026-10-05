@@ -8,11 +8,25 @@
   "club": "Cannes-Mougins",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 349,
-  "egrPoints": 13612.9,
-  "avgScore": 72.96,
-  "avgToCR": 71.75,
+  "egrRank": 324,
+  "egrPoints": 14166.1,
+  "avgScore": 72.58,
+  "avgToCR": 71.58,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 928.95
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 66,
       "r3": 80,
       "r4": null,
-      "egrPoints": 627.6
+      "egrPoints": 627.6,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:55.016Z",
+  "scrapedAt": "2026-10-05T14:16:30.439Z",
   "url": "https://www.europeangolfrankings.com/players/30555"
 }

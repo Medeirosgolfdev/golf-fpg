@@ -6,13 +6,27 @@
   "firstName": "Hugo",
   "country": "Germany",
   "club": "Stolper Heide",
-  "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 6612,
-  "egrPoints": 280.63,
-  "avgScore": 80.44,
-  "avgToCR": 81.6,
+  "ageGroup": "U12",
+  "tournamentsPlayed": 6,
+  "egrRank": 5936,
+  "egrPoints": 404.87,
+  "avgScore": 79.71,
+  "avgToCR": 80.29,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "7",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 38.84
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 65.29
+    },
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "6",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 85.4
     },
     {
       "eventId": "12835",
@@ -70,7 +98,7 @@
       "egrPoints": 34.65
     }
   ],
-  "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:23.835Z",
+  "ageNum": 12,
+  "scrapedAt": "2026-10-05T14:24:29.416Z",
   "url": "https://www.europeangolfrankings.com/players/53507"
 }

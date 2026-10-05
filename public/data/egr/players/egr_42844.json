@@ -8,11 +8,25 @@
   "club": "Archi Claudio",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 4661,
-  "egrPoints": 697.43,
-  "avgScore": 80,
-  "avgToCR": 79.13,
+  "egrRank": 4421,
+  "egrPoints": 798.97,
+  "avgScore": 79.62,
+  "avgToCR": 78.92,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "3",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 101.55
+    },
     {
       "eventId": "11998",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 77,
       "r3": 73,
       "r4": null,
-      "egrPoints": 101.18
+      "egrPoints": 101.18,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:34.880Z",
+  "scrapedAt": "2026-10-05T14:20:49.246Z",
   "url": "https://www.europeangolfrankings.com/players/42844"
 }

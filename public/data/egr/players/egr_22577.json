@@ -7,12 +7,26 @@
   "country": "Czech",
   "club": "Praque City",
   "ageGroup": "U21",
-  "tournamentsPlayed": 8,
-  "egrRank": 221,
-  "egrPoints": 18135.5,
-  "avgScore": 71.57,
-  "avgToCR": 68.84,
+  "tournamentsPlayed": 9,
+  "egrRank": 179,
+  "egrPoints": 19671.7,
+  "avgScore": 71.96,
+  "avgToCR": 69.19,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "35",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1536.2
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:15.847Z",
+  "scrapedAt": "2026-10-05T14:13:09.252Z",
   "url": "https://www.europeangolfrankings.com/players/22577"
 }

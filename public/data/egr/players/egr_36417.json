@@ -7,15 +7,29 @@
   "country": "Belgium",
   "club": "Royal Bercuit",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1576,
-  "egrPoints": 4016.33,
-  "avgScore": 76.54,
-  "avgToCR": 76.67,
+  "tournamentsPlayed": 11,
+  "egrRank": 1502,
+  "egrPoints": 4318.95,
+  "avgScore": 76.38,
+  "avgToCR": 76.35,
   "events": [
     {
-      "eventId": "12917",
+      "eventId": "12194",
       "counting": true,
+      "pos": "59",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 85,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 302.62
+    },
+    {
+      "eventId": "12917",
+      "counting": false,
       "pos": "42",
       "event": "Faldo Junior Tour (Belgium) 2026",
       "venue": "Golf Club d´Hulencourt",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:36.512Z",
+  "scrapedAt": "2026-10-05T14:18:41.139Z",
   "url": "https://www.europeangolfrankings.com/players/36417"
 }

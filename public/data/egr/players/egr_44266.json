@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2525,
-  "egrPoints": 2118.32,
-  "avgScore": 76.43,
-  "avgToCR": 76.04,
+  "tournamentsPlayed": 9,
+  "egrRank": 2636,
+  "egrPoints": 2002.55,
+  "avgScore": 76.3,
+  "avgToCR": 75.79,
   "events": [
     {
       "eventId": "11987",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11961",
-      "counting": false,
+      "counting": true,
       "pos": "65",
       "event": "Trofeo Chiocciola D'Oro 2026",
       "venue": "Golf Club Cherasco",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11955",
-      "counting": false,
+      "counting": true,
       "pos": "92",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -151,7 +151,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -165,10 +166,11 @@
       "r2": 79,
       "r3": 77,
       "r4": null,
-      "egrPoints": 115.77
+      "egrPoints": 115.77,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:50.372Z",
+  "scrapedAt": "2026-10-05T14:21:12.074Z",
   "url": "https://www.europeangolfrankings.com/players/44266"
 }

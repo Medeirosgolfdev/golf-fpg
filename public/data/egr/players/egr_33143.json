@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1585,
-  "egrPoints": 3990.87,
-  "avgScore": 75.6,
-  "avgToCR": 74.95,
+  "tournamentsPlayed": 14,
+  "egrRank": 1534,
+  "egrPoints": 4236.67,
+  "avgScore": 75.5,
+  "avgToCR": 75.01,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": false,
+      "pos": "39",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 117.38
+    },
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "27",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 84,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 446.02
+    },
     {
       "eventId": "12596",
       "counting": true,
@@ -169,7 +197,7 @@
     },
     {
       "eventId": "10116",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "Lübker Junior Open (GJG) 2025",
       "venue": "Lübker Golf & Spa Resort",
@@ -183,6 +211,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:13.549Z",
+  "scrapedAt": "2026-10-05T14:17:36.000Z",
   "url": "https://www.europeangolfrankings.com/players/33143"
 }

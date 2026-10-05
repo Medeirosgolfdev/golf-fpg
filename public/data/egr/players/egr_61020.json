@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Rougemont",
   "ageGroup": "U12",
-  "tournamentsPlayed": 1,
-  "egrRank": 10264,
+  "tournamentsPlayed": 2,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 96,
-  "avgToCR": 98.9,
+  "avgScore": 97,
+  "avgToCR": 99.9,
   "events": [
+    {
+      "eventId": "12929",
+      "counting": true,
+      "pos": "17",
+      "event": "Finals Junior U12 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 97,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11745",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:32.540Z",
+  "scrapedAt": "2026-10-05T14:27:36.993Z",
   "url": "https://www.europeangolfrankings.com/players/61020"
 }

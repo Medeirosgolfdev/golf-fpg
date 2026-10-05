@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 2970,
-  "egrPoints": 33.32,
-  "avgScore": 87.78,
-  "avgToCR": 85.14,
+  "tournamentsPlayed": 11,
+  "egrRank": 2215,
+  "egrPoints": 185.72,
+  "avgScore": 87.06,
+  "avgToCR": 84.23,
   "events": [
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "18",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 81,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 152.4
+    },
     {
       "eventId": "12597",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12883",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Danish Girls Open by Fourball.dk 2026",
       "venue": "Midtsjællands Golfklub",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:58:05.787Z",
+  "scrapedAt": "2026-10-05T14:24:05.221Z",
   "url": "https://www.europeangolfrankings.com/players/52665"
 }

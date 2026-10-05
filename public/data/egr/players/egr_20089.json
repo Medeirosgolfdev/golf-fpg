@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Gullane",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 14,
-  "egrRank": 148,
-  "egrPoints": 11161.8,
-  "avgScore": 74.12,
-  "avgToCR": 71.92,
+  "tournamentsPlayed": 13,
+  "egrRank": 149,
+  "egrPoints": 10933,
+  "avgScore": 74.4,
+  "avgToCR": 72.24,
   "events": [
     {
       "eventId": "12833",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12227",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Scottish Student Sport Championships (BUCS) 2026",
       "venue": "Moray Golf Club",
@@ -207,10 +207,11 @@
       "r2": 72,
       "r3": 73,
       "r4": null,
-      "egrPoints": 300.38
+      "egrPoints": 300.38,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:52.120Z",
+  "scrapedAt": "2026-10-05T14:12:23.749Z",
   "url": "https://www.europeangolfrankings.com/players/20089"
 }

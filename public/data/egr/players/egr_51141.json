@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Royal Norwich",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 4752,
-  "egrPoints": 669.08,
-  "avgScore": 76.86,
-  "avgToCR": 75.76,
+  "tournamentsPlayed": 4,
+  "egrRank": 4347,
+  "egrPoints": 827.41,
+  "avgScore": 76.67,
+  "avgToCR": 74.87,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "19",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 158.33
+    },
     {
       "eventId": "12280",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:23.561Z",
+  "scrapedAt": "2026-10-05T14:23:34.400Z",
   "url": "https://www.europeangolfrankings.com/players/51141"
 }

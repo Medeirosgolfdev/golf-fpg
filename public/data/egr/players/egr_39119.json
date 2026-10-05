@@ -8,11 +8,25 @@
   "club": "Kokkedal",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 972,
-  "egrPoints": 6722.28,
-  "avgScore": 75.14,
-  "avgToCR": 73.48,
+  "egrRank": 961,
+  "egrPoints": 6803.79,
+  "avgScore": 75.52,
+  "avgToCR": 74.01,
   "events": [
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "36",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 70,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 512.59
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12596",
-      "counting": true,
+      "counting": false,
       "pos": "20",
       "event": "Dormy Elite Tour III Drenge U22 2026",
       "venue": "Esbjerg Golfklub",
@@ -193,10 +207,11 @@
       "r2": 77,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:07.470Z",
+  "scrapedAt": "2026-10-05T14:19:51.007Z",
   "url": "https://www.europeangolfrankings.com/players/39119"
 }

@@ -1,18 +1,32 @@
 {
   "id": "36991",
-  "egrId": "MFRA36991",
+  "egrId": "MCHE36991",
   "name": "Gregory Fretz",
   "lastName": "FRETZ",
   "firstName": "Gregory",
-  "country": "France",
+  "country": "Switzerland",
   "club": "Pont Royal",
   "ageGroup": "U21",
   "tournamentsPlayed": 7,
-  "egrRank": 918,
-  "egrPoints": 7019.5,
-  "avgScore": 73.67,
-  "avgToCR": 72.32,
+  "egrRank": 1133,
+  "egrPoints": 5822.55,
+  "avgScore": 73.94,
+  "avgToCR": 72.86,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": true,
+      "pos": "6",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 71,
+      "r2": 77,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 372.23
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 69,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1569.18
+      "egrPoints": 1569.18,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:41.158Z",
+  "scrapedAt": "2026-10-05T14:18:56.849Z",
   "url": "https://www.europeangolfrankings.com/players/36991"
 }

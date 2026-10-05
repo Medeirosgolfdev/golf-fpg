@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Marco Simone",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1636,
+  "tournamentsPlayed": 11,
+  "egrRank": 1655,
   "egrPoints": 3829.02,
   "avgScore": 76.8,
   "avgToCR": 75.4,
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "10234",
-      "counting": false,
+      "counting": true,
       "pos": "44",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -179,10 +179,11 @@
       "r2": 71,
       "r3": 80,
       "r4": null,
-      "egrPoints": 142.95
+      "egrPoints": 142.95,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:50.705Z",
+  "scrapedAt": "2026-10-05T14:21:12.397Z",
   "url": "https://www.europeangolfrankings.com/players/44275"
 }

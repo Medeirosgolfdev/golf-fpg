@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Castres",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 5563,
-  "egrPoints": 462.5,
-  "avgScore": 82.19,
-  "avgToCR": 81.93,
+  "tournamentsPlayed": 8,
+  "egrRank": 4099,
+  "egrPoints": 926.02,
+  "avgScore": 80.83,
+  "avgToCR": 80.56,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "34",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 463.52
+    },
     {
       "eventId": "12137",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:27.053Z",
+  "scrapedAt": "2026-10-05T14:22:02.846Z",
   "url": "https://www.europeangolfrankings.com/players/47143"
 }

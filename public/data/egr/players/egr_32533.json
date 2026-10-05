@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Molinetto",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1867,
-  "egrPoints": 3245.56,
-  "avgScore": 75.35,
-  "avgToCR": 74.42,
+  "tournamentsPlayed": 10,
+  "egrRank": 1943,
+  "egrPoints": 3076.73,
+  "avgScore": 75.78,
+  "avgToCR": 74.62,
   "events": [
     {
       "eventId": "11986",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11931",
-      "counting": false,
+      "counting": true,
       "pos": "60",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11888",
-      "counting": false,
+      "counting": true,
       "pos": "42",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -165,7 +165,8 @@
       "r2": 80,
       "r3": 80,
       "r4": null,
-      "egrPoints": 90.93
+      "egrPoints": 90.93,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -179,10 +180,11 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 259.76
+      "egrPoints": 259.76,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:08.531Z",
+  "scrapedAt": "2026-10-05T14:17:18.825Z",
   "url": "https://www.europeangolfrankings.com/players/32533"
 }

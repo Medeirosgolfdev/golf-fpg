@@ -7,11 +7,11 @@
   "country": "Wales",
   "club": "Pennard",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 133,
-  "egrPoints": 11802.8,
-  "avgScore": 73.43,
-  "avgToCR": 71.37,
+  "tournamentsPlayed": 8,
+  "egrRank": 151,
+  "egrPoints": 10847.6,
+  "avgScore": 73.35,
+  "avgToCR": 70.89,
   "events": [
     {
       "eventId": "12625",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11801",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Sir Henry Cooper Junior Masters 2026",
       "venue": "King's Hill Golf Club",
@@ -137,10 +137,11 @@
       "r2": 71,
       "r3": 69,
       "r4": null,
-      "egrPoints": 955.2
+      "egrPoints": 955.2,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:27.992Z",
+  "scrapedAt": "2026-10-05T14:18:20.039Z",
   "url": "https://www.europeangolfrankings.com/players/35534"
 }

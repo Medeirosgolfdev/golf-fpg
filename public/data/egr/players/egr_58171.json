@@ -5,14 +5,28 @@
   "lastName": "NEERGAARD-PETERSEN",
   "firstName": "Clara Victoria",
   "country": "Denmark",
-  "club": "Mariagerfjord",
+  "club": "Aarhus",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 2355,
-  "egrPoints": 141.08,
-  "avgScore": 84.36,
-  "avgToCR": 81.61,
+  "tournamentsPlayed": 7,
+  "egrRank": 2027,
+  "egrPoints": 255.17,
+  "avgScore": 84.18,
+  "avgToCR": 81.35,
   "events": [
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "21",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 85,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 114.09
+    },
     {
       "eventId": "12597",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:54.477Z",
+  "scrapedAt": "2026-10-05T14:26:31.939Z",
   "url": "https://www.europeangolfrankings.com/players/58171"
 }

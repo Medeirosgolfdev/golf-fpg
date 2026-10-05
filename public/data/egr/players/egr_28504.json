@@ -7,10 +7,10 @@
   "country": "Italy",
   "club": "Molinetto",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
+  "tournamentsPlayed": 11,
   "egrRank": 1150,
   "egrPoints": 5706.07,
-  "avgScore": 74.62,
+  "avgScore": 74.63,
   "avgToCR": 72.88,
   "events": [
     {
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11913",
-      "counting": false,
+      "counting": true,
       "pos": "41",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -179,10 +179,11 @@
       "r2": 72,
       "r3": 76,
       "r4": null,
-      "egrPoints": 512.92
+      "egrPoints": 512.92,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:41.782Z",
+  "scrapedAt": "2026-10-05T14:15:27.625Z",
   "url": "https://www.europeangolfrankings.com/players/28504"
 }

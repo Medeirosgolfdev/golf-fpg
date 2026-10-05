@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 8,
-  "egrRank": 138,
-  "egrPoints": 22375.7,
-  "avgScore": 71.57,
-  "avgToCR": 69.07,
+  "tournamentsPlayed": 9,
+  "egrRank": 133,
+  "egrPoints": 23143.8,
+  "avgScore": 71.8,
+  "avgToCR": 69.37,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "55",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 768.1
+    },
     {
       "eventId": "12391",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:38.428Z",
+  "scrapedAt": "2026-10-05T14:18:47.625Z",
   "url": "https://www.europeangolfrankings.com/players/36645"
 }

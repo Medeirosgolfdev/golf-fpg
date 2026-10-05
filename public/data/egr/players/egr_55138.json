@@ -6,13 +6,27 @@
   "firstName": "Lorenzo Maria",
   "country": "Italy",
   "club": "Roma Acquasanta",
-  "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 9722,
+  "ageGroup": "U12",
+  "tournamentsPlayed": 2,
+  "egrRank": 9854,
   "egrPoints": 31.18,
-  "avgScore": 89.5,
-  "avgToCR": 94.7,
+  "avgScore": 91.5,
+  "avgToCR": 94.6,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "25",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 89,
+      "r2": 94,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11971",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 31.18
     }
   ],
-  "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:01.417Z",
+  "ageNum": 12,
+  "scrapedAt": "2026-10-05T14:25:09.520Z",
   "url": "https://www.europeangolfrankings.com/players/55138"
 }

@@ -8,11 +8,25 @@
   "club": "Royal Latem",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 719,
+  "egrRank": 730,
   "egrPoints": 8731.5,
   "avgScore": 73.87,
   "avgToCR": 73.48,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": false,
+      "pos": "12",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": null,
+      "r4": 77,
+      "egrPoints": 305.59
+    },
     {
       "eventId": "12917",
       "counting": false,
@@ -193,10 +207,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 92.42
+      "egrPoints": 92.42,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:23.005Z",
+  "scrapedAt": "2026-10-05T14:20:24.822Z",
   "url": "https://www.europeangolfrankings.com/players/41849"
 }

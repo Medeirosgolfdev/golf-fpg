@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Lac D'Annecy",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 4910,
-  "egrPoints": 623.64,
-  "avgScore": 81.78,
-  "avgToCR": 82.6,
+  "tournamentsPlayed": 5,
+  "egrRank": 4548,
+  "egrPoints": 752.35,
+  "avgScore": 82.58,
+  "avgToCR": 82.75,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": true,
+      "pos": "35",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 86,
+      "r2": 82,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 128.71
+    },
     {
       "eventId": "12148",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:41:02.564Z",
+  "scrapedAt": "2026-10-05T14:22:10.404Z",
   "url": "https://www.europeangolfrankings.com/players/47578"
 }

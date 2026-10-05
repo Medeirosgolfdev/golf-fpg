@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Chorley",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2552,
-  "egrPoints": 2083.9,
-  "avgScore": 76.44,
-  "avgToCR": 75.91,
+  "tournamentsPlayed": 10,
+  "egrRank": 2625,
+  "egrPoints": 2006.82,
+  "avgScore": 76.56,
+  "avgToCR": 75.54,
   "events": [
     {
       "eventId": "12645",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11391",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "European Winter Series #1 (Toro Tour) 2025",
       "venue": "San Roque Golf Resort",
@@ -165,10 +165,11 @@
       "r2": 73,
       "r3": 81,
       "r4": null,
-      "egrPoints": 77.08
+      "egrPoints": 77.08,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:33.953Z",
+  "scrapedAt": "2026-10-05T14:18:35.879Z",
   "url": "https://www.europeangolfrankings.com/players/36080"
 }

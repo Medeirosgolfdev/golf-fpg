@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Zurichsee",
   "ageGroup": "U14",
-  "tournamentsPlayed": 13,
-  "egrRank": 1730,
-  "egrPoints": 3568.4,
-  "avgScore": 74.27,
-  "avgToCR": 74.81,
+  "tournamentsPlayed": 14,
+  "egrRank": 1513,
+  "egrPoints": 4299.04,
+  "avgScore": 73.56,
+  "avgToCR": 73.58,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "13",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 69,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 620.3
+    },
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "11",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 76,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 654.74
+    },
     {
       "eventId": "12478",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "12448",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11841",
-      "counting": true,
+      "counting": false,
       "pos": "42",
       "event": "International French U14 Boys (Challenge Alexis Godillot) 2026",
       "venue": "Golf de Chantilly",
@@ -193,10 +221,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 255.68
+      "egrPoints": 255.68,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:04.035Z",
+  "scrapedAt": "2026-10-05T14:19:32.776Z",
   "url": "https://www.europeangolfrankings.com/players/38535"
 }

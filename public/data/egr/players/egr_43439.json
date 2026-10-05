@@ -7,15 +7,15 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 3030,
-  "egrPoints": 1571.29,
-  "avgScore": 79.82,
-  "avgToCR": 78.61,
+  "tournamentsPlayed": 8,
+  "egrRank": 3624,
+  "egrPoints": 1159.96,
+  "avgScore": 80.05,
+  "avgToCR": 78.88,
   "events": [
     {
       "eventId": "12145",
-      "counting": false,
+      "counting": true,
       "pos": "101",
       "event": "Grand Prix des Landes Hossegor 2026",
       "venue": "Golf d' Hossegor",
@@ -137,10 +137,11 @@
       "r2": 81,
       "r3": 79,
       "r4": null,
-      "egrPoints": 411.33
+      "egrPoints": 411.33,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:39.743Z",
+  "scrapedAt": "2026-10-05T14:20:57.216Z",
   "url": "https://www.europeangolfrankings.com/players/43439"
 }

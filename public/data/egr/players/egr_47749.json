@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Gross Kienitz",
   "ageGroup": "U18",
-  "tournamentsPlayed": 4,
-  "egrRank": 4982,
-  "egrPoints": 601.43,
-  "avgScore": 76.11,
-  "avgToCR": 75.13,
+  "tournamentsPlayed": 5,
+  "egrRank": 4393,
+  "egrPoints": 811.5,
+  "avgScore": 75.67,
+  "avgToCR": 75.11,
   "events": [
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "8",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 210.07
+    },
     {
       "eventId": "11428",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:35.083Z",
+  "scrapedAt": "2026-10-05T14:22:13.308Z",
   "url": "https://www.europeangolfrankings.com/players/47749"
 }

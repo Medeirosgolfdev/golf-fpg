@@ -8,11 +8,25 @@
   "club": "West Links",
   "ageGroup": "U14",
   "tournamentsPlayed": 13,
-  "egrRank": 2066,
+  "egrRank": 2069,
   "egrPoints": 236.58,
-  "avgScore": 81.83,
-  "avgToCR": 81.73,
+  "avgScore": 82.37,
+  "avgToCR": 82.37,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "16",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 89,
+      "r2": 89,
+      "r3": 98,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11720",
       "counting": false,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "12730",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Goswick Classic (SGF) 2026",
       "venue": "Goswick Golf Club",
@@ -193,10 +207,11 @@
       "r2": 83,
       "r3": 81,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:51.332Z",
+  "scrapedAt": "2026-10-05T14:24:14.752Z",
   "url": "https://www.europeangolfrankings.com/players/53080"
 }

@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Carus Green",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 11,
-  "egrRank": 48,
-  "egrPoints": 30942.5,
-  "avgScore": 71.09,
-  "avgToCR": 68.95,
+  "tournamentsPlayed": 10,
+  "egrRank": 52,
+  "egrPoints": 31719.5,
+  "avgScore": 71.92,
+  "avgToCR": 69.28,
   "events": [
     {
       "eventId": "11668",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11769",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "R&A Student Tour Series (La Sella) 2026",
       "venue": "La Sella Golf Club",
@@ -165,10 +165,11 @@
       "r2": 73,
       "r3": 69,
       "r4": null,
-      "egrPoints": 587.36
+      "egrPoints": 587.36,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:01.983Z",
+  "scrapedAt": "2026-10-05T14:12:31.708Z",
   "url": "https://www.europeangolfrankings.com/players/20517"
 }

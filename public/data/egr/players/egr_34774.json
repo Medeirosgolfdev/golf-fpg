@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Knole Park",
   "ageGroup": "U25",
-  "tournamentsPlayed": 1,
-  "egrRank": 8469,
-  "egrPoints": 102.23,
-  "avgScore": 80,
-  "avgToCR": 79.53,
+  "tournamentsPlayed": 2,
+  "egrRank": 8445,
+  "egrPoints": 113.12,
+  "avgScore": 81.83,
+  "avgToCR": 79.95,
   "events": [
+    {
+      "eventId": "12927",
+      "counting": true,
+      "pos": "12",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 87,
+      "r2": 77,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 10.89
+    },
     {
       "eventId": "11855",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:38:25.418Z",
+  "scrapedAt": "2026-10-05T14:18:09.170Z",
   "url": "https://www.europeangolfrankings.com/players/34774"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Hillerod",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1466,
-  "egrPoints": 4346.19,
-  "avgScore": 73.95,
-  "avgToCR": 73.82,
+  "tournamentsPlayed": 13,
+  "egrRank": 1389,
+  "egrPoints": 4688.65,
+  "avgScore": 74.86,
+  "avgToCR": 73.92,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": false,
+      "pos": "47",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 83,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 131.02
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "12542",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Vordingborg Kommune/Møns Bank Møn Open 2026",
       "venue": "Møn GolfKlub",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-21T12:39:45.718Z",
+  "scrapedAt": "2026-10-05T14:19:51.159Z",
   "url": "https://www.europeangolfrankings.com/players/39121"
 }

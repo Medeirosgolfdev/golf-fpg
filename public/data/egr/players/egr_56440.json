@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Fontainebleu",
   "ageGroup": "U12",
-  "tournamentsPlayed": 2,
-  "egrRank": 5390,
+  "tournamentsPlayed": 3,
+  "egrRank": 5449,
   "egrPoints": 504.75,
-  "avgScore": 80.75,
-  "avgToCR": 81,
+  "avgScore": 81.5,
+  "avgToCR": 81.93,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "38",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 82,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12285",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:15.770Z",
+  "scrapedAt": "2026-10-05T14:25:50.270Z",
   "url": "https://www.europeangolfrankings.com/players/56440"
 }

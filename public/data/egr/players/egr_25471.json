@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1355,
-  "egrPoints": 4785.96,
-  "avgScore": 75,
-  "avgToCR": 74.23,
+  "tournamentsPlayed": 11,
+  "egrRank": 1327,
+  "egrPoints": 4964.82,
+  "avgScore": 74.39,
+  "avgToCR": 73.63,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "2",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 68,
+      "r2": 72,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 226
+    },
     {
       "eventId": "12908",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 75,
       "r4": null,
       "egrPoints": 816.5
+    },
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "11",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 170.77
     },
     {
       "eventId": "12837",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12724",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "PRO1PUTT Open Classic 2026",
       "venue": "WINSTONgolf",
@@ -151,10 +179,11 @@
       "r2": 88,
       "r3": 76,
       "r4": null,
-      "egrPoints": 208.4
+      "egrPoints": 208.4,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:30.960Z",
+  "scrapedAt": "2026-10-05T14:14:08.188Z",
   "url": "https://www.europeangolfrankings.com/players/25471"
 }

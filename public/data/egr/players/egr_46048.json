@@ -7,12 +7,26 @@
   "country": "Iceland",
   "club": "Odense",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2025,
-  "egrPoints": 2905.45,
-  "avgScore": 76.62,
-  "avgToCR": 75.36,
+  "tournamentsPlayed": 12,
+  "egrRank": 1874,
+  "egrPoints": 3240.39,
+  "avgScore": 76.23,
+  "avgToCR": 75.05,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "31",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 389.48
+    },
     {
       "eventId": "12600",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12552",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "COBRA/PUMA Skanderborg Open 2026",
       "venue": "Skanderborg Golf Klub (54)",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:17.190Z",
+  "scrapedAt": "2026-10-05T14:21:50.098Z",
   "url": "https://www.europeangolfrankings.com/players/46048"
 }

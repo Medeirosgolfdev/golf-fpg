@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 509,
-  "egrPoints": 10758.7,
-  "avgScore": 73.1,
-  "avgToCR": 71.26,
+  "tournamentsPlayed": 12,
+  "egrRank": 317,
+  "egrPoints": 14305.5,
+  "avgScore": 71.73,
+  "avgToCR": 70.2,
   "events": [
+    {
+      "eventId": "12396",
+      "counting": true,
+      "pos": "4",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 70,
+      "r2": 72,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 1104.25
+    },
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "1",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 65,
+      "r2": 67,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 3430.88
+    },
     {
       "eventId": "12876",
       "counting": true,
@@ -127,7 +155,7 @@
     },
     {
       "eventId": "11646",
-      "counting": true,
+      "counting": false,
       "pos": "84",
       "event": "Portuguese International Amateur Championship 2026",
       "venue": "Amendoeira Golf Resort (Faldo)",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11638",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "GJG Edge Mason Championship 2026",
       "venue": "PGA Aroeira Lisboa",
@@ -155,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:26.318Z",
+  "scrapedAt": "2026-10-05T14:18:14.156Z",
   "url": "https://www.europeangolfrankings.com/players/35179"
 }

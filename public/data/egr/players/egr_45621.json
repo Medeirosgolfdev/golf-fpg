@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Turnberry",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 771,
+  "tournamentsPlayed": 12,
+  "egrRank": 780,
   "egrPoints": 2160.36,
   "avgScore": 83.76,
   "avgToCR": 81.57,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": false,
+      "pos": "10",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 78,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 8.68
+    },
     {
       "eventId": "12907",
       "counting": false,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:42.487Z",
+  "scrapedAt": "2026-10-05T14:21:41.431Z",
   "url": "https://www.europeangolfrankings.com/players/45621"
 }

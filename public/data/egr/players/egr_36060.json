@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Ravenstein",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 234,
-  "egrPoints": 7896.28,
-  "avgScore": 74.5,
-  "avgToCR": 71.55,
+  "tournamentsPlayed": 10,
+  "egrRank": 212,
+  "egrPoints": 8452.97,
+  "avgScore": 74.75,
+  "avgToCR": 71.82,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -123,11 +137,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 3093.03
+      "egrPoints": 3300.86
     },
     {
       "eventId": "11653",
-      "counting": true,
+      "counting": false,
       "pos": "106",
       "event": "Spanish International Women's Amateur (Copa S. M. La Reina) 2026",
       "venue": "La Reserva de Sotogrande",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:33.566Z",
+  "scrapedAt": "2026-10-05T14:18:34.890Z",
   "url": "https://www.europeangolfrankings.com/players/36060"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Rungsted",
   "ageGroup": "U21",
-  "tournamentsPlayed": 5,
-  "egrRank": 3109,
-  "egrPoints": 1495.63,
-  "avgScore": 76.82,
-  "avgToCR": 75.53,
+  "tournamentsPlayed": 6,
+  "egrRank": 2732,
+  "egrPoints": 1899.42,
+  "avgScore": 76.93,
+  "avgToCR": 75.39,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "22",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 403.79
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:39:39.922Z",
+  "scrapedAt": "2026-10-05T14:19:43.032Z",
   "url": "https://www.europeangolfrankings.com/players/38857"
 }

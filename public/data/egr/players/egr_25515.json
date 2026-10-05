@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Schloss Guttenburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 277,
-  "egrPoints": 6861.96,
-  "avgScore": 77.72,
-  "avgToCR": 73.09,
+  "tournamentsPlayed": 12,
+  "egrRank": 319,
+  "egrPoints": 5971.29,
+  "avgScore": 78.06,
+  "avgToCR": 73.72,
   "events": [
     {
       "eventId": "12625",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12843",
-      "counting": false,
+      "counting": true,
       "pos": "37",
       "event": "Czech International Amateur 2026",
       "venue": "Golf Club Karlštejn",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12664",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "DGV-Bayern Meisterschaft AK16/18 Mädchen 2026",
       "venue": "GC am Reichswald",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "116",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,7 +151,7 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 336.73
+      "egrPoints": 0
     },
     {
       "eventId": "11653",
@@ -193,10 +193,11 @@
       "r2": 80,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1018.62
+      "egrPoints": 1018.62,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:31.123Z",
+  "scrapedAt": "2026-10-05T14:14:09.268Z",
   "url": "https://www.europeangolfrankings.com/players/25515"
 }

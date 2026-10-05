@@ -7,12 +7,26 @@
   "country": "Norway",
   "club": "Stavanger",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 3308,
+  "tournamentsPlayed": 2,
+  "egrRank": 3338,
   "egrPoints": 0,
-  "avgScore": 86.5,
-  "avgToCR": 85.2,
+  "avgScore": 87.6,
+  "avgToCR": 87.92,
   "events": [
+    {
+      "eventId": "12336",
+      "counting": true,
+      "pos": "10",
+      "event": "Srixon Tour 8 Finale (U15) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 88,
+      "r2": 90,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12326",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:58:14.979Z",
+  "scrapedAt": "2026-10-05T14:27:49.459Z",
   "url": "https://www.europeangolfrankings.com/players/62341"
 }

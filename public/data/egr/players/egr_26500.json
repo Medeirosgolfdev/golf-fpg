@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Kolding",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 11,
-  "egrRank": 1517,
-  "egrPoints": 4170.87,
-  "avgScore": 74.11,
-  "avgToCR": 73.37,
+  "tournamentsPlayed": 12,
+  "egrRank": 1406,
+  "egrPoints": 4616.89,
+  "avgScore": 75.09,
+  "avgToCR": 73.7,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "27",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 446.02
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:38.815Z",
+  "scrapedAt": "2026-10-05T14:14:29.739Z",
   "url": "https://www.europeangolfrankings.com/players/26500"
 }

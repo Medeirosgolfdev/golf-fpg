@@ -8,14 +8,28 @@
   "club": "Vasatorps",
   "ageGroup": "U16",
   "tournamentsPlayed": 12,
-  "egrRank": 196,
-  "egrPoints": 9235.81,
-  "avgScore": 75.57,
-  "avgToCR": 72.4,
+  "egrRank": 193,
+  "egrPoints": 9296.1,
+  "avgScore": 75.04,
+  "avgToCR": 72,
   "events": [
     {
+      "eventId": "12404",
+      "counting": true,
+      "pos": "3",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 72,
+      "r2": 69,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 690.3
+    },
+    {
       "eventId": "12395",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Swedish Junior Tour Elite #6 2026",
       "venue": "Golfstar International (57)",
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "101",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -137,7 +151,7 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 630.01
+      "egrPoints": 0
     },
     {
       "eventId": "12287",
@@ -179,10 +193,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:08.564Z",
+  "scrapedAt": "2026-10-05T14:21:35.724Z",
   "url": "https://www.europeangolfrankings.com/players/45275"
 }

@@ -5,14 +5,28 @@
   "lastName": "KUNA",
   "firstName": "Marcin",
   "country": "Poland",
-  "club": "Tokary",
+  "club": "Royal Wilanow",
   "ageGroup": "U25",
   "tournamentsPlayed": 1,
-  "egrRank": 5163,
-  "egrPoints": 559.88,
-  "avgScore": 78.67,
-  "avgToCR": 77.87,
+  "egrRank": 4226,
+  "egrPoints": 877.23,
+  "avgScore": 76.17,
+  "avgToCR": 74.52,
   "events": [
+    {
+      "eventId": "12924",
+      "counting": true,
+      "pos": "5",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 73,
+      "r2": 77,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 317.35
+    },
     {
       "eventId": "11350",
       "counting": true,
@@ -25,10 +39,11 @@
       "r2": 82,
       "r3": 73,
       "r4": null,
-      "egrPoints": 559.88
+      "egrPoints": 559.88,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:32:57.652Z",
+  "scrapedAt": "2026-10-05T14:13:14.644Z",
   "url": "https://www.europeangolfrankings.com/players/22887"
 }

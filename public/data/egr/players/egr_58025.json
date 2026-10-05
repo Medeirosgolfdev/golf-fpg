@@ -1,18 +1,32 @@
 {
   "id": "58025",
-  "egrId": "MFRA58025",
+  "egrId": "FFRA58025",
   "name": "Manon Genet",
   "lastName": "GENET",
   "firstName": "Manon",
   "country": "France",
   "club": "Wimereux",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 8431,
-  "egrPoints": 105.46,
-  "avgScore": 81.6,
-  "avgToCR": 82.8,
+  "tournamentsPlayed": 4,
+  "egrRank": 2357,
+  "egrPoints": 142.85,
+  "avgScore": 81.57,
+  "avgToCR": 82.43,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 86,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 37.39
+    },
     {
       "eventId": "12241",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:41.335Z",
+  "scrapedAt": "2026-10-05T14:26:28.874Z",
   "url": "https://www.europeangolfrankings.com/players/58025"
 }

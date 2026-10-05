@@ -7,11 +7,11 @@
   "country": "Poland",
   "club": "Slaski",
   "ageGroup": "U21",
-  "tournamentsPlayed": 6,
-  "egrRank": 600,
-  "egrPoints": 3030.3,
-  "avgScore": 77.07,
-  "avgToCR": 73.63,
+  "tournamentsPlayed": 5,
+  "egrRank": 598,
+  "egrPoints": 3125.92,
+  "avgScore": 77.2,
+  "avgToCR": 74.03,
   "events": [
     {
       "eventId": "11765",
@@ -40,6 +40,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 1094.66
+    },
+    {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "6",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 338.25
     },
     {
       "eventId": "11454",
@@ -81,7 +95,8 @@
       "r2": 81,
       "r3": 78,
       "r4": null,
-      "egrPoints": 550.4
+      "egrPoints": 550.4,
+      "_mantido": true
     },
     {
       "eventId": "11319",
@@ -95,10 +110,11 @@
       "r2": 73,
       "r3": 76,
       "r4": null,
-      "egrPoints": 242.63
+      "egrPoints": 242.63,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:46.755Z",
+  "scrapedAt": "2026-10-05T14:15:49.025Z",
   "url": "https://www.europeangolfrankings.com/players/29158"
 }

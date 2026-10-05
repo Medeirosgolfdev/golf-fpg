@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Dolce Fregate Provence",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 734,
-  "egrPoints": 8605.22,
-  "avgScore": 75.86,
+  "tournamentsPlayed": 13,
+  "egrRank": 729,
+  "egrPoints": 8733.6,
+  "avgScore": 75.76,
   "avgToCR": 74.2,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "14",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 659.42
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:32.142Z",
+  "scrapedAt": "2026-10-05T14:18:32.500Z",
   "url": "https://www.europeangolfrankings.com/players/35980"
 }

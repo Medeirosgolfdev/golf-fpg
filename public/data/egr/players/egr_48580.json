@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Krakow Valley",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 892,
-  "egrPoints": 7245.73,
-  "avgScore": 73.13,
-  "avgToCR": 72.17,
+  "tournamentsPlayed": 10,
+  "egrRank": 959,
+  "egrPoints": 6824.06,
+  "avgScore": 72.7,
+  "avgToCR": 71.94,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "2",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 522.27
+    },
     {
       "eventId": "11465",
       "counting": false,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11461",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "5 Stars Junior Cup by Adrian Meronk 2026",
       "venue": "Kalinowe Pola Golf Course",
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12633",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "European Boys' Team Championship, Division 2 2026",
       "venue": "Costa Navarino",
@@ -151,7 +165,8 @@
       "r2": 80,
       "r3": 78,
       "r4": null,
-      "egrPoints": 681.75
+      "egrPoints": 681.75,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -165,7 +180,8 @@
       "r2": 81,
       "r3": 72,
       "r4": null,
-      "egrPoints": 241.56
+      "egrPoints": 241.56,
+      "_mantido": true
     },
     {
       "eventId": "11336",
@@ -179,10 +195,11 @@
       "r2": 72,
       "r3": 75,
       "r4": null,
-      "egrPoints": 943.95
+      "egrPoints": 943.95,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:50.890Z",
+  "scrapedAt": "2026-10-05T14:22:37.377Z",
   "url": "https://www.europeangolfrankings.com/players/48580"
 }

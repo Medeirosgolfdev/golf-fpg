@@ -1,18 +1,32 @@
 {
   "id": "53265",
-  "egrId": "MDEU53265",
+  "egrId": "MPOL53265",
   "name": "Adam Golimento",
   "lastName": "GOLIMENTO",
   "firstName": "Adam",
-  "country": "Germany",
+  "country": "Poland",
   "club": "Kalinowe Pola",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 4737,
-  "egrPoints": 673,
-  "avgScore": 80.86,
-  "avgToCR": 81.02,
+  "tournamentsPlayed": 8,
+  "egrRank": 3863,
+  "egrPoints": 1038.26,
+  "avgScore": 80.17,
+  "avgToCR": 80.33,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "17",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 132.3
+    },
     {
       "eventId": "12435",
       "counting": true,
@@ -54,6 +68,20 @@
       "r3": 73,
       "r4": null,
       "egrPoints": 77.94
+    },
+    {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "43",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 84,
+      "r2": 82,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 366.05
     },
     {
       "eventId": "11455",
@@ -109,10 +137,11 @@
       "r2": 85,
       "r3": 85,
       "r4": null,
-      "egrPoints": 133.09
+      "egrPoints": 133.09,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:12.819Z",
+  "scrapedAt": "2026-10-05T14:24:18.806Z",
   "url": "https://www.europeangolfrankings.com/players/53265"
 }

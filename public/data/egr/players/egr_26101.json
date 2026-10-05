@@ -7,11 +7,11 @@
   "country": "Wales",
   "club": "Conwy",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1434,
+  "tournamentsPlayed": 9,
+  "egrRank": 1467,
   "egrPoints": 4439.28,
-  "avgScore": 76.45,
-  "avgToCR": 75.28,
+  "avgScore": 77.13,
+  "avgToCR": 75.48,
   "events": [
     {
       "eventId": "12645",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11823",
-      "counting": false,
+      "counting": true,
       "pos": "50",
       "event": "Danny Willett Salver 2026",
       "venue": "Worksop & LIndrick Golf Clubs",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11793",
-      "counting": false,
+      "counting": true,
       "pos": "87",
       "event": "Berkhamsted Trophy 2026",
       "venue": "Berkhamsted Golf Club",
@@ -151,10 +151,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 452.64
+      "egrPoints": 452.64,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:34:25.536Z",
+  "scrapedAt": "2026-10-05T14:14:18.338Z",
   "url": "https://www.europeangolfrankings.com/players/26101"
 }

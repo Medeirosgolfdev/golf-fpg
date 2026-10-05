@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Blairgowrie",
   "ageGroup": "U14",
-  "tournamentsPlayed": 20,
-  "egrRank": 109,
+  "tournamentsPlayed": 19,
+  "egrRank": 108,
   "egrPoints": 13692.2,
   "avgScore": 72.7,
   "avgToCR": 69.88,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": false,
+      "pos": "1",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 74,
+      "r2": 69,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 364.35
+    },
     {
       "eventId": "11722",
       "counting": false,
@@ -277,7 +291,8 @@
       "r2": 71,
       "r3": 69,
       "r4": null,
-      "egrPoints": 170.48
+      "egrPoints": 170.48,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -291,10 +306,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 195.25
+      "egrPoints": 195.25,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:40.532Z",
+  "scrapedAt": "2026-10-05T14:19:39.679Z",
   "url": "https://www.europeangolfrankings.com/players/38696"
 }

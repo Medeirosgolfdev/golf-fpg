@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 793,
-  "egrPoints": 8065.69,
-  "avgScore": 74,
-  "avgToCR": 72.31,
+  "tournamentsPlayed": 13,
+  "egrRank": 863,
+  "egrPoints": 7582.7,
+  "avgScore": 74.13,
+  "avgToCR": 72.56,
   "events": [
     {
       "eventId": "11672",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12858",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Planet Golf Junior Invitational 2026",
       "venue": "Golfclub Hannover",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12679",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "DGV-NRW 1. AK16/18 Jungen 2026",
       "venue": "Golf- und Landclub Coesfeld",
@@ -207,10 +207,11 @@
       "r2": 79,
       "r3": 73,
       "r4": null,
-      "egrPoints": 816.01
+      "egrPoints": 816.01,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:16.987Z",
+  "scrapedAt": "2026-10-05T14:17:43.127Z",
   "url": "https://www.europeangolfrankings.com/players/33446"
 }

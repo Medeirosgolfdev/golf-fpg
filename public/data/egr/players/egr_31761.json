@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": "AIK",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 373,
-  "egrPoints": 13094.8,
-  "avgScore": 71.42,
-  "avgToCR": 70.12,
+  "tournamentsPlayed": 13,
+  "egrRank": 302,
+  "egrPoints": 14845.9,
+  "avgScore": 71.63,
+  "avgToCR": 70.25,
   "events": [
+    {
+      "eventId": "12396",
+      "counting": true,
+      "pos": "2",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 2445.13
+    },
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "13",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 70,
+      "r2": 75,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 769.91
+    },
     {
       "eventId": "12394",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12385",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Swedish Junior Elite Tour #2 2026",
       "venue": "Söderslätts Golfklubb",
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:02.264Z",
+  "scrapedAt": "2026-10-05T14:16:57.764Z",
   "url": "https://www.europeangolfrankings.com/players/31761"
 }

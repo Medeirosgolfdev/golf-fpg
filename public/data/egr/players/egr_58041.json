@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Luberon",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 7390,
-  "egrPoints": 195.17,
-  "avgScore": 78.75,
-  "avgToCR": 80.25,
+  "tournamentsPlayed": 4,
+  "egrRank": 6974,
+  "egrPoints": 248.41,
+  "avgScore": 79.67,
+  "avgToCR": 80.93,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 82,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 53.24
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:31.001Z",
+  "scrapedAt": "2026-10-05T14:26:29.966Z",
   "url": "https://www.europeangolfrankings.com/players/58041"
 }

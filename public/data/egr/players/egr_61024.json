@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Chateau De La Tournette",
   "ageGroup": "U12",
-  "tournamentsPlayed": 4,
-  "egrRank": 3177,
-  "egrPoints": 13.65,
-  "avgScore": 103.4,
-  "avgToCR": 103.58,
+  "tournamentsPlayed": 5,
+  "egrRank": 3118,
+  "egrPoints": 20.8,
+  "avgScore": 102.67,
+  "avgToCR": 102.75,
   "events": [
+    {
+      "eventId": "12928",
+      "counting": true,
+      "pos": "4",
+      "event": "Finals Junior U12 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 98,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 7.15
+    },
     {
       "eventId": "12865",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:58:10.948Z",
+  "scrapedAt": "2026-10-05T14:27:37.176Z",
   "url": "https://www.europeangolfrankings.com/players/61024"
 }

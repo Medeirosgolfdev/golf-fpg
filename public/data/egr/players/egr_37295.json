@@ -5,14 +5,28 @@
   "lastName": "GUIDI",
   "firstName": "Gaston",
   "country": "Spain",
-  "club": "Manises",
+  "club": "El Bosque",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 7548,
-  "egrPoints": 179.65,
-  "avgScore": 80.8,
-  "avgToCR": 80.74,
+  "tournamentsPlayed": 3,
+  "egrRank": 5922,
+  "egrPoints": 407.97,
+  "avgScore": 79.25,
+  "avgToCR": 78.8,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "13",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 228.32
+    },
     {
       "eventId": "12268",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:39:12.012Z",
+  "scrapedAt": "2026-10-05T14:19:02.153Z",
   "url": "https://www.europeangolfrankings.com/players/37295"
 }

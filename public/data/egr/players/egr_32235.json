@@ -8,11 +8,25 @@
   "club": "Pickala",
   "ageGroup": "U18",
   "tournamentsPlayed": 16,
-  "egrRank": 50,
+  "egrRank": 48,
   "egrPoints": 32076.5,
   "avgScore": 70.92,
   "avgToCR": 68.92,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": false,
+      "pos": "4",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 71,
+      "r2": 78,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1098.14
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -235,10 +249,11 @@
       "r2": 73,
       "r3": 73,
       "r4": null,
-      "egrPoints": 355.65
+      "egrPoints": 355.65,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:04.985Z",
+  "scrapedAt": "2026-10-05T14:17:08.330Z",
   "url": "https://www.europeangolfrankings.com/players/32235"
 }

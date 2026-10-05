@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 2421,
-  "egrPoints": 2236.77,
-  "avgScore": 77.17,
-  "avgToCR": 76.67,
+  "tournamentsPlayed": 11,
+  "egrRank": 2254,
+  "egrPoints": 2482.11,
+  "avgScore": 76.35,
+  "avgToCR": 75.91,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "1",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 72,
+      "r2": 70,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 317.75
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -165,7 +179,8 @@
       "r2": 78,
       "r3": 72,
       "r4": null,
-      "egrPoints": 181.01
+      "egrPoints": 181.01,
+      "_mantido": true
     },
     {
       "eventId": "10315",
@@ -179,10 +194,11 @@
       "r2": 79,
       "r3": 86,
       "r4": null,
-      "egrPoints": 38.35
+      "egrPoints": 38.35,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:51.240Z",
+  "scrapedAt": "2026-10-05T14:21:12.891Z",
   "url": "https://www.europeangolfrankings.com/players/44285"
 }

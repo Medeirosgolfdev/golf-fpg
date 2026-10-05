@@ -7,12 +7,26 @@
   "country": "Estonia",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 60,
-  "egrPoints": 18162.7,
-  "avgScore": 72.27,
-  "avgToCR": 69.83,
+  "tournamentsPlayed": 11,
+  "egrRank": 53,
+  "egrPoints": 19526.5,
+  "avgScore": 72.09,
+  "avgToCR": 69.61,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "24",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 69,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1829.96
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11653",
-      "counting": true,
+      "counting": false,
       "pos": "97",
       "event": "Spanish International Women's Amateur (Copa S. M. La Reina) 2026",
       "venue": "La Reserva de Sotogrande",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:05.058Z",
+  "scrapedAt": "2026-10-05T14:21:30.692Z",
   "url": "https://www.europeangolfrankings.com/players/45059"
 }

@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Rheinblick",
   "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 5917,
-  "egrPoints": 394.91,
-  "avgScore": 77,
-  "avgToCR": 77.1,
+  "tournamentsPlayed": 2,
+  "egrRank": 3922,
+  "egrPoints": 1004.67,
+  "avgScore": 77.4,
+  "avgToCR": 76.68,
   "events": [
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "16",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 609.76
+    },
     {
       "eventId": "12470",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:55.689Z",
+  "scrapedAt": "2026-10-05T14:19:31.040Z",
   "url": "https://www.europeangolfrankings.com/players/38499"
 }

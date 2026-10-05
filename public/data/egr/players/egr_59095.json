@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Mannheim-Viernheim",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 2714,
-  "egrPoints": 69.4,
-  "avgScore": 82,
-  "avgToCR": 82.3,
+  "tournamentsPlayed": 3,
+  "egrRank": 1621,
+  "egrPoints": 489.22,
+  "avgScore": 80.71,
+  "avgToCR": 79.6,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "29",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 81,
+      "r2": 79,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 419.81
+    },
     {
       "eventId": "12706",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:58:00.596Z",
+  "scrapedAt": "2026-10-05T14:26:49.617Z",
   "url": "https://www.europeangolfrankings.com/players/59095"
 }

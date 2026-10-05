@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Villa Condulmer",
   "ageGroup": "U14",
-  "tournamentsPlayed": 19,
-  "egrRank": 754,
-  "egrPoints": 2228.5,
-  "avgScore": 78.14,
-  "avgToCR": 75.31,
+  "tournamentsPlayed": 17,
+  "egrRank": 782,
+  "egrPoints": 2152.59,
+  "avgScore": 78.19,
+  "avgToCR": 75.71,
   "events": [
     {
       "eventId": "12003",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11976",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Italian National Closed U14 Championships 2026",
       "venue": "Golf Club Folgaria",
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "11916",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Trofeo Gianluca 2026",
       "venue": "Circolo Golf Torino La Mandria",
@@ -263,7 +263,8 @@
       "r2": 85,
       "r3": 76,
       "r4": null,
-      "egrPoints": 170.1
+      "egrPoints": 170.1,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -277,10 +278,11 @@
       "r2": 76,
       "r3": 82,
       "r4": null,
-      "egrPoints": 112.75
+      "egrPoints": 112.75,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:42.368Z",
+  "scrapedAt": "2026-10-05T14:22:42.319Z",
   "url": "https://www.europeangolfrankings.com/players/49051"
 }

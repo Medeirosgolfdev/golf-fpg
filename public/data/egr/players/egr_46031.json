@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Saint Donat",
   "ageGroup": "U21",
-  "tournamentsPlayed": 13,
-  "egrRank": 536,
-  "egrPoints": 10228.9,
-  "avgScore": 72.09,
-  "avgToCR": 72.51,
+  "tournamentsPlayed": 12,
+  "egrRank": 513,
+  "egrPoints": 10778.1,
+  "avgScore": 73.35,
+  "avgToCR": 72.62,
   "events": [
     {
       "eventId": "11671",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12039",
-      "counting": false,
+      "counting": true,
       "pos": "17",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de Saint Donat",
@@ -193,10 +193,11 @@
       "r2": 70,
       "r3": 82,
       "r4": null,
-      "egrPoints": 549.15
+      "egrPoints": 549.15,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:40:55.593Z",
+  "scrapedAt": "2026-10-05T14:21:50.097Z",
   "url": "https://www.europeangolfrankings.com/players/46031"
 }

@@ -7,15 +7,29 @@
   "country": "Belgium",
   "club": "Royal Sart Tilman",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 6626,
+  "tournamentsPlayed": 9,
+  "egrRank": 6701,
   "egrPoints": 279.21,
-  "avgScore": 81.8,
-  "avgToCR": 81.85,
+  "avgScore": 81.71,
+  "avgToCR": 81.84,
   "events": [
     {
-      "eventId": "11756",
+      "eventId": "11790",
       "counting": true,
+      "pos": "22",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "11756",
+      "counting": false,
       "pos": "56",
       "event": "Federal Summer Prize 2026",
       "venue": "Golf De Liege-Gomze",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:24.117Z",
+  "scrapedAt": "2026-10-05T14:25:44.232Z",
   "url": "https://www.europeangolfrankings.com/players/56271"
 }

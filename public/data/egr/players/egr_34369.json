@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Carimate",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 405,
-  "egrPoints": 4817.36,
-  "avgScore": 77.42,
-  "avgToCR": 73.97,
+  "tournamentsPlayed": 11,
+  "egrRank": 410,
+  "egrPoints": 4707.08,
+  "avgScore": 77.38,
+  "avgToCR": 73.9,
   "events": [
     {
       "eventId": "12003",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11999",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "30th Gran Premio Citta Di Cervia 2026",
       "venue": "Adriatic Golf Club Cervia",
@@ -179,10 +179,11 @@
       "r2": 75,
       "r3": 79,
       "r4": null,
-      "egrPoints": 316.31
+      "egrPoints": 316.31,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:23.507Z",
+  "scrapedAt": "2026-10-05T14:18:04.270Z",
   "url": "https://www.europeangolfrankings.com/players/34369"
 }

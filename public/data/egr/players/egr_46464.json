@@ -7,12 +7,26 @@
   "country": "Portugal",
   "club": "Miramar",
   "ageGroup": "U21",
-  "tournamentsPlayed": 5,
-  "egrRank": 691,
-  "egrPoints": 7537.83,
-  "avgScore": 72.46,
-  "avgToCR": 71.36,
+  "tournamentsPlayed": 3,
+  "egrRank": 1552,
+  "egrPoints": 4190.2,
+  "avgScore": 74.88,
+  "avgToCR": 73.29,
   "events": [
+    {
+      "eventId": "12632",
+      "counting": true,
+      "pos": "9",
+      "event": "European Amateur Team Championship, Division 2 2026",
+      "venue": "Costa Navarino (Dunes)",
+      "country": "Greece",
+      "startDateRaw": "07. Jul 26",
+      "r1": 70,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1284.75
+    },
     {
       "eventId": "11658",
       "counting": true,
@@ -53,7 +67,8 @@
       "r2": 72,
       "r3": 71,
       "r4": 72,
-      "egrPoints": 1675.62
+      "egrPoints": 1675.62,
+      "_mantido": true
     },
     {
       "eventId": "10388",
@@ -67,7 +82,8 @@
       "r2": 69,
       "r3": null,
       "r4": null,
-      "egrPoints": 2560.91
+      "egrPoints": 2560.91,
+      "_mantido": true
     },
     {
       "eventId": "10396",
@@ -81,10 +97,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 395.85
+      "egrPoints": 395.85,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-07-04T00:01:34.579Z",
+  "scrapedAt": "2026-10-05T14:21:57.392Z",
   "url": "https://www.europeangolfrankings.com/players/46464"
 }

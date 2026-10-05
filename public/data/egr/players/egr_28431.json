@@ -7,10 +7,10 @@
   "country": "Italy",
   "club": "Royal Park Roveri",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 482,
-  "egrPoints": 4085.16,
-  "avgScore": 76.96,
+  "tournamentsPlayed": 15,
+  "egrRank": 485,
+  "egrPoints": 4039.49,
+  "avgScore": 77.28,
   "avgToCR": 73.64,
   "events": [
     {
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11932",
-      "counting": false,
+      "counting": true,
       "pos": "20",
       "event": "Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -235,10 +235,11 @@
       "r2": 77,
       "r3": 76,
       "r4": null,
-      "egrPoints": 253.17
+      "egrPoints": 253.17,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:40.714Z",
+  "scrapedAt": "2026-10-05T14:15:24.286Z",
   "url": "https://www.europeangolfrankings.com/players/28431"
 }

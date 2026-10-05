@@ -8,11 +8,25 @@
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 425,
-  "egrPoints": 4609.3,
-  "avgScore": 75.86,
-  "avgToCR": 72.19,
+  "egrRank": 407,
+  "egrPoints": 4714.02,
+  "avgScore": 75.29,
+  "avgToCR": 71.99,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "22",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 312.28
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "10232",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Argentario Classic Open 2025",
       "venue": "Argentario Golf Resort",
@@ -193,10 +207,11 @@
       "r2": 80,
       "r3": 77,
       "r4": null,
-      "egrPoints": 100.42
+      "egrPoints": 100.42,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:46.930Z",
+  "scrapedAt": "2026-10-05T14:22:31.465Z",
   "url": "https://www.europeangolfrankings.com/players/48349"
 }

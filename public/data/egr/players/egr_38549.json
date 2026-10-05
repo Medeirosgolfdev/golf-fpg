@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": "Vuissens",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 3335,
+  "tournamentsPlayed": 8,
+  "egrRank": 3353,
   "egrPoints": 1326.27,
   "avgScore": 76.58,
   "avgToCR": 77.96,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12457",
-      "counting": false,
+      "counting": true,
       "pos": "57",
       "event": "Swiss Golf West Championship (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -137,10 +137,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 28.5
+      "egrPoints": 28.5,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:07.488Z",
+  "scrapedAt": "2026-10-05T14:19:33.615Z",
   "url": "https://www.europeangolfrankings.com/players/38549"
 }

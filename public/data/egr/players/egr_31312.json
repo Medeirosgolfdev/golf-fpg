@@ -7,15 +7,15 @@
   "country": "Italy",
   "club": "Franciacorta",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 98,
-  "egrPoints": 14510,
-  "avgScore": 74.65,
-  "avgToCR": 70.78,
+  "tournamentsPlayed": 16,
+  "egrRank": 103,
+  "egrPoints": 14072.2,
+  "avgScore": 75.15,
+  "avgToCR": 71.05,
   "events": [
     {
       "eventId": "12003",
-      "counting": false,
+      "counting": true,
       "pos": "42",
       "event": "Italian International U18 Girls Stroke Play Championship 2026",
       "venue": "Golf Club Villa Condulmer",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12625",
-      "counting": false,
+      "counting": true,
       "pos": "115",
       "event": "R&A Girls' Amateur 2026",
       "venue": "Craigielaw Golf Club",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "71",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,7 +151,7 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 1350.99
+      "egrPoints": 0
     },
     {
       "eventId": "11902",
@@ -249,10 +249,11 @@
       "r2": 77,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1234.58
+      "egrPoints": 1234.58,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:58.432Z",
+  "scrapedAt": "2026-10-05T14:16:46.438Z",
   "url": "https://www.europeangolfrankings.com/players/31312"
 }

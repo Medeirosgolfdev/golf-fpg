@@ -7,9 +7,9 @@
   "country": "Italy",
   "club": "Royal Park I Roveri",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 26,
-  "egrPoints": 26040.9,
+  "tournamentsPlayed": 15,
+  "egrRank": 28,
+  "egrPoints": 25307.6,
   "avgScore": 72.13,
   "avgToCR": 67.64,
   "events": [
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11657",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "International Italian Women's Championship 2026",
       "venue": "Is Molas Golf Club",
@@ -179,7 +179,7 @@
       "r2": 69,
       "r3": null,
       "r4": null,
-      "egrPoints": 2433.15
+      "egrPoints": 1699.84
     },
     {
       "eventId": "11902",
@@ -235,10 +235,11 @@
       "r2": 73,
       "r3": 71,
       "r4": null,
-      "egrPoints": 611.6
+      "egrPoints": 611.6,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:44.247Z",
+  "scrapedAt": "2026-10-05T14:19:03.550Z",
   "url": "https://www.europeangolfrankings.com/players/37368"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 265,
-  "egrPoints": 16341.4,
-  "avgScore": 72.04,
-  "avgToCR": 71.31,
+  "tournamentsPlayed": 12,
+  "egrRank": 213,
+  "egrPoints": 18405.8,
+  "avgScore": 71.48,
+  "avgToCR": 70.84,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 69,
+      "r2": 67,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 3289.95
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12042",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "41ème Grand Prix de Campagne 2026",
       "venue": "Golf de Nîmes Campagne",
@@ -179,7 +193,8 @@
       "r2": 69,
       "r3": 76,
       "r4": null,
-      "egrPoints": 416.77
+      "egrPoints": 416.77,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -193,10 +208,11 @@
       "r2": 75,
       "r3": 68,
       "r4": null,
-      "egrPoints": 1225.49
+      "egrPoints": 1225.49,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:18.076Z",
+  "scrapedAt": "2026-10-05T14:23:20.746Z",
   "url": "https://www.europeangolfrankings.com/players/50411"
 }

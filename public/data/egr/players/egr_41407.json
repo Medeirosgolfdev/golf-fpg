@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Bubikon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 8248,
-  "egrPoints": 120.03,
-  "avgScore": 78,
+  "tournamentsPlayed": 2,
+  "egrRank": 4919,
+  "egrPoints": 630.83,
+  "avgScore": 78.5,
   "avgToCR": 77.4,
   "events": [
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "28",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 510.8
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:20.387Z",
+  "scrapedAt": "2026-10-05T14:20:20.987Z",
   "url": "https://www.europeangolfrankings.com/players/41407"
 }

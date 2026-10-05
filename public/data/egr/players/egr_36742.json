@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Lecco",
   "ageGroup": "U18",
-  "tournamentsPlayed": 20,
-  "egrRank": 2311,
+  "tournamentsPlayed": 19,
+  "egrRank": 2325,
   "egrPoints": 2384.59,
   "avgScore": 78.61,
   "avgToCR": 77.52,
@@ -239,7 +239,7 @@
     },
     {
       "eventId": "10230",
-      "counting": false,
+      "counting": true,
       "pos": "39",
       "event": "Trofeo Castelconturbia 2025",
       "venue": "Golf Club Castelconturbia",
@@ -291,10 +291,11 @@
       "r2": 78,
       "r3": 85,
       "r4": null,
-      "egrPoints": 45.46
+      "egrPoints": 45.46,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:38.979Z",
+  "scrapedAt": "2026-10-05T14:18:50.820Z",
   "url": "https://www.europeangolfrankings.com/players/36742"
 }

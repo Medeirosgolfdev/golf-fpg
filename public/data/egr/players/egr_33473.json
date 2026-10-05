@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 207,
-  "egrPoints": 8779.04,
+  "tournamentsPlayed": 14,
+  "egrRank": 218,
+  "egrPoints": 8293.66,
   "avgScore": 75.16,
-  "avgToCR": 71.36,
+  "avgToCR": 71.67,
   "events": [
     {
       "eventId": "12912",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12534",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -221,10 +221,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 124.99
+      "egrPoints": 124.99,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:17.627Z",
+  "scrapedAt": "2026-10-05T14:17:44.226Z",
   "url": "https://www.europeangolfrankings.com/players/33473"
 }

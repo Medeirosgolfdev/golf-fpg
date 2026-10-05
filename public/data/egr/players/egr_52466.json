@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Roganstown",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 2803,
+  "tournamentsPlayed": 13,
+  "egrRank": 2814,
   "egrPoints": 1816.12,
   "avgScore": 78.52,
   "avgToCR": 77.32,
   "events": [
+    {
+      "eventId": "11687",
+      "counting": false,
+      "pos": "12",
+      "event": "Irish Elite WAGR Tour #11 2026",
+      "venue": "Lough Erne Resort",
+      "country": "Ireland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 81,
+      "r2": 89,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 16.38
+    },
     {
       "eventId": "11685",
       "counting": true,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:38.638Z",
+  "scrapedAt": "2026-10-05T14:24:02.265Z",
   "url": "https://www.europeangolfrankings.com/players/52466"
 }

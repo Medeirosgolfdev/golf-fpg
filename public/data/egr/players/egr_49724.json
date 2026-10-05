@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Forsgardens",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 2562,
-  "egrPoints": 2068.17,
-  "avgScore": 75.47,
-  "avgToCR": 73.43,
+  "tournamentsPlayed": 6,
+  "egrRank": 2326,
+  "egrPoints": 2383.67,
+  "avgScore": 75.61,
+  "avgToCR": 73.69,
   "events": [
+    {
+      "eventId": "12396",
+      "counting": true,
+      "pos": "33",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 74,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 315.5
+    },
     {
       "eventId": "12394",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:08.366Z",
+  "scrapedAt": "2026-10-05T14:23:04.343Z",
   "url": "https://www.europeangolfrankings.com/players/49724"
 }

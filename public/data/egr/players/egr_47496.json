@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Bruntsfield Links",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
+  "tournamentsPlayed": 11,
   "egrRank": 1918,
   "egrPoints": 3138.79,
   "avgScore": 76.35,
   "avgToCR": 75.71,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "21",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 68.47
+    },
     {
       "eventId": "12893",
       "counting": false,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11709",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "Junior Tour Hayston Boys 2026",
       "venue": "Hayston GC",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:31.768Z",
+  "scrapedAt": "2026-10-05T14:22:08.667Z",
   "url": "https://www.europeangolfrankings.com/players/47496"
 }

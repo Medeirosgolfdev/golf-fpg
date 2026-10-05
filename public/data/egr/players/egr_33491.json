@@ -8,11 +8,25 @@
   "club": "Odder",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 295,
-  "egrPoints": 14894.8,
-  "avgScore": 72.92,
-  "avgToCR": 70.75,
+  "egrRank": 236,
+  "egrPoints": 17452.2,
+  "avgScore": 72.24,
+  "avgToCR": 70.2,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "1",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 64,
+      "r2": 74,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 3385.06
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "12555",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Dormy Elite Tour I Drenge U22 2026",
       "venue": "Kokkedal Golfklub",
@@ -221,10 +235,11 @@
       "r2": 66,
       "r3": 75,
       "r4": null,
-      "egrPoints": 182.75
+      "egrPoints": 182.75,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:17.954Z",
+  "scrapedAt": "2026-10-05T14:17:44.881Z",
   "url": "https://www.europeangolfrankings.com/players/33491"
 }

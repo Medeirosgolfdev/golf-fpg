@@ -5,14 +5,28 @@
   "lastName": "LAVILLA",
   "firstName": "Jaime Vizcaino",
   "country": "Spain",
-  "club": "Hipica",
+  "club": "R.S.H.E. CC",
   "ageGroup": "U18",
   "tournamentsPlayed": 3,
-  "egrRank": 8997,
+  "egrRank": 9131,
   "egrPoints": 66.3,
   "avgScore": 81,
-  "avgToCR": 80.1,
+  "avgToCR": 80.25,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "28",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11482",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:58.855Z",
+  "scrapedAt": "2026-10-05T14:24:33.630Z",
   "url": "https://www.europeangolfrankings.com/players/53667"
 }

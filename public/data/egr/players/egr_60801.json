@@ -7,12 +7,26 @@
   "country": "USA",
   "club": "Haggs Castle",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 1296,
-  "egrPoints": 845.48,
-  "avgScore": 81.08,
-  "avgToCR": 80.43,
+  "tournamentsPlayed": 6,
+  "egrRank": 1275,
+  "egrPoints": 873.67,
+  "avgScore": 80.73,
+  "avgToCR": 80.19,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "8",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 28.19
+    },
     {
       "eventId": "11722",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:45.205Z",
+  "scrapedAt": "2026-10-05T14:27:31.845Z",
   "url": "https://www.europeangolfrankings.com/players/60801"
 }

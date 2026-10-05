@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Rheinhessen",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 297,
+  "tournamentsPlayed": 11,
+  "egrRank": 303,
   "egrPoints": 14837.1,
   "avgScore": 71.52,
   "avgToCR": 70.3,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12837",
-      "counting": false,
+      "counting": true,
       "pos": "41",
       "event": "DM-Vorausscheid Jungen AK18 2026",
       "venue": "Golf Club Pottenstein-Weidenloh",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11496",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "GJG Season Kick Off 2026",
       "venue": "Villa Padierna (Flamingos)",
@@ -179,7 +179,8 @@
       "r2": 79,
       "r3": 74,
       "r4": null,
-      "egrPoints": 618.5
+      "egrPoints": 618.5,
+      "_mantido": true
     },
     {
       "eventId": "11081",
@@ -193,10 +194,11 @@
       "r2": 71,
       "r3": 79,
       "r4": null,
-      "egrPoints": 126.1
+      "egrPoints": 126.1,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:08.116Z",
+  "scrapedAt": "2026-10-05T14:21:34.981Z",
   "url": "https://www.europeangolfrankings.com/players/45239"
 }

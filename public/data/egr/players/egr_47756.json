@@ -5,14 +5,42 @@
   "lastName": "MYLIUS",
   "firstName": "Alexander",
   "country": "Germany",
-  "club": "G&LC Berlin-Wannsee",
+  "club": "Berlin Wannsee",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 5641,
-  "egrPoints": 446.02,
-  "avgScore": 80.52,
-  "avgToCR": 80.25,
+  "tournamentsPlayed": 10,
+  "egrRank": 5049,
+  "egrPoints": 597.61,
+  "avgScore": 79.43,
+  "avgToCR": 79.45,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "6",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 52.46
+    },
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "4",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 75,
+      "r2": 78,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 99.12
+    },
     {
       "eventId": "12835",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12851",
-      "counting": true,
+      "counting": false,
       "pos": "53",
       "event": "Hanseatic International Youth Open Boys 2026",
       "venue": "Gut Kaden (A+B)",
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11146",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Bogogno International Junior Open 2025",
       "venue": "Bogogno (Bonora)",
@@ -127,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:17.496Z",
+  "scrapedAt": "2026-10-05T14:22:13.705Z",
   "url": "https://www.europeangolfrankings.com/players/47756"
 }

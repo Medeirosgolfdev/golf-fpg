@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Zurich",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 1761,
-  "egrPoints": 396.56,
-  "avgScore": 78,
-  "avgToCR": 76.84,
+  "tournamentsPlayed": 3,
+  "egrRank": 946,
+  "egrPoints": 1568.51,
+  "avgScore": 76.88,
+  "avgToCR": 74.22,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "14",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 68,
+      "r2": 81,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 839.63
+    },
+    {
+      "eventId": "12919",
+      "counting": true,
+      "pos": "2",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 504.53
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -29,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:49.146Z",
+  "scrapedAt": "2026-10-05T14:19:35.651Z",
   "url": "https://www.europeangolfrankings.com/players/38578"
 }

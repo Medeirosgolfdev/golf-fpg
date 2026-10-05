@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Open Golf",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 2086,
-  "egrPoints": 224.2,
-  "avgScore": 83.64,
-  "avgToCR": 81.48,
+  "tournamentsPlayed": 5,
+  "egrRank": 1722,
+  "egrPoints": 417.6,
+  "avgScore": 83.29,
+  "avgToCR": 80.63,
   "events": [
+    {
+      "eventId": "12921",
+      "counting": true,
+      "pos": "11",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 41.78
+    },
     {
       "eventId": "12436",
       "counting": true,
@@ -26,6 +40,20 @@
       "r3": 78,
       "r4": null,
       "egrPoints": 198.44
+    },
+    {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "19",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 86,
+      "r2": 88,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 177.38
     },
     {
       "eventId": "11454",
@@ -57,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-21T12:41:10.817Z",
+  "scrapedAt": "2026-10-05T14:22:38.578Z",
   "url": "https://www.europeangolfrankings.com/players/48603"
 }

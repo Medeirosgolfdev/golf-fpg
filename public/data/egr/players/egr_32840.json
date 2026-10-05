@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Arzaga",
   "ageGroup": "U16",
-  "tournamentsPlayed": 20,
-  "egrRank": 271,
+  "tournamentsPlayed": 18,
+  "egrRank": 274,
   "egrPoints": 15855.2,
   "avgScore": 72.3,
   "avgToCR": 70.63,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11955",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -253,7 +253,7 @@
     },
     {
       "eventId": "10325",
-      "counting": false,
+      "counting": true,
       "pos": "22",
       "event": "Italian National Closed Boys U18 Match Play Championship 2025",
       "venue": "Modena Golf & Country Club",
@@ -277,7 +277,8 @@
       "r2": 72,
       "r3": 69,
       "r4": null,
-      "egrPoints": 1909.43
+      "egrPoints": 1909.43,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -291,10 +292,11 @@
       "r2": 74,
       "r3": 67,
       "r4": null,
-      "egrPoints": 499.75
+      "egrPoints": 499.75,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:11.489Z",
+  "scrapedAt": "2026-10-05T14:17:27.155Z",
   "url": "https://www.europeangolfrankings.com/players/32840"
 }

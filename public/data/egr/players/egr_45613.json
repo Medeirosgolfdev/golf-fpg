@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Verona",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 343,
+  "tournamentsPlayed": 14,
+  "egrRank": 339,
   "egrPoints": 5625.9,
   "avgScore": 76.67,
   "avgToCR": 73.59,
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "11907",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Trofeo Fondazione Sergio E Stella Montelatci 2026",
       "venue": "Pelagone Golf Club Toscana",
@@ -221,10 +221,11 @@
       "r2": 71,
       "r3": 86,
       "r4": null,
-      "egrPoints": 143.89
+      "egrPoints": 143.89,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:12.440Z",
+  "scrapedAt": "2026-10-05T14:21:40.833Z",
   "url": "https://www.europeangolfrankings.com/players/45613"
 }

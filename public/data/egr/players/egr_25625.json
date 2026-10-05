@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Simon's",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 2,
-  "egrRank": 3506,
-  "egrPoints": 1217.23,
-  "avgScore": 72.17,
-  "avgToCR": 72.87,
+  "tournamentsPlayed": 3,
+  "egrRank": 2962,
+  "egrPoints": 1663.28,
+  "avgScore": 74,
+  "avgToCR": 73.43,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "19",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 446.05
+    },
     {
       "eventId": "12582",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:17.560Z",
+  "scrapedAt": "2026-10-05T14:14:12.203Z",
   "url": "https://www.europeangolfrankings.com/players/25625"
 }

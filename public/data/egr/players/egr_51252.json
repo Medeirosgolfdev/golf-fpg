@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bussy",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1832,
+  "tournamentsPlayed": 5,
+  "egrRank": 1825,
   "egrPoints": 352.8,
-  "avgScore": 85.88,
-  "avgToCR": 81.87,
+  "avgScore": 84.67,
+  "avgToCR": 81.53,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "91",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 82,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12166",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:26.204Z",
+  "scrapedAt": "2026-10-05T14:23:38.347Z",
   "url": "https://www.europeangolfrankings.com/players/51252"
 }

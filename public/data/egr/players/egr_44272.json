@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2270,
-  "egrPoints": 2441.57,
-  "avgScore": 78.13,
-  "avgToCR": 77.07,
+  "tournamentsPlayed": 10,
+  "egrRank": 2303,
+  "egrPoints": 2412.99,
+  "avgScore": 78.43,
+  "avgToCR": 77.3,
   "events": [
     {
       "eventId": "11995",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11929",
-      "counting": false,
+      "counting": true,
       "pos": "35",
       "event": "Trofeo Giovanile U18 2026",
       "venue": "Parco di Roma Golf & CC",
@@ -165,10 +165,11 @@
       "r2": 77,
       "r3": 76,
       "r4": null,
-      "egrPoints": 115.77
+      "egrPoints": 115.77,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:50.598Z",
+  "scrapedAt": "2026-10-05T14:21:12.209Z",
   "url": "https://www.europeangolfrankings.com/players/44272"
 }

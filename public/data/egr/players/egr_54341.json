@@ -7,12 +7,26 @@
   "country": "Latvia",
   "club": "Ikast",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 4386,
-  "egrPoints": 802.31,
-  "avgScore": 80.44,
-  "avgToCR": 80.14,
+  "tournamentsPlayed": 9,
+  "egrRank": 4083,
+  "egrPoints": 933.33,
+  "avgScore": 80.57,
+  "avgToCR": 80.16,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "47",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 76,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 131.02
+    },
     {
       "eventId": "12600",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:07.458Z",
+  "scrapedAt": "2026-10-05T14:24:47.023Z",
   "url": "https://www.europeangolfrankings.com/players/54341"
 }

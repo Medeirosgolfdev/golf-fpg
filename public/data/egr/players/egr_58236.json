@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Marco Simone",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 7902,
-  "egrPoints": 148.51,
-  "avgScore": 88.18,
-  "avgToCR": 88.61,
+  "tournamentsPlayed": 6,
+  "egrRank": 7772,
+  "egrPoints": 169.67,
+  "avgScore": 87.77,
+  "avgToCR": 88.28,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "14",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 85,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 21.16
+    },
     {
       "eventId": "11975",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:36.139Z",
+  "scrapedAt": "2026-10-05T14:26:33.264Z",
   "url": "https://www.europeangolfrankings.com/players/58236"
 }

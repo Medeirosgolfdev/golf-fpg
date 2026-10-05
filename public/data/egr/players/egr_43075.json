@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1531,
-  "egrPoints": 4168.34,
-  "avgScore": 74.28,
-  "avgToCR": 74.25,
+  "tournamentsPlayed": 9,
+  "egrRank": 1413,
+  "egrPoints": 4596.25,
+  "avgScore": 74.58,
+  "avgToCR": 74.13,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "20",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 495.31
+    },
     {
       "eventId": "12911",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12701",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "DGV-BWGV 1. AK14 Jungen 2026",
       "venue": "Hetzenhof",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:03.552Z",
+  "scrapedAt": "2026-10-05T14:20:52.599Z",
   "url": "https://www.europeangolfrankings.com/players/43075"
 }

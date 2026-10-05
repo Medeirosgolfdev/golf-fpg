@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U18",
   "tournamentsPlayed": 12,
-  "egrRank": 602,
+  "egrRank": 605,
   "egrPoints": 9750.62,
   "avgScore": 74.8,
   "avgToCR": 73.97,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "5",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 226.21
+    },
     {
       "eventId": "12877",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "11484",
-      "counting": false,
+      "counting": true,
       "pos": "28",
       "event": "SGF Trophy 2026",
       "venue": "Duddingston GC",
@@ -179,10 +193,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 419.45
+      "egrPoints": 419.45,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:09.896Z",
+  "scrapedAt": "2026-10-05T14:17:24.649Z",
   "url": "https://www.europeangolfrankings.com/players/32791"
 }

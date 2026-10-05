@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Viipurin",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 4,
-  "egrRank": 208,
-  "egrPoints": 8749.55,
-  "avgScore": 74.1,
-  "avgToCR": 69.8,
+  "tournamentsPlayed": 5,
+  "egrRank": 145,
+  "egrPoints": 11186.9,
+  "avgScore": 73.92,
+  "avgToCR": 69.9,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "11",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 69,
+      "r2": 70,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 2437.35
+    },
     {
       "eventId": "12357",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:30:55.344Z",
+  "scrapedAt": "2026-10-05T14:11:41.882Z",
   "url": "https://www.europeangolfrankings.com/players/16948"
 }

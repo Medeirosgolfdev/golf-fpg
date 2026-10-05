@@ -6,13 +6,27 @@
   "firstName": "Andrea",
   "country": "Italy",
   "club": "Marco Simone",
-  "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 9303,
+  "ageGroup": "U12",
+  "tournamentsPlayed": 2,
+  "egrRank": 9437,
   "egrPoints": 51.3,
-  "avgScore": 81,
-  "avgToCR": 86.2,
+  "avgScore": 86.25,
+  "avgToCR": 89.35,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "22",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 93,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11971",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 51.3
     }
   ],
-  "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:53.786Z",
+  "ageNum": 12,
+  "scrapedAt": "2026-10-05T14:25:08.232Z",
   "url": "https://www.europeangolfrankings.com/players/55113"
 }

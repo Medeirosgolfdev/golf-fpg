@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Roscommon",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 79,
-  "egrPoints": 16167.1,
-  "avgScore": 72.82,
-  "avgToCR": 70.13,
+  "tournamentsPlayed": 15,
+  "egrRank": 83,
+  "egrPoints": 15759,
+  "avgScore": 73.04,
+  "avgToCR": 69.93,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "61",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11656",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "Nations Cup (Copa Sotogrande) 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "84",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -165,7 +179,7 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 1045.49
+      "egrPoints": 0
     },
     {
       "eventId": "11653",
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:36.430Z",
+  "scrapedAt": "2026-10-05T14:15:08.726Z",
   "url": "https://www.europeangolfrankings.com/players/28004"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 94,
-  "egrPoints": 27224.3,
-  "avgScore": 72.71,
-  "avgToCR": 69.81,
+  "tournamentsPlayed": 12,
+  "egrRank": 79,
+  "egrPoints": 28026,
+  "avgScore": 72.64,
+  "avgToCR": 69.69,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "14",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 2028.08
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12630",
-      "counting": true,
+      "counting": false,
       "pos": "63",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:14.776Z",
+  "scrapedAt": "2026-10-05T14:17:39.012Z",
   "url": "https://www.europeangolfrankings.com/players/33264"
 }

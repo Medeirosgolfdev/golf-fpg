@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Torino",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 2129,
-  "egrPoints": 2684.23,
-  "avgScore": 77.42,
-  "avgToCR": 76.48,
+  "tournamentsPlayed": 10,
+  "egrRank": 2160,
+  "egrPoints": 2639.05,
+  "avgScore": 77.3,
+  "avgToCR": 76.26,
   "events": [
     {
       "eventId": "11995",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11888",
-      "counting": false,
+      "counting": true,
       "pos": "62",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -165,10 +165,11 @@
       "r2": 80,
       "r3": 85,
       "r4": null,
-      "egrPoints": 45.18
+      "egrPoints": 45.18,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:06.481Z",
+  "scrapedAt": "2026-10-05T14:23:01.840Z",
   "url": "https://www.europeangolfrankings.com/players/49633"
 }

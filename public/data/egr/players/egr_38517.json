@@ -5,13 +5,13 @@
   "lastName": "ZIMMERMANN",
   "firstName": "Luca",
   "country": "Switzerland",
-  "club": null,
+  "club": "Hittnau",
   "ageGroup": "U16",
   "tournamentsPlayed": 16,
-  "egrRank": 632,
-  "egrPoints": 9457.86,
-  "avgScore": 72.75,
-  "avgToCR": 72.46,
+  "egrRank": 620,
+  "egrPoints": 9585.24,
+  "avgScore": 73.67,
+  "avgToCR": 73.15,
   "events": [
     {
       "eventId": "12002",
@@ -28,8 +28,22 @@
       "egrPoints": 2935.79
     },
     {
-      "eventId": "12475",
+      "eventId": "12918",
       "counting": true,
+      "pos": "21",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 79,
+      "r2": 79,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 546.78
+    },
+    {
+      "eventId": "12475",
+      "counting": false,
       "pos": "10",
       "event": "Swiss Golf Junior Tour (Markgräflerland) 2026",
       "venue": "Golfclub Markgräflerland Kandern",
@@ -235,10 +249,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:56.593Z",
+  "scrapedAt": "2026-10-05T14:19:31.902Z",
   "url": "https://www.europeangolfrankings.com/players/38517"
 }

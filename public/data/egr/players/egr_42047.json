@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Abbekas",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 906,
-  "egrPoints": 7076.65,
-  "avgScore": 74.32,
-  "avgToCR": 72.48,
+  "tournamentsPlayed": 11,
+  "egrRank": 890,
+  "egrPoints": 7377.4,
+  "avgScore": 74.41,
+  "avgToCR": 72.47,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "71",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 75,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 369.28
+    },
     {
       "eventId": "12394",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11638",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "GJG Edge Mason Championship 2026",
       "venue": "PGA Aroeira Lisboa",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:24.557Z",
+  "scrapedAt": "2026-10-05T14:20:32.255Z",
   "url": "https://www.europeangolfrankings.com/players/42047"
 }

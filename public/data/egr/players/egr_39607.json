@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Dinard",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 690,
-  "egrPoints": 9052.91,
-  "avgScore": 74.78,
-  "avgToCR": 73.43,
+  "tournamentsPlayed": 10,
+  "egrRank": 721,
+  "egrPoints": 8838.73,
+  "avgScore": 74.59,
+  "avgToCR": 73.19,
   "events": [
     {
       "eventId": "11671",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11368",
-      "counting": false,
+      "counting": true,
       "pos": "49",
       "event": "French National U16 Championships 2025",
       "venue": "Golf de Biarritz Le Phare",
@@ -165,10 +165,11 @@
       "r2": 76,
       "r3": 78,
       "r4": null,
-      "egrPoints": 406.08
+      "egrPoints": 406.08,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:11.551Z",
+  "scrapedAt": "2026-10-05T14:19:59.679Z",
   "url": "https://www.europeangolfrankings.com/players/39607"
 }

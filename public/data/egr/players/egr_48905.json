@@ -7,10 +7,10 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 648,
-  "egrPoints": 9373.29,
-  "avgScore": 72.48,
+  "tournamentsPlayed": 14,
+  "egrRank": 657,
+  "egrPoints": 9316.4,
+  "avgScore": 72.35,
   "avgToCR": 71.97,
   "events": [
     {
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "10670",
-      "counting": false,
+      "counting": true,
       "pos": "36",
       "event": "Grand Prix Messieurs de la Ligue PACA 2025",
       "venue": "Golf Club d' Aix Marseille (Aix Marseille)",
@@ -197,7 +197,7 @@
     },
     {
       "eventId": "10687",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Grand Prix de Valescure 2025",
       "venue": "Golf de Valescure",
@@ -221,10 +221,11 @@
       "r2": 75,
       "r3": 72,
       "r4": null,
-      "egrPoints": 651.82
+      "egrPoints": 651.82,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:53.498Z",
+  "scrapedAt": "2026-10-05T14:22:41.322Z",
   "url": "https://www.europeangolfrankings.com/players/48905"
 }

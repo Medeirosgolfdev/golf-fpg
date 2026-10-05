@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 403,
-  "egrPoints": 4837.78,
-  "avgScore": 73.1,
-  "avgToCR": 68.94,
+  "tournamentsPlayed": 4,
+  "egrRank": 350,
+  "egrPoints": 5522.04,
+  "avgScore": 73.31,
+  "avgToCR": 69.46,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "13",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 72,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 684.27
+    },
     {
       "eventId": "12886",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:30:52.789Z",
+  "scrapedAt": "2026-10-05T14:11:39.862Z",
   "url": "https://www.europeangolfrankings.com/players/16515"
 }

@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Crans-sur-Sierre",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1609,
+  "tournamentsPlayed": 10,
+  "egrRank": 1604,
   "egrPoints": 505.4,
-  "avgScore": 81.57,
-  "avgToCR": 79.1,
+  "avgScore": 81.19,
+  "avgToCR": 78.8,
   "events": [
     {
       "eventId": "11766",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12462",
-      "counting": false,
+      "counting": true,
       "pos": "14",
       "event": "Swiss Golf Junior Tour (Leuk) 2026",
       "venue": "Links Leuk Golfresort",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12440",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Ticino Championship 2026",
       "venue": "Golf Ascona",
@@ -165,7 +165,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 50.25
+      "egrPoints": 50.25,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -179,10 +180,11 @@
       "r2": 90,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:26.867Z",
+  "scrapedAt": "2026-10-05T14:22:02.676Z",
   "url": "https://www.europeangolfrankings.com/players/47132"
 }

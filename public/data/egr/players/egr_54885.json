@@ -7,12 +7,26 @@
   "country": "Portugal",
   "club": "Miramar",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 1649,
-  "egrPoints": 475.05,
-  "avgScore": 80.5,
-  "avgToCR": 79.24,
+  "tournamentsPlayed": 4,
+  "egrRank": 1407,
+  "egrPoints": 712.9,
+  "avgScore": 81.8,
+  "avgToCR": 80.31,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "38",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 86,
+      "r2": 92,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 237.85
+    },
     {
       "eventId": "12237",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:47.914Z",
+  "scrapedAt": "2026-10-05T14:25:01.223Z",
   "url": "https://www.europeangolfrankings.com/players/54885"
 }

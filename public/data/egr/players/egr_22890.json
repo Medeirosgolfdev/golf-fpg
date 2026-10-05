@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Kalinowe Pola",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 301,
-  "egrPoints": 6353.71,
-  "avgScore": 76,
-  "avgToCR": 70.2,
+  "tournamentsPlayed": 5,
+  "egrRank": 238,
+  "egrPoints": 7818.91,
+  "avgScore": 74.46,
+  "avgToCR": 69,
   "events": [
+    {
+      "eventId": "12925",
+      "counting": true,
+      "pos": "1",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 739.2
+    },
     {
       "eventId": "11765",
       "counting": true,
@@ -54,9 +68,23 @@
       "r3": null,
       "r4": null,
       "egrPoints": 2306.34
+    },
+    {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "3",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 726
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:32:57.699Z",
+  "scrapedAt": "2026-10-05T14:13:14.683Z",
   "url": "https://www.europeangolfrankings.com/players/22890"
 }

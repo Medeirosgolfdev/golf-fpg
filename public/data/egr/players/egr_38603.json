@@ -7,15 +7,15 @@
   "country": "Italy",
   "club": "Milano",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 737,
-  "egrPoints": 2316.45,
-  "avgScore": 78,
-  "avgToCR": 74.69,
+  "tournamentsPlayed": 11,
+  "egrRank": 770,
+  "egrPoints": 2214.98,
+  "avgScore": 77.8,
+  "avgToCR": 74.47,
   "events": [
     {
       "eventId": "11985",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Mattone d'Oro 2026",
       "venue": "Golf Club Bergamo L'Albenza",
@@ -179,10 +179,11 @@
       "r2": 75,
       "r3": 80,
       "r4": null,
-      "egrPoints": 230.31
+      "egrPoints": 230.31,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:59.358Z",
+  "scrapedAt": "2026-10-05T14:19:36.589Z",
   "url": "https://www.europeangolfrankings.com/players/38603"
 }

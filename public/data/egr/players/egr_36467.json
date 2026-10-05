@@ -8,11 +8,25 @@
   "club": "Haga",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 2404,
+  "egrRank": 2427,
   "egrPoints": 124.89,
-  "avgScore": 82.96,
-  "avgToCR": 79.99,
+  "avgScore": 82.65,
+  "avgToCR": 80.86,
   "events": [
+    {
+      "eventId": "12335",
+      "counting": true,
+      "pos": "10",
+      "event": "Srixon Tour 8 Finale (U19) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 84,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12330",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12292",
-      "counting": false,
+      "counting": true,
       "pos": "17",
       "event": "Srixon Tour 2 (U19) 2026",
       "venue": "Bjaavann Golfklubb (55)",
@@ -193,10 +207,11 @@
       "r2": 81,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:38:54.080Z",
+  "scrapedAt": "2026-10-05T14:18:43.076Z",
   "url": "https://www.europeangolfrankings.com/players/36467"
 }

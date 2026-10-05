@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Erlen",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 883,
-  "egrPoints": 7306.52,
-  "avgScore": 73.12,
-  "avgToCR": 72.16,
+  "tournamentsPlayed": 9,
+  "egrRank": 903,
+  "egrPoints": 7237.09,
+  "avgScore": 72.88,
+  "avgToCR": 72.05,
   "events": [
     {
       "eventId": "12472",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "10373",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "Swiss Golf Junior Tour Final (Waldkirch) 2025",
       "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
@@ -151,10 +151,11 @@
       "r2": 75,
       "r3": 81,
       "r4": null,
-      "egrPoints": 104.56
+      "egrPoints": 104.56,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:19.401Z",
+  "scrapedAt": "2026-10-05T14:17:52.524Z",
   "url": "https://www.europeangolfrankings.com/players/33857"
 }

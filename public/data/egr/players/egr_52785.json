@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Roissy",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1286,
-  "egrPoints": 5136.06,
-  "avgScore": 75,
-  "avgToCR": 75.08,
+  "tournamentsPlayed": 9,
+  "egrRank": 1124,
+  "egrPoints": 5876.71,
+  "avgScore": 74.06,
+  "avgToCR": 74.16,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "16",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 884.81
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12054",
-      "counting": true,
+      "counting": false,
       "pos": "15",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.857Z",
+  "scrapedAt": "2026-10-05T14:24:07.141Z",
   "url": "https://www.europeangolfrankings.com/players/52785"
 }

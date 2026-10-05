@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Kalinowe Pola",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1567,
-  "egrPoints": 531.52,
-  "avgScore": 78.3,
-  "avgToCR": 77.47,
+  "tournamentsPlayed": 9,
+  "egrRank": 1369,
+  "egrPoints": 760.94,
+  "avgScore": 77.91,
+  "avgToCR": 76.86,
   "events": [
+    {
+      "eventId": "12921",
+      "counting": true,
+      "pos": "10",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 55.05
+    },
     {
       "eventId": "12436",
       "counting": true,
@@ -70,6 +84,20 @@
       "egrPoints": 43
     },
     {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "14",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 76,
+      "r2": 84,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 239.25
+    },
+    {
       "eventId": "11456",
       "counting": true,
       "pos": "1",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "11365",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "German Junior Golf Championship (GJGT) 2025",
       "venue": "Berliner Golfclub Stolper Heide",
@@ -123,10 +151,11 @@
       "r2": 80,
       "r3": 80,
       "r4": null,
-      "egrPoints": 53.96
+      "egrPoints": 53.96,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:47.318Z",
+  "scrapedAt": "2026-10-05T14:22:04.325Z",
   "url": "https://www.europeangolfrankings.com/players/47229"
 }

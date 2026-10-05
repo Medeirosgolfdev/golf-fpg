@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Kempferhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 2040,
-  "egrPoints": 2883.65,
-  "avgScore": 77.61,
-  "avgToCR": 77.89,
+  "tournamentsPlayed": 8,
+  "egrRank": 2095,
+  "egrPoints": 2777.86,
+  "avgScore": 78.17,
+  "avgToCR": 78.07,
   "events": [
     {
       "eventId": "12285",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12116",
-      "counting": false,
+      "counting": true,
       "pos": "47",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf Club de Besançon",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12112",
-      "counting": false,
+      "counting": true,
       "pos": "37",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -137,7 +137,8 @@
       "r2": 82,
       "r3": 83,
       "r4": null,
-      "egrPoints": 91.81
+      "egrPoints": 91.81,
+      "_mantido": true
     },
     {
       "eventId": "11385",
@@ -151,10 +152,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 105.79
+      "egrPoints": 105.79,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:04.599Z",
+  "scrapedAt": "2026-10-05T14:23:21.330Z",
   "url": "https://www.europeangolfrankings.com/players/50434"
 }

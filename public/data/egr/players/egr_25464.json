@@ -8,11 +8,25 @@
   "club": "Berlin Wannsee",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 1100,
-  "egrPoints": 5978.71,
-  "avgScore": 73.79,
-  "avgToCR": 72.26,
+  "egrRank": 1044,
+  "egrPoints": 6275.34,
+  "avgScore": 73,
+  "avgToCR": 71.52,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "1",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 70,
+      "r2": 66,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 296.63
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 71,
       "r3": 82,
       "r4": null,
-      "egrPoints": 375.11
+      "egrPoints": 375.11,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:30.814Z",
+  "scrapedAt": "2026-10-05T14:14:07.885Z",
   "url": "https://www.europeangolfrankings.com/players/25464"
 }

@@ -8,11 +8,25 @@
   "club": "Sept Fontaines",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 287,
-  "egrPoints": 6586.41,
-  "avgScore": 73.74,
-  "avgToCR": 71.44,
+  "egrRank": 216,
+  "egrPoints": 8343.64,
+  "avgScore": 73.81,
+  "avgToCR": 71.39,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "34",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 77,
+      "r2": 73,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1292.65
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11736",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "King's Prize 2026",
       "venue": "Damme Golf & Country Club",
@@ -207,10 +221,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:33.413Z",
+  "scrapedAt": "2026-10-05T14:18:34.895Z",
   "url": "https://www.europeangolfrankings.com/players/36059"
 }

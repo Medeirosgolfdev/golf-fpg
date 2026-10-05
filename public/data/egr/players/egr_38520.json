@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 3630,
+  "tournamentsPlayed": 10,
+  "egrRank": 3647,
   "egrPoints": 1147.35,
-  "avgScore": 77.33,
-  "avgToCR": 76.92,
+  "avgScore": 77.89,
+  "avgToCR": 77.63,
   "events": [
     {
       "eventId": "12475",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12063",
-      "counting": false,
+      "counting": true,
       "pos": "59",
       "event": "Grand Prix de Haute Savoie 2026",
       "venue": "Golf & CC de Bossey",
@@ -165,10 +165,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:56.709Z",
+  "scrapedAt": "2026-10-05T14:19:32.050Z",
   "url": "https://www.europeangolfrankings.com/players/38520"
 }

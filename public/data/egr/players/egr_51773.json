@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Ternesse",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 2653,
-  "egrPoints": 78.26,
-  "avgScore": 86.57,
-  "avgToCR": 86.88,
+  "tournamentsPlayed": 8,
+  "egrRank": 2585,
+  "egrPoints": 94.51,
+  "avgScore": 86.47,
+  "avgToCR": 86.19,
   "events": [
+    {
+      "eventId": "11760",
+      "counting": true,
+      "pos": "6",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 84,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 16.25
+    },
     {
       "eventId": "12864",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:59.308Z",
+  "scrapedAt": "2026-10-05T14:23:47.577Z",
   "url": "https://www.europeangolfrankings.com/players/51773"
 }

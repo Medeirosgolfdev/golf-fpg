@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 797,
-  "egrPoints": 2062.98,
-  "avgScore": 77.07,
-  "avgToCR": 76.24,
+  "tournamentsPlayed": 7,
+  "egrRank": 788,
+  "egrPoints": 2136.89,
+  "avgScore": 78.18,
+  "avgToCR": 77.26,
   "events": [
+    {
+      "eventId": "12188",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 83,
+      "r2": 79,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 73.91
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:42.783Z",
+  "scrapedAt": "2026-10-05T14:22:12.850Z",
   "url": "https://www.europeangolfrankings.com/players/47722"
 }

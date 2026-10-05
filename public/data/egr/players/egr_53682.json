@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Burgdorf",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1408,
+  "tournamentsPlayed": 8,
+  "egrRank": 1416,
   "egrPoints": 703.42,
   "avgScore": 80.8,
   "avgToCR": 79.29,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12640",
-      "counting": false,
+      "counting": true,
       "pos": "44",
       "event": "Faldo Junior Tour (Germany) 2026",
       "venue": "Bad Saarow",
@@ -137,10 +137,11 @@
       "r2": 92,
       "r3": 85,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:46.230Z",
+  "scrapedAt": "2026-10-05T14:24:33.913Z",
   "url": "https://www.europeangolfrankings.com/players/53682"
 }

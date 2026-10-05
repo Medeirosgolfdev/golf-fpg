@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Aix Marseille",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 2867,
-  "egrPoints": 46.8,
-  "avgScore": 85.62,
-  "avgToCR": 84.06,
+  "tournamentsPlayed": 4,
+  "egrRank": 2366,
+  "egrPoints": 141.94,
+  "avgScore": 83.7,
+  "avgToCR": 82.31,
   "events": [
+    {
+      "eventId": "12188",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 95.14
+    },
     {
       "eventId": "12168",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:58:03.358Z",
+  "scrapedAt": "2026-10-05T14:23:28.000Z",
   "url": "https://www.europeangolfrankings.com/players/50633"
 }

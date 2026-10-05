@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Neckertal",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 2019,
-  "egrPoints": 257.51,
-  "avgScore": 81.67,
-  "avgToCR": 80.65,
+  "tournamentsPlayed": 11,
+  "egrRank": 1910,
+  "egrPoints": 303.82,
+  "avgScore": 81.39,
+  "avgToCR": 80.69,
   "events": [
+    {
+      "eventId": "12935",
+      "counting": true,
+      "pos": "8",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 82,
+      "r2": 86,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 51.7
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11691",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "World Junior Golf Championship U12-U13 (BJGT) 2026",
       "venue": "Villa Padierna (Flamingos)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:50.883Z",
+  "scrapedAt": "2026-10-05T14:22:10.222Z",
   "url": "https://www.europeangolfrankings.com/players/47575"
 }

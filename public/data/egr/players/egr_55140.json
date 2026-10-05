@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Roma Acquasanta",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 8441,
-  "egrPoints": 104.38,
-  "avgScore": 88.5,
-  "avgToCR": 89.25,
+  "tournamentsPlayed": 3,
+  "egrRank": 8291,
+  "egrPoints": 125.54,
+  "avgScore": 87.5,
+  "avgToCR": 88.33,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "14",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 84,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 21.16
+    },
     {
       "eventId": "11975",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:41.507Z",
+  "scrapedAt": "2026-10-05T14:25:09.564Z",
   "url": "https://www.europeangolfrankings.com/players/55140"
 }

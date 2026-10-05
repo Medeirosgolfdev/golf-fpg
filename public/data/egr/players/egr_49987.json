@@ -1,18 +1,32 @@
 {
   "id": "49987",
   "egrId": "MPOL49987",
-  "name": "ADAM Pisarek",
+  "name": "Adam Pisarek",
   "lastName": "PISAREK",
-  "firstName": "ADAM",
+  "firstName": "Adam",
   "country": "Poland",
   "club": "Binowo Park",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 9354,
-  "egrPoints": 47.76,
-  "avgScore": 89.09,
-  "avgToCR": 88.45,
+  "tournamentsPlayed": 4,
+  "egrRank": 9080,
+  "egrPoints": 69.63,
+  "avgScore": 89.2,
+  "avgToCR": 89.32,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "42",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 86,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11461",
       "counting": true,
@@ -42,6 +56,20 @@
       "egrPoints": 0
     },
     {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "84",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 104,
+      "r2": 103,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 69.63
+    },
+    {
       "eventId": "11318",
       "counting": true,
       "pos": "37",
@@ -53,10 +81,11 @@
       "r2": 90,
       "r3": 93,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-21T12:41:19.091Z",
+  "scrapedAt": "2026-10-05T14:23:11.742Z",
   "url": "https://www.europeangolfrankings.com/players/49987"
 }

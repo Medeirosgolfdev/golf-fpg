@@ -7,15 +7,15 @@
   "country": "Italy",
   "club": "Asolo",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1730,
-  "egrPoints": 417.22,
-  "avgScore": 85.28,
-  "avgToCR": 82.55,
+  "tournamentsPlayed": 10,
+  "egrRank": 1754,
+  "egrPoints": 398.11,
+  "avgScore": 86.04,
+  "avgToCR": 83.32,
   "events": [
     {
       "eventId": "11999",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "30th Gran Premio Citta Di Cervia 2026",
       "venue": "Adriatic Golf Club Cervia",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11934",
-      "counting": false,
+      "counting": true,
       "pos": "14",
       "event": "Trofeo Giovanile #2 U18 2026",
       "venue": "Cus Ferrara Golf",
@@ -165,10 +165,11 @@
       "r2": 85,
       "r3": 82,
       "r4": null,
-      "egrPoints": 19.11
+      "egrPoints": 19.11,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:42.228Z",
+  "scrapedAt": "2026-10-05T14:21:01.258Z",
   "url": "https://www.europeangolfrankings.com/players/43610"
 }

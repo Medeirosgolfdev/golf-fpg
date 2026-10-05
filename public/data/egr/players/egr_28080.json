@@ -7,11 +7,11 @@
   "country": "Norway",
   "club": "Losby",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
-  "egrRank": 243,
-  "egrPoints": 7606.41,
-  "avgScore": 74.04,
-  "avgToCR": 71.79,
+  "tournamentsPlayed": 11,
+  "egrRank": 300,
+  "egrPoints": 6325.18,
+  "avgScore": 74.74,
+  "avgToCR": 72.22,
   "events": [
     {
       "eventId": "12316",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12292",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Srixon Tour 2 (U19) 2026",
       "venue": "Bjaavann Golfklubb (55)",
@@ -151,11 +151,11 @@
       "r2": 70,
       "r3": null,
       "r4": null,
-      "egrPoints": 2567.57
+      "egrPoints": 2025.98
     },
     {
       "eventId": "12287",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Srixon Winter Open 2026",
       "venue": "Alhama Signature Golf Course",
@@ -179,10 +179,11 @@
       "r2": 71,
       "r3": 72,
       "r4": null,
-      "egrPoints": 833.7
+      "egrPoints": 833.7,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:37.390Z",
+  "scrapedAt": "2026-10-05T14:15:11.031Z",
   "url": "https://www.europeangolfrankings.com/players/28080"
 }

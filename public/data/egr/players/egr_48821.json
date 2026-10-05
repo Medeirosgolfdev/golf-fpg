@@ -8,11 +8,25 @@
   "club": "Nantes Vigneux",
   "ageGroup": "U16",
   "tournamentsPlayed": 7,
-  "egrRank": 916,
-  "egrPoints": 1656.03,
-  "avgScore": 77.78,
-  "avgToCR": 75.78,
+  "egrRank": 918,
+  "egrPoints": 1670.56,
+  "avgScore": 77.72,
+  "avgToCR": 75.91,
   "events": [
+    {
+      "eventId": "12195",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 66.7
+    },
     {
       "eventId": "12154",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 79,
       "r3": 78,
       "r4": null,
-      "egrPoints": 52.17
+      "egrPoints": 52.17,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:52.838Z",
+  "scrapedAt": "2026-10-05T14:22:40.435Z",
   "url": "https://www.europeangolfrankings.com/players/48821"
 }

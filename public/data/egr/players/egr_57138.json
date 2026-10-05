@@ -7,12 +7,26 @@
   "country": "Slovakia",
   "club": "Alpinka Kosice",
   "ageGroup": "U14",
-  "tournamentsPlayed": 5,
-  "egrRank": 433,
-  "egrPoints": 4448.71,
-  "avgScore": 74.77,
-  "avgToCR": 74.01,
+  "tournamentsPlayed": 6,
+  "egrRank": 388,
+  "egrPoints": 4932.75,
+  "avgScore": 75.5,
+  "avgToCR": 72.95,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "25",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 74,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 484.03
+    },
     {
       "eventId": "12648",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.232Z",
+  "scrapedAt": "2026-10-05T14:26:10.618Z",
   "url": "https://www.europeangolfrankings.com/players/57138"
 }

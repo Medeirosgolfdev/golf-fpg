@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Seddiner See",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 8289,
-  "egrPoints": 116.55,
-  "avgScore": 78.25,
-  "avgToCR": 78.05,
+  "tournamentsPlayed": 3,
+  "egrRank": 7059,
+  "egrPoints": 239.29,
+  "avgScore": 78,
+  "avgToCR": 78.19,
   "events": [
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "18",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 75,
+      "r2": 79,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 122.74
+    },
     {
       "eventId": "12773",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:01.576Z",
+  "scrapedAt": "2026-10-05T14:19:39.206Z",
   "url": "https://www.europeangolfrankings.com/players/38686"
 }

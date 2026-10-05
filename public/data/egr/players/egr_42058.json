@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Aberdour",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 1020,
+  "tournamentsPlayed": 18,
+  "egrRank": 1026,
   "egrPoints": 6387.34,
   "avgScore": 73.92,
   "avgToCR": 72.87,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "7",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 80,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 206.49
+    },
     {
       "eventId": "11721",
       "counting": false,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11717",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Junior Tour Hilton Park Boys 2026",
       "venue": "Hilton Park GC",
@@ -263,7 +277,8 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 355.47
+      "egrPoints": 355.47,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -277,10 +292,11 @@
       "r2": 75,
       "r3": 75,
       "r4": null,
-      "egrPoints": 238.28
+      "egrPoints": 238.28,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:24.579Z",
+  "scrapedAt": "2026-10-05T14:20:32.373Z",
   "url": "https://www.europeangolfrankings.com/players/42058"
 }

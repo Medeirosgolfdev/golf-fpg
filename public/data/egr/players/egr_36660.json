@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Hinton",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 721,
-  "egrPoints": 8708.89,
-  "avgScore": 73.62,
-  "avgToCR": 71.61,
+  "tournamentsPlayed": 13,
+  "egrRank": 705,
+  "egrPoints": 8960.2,
+  "avgScore": 73.83,
+  "avgToCR": 71.76,
   "events": [
+    {
+      "eventId": "12396",
+      "counting": true,
+      "pos": "24",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 465.36
+    },
     {
       "eventId": "12391",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11502",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "GJG Portuguese Intercollegiate By UGPM 2026",
       "venue": "Parador Malaga del Golf",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:38.662Z",
+  "scrapedAt": "2026-10-05T14:18:48.039Z",
   "url": "https://www.europeangolfrankings.com/players/36660"
 }

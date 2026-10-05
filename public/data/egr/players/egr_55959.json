@@ -7,12 +7,26 @@
   "country": "Czech",
   "club": "Brno",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 681,
-  "egrPoints": 2577.59,
-  "avgScore": 74.08,
-  "avgToCR": 72.79,
+  "tournamentsPlayed": 5,
+  "egrRank": 587,
+  "egrPoints": 3203.04,
+  "avgScore": 74.6,
+  "avgToCR": 72.04,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "16",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 708.81
+    },
     {
       "eventId": "12845",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.971Z",
+  "scrapedAt": "2026-10-05T14:25:34.524Z",
   "url": "https://www.europeangolfrankings.com/players/55959"
 }

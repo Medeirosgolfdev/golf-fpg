@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Olivar Hinojosa",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 649,
-  "egrPoints": 9368.04,
-  "avgScore": 73.64,
-  "avgToCR": 73.06,
+  "tournamentsPlayed": 12,
+  "egrRank": 630,
+  "egrPoints": 9530.17,
+  "avgScore": 73.23,
+  "avgToCR": 72.46,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "11",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 645.3
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12247",
-      "counting": true,
+      "counting": false,
       "pos": "24",
       "event": "Spanish National U16 Rankings Event #2 2026",
       "venue": "Real Club de Golf de Tenerife",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:01.899Z",
+  "scrapedAt": "2026-10-05T14:22:32.880Z",
   "url": "https://www.europeangolfrankings.com/players/48388"
 }

@@ -8,11 +8,25 @@
   "club": "Rougemont-le-Chateau",
   "ageGroup": "U16",
   "tournamentsPlayed": 14,
-  "egrRank": 1074,
-  "egrPoints": 6116.5,
-  "avgScore": 74,
-  "avgToCR": 73.45,
+  "egrRank": 1121,
+  "egrPoints": 5908.43,
+  "avgScore": 74.42,
+  "avgToCR": 74.05,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "27",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 521.4
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11538",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "Golfing Knights Junior Open 2026",
       "venue": "Golfplatz Altenstadt",
@@ -207,10 +221,11 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 729.47
+      "egrPoints": 729.47,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:51.747Z",
+  "scrapedAt": "2026-10-05T14:19:20.294Z",
   "url": "https://www.europeangolfrankings.com/players/38117"
 }

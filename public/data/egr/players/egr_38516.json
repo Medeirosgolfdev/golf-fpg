@@ -8,11 +8,25 @@
   "club": "Grande Bastide",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 757,
-  "egrPoints": 8374.5,
-  "avgScore": 73.54,
-  "avgToCR": 73.1,
+  "egrRank": 719,
+  "egrPoints": 8842.02,
+  "avgScore": 73.52,
+  "avgToCR": 73.12,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "14",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 659.42
+    },
     {
       "eventId": "12167",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 44.22
+      "egrPoints": 44.22,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:56.547Z",
+  "scrapedAt": "2026-10-05T14:19:31.878Z",
   "url": "https://www.europeangolfrankings.com/players/38516"
 }

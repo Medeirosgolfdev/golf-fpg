@@ -8,11 +8,25 @@
   "club": "Hills",
   "ageGroup": "U18",
   "tournamentsPlayed": 8,
-  "egrRank": 1200,
-  "egrPoints": 1001.39,
-  "avgScore": 77.32,
-  "avgToCR": 74.7,
+  "egrRank": 1261,
+  "egrPoints": 908.54,
+  "avgScore": 77.64,
+  "avgToCR": 74.86,
   "events": [
+    {
+      "eventId": "12397",
+      "counting": true,
+      "pos": "22",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 83,
+      "r2": 83,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 40.75
+    },
     {
       "eventId": "12393",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 76,
       "r3": 83,
       "r4": null,
-      "egrPoints": 133.6
+      "egrPoints": 133.6,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:58.275Z",
+  "scrapedAt": "2026-10-05T14:21:22.279Z",
   "url": "https://www.europeangolfrankings.com/players/44692"
 }

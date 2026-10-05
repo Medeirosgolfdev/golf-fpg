@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Gams-Werdenberg",
   "ageGroup": "U25",
-  "tournamentsPlayed": 11,
-  "egrRank": 2136,
-  "egrPoints": 2661.03,
-  "avgScore": 77.5,
-  "avgToCR": 76.95,
+  "tournamentsPlayed": 10,
+  "egrRank": 2113,
+  "egrPoints": 2742.9,
+  "avgScore": 77.84,
+  "avgToCR": 77.33,
   "events": [
     {
       "eventId": "12472",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "10122",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "GJG Junior Trophy (GJG) 2025",
       "venue": "Praia dèl Rey Golfcourse",
@@ -165,10 +165,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:34:30.388Z",
+  "scrapedAt": "2026-10-05T14:14:22.454Z",
   "url": "https://www.europeangolfrankings.com/players/26285"
 }

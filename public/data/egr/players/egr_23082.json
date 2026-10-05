@@ -1,18 +1,46 @@
 {
   "id": "23082",
   "egrId": "MDEU23082",
-  "name": "jacob Boether",
+  "name": "Jacob Boether",
   "lastName": "BOETHER",
-  "firstName": "jacob",
+  "firstName": "Jacob",
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 4523,
-  "egrPoints": 747.99,
-  "avgScore": 76.73,
-  "avgToCR": 75.71,
+  "tournamentsPlayed": 7,
+  "egrRank": 3636,
+  "egrPoints": 1154.37,
+  "avgScore": 75.35,
+  "avgToCR": 74.52,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "3",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 141.25
+    },
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "4",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 70,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 265.13
+    },
     {
       "eventId": "11430",
       "counting": true,
@@ -95,10 +123,11 @@
       "r2": 81,
       "r3": 94,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:16.423Z",
+  "scrapedAt": "2026-10-05T14:13:17.169Z",
   "url": "https://www.europeangolfrankings.com/players/23082"
 }

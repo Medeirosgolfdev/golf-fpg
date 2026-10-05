@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Galgorm Castle",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 592,
+  "tournamentsPlayed": 12,
+  "egrRank": 597,
   "egrPoints": 9830.96,
   "avgScore": 73.83,
   "avgToCR": 72.19,
   "events": [
+    {
+      "eventId": "11687",
+      "counting": false,
+      "pos": "4",
+      "event": "Irish Elite WAGR Tour #11 2026",
+      "venue": "Lough Erne Resort",
+      "country": "Ireland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 145.33
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:05.557Z",
+  "scrapedAt": "2026-10-05T14:23:00.541Z",
   "url": "https://www.europeangolfrankings.com/players/49603"
 }

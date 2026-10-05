@@ -8,11 +8,25 @@
   "club": "Arcangues",
   "ageGroup": "U12",
   "tournamentsPlayed": 8,
-  "egrRank": 1484,
-  "egrPoints": 623.35,
-  "avgScore": 78.29,
-  "avgToCR": 77.28,
+  "egrRank": 1095,
+  "egrPoints": 1187.85,
+  "avgScore": 78.11,
+  "avgToCR": 76.19,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "51",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 591.82
+    },
     {
       "eventId": "12176",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 27.31
+      "egrPoints": 27.31,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:46.725Z",
+  "scrapedAt": "2026-10-05T14:23:27.448Z",
   "url": "https://www.europeangolfrankings.com/players/50620"
 }

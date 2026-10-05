@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "East Kilbride",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 5217,
+  "tournamentsPlayed": 9,
+  "egrRank": 5279,
   "egrPoints": 543.19,
-  "avgScore": 81.05,
-  "avgToCR": 80.65,
+  "avgScore": 80.67,
+  "avgToCR": 80.26,
   "events": [
     {
       "eventId": "11719",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11713",
-      "counting": false,
+      "counting": true,
       "pos": "55",
       "event": "Junior Tour Royal Musselburgh 2026",
       "venue": "Royal Musselburgh GC",
@@ -151,10 +151,11 @@
       "r2": 84,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:53.450Z",
+  "scrapedAt": "2026-10-05T14:21:15.584Z",
   "url": "https://www.europeangolfrankings.com/players/44373"
 }

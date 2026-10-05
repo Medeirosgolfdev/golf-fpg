@@ -7,12 +7,26 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 729,
-  "egrPoints": 8655.97,
-  "avgScore": 74.43,
-  "avgToCR": 73.27,
+  "tournamentsPlayed": 15,
+  "egrRank": 696,
+  "egrPoints": 9052.21,
+  "avgScore": 74.17,
+  "avgToCR": 73.03,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "21",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 804.51
+    },
     {
       "eventId": "12163",
       "counting": true,
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:32.325Z",
+  "scrapedAt": "2026-10-05T14:18:32.777Z",
   "url": "https://www.europeangolfrankings.com/players/36004"
 }

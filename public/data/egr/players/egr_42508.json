@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 3095,
-  "egrPoints": 1512.8,
-  "avgScore": 78.33,
-  "avgToCR": 77.75,
+  "tournamentsPlayed": 7,
+  "egrRank": 2599,
+  "egrPoints": 2036.25,
+  "avgScore": 78.17,
+  "avgToCR": 77.7,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "40",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 523.45
+    },
     {
       "eventId": "12097",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:31.144Z",
+  "scrapedAt": "2026-10-05T14:20:43.674Z",
   "url": "https://www.europeangolfrankings.com/players/42508"
 }

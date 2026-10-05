@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 674,
-  "egrPoints": 2616.94,
-  "avgScore": 77.13,
-  "avgToCR": 73.87,
+  "tournamentsPlayed": 12,
+  "egrRank": 712,
+  "egrPoints": 2457.68,
+  "avgScore": 77.36,
+  "avgToCR": 74.35,
   "events": [
     {
       "eventId": "11999",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11977",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Gran Premio Castello Tolcinasco 2026",
       "venue": "Castello Tolcinasco Golf Resort & SPA",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11908",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -193,10 +193,11 @@
       "r2": 80,
       "r3": 73,
       "r4": null,
-      "egrPoints": 290.51
+      "egrPoints": 290.51,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:56.398Z",
+  "scrapedAt": "2026-10-05T14:21:19.172Z",
   "url": "https://www.europeangolfrankings.com/players/44537"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Lecco",
   "ageGroup": "U18",
-  "tournamentsPlayed": 22,
-  "egrRank": 354,
+  "tournamentsPlayed": 20,
+  "egrRank": 355,
   "egrPoints": 13503.8,
   "avgScore": 72.27,
   "avgToCR": 70.6,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11960",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "Italian National Closed U18 Stroke Play (Trofeo Silvio Marazza) 2026",
       "venue": "Golf Club Lignano",
@@ -305,7 +305,8 @@
       "r2": 71,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1272.95
+      "egrPoints": 1272.95,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -319,10 +320,11 @@
       "r2": 70,
       "r3": 72,
       "r4": null,
-      "egrPoints": 429.17
+      "egrPoints": 429.17,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:42.677Z",
+  "scrapedAt": "2026-10-05T14:19:00.605Z",
   "url": "https://www.europeangolfrankings.com/players/37231"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Arzaga",
   "ageGroup": "U18",
-  "tournamentsPlayed": 18,
-  "egrRank": 654,
+  "tournamentsPlayed": 16,
+  "egrRank": 656,
   "egrPoints": 9334.76,
   "avgScore": 73.7,
   "avgToCR": 71.72,
@@ -197,7 +197,7 @@
     },
     {
       "eventId": "10230",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "Trofeo Castelconturbia 2025",
       "venue": "Golf Club Castelconturbia",
@@ -249,7 +249,8 @@
       "r2": 73,
       "r3": 71,
       "r4": null,
-      "egrPoints": 512.92
+      "egrPoints": 512.92,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -263,10 +264,11 @@
       "r2": 69,
       "r3": 83,
       "r4": null,
-      "egrPoints": 398.1
+      "egrPoints": 398.1,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:41.144Z",
+  "scrapedAt": "2026-10-05T14:15:26.292Z",
   "url": "https://www.europeangolfrankings.com/players/28478"
 }

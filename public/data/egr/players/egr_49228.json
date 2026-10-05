@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Kampenhout",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 5275,
-  "egrPoints": 527.47,
-  "avgScore": 81.12,
-  "avgToCR": 80.84,
+  "tournamentsPlayed": 8,
+  "egrRank": 5098,
+  "egrPoints": 587.93,
+  "avgScore": 81.24,
+  "avgToCR": 81.02,
   "events": [
+    {
+      "eventId": "11790",
+      "counting": true,
+      "pos": "5",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 82,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 60.46
+    },
     {
       "eventId": "12866",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:14.975Z",
+  "scrapedAt": "2026-10-05T14:22:48.156Z",
   "url": "https://www.europeangolfrankings.com/players/49228"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 7322,
-  "egrPoints": 203.57,
-  "avgScore": 81.62,
-  "avgToCR": 80.35,
+  "tournamentsPlayed": 9,
+  "egrRank": 6707,
+  "egrPoints": 278.68,
+  "avgScore": 81.33,
+  "avgToCR": 80.45,
   "events": [
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "7",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 81,
+      "r2": 76,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 75.11
+    },
     {
       "eventId": "11574",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12640",
-      "counting": true,
+      "counting": false,
       "pos": "50",
       "event": "Faldo Junior Tour (Germany) 2026",
       "venue": "Bad Saarow",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:30.111Z",
+  "scrapedAt": "2026-10-05T14:22:13.576Z",
   "url": "https://www.europeangolfrankings.com/players/47755"
 }

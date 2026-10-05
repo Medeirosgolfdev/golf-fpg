@@ -7,12 +7,40 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
-  "egrRank": 270,
-  "egrPoints": 6963.13,
-  "avgScore": 74.23,
-  "avgToCR": 71.64,
+  "tournamentsPlayed": 18,
+  "egrRank": 250,
+  "egrPoints": 7425.69,
+  "avgScore": 74.5,
+  "avgToCR": 71.35,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "16",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 76,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 560.27
+    },
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "11",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 805.14
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "11976",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "Italian National Closed U14 Championships 2026",
       "venue": "Golf Club Folgaria",
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11894",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Grand Premio Della Maremma 2026",
       "venue": "Golf Club Punta Ala",
@@ -249,10 +277,11 @@
       "r2": 79,
       "r3": 76,
       "r4": null,
-      "egrPoints": 161.13
+      "egrPoints": 161.13,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:40.927Z",
+  "scrapedAt": "2026-10-05T14:19:36.568Z",
   "url": "https://www.europeangolfrankings.com/players/38602"
 }

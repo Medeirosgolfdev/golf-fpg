@@ -1,18 +1,32 @@
 {
   "id": "46255",
   "egrId": "MDEU46255",
-  "name": "MILO Kaussen",
+  "name": "Milo Kaussen",
   "lastName": "KAUSSEN",
-  "firstName": "MILO",
+  "firstName": "Milo",
   "country": "Germany",
   "club": "San Roque",
   "ageGroup": "U21",
   "tournamentsPlayed": 7,
-  "egrRank": 5226,
-  "egrPoints": 541.86,
-  "avgScore": 80.05,
-  "avgToCR": 80.27,
+  "egrRank": 3760,
+  "egrPoints": 1088.83,
+  "avgScore": 78.26,
+  "avgToCR": 77.77,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "3",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 76,
+      "r2": 68,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 546.97
+    },
     {
       "eventId": "12590",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 82,
       "r3": 88,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:07:20.518Z",
+  "scrapedAt": "2026-10-05T14:21:54.220Z",
   "url": "https://www.europeangolfrankings.com/players/46255"
 }

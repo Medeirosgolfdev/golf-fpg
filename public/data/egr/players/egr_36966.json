@@ -7,11 +7,11 @@
   "country": "Netherlands",
   "club": "Broekpolder",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 980,
-  "egrPoints": 6501.64,
-  "avgScore": 73.65,
-  "avgToCR": 73.15,
+  "tournamentsPlayed": 10,
+  "egrRank": 1017,
+  "egrPoints": 6421.09,
+  "avgScore": 74,
+  "avgToCR": 72.97,
   "events": [
     {
       "eventId": "12874",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11800",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "European Winter Series #7 (Toro Tour) 2026",
       "venue": "Los Arqueros Golf Club",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11390",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "Triple A European Classic 2025",
       "venue": "San Roque Golf Club",
@@ -165,10 +165,11 @@
       "r2": 76,
       "r3": 70,
       "r4": null,
-      "egrPoints": 811.8
+      "egrPoints": 811.8,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:39:06.462Z",
+  "scrapedAt": "2026-10-05T14:18:55.554Z",
   "url": "https://www.europeangolfrankings.com/players/36966"
 }

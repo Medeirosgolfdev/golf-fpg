@@ -8,11 +8,25 @@
   "club": "Losby",
   "ageGroup": "U16",
   "tournamentsPlayed": 11,
-  "egrRank": 1273,
-  "egrPoints": 885.45,
-  "avgScore": 80.55,
-  "avgToCR": 80.08,
+  "egrRank": 989,
+  "egrPoints": 1479.18,
+  "avgScore": 79.3,
+  "avgToCR": 79.07,
   "events": [
+    {
+      "eventId": "12336",
+      "counting": true,
+      "pos": "1",
+      "event": "Srixon Tour 8 Finale (U15) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 561.02
+    },
     {
       "eventId": "12332",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12716",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Danish Juniors Int.-Marbæk by NorSea (U14) 2026",
       "venue": "Esbjerg Golfklub (52)",
@@ -165,10 +179,11 @@
       "r2": 83,
       "r3": 84,
       "r4": null,
-      "egrPoints": 39.19
+      "egrPoints": 39.19,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:46.716Z",
+  "scrapedAt": "2026-10-05T14:22:31.297Z",
   "url": "https://www.europeangolfrankings.com/players/48344"
 }

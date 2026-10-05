@@ -7,8 +7,8 @@
   "country": "Netherlands",
   "club": "Lauswolt",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 291,
+  "tournamentsPlayed": 15,
+  "egrRank": 296,
   "egrPoints": 15290.4,
   "avgScore": 73.11,
   "avgToCR": 71.93,
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12876",
-      "counting": false,
+      "counting": true,
       "pos": "121",
       "event": "R&A Boys Amateur 2026",
       "venue": "Glasgow Gailes Links",
@@ -235,7 +235,8 @@
       "r2": 69,
       "r3": null,
       "r4": null,
-      "egrPoints": 934.2
+      "egrPoints": 934.2,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -249,10 +250,11 @@
       "r2": 72,
       "r3": 74,
       "r4": null,
-      "egrPoints": 520.28
+      "egrPoints": 520.28,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:12.604Z",
+  "scrapedAt": "2026-10-05T14:20:02.492Z",
   "url": "https://www.europeangolfrankings.com/players/39928"
 }

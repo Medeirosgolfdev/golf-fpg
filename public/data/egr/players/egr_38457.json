@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Rovedine",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 410,
-  "egrPoints": 12315.3,
-  "avgScore": 73.17,
-  "avgToCR": 70.98,
+  "tournamentsPlayed": 14,
+  "egrRank": 419,
+  "egrPoints": 12236.9,
+  "avgScore": 73.04,
+  "avgToCR": 70.66,
   "events": [
     {
       "eventId": "11995",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11987",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Trofeo Umberto Cristani 2026",
       "venue": "Golf Club Arzaga",
@@ -221,7 +221,8 @@
       "r2": 73,
       "r3": 74,
       "r4": null,
-      "egrPoints": 512.92
+      "egrPoints": 512.92,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -235,10 +236,11 @@
       "r2": 70,
       "r3": 72,
       "r4": null,
-      "egrPoints": 677.63
+      "egrPoints": 677.63,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:54.723Z",
+  "scrapedAt": "2026-10-05T14:19:29.755Z",
   "url": "https://www.europeangolfrankings.com/players/38457"
 }

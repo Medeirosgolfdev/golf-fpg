@@ -8,11 +8,39 @@
   "club": "Smorum",
   "ageGroup": "U21",
   "tournamentsPlayed": 11,
-  "egrRank": 327,
-  "egrPoints": 5882.36,
-  "avgScore": 75.29,
-  "avgToCR": 72.26,
+  "egrRank": 329,
+  "egrPoints": 5780.86,
+  "avgScore": 75,
+  "avgToCR": 71.67,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "6",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 67,
+      "r2": 76,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1099.88
+    },
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "5",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 69,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 396.76
+    },
     {
       "eventId": "12605",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "71",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -123,7 +151,7 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 1350.99
+      "egrPoints": 0
     },
     {
       "eventId": "11653",
@@ -151,7 +179,8 @@
       "r2": 78,
       "r3": 78,
       "r4": null,
-      "egrPoints": 70.56
+      "egrPoints": 70.56,
+      "_mantido": true
     },
     {
       "eventId": "11151",
@@ -165,10 +194,11 @@
       "r2": 70,
       "r3": 77,
       "r4": null,
-      "egrPoints": 247.15
+      "egrPoints": 247.15,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:00.777Z",
+  "scrapedAt": "2026-10-05T14:16:54.175Z",
   "url": "https://www.europeangolfrankings.com/players/31671"
 }

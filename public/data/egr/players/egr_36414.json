@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Ternesse",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 152,
+  "tournamentsPlayed": 14,
+  "egrRank": 148,
   "egrPoints": 21440.2,
   "avgScore": 72.15,
   "avgToCR": 69.47,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": false,
+      "pos": "10",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": null,
+      "r4": 78,
+      "egrPoints": 331.85
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:36.366Z",
+  "scrapedAt": "2026-10-05T14:18:41.001Z",
   "url": "https://www.europeangolfrankings.com/players/36414"
 }

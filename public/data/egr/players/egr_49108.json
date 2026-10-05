@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Valescure",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1269,
-  "egrPoints": 5219.15,
-  "avgScore": 75.11,
-  "avgToCR": 75.51,
+  "tournamentsPlayed": 11,
+  "egrRank": 1098,
+  "egrPoints": 6003.99,
+  "avgScore": 74.5,
+  "avgToCR": 74.73,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 71,
+      "r2": 69,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 928.95
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11649",
-      "counting": true,
+      "counting": false,
       "pos": "29",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.704Z",
+  "scrapedAt": "2026-10-05T14:22:44.933Z",
   "url": "https://www.europeangolfrankings.com/players/49108"
 }

@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Lochmaben",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 3179,
-  "egrPoints": 1436.25,
-  "avgScore": 78,
-  "avgToCR": 77.81,
+  "tournamentsPlayed": 8,
+  "egrRank": 3021,
+  "egrPoints": 1593.45,
+  "avgScore": 77.68,
+  "avgToCR": 77.55,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "12",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 157.2
+    },
     {
       "eventId": "11719",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:26.754Z",
+  "scrapedAt": "2026-10-05T14:23:39.017Z",
   "url": "https://www.europeangolfrankings.com/players/51272"
 }

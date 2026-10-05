@@ -7,15 +7,29 @@
   "country": "Finland",
   "club": "Nokia River",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 5,
-  "egrPoints": 52059.9,
-  "avgScore": 69.62,
-  "avgToCR": 67.34,
+  "tournamentsPlayed": 11,
+  "egrRank": 4,
+  "egrPoints": 54463.7,
+  "avgScore": 70.93,
+  "avgToCR": 67.6,
   "events": [
     {
-      "eventId": "11672",
+      "eventId": "11673",
       "counting": false,
+      "pos": "7",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 69,
+      "r2": 70,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 2254.07
+    },
+    {
+      "eventId": "11672",
+      "counting": true,
       "pos": "47",
       "event": "Bernhard Langer International Amateur Championship 2026",
       "venue": "G&CC Motzener See (A&B)",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:34:30.585Z",
+  "scrapedAt": "2026-10-05T14:14:22.920Z",
   "url": "https://www.europeangolfrankings.com/players/26292"
 }

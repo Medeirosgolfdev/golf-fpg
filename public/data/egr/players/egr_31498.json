@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Isabella",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 897,
-  "egrPoints": 1725.07,
-  "avgScore": 73.82,
-  "avgToCR": 71.85,
+  "tournamentsPlayed": 5,
+  "egrRank": 550,
+  "egrPoints": 3391.5,
+  "avgScore": 74.14,
+  "avgToCR": 71.93,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "27",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1666.43
+    },
     {
       "eventId": "12184",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:37:15.062Z",
+  "scrapedAt": "2026-10-05T14:16:51.884Z",
   "url": "https://www.europeangolfrankings.com/players/31498"
 }

@@ -5,14 +5,42 @@
   "lastName": "ÅBERG",
   "firstName": "Fred",
   "country": "Sweden",
-  "club": "Pitea Golfclub",
+  "club": "Pitea",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 766,
-  "egrPoints": 8298.22,
-  "avgScore": 72.91,
-  "avgToCR": 70.93,
+  "tournamentsPlayed": 9,
+  "egrRank": 753,
+  "egrPoints": 8517.43,
+  "avgScore": 73.4,
+  "avgToCR": 71.75,
   "events": [
+    {
+      "eventId": "12396",
+      "counting": true,
+      "pos": "43",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 181.41
+    },
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "5",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 64,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 968
+    },
     {
       "eventId": "12394",
       "counting": true,
@@ -123,10 +151,11 @@
       "r2": 76,
       "r3": 73,
       "r4": null,
-      "egrPoints": 930.2
+      "egrPoints": 930.2,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:22.599Z",
+  "scrapedAt": "2026-10-05T14:23:33.103Z",
   "url": "https://www.europeangolfrankings.com/players/51088"
 }

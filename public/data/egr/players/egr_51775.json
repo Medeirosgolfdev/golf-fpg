@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Chateau Bawette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 1732,
-  "egrPoints": 415.26,
-  "avgScore": 80.57,
-  "avgToCR": 81.64,
+  "tournamentsPlayed": 8,
+  "egrRank": 1687,
+  "egrPoints": 443.7,
+  "avgScore": 80.8,
+  "avgToCR": 81.23,
   "events": [
+    {
+      "eventId": "11760",
+      "counting": true,
+      "pos": "5",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 83,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 28.44
+    },
     {
       "eventId": "12864",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:48.679Z",
+  "scrapedAt": "2026-10-05T14:23:47.708Z",
   "url": "https://www.europeangolfrankings.com/players/51775"
 }

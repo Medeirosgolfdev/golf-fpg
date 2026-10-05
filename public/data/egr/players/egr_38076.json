@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Pirkkala",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 691,
-  "egrPoints": 9045.01,
-  "avgScore": 73.81,
-  "avgToCR": 72.42,
+  "tournamentsPlayed": 12,
+  "egrRank": 664,
+  "egrPoints": 9262.93,
+  "avgScore": 74.35,
+  "avgToCR": 72.72,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "20",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 598.09
+    },
     {
       "eventId": "12372",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12359",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Footjoy FJT 5 National Match Play Championship (U18) 2026",
       "venue": "Muurame Golf (58)",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:50.355Z",
+  "scrapedAt": "2026-10-05T14:19:18.407Z",
   "url": "https://www.europeangolfrankings.com/players/38076"
 }

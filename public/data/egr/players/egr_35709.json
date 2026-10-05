@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 87,
-  "avgToCR": 87,
+  "tournamentsPlayed": 2,
+  "egrRank": 9570,
+  "egrPoints": 44.15,
+  "avgScore": 85.17,
+  "avgToCR": 85.52,
   "events": [
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "27",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 83,
+      "r2": 82,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 44.15
+    },
     {
       "eventId": "12724",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:30.000Z",
+  "scrapedAt": "2026-10-05T14:18:25.058Z",
   "url": "https://www.europeangolfrankings.com/players/35709"
 }

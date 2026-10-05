@@ -8,11 +8,39 @@
   "club": "Saint Germain",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 134,
-  "egrPoints": 11667.8,
-  "avgScore": 74.52,
-  "avgToCR": 70.85,
+  "egrRank": 117,
+  "egrPoints": 12815.6,
+  "avgScore": 73.88,
+  "avgToCR": 70.34,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "8",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 70,
+      "r2": 71,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 3008.93
+    },
+    {
+      "eventId": "12190",
+      "counting": false,
+      "pos": "1",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 74,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 291.86
+    },
     {
       "eventId": "12184",
       "counting": false,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12076",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Grand Prix de Saint-Cloud 2026",
       "venue": "Golf de Saint-Cloud",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "65",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -165,7 +193,7 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 1809.92
+      "egrPoints": 316.25
     },
     {
       "eventId": "12040",
@@ -207,7 +235,8 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 420.48
+      "egrPoints": 420.48,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -221,10 +250,11 @@
       "r2": 73,
       "r3": 80,
       "r4": null,
-      "egrPoints": 599.16
+      "egrPoints": 599.16,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:45.300Z",
+  "scrapedAt": "2026-10-05T14:19:06.365Z",
   "url": "https://www.europeangolfrankings.com/players/37521"
 }

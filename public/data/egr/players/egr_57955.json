@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Antognolla",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 9535,
+  "tournamentsPlayed": 5,
+  "egrRank": 9660,
   "egrPoints": 39.24,
-  "avgScore": 88.78,
-  "avgToCR": 87.78,
+  "avgScore": 88.5,
+  "avgToCR": 87.94,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "22",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 89,
+      "r2": 90,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11998",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:10:03.661Z",
+  "scrapedAt": "2026-10-05T14:26:25.385Z",
   "url": "https://www.europeangolfrankings.com/players/57955"
 }

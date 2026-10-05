@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 792,
+  "tournamentsPlayed": 10,
+  "egrRank": 805,
   "egrPoints": 8071.28,
   "avgScore": 71.09,
   "avgToCR": 70.55,
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11440",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Junior Golf Tour Open Fürth (JTG) 2026",
       "venue": "1. Golf Club Fürth e.V.",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11424",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Bavarian Junior Golf Tour by Maxi (JTG) 2026",
       "venue": "Golfpark Gerolsbach",
@@ -165,10 +165,11 @@
       "r2": 76,
       "r3": 73,
       "r4": null,
-      "egrPoints": 964.3
+      "egrPoints": 964.3,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:16.442Z",
+  "scrapedAt": "2026-10-05T14:13:17.190Z",
   "url": "https://www.europeangolfrankings.com/players/23083"
 }

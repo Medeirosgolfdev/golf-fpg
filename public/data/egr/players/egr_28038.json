@@ -14,6 +14,20 @@
   "avgToCR": 69.54,
   "events": [
     {
+      "eventId": "12374",
+      "counting": false,
+      "pos": "15",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 81,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 668.68
+    },
+    {
       "eventId": "11672",
       "counting": true,
       "pos": "17",
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12876",
-      "counting": false,
+      "counting": true,
       "pos": "103",
       "event": "R&A Boys Amateur 2026",
       "venue": "Glasgow Gailes Links",
@@ -207,10 +221,11 @@
       "r2": 72,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:36.930Z",
+  "scrapedAt": "2026-10-05T14:15:09.954Z",
   "url": "https://www.europeangolfrankings.com/players/28038"
 }

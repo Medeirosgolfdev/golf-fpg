@@ -7,12 +7,40 @@
   "country": "Switzerland",
   "club": "Waldkirch",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 810,
+  "tournamentsPlayed": 13,
+  "egrRank": 814,
   "egrPoints": 1980.96,
   "avgScore": 75.48,
   "avgToCR": 73.92,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "81",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12919",
+      "counting": false,
+      "pos": "8",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 78,
+      "r2": 86,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 32.55
+    },
     {
       "eventId": "12474",
       "counting": true,
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:58.383Z",
+  "scrapedAt": "2026-10-05T14:19:34.591Z",
   "url": "https://www.europeangolfrankings.com/players/38564"
 }

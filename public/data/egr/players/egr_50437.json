@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Hossegor",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 1713,
-  "egrPoints": 3616.94,
-  "avgScore": 74.84,
-  "avgToCR": 75.11,
+  "tournamentsPlayed": 13,
+  "egrRank": 1574,
+  "egrPoints": 4096.92,
+  "avgScore": 74.75,
+  "avgToCR": 74.92,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 712.69
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12054",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:03.873Z",
+  "scrapedAt": "2026-10-05T14:23:21.488Z",
   "url": "https://www.europeangolfrankings.com/players/50437"
 }

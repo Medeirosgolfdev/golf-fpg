@@ -8,11 +8,25 @@
   "club": "Bubikon",
   "ageGroup": "U14",
   "tournamentsPlayed": 12,
-  "egrRank": 1401,
-  "egrPoints": 712.21,
-  "avgScore": 79.2,
-  "avgToCR": 77.62,
+  "egrRank": 1404,
+  "egrPoints": 715.8,
+  "avgScore": 79.71,
+  "avgToCR": 77.96,
   "events": [
+    {
+      "eventId": "12919",
+      "counting": true,
+      "pos": "8",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 85,
+      "r2": 84,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 16.27
+    },
     {
       "eventId": "12479",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12452",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Swiss Golf National U14 (Domat/Ems) 2026",
       "venue": "Golfclub Domat/Ems",
@@ -179,10 +193,11 @@
       "r2": 87,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:46.286Z",
+  "scrapedAt": "2026-10-05T14:22:36.458Z",
   "url": "https://www.europeangolfrankings.com/players/48531"
 }

@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "Hilversum",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 1934,
-  "egrPoints": 295.75,
-  "avgScore": 86.5,
-  "avgToCR": 84,
+  "tournamentsPlayed": 3,
+  "egrRank": 1783,
+  "egrPoints": 377.05,
+  "avgScore": 84.89,
+  "avgToCR": 83.39,
   "events": [
+    {
+      "eventId": "12539",
+      "counting": true,
+      "pos": "7",
+      "event": "Nationaal Strokeplay Kampioenschap Meisjes U15 2026",
+      "venue": "Twentsche Golfclub",
+      "country": "Netherlands",
+      "startDateRaw": "19. Sep 26",
+      "r1": 83,
+      "r2": 83,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 81.3
+    },
     {
       "eventId": "12526",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:31.227Z",
+  "scrapedAt": "2026-10-05T14:23:49.360Z",
   "url": "https://www.europeangolfrankings.com/players/51856"
 }

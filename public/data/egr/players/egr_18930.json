@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Tramore",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 13,
-  "egrRank": 102,
+  "tournamentsPlayed": 14,
+  "egrRank": 101,
   "egrPoints": 14200.4,
   "avgScore": 73.04,
   "avgToCR": 70.11,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
     {
       "eventId": "11887",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11881",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "East of Ireland Women's Amateur Open Championship 2026",
       "venue": "Woodbrook Golf Club",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:27.383Z",
+  "scrapedAt": "2026-10-05T14:12:05.554Z",
   "url": "https://www.europeangolfrankings.com/players/18930"
 }

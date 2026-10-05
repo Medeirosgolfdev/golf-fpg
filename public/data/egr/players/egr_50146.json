@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Girasoli",
   "ageGroup": "U14",
-  "tournamentsPlayed": 17,
-  "egrRank": 238,
-  "egrPoints": 7821.11,
-  "avgScore": 74.67,
-  "avgToCR": 71.5,
+  "tournamentsPlayed": 18,
+  "egrRank": 234,
+  "egrPoints": 7900.44,
+  "avgScore": 75.29,
+  "avgToCR": 72.04,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "21",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 601.77
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "11916",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "Trofeo Gianluca 2026",
       "venue": "Circolo Golf Torino La Mandria",
@@ -253,6 +267,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:40.949Z",
+  "scrapedAt": "2026-10-05T14:23:15.586Z",
   "url": "https://www.europeangolfrankings.com/players/50146"
 }

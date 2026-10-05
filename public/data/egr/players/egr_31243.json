@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
+  "tournamentsPlayed": 12,
   "egrRank": 7,
-  "egrPoints": 49815.7,
-  "avgScore": 69,
-  "avgToCR": 67.51,
+  "egrPoints": 52547.1,
+  "avgScore": 69.96,
+  "avgToCR": 67.34,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": false,
+      "pos": "6",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 2726.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11655",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "Nations Cup (Copa Sotogrande) 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:37:08.211Z",
+  "scrapedAt": "2026-10-05T14:16:44.209Z",
   "url": "https://www.europeangolfrankings.com/players/31243"
 }

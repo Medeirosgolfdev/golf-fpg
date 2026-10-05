@@ -5,14 +5,28 @@
   "lastName": "WÖHLER",
   "firstName": "Michelle",
   "country": "Germany",
-  "club": "Nahetal",
+  "club": "Mainz",
   "ageGroup": "U21",
   "tournamentsPlayed": 1,
-  "egrRank": 3308,
-  "egrPoints": 0,
-  "avgScore": 81,
-  "avgToCR": 79.5,
+  "egrRank": 1964,
+  "egrPoints": 280.94,
+  "avgScore": 85.67,
+  "avgToCR": 83.17,
   "events": [
+    {
+      "eventId": "12923",
+      "counting": true,
+      "pos": "2",
+      "event": "DGV-RP/S Meisterschaft AKOffen Damen 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 88,
+      "r2": 79,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 280.94
+    },
     {
       "eventId": "11082",
       "counting": true,
@@ -25,10 +39,11 @@
       "r2": 76,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:12.501Z",
+  "scrapedAt": "2026-10-05T14:12:50.889Z",
   "url": "https://www.europeangolfrankings.com/players/21738"
 }

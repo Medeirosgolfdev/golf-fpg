@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Cervino",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 3539,
+  "tournamentsPlayed": 14,
+  "egrRank": 3551,
   "egrPoints": 1198.12,
   "avgScore": 79,
   "avgToCR": 78.31,
@@ -197,7 +197,7 @@
     },
     {
       "eventId": "10229",
-      "counting": false,
+      "counting": true,
       "pos": "58",
       "event": "Trofeo Glauco Lolli Ghetti 2025",
       "venue": "Margara Golf Club",
@@ -221,10 +221,11 @@
       "r2": 78,
       "r3": 78,
       "r4": null,
-      "egrPoints": 229.51
+      "egrPoints": 229.51,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:55.400Z",
+  "scrapedAt": "2026-10-05T14:19:30.639Z",
   "url": "https://www.europeangolfrankings.com/players/38476"
 }

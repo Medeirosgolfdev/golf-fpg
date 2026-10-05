@@ -7,8 +7,8 @@
   "country": "France",
   "club": "Bussy",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 943,
+  "tournamentsPlayed": 10,
+  "egrRank": 945,
   "egrPoints": 1570.03,
   "avgScore": 78.68,
   "avgToCR": 76.2,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11448",
-      "counting": false,
+      "counting": true,
       "pos": "27",
       "event": "Grand Prix du 24H Le Mans 2025",
       "venue": "Golf des 24 Heures - Le Mans",
@@ -165,10 +165,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:16.165Z",
+  "scrapedAt": "2026-10-05T14:17:41.611Z",
   "url": "https://www.europeangolfrankings.com/players/33416"
 }

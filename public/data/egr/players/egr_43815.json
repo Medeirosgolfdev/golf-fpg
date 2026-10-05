@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "El Prat",
   "ageGroup": "U16",
-  "tournamentsPlayed": 17,
-  "egrRank": 240,
+  "tournamentsPlayed": 18,
+  "egrRank": 241,
   "egrPoints": 17168,
   "avgScore": 71.81,
   "avgToCR": 70.54,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": false,
+      "pos": "5",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 75,
+      "r2": 68,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 312.2
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11753",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Belgian National Championship (U16/18) 2026",
       "venue": "The National Golf Brussels",
@@ -253,6 +267,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:45.817Z",
+  "scrapedAt": "2026-10-05T14:21:05.408Z",
   "url": "https://www.europeangolfrankings.com/players/43815"
 }

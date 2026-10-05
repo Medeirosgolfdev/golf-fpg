@@ -8,11 +8,25 @@
   "club": "Houtrak",
   "ageGroup": "U12",
   "tournamentsPlayed": 2,
-  "egrRank": 6659,
-  "egrPoints": 275.18,
-  "avgScore": 77.25,
-  "avgToCR": 81.85,
+  "egrRank": 6724,
+  "egrPoints": 276.79,
+  "avgScore": 81.2,
+  "avgToCR": 83.34,
   "events": [
+    {
+      "eventId": "12540",
+      "counting": true,
+      "pos": "25",
+      "event": "Nationaal Strokeplay Kampioenschap Jongens U15 2026",
+      "venue": "Twentsche Golfclub",
+      "country": "Netherlands",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 144.26
+    },
     {
       "eventId": "12537",
       "counting": true,
@@ -39,10 +53,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 142.65
+      "egrPoints": 142.65,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:24.647Z",
+  "scrapedAt": "2026-10-05T14:22:50.244Z",
   "url": "https://www.europeangolfrankings.com/players/49272"
 }

@@ -8,10 +8,10 @@
   "club": "Black Water Links",
   "ageGroup": "U14",
   "tournamentsPlayed": 5,
-  "egrRank": 5870,
-  "egrPoints": 404.75,
-  "avgScore": 78.31,
-  "avgToCR": 80.32,
+  "egrRank": 4778,
+  "egrPoints": 673.15,
+  "avgScore": 78.38,
+  "avgToCR": 79.99,
   "events": [
     {
       "eventId": "11463",
@@ -40,6 +40,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 0
+    },
+    {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "26",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 75,
+      "r2": 82,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 461.55
     },
     {
       "eventId": "11455",
@@ -81,10 +95,11 @@
       "r2": 77,
       "r3": 82,
       "r4": null,
-      "egrPoints": 193.15
+      "egrPoints": 193.15,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:19.065Z",
+  "scrapedAt": "2026-10-05T14:24:15.053Z",
   "url": "https://www.europeangolfrankings.com/players/53089"
 }

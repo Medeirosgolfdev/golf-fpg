@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Terre Blanche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 3852,
-  "egrPoints": 1032.3,
-  "avgScore": 78.64,
-  "avgToCR": 78.35,
+  "tournamentsPlayed": 6,
+  "egrRank": 3139,
+  "egrPoints": 1475.45,
+  "avgScore": 78.43,
+  "avgToCR": 78.22,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "47",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 83,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 443.15
+    },
     {
       "eventId": "12099",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:04:59.786Z",
+  "scrapedAt": "2026-10-05T14:16:51.082Z",
   "url": "https://www.europeangolfrankings.com/players/31484"
 }

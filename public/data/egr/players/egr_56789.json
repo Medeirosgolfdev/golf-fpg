@@ -5,14 +5,28 @@
   "lastName": "DESARNAUD ALVAREZ",
   "firstName": "Loris",
   "country": "France",
-  "club": "Pessac",
+  "club": "UGOLF Albi",
   "ageGroup": "U18",
-  "tournamentsPlayed": 3,
-  "egrRank": 5200,
-  "egrPoints": 547.58,
-  "avgScore": 80.75,
-  "avgToCR": 80.26,
+  "tournamentsPlayed": 4,
+  "egrRank": 3512,
+  "egrPoints": 1222.52,
+  "avgScore": 77.7,
+  "avgToCR": 77.07,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "20",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 674.94
+    },
     {
       "eventId": "12175",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:09:51.153Z",
+  "scrapedAt": "2026-10-05T14:26:00.725Z",
   "url": "https://www.europeangolfrankings.com/players/56789"
 }

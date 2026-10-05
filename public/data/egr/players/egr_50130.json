@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Hjortespring",
   "ageGroup": "U14",
-  "tournamentsPlayed": 15,
-  "egrRank": 1951,
-  "egrPoints": 288.1,
-  "avgScore": 84.78,
-  "avgToCR": 81.78,
+  "tournamentsPlayed": 17,
+  "egrRank": 1719,
+  "egrPoints": 419.42,
+  "avgScore": 83.33,
+  "avgToCR": 80.39,
   "events": [
+    {
+      "eventId": "12609",
+      "counting": true,
+      "pos": "4",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub (52)",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 82,
+      "r2": 79,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 47.88
+    },
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "23",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 85,
+      "r2": 84,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 83.44
+    },
     {
       "eventId": "12605",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12602",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Dragør Pokalen 2026",
       "venue": "Dragør Golfklub",
@@ -197,7 +225,7 @@
     },
     {
       "eventId": "12413",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "DJGA Spring Open 2026",
       "venue": "Royal Golf Club (50)",
@@ -225,6 +253,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:50.357Z",
+  "scrapedAt": "2026-10-05T14:23:14.826Z",
   "url": "https://www.europeangolfrankings.com/players/50130"
 }

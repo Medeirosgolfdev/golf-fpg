@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 523,
-  "egrPoints": 10629.9,
-  "avgScore": 74.13,
-  "avgToCR": 72.74,
+  "tournamentsPlayed": 17,
+  "egrRank": 508,
+  "egrPoints": 10856.5,
+  "avgScore": 73.87,
+  "avgToCR": 72.5,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "24",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 757.67
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -239,6 +253,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:20.983Z",
+  "scrapedAt": "2026-10-05T14:20:21.718Z",
   "url": "https://www.europeangolfrankings.com/players/41499"
 }

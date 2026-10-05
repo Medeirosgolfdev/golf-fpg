@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U18",
-  "tournamentsPlayed": 18,
-  "egrRank": 126,
-  "egrPoints": 12064.8,
+  "tournamentsPlayed": 19,
+  "egrRank": 134,
+  "egrPoints": 11732.3,
   "avgScore": 75,
   "avgToCR": 70.89,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": false,
+      "pos": "10",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 70,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 808.26
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -179,7 +193,7 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 2714.21
+      "egrPoints": 2381.76
     },
     {
       "eventId": "11902",
@@ -239,7 +253,7 @@
     },
     {
       "eventId": "10323",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Italian National Closed Girls U18 Match Play Championship 2025",
       "venue": "Golf Terre di Canossa",
@@ -267,6 +281,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:40.550Z",
+  "scrapedAt": "2026-10-05T14:15:23.830Z",
   "url": "https://www.europeangolfrankings.com/players/28423"
 }

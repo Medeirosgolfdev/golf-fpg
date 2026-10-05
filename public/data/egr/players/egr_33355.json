@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 17,
-  "egrRank": 483,
+  "tournamentsPlayed": 15,
+  "egrRank": 492,
   "egrPoints": 11149.5,
   "avgScore": 73.35,
   "avgToCR": 71.97,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12630",
-      "counting": false,
+      "counting": true,
       "pos": "84",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -235,7 +235,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 92.42
+      "egrPoints": 92.42,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -249,10 +250,11 @@
       "r2": 73,
       "r3": 78,
       "r4": null,
-      "egrPoints": 210.06
+      "egrPoints": 210.06,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:15.394Z",
+  "scrapedAt": "2026-10-05T14:17:40.150Z",
   "url": "https://www.europeangolfrankings.com/players/33355"
 }

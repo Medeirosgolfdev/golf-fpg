@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Lecco",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 7547,
-  "egrPoints": 180.1,
-  "avgScore": 84.26,
-  "avgToCR": 83.77,
+  "tournamentsPlayed": 9,
+  "egrRank": 8181,
+  "egrPoints": 134.92,
+  "avgScore": 85.11,
+  "avgToCR": 84.51,
   "events": [
     {
       "eventId": "11958",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11955",
-      "counting": false,
+      "counting": true,
       "pos": "107",
       "event": "Gran Premio Di Monticello 2026",
       "venue": "Golf Club Monticello",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11917",
-      "counting": false,
+      "counting": true,
       "pos": "82",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -151,7 +151,8 @@
       "r2": 80,
       "r3": 79,
       "r4": null,
-      "egrPoints": 104.12
+      "egrPoints": 104.12,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -165,10 +166,11 @@
       "r2": 79,
       "r3": 79,
       "r4": null,
-      "egrPoints": 45.18
+      "egrPoints": 45.18,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:51.412Z",
+  "scrapedAt": "2026-10-05T14:21:13.029Z",
   "url": "https://www.europeangolfrankings.com/players/44288"
 }

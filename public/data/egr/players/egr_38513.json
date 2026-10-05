@@ -5,14 +5,28 @@
   "lastName": "MESSMER",
   "firstName": "Alain",
   "country": "Switzerland",
-  "club": null,
+  "club": "Breitenloo",
   "ageGroup": "U16",
   "tournamentsPlayed": 17,
-  "egrRank": 794,
+  "egrRank": 807,
   "egrPoints": 8062.04,
   "avgScore": 73.38,
   "avgToCR": 73.16,
   "events": [
+    {
+      "eventId": "12918",
+      "counting": false,
+      "pos": "56",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 79,
+      "r2": 88,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 254.4
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -84,20 +98,6 @@
       "egrPoints": 552.48
     },
     {
-      "eventId": "12460",
-      "counting": true,
-      "pos": "23",
-      "event": "Swiss Golf Open Championship 2026",
-      "venue": "Golfclub Wylihof",
-      "country": "Switzerland",
-      "startDateRaw": "12. Jun 26",
-      "r1": 77,
-      "r2": 80,
-      "r3": 76,
-      "r4": 70,
-      "egrPoints": 1188.82
-    },
-    {
       "eventId": "12129",
       "counting": false,
       "pos": "94",
@@ -110,6 +110,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 0
+    },
+    {
+      "eventId": "12460",
+      "counting": true,
+      "pos": "23",
+      "event": "Swiss Golf Open Championship 2026",
+      "venue": "Golfclub Wylihof",
+      "country": "Switzerland",
+      "startDateRaw": "12. Jun 26",
+      "r1": 77,
+      "r2": 80,
+      "r3": 76,
+      "r4": 70,
+      "egrPoints": 1188.82
     },
     {
       "eventId": "12456",
@@ -249,10 +263,11 @@
       "r2": 81,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:56.392Z",
+  "scrapedAt": "2026-10-05T14:19:31.734Z",
   "url": "https://www.europeangolfrankings.com/players/38513"
 }

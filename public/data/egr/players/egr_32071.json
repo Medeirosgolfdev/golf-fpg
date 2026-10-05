@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lausanne",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 175,
-  "egrPoints": 19842.4,
+  "tournamentsPlayed": 10,
+  "egrRank": 221,
+  "egrPoints": 18104.3,
   "avgScore": 72.36,
-  "avgToCR": 69.82,
+  "avgToCR": 70.1,
   "events": [
     {
       "eventId": "11995",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11958",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Vecchio Monastero 2026",
       "venue": "Varese Golf Club",
@@ -165,10 +165,11 @@
       "r2": 68,
       "r3": 68,
       "r4": null,
-      "egrPoints": 2614.07
+      "egrPoints": 2614.07,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:03.927Z",
+  "scrapedAt": "2026-10-05T14:17:06.116Z",
   "url": "https://www.europeangolfrankings.com/players/32071"
 }

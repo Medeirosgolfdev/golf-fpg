@@ -7,12 +7,26 @@
   "country": "Estonia",
   "club": "Estonian CC",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 879,
+  "tournamentsPlayed": 7,
+  "egrRank": 885,
   "egrPoints": 1769.5,
-  "avgScore": 81.25,
-  "avgToCR": 78.11,
+  "avgScore": 80.44,
+  "avgToCR": 77.32,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "32",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:04.967Z",
+  "scrapedAt": "2026-10-05T14:21:30.562Z",
   "url": "https://www.europeangolfrankings.com/players/45057"
 }

@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1792,
-  "egrPoints": 3436.37,
-  "avgScore": 74.85,
-  "avgToCR": 74.44,
+  "tournamentsPlayed": 13,
+  "egrRank": 1634,
+  "egrPoints": 3895.63,
+  "avgScore": 75.41,
+  "avgToCR": 74.63,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "19",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 446.05
+    },
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "40",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 252.17
+    },
     {
       "eventId": "12603",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12592",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Kokkedal U16 Boys Open 2026",
       "venue": "Kokkedal Golfklub (59)",
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12582",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "Kjeldsen Trophy 2026",
       "venue": "Fredensborg Golf Club (58)",
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:55.106Z",
+  "scrapedAt": "2026-10-05T14:24:28.423Z",
   "url": "https://www.europeangolfrankings.com/players/53479"
 }

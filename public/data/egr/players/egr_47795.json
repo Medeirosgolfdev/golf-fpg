@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": "Bern",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 5611,
+  "tournamentsPlayed": 10,
+  "egrRank": 5669,
   "egrPoints": 451.87,
   "avgScore": 82.27,
   "avgToCR": 84.22,
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "10124",
-      "counting": false,
+      "counting": true,
       "pos": "38",
       "event": "Portuguese Junior Classics (GJG) 2025",
       "venue": "Praia dèl Rey/Westcliff Golfcourse",
@@ -165,10 +165,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 30.39
+      "egrPoints": 30.39,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:17.485Z",
+  "scrapedAt": "2026-10-05T14:22:15.501Z",
   "url": "https://www.europeangolfrankings.com/players/47795"
 }

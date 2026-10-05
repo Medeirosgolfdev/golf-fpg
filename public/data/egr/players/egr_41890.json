@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Ledreborg Palace",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 994,
-  "egrPoints": 1441.47,
-  "avgScore": 78.62,
-  "avgToCR": 75.6,
+  "tournamentsPlayed": 13,
+  "egrRank": 940,
+  "egrPoints": 1591.87,
+  "avgScore": 78.83,
+  "avgToCR": 75.79,
   "events": [
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "15",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 78,
+      "r2": 81,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 198.38
+    },
     {
       "eventId": "12605",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12567",
-      "counting": true,
+      "counting": false,
       "pos": "8",
       "event": "Holstebro Open Championship presented by Egekilde 2026",
       "venue": "Holstebro Golfklub",
@@ -193,7 +207,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11151",
@@ -207,10 +222,11 @@
       "r2": 72,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:23.487Z",
+  "scrapedAt": "2026-10-05T14:20:25.542Z",
   "url": "https://www.europeangolfrankings.com/players/41890"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Kokkedal",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 915,
-  "egrPoints": 1656.13,
-  "avgScore": 78.29,
-  "avgToCR": 75.13,
+  "tournamentsPlayed": 12,
+  "egrRank": 810,
+  "egrPoints": 2004.93,
+  "avgScore": 77.29,
+  "avgToCR": 74.26,
   "events": [
+    {
+      "eventId": "12404",
+      "counting": true,
+      "pos": "14",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 378.52
+    },
     {
       "eventId": "12605",
       "counting": true,
@@ -179,7 +193,8 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11151",
@@ -193,10 +208,11 @@
       "r2": 73,
       "r3": 77,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:37.511Z",
+  "scrapedAt": "2026-10-05T14:20:52.992Z",
   "url": "https://www.europeangolfrankings.com/players/43133"
 }

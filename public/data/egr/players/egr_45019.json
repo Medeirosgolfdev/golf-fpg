@@ -5,14 +5,28 @@
   "lastName": "BALLESTEROS FUERO",
   "firstName": "Graciliano",
   "country": "Spain",
-  "club": "Escorpion",
+  "club": "Costa de Azahar",
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 1566,
-  "egrPoints": 4043.26,
-  "avgScore": 75.14,
-  "avgToCR": 74.84,
+  "tournamentsPlayed": 9,
+  "egrRank": 1456,
+  "egrPoints": 4477.44,
+  "avgScore": 74.17,
+  "avgToCR": 73.77,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "4",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 69,
+      "r2": 70,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 434.18
+    },
     {
       "eventId": "11742",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12251",
-      "counting": true,
+      "counting": false,
       "pos": "65",
       "event": "Spanish National U18 Championship (Closed) 2026",
       "venue": "Golf Los Lagos",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:03.549Z",
+  "scrapedAt": "2026-10-05T14:21:29.216Z",
   "url": "https://www.europeangolfrankings.com/players/45019"
 }

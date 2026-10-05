@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Ile d'OR",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1304,
-  "egrPoints": 5074.78,
-  "avgScore": 73.94,
-  "avgToCR": 74.41,
+  "tournamentsPlayed": 8,
+  "egrRank": 1452,
+  "egrPoints": 4494.5,
+  "avgScore": 75,
+  "avgToCR": 75.02,
   "events": [
     {
       "eventId": "11778",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12054",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Grand Prix Jeunes Majeur #1 U14 2026",
       "venue": "Golf de Chiberta",
@@ -137,10 +137,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 644.73
+      "egrPoints": 644.73,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.992Z",
+  "scrapedAt": "2026-10-05T14:23:22.060Z",
   "url": "https://www.europeangolfrankings.com/players/50449"
 }

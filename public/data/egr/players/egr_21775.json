@@ -7,7 +7,7 @@
   "country": "England",
   "club": "Huddersfield",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 12,
+  "tournamentsPlayed": 11,
   "egrRank": 10,
   "egrPoints": 34086,
   "avgScore": 71.09,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11647",
-      "counting": false,
+      "counting": true,
       "pos": "42",
       "event": "Portuguese International Ladies' Amateur 2026",
       "venue": "Penina Hotel & Golf Resort",
@@ -179,10 +179,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 215.38
+      "egrPoints": 215.38,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:28.510Z",
+  "scrapedAt": "2026-10-05T14:12:52.122Z",
   "url": "https://www.europeangolfrankings.com/players/21775"
 }

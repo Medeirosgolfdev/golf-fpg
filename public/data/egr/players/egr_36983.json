@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": "Heidental",
   "ageGroup": "U21",
-  "tournamentsPlayed": 16,
-  "egrRank": 204,
+  "tournamentsPlayed": 14,
+  "egrRank": 205,
   "egrPoints": 18761.8,
   "avgScore": 71.67,
   "avgToCR": 70.19,
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12460",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Swiss Golf Open Championship 2026",
       "venue": "Golfclub Wylihof",
@@ -221,7 +221,8 @@
       "r2": 67,
       "r3": 73,
       "r4": null,
-      "egrPoints": 727.4
+      "egrPoints": 727.4,
+      "_mantido": true
     },
     {
       "eventId": "10364",
@@ -235,10 +236,11 @@
       "r2": 69,
       "r3": 74,
       "r4": null,
-      "egrPoints": 1113.99
+      "egrPoints": 1113.99,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:41.008Z",
+  "scrapedAt": "2026-10-05T14:18:56.411Z",
   "url": "https://www.europeangolfrankings.com/players/36983"
 }

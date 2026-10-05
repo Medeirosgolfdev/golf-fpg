@@ -5,14 +5,28 @@
   "lastName": "DEPERON",
   "firstName": "HUGO",
   "country": "Belgium",
-  "club": "Pierpont",
+  "club": "La Bruyere",
   "ageGroup": "U12",
-  "tournamentsPlayed": 6,
-  "egrRank": 9628,
-  "egrPoints": 36.14,
-  "avgScore": 89.5,
-  "avgToCR": 90.44,
+  "tournamentsPlayed": 7,
+  "egrRank": 9389,
+  "egrPoints": 53.11,
+  "avgScore": 89.44,
+  "avgToCR": 90.6,
   "events": [
+    {
+      "eventId": "12929",
+      "counting": true,
+      "pos": "5",
+      "event": "Finals Junior U12 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 88,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 16.97
+    },
     {
       "eventId": "12867",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:59.052Z",
+  "scrapedAt": "2026-10-05T14:24:08.475Z",
   "url": "https://www.europeangolfrankings.com/players/52888"
 }

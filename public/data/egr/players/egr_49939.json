@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Roma Acquasanta",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 2090,
-  "egrPoints": 2771.9,
-  "avgScore": 77.21,
-  "avgToCR": 76.43,
+  "tournamentsPlayed": 10,
+  "egrRank": 2067,
+  "egrPoints": 2833.59,
+  "avgScore": 76.43,
+  "avgToCR": 75.9,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "3",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 74,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 101.55
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11943",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Querica D'Oro 2026",
       "venue": "Golf Nazionale",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:12.226Z",
+  "scrapedAt": "2026-10-05T14:23:10.233Z",
   "url": "https://www.europeangolfrankings.com/players/49939"
 }

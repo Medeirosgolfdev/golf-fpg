@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Wildernesse",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 667,
-  "egrPoints": 2654.54,
-  "avgScore": 79.68,
-  "avgToCR": 77.7,
+  "tournamentsPlayed": 9,
+  "egrRank": 659,
+  "egrPoints": 2719.17,
+  "avgScore": 79.27,
+  "avgToCR": 77.9,
   "events": [
+    {
+      "eventId": "12935",
+      "counting": true,
+      "pos": "4",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 81,
+      "r2": 77,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 64.63
+    },
     {
       "eventId": "11810",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:09:19.198Z",
+  "scrapedAt": "2026-10-05T14:25:12.993Z",
   "url": "https://www.europeangolfrankings.com/players/55258"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 2947,
+  "tournamentsPlayed": 12,
+  "egrRank": 2963,
   "egrPoints": 1663.1,
   "avgScore": 80.05,
   "avgToCR": 79.61,
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "10322",
-      "counting": false,
+      "counting": true,
       "pos": "37",
       "event": "Trofeo Rocca D'Asolo 2025",
       "venue": "Asolo Golf Club",
@@ -193,10 +193,11 @@
       "r2": 77,
       "r3": 83,
       "r4": null,
-      "egrPoints": 21.35
+      "egrPoints": 21.35,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:11.899Z",
+  "scrapedAt": "2026-10-05T14:23:09.734Z",
   "url": "https://www.europeangolfrankings.com/players/49931"
 }

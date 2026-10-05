@@ -7,12 +7,26 @@
   "country": "China",
   "club": "CGA",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 793,
-  "egrPoints": 2073.13,
-  "avgScore": 69.33,
-  "avgToCR": 69.93,
+  "tournamentsPlayed": 2,
+  "egrRank": 650,
+  "egrPoints": 2749.83,
+  "avgScore": 73.17,
+  "avgToCR": 71.97,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "17",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 74,
+      "r2": 79,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 676.7
+    },
     {
       "eventId": "11741",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:42.787Z",
+  "scrapedAt": "2026-10-05T14:27:19.259Z",
   "url": "https://www.europeangolfrankings.com/players/60408"
 }

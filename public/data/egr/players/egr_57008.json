@@ -6,13 +6,27 @@
   "firstName": "Jacob",
   "country": "Germany",
   "club": "Seddiner See",
-  "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 93.5,
-  "avgToCR": 96.8,
+  "ageGroup": "U12",
+  "tournamentsPlayed": 2,
+  "egrRank": 9797,
+  "egrPoints": 33.93,
+  "avgScore": 90,
+  "avgToCR": 91.74,
   "events": [
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "13",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 87,
+      "r2": 88,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 33.93
+    },
     {
       "eventId": "12753",
       "counting": true,
@@ -28,7 +42,7 @@
       "egrPoints": 0
     }
   ],
-  "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:30.653Z",
+  "ageNum": 12,
+  "scrapedAt": "2026-10-05T14:26:05.516Z",
   "url": "https://www.europeangolfrankings.com/players/57008"
 }

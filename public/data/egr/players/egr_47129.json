@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1459,
+  "tournamentsPlayed": 11,
+  "egrRank": 1471,
   "egrPoints": 641.99,
-  "avgScore": 80.82,
-  "avgToCR": 78.71,
+  "avgScore": 80.57,
+  "avgToCR": 78.42,
   "events": [
     {
       "eventId": "12474",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12455",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "12442",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "WAGR Invitational Freiburg 2026",
       "venue": "Freiburger Golf Club",
@@ -179,10 +179,11 @@
       "r2": 94,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:26.716Z",
+  "scrapedAt": "2026-10-05T14:22:02.531Z",
   "url": "https://www.europeangolfrankings.com/players/47129"
 }

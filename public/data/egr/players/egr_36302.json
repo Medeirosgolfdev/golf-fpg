@@ -8,11 +8,25 @@
   "club": "Wylihof",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 1244,
-  "egrPoints": 5306.96,
-  "avgScore": 71.41,
-  "avgToCR": 70.94,
+  "egrRank": 1262,
+  "egrPoints": 5261.1,
+  "avgScore": 71.45,
+  "avgToCR": 71.18,
   "events": [
+    {
+      "eventId": "12918",
+      "counting": false,
+      "pos": "91",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 75,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12895",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12461",
-      "counting": false,
+      "counting": true,
       "pos": "6",
       "event": "Swiss Golf Junior Tour (Leuk) 2026",
       "venue": "Links Leuk Golfresort",
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12448",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -207,10 +221,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 306.7
+      "egrPoints": 306.7,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:34.926Z",
+  "scrapedAt": "2026-10-05T14:18:38.414Z",
   "url": "https://www.europeangolfrankings.com/players/36302"
 }

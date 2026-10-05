@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U16",
-  "tournamentsPlayed": 23,
-  "egrRank": 419,
+  "tournamentsPlayed": 21,
+  "egrRank": 427,
   "egrPoints": 12116.2,
   "avgScore": 74.24,
   "avgToCR": 72.14,
@@ -211,7 +211,7 @@
     },
     {
       "eventId": "11913",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -319,7 +319,8 @@
       "r2": 78,
       "r3": 80,
       "r4": null,
-      "egrPoints": 90.93
+      "egrPoints": 90.93,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -333,10 +334,11 @@
       "r2": 80,
       "r3": 74,
       "r4": null,
-      "egrPoints": 175.06
+      "egrPoints": 175.06,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:54.679Z",
+  "scrapedAt": "2026-10-05T14:22:42.593Z",
   "url": "https://www.europeangolfrankings.com/players/49055"
 }

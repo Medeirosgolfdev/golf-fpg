@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bastide Salette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 1671,
-  "egrPoints": 457.9,
-  "avgScore": 80.56,
-  "avgToCR": 79.62,
+  "tournamentsPlayed": 5,
+  "egrRank": 1549,
+  "egrPoints": 553.04,
+  "avgScore": 81.17,
+  "avgToCR": 80.13,
   "events": [
+    {
+      "eventId": "12188",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 84,
+      "r2": 80,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 95.14
+    },
     {
       "eventId": "12168",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:47.910Z",
+  "scrapedAt": "2026-10-05T14:25:31.413Z",
   "url": "https://www.europeangolfrankings.com/players/55876"
 }

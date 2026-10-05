@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Cosmopolitan",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 893,
-  "egrPoints": 1735.19,
-  "avgScore": 79.22,
-  "avgToCR": 76.92,
+  "tournamentsPlayed": 9,
+  "egrRank": 953,
+  "egrPoints": 1553.95,
+  "avgScore": 79.81,
+  "avgToCR": 77.37,
   "events": [
     {
       "eventId": "11984",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11957",
-      "counting": false,
+      "counting": true,
       "pos": "52",
       "event": "Italian National Closed Stroke Play (Trofeo Isa Goldschmid) 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11902",
-      "counting": false,
+      "counting": true,
       "pos": "58",
       "event": "Italian National Closed Match Play Championships (Trofeo Giuseppe Silva) 2026",
       "venue": "Golf Nazionale",
@@ -151,10 +151,11 @@
       "r2": 80,
       "r3": 75,
       "r4": null,
-      "egrPoints": 181.24
+      "egrPoints": 181.24,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:56.713Z",
+  "scrapedAt": "2026-10-05T14:21:19.355Z",
   "url": "https://www.europeangolfrankings.com/players/44538"
 }

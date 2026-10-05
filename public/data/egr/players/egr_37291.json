@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Alenda",
   "ageGroup": "U18",
-  "tournamentsPlayed": 2,
-  "egrRank": 7432,
+  "tournamentsPlayed": 3,
+  "egrRank": 7524,
   "egrPoints": 191.22,
-  "avgScore": 82.5,
-  "avgToCR": 82.35,
+  "avgScore": 82,
+  "avgToCR": 81.44,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "38",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 82,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:43.475Z",
+  "scrapedAt": "2026-10-05T14:19:01.913Z",
   "url": "https://www.europeangolfrankings.com/players/37291"
 }

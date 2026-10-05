@@ -8,11 +8,25 @@
   "club": "Lyon",
   "ageGroup": "U16",
   "tournamentsPlayed": 14,
-  "egrRank": 93,
-  "egrPoints": 27251,
-  "avgScore": 71.52,
-  "avgToCR": 69.67,
+  "egrRank": 84,
+  "egrPoints": 27767.3,
+  "avgScore": 71.16,
+  "avgToCR": 69.43,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "5",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 69,
+      "r2": 69,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 1754.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "11366",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Grand Prix de la Côte d'Opale 2025",
       "venue": "Le Touquet Golf Resort",
@@ -207,10 +221,11 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 1238.5
+      "egrPoints": 1238.5,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:16.035Z",
+  "scrapedAt": "2026-10-05T14:20:11.090Z",
   "url": "https://www.europeangolfrankings.com/players/40353"
 }

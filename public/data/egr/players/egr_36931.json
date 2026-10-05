@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Nairn",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 3540,
+  "tournamentsPlayed": 13,
+  "egrRank": 3552,
   "egrPoints": 1197.52,
   "avgScore": 78.44,
   "avgToCR": 78.61,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "32",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 79,
+      "r2": 93,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11721",
       "counting": false,
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:08.447Z",
+  "scrapedAt": "2026-10-05T14:18:54.693Z",
   "url": "https://www.europeangolfrankings.com/players/36931"
 }

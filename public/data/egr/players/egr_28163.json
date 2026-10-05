@@ -7,15 +7,29 @@
   "country": "Germany",
   "club": "Hubbelrath",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 470,
-  "egrPoints": 11302.8,
-  "avgScore": 72.39,
-  "avgToCR": 70.81,
+  "tournamentsPlayed": 10,
+  "egrRank": 474,
+  "egrPoints": 11337.8,
+  "avgScore": 72.48,
+  "avgToCR": 70.87,
   "events": [
     {
-      "eventId": "12900",
+      "eventId": "12926",
       "counting": true,
+      "pos": "6",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 68,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 300.5
+    },
+    {
+      "eventId": "12900",
+      "counting": false,
       "pos": "4",
       "event": "Adidas Youth Open 2026",
       "venue": "Golfclub Wasserburg Anholt",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:38.520Z",
+  "scrapedAt": "2026-10-05T14:15:14.722Z",
   "url": "https://www.europeangolfrankings.com/players/28163"
 }

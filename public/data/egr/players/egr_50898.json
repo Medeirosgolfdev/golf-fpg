@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Glenbervie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 2424,
+  "tournamentsPlayed": 7,
+  "egrRank": 2439,
   "egrPoints": 123.1,
-  "avgScore": 87.25,
-  "avgToCR": 87.14,
+  "avgScore": 87.17,
+  "avgToCR": 87.22,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "15",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 90,
+      "r2": 86,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12841",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:21.298Z",
+  "scrapedAt": "2026-10-05T14:23:31.057Z",
   "url": "https://www.europeangolfrankings.com/players/50898"
 }

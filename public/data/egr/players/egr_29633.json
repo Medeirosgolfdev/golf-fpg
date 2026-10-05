@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "Eindhoven",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 82,
-  "egrPoints": 27840.7,
-  "avgScore": 70.88,
-  "avgToCR": 68.69,
+  "tournamentsPlayed": 13,
+  "egrRank": 80,
+  "egrPoints": 27984.2,
+  "avgScore": 70.76,
+  "avgToCR": 68.62,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "14",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 71,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 2028.08
+    },
     {
       "eventId": "12535",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12789",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "German International Amateur Championship Boys 2026",
       "venue": "GC Bad Saarow (Faldo)",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:50.932Z",
+  "scrapedAt": "2026-10-05T14:16:06.999Z",
   "url": "https://www.europeangolfrankings.com/players/29633"
 }

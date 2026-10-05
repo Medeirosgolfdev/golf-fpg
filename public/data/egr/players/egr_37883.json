@@ -7,12 +7,26 @@
   "country": "Latvia",
   "club": "Ozo",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 2060,
-  "egrPoints": 2829.46,
-  "avgScore": 75.44,
-  "avgToCR": 74.83,
+  "tournamentsPlayed": 10,
+  "egrRank": 1763,
+  "egrPoints": 3504.5,
+  "avgScore": 75,
+  "avgToCR": 74.31,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "60",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 675.04
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:48.012Z",
+  "scrapedAt": "2026-10-05T14:19:13.820Z",
   "url": "https://www.europeangolfrankings.com/players/37883"
 }

@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Damme",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 10264,
+  "tournamentsPlayed": 5,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 89.2,
-  "avgToCR": 91,
+  "avgScore": 90.67,
+  "avgToCR": 92.32,
   "events": [
+    {
+      "eventId": "11790",
+      "counting": true,
+      "pos": "20",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 97,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12860",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:24.645Z",
+  "scrapedAt": "2026-10-05T14:23:10.357Z",
   "url": "https://www.europeangolfrankings.com/players/49950"
 }

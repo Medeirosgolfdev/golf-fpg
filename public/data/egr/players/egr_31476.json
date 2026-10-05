@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Barriere La Baule",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 2841,
-  "egrPoints": 1774.52,
-  "avgScore": 76.56,
-  "avgToCR": 76.39,
+  "tournamentsPlayed": 4,
+  "egrRank": 2180,
+  "egrPoints": 2612.49,
+  "avgScore": 75.64,
+  "avgToCR": 75.3,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 837.97
+    },
     {
       "eventId": "12170",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:37:13.746Z",
+  "scrapedAt": "2026-10-05T14:16:50.717Z",
   "url": "https://www.europeangolfrankings.com/players/31476"
 }

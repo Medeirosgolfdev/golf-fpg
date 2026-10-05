@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Torrepacheco",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 725,
-  "egrPoints": 8681.16,
-  "avgScore": 73.67,
-  "avgToCR": 72.63,
+  "tournamentsPlayed": 9,
+  "egrRank": 716,
+  "egrPoints": 8861.35,
+  "avgScore": 74,
+  "avgToCR": 72.96,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "17",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 83,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 180.19
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:17.975Z",
+  "scrapedAt": "2026-10-05T14:20:14.893Z",
   "url": "https://www.europeangolfrankings.com/players/40675"
 }

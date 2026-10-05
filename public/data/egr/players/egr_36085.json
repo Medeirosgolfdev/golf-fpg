@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Le Mans",
   "ageGroup": "U25",
-  "tournamentsPlayed": 16,
-  "egrRank": 190,
-  "egrPoints": 18566.5,
-  "avgScore": 70.92,
-  "avgToCR": 70.13,
+  "tournamentsPlayed": 17,
+  "egrRank": 184,
+  "egrPoints": 19557.5,
+  "avgScore": 71.85,
+  "avgToCR": 70.3,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": false,
+      "pos": "17",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 864.73
+    },
     {
       "eventId": "12183",
       "counting": false,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12108",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Coupe Didier Illouz Grand Prix du RCF La Boulie 2026",
       "venue": "Racing Club de France",
@@ -239,6 +253,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:38:48.361Z",
+  "scrapedAt": "2026-10-05T14:18:35.912Z",
   "url": "https://www.europeangolfrankings.com/players/36085"
 }

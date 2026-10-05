@@ -8,11 +8,25 @@
   "club": "Chemnitz",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 603,
-  "egrPoints": 9743.11,
-  "avgScore": 74.42,
-  "avgToCR": 72.41,
+  "egrRank": 511,
+  "egrPoints": 10810.6,
+  "avgScore": 74.21,
+  "avgToCR": 72.19,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "43",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 1336.78
+    },
     {
       "eventId": "12887",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "10124",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Portuguese Junior Classics (GJG) 2025",
       "venue": "Praia dèl Rey/Westcliff Golfcourse",
@@ -151,10 +165,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 259.5
+      "egrPoints": 259.5,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:13.082Z",
+  "scrapedAt": "2026-10-05T14:12:56.586Z",
   "url": "https://www.europeangolfrankings.com/players/21976"
 }

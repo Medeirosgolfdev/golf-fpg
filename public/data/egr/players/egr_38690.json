@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Murrayfield",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 1630,
-  "egrPoints": 488.72,
-  "avgScore": 81.14,
-  "avgToCR": 81.14,
+  "tournamentsPlayed": 7,
+  "egrRank": 1585,
+  "egrPoints": 516.92,
+  "avgScore": 80.82,
+  "avgToCR": 80.8,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "8",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 28.19
+    },
     {
       "eventId": "11722",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:01.716Z",
+  "scrapedAt": "2026-10-05T14:19:39.376Z",
   "url": "https://www.europeangolfrankings.com/players/38690"
 }

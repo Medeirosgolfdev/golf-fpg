@@ -7,15 +7,15 @@
   "country": "England",
   "club": "Bentley",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1258,
+  "tournamentsPlayed": 11,
+  "egrRank": 1267,
   "egrPoints": 5243.28,
   "avgScore": 75.95,
   "avgToCR": 74.77,
   "events": [
     {
       "eventId": "11810",
-      "counting": false,
+      "counting": true,
       "pos": "64",
       "event": "West of England U18 2026",
       "venue": "Burnham & Berrow Golf Club",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11410",
-      "counting": false,
+      "counting": true,
       "pos": "32",
       "event": "29th Faldo Junior Tour Europe Grand Final 2025",
       "venue": "Al Ain Equestrian, Shooting & Golf Club",
@@ -179,10 +179,11 @@
       "r2": 78,
       "r3": 72,
       "r4": 78,
-      "egrPoints": 1238.59
+      "egrPoints": 1238.59,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:06.018Z",
+  "scrapedAt": "2026-10-05T14:19:47.810Z",
   "url": "https://www.europeangolfrankings.com/players/39018"
 }

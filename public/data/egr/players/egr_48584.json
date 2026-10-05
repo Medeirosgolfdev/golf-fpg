@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Mikolow",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 4307,
-  "egrPoints": 830.52,
-  "avgScore": 82.18,
-  "avgToCR": 81.42,
+  "tournamentsPlayed": 4,
+  "egrRank": 4315,
+  "egrPoints": 843.06,
+  "avgScore": 79.36,
+  "avgToCR": 79.51,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "7",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 191.52
+    },
     {
       "eventId": "11465",
       "counting": true,
@@ -67,7 +81,8 @@
       "r2": 84,
       "r3": 83,
       "r4": null,
-      "egrPoints": 308.26
+      "egrPoints": 308.26,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -81,7 +96,8 @@
       "r2": 84,
       "r3": 81,
       "r4": null,
-      "egrPoints": 74.33
+      "egrPoints": 74.33,
+      "_mantido": true
     },
     {
       "eventId": "11336",
@@ -95,10 +111,11 @@
       "r2": 83,
       "r3": 86,
       "r4": null,
-      "egrPoints": 104.65
+      "egrPoints": 104.65,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:51.179Z",
+  "scrapedAt": "2026-10-05T14:22:37.594Z",
   "url": "https://www.europeangolfrankings.com/players/48584"
 }

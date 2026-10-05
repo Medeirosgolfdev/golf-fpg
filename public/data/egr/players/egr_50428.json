@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Cloud",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 963,
-  "egrPoints": 6770.39,
-  "avgScore": 75.04,
-  "avgToCR": 74.19,
+  "tournamentsPlayed": 16,
+  "egrRank": 893,
+  "egrPoints": 7344.37,
+  "avgScore": 75.09,
+  "avgToCR": 74.61,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "28",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 80,
+      "r2": 76,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 717.51
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -197,7 +211,7 @@
     },
     {
       "eventId": "11410",
-      "counting": true,
+      "counting": false,
       "pos": "25",
       "event": "29th Faldo Junior Tour Europe Grand Final 2025",
       "venue": "Al Ain Equestrian, Shooting & Golf Club",
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:18.456Z",
+  "scrapedAt": "2026-10-05T14:23:21.182Z",
   "url": "https://www.europeangolfrankings.com/players/50428"
 }

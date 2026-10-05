@@ -7,11 +7,11 @@
   "country": "Denmark",
   "club": "Smorum",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 1327,
-  "egrPoints": 4955.29,
-  "avgScore": 73.26,
-  "avgToCR": 72.09,
+  "tournamentsPlayed": 8,
+  "egrRank": 1367,
+  "egrPoints": 4772.54,
+  "avgScore": 73.3,
+  "avgToCR": 72.01,
   "events": [
     {
       "eventId": "12596",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12542",
-      "counting": false,
+      "counting": true,
       "pos": "48",
       "event": "Vordingborg Kommune/Møns Bank Møn Open 2026",
       "venue": "Møn GolfKlub",
@@ -137,10 +137,11 @@
       "r2": 74,
       "r3": 70,
       "r4": null,
-      "egrPoints": 182.75
+      "egrPoints": 182.75,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:09.214Z",
+  "scrapedAt": "2026-10-05T14:11:31.398Z",
   "url": "https://www.europeangolfrankings.com/players/15731"
 }

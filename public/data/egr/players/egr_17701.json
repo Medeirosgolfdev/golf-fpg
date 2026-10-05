@@ -9,10 +9,24 @@
   "ageGroup": "Adult",
   "tournamentsPlayed": 14,
   "egrRank": 3,
-  "egrPoints": 52764.8,
-  "avgScore": 69.58,
-  "avgToCR": 67.13,
+  "egrPoints": 56208.3,
+  "avgScore": 70.34,
+  "avgToCR": 67.14,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": false,
+      "pos": "7",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 2254.07
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11661",
-      "counting": false,
+      "counting": true,
       "pos": "44",
       "event": "English Amateur Stroke Play (Brabazon) 2026",
       "venue": "Moortown Golf Club",
@@ -207,10 +221,11 @@
       "r2": 69,
       "r3": 71,
       "r4": 74,
-      "egrPoints": 2757
+      "egrPoints": 2757,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:10.843Z",
+  "scrapedAt": "2026-10-05T14:11:53.648Z",
   "url": "https://www.europeangolfrankings.com/players/17701"
 }

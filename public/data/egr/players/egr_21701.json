@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Rigenee",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 10,
-  "egrRank": 93,
-  "egrPoints": 14685.9,
-  "avgScore": 73.36,
-  "avgToCR": 70,
+  "tournamentsPlayed": 11,
+  "egrRank": 74,
+  "egrPoints": 16838,
+  "avgScore": 73.2,
+  "avgToCR": 69.96,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "8",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 72,
+      "r2": 73,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 3259.68
+    },
     {
       "eventId": "11755",
       "counting": false,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:25.213Z",
+  "scrapedAt": "2026-10-05T14:12:49.528Z",
   "url": "https://www.europeangolfrankings.com/players/21701"
 }

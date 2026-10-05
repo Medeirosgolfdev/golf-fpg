@@ -8,11 +8,25 @@
   "club": "St. Malo",
   "ageGroup": "U14",
   "tournamentsPlayed": 16,
-  "egrRank": 300,
-  "egrPoints": 14797.5,
-  "avgScore": 71.14,
-  "avgToCR": 70.8,
+  "egrRank": 246,
+  "egrPoints": 16919,
+  "avgScore": 70.77,
+  "avgToCR": 70.3,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "1",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 64,
+      "r2": 73,
+      "r3": 66,
+      "r4": null,
+      "egrPoints": 2955.23
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12239",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Championnat de France U14 Boys 2026",
       "venue": "Golf du Gouverneur",
@@ -235,10 +249,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 496
+      "egrPoints": 496,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:01.481Z",
+  "scrapedAt": "2026-10-05T14:22:45.125Z",
   "url": "https://www.europeangolfrankings.com/players/49110"
 }

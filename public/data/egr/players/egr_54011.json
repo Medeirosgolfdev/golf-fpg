@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "Stolper Heide",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10264,
+  "tournamentsPlayed": 3,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 94.33,
-  "avgToCR": 94.33,
+  "avgScore": 92.22,
+  "avgToCR": 91.99,
   "events": [
+    {
+      "eventId": "12936",
+      "counting": true,
+      "pos": "15",
+      "event": "Pro1Putt Open 2026",
+      "venue": "Bad Saarow Golf Club",
+      "country": "Germany",
+      "startDateRaw": "25. Sep 26",
+      "r1": 102,
+      "r2": 92,
+      "r3": 89,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "35",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 90,
+      "r2": 89,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12724",
       "counting": true,
@@ -29,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:01.679Z",
+  "scrapedAt": "2026-10-05T14:24:37.742Z",
   "url": "https://www.europeangolfrankings.com/players/54011"
 }

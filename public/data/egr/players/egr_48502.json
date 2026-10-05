@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 923,
-  "egrPoints": 6976.63,
-  "avgScore": 74.04,
-  "avgToCR": 73.56,
+  "tournamentsPlayed": 11,
+  "egrRank": 1029,
+  "egrPoints": 6359.32,
+  "avgScore": 74.09,
+  "avgToCR": 73.76,
   "events": [
     {
       "eventId": "11672",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12784",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Frohlinder Youth Open (IJGM) 2026",
       "venue": "Golfclub Castrop-Rauxel",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12679",
-      "counting": false,
+      "counting": true,
       "pos": "17",
       "event": "DGV-NRW 1. AK16/18 Jungen 2026",
       "venue": "Golf- und Landclub Coesfeld",
@@ -179,10 +179,11 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 881.49
+      "egrPoints": 881.49,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:49.413Z",
+  "scrapedAt": "2026-10-05T14:22:35.146Z",
   "url": "https://www.europeangolfrankings.com/players/48502"
 }

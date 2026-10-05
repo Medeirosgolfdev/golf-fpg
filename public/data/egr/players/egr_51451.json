@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Kronberg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 10264,
+  "tournamentsPlayed": 3,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 85.17,
-  "avgToCR": 85.17,
+  "avgScore": 84.11,
+  "avgToCR": 83.21,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "37",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 81,
+      "r2": 80,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11560",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:28.680Z",
+  "scrapedAt": "2026-10-05T14:23:43.632Z",
   "url": "https://www.europeangolfrankings.com/players/51451"
 }

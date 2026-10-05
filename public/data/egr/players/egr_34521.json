@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Murcar Links",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 353,
-  "egrPoints": 5510.77,
+  "tournamentsPlayed": 10,
+  "egrRank": 351,
+  "egrPoints": 5503.27,
   "avgScore": 77.09,
-  "avgToCR": 74.76,
+  "avgToCR": 74.89,
   "events": [
     {
       "eventId": "11781",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11704",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "Junior Tour Royal Dornoch Girls 2026",
       "venue": "Royal Dornoch GC",
@@ -165,7 +165,8 @@
       "r2": 79,
       "r3": 74,
       "r4": null,
-      "egrPoints": 50.92
+      "egrPoints": 50.92,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -179,10 +180,11 @@
       "r2": 78,
       "r3": 77,
       "r4": null,
-      "egrPoints": 97.62
+      "egrPoints": 97.62,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:23.787Z",
+  "scrapedAt": "2026-10-05T14:18:06.254Z",
   "url": "https://www.europeangolfrankings.com/players/34521"
 }

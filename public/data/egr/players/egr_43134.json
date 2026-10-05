@@ -8,11 +8,25 @@
   "club": "Amiens",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 871,
+  "egrRank": 879,
   "egrPoints": 1782.08,
-  "avgScore": 77.12,
-  "avgToCR": 74.54,
+  "avgScore": 77.21,
+  "avgToCR": 74.66,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "81",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 81,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11748",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:37.632Z",
+  "scrapedAt": "2026-10-05T14:20:53.053Z",
   "url": "https://www.europeangolfrankings.com/players/43134"
 }

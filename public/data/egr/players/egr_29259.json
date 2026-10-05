@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Marienburg",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
-  "egrRank": 1694,
-  "egrPoints": 3674.56,
-  "avgScore": 74.38,
-  "avgToCR": 73.45,
+  "tournamentsPlayed": 10,
+  "egrRank": 1972,
+  "egrPoints": 3015.38,
+  "avgScore": 74.29,
+  "avgToCR": 73.4,
   "events": [
     {
       "eventId": "11570",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11502",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "GJG Portuguese Intercollegiate By UGPM 2026",
       "venue": "Parador Malaga del Golf",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11391",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "European Winter Series #1 (Toro Tour) 2025",
       "venue": "San Roque Golf Resort",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11387",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Triple A European Championship 2025",
       "venue": "San Roque Golf Club",
@@ -165,7 +165,8 @@
       "r2": 84,
       "r3": 79,
       "r4": null,
-      "egrPoints": 297.71
+      "egrPoints": 297.71,
+      "_mantido": true
     },
     {
       "eventId": "11020",
@@ -179,10 +180,11 @@
       "r2": 79,
       "r3": 72,
       "r4": null,
-      "egrPoints": 816.01
+      "egrPoints": 816.01,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:47.171Z",
+  "scrapedAt": "2026-10-05T14:15:52.682Z",
   "url": "https://www.europeangolfrankings.com/players/29259"
 }

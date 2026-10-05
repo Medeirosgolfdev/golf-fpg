@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Hamburg",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 8635,
-  "egrPoints": 90.23,
-  "avgScore": 83.56,
-  "avgToCR": 83.69,
+  "tournamentsPlayed": 5,
+  "egrRank": 7355,
+  "egrPoints": 207.99,
+  "avgScore": 81.91,
+  "avgToCR": 82.01,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "16",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 117.76
+    },
     {
       "eventId": "12858",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:48.302Z",
+  "scrapedAt": "2026-10-05T14:21:09.512Z",
   "url": "https://www.europeangolfrankings.com/players/43991"
 }

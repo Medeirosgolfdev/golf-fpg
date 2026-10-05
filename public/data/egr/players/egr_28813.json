@@ -7,7 +7,7 @@
   "country": "Scotland",
   "club": "Broomieknowe",
   "ageGroup": "U21",
-  "tournamentsPlayed": 12,
+  "tournamentsPlayed": 11,
   "egrRank": 170,
   "egrPoints": 20055,
   "avgScore": 73.04,
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12533",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11661",
-      "counting": false,
+      "counting": true,
       "pos": "137",
       "event": "English Amateur Stroke Play (Brabazon) 2026",
       "venue": "Moortown Golf Club",
@@ -179,10 +179,11 @@
       "r2": 65,
       "r3": null,
       "r4": null,
-      "egrPoints": 2047.5
+      "egrPoints": 2047.5,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:44.101Z",
+  "scrapedAt": "2026-10-05T14:15:37.244Z",
   "url": "https://www.europeangolfrankings.com/players/28813"
 }

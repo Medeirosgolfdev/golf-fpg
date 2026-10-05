@@ -8,11 +8,25 @@
   "club": "Mainz",
   "ageGroup": "U21",
   "tournamentsPlayed": 2,
-  "egrRank": 4333,
-  "egrPoints": 821.24,
-  "avgScore": 73.33,
-  "avgToCR": 72.43,
+  "egrRank": 5226,
+  "egrPoints": 556.97,
+  "avgScore": 76.83,
+  "avgToCR": 75.43,
   "events": [
+    {
+      "eventId": "12922",
+      "counting": true,
+      "pos": "4",
+      "event": "DGV-RP/S Meisterschaft AKOffen Herren 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 77,
+      "r2": 84,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 151.73
+    },
     {
       "eventId": "12856",
       "counting": true,
@@ -39,10 +53,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 416
+      "egrPoints": 416,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:45.726Z",
+  "scrapedAt": "2026-10-05T14:15:42.968Z",
   "url": "https://www.europeangolfrankings.com/players/28958"
 }

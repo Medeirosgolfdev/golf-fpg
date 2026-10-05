@@ -5,14 +5,42 @@
   "lastName": "KIIGE",
   "firstName": "Kirke",
   "country": "Estonia",
-  "club": "Rae",
+  "club": "Estonian CC",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 171,
-  "egrPoints": 10078.4,
-  "avgScore": 74.54,
-  "avgToCR": 71.81,
+  "tournamentsPlayed": 12,
+  "egrRank": 137,
+  "egrPoints": 11639.8,
+  "avgScore": 74.38,
+  "avgToCR": 71.51,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "8",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 911.59
+    },
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "30",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1502.91
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -85,7 +113,7 @@
     },
     {
       "eventId": "12423",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Estonian Amateur Open by Tallink 2026",
       "venue": "Estonian CC (Sea)",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "11647",
-      "counting": true,
+      "counting": false,
       "pos": "73",
       "event": "Portuguese International Ladies' Amateur 2026",
       "venue": "Penina Hotel & Golf Resort",
@@ -165,10 +193,11 @@
       "r2": 83,
       "r3": 78,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:36.609Z",
+  "scrapedAt": "2026-10-05T14:20:51.517Z",
   "url": "https://www.europeangolfrankings.com/players/43004"
 }

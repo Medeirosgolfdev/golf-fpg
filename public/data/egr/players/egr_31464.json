@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Aix Les Bains",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 466,
-  "egrPoints": 11151.9,
-  "avgScore": 71,
-  "avgToCR": 71.84,
+  "tournamentsPlayed": 9,
+  "egrRank": 692,
+  "egrPoints": 9095.84,
+  "avgScore": 72.73,
+  "avgToCR": 72.48,
   "events": [
     {
       "eventId": "11671",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12073",
-      "counting": false,
+      "counting": true,
       "pos": "74",
       "event": "Coupe Frayssineau Mouchy 2026",
       "venue": "Golf de Fontainebleau",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12736",
-      "counting": false,
+      "counting": true,
       "pos": "91",
       "event": "French National Men's (Closed) Championship 2026",
       "venue": "Cabot Bordeaux",
@@ -151,10 +151,11 @@
       "r2": 72,
       "r3": 67,
       "r4": null,
-      "egrPoints": 2450.98
+      "egrPoints": 2450.98,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:37:12.993Z",
+  "scrapedAt": "2026-10-05T14:16:50.007Z",
   "url": "https://www.europeangolfrankings.com/players/31464"
 }

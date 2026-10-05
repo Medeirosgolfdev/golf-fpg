@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Ralston",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 202,
-  "egrPoints": 9017.32,
-  "avgScore": 74.13,
-  "avgToCR": 72.55,
+  "tournamentsPlayed": 10,
+  "egrRank": 204,
+  "egrPoints": 8695.93,
+  "avgScore": 75.26,
+  "avgToCR": 73.31,
   "events": [
     {
       "eventId": "12625",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12779",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Monmouthshire Masters (SGF) 2026",
       "venue": "Monmouthshire Golf Club",
@@ -165,10 +165,11 @@
       "r2": 70,
       "r3": 71,
       "r4": null,
-      "egrPoints": 354.25
+      "egrPoints": 354.25,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:01.786Z",
+  "scrapedAt": "2026-10-05T14:21:26.819Z",
   "url": "https://www.europeangolfrankings.com/players/44862"
 }

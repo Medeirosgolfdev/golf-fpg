@@ -5,14 +5,28 @@
   "lastName": "AUFFRET",
   "firstName": "Marius",
   "country": "France",
-  "club": "Palomola",
+  "club": "Palmola",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 956,
-  "egrPoints": 6809.66,
-  "avgScore": 74.17,
-  "avgToCR": 73.56,
+  "tournamentsPlayed": 11,
+  "egrRank": 763,
+  "egrPoints": 8435.41,
+  "avgScore": 73.46,
+  "avgToCR": 72.9,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "3",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 67,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1625.75
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:04.874Z",
+  "scrapedAt": "2026-10-05T14:19:45.255Z",
   "url": "https://www.europeangolfrankings.com/players/38909"
 }

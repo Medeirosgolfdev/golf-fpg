@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Gent GS",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 9892,
+  "tournamentsPlayed": 2,
+  "egrRank": 10021,
   "egrPoints": 23.83,
-  "avgScore": 81,
-  "avgToCR": 82.1,
+  "avgScore": 92.5,
+  "avgToCR": 93.5,
   "events": [
+    {
+      "eventId": "11790",
+      "counting": true,
+      "pos": "21",
+      "event": "Finals Junior U14 2026",
+      "venue": "Royal Latem Golf Club",
+      "country": "Belgium",
+      "startDateRaw": "20. Sep 26",
+      "r1": 103,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11788",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:05.518Z",
+  "scrapedAt": "2026-10-05T14:27:36.875Z",
   "url": "https://www.europeangolfrankings.com/players/61017"
 }

@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 95,
-  "egrPoints": 14611.4,
-  "avgScore": 73.48,
-  "avgToCR": 69.85,
+  "tournamentsPlayed": 16,
+  "egrRank": 99,
+  "egrPoints": 14385.3,
+  "avgScore": 73.72,
+  "avgToCR": 70,
   "events": [
     {
       "eventId": "12176",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12790",
-      "counting": false,
+      "counting": true,
       "pos": "85",
       "event": "German International Amateur Championship Girls 2026",
       "venue": "GC Bad Saarow (Palmer)",
@@ -249,10 +249,11 @@
       "r2": 72,
       "r3": 78,
       "r4": null,
-      "egrPoints": 802.53
+      "egrPoints": 802.53,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:22.742Z",
+  "scrapedAt": "2026-10-05T14:18:01.717Z",
   "url": "https://www.europeangolfrankings.com/players/34162"
 }

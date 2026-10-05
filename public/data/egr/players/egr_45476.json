@@ -7,11 +7,11 @@
   "country": "Wales",
   "club": "Radyr",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1494,
-  "egrPoints": 4293.17,
-  "avgScore": 77.79,
-  "avgToCR": 77.24,
+  "tournamentsPlayed": 10,
+  "egrRank": 1529,
+  "egrPoints": 4253.2,
+  "avgScore": 76.74,
+  "avgToCR": 76.11,
   "events": [
     {
       "eventId": "12877",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11394",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "European Winter Series #4 (Toro Tour) 2025",
       "venue": "Villa Padierna Golf (Flamingos)",
@@ -165,10 +165,11 @@
       "r2": 80,
       "r3": 78,
       "r4": null,
-      "egrPoints": 145.15
+      "egrPoints": 145.15,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:10.060Z",
+  "scrapedAt": "2026-10-05T14:21:37.822Z",
   "url": "https://www.europeangolfrankings.com/players/45476"
 }

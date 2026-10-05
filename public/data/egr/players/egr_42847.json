@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 769,
-  "egrPoints": 2179.41,
-  "avgScore": 78,
-  "avgToCR": 75.89,
+  "tournamentsPlayed": 13,
+  "egrRank": 771,
+  "egrPoints": 2214.36,
+  "avgScore": 77.74,
+  "avgToCR": 75.21,
   "events": [
     {
       "eventId": "12001",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11930",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Trofeo Giovanile U18 2026",
       "venue": "Parco di Roma Golf & CC",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11908",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Trofeo Vincenzo de Benedictis 2026",
       "venue": "Il Picciolo Golf Club",
@@ -207,7 +207,8 @@
       "r2": 76,
       "r3": 78,
       "r4": null,
-      "egrPoints": 100.42
+      "egrPoints": 100.42,
+      "_mantido": true
     },
     {
       "eventId": "10316",
@@ -221,10 +222,11 @@
       "r2": 80,
       "r3": 79,
       "r4": null,
-      "egrPoints": 76.65
+      "egrPoints": 76.65,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:35.114Z",
+  "scrapedAt": "2026-10-05T14:20:49.422Z",
   "url": "https://www.europeangolfrankings.com/players/42847"
 }

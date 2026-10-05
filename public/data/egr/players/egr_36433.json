@@ -8,11 +8,25 @@
   "club": "Sola",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 20,
-  "egrPoints": 40972.2,
-  "avgScore": 70.43,
+  "egrRank": 18,
+  "egrPoints": 41625,
+  "avgScore": 70.13,
   "avgToCR": 67.5,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": true,
+      "pos": "1",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 69,
+      "r2": 68,
+      "r3": 65,
+      "r4": null,
+      "egrPoints": 2829
+    },
     {
       "eventId": "12329",
       "counting": false,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12630",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -207,10 +221,11 @@
       "r2": 67,
       "r3": 70,
       "r4": null,
-      "egrPoints": 1924.44
+      "egrPoints": 1924.44,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:36.676Z",
+  "scrapedAt": "2026-10-05T14:18:41.429Z",
   "url": "https://www.europeangolfrankings.com/players/36433"
 }

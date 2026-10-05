@@ -1,18 +1,32 @@
 {
   "id": "50635",
-  "egrId": "FFRA50635",
+  "egrId": "FMAR50635",
   "name": "Safaa Assbai",
   "lastName": "ASSBAI",
   "firstName": "Safaa",
-  "country": "France",
+  "country": "Morocco",
   "club": "Cice-Blossac",
   "ageGroup": "U12",
-  "tournamentsPlayed": 14,
-  "egrRank": 470,
-  "egrPoints": 4194.19,
-  "avgScore": 74.33,
-  "avgToCR": 73.54,
+  "tournamentsPlayed": 13,
+  "egrRank": 393,
+  "egrPoints": 4908.6,
+  "avgScore": 74.14,
+  "avgToCR": 72.95,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "8",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 73,
+      "r2": 73,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 858.66
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12130",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Grand Prix du Stade Français 2026",
       "venue": "Golf du Stade Francais Courson",
@@ -193,7 +207,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 43.34
+      "egrPoints": 43.34,
+      "_mantido": true
     },
     {
       "eventId": "11372",
@@ -207,10 +222,11 @@
       "r2": 81,
       "r3": 82,
       "r4": null,
-      "egrPoints": 38.36
+      "egrPoints": 38.36,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:41.227Z",
+  "scrapedAt": "2026-10-05T14:23:28.137Z",
   "url": "https://www.europeangolfrankings.com/players/50635"
 }

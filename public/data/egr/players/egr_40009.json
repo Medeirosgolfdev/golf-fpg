@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Oliva Nova",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 2131,
-  "egrPoints": 2681.99,
-  "avgScore": 77.93,
-  "avgToCR": 77.81,
+  "tournamentsPlayed": 7,
+  "egrRank": 2100,
+  "egrPoints": 2775.56,
+  "avgScore": 78.12,
+  "avgToCR": 77.82,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "27",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 84,
+      "r2": 72,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 93.57
+    },
     {
       "eventId": "12282",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:13.022Z",
+  "scrapedAt": "2026-10-05T14:20:04.570Z",
   "url": "https://www.europeangolfrankings.com/players/40009"
 }

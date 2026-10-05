@@ -8,11 +8,25 @@
   "club": "Losby",
   "ageGroup": "U14",
   "tournamentsPlayed": 9,
-  "egrRank": 2588,
-  "egrPoints": 90.94,
-  "avgScore": 85.33,
-  "avgToCR": 86.53,
+  "egrRank": 1691,
+  "egrPoints": 441.85,
+  "avgScore": 83.72,
+  "avgToCR": 84.24,
   "events": [
+    {
+      "eventId": "12336",
+      "counting": true,
+      "pos": "3",
+      "event": "Srixon Tour 8 Finale (U15) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 85,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 318.41
+    },
     {
       "eventId": "12332",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 85,
       "r3": 90,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:58.036Z",
+  "scrapedAt": "2026-10-05T14:24:28.708Z",
   "url": "https://www.europeangolfrankings.com/players/53487"
 }

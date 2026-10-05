@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "El Prat",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 423,
-  "egrPoints": 11743.2,
-  "avgScore": 71.65,
-  "avgToCR": 69.81,
+  "tournamentsPlayed": 8,
+  "egrRank": 380,
+  "egrPoints": 13045.8,
+  "avgScore": 71.61,
+  "avgToCR": 69.6,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "1",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 67,
+      "r2": 70,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 1302.53
+    },
     {
       "eventId": "12269",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:36:36.003Z",
+  "scrapedAt": "2026-10-05T14:16:14.716Z",
   "url": "https://www.europeangolfrankings.com/players/29963"
 }

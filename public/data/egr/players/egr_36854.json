@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Cloud",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 284,
-  "egrPoints": 15457.9,
-  "avgScore": 73.45,
-  "avgToCR": 72.19,
+  "tournamentsPlayed": 12,
+  "egrRank": 269,
+  "egrPoints": 16130.3,
+  "avgScore": 73,
+  "avgToCR": 71.8,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 73,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 945.04
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11368",
-      "counting": true,
+      "counting": false,
       "pos": "41",
       "event": "French National U16 Championships 2025",
       "venue": "Golf de Biarritz Le Phare",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:39.643Z",
+  "scrapedAt": "2026-10-05T14:18:52.005Z",
   "url": "https://www.europeangolfrankings.com/players/36854"
 }

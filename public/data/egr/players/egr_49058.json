@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U14",
-  "tournamentsPlayed": 18,
-  "egrRank": 1030,
+  "tournamentsPlayed": 19,
+  "egrRank": 1038,
   "egrPoints": 6329.82,
   "avgScore": 75.24,
   "avgToCR": 74.52,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": false,
+      "pos": "37",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 80,
+      "r2": 86,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 220.35
+    },
     {
       "eventId": "11995",
       "counting": true,
@@ -267,6 +281,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.373Z",
+  "scrapedAt": "2026-10-05T14:22:42.738Z",
   "url": "https://www.europeangolfrankings.com/players/49058"
 }

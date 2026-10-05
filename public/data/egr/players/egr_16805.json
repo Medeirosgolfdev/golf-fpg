@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Hannover",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 2543,
+  "tournamentsPlayed": 9,
+  "egrRank": 2555,
   "egrPoints": 2094.83,
   "avgScore": 76.13,
   "avgToCR": 76.04,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12717",
-      "counting": false,
+      "counting": true,
       "pos": "54",
       "event": "KIFFE Youth Open 2026",
       "venue": "Golfclub Issum-Niederrhein",
@@ -151,10 +151,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 33.25
+      "egrPoints": 33.25,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:04:10.219Z",
+  "scrapedAt": "2026-10-05T14:11:41.196Z",
   "url": "https://www.europeangolfrankings.com/players/16805"
 }

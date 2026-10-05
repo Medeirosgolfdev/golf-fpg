@@ -7,12 +7,26 @@
   "country": "France",
   "club": "RCF La Boulie",
   "ageGroup": "U12",
-  "tournamentsPlayed": 2,
-  "egrRank": 1731,
-  "egrPoints": 415.88,
-  "avgScore": 81,
-  "avgToCR": 81.37,
+  "tournamentsPlayed": 3,
+  "egrRank": 1653,
+  "egrPoints": 468.93,
+  "avgScore": 80.8,
+  "avgToCR": 81.02,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "6",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 79,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 53.05
+    },
     {
       "eventId": "12241",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:48.634Z",
+  "scrapedAt": "2026-10-05T14:25:31.833Z",
   "url": "https://www.europeangolfrankings.com/players/55884"
 }

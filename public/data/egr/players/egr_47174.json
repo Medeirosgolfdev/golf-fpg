@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Villa Condulmer",
   "ageGroup": "U16",
-  "tournamentsPlayed": 20,
-  "egrRank": 503,
-  "egrPoints": 3811.33,
-  "avgScore": 75.17,
-  "avgToCR": 71.88,
+  "tournamentsPlayed": 18,
+  "egrRank": 511,
+  "egrPoints": 3702.49,
+  "avgScore": 74.92,
+  "avgToCR": 71.69,
   "events": [
     {
       "eventId": "12003",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11981",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Trofeo Citta' Di Treviso 2026",
       "venue": "Golf Villa Condulmer",
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "11918",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -277,7 +277,8 @@
       "r2": 83,
       "r3": 80,
       "r4": null,
-      "egrPoints": 230.31
+      "egrPoints": 230.31,
+      "_mantido": true
     },
     {
       "eventId": "10318",
@@ -291,10 +292,11 @@
       "r2": 80,
       "r3": 77,
       "r4": null,
-      "egrPoints": 137.66
+      "egrPoints": 137.66,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:27.597Z",
+  "scrapedAt": "2026-10-05T14:22:03.337Z",
   "url": "https://www.europeangolfrankings.com/players/47174"
 }

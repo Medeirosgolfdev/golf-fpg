@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Odsherred",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 1108,
-  "egrPoints": 5956.83,
-  "avgScore": 74.76,
-  "avgToCR": 73.81,
+  "tournamentsPlayed": 18,
+  "egrRank": 1107,
+  "egrPoints": 5963.71,
+  "avgScore": 75.1,
+  "avgToCR": 73.9,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "18",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 474.22
+    },
+    {
+      "eventId": "12606",
+      "counting": false,
+      "pos": "45",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 81,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 179.48
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12596",
-      "counting": true,
+      "counting": false,
       "pos": "17",
       "event": "Dormy Elite Tour III Drenge U22 2026",
       "venue": "Esbjerg Golfklub",
@@ -239,6 +267,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:13.551Z",
+  "scrapedAt": "2026-10-05T14:17:36.031Z",
   "url": "https://www.europeangolfrankings.com/players/33140"
 }

@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Bathgate",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1138,
+  "tournamentsPlayed": 10,
+  "egrRank": 1139,
   "egrPoints": 5770.81,
   "avgScore": 73.78,
   "avgToCR": 72.49,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11474",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Trump Invitaitonal 2026",
       "venue": "Trump International",
@@ -165,10 +165,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 497.66
+      "egrPoints": 497.66,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:43.854Z",
+  "scrapedAt": "2026-10-05T14:15:37.091Z",
   "url": "https://www.europeangolfrankings.com/players/28809"
 }

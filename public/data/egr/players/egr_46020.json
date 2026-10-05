@@ -7,12 +7,26 @@
   "country": "Luxembourg",
   "club": "RCG La Boulie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 2512,
+  "tournamentsPlayed": 6,
+  "egrRank": 2524,
   "egrPoints": 104.42,
-  "avgScore": 85.22,
-  "avgToCR": 82.54,
+  "avgScore": 85.4,
+  "avgToCR": 82.68,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "103",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 85,
+      "r2": 89,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12136",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:16.965Z",
+  "scrapedAt": "2026-10-05T14:21:49.888Z",
   "url": "https://www.europeangolfrankings.com/players/46020"
 }

@@ -8,11 +8,25 @@
   "club": "Brigode",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 137,
-  "egrPoints": 11532,
-  "avgScore": 73.24,
-  "avgToCR": 70.07,
+  "egrRank": 165,
+  "egrPoints": 10452,
+  "avgScore": 73.28,
+  "avgToCR": 70.35,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12079",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Grand Prix d'Amiens 2026",
       "venue": "Golf Club d'Amiens (Les Aubépines)",
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "101",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -137,7 +151,7 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 630.01
+      "egrPoints": 0
     },
     {
       "eventId": "12046",
@@ -207,10 +221,11 @@
       "r2": 70,
       "r3": 73,
       "r4": null,
-      "egrPoints": 1319.45
+      "egrPoints": 1319.45,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:22.868Z",
+  "scrapedAt": "2026-10-05T14:18:01.871Z",
   "url": "https://www.europeangolfrankings.com/players/34165"
 }

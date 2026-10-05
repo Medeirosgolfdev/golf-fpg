@@ -7,12 +7,40 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 129,
-  "egrPoints": 11971.1,
-  "avgScore": 72.12,
-  "avgToCR": 69.47,
+  "tournamentsPlayed": 11,
+  "egrRank": 121,
+  "egrPoints": 12360.8,
+  "avgScore": 72.81,
+  "avgToCR": 69.57,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "13",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 70,
+      "r2": 73,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 684.27
+    },
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "34",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1292.65
+    },
     {
       "eventId": "12912",
       "counting": true,
@@ -71,7 +99,7 @@
     },
     {
       "eventId": "12708",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "DGV-BWGV Meisterschaft AK16-18 Mädchen 2026",
       "venue": "Golfclub Kaiserhöhe",
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12714",
-      "counting": true,
+      "counting": false,
       "pos": "11",
       "event": "BWGV International Match Play Trophy 2026",
       "venue": "GLC Schloss Liebenstein",
@@ -141,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:02.439Z",
+  "scrapedAt": "2026-10-05T14:19:40.223Z",
   "url": "https://www.europeangolfrankings.com/players/38712"
 }

@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Koge",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 166,
-  "egrPoints": 10387.7,
-  "avgScore": 73.55,
-  "avgToCR": 71.19,
+  "tournamentsPlayed": 15,
+  "egrRank": 144,
+  "egrPoints": 11259,
+  "avgScore": 73.91,
+  "avgToCR": 71.02,
   "events": [
+    {
+      "eventId": "12607",
+      "counting": true,
+      "pos": "1",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 1535.96
+    },
     {
       "eventId": "12605",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12573",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Danish International Amateur Championship 2026",
       "venue": "Silkeborg Ry Golfklub (54)",
@@ -221,7 +235,8 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 452.29
+      "egrPoints": 452.29,
+      "_mantido": true
     },
     {
       "eventId": "11151",
@@ -235,10 +250,11 @@
       "r2": 68,
       "r3": 73,
       "r4": null,
-      "egrPoints": 664.61
+      "egrPoints": 664.61,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:17.966Z",
+  "scrapedAt": "2026-10-05T14:17:45.018Z",
   "url": "https://www.europeangolfrankings.com/players/33495"
 }

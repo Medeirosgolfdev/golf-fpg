@@ -1,18 +1,32 @@
 {
   "id": "58018",
-  "egrId": "MFRA58018",
+  "egrId": "FFRA58018",
   "name": "Alexandra Vimber",
   "lastName": "VIMBER",
   "firstName": "Alexandra",
   "country": "France",
   "club": "Alsace G Links",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 8502,
-  "egrPoints": 100.45,
-  "avgScore": 80.8,
-  "avgToCR": 82,
+  "tournamentsPlayed": 4,
+  "egrRank": 2306,
+  "egrPoints": 155.82,
+  "avgScore": 80.86,
+  "avgToCR": 81.71,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "7",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 88,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 55.37
+    },
     {
       "eventId": "12241",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:42.356Z",
+  "scrapedAt": "2026-10-05T14:26:28.466Z",
   "url": "https://www.europeangolfrankings.com/players/58018"
 }

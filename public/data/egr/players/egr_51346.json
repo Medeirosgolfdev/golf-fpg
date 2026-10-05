@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Sobienie Krolewskie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 2595,
-  "egrPoints": 2023.99,
-  "avgScore": 78.12,
-  "avgToCR": 77.19,
+  "tournamentsPlayed": 9,
+  "egrRank": 2081,
+  "egrPoints": 2801.47,
+  "avgScore": 76.8,
+  "avgToCR": 76.19,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "2",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 69,
+      "r2": 73,
+      "r3": 66,
+      "r4": null,
+      "egrPoints": 562.45
+    },
     {
       "eventId": "12435",
       "counting": true,
@@ -70,8 +84,22 @@
       "egrPoints": 128.64
     },
     {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "11",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 554.05
+    },
+    {
       "eventId": "11453",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "5 Stars Junior Cup by Adrian Meronk 2026",
       "venue": "Ropice Golf Resort",
@@ -123,7 +151,8 @@
       "r2": 80,
       "r3": 76,
       "r4": null,
-      "egrPoints": 579.24
+      "egrPoints": 579.24,
+      "_mantido": true
     },
     {
       "eventId": "11318",
@@ -137,7 +166,8 @@
       "r2": 83,
       "r3": 75,
       "r4": null,
-      "egrPoints": 130.07
+      "egrPoints": 130.07,
+      "_mantido": true
     },
     {
       "eventId": "11336",
@@ -151,10 +181,11 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 208.95
+      "egrPoints": 208.95,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:27.612Z",
+  "scrapedAt": "2026-10-05T14:23:40.779Z",
   "url": "https://www.europeangolfrankings.com/players/51346"
 }

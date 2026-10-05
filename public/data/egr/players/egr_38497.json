@@ -8,11 +8,25 @@
   "club": "Bossey",
   "ageGroup": "U18",
   "tournamentsPlayed": 13,
-  "egrRank": 803,
-  "egrPoints": 7971.77,
-  "avgScore": 73,
-  "avgToCR": 72.43,
+  "egrRank": 758,
+  "egrPoints": 8476.36,
+  "avgScore": 72.88,
+  "avgToCR": 72.35,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": true,
+      "pos": "3",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 803.15
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -193,10 +207,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:55.753Z",
+  "scrapedAt": "2026-10-05T14:19:30.946Z",
   "url": "https://www.europeangolfrankings.com/players/38497"
 }

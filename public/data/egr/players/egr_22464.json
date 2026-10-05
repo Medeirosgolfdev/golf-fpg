@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Aurinko",
   "ageGroup": "U25",
-  "tournamentsPlayed": 3,
-  "egrRank": 596,
-  "egrPoints": 9554.12,
-  "avgScore": 71.44,
-  "avgToCR": 70.42,
+  "tournamentsPlayed": 4,
+  "egrRank": 343,
+  "egrPoints": 13749.1,
+  "avgScore": 71.09,
+  "avgToCR": 69.09,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "4",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 67,
+      "r2": 72,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 4195
+    },
     {
       "eventId": "11670",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:32:45.721Z",
+  "scrapedAt": "2026-10-05T14:13:06.158Z",
   "url": "https://www.europeangolfrankings.com/players/22464"
 }

@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 945,
-  "egrPoints": 6858.89,
-  "avgScore": 72.54,
-  "avgToCR": 72.35,
+  "tournamentsPlayed": 8,
+  "egrRank": 985,
+  "egrPoints": 6608.07,
+  "avgScore": 72.23,
+  "avgToCR": 72.04,
   "events": [
     {
       "eventId": "11715",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12816",
-      "counting": false,
+      "counting": true,
       "pos": "67",
       "event": "Pro DreamUSA Junior Masters 2026",
       "venue": "Pollok Golf Club",
@@ -137,7 +137,8 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 611.41
+      "egrPoints": 611.41,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -151,10 +152,11 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 250.82
+      "egrPoints": 250.82,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:06:37.903Z",
+  "scrapedAt": "2026-10-05T14:20:53.386Z",
   "url": "https://www.europeangolfrankings.com/players/43241"
 }

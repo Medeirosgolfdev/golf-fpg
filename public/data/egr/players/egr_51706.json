@@ -8,11 +8,25 @@
   "club": "Mainz",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 1363,
-  "egrPoints": 4742.02,
-  "avgScore": 74.96,
-  "avgToCR": 74.55,
+  "egrRank": 1258,
+  "egrPoints": 5274.71,
+  "avgScore": 75,
+  "avgToCR": 74.36,
   "events": [
+    {
+      "eventId": "12922",
+      "counting": true,
+      "pos": "1",
+      "event": "DGV-RP/S Meisterschaft AKOffen Herren 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 667.28
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "11560",
-      "counting": true,
+      "counting": false,
       "pos": "18",
       "event": "Mid Summer Junior International 2026",
       "venue": "Golf-Club Main-Taunus",
@@ -193,10 +207,11 @@
       "r2": 84,
       "r3": 91,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:30.203Z",
+  "scrapedAt": "2026-10-05T14:23:47.165Z",
   "url": "https://www.europeangolfrankings.com/players/51706"
 }

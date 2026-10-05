@@ -8,10 +8,10 @@
   "club": "Mijas",
   "ageGroup": "U16",
   "tournamentsPlayed": 15,
-  "egrRank": 119,
-  "egrPoints": 12977.9,
-  "avgScore": 73.52,
-  "avgToCR": 70.7,
+  "egrRank": 128,
+  "egrPoints": 12042.7,
+  "avgScore": 73.85,
+  "avgToCR": 70.96,
   "events": [
     {
       "eventId": "12625",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "65",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -95,11 +95,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 1809.92
+      "egrPoints": 316.25
     },
     {
       "eventId": "12250",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Spanish U18 Championship (Closed) 2026",
       "venue": "Real Club de Golf Guadalmina (Sur)",
@@ -225,6 +225,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:04:55.209Z",
+  "scrapedAt": "2026-10-05T14:16:33.208Z",
   "url": "https://www.europeangolfrankings.com/players/30764"
 }

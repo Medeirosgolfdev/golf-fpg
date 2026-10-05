@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Lyngbygaard",
   "ageGroup": "U21",
-  "tournamentsPlayed": 16,
-  "egrRank": 193,
-  "egrPoints": 19033.6,
-  "avgScore": 69.92,
-  "avgToCR": 68.67,
+  "tournamentsPlayed": 17,
+  "egrRank": 178,
+  "egrPoints": 19823.6,
+  "avgScore": 70.15,
+  "avgToCR": 68.91,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "31",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 70,
+      "r2": 76,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 1629.26
+    },
+    {
+      "eventId": "12606",
+      "counting": false,
+      "pos": "22",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 70,
+      "r2": 75,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 542.94
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12566",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Holstebro Open Championship presented by Egekilde 2026",
       "venue": "Holstebro Golfklub (65)",
@@ -235,10 +263,11 @@
       "r2": 67,
       "r3": 70,
       "r4": null,
-      "egrPoints": 705.2
+      "egrPoints": 705.2,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:13.409Z",
+  "scrapedAt": "2026-10-05T14:17:35.979Z",
   "url": "https://www.europeangolfrankings.com/players/33137"
 }

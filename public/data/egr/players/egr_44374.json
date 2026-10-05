@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "East Kilbride",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 4690,
+  "tournamentsPlayed": 9,
+  "egrRank": 4729,
   "egrPoints": 689.92,
-  "avgScore": 81.37,
-  "avgToCR": 81.14,
+  "avgScore": 81.16,
+  "avgToCR": 80.85,
   "events": [
     {
       "eventId": "11719",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11711",
-      "counting": false,
+      "counting": true,
       "pos": "51",
       "event": "Junior Tour Tain Boys 2026",
       "venue": "Tain GC",
@@ -151,10 +151,11 @@
       "r2": 80,
       "r3": 87,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:53.457Z",
+  "scrapedAt": "2026-10-05T14:21:15.602Z",
   "url": "https://www.europeangolfrankings.com/players/44374"
 }

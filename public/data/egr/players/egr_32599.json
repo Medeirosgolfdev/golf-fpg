@@ -7,8 +7,8 @@
   "country": "Belgium",
   "club": "Royal Limburg",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1415,
+  "tournamentsPlayed": 10,
+  "egrRank": 1429,
   "egrPoints": 4547.04,
   "avgScore": 74.92,
   "avgToCR": 74.4,
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11570",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "GJG Mühlheim Junior Open 2026",
       "venue": "Golfclub Mühlheim a.d. Ruhr",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11482",
-      "counting": false,
+      "counting": true,
       "pos": "43",
       "event": "Barrie Douglas Scottish Junior Masters 2026",
       "venue": "Strathmore GC",
@@ -165,10 +165,11 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 355.47
+      "egrPoints": 355.47,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:08.986Z",
+  "scrapedAt": "2026-10-05T14:17:20.380Z",
   "url": "https://www.europeangolfrankings.com/players/32599"
 }

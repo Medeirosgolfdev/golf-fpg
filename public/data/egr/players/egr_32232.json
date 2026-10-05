@@ -8,11 +8,25 @@
   "club": "Talma",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 1622,
-  "egrPoints": 3867.62,
-  "avgScore": 77.36,
-  "avgToCR": 75.69,
+  "egrRank": 1667,
+  "egrPoints": 3810.06,
+  "avgScore": 78.19,
+  "avgToCR": 76.44,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "39",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 81,
+      "r2": 86,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 175.5
+    },
     {
       "eventId": "12914",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12355",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "Finnish National Stroke Play Championship (Closed) 2026",
       "venue": "Laukaan Peurunkagolf",
@@ -151,10 +165,11 @@
       "r2": 78,
       "r3": 75,
       "r4": null,
-      "egrPoints": 233.06
+      "egrPoints": 233.06,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:04.843Z",
+  "scrapedAt": "2026-10-05T14:17:08.174Z",
   "url": "https://www.europeangolfrankings.com/players/32232"
 }

@@ -8,11 +8,39 @@
   "club": "Armada",
   "ageGroup": "U16",
   "tournamentsPlayed": 9,
-  "egrRank": 958,
-  "egrPoints": 1544.84,
-  "avgScore": 79.72,
-  "avgToCR": 76.52,
+  "egrRank": 779,
+  "egrPoints": 2177.12,
+  "avgScore": 78.24,
+  "avgToCR": 75.28,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "34",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12921",
+      "counting": true,
+      "pos": "1",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 443.31
+    },
     {
       "eventId": "12436",
       "counting": true,
@@ -70,6 +98,20 @@
       "egrPoints": 133.88
     },
     {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "7",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 319.69
+    },
+    {
       "eventId": "11454",
       "counting": true,
       "pos": "9",
@@ -109,7 +151,8 @@
       "r2": 88,
       "r3": 81,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11319",
@@ -123,7 +166,8 @@
       "r2": 81,
       "r3": 83,
       "r4": null,
-      "egrPoints": 26.28
+      "egrPoints": 26.28,
+      "_mantido": true
     },
     {
       "eventId": "11340",
@@ -137,10 +181,11 @@
       "r2": 76,
       "r3": 80,
       "r4": null,
-      "egrPoints": 104.44
+      "egrPoints": 104.44,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:51.495Z",
+  "scrapedAt": "2026-10-05T14:22:38.406Z",
   "url": "https://www.europeangolfrankings.com/players/48601"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Pinetina",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 2613,
+  "tournamentsPlayed": 15,
+  "egrRank": 2624,
   "egrPoints": 2007.39,
   "avgScore": 76.64,
   "avgToCR": 76.12,
@@ -28,20 +28,6 @@
       "egrPoints": 282.7
     },
     {
-      "eventId": "11960",
-      "counting": true,
-      "pos": "70",
-      "event": "Italian National Closed U18 Stroke Play (Trofeo Silvio Marazza) 2026",
-      "venue": "Golf Club Lignano",
-      "country": "Italy",
-      "startDateRaw": "16. Jun 26",
-      "r1": 79,
-      "r2": 74,
-      "r3": null,
-      "r4": null,
-      "egrPoints": 460.04
-    },
-    {
       "eventId": "11958",
       "counting": false,
       "pos": "48",
@@ -54,6 +40,20 @@
       "r3": null,
       "r4": null,
       "egrPoints": 0
+    },
+    {
+      "eventId": "11960",
+      "counting": true,
+      "pos": "70",
+      "event": "Italian National Closed U18 Stroke Play (Trofeo Silvio Marazza) 2026",
+      "venue": "Golf Club Lignano",
+      "country": "Italy",
+      "startDateRaw": "16. Jun 26",
+      "r1": 79,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 460.04
     },
     {
       "eventId": "11955",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11893",
-      "counting": false,
+      "counting": true,
       "pos": "34",
       "event": "Grand Premio Della Maremma 2026",
       "venue": "Golf Club Punta Ala",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11500",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "GJG Spanish Junior Classics 2026",
       "venue": "Villa Padierna (Alferini)",
@@ -235,10 +235,11 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 163.52
+      "egrPoints": 163.52,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:04.263Z",
+  "scrapedAt": "2026-10-05T14:17:07.198Z",
   "url": "https://www.europeangolfrankings.com/players/32183"
 }

@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Kalinowe Pola",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 2935,
-  "egrPoints": 1672.82,
-  "avgScore": 77,
-  "avgToCR": 76.54,
+  "tournamentsPlayed": 8,
+  "egrRank": 3341,
+  "egrPoints": 1332.47,
+  "avgScore": 76.86,
+  "avgToCR": 76.9,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "18",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 122.95
+    },
     {
       "eventId": "12435",
       "counting": true,
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12220",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "Triple A European Open 2026",
       "venue": "San Roque Golf Resort (Old)",
@@ -123,7 +137,8 @@
       "r2": 77,
       "r3": 81,
       "r4": null,
-      "egrPoints": 148.65
+      "egrPoints": 148.65,
+      "_mantido": true
     },
     {
       "eventId": "11336",
@@ -137,10 +152,11 @@
       "r2": 74,
       "r3": 79,
       "r4": null,
-      "egrPoints": 314.65
+      "egrPoints": 314.65,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:13.254Z",
+  "scrapedAt": "2026-10-05T14:23:12.003Z",
   "url": "https://www.europeangolfrankings.com/players/49992"
 }

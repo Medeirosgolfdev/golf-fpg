@@ -8,11 +8,25 @@
   "club": "Bossey",
   "ageGroup": "U18",
   "tournamentsPlayed": 7,
-  "egrRank": 2570,
+  "egrRank": 2586,
   "egrPoints": 94.24,
-  "avgScore": 85.07,
-  "avgToCR": 82.62,
+  "avgScore": 84.33,
+  "avgToCR": 82.57,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "14",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 88,
+      "r2": 87,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12474",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 91,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:34.138Z",
+  "scrapedAt": "2026-10-05T14:22:11.950Z",
   "url": "https://www.europeangolfrankings.com/players/47668"
 }

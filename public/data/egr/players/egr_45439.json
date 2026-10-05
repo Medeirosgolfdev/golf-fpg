@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Manville",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1212,
+  "tournamentsPlayed": 8,
+  "egrRank": 1232,
   "egrPoints": 5387.94,
-  "avgScore": 73.57,
-  "avgToCR": 74.55,
+  "avgScore": 75.17,
+  "avgToCR": 74.8,
   "events": [
     {
       "eventId": "12183",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "10670",
-      "counting": false,
+      "counting": true,
       "pos": "67",
       "event": "Grand Prix Messieurs de la Ligue PACA 2025",
       "venue": "Golf Club d' Aix Marseille (Aix Marseille)",
@@ -137,10 +137,11 @@
       "r2": 69,
       "r3": 72,
       "r4": null,
-      "egrPoints": 1215.97
+      "egrPoints": 1215.97,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:40:46.386Z",
+  "scrapedAt": "2026-10-05T14:21:37.393Z",
   "url": "https://www.europeangolfrankings.com/players/45439"
 }

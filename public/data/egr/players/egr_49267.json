@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Chateau De La Tournette",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 2661,
-  "egrPoints": 77.25,
-  "avgScore": 86.57,
-  "avgToCR": 86.85,
+  "tournamentsPlayed": 7,
+  "egrRank": 2643,
+  "egrPoints": 83.46,
+  "avgScore": 86.24,
+  "avgToCR": 89.81,
   "events": [
+    {
+      "eventId": "11757",
+      "counting": true,
+      "pos": "9",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 85,
+      "r2": 85,
+      "r3": null,
+      "r4": 84,
+      "egrPoints": 6.21
+    },
     {
       "eventId": "12917",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:58.794Z",
+  "scrapedAt": "2026-10-05T14:22:50.059Z",
   "url": "https://www.europeangolfrankings.com/players/49267"
 }

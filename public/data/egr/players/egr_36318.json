@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Domaine Imperial",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 753,
-  "egrPoints": 2238.82,
-  "avgScore": 79.48,
-  "avgToCR": 77.07,
+  "tournamentsPlayed": 13,
+  "egrRank": 767,
+  "egrPoints": 2229.47,
+  "avgScore": 79.3,
+  "avgToCR": 77.09,
   "events": [
     {
       "eventId": "12471",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11808",
-      "counting": false,
+      "counting": true,
       "pos": "14",
       "event": "Fairhaven Trophies 2026",
       "venue": "Fairhaven Golf Club",
@@ -207,10 +207,11 @@
       "r2": 83,
       "r3": 75,
       "r4": null,
-      "egrPoints": 45.73
+      "egrPoints": 45.73,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:35.301Z",
+  "scrapedAt": "2026-10-05T14:18:38.957Z",
   "url": "https://www.europeangolfrankings.com/players/36318"
 }

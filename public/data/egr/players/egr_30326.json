@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Charmeil",
   "ageGroup": "U21",
-  "tournamentsPlayed": 6,
-  "egrRank": 1958,
-  "egrPoints": 3036.87,
-  "avgScore": 75.53,
-  "avgToCR": 75.91,
+  "tournamentsPlayed": 7,
+  "egrRank": 1582,
+  "egrPoints": 4074.82,
+  "avgScore": 74.84,
+  "avgToCR": 74.76,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": true,
+      "pos": "2",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 70,
+      "r2": 76,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 1037.95
+    },
     {
       "eventId": "12170",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:36:46.933Z",
+  "scrapedAt": "2026-10-05T14:16:24.833Z",
   "url": "https://www.europeangolfrankings.com/players/30326"
 }

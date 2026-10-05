@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Tawast",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 8,
-  "egrRank": 83,
-  "egrPoints": 15628.6,
-  "avgScore": 73.81,
-  "avgToCR": 69.32,
+  "tournamentsPlayed": 9,
+  "egrRank": 65,
+  "egrPoints": 17785.6,
+  "avgScore": 73.83,
+  "avgToCR": 69.52,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "16",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2157.02
+    },
     {
       "eventId": "12357",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:30:29.416Z",
+  "scrapedAt": "2026-10-05T14:11:21.509Z",
   "url": "https://www.europeangolfrankings.com/players/14470"
 }

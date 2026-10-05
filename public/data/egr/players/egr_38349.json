@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 1964,
-  "egrPoints": 282.88,
-  "avgScore": 83.12,
-  "avgToCR": 79.64,
+  "tournamentsPlayed": 9,
+  "egrRank": 2008,
+  "egrPoints": 260.75,
+  "avgScore": 83.46,
+  "avgToCR": 79.84,
   "events": [
     {
       "eventId": "11999",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11914",
-      "counting": false,
+      "counting": true,
       "pos": "26",
       "event": "Coppa D'Oro Citta Di Roma 2026",
       "venue": "Circolo del Golf Roma Acquasanta",
@@ -151,10 +151,11 @@
       "r2": 83,
       "r3": 79,
       "r4": null,
-      "egrPoints": 22.13
+      "egrPoints": 22.13,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:52.481Z",
+  "scrapedAt": "2026-10-05T14:19:25.768Z",
   "url": "https://www.europeangolfrankings.com/players/38349"
 }

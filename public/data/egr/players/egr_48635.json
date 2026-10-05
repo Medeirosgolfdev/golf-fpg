@@ -7,12 +7,26 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U14",
-  "tournamentsPlayed": 7,
-  "egrRank": 4736,
-  "egrPoints": 673.59,
-  "avgScore": 79,
-  "avgToCR": 78.9,
+  "tournamentsPlayed": 8,
+  "egrRank": 4612,
+  "egrPoints": 729.63,
+  "avgScore": 79.53,
+  "avgToCR": 79.58,
   "events": [
+    {
+      "eventId": "12006",
+      "counting": true,
+      "pos": "8",
+      "event": "Junior Trophy 2026",
+      "venue": "Golf Club Fioranello",
+      "country": "Italy",
+      "startDateRaw": "12. Sep 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 56.04
+    },
     {
       "eventId": "12000",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:12.687Z",
+  "scrapedAt": "2026-10-05T14:22:39.353Z",
   "url": "https://www.europeangolfrankings.com/players/48635"
 }

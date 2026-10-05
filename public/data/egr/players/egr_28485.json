@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Arzaga",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 569,
-  "egrPoints": 10080.6,
-  "avgScore": 73.44,
-  "avgToCR": 71.4,
+  "tournamentsPlayed": 9,
+  "egrRank": 621,
+  "egrPoints": 9565.83,
+  "avgScore": 73.83,
+  "avgToCR": 71.68,
   "events": [
     {
       "eventId": "11995",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11982",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Trofeo Citta' Di Treviso 2026",
       "venue": "Golf Villa Condulmer",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11901",
-      "counting": false,
+      "counting": true,
       "pos": "91",
       "event": "Italian National Closed Match Play Championships (Trofeo Giuseppe Silva) 2026",
       "venue": "Golf & CC Le Pavoniere",
@@ -151,10 +151,11 @@
       "r2": 76,
       "r3": 73,
       "r4": null,
-      "egrPoints": 770.14
+      "egrPoints": 770.14,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:41.385Z",
+  "scrapedAt": "2026-10-05T14:15:26.677Z",
   "url": "https://www.europeangolfrankings.com/players/28485"
 }

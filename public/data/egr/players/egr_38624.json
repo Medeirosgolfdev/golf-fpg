@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Fureso",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1394,
-  "egrPoints": 4655.07,
-  "avgScore": 75.47,
-  "avgToCR": 74.08,
+  "tournamentsPlayed": 14,
+  "egrRank": 1211,
+  "egrPoints": 5476.25,
+  "avgScore": 75.25,
+  "avgToCR": 73.47,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "8",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 669.07
+    },
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "15",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 656.01
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12582",
-      "counting": true,
+      "counting": false,
       "pos": "38",
       "event": "Kjeldsen Trophy 2026",
       "venue": "Fredensborg Golf Club (58)",
@@ -193,10 +221,11 @@
       "r2": 71,
       "r3": 71,
       "r4": null,
-      "egrPoints": 414.95
+      "egrPoints": 414.95,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:00.075Z",
+  "scrapedAt": "2026-10-05T14:19:37.344Z",
   "url": "https://www.europeangolfrankings.com/players/38624"
 }

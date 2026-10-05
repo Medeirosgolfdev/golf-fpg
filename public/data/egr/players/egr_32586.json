@@ -8,11 +8,25 @@
   "club": "Esbjerg",
   "ageGroup": "U21",
   "tournamentsPlayed": 13,
-  "egrRank": 874,
-  "egrPoints": 7457.59,
+  "egrRank": 625,
+  "egrPoints": 9550.75,
   "avgScore": 73,
-  "avgToCR": 72.17,
+  "avgToCR": 72.03,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "2",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 70,
+      "r2": 68,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 2559.44
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12584",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Mølleåens Junior- og Ynglinge Cup 2026",
       "venue": "Mølleåens Golf Klub",
@@ -193,10 +207,11 @@
       "r2": 72,
       "r3": 69,
       "r4": null,
-      "egrPoints": 414.95
+      "egrPoints": 414.95,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:08.964Z",
+  "scrapedAt": "2026-10-05T14:17:20.228Z",
   "url": "https://www.europeangolfrankings.com/players/32586"
 }

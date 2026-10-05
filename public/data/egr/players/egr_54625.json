@@ -7,15 +7,15 @@
   "country": "Finland",
   "club": "Viipurin",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 1732,
+  "tournamentsPlayed": 8,
+  "egrRank": 1724,
   "egrPoints": 415.26,
-  "avgScore": 85.38,
-  "avgToCR": 82.27,
+  "avgScore": 85.16,
+  "avgToCR": 81.81,
   "events": [
     {
       "eventId": "12369",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "FootJoy Finnish Junior Tour 8 (U18) 2026",
       "venue": "Nurmijärven Golfklubi (A&B&C)",
@@ -137,10 +137,11 @@
       "r2": 95,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:10.964Z",
+  "scrapedAt": "2026-10-05T14:24:52.500Z",
   "url": "https://www.europeangolfrankings.com/players/54625"
 }

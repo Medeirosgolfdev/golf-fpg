@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Rinkven",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 440,
-  "egrPoints": 4403.84,
-  "avgScore": 73,
-  "avgToCR": 72.78,
+  "tournamentsPlayed": 13,
+  "egrRank": 419,
+  "egrPoints": 4544.54,
+  "avgScore": 72.35,
+  "avgToCR": 72.9,
   "events": [
+    {
+      "eventId": "12935",
+      "counting": true,
+      "pos": "1",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 71,
+      "r2": 70,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 252.63
+    },
     {
       "eventId": "12917",
       "counting": false,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11762",
-      "counting": true,
+      "counting": false,
       "pos": "20",
       "event": "Omnium Classic of Belgium 2026",
       "venue": "Golf Club D'Hulencourt",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:47.830Z",
+  "scrapedAt": "2026-10-05T14:19:13.338Z",
   "url": "https://www.europeangolfrankings.com/players/37858"
 }

@@ -8,14 +8,28 @@
   "club": "Aalborg",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 1092,
-  "egrPoints": 6014.65,
-  "avgScore": 75,
-  "avgToCR": 73.58,
+  "egrRank": 1060,
+  "egrPoints": 6196.6,
+  "avgScore": 74.75,
+  "avgToCR": 73.46,
   "events": [
     {
-      "eventId": "12604",
+      "eventId": "12606",
       "counting": true,
+      "pos": "19",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 599.48
+    },
+    {
+      "eventId": "12604",
+      "counting": false,
       "pos": "54",
       "event": "DM Slagspil 2026",
       "venue": "Simon's Golf Club",
@@ -207,10 +221,11 @@
       "r2": 81,
       "r3": 75,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:42.001Z",
+  "scrapedAt": "2026-10-05T14:22:23.789Z",
   "url": "https://www.europeangolfrankings.com/players/48079"
 }

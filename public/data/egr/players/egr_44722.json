@@ -7,15 +7,29 @@
   "country": "France",
   "club": "Saint Germain",
   "ageGroup": "U16",
-  "tournamentsPlayed": 9,
-  "egrRank": 725,
-  "egrPoints": 2360.5,
-  "avgScore": 75.87,
-  "avgToCR": 74.39,
+  "tournamentsPlayed": 10,
+  "egrRank": 677,
+  "egrPoints": 2622.63,
+  "avgScore": 75.7,
+  "avgToCR": 74.37,
   "events": [
     {
-      "eventId": "12184",
+      "eventId": "11768",
       "counting": true,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
+    {
+      "eventId": "12184",
+      "counting": false,
       "pos": "22",
       "event": "Grand Prix de Saint Germain 2026",
       "venue": "Golf de St Germain",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:58.427Z",
+  "scrapedAt": "2026-10-05T14:21:22.573Z",
   "url": "https://www.europeangolfrankings.com/players/44722"
 }

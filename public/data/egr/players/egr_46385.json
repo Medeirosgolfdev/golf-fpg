@@ -8,11 +8,25 @@
   "club": "La Hacienda",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 1699,
-  "egrPoints": 3655.05,
-  "avgScore": 75.42,
-  "avgToCR": 74.38,
+  "egrRank": 1690,
+  "egrPoints": 3727.61,
+  "avgScore": 75.04,
+  "avgToCR": 73.53,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "10",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 78,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 238.74
+    },
     {
       "eventId": "12900",
       "counting": true,
@@ -221,10 +235,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 166.18
+      "egrPoints": 166.18,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:21.587Z",
+  "scrapedAt": "2026-10-05T14:21:55.372Z",
   "url": "https://www.europeangolfrankings.com/players/46385"
 }

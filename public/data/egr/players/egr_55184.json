@@ -1,18 +1,32 @@
 {
   "id": "55184",
-  "egrId": "FITA55184",
+  "egrId": "FFRA55184",
   "name": "Monica Magini",
   "lastName": "MAGINI",
   "firstName": "Monica",
-  "country": "Italy",
-  "club": "Rapallo",
+  "country": "France",
+  "club": "L'Esterel",
   "ageGroup": "U12",
-  "tournamentsPlayed": 1,
-  "egrRank": 3029,
+  "tournamentsPlayed": 2,
+  "egrRank": 3050,
   "egrPoints": 26.33,
-  "avgScore": 92,
-  "avgToCR": 95.6,
+  "avgScore": 95,
+  "avgToCR": 96.15,
   "events": [
+    {
+      "eventId": "12188",
+      "counting": true,
+      "pos": "19",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 99,
+      "r2": 93,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11972",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:58:07.213Z",
+  "scrapedAt": "2026-10-05T14:25:11.818Z",
   "url": "https://www.europeangolfrankings.com/players/55184"
 }

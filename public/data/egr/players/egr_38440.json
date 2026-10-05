@@ -7,7 +7,7 @@
   "country": "Italy",
   "club": "Montecchia",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
+  "tournamentsPlayed": 10,
   "egrRank": 21,
   "egrPoints": 40182.7,
   "avgScore": 71.1,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11661",
-      "counting": false,
+      "counting": true,
       "pos": "67",
       "event": "English Amateur Stroke Play (Brabazon) 2026",
       "venue": "Moortown Golf Club",
@@ -165,10 +165,11 @@
       "r2": 75,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1023.5
+      "egrPoints": 1023.5,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:53.674Z",
+  "scrapedAt": "2026-10-05T14:19:28.856Z",
   "url": "https://www.europeangolfrankings.com/players/38440"
 }

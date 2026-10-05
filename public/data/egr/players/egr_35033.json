@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Brigode",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 633,
+  "tournamentsPlayed": 15,
+  "egrRank": 635,
   "egrPoints": 2821.86,
   "avgScore": 79.8,
   "avgToCR": 77.13,
   "events": [
+    {
+      "eventId": "12927",
+      "counting": false,
+      "pos": "13",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 82,
+      "r2": 85,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:26.195Z",
+  "scrapedAt": "2026-10-05T14:18:13.705Z",
   "url": "https://www.europeangolfrankings.com/players/35033"
 }

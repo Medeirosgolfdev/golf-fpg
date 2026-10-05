@@ -8,11 +8,25 @@
   "club": "North Berwick",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 889,
+  "egrRank": 900,
   "egrPoints": 7258.53,
   "avgScore": 74.64,
   "avgToCR": 72.98,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": false,
+      "pos": "8",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 261.07
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11472",
-      "counting": false,
+      "counting": true,
       "pos": "13",
       "event": "GJG Tour Final 2025",
       "venue": "The Alto Golf Club",
@@ -193,10 +207,11 @@
       "r2": 75,
       "r3": 84,
       "r4": null,
-      "egrPoints": 96.17
+      "egrPoints": 96.17,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:07.876Z",
+  "scrapedAt": "2026-10-05T14:19:51.808Z",
   "url": "https://www.europeangolfrankings.com/players/39137"
 }

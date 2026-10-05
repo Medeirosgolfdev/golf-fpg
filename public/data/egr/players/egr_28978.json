@@ -8,11 +8,25 @@
   "club": "Mainz",
   "ageGroup": "U18",
   "tournamentsPlayed": 9,
-  "egrRank": 1364,
-  "egrPoints": 764.7,
-  "avgScore": 80.91,
-  "avgToCR": 78.8,
+  "egrRank": 1292,
+  "egrPoints": 855.33,
+  "avgScore": 81.78,
+  "avgToCR": 79.73,
   "events": [
+    {
+      "eventId": "12923",
+      "counting": true,
+      "pos": "4",
+      "event": "DGV-RP/S Meisterschaft AKOffen Damen 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 82,
+      "r2": 89,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 90.62
+    },
     {
       "eventId": "12909",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 79,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:45.878Z",
+  "scrapedAt": "2026-10-05T14:15:43.824Z",
   "url": "https://www.europeangolfrankings.com/players/28978"
 }

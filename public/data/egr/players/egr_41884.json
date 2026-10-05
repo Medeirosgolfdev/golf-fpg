@@ -7,8 +7,8 @@
   "country": "Denmark",
   "club": "Rungsted",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 14,
-  "egrRank": 1163,
+  "tournamentsPlayed": 13,
+  "egrRank": 1165,
   "egrPoints": 5646.7,
   "avgScore": 75.14,
   "avgToCR": 74.53,
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12579",
-      "counting": false,
+      "counting": true,
       "pos": "16",
       "event": "Kronberg Masters 2026",
       "venue": "Helsingør Golf Club (59)",
@@ -207,10 +207,11 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-18T22:06:23.148Z",
+  "scrapedAt": "2026-10-05T14:20:25.307Z",
   "url": "https://www.europeangolfrankings.com/players/41884"
 }

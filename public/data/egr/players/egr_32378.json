@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Balmoral",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 967,
+  "tournamentsPlayed": 12,
+  "egrRank": 971,
   "egrPoints": 6747.21,
   "avgScore": 73.45,
   "avgToCR": 72.47,
   "events": [
+    {
+      "eventId": "11687",
+      "counting": false,
+      "pos": "7",
+      "event": "Irish Elite WAGR Tour #11 2026",
+      "venue": "Lough Erne Resort",
+      "country": "Ireland",
+      "startDateRaw": "26. Sep 26",
+      "r1": 81,
+      "r2": 79,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 108.48
+    },
     {
       "eventId": "12850",
       "counting": true,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:06.542Z",
+  "scrapedAt": "2026-10-05T14:17:12.663Z",
   "url": "https://www.europeangolfrankings.com/players/32378"
 }

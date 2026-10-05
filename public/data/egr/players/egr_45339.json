@@ -7,12 +7,26 @@
   "country": "Latvia",
   "club": "Jurmala",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1181,
-  "egrPoints": 5556.48,
-  "avgScore": 73.46,
-  "avgToCR": 71.43,
+  "tournamentsPlayed": 10,
+  "egrRank": 1100,
+  "egrPoints": 5978.93,
+  "avgScore": 73.38,
+  "avgToCR": 71.25,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "70",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 422.45
+    },
     {
       "eventId": "11574",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11498",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "GJG Season Kick Off #2 2026",
       "venue": "Villa Padierna (Alferini)",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:08.917Z",
+  "scrapedAt": "2026-10-05T14:21:36.230Z",
   "url": "https://www.europeangolfrankings.com/players/45339"
 }

@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Edmondstown",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 11,
-  "egrRank": 178,
-  "egrPoints": 18795.9,
-  "avgScore": 72.12,
-  "avgToCR": 70,
+  "tournamentsPlayed": 12,
+  "egrRank": 157,
+  "egrPoints": 20914,
+  "avgScore": 72.22,
+  "avgToCR": 69.85,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "22",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 66,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 2118.18
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:39.986Z",
+  "scrapedAt": "2026-10-05T14:12:15.016Z",
   "url": "https://www.europeangolfrankings.com/players/19578"
 }

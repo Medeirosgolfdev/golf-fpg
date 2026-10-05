@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Limpachtal",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 1539,
-  "egrPoints": 4140.93,
-  "avgScore": 74.17,
-  "avgToCR": 74.6,
+  "tournamentsPlayed": 10,
+  "egrRank": 1569,
+  "egrPoints": 4120.72,
+  "avgScore": 74.25,
+  "avgToCR": 74.66,
   "events": [
     {
       "eventId": "12475",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12456",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Swiss Golf Junior Tour (Zürichsee) 2026",
       "venue": "Golfpark Zürichsee",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "10373",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "Swiss Golf Junior Tour Final (Waldkirch) 2025",
       "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
@@ -165,7 +165,8 @@
       "r2": 81,
       "r3": 81,
       "r4": null,
-      "egrPoints": 178.78
+      "egrPoints": 178.78,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -179,10 +180,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 162.76
+      "egrPoints": 162.76,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:41.147Z",
+  "scrapedAt": "2026-10-05T14:18:56.718Z",
   "url": "https://www.europeangolfrankings.com/players/36987"
 }

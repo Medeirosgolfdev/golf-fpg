@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 150,
-  "egrPoints": 11122.5,
-  "avgScore": 72.48,
-  "avgToCR": 69.65,
+  "tournamentsPlayed": 13,
+  "egrRank": 140,
+  "egrPoints": 11450.7,
+  "avgScore": 72.52,
+  "avgToCR": 69.61,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "16",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 72,
+      "r2": 72,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 2157.02
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -137,7 +151,7 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 2005.45
+      "egrPoints": 586.38
     },
     {
       "eventId": "12049",
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "10688",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Grand Prix de Valescure 2025",
       "venue": "Golf de Valescure",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:21.361Z",
+  "scrapedAt": "2026-10-05T14:20:22.118Z",
   "url": "https://www.europeangolfrankings.com/players/41506"
 }

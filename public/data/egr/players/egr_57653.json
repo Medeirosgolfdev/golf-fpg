@@ -8,11 +8,25 @@
   "club": "Esery",
   "ageGroup": "U12",
   "tournamentsPlayed": 4,
-  "egrRank": 6171,
-  "egrPoints": 350.25,
-  "avgScore": 80.71,
-  "avgToCR": 82.86,
+  "egrRank": 5638,
+  "egrPoints": 460.58,
+  "avgScore": 78.29,
+  "avgToCR": 79.51,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 110.34
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 90,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:20.466Z",
+  "scrapedAt": "2026-10-05T14:26:21.579Z",
   "url": "https://www.europeangolfrankings.com/players/57653"
 }

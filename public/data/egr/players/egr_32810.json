@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Franciacorta",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 351,
-  "egrPoints": 5558.74,
-  "avgScore": 76.08,
-  "avgToCR": 72.7,
+  "tournamentsPlayed": 12,
+  "egrRank": 360,
+  "egrPoints": 5378.31,
+  "avgScore": 76.12,
+  "avgToCR": 72.47,
   "events": [
     {
       "eventId": "12003",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "11988",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Trofeo Umberto Cristani 2026",
       "venue": "Golf Club Arzaga",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11985",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Mattone d'Oro 2026",
       "venue": "Golf Club Bergamo L'Albenza",
@@ -193,10 +193,11 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 374.38
+      "egrPoints": 374.38,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:10.399Z",
+  "scrapedAt": "2026-10-05T14:17:25.702Z",
   "url": "https://www.europeangolfrankings.com/players/32810"
 }

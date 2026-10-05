@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": null,
   "ageGroup": "U14",
-  "tournamentsPlayed": 8,
-  "egrRank": 2597,
-  "egrPoints": 2023.31,
-  "avgScore": 76.78,
-  "avgToCR": 76.73,
+  "tournamentsPlayed": 9,
+  "egrRank": 2439,
+  "egrPoints": 2232.27,
+  "avgScore": 76.89,
+  "avgToCR": 76.77,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "30",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 328.67
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "11355",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Finale AJGT presented by Bernd Wiesberger U14 2025",
       "venue": "Golf & Country Club Brunn",
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:05.703Z",
+  "scrapedAt": "2026-10-05T14:23:18.228Z",
   "url": "https://www.europeangolfrankings.com/players/50289"
 }

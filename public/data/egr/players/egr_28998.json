@@ -7,12 +7,26 @@
   "country": "England",
   "club": "Sunningdale",
   "ageGroup": "U25",
-  "tournamentsPlayed": 8,
-  "egrRank": 251,
-  "egrPoints": 7448.6,
-  "avgScore": 73.95,
-  "avgToCR": 72.68,
+  "tournamentsPlayed": 9,
+  "egrRank": 135,
+  "egrPoints": 11711.2,
+  "avgScore": 73.79,
+  "avgToCR": 72.15,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "6",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 70,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 4262.64
+    },
     {
       "eventId": "11766",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:36:04.954Z",
+  "scrapedAt": "2026-10-05T14:15:45.013Z",
   "url": "https://www.europeangolfrankings.com/players/28998"
 }

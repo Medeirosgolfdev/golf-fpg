@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Saint Malo",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 1312,
-  "egrPoints": 5023.35,
-  "avgScore": 73.84,
-  "avgToCR": 74.4,
+  "tournamentsPlayed": 10,
+  "egrRank": 1344,
+  "egrPoints": 4888.57,
+  "avgScore": 74.25,
+  "avgToCR": 74.58,
   "events": [
     {
       "eventId": "12163",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11649",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "Portuguese International U14 Championship (Major) 2025",
       "venue": "Quinta do Vale Golf Resort",
@@ -165,7 +165,8 @@
       "r2": 72,
       "r3": null,
       "r4": null,
-      "egrPoints": 361.68
+      "egrPoints": 361.68,
+      "_mantido": true
     },
     {
       "eventId": "11373",
@@ -179,10 +180,11 @@
       "r2": 75,
       "r3": 77,
       "r4": null,
-      "egrPoints": 322.58
+      "egrPoints": 322.58,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:03.017Z",
+  "scrapedAt": "2026-10-05T14:23:23.488Z",
   "url": "https://www.europeangolfrankings.com/players/50478"
 }

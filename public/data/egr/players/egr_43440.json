@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Paris CC",
   "ageGroup": "U14",
-  "tournamentsPlayed": 14,
-  "egrRank": 576,
-  "egrPoints": 10004.5,
-  "avgScore": 72.67,
-  "avgToCR": 72.12,
+  "tournamentsPlayed": 15,
+  "egrRank": 489,
+  "egrPoints": 11183.7,
+  "avgScore": 72.26,
+  "avgToCR": 71.42,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "3",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 69,
+      "r2": 69,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 1688.7
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12112",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:01.838Z",
+  "scrapedAt": "2026-10-05T14:20:57.244Z",
   "url": "https://www.europeangolfrankings.com/players/43440"
 }

@@ -7,12 +7,26 @@
   "country": "Turkey",
   "club": "Bodrum",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 2779,
-  "egrPoints": 1836.56,
-  "avgScore": 77.2,
-  "avgToCR": 74.78,
+  "tournamentsPlayed": 5,
+  "egrRank": 2412,
+  "egrPoints": 2265.22,
+  "avgScore": 77.08,
+  "avgToCR": 74.89,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "24",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 428.66
+    },
     {
       "eventId": "12870",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:06.124Z",
+  "scrapedAt": "2026-10-05T14:24:15.176Z",
   "url": "https://www.europeangolfrankings.com/players/53091"
 }

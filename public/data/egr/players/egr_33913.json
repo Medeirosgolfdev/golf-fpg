@@ -7,8 +7,8 @@
   "country": "England",
   "club": "Cleveland",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 246,
+  "tournamentsPlayed": 12,
+  "egrRank": 247,
   "egrPoints": 16908,
   "avgScore": 72.96,
   "avgToCR": 71.02,
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11807",
-      "counting": false,
+      "counting": true,
       "pos": "43",
       "event": "Sir Henry Cooper Junior Masters 2026",
       "venue": "King's Hill Golf Club",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11843",
-      "counting": false,
+      "counting": true,
       "pos": "84",
       "event": "French International U18 (Trophée Michel Carlhian) 2026",
       "venue": "Les Aisses Golf",
@@ -193,10 +193,11 @@
       "r2": 73,
       "r3": 75,
       "r4": null,
-      "egrPoints": 1127.49
+      "egrPoints": 1127.49,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:20.391Z",
+  "scrapedAt": "2026-10-05T14:17:54.648Z",
   "url": "https://www.europeangolfrankings.com/players/33913"
 }

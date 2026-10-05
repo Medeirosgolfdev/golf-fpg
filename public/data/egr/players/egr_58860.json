@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Wroclaw",
   "ageGroup": "U14",
-  "tournamentsPlayed": 1,
-  "egrRank": 10199,
+  "tournamentsPlayed": 2,
+  "egrRank": 10314,
   "egrPoints": 7.23,
-  "avgScore": 87.33,
-  "avgToCR": 95.03,
+  "avgScore": 86.17,
+  "avgToCR": 91.12,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "42",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 82,
+      "r2": 89,
+      "r3": 84,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11455",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:14.074Z",
+  "scrapedAt": "2026-10-05T14:26:45.121Z",
   "url": "https://www.europeangolfrankings.com/players/58860"
 }

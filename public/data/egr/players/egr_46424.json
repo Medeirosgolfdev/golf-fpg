@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Open Golf",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 2762,
-  "egrPoints": 61.44,
-  "avgScore": 81.83,
-  "avgToCR": 79.53,
+  "tournamentsPlayed": 1,
+  "egrRank": 2981,
+  "egrPoints": 33.6,
+  "avgScore": 94.67,
+  "avgToCR": 88.17,
   "events": [
+    {
+      "eventId": "12925",
+      "counting": true,
+      "pos": "5",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 101,
+      "r2": 94,
+      "r3": 89,
+      "r4": null,
+      "egrPoints": 33.6
+    },
     {
       "eventId": "11319",
       "counting": true,
@@ -25,7 +39,8 @@
       "r2": 80,
       "r3": 77,
       "r4": null,
-      "egrPoints": 26.28
+      "egrPoints": 26.28,
+      "_mantido": true
     },
     {
       "eventId": "11340",
@@ -39,10 +54,11 @@
       "r2": 82,
       "r3": 78,
       "r4": null,
-      "egrPoints": 35.16
+      "egrPoints": 35.16,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:07:22.041Z",
+  "scrapedAt": "2026-10-05T14:21:56.645Z",
   "url": "https://www.europeangolfrankings.com/players/46424"
 }

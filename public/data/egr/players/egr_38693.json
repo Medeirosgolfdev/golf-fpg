@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Greenock",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 764,
-  "egrPoints": 2197.09,
-  "avgScore": 75.76,
-  "avgToCR": 74.47,
+  "tournamentsPlayed": 16,
+  "egrRank": 738,
+  "egrPoints": 2337.27,
+  "avgScore": 75.29,
+  "avgToCR": 74.03,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "2",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 70,
+      "r2": 72,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 268.93
+    },
     {
       "eventId": "11722",
       "counting": false,
@@ -211,7 +225,7 @@
     },
     {
       "eventId": "11704",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Junior Tour Royal Dornoch Girls 2026",
       "venue": "Royal Dornoch GC",
@@ -235,7 +249,8 @@
       "r2": 79,
       "r3": 77,
       "r4": null,
-      "egrPoints": 17.71
+      "egrPoints": 17.71,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -249,10 +264,11 @@
       "r2": 87,
       "r3": 75,
       "r4": null,
-      "egrPoints": 53.69
+      "egrPoints": 53.69,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:01.858Z",
+  "scrapedAt": "2026-10-05T14:19:39.513Z",
   "url": "https://www.europeangolfrankings.com/players/38693"
 }

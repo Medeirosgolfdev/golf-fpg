@@ -7,8 +7,8 @@
   "country": "France",
   "club": "Valescure",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1147,
+  "tournamentsPlayed": 9,
+  "egrRank": 1142,
   "egrPoints": 1092.44,
   "avgScore": 78.88,
   "avgToCR": 76.03,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12040",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de St. Donat",
@@ -151,10 +151,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:21.160Z",
+  "scrapedAt": "2026-10-05T14:20:21.998Z",
   "url": "https://www.europeangolfrankings.com/players/41504"
 }

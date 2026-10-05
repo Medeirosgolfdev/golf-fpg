@@ -7,15 +7,29 @@
   "country": "Switzerland",
   "club": "Evian",
   "ageGroup": "U12",
-  "tournamentsPlayed": 10,
-  "egrRank": 3943,
-  "egrPoints": 986.95,
-  "avgScore": 75.82,
-  "avgToCR": 77.91,
+  "tournamentsPlayed": 9,
+  "egrRank": 4045,
+  "egrPoints": 950.49,
+  "avgScore": 76.27,
+  "avgToCR": 78.07,
   "events": [
     {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "25",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 81,
+      "r2": 82,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 53.24
+    },
+    {
       "eventId": "12478",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "Swiss Golf National U14 (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -137,7 +151,8 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 95.84
+      "egrPoints": 95.84,
+      "_mantido": true
     },
     {
       "eventId": "11385",
@@ -151,10 +166,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 89.7
+      "egrPoints": 89.7,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:10.600Z",
+  "scrapedAt": "2026-10-05T14:25:20.848Z",
   "url": "https://www.europeangolfrankings.com/players/55545"
 }

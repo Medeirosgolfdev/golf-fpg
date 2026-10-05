@@ -7,15 +7,29 @@
   "country": "France",
   "club": "Lyon",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 180,
-  "egrPoints": 9958.3,
-  "avgScore": 74.39,
-  "avgToCR": 71.21,
+  "tournamentsPlayed": 13,
+  "egrRank": 125,
+  "egrPoints": 12134.5,
+  "avgScore": 73.67,
+  "avgToCR": 70.68,
   "events": [
     {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "8",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 70,
+      "r2": 69,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 3008.93
+    },
+    {
       "eventId": "12184",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Grand Prix de Saint Germain 2026",
       "venue": "Golf de St Germain",
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "99",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -137,7 +151,7 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 739.99
+      "egrPoints": 0
     },
     {
       "eventId": "12044",
@@ -193,7 +207,8 @@
       "r2": 78,
       "r3": 79,
       "r4": null,
-      "egrPoints": 98.21
+      "egrPoints": 98.21,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -207,10 +222,11 @@
       "r2": 79,
       "r3": 74,
       "r4": null,
-      "egrPoints": 599.16
+      "egrPoints": 599.16,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:16.977Z",
+  "scrapedAt": "2026-10-05T14:21:49.905Z",
   "url": "https://www.europeangolfrankings.com/players/46023"
 }

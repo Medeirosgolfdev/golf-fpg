@@ -5,14 +5,28 @@
   "lastName": "CAMILLATO",
   "firstName": "Clara",
   "country": "France",
-  "club": "Ozoir",
+  "club": "Fontainbleau",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 1549,
+  "tournamentsPlayed": 2,
+  "egrRank": 1552,
   "egrPoints": 552.22,
-  "avgScore": 76.75,
-  "avgToCR": 72.75,
+  "avgScore": 77.5,
+  "avgToCR": 73.8,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "71",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11369",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:16.348Z",
+  "scrapedAt": "2026-10-05T14:20:11.387Z",
   "url": "https://www.europeangolfrankings.com/players/40365"
 }

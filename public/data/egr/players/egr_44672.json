@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Strathaven",
   "ageGroup": "U18",
-  "tournamentsPlayed": 9,
-  "egrRank": 1993,
+  "tournamentsPlayed": 8,
+  "egrRank": 1997,
   "egrPoints": 2973.34,
   "avgScore": 75.55,
   "avgToCR": 75.66,
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12729",
-      "counting": false,
+      "counting": true,
       "pos": "56",
       "event": "Goswick Classic (SGF) 2026",
       "venue": "Goswick Golf Club",
@@ -137,10 +137,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 156.41
+      "egrPoints": 156.41,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:58.125Z",
+  "scrapedAt": "2026-10-05T14:21:21.800Z",
   "url": "https://www.europeangolfrankings.com/players/44672"
 }

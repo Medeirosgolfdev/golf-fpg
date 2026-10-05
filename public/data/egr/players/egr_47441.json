@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Fureso",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 735,
-  "egrPoints": 8603.99,
-  "avgScore": 73.48,
-  "avgToCR": 72.3,
+  "tournamentsPlayed": 17,
+  "egrRank": 709,
+  "egrPoints": 8914.42,
+  "avgScore": 73.95,
+  "avgToCR": 72.46,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "50",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 74,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 901.04
+    },
+    {
+      "eventId": "12606",
+      "counting": false,
+      "pos": "27",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 446.02
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -43,7 +71,7 @@
     },
     {
       "eventId": "12596",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Dormy Elite Tour III Drenge U22 2026",
       "venue": "Esbjerg Golfklub",
@@ -225,6 +253,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:30.022Z",
+  "scrapedAt": "2026-10-05T14:22:07.004Z",
   "url": "https://www.europeangolfrankings.com/players/47441"
 }

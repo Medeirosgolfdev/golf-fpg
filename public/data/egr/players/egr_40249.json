@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "St. Leon-Rot",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 61,
-  "egrPoints": 18145.7,
-  "avgScore": 72.71,
-  "avgToCR": 69.37,
+  "tournamentsPlayed": 13,
+  "egrRank": 59,
+  "egrPoints": 18327.1,
+  "avgScore": 72.92,
+  "avgToCR": 69.54,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "6",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 994.25
+    },
     {
       "eventId": "12909",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12704",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "DGV-BWGV 2. AK16-18 Mädchen 2026",
       "venue": "Heddesheim",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:14.924Z",
+  "scrapedAt": "2026-10-05T14:20:09.366Z",
   "url": "https://www.europeangolfrankings.com/players/40249"
 }

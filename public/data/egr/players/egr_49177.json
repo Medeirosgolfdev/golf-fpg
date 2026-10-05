@@ -7,12 +7,26 @@
   "country": "Finland",
   "club": "Suur-Helsingin",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 2773,
-  "egrPoints": 1840.01,
-  "avgScore": 79.41,
-  "avgToCR": 78.75,
+  "tournamentsPlayed": 10,
+  "egrRank": 2987,
+  "egrPoints": 1633.01,
+  "avgScore": 80.48,
+  "avgToCR": 79.31,
   "events": [
+    {
+      "eventId": "12364",
+      "counting": true,
+      "pos": "61",
+      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
+      "venue": "Aulangon Golfklubi (Eversti)",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 84,
+      "r2": 84,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12366",
       "counting": true,
@@ -33,20 +47,6 @@
       "pos": "61",
       "event": "FootJoy Finnish Junior Tour 7 U18/U21 2026",
       "venue": "Tahkon Golfseura",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 84,
-      "r2": 84,
-      "r3": 88,
-      "r4": null,
-      "egrPoints": 0
-    },
-    {
-      "eventId": "12364",
-      "counting": false,
-      "pos": "61",
-      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
-      "venue": "Aulangon Golfklubi (Eversti)",
       "country": "Finland",
       "startDateRaw": "08. Aug 26",
       "r1": 84,
@@ -165,10 +165,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 207
+      "egrPoints": 207,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:56.948Z",
+  "scrapedAt": "2026-10-05T14:22:46.309Z",
   "url": "https://www.europeangolfrankings.com/players/49177"
 }

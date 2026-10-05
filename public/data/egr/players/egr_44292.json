@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1796,
+  "tournamentsPlayed": 10,
+  "egrRank": 1800,
   "egrPoints": 3421.81,
   "avgScore": 76.82,
   "avgToCR": 75.58,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12217",
-      "counting": false,
+      "counting": true,
       "pos": "36",
       "event": "Triple A European Invitational 2026",
       "venue": "Real Club de Golf Sotogrande",
@@ -165,10 +165,11 @@
       "r2": 74,
       "r3": 78,
       "r4": null,
-      "egrPoints": 130.52
+      "egrPoints": 130.52,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:51.557Z",
+  "scrapedAt": "2026-10-05T14:21:13.214Z",
   "url": "https://www.europeangolfrankings.com/players/44292"
 }

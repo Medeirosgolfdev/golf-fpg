@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Aisses",
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 1597,
+  "tournamentsPlayed": 5,
+  "egrRank": 1594,
   "egrPoints": 510.5,
-  "avgScore": 80.67,
-  "avgToCR": 80.68,
+  "avgScore": 81.27,
+  "avgToCR": 80.72,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "96",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 84,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12164",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:47.503Z",
+  "scrapedAt": "2026-10-05T14:21:22.546Z",
   "url": "https://www.europeangolfrankings.com/players/44705"
 }

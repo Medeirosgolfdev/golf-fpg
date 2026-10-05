@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 1115,
-  "egrPoints": 1153.59,
-  "avgScore": 79.29,
-  "avgToCR": 79.59,
+  "tournamentsPlayed": 9,
+  "egrRank": 1131,
+  "egrPoints": 1115.59,
+  "avgScore": 79.53,
+  "avgToCR": 79.41,
   "events": [
     {
       "eventId": "11782",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "12098",
-      "counting": false,
+      "counting": true,
       "pos": "23",
       "event": "Grand Prix de Bondues 2026",
       "venue": "Golf de Bondues",
@@ -151,10 +151,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 38
+      "egrPoints": 38,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:44.234Z",
+  "scrapedAt": "2026-10-05T14:23:27.288Z",
   "url": "https://www.europeangolfrankings.com/players/50618"
 }

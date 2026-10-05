@@ -8,11 +8,25 @@
   "club": "Aix-Marseille",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 654,
-  "egrPoints": 9118.91,
-  "avgScore": 72.3,
-  "avgToCR": 72.6,
+  "egrRank": 462,
+  "egrPoints": 11579.1,
+  "avgScore": 73.04,
+  "avgToCR": 72.1,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 66,
+      "r2": 68,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 2833.95
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12056",
-      "counting": false,
+      "counting": true,
       "pos": "66",
       "event": "Grand Prix de Château L'Arc 2026",
       "venue": "Château l'Arc Golf Club",
@@ -137,10 +151,11 @@
       "r2": 74,
       "r3": 82,
       "r4": null,
-      "egrPoints": 373.75
+      "egrPoints": 373.75,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:38:46.314Z",
+  "scrapedAt": "2026-10-05T14:18:32.505Z",
   "url": "https://www.europeangolfrankings.com/players/35979"
 }

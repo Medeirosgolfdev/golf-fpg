@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Prunevelle",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 2009,
-  "egrPoints": 260.54,
-  "avgScore": 82,
-  "avgToCR": 82.68,
+  "tournamentsPlayed": 3,
+  "egrRank": 1993,
+  "egrPoints": 267.33,
+  "avgScore": 82.38,
+  "avgToCR": 82.46,
   "events": [
+    {
+      "eventId": "12190",
+      "counting": true,
+      "pos": "6",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 87,
+      "r2": 86,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 6.79
+    },
     {
       "eventId": "12242",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:50.757Z",
+  "scrapedAt": "2026-10-05T14:25:33.519Z",
   "url": "https://www.europeangolfrankings.com/players/55921"
 }

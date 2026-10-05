@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Otelfingen",
   "ageGroup": "U18",
-  "tournamentsPlayed": 17,
-  "egrRank": 433,
-  "egrPoints": 11930.8,
-  "avgScore": 71.67,
-  "avgToCR": 71.1,
+  "tournamentsPlayed": 16,
+  "egrRank": 366,
+  "egrPoints": 13341.1,
+  "avgScore": 71.78,
+  "avgToCR": 71.04,
   "events": [
     {
       "eventId": "12264",
@@ -26,6 +26,20 @@
       "r3": 72,
       "r4": 76,
       "egrPoints": 2025.58
+    },
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "2",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": 68,
+      "r4": null,
+      "egrPoints": 1983.2
     },
     {
       "eventId": "12475",
@@ -99,7 +113,7 @@
     },
     {
       "eventId": "12457",
-      "counting": true,
+      "counting": false,
       "pos": "15",
       "event": "Swiss Golf West Championship (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -235,7 +249,8 @@
       "r2": 82,
       "r3": 77,
       "r4": null,
-      "egrPoints": 91.81
+      "egrPoints": 91.81,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -249,10 +264,11 @@
       "r2": 78,
       "r3": null,
       "r4": null,
-      "egrPoints": 162.76
+      "egrPoints": 162.76,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:56.139Z",
+  "scrapedAt": "2026-10-05T14:19:31.470Z",
   "url": "https://www.europeangolfrankings.com/players/38508"
 }

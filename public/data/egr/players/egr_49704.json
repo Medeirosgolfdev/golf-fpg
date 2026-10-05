@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 1495,
-  "egrPoints": 4288.36,
-  "avgScore": 76.17,
-  "avgToCR": 74.62,
+  "tournamentsPlayed": 17,
+  "egrRank": 1433,
+  "egrPoints": 4536.58,
+  "avgScore": 76,
+  "avgToCR": 74.49,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "26",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 71,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 486.4
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12812",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "West Coast Masters 2026",
       "venue": "Breinholtgård Golf Klub (60)",
@@ -239,6 +253,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:08.017Z",
+  "scrapedAt": "2026-10-05T14:23:03.848Z",
   "url": "https://www.europeangolfrankings.com/players/49704"
 }

@@ -8,11 +8,25 @@
   "club": "Delamere Forest",
   "ageGroup": "U16",
   "tournamentsPlayed": 11,
-  "egrRank": 2618,
-  "egrPoints": 1999.91,
-  "avgScore": 78.15,
-  "avgToCR": 77.95,
+  "egrRank": 2507,
+  "egrPoints": 2156.31,
+  "avgScore": 77.74,
+  "avgToCR": 76.68,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "17",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 77,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 176.2
+    },
     {
       "eventId": "11812",
       "counting": false,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11390",
-      "counting": false,
+      "counting": true,
       "pos": "34",
       "event": "Triple A European Classic 2025",
       "venue": "San Roque Golf Club",
@@ -165,10 +179,11 @@
       "r2": 90,
       "r3": 79,
       "r4": null,
-      "egrPoints": 19.8
+      "egrPoints": 19.8,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-21T12:40:47.250Z",
+  "scrapedAt": "2026-10-05T14:21:39.769Z",
   "url": "https://www.europeangolfrankings.com/players/45592"
 }

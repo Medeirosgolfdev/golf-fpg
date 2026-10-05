@@ -7,11 +7,11 @@
   "country": "Netherlands",
   "club": "Brunssummerheide",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 12,
-  "egrRank": 101,
-  "egrPoints": 25322.9,
-  "avgScore": 70.4,
-  "avgToCR": 68.75,
+  "tournamentsPlayed": 11,
+  "egrRank": 124,
+  "egrPoints": 23955.1,
+  "avgScore": 71.78,
+  "avgToCR": 69.41,
   "events": [
     {
       "eventId": "12535",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11661",
-      "counting": false,
+      "counting": true,
       "pos": "85",
       "event": "English Amateur Stroke Play (Brabazon) 2026",
       "venue": "Moortown Golf Club",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "12521",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Voorjaarswedstrijd Heren 2026",
       "venue": "Golfbaan Stippelberg",
@@ -179,10 +179,11 @@
       "r2": 69,
       "r3": 68,
       "r4": null,
-      "egrPoints": 4496.19
+      "egrPoints": 4496.19,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:41.843Z",
+  "scrapedAt": "2026-10-05T14:14:32.130Z",
   "url": "https://www.europeangolfrankings.com/players/26654"
 }

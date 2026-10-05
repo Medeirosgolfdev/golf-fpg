@@ -1,18 +1,32 @@
 {
   "id": "55084",
   "egrId": "MITA55084",
-  "name": "Tommaso Testori",
+  "name": "Tommasco Testori",
   "lastName": "TESTORI",
-  "firstName": "Tommaso",
+  "firstName": "Tommasco",
   "country": "Italy",
   "club": "Bogogno",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 5271,
-  "egrPoints": 528.34,
-  "avgScore": 79.56,
-  "avgToCR": 79.48,
+  "tournamentsPlayed": 8,
+  "egrRank": 4871,
+  "egrPoints": 646.47,
+  "avgScore": 79.33,
+  "avgToCR": 78.89,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "23",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 118.13
+    },
     {
       "eventId": "11989",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:17.524Z",
+  "scrapedAt": "2026-10-05T14:25:07.480Z",
   "url": "https://www.europeangolfrankings.com/players/55084"
 }

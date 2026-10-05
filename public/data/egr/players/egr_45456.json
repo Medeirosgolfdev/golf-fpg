@@ -7,15 +7,43 @@
   "country": "France",
   "club": "Toulouse",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 496,
-  "egrPoints": 3970.53,
-  "avgScore": 75,
-  "avgToCR": 72.42,
+  "tournamentsPlayed": 13,
+  "egrRank": 492,
+  "egrPoints": 3886.91,
+  "avgScore": 74.62,
+  "avgToCR": 72.5,
   "events": [
     {
-      "eventId": "12176",
+      "eventId": "12195",
       "counting": true,
+      "pos": "3",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 74,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 250.53
+    },
+    {
+      "eventId": "12182",
+      "counting": true,
+      "pos": "2",
+      "event": "Grand Prix de la Loire Forez 2026",
+      "venue": "Golf Club du Forez",
+      "country": "France",
+      "startDateRaw": "28. Aug 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 287.15
+    },
+    {
+      "eventId": "12176",
+      "counting": false,
       "pos": "9",
       "event": "Grand Prix du Médoc 2026",
       "venue": "Golf du Médoc",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "12040",
-      "counting": true,
+      "counting": false,
       "pos": "20",
       "event": "Grand Prix Saint Donat 2026",
       "venue": "Golf de St. Donat",
@@ -169,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:09.849Z",
+  "scrapedAt": "2026-10-05T14:21:37.541Z",
   "url": "https://www.europeangolfrankings.com/players/45456"
 }

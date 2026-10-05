@@ -8,11 +8,25 @@
   "club": "Sobienie Krolewskie",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 2559,
-  "egrPoints": 2074.33,
-  "avgScore": 75.88,
-  "avgToCR": 75.05,
+  "egrRank": 2322,
+  "egrPoints": 2391.61,
+  "avgScore": 75.4,
+  "avgToCR": 74.88,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "7",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 191.52
+    },
     {
       "eventId": "12435",
       "counting": true,
@@ -68,6 +82,20 @@
       "r3": 75,
       "r4": null,
       "egrPoints": 227.59
+    },
+    {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "29",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 76,
+      "r2": 83,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 449.61
     },
     {
       "eventId": "11453",
@@ -137,7 +165,8 @@
       "r2": 78,
       "r3": 84,
       "r4": null,
-      "egrPoints": 99.1
+      "egrPoints": 99.1,
+      "_mantido": true
     },
     {
       "eventId": "11336",
@@ -151,10 +180,11 @@
       "r2": 80,
       "r3": 73,
       "r4": null,
-      "egrPoints": 224.75
+      "egrPoints": 224.75,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:21.749Z",
+  "scrapedAt": "2026-10-05T14:21:55.508Z",
   "url": "https://www.europeangolfrankings.com/players/46402"
 }

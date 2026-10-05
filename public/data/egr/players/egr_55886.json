@@ -8,11 +8,25 @@
   "club": "Trois Vallons",
   "ageGroup": "U12",
   "tournamentsPlayed": 4,
-  "egrRank": 2518,
-  "egrPoints": 103.31,
-  "avgScore": 85.43,
-  "avgToCR": 87.24,
+  "egrRank": 2373,
+  "egrPoints": 140.71,
+  "avgScore": 83.29,
+  "avgToCR": 83.96,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "9",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 37.39
+    },
     {
       "eventId": "12241",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 93,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:57.068Z",
+  "scrapedAt": "2026-10-05T14:25:31.902Z",
   "url": "https://www.europeangolfrankings.com/players/55886"
 }

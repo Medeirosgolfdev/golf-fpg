@@ -7,12 +7,26 @@
   "country": "Belguim",
   "club": "National Brussels",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 2079,
+  "tournamentsPlayed": 15,
+  "egrRank": 2088,
   "egrPoints": 2790.33,
   "avgScore": 76.83,
   "avgToCR": 76.38,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": false,
+      "pos": "39",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 85,
+      "r2": 76,
+      "r3": 87,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11761",
       "counting": true,
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:33.596Z",
+  "scrapedAt": "2026-10-05T14:23:53.459Z",
   "url": "https://www.europeangolfrankings.com/players/52044"
 }

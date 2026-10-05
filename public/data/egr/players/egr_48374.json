@@ -5,14 +5,28 @@
   "lastName": "BARRIER",
   "firstName": "Leonie",
   "country": "France",
-  "club": "Lyon Salvagny",
+  "club": "Volcans",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 2914,
-  "egrPoints": 40.9,
-  "avgScore": 81.2,
-  "avgToCR": 80.16,
+  "tournamentsPlayed": 3,
+  "egrRank": 2878,
+  "egrPoints": 47.69,
+  "avgScore": 81.88,
+  "avgToCR": 80.89,
   "events": [
+    {
+      "eventId": "12190",
+      "counting": true,
+      "pos": "6",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 81,
+      "r2": 82,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 6.79
+    },
     {
       "eventId": "12178",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:47.571Z",
+  "scrapedAt": "2026-10-05T14:22:32.122Z",
   "url": "https://www.europeangolfrankings.com/players/48374"
 }

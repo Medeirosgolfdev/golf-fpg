@@ -5,15 +5,30 @@
   "lastName": "KNITTER",
   "firstName": "Sarah",
   "country": "Germany",
-  "club": null,
+  "club": "Hamburg",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 0,
-  "egrRank": 3302,
+  "tournamentsPlayed": 1,
+  "egrRank": 3338,
   "egrPoints": 0,
   "avgScore": 0,
   "avgToCR": 0,
-  "events": [],
+  "events": [
+    {
+      "eventId": "12434",
+      "counting": true,
+      "pos": "29",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": null,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    }
+  ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:31:35.312Z",
+  "scrapedAt": "2026-10-05T14:12:11.567Z",
   "url": "https://www.europeangolfrankings.com/players/19261"
 }

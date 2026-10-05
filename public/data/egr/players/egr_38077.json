@@ -8,11 +8,25 @@
   "club": "Aura",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 633,
-  "egrPoints": 9455.86,
-  "avgScore": 73.59,
-  "avgToCR": 71.98,
+  "egrRank": 408,
+  "egrPoints": 12473,
+  "avgScore": 73.45,
+  "avgToCR": 71.57,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "1",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 3372.81
+    },
     {
       "eventId": "12372",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 355.65
+      "egrPoints": 355.65,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:50.365Z",
+  "scrapedAt": "2026-10-05T14:19:18.412Z",
   "url": "https://www.europeangolfrankings.com/players/38077"
 }

@@ -8,10 +8,10 @@
   "club": "Chemnitz",
   "ageGroup": "U18",
   "tournamentsPlayed": 6,
-  "egrRank": 4598,
-  "egrPoints": 716.92,
-  "avgScore": 77.5,
-  "avgToCR": 76.53,
+  "egrRank": 3623,
+  "egrPoints": 1160.56,
+  "avgScore": 78.12,
+  "avgToCR": 77.05,
   "events": [
     {
       "eventId": "12507",
@@ -40,6 +40,20 @@
       "r3": 79,
       "r4": null,
       "egrPoints": 79.85
+    },
+    {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "30",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 78,
+      "r2": 83,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 443.64
     },
     {
       "eventId": "12640",
@@ -95,10 +109,11 @@
       "r2": 82,
       "r3": 82,
       "r4": null,
-      "egrPoints": 148.85
+      "egrPoints": 148.85,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:01.422Z",
+  "scrapedAt": "2026-10-05T14:19:38.902Z",
   "url": "https://www.europeangolfrankings.com/players/38669"
 }

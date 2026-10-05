@@ -8,11 +8,25 @@
   "club": "Strasbourg",
   "ageGroup": "Adult",
   "tournamentsPlayed": 9,
-  "egrRank": 2065,
-  "egrPoints": 2811.94,
-  "avgScore": 76.28,
-  "avgToCR": 75.74,
+  "egrRank": 2085,
+  "egrPoints": 2794.56,
+  "avgScore": 77,
+  "avgToCR": 75.99,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "24",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 78,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 757.67
+    },
     {
       "eventId": "11671",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12077",
-      "counting": false,
+      "counting": true,
       "pos": "85",
       "event": "Grand Prix de Saint-Cloud 2026",
       "venue": "Golf de Saint-Cloud",
@@ -137,10 +151,11 @@
       "r2": 69,
       "r3": 72,
       "r4": null,
-      "egrPoints": 775.05
+      "egrPoints": 775.05,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:35:04.030Z",
+  "scrapedAt": "2026-10-05T14:14:49.731Z",
   "url": "https://www.europeangolfrankings.com/players/27244"
 }

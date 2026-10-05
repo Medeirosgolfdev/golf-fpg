@@ -7,12 +7,26 @@
   "country": "Norway",
   "club": "Losby",
   "ageGroup": "U14",
-  "tournamentsPlayed": 19,
-  "egrRank": 683,
-  "egrPoints": 2572.38,
-  "avgScore": 73.58,
-  "avgToCR": 71.76,
+  "tournamentsPlayed": 18,
+  "egrRank": 548,
+  "egrPoints": 3395.26,
+  "avgScore": 73.37,
+  "avgToCR": 71.79,
   "events": [
+    {
+      "eventId": "12335",
+      "counting": true,
+      "pos": "2",
+      "event": "Srixon Tour 8 Finale (U19) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 694.79
+    },
     {
       "eventId": "12330",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12309",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Garmin Norgescup #3 2026",
       "venue": "Moss & Rygge GK (53)",
@@ -263,7 +277,8 @@
       "r2": 78,
       "r3": 80,
       "r4": null,
-      "egrPoints": 111.12
+      "egrPoints": 111.12,
+      "_mantido": true
     },
     {
       "eventId": "10873",
@@ -277,10 +292,11 @@
       "r2": 75,
       "r3": 77,
       "r4": null,
-      "egrPoints": 149.63
+      "egrPoints": 149.63,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.986Z",
+  "scrapedAt": "2026-10-05T14:24:17.408Z",
   "url": "https://www.europeangolfrankings.com/players/53184"
 }

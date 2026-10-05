@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Winge",
   "ageGroup": "U14",
-  "tournamentsPlayed": 12,
-  "egrRank": 1084,
-  "egrPoints": 1218.9,
-  "avgScore": 73.53,
-  "avgToCR": 76.47,
+  "tournamentsPlayed": 13,
+  "egrRank": 943,
+  "egrPoints": 1583.58,
+  "avgScore": 74.05,
+  "avgToCR": 76.28,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "29",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 78,
+      "r2": 76,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 419.81
+    },
     {
       "eventId": "11755",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12863",
-      "counting": true,
+      "counting": false,
       "pos": "2",
       "event": "Junior 14 (No.6) 2026",
       "venue": "Golf La Bruyere",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:43.976Z",
+  "scrapedAt": "2026-10-05T14:22:06.448Z",
   "url": "https://www.europeangolfrankings.com/players/47408"
 }

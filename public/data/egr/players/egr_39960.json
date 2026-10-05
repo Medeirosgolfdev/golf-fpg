@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Gaillon",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 1529,
-  "egrPoints": 4128.32,
-  "avgScore": 74.9,
-  "avgToCR": 74.88,
+  "tournamentsPlayed": 10,
+  "egrRank": 1364,
+  "egrPoints": 4792.3,
+  "avgScore": 75.83,
+  "avgToCR": 75.04,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "32",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 663.98
+    },
     {
       "eventId": "12183",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:39:55.349Z",
+  "scrapedAt": "2026-10-05T14:20:03.452Z",
   "url": "https://www.europeangolfrankings.com/players/39960"
 }

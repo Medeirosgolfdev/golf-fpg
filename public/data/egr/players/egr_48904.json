@@ -8,11 +8,25 @@
   "club": "Kempferhof",
   "ageGroup": "U14",
   "tournamentsPlayed": 9,
-  "egrRank": 780,
+  "egrRank": 792,
   "egrPoints": 2121.78,
   "avgScore": 78.11,
   "avgToCR": 77.41,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "71",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12242",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12111",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "Grand Prix Jeunes Majeur Filles U14 2026",
       "venue": "Golf de Bondues (Hawtree)",
@@ -137,10 +151,11 @@
       "r2": 82,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:42.642Z",
+  "scrapedAt": "2026-10-05T14:22:41.191Z",
   "url": "https://www.europeangolfrankings.com/players/48904"
 }

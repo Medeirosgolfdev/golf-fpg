@@ -8,11 +8,25 @@
   "club": "Helsingin",
   "ageGroup": "U16",
   "tournamentsPlayed": 16,
-  "egrRank": 1202,
+  "egrRank": 1209,
   "egrPoints": 5481.8,
   "avgScore": 76.17,
   "avgToCR": 74.26,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": false,
+      "pos": "41",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 89,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 122.56
+    },
     {
       "eventId": "12372",
       "counting": true,
@@ -56,20 +70,6 @@
       "egrPoints": 138.02
     },
     {
-      "eventId": "12366",
-      "counting": true,
-      "pos": "2",
-      "event": "FootJoy Finnish Junior Tour 7 (U18) 2026",
-      "venue": "Tahko Golf (Lake & Forest)",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 77,
-      "r2": 74,
-      "r3": 72,
-      "r4": null,
-      "egrPoints": 893.63
-    },
-    {
       "eventId": "12915",
       "counting": true,
       "pos": "5",
@@ -96,6 +96,20 @@
       "r3": 72,
       "r4": null,
       "egrPoints": 699.6
+    },
+    {
+      "eventId": "12366",
+      "counting": true,
+      "pos": "2",
+      "event": "FootJoy Finnish Junior Tour 7 (U18) 2026",
+      "venue": "Tahko Golf (Lake & Forest)",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 893.63
     },
     {
       "eventId": "12427",
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "12341",
-      "counting": false,
+      "counting": true,
       "pos": "13",
       "event": "FootJoy Finnish Junior Tour 2 (U18) 2026",
       "venue": "Archipelagia Golf Club",
@@ -235,10 +249,11 @@
       "r2": 81,
       "r3": 76,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:02.630Z",
+  "scrapedAt": "2026-10-05T14:21:27.785Z",
   "url": "https://www.europeangolfrankings.com/players/44989"
 }

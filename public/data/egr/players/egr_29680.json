@@ -7,12 +7,26 @@
   "country": "Netherlands",
   "club": "Eindhoven",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 308,
-  "egrPoints": 6215.76,
-  "avgScore": 74.07,
-  "avgToCR": 72.38,
+  "tournamentsPlayed": 8,
+  "egrRank": 274,
+  "egrPoints": 6821.8,
+  "avgScore": 73.94,
+  "avgToCR": 71.14,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "8",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 911.59
+    },
     {
       "eventId": "12536",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:51.672Z",
+  "scrapedAt": "2026-10-05T14:16:09.443Z",
   "url": "https://www.europeangolfrankings.com/players/29680"
 }

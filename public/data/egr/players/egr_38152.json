@@ -8,11 +8,25 @@
   "club": "Auchterarder",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 6329,
-  "egrPoints": 322.86,
-  "avgScore": 80.09,
-  "avgToCR": 79.65,
+  "egrRank": 5956,
+  "egrPoints": 400.78,
+  "avgScore": 79.92,
+  "avgToCR": 78.63,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "28",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 83,
+      "r2": 79,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 77.92
+    },
     {
       "eventId": "12647",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12644",
-      "counting": false,
+      "counting": true,
       "pos": "79",
       "event": "Faldo Junior Tour England (Astbury) 2026",
       "venue": "The Astbury",
@@ -137,10 +151,11 @@
       "r2": 84,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:39:25.780Z",
+  "scrapedAt": "2026-10-05T14:19:20.899Z",
   "url": "https://www.europeangolfrankings.com/players/38152"
 }

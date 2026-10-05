@@ -8,11 +8,39 @@
   "club": "Skjeberg",
   "ageGroup": "U16",
   "tournamentsPlayed": 18,
-  "egrRank": 1057,
+  "egrRank": 1067,
   "egrPoints": 6181.98,
   "avgScore": 74.1,
   "avgToCR": 72.99,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": false,
+      "pos": "30",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 77,
+      "r2": 79,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 219.81
+    },
+    {
+      "eventId": "12927",
+      "counting": false,
+      "pos": "3",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 217.75
+    },
     {
       "eventId": "12329",
       "counting": false,
@@ -249,7 +277,8 @@
       "r2": 75,
       "r3": 78,
       "r4": null,
-      "egrPoints": 321.52
+      "egrPoints": 321.52,
+      "_mantido": true
     },
     {
       "eventId": "10874",
@@ -263,10 +292,11 @@
       "r2": 73,
       "r3": 77,
       "r4": null,
-      "egrPoints": 9.15
+      "egrPoints": 9.15,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:23.155Z",
+  "scrapedAt": "2026-10-05T14:20:24.876Z",
   "url": "https://www.europeangolfrankings.com/players/41872"
 }

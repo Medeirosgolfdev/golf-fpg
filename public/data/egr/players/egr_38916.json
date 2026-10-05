@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Valcros",
   "ageGroup": "U18",
-  "tournamentsPlayed": 1,
-  "egrRank": 5248,
-  "egrPoints": 535.84,
-  "avgScore": 77.33,
-  "avgToCR": 76.23,
+  "tournamentsPlayed": 2,
+  "egrRank": 4254,
+  "egrPoints": 864.01,
+  "avgScore": 79.5,
+  "avgToCR": 79.1,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "45",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 328.17
+    },
     {
       "eventId": "12086",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:39:41.868Z",
+  "scrapedAt": "2026-10-05T14:19:45.533Z",
   "url": "https://www.europeangolfrankings.com/players/38916"
 }

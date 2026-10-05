@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Mionnay",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 1656,
-  "egrPoints": 469.95,
-  "avgScore": 78,
-  "avgToCR": 76.34,
+  "tournamentsPlayed": 8,
+  "egrRank": 1080,
+  "egrPoints": 1215.31,
+  "avgScore": 77.44,
+  "avgToCR": 75.68,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "50",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 78,
+      "r2": 72,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 638.54
+    },
+    {
+      "eventId": "12182",
+      "counting": true,
+      "pos": "4",
+      "event": "Grand Prix de la Loire Forez 2026",
+      "venue": "Golf Club du Forez",
+      "country": "France",
+      "startDateRaw": "28. Aug 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 106.82
+    },
     {
       "eventId": "12178",
       "counting": true,
@@ -109,10 +137,11 @@
       "r2": 87,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:17.949Z",
+  "scrapedAt": "2026-10-05T14:23:20.282Z",
   "url": "https://www.europeangolfrankings.com/players/50395"
 }

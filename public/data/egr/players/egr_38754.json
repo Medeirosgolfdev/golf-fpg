@@ -7,15 +7,15 @@
   "country": "Scotland",
   "club": "Carnoustie",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 1340,
+  "tournamentsPlayed": 11,
+  "egrRank": 1346,
   "egrPoints": 789.36,
-  "avgScore": 82.29,
-  "avgToCR": 81.75,
+  "avgScore": 81.95,
+  "avgToCR": 81.45,
   "events": [
     {
       "eventId": "11722",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "Junior Tour Fraserburgh Girls 2026",
       "venue": "Fraserburgh GC",
@@ -179,7 +179,8 @@
       "r2": 83,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -193,10 +194,11 @@
       "r2": 91,
       "r3": 94,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:03.354Z",
+  "scrapedAt": "2026-10-05T14:19:41.758Z",
   "url": "https://www.europeangolfrankings.com/players/38754"
 }

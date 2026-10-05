@@ -7,7 +7,7 @@
   "country": "England",
   "club": "Royal Liverpool",
   "ageGroup": "U21",
-  "tournamentsPlayed": 14,
+  "tournamentsPlayed": 13,
   "egrRank": 225,
   "egrPoints": 17914.2,
   "avgScore": 72.83,
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11814",
-      "counting": false,
+      "counting": true,
       "pos": "99",
       "event": "Tillman Trophy 2026",
       "venue": "The Caversham",
@@ -207,10 +207,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 665.59
+      "egrPoints": 665.59,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:46.584Z",
+  "scrapedAt": "2026-10-05T14:15:48.573Z",
   "url": "https://www.europeangolfrankings.com/players/29134"
 }

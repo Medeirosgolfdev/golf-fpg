@@ -8,11 +8,25 @@
   "club": "Kristianstads",
   "ageGroup": "U21",
   "tournamentsPlayed": 9,
-  "egrRank": 873,
-  "egrPoints": 1778.21,
-  "avgScore": 75.28,
-  "avgToCR": 73.11,
+  "egrRank": 571,
+  "egrPoints": 3298.94,
+  "avgScore": 75.2,
+  "avgToCR": 72.92,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "24",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 73,
+      "r2": 72,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1829.96
+    },
     {
       "eventId": "12393",
       "counting": true,
@@ -137,10 +151,11 @@
       "r2": 79,
       "r3": 73,
       "r4": null,
-      "egrPoints": 309.23
+      "egrPoints": 309.23,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:06:03.316Z",
+  "scrapedAt": "2026-10-05T14:19:41.733Z",
   "url": "https://www.europeangolfrankings.com/players/38752"
 }

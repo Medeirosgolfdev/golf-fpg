@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 132,
-  "egrPoints": 23457.8,
-  "avgScore": 70.41,
-  "avgToCR": 69,
+  "tournamentsPlayed": 14,
+  "egrRank": 112,
+  "egrPoints": 24770,
+  "avgScore": 70.7,
+  "avgToCR": 69.3,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "25",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 76,
+      "r2": 69,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 1802.08
+    },
+    {
+      "eventId": "12405",
+      "counting": true,
+      "pos": "2",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 67,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1960.51
+    },
     {
       "eventId": "12876",
       "counting": true,
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12868",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "PGA Junior Championship by Titleist 2026",
       "venue": "Landskrona Golfklubb",
@@ -57,7 +85,7 @@
     },
     {
       "eventId": "12630",
-      "counting": true,
+      "counting": false,
       "pos": "53",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -193,10 +221,11 @@
       "r2": 73,
       "r3": 72,
       "r4": null,
-      "egrPoints": 721.85
+      "egrPoints": 721.85,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:27.558Z",
+  "scrapedAt": "2026-10-05T14:18:18.650Z",
   "url": "https://www.europeangolfrankings.com/players/35447"
 }

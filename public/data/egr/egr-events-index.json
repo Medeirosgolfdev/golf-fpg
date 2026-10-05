@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-28T13:28:15.511Z",
+  "generated_at": "2026-10-05T14:10:55.633Z",
   "years": [
     2019,
     2020,
@@ -11,10 +11,10 @@
     2026
   ],
   "maxAge": 18,
-  "totalArchive": 7915,
-  "totalTargets": 914,
-  "scraped": 4,
-  "skipped": 910,
+  "totalArchive": 7922,
+  "totalTargets": 920,
+  "scraped": 6,
+  "skipped": 914,
   "events": [
     {
       "id": "8604",
@@ -38345,7 +38345,7 @@
       "endDateRaw": "6. Apr",
       "startDate": "2026-04-01",
       "endDate": "2026-04-06",
-      "egrPoints": 11514,
+      "egrPoints": 12650,
       "scraped": false
     },
     {
@@ -51687,7 +51687,7 @@
       "endDateRaw": "13. Sep",
       "startDate": "2026-09-12",
       "endDate": "2026-09-13",
-      "egrPoints": 1500,
+      "egrPoints": 310,
       "scraped": true
     },
     {
@@ -51771,7 +51771,7 @@
       "endDateRaw": "19. Sep",
       "startDate": "2026-09-17",
       "endDate": "2026-09-19",
-      "egrPoints": 6250,
+      "egrPoints": 10029.8,
       "scraped": false
     },
     {
@@ -51855,7 +51855,7 @@
       "endDateRaw": "20. Sep",
       "startDate": "2026-09-18",
       "endDate": "2026-09-20",
-      "egrPoints": 2300,
+      "egrPoints": 3509.5,
       "scraped": false
     },
     {
@@ -51869,7 +51869,7 @@
       "endDateRaw": "20. Sep",
       "startDate": "2026-09-18",
       "endDate": "2026-09-20",
-      "egrPoints": 400,
+      "egrPoints": 455.5,
       "scraped": false
     },
     {
@@ -52394,6 +52394,20 @@
       "id": "12335",
       "year": 2026,
       "name": "Srixon Tour 8 Finale (U19)",
+      "ageGroup": "U18",
+      "ageNum": 18,
+      "country": "NOR",
+      "startDateRaw": "26. Sep",
+      "endDateRaw": "28. Sep",
+      "startDate": "2026-09-26",
+      "endDate": "2026-09-28",
+      "egrPoints": 896.5,
+      "scraped": true
+    },
+    {
+      "id": "12336",
+      "year": 2026,
+      "name": "Srixon Tour 8 Finale (U15)",
       "ageGroup": "U15",
       "ageNum": 15,
       "country": "NOR",
@@ -52401,22 +52415,8 @@
       "endDateRaw": "28. Sep",
       "startDate": "2026-09-26",
       "endDate": "2026-09-28",
-      "egrPoints": 375,
+      "egrPoints": 606.5,
       "scraped": true
-    },
-    {
-      "id": "12336",
-      "year": 2026,
-      "name": "Srixon Tour 8 Finale (U19)",
-      "ageGroup": "U19",
-      "ageNum": 19,
-      "country": "NOR",
-      "startDateRaw": "26. Sep",
-      "endDateRaw": "28. Sep",
-      "startDate": "2026-09-26",
-      "endDate": "2026-09-28",
-      "egrPoints": 1275,
-      "scraped": false
     },
     {
       "id": "12608",
@@ -52471,7 +52471,7 @@
       "endDateRaw": "27. Sep",
       "startDate": "2026-09-26",
       "endDate": "2026-09-27",
-      "egrPoints": 1000,
+      "egrPoints": 655,
       "scraped": false
     },
     {
@@ -52555,7 +52555,7 @@
       "endDateRaw": "3. Oct",
       "startDate": "2026-10-01",
       "endDate": "2026-10-03",
-      "egrPoints": 2800,
+      "egrPoints": 4225,
       "scraped": false
     },
     {
@@ -53437,7 +53437,7 @@
       "endDateRaw": "28. Oct",
       "startDate": "2026-10-26",
       "endDate": "2026-10-28",
-      "egrPoints": 5000,
+      "egrPoints": 1750,
       "scraped": false
     },
     {
@@ -110824,6 +110824,104 @@
       "startDate": "2026-09-20",
       "endDate": "2026-09-20",
       "egrPoints": 90.5,
+      "scraped": true
+    },
+    {
+      "id": "12930",
+      "year": 2026,
+      "name": "GVBB AK14 Meisterschaft Mädchen",
+      "ageGroup": "U14",
+      "ageNum": 14,
+      "country": "DEU",
+      "startDateRaw": "18. Aug",
+      "endDateRaw": "20. Aug",
+      "startDate": "2026-08-18",
+      "endDate": "2026-08-20",
+      "egrPoints": 158.5,
+      "scraped": true
+    },
+    {
+      "id": "12931",
+      "year": 2026,
+      "name": "GVBB AK16-18 Meisterschaft Mädchen",
+      "ageGroup": "U18",
+      "ageNum": 18,
+      "country": "DEU",
+      "startDateRaw": "18. Aug",
+      "endDateRaw": "20. Aug",
+      "startDate": "2026-08-18",
+      "endDate": "2026-08-20",
+      "egrPoints": 475,
+      "scraped": true
+    },
+    {
+      "id": "12932",
+      "year": 2026,
+      "name": "GVBB AK14 Meisterschaft Jungen",
+      "ageGroup": "U14",
+      "ageNum": 14,
+      "country": "DEU",
+      "startDateRaw": "18. Aug",
+      "endDateRaw": "20. Aug",
+      "startDate": "2026-08-18",
+      "endDate": "2026-08-20",
+      "egrPoints": 271.5,
+      "scraped": true
+    },
+    {
+      "id": "12933",
+      "year": 2026,
+      "name": "GVBB AK16/18 Meisterschaft Jungen",
+      "ageGroup": "U18",
+      "ageNum": 18,
+      "country": "DEU",
+      "startDateRaw": "18. Aug",
+      "endDateRaw": "20. Aug",
+      "startDate": "2026-08-18",
+      "endDate": "2026-08-20",
+      "egrPoints": 980,
+      "scraped": true
+    },
+    {
+      "id": "12934",
+      "year": 2026,
+      "name": "Triple A European MASTERS",
+      "ageGroup": "U21",
+      "ageNum": 21,
+      "country": "ESP",
+      "startDateRaw": "16. Sep",
+      "endDateRaw": "18. Sep",
+      "startDate": "2026-09-16",
+      "endDate": "2026-09-18",
+      "egrPoints": 1151.5,
+      "scraped": false
+    },
+    {
+      "id": "12935",
+      "year": 2026,
+      "name": "Triple A European MASTERS",
+      "ageGroup": "U21",
+      "ageNum": 21,
+      "country": "ESP",
+      "startDateRaw": "16. Sep",
+      "endDateRaw": "18. Sep",
+      "startDate": "2026-09-16",
+      "endDate": "2026-09-18",
+      "egrPoints": 235,
+      "scraped": false
+    },
+    {
+      "id": "12936",
+      "year": 2026,
+      "name": "Pro1Putt Open",
+      "ageGroup": "U18",
+      "ageNum": 18,
+      "country": "DEU",
+      "startDateRaw": "25. Sep",
+      "endDateRaw": "27. Sep",
+      "startDate": "2026-09-25",
+      "endDate": "2026-09-27",
+      "egrPoints": 282.5,
       "scraped": true
     }
   ]

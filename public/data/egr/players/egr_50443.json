@@ -8,11 +8,25 @@
   "club": "Lyon-Salvagny",
   "ageGroup": "U12",
   "tournamentsPlayed": 7,
-  "egrRank": 3416,
-  "egrPoints": 1270.33,
-  "avgScore": 78.42,
-  "avgToCR": 79.9,
+  "egrRank": 2799,
+  "egrPoints": 1828.69,
+  "avgScore": 77.5,
+  "avgToCR": 78.45,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 596.6
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -109,10 +123,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 38.24
+      "egrPoints": 38.24,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:07.800Z",
+  "scrapedAt": "2026-10-05T14:23:21.792Z",
   "url": "https://www.europeangolfrankings.com/players/50443"
 }

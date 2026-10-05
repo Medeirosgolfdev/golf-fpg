@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Molinetto",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 4800,
+  "tournamentsPlayed": 11,
+  "egrRank": 4836,
   "egrPoints": 656.15,
   "avgScore": 79.83,
   "avgToCR": 80.03,
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "11958",
-      "counting": false,
+      "counting": true,
       "pos": "35",
       "event": "Vecchio Monastero 2026",
       "venue": "Varese Golf Club",
@@ -179,10 +179,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:22.126Z",
+  "scrapedAt": "2026-10-05T14:25:17.058Z",
   "url": "https://www.europeangolfrankings.com/players/55349"
 }

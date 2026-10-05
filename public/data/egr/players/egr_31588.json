@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Deeside",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 364,
+  "tournamentsPlayed": 9,
+  "egrRank": 369,
   "egrPoints": 13288.4,
   "avgScore": 73.92,
   "avgToCR": 72.32,
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12278",
-      "counting": false,
+      "counting": true,
       "pos": "52",
       "event": "Battle Trophy 2026",
       "venue": "Craighead Links",
@@ -151,7 +151,8 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 263.05
+      "egrPoints": 263.05,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -165,10 +166,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:00.638Z",
+  "scrapedAt": "2026-10-05T14:16:53.715Z",
   "url": "https://www.europeangolfrankings.com/players/31588"
 }

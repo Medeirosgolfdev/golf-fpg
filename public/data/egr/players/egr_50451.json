@@ -8,11 +8,25 @@
   "club": "Strasbourg",
   "ageGroup": "U14",
   "tournamentsPlayed": 8,
-  "egrRank": 3704,
-  "egrPoints": 1102.32,
-  "avgScore": 81.67,
-  "avgToCR": 81.64,
+  "egrRank": 2880,
+  "egrPoints": 1747.05,
+  "avgScore": 79.83,
+  "avgToCR": 79.78,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "23",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 79,
+      "r2": 73,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 644.73
+    },
     {
       "eventId": "11778",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 85,
       "r3": 87,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:09.107Z",
+  "scrapedAt": "2026-10-05T14:23:22.201Z",
   "url": "https://www.europeangolfrankings.com/players/50451"
 }

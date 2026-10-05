@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": "Vellinge",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 308,
-  "egrPoints": 14590.4,
-  "avgScore": 71.52,
-  "avgToCR": 69.85,
+  "tournamentsPlayed": 13,
+  "egrRank": 271,
+  "egrPoints": 16094.1,
+  "avgScore": 71.57,
+  "avgToCR": 69.69,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "7",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 69,
+      "r2": 73,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 2254.07
+    },
     {
       "eventId": "12394",
       "counting": true,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12385",
-      "counting": true,
+      "counting": false,
       "pos": "6",
       "event": "Swedish Junior Elite Tour #2 2026",
       "venue": "Söderslätts Golfklubb",
@@ -183,6 +197,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:13.616Z",
+  "scrapedAt": "2026-10-05T14:20:05.932Z",
   "url": "https://www.europeangolfrankings.com/players/40066"
 }

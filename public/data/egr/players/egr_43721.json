@@ -8,11 +8,25 @@
   "club": "Forsgardens",
   "ageGroup": "U16",
   "tournamentsPlayed": 14,
-  "egrRank": 192,
-  "egrPoints": 9465.69,
-  "avgScore": 74.09,
-  "avgToCR": 70.63,
+  "egrRank": 213,
+  "egrPoints": 8451.69,
+  "avgScore": 73.83,
+  "avgToCR": 70.02,
   "events": [
+    {
+      "eventId": "12397",
+      "counting": true,
+      "pos": "10",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 78,
+      "r2": 79,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 275.06
+    },
     {
       "eventId": "12395",
       "counting": false,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12386",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Swedish Junior Tour Elite #3 (JSM Match) 2026",
       "venue": "Kalmar Golfklubb",
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "84",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,7 +165,7 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 1045.49
+      "egrPoints": 0
     },
     {
       "eventId": "12287",
@@ -207,10 +221,11 @@
       "r2": 74,
       "r3": 78,
       "r4": null,
-      "egrPoints": 528.41
+      "egrPoints": 528.41,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:44.363Z",
+  "scrapedAt": "2026-10-05T14:21:03.795Z",
   "url": "https://www.europeangolfrankings.com/players/43721"
 }

@@ -5,14 +5,28 @@
   "lastName": "BOON",
   "firstName": "Valentijn",
   "country": "Netherlands",
-  "club": "Soestduinen",
+  "club": "De Hoge Kleij",
   "ageGroup": "U14",
   "tournamentsPlayed": 1,
-  "egrRank": 9791,
-  "egrPoints": 28.28,
-  "avgScore": 89.5,
-  "avgToCR": 94.1,
+  "egrRank": 9025,
+  "egrPoints": 73.5,
+  "avgScore": 89.33,
+  "avgToCR": 89.83,
   "events": [
+    {
+      "eventId": "12540",
+      "counting": true,
+      "pos": "39",
+      "event": "Nationaal Strokeplay Kampioenschap Jongens U15 2026",
+      "venue": "Twentsche Golfclub",
+      "country": "Netherlands",
+      "startDateRaw": "19. Sep 26",
+      "r1": 86,
+      "r2": 92,
+      "r3": 90,
+      "r4": null,
+      "egrPoints": 73.5
+    },
     {
       "eventId": "11165",
       "counting": true,
@@ -25,10 +39,11 @@
       "r2": 86,
       "r3": null,
       "r4": null,
-      "egrPoints": 28.28
+      "egrPoints": 28.28,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:02.790Z",
+  "scrapedAt": "2026-10-05T14:26:12.431Z",
   "url": "https://www.europeangolfrankings.com/players/57177"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Berlin Wannsee",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 2936,
+  "tournamentsPlayed": 4,
+  "egrRank": 2950,
   "egrPoints": 37.65,
-  "avgScore": 94.14,
-  "avgToCR": 92.84,
+  "avgScore": 93.67,
+  "avgToCR": 92.21,
   "events": [
+    {
+      "eventId": "12930",
+      "counting": true,
+      "pos": "9",
+      "event": "GVBB AK14 Meisterschaft Mädchen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 102,
+      "r2": 89,
+      "r3": 95,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12838",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:58:04.952Z",
+  "scrapedAt": "2026-10-05T14:26:04.852Z",
   "url": "https://www.europeangolfrankings.com/players/56993"
 }

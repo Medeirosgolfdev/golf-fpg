@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": "Davos",
   "ageGroup": "U18",
-  "tournamentsPlayed": 19,
-  "egrRank": 264,
+  "tournamentsPlayed": 17,
+  "egrRank": 265,
   "egrPoints": 16364.3,
   "avgScore": 70.96,
   "avgToCR": 69.71,
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "11544",
-      "counting": false,
+      "counting": true,
       "pos": "1",
       "event": "GJG Grand Final Qualifier 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -263,7 +263,8 @@
       "r2": 79,
       "r3": 72,
       "r4": null,
-      "egrPoints": 309.25
+      "egrPoints": 309.25,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -277,10 +278,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 162.76
+      "egrPoints": 162.76,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:56.260Z",
+  "scrapedAt": "2026-10-05T14:19:31.616Z",
   "url": "https://www.europeangolfrankings.com/players/38511"
 }

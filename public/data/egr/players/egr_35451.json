@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Hjortespring",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 73,
-  "egrPoints": 16865.5,
-  "avgScore": 74.32,
-  "avgToCR": 70.6,
+  "tournamentsPlayed": 14,
+  "egrRank": 84,
+  "egrPoints": 15736.5,
+  "avgScore": 73.65,
+  "avgToCR": 70.23,
   "events": [
+    {
+      "eventId": "12607",
+      "counting": false,
+      "pos": "3",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 561.94
+    },
     {
       "eventId": "12605",
       "counting": false,
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12557",
-      "counting": false,
+      "counting": true,
       "pos": "3",
       "event": "Dormy Elite Tour I Damer 2026",
       "venue": "Asserbo Golf Club",
@@ -155,7 +169,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "65",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -165,7 +179,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 1809.92
+      "egrPoints": 316.25
     },
     {
       "eventId": "11653",
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "11647",
-      "counting": false,
+      "counting": true,
       "pos": "61",
       "event": "Portuguese International Ladies' Amateur 2026",
       "venue": "Penina Hotel & Golf Resort",
@@ -207,7 +221,8 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 646.13
+      "egrPoints": 646.13,
+      "_mantido": true
     },
     {
       "eventId": "11151",
@@ -221,10 +236,11 @@
       "r2": 70,
       "r3": 71,
       "r4": null,
-      "egrPoints": 377.99
+      "egrPoints": 377.99,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:27.575Z",
+  "scrapedAt": "2026-10-05T14:18:18.827Z",
   "url": "https://www.europeangolfrankings.com/players/35451"
 }

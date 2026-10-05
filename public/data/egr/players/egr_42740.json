@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "R.S.H.E. CC",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 622,
-  "egrPoints": 2913.05,
+  "tournamentsPlayed": 6,
+  "egrRank": 608,
+  "egrPoints": 3060.01,
   "avgScore": 76.33,
-  "avgToCR": 72.46,
+  "avgToCR": 72.64,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "26",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 146.96
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:32.868Z",
+  "scrapedAt": "2026-10-05T14:20:47.102Z",
   "url": "https://www.europeangolfrankings.com/players/42740"
 }

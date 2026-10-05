@@ -8,10 +8,10 @@
   "club": "First Warsaw",
   "ageGroup": "Adult",
   "tournamentsPlayed": 3,
-  "egrRank": 7721,
-  "egrPoints": 163.73,
-  "avgScore": 83.29,
-  "avgToCR": 82.41,
+  "egrRank": 5399,
+  "egrPoints": 514.86,
+  "avgScore": 82.22,
+  "avgToCR": 81.66,
   "events": [
     {
       "eventId": "11457",
@@ -26,6 +26,20 @@
       "r3": 97,
       "r4": null,
       "egrPoints": 0
+    },
+    {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "45",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 84,
+      "r2": 81,
+      "r3": 88,
+      "r4": null,
+      "egrPoints": 351.13
     },
     {
       "eventId": "11453",
@@ -53,10 +67,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:36:08.795Z",
+  "scrapedAt": "2026-10-05T14:15:48.714Z",
   "url": "https://www.europeangolfrankings.com/players/29137"
 }

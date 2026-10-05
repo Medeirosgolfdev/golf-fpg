@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Ile d'Or",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 243,
-  "egrPoints": 16947.4,
-  "avgScore": 72.04,
-  "avgToCR": 70.48,
+  "tournamentsPlayed": 14,
+  "egrRank": 249,
+  "egrPoints": 16876.3,
+  "avgScore": 72.24,
+  "avgToCR": 70.49,
   "events": [
     {
       "eventId": "12002",
@@ -29,7 +29,7 @@
     },
     {
       "eventId": "12175",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Grand Prix du Médoc 2026",
       "venue": "Golf du Médoc",
@@ -221,10 +221,11 @@
       "r2": 73,
       "r3": 74,
       "r4": null,
-      "egrPoints": 1415.93
+      "egrPoints": 1415.93,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:16.192Z",
+  "scrapedAt": "2026-10-05T14:20:11.334Z",
   "url": "https://www.europeangolfrankings.com/players/40360"
 }

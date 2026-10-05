@@ -8,11 +8,25 @@
   "club": "Sola",
   "ageGroup": "U18",
   "tournamentsPlayed": 20,
-  "egrRank": 310,
+  "egrRank": 311,
   "egrPoints": 14499.4,
   "avgScore": 72.63,
   "avgToCR": 70.9,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": false,
+      "pos": "44",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 86,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12329",
       "counting": false,
@@ -291,10 +305,11 @@
       "r2": 74,
       "r3": 74,
       "r4": null,
-      "egrPoints": 199.48
+      "egrPoints": 199.48,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:20.072Z",
+  "scrapedAt": "2026-10-05T14:20:19.716Z",
   "url": "https://www.europeangolfrankings.com/players/41254"
 }

@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Massane",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 5448,
-  "egrPoints": 488.32,
-  "avgScore": 81.62,
-  "avgToCR": 81,
+  "tournamentsPlayed": 11,
+  "egrRank": 4179,
+  "egrPoints": 893.78,
+  "avgScore": 81.32,
+  "avgToCR": 80.87,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "38",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 81,
+      "r2": 76,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 405.46
+    },
     {
       "eventId": "12162",
       "counting": false,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12086",
-      "counting": true,
+      "counting": false,
       "pos": "85",
       "event": "Grand Prix d'Aix-Marseille Coupe Yves Caillol 2026",
       "venue": "Golf Club d'Aix Marseille",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:27.193Z",
+  "scrapedAt": "2026-10-05T14:22:02.929Z",
   "url": "https://www.europeangolfrankings.com/players/47154"
 }

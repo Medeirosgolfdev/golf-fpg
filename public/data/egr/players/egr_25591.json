@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Odense",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 566,
-  "egrPoints": 9865.15,
-  "avgScore": 71.8,
-  "avgToCR": 70.71,
+  "tournamentsPlayed": 9,
+  "egrRank": 370,
+  "egrPoints": 13283.1,
+  "avgScore": 71.96,
+  "avgToCR": 70.49,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "1",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 70,
+      "r2": 69,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 2624.61
+    },
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "5",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 76,
+      "r2": 73,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 793.32
+    },
     {
       "eventId": "12595",
       "counting": true,
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:16.104Z",
+  "scrapedAt": "2026-10-05T14:14:11.090Z",
   "url": "https://www.europeangolfrankings.com/players/25591"
 }

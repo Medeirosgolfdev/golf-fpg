@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Lucerne",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 846,
-  "egrPoints": 1871.08,
-  "avgScore": 77.65,
-  "avgToCR": 75.82,
+  "tournamentsPlayed": 11,
+  "egrRank": 927,
+  "egrPoints": 1640.83,
+  "avgScore": 77.5,
+  "avgToCR": 75.97,
   "events": [
     {
       "eventId": "12003",
@@ -99,7 +99,7 @@
     },
     {
       "eventId": "12458",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Swiss Golf West Championship (Sion) 2026",
       "venue": "Golf Club de Sion",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "10372",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "Swiss Golf Junior Tour Final (Waldkirch) 2025",
       "venue": "Golfclub Waldkirch / Golfpark Waldkirch",
@@ -179,7 +179,8 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 129.66
+      "egrPoints": 129.66,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -193,10 +194,11 @@
       "r2": 83,
       "r3": null,
       "r4": null,
-      "egrPoints": 230.25
+      "egrPoints": 230.25,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:50.395Z",
+  "scrapedAt": "2026-10-05T14:22:36.489Z",
   "url": "https://www.europeangolfrankings.com/players/48530"
 }

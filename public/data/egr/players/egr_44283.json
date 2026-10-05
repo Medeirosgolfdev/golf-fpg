@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Madonna Campiglio",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 1629,
+  "tournamentsPlayed": 10,
+  "egrRank": 1646,
   "egrPoints": 3854.3,
   "avgScore": 77.54,
   "avgToCR": 76.96,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11893",
-      "counting": false,
+      "counting": true,
       "pos": "41",
       "event": "Grand Premio Della Maremma 2026",
       "venue": "Golf Club Punta Ala",
@@ -165,10 +165,11 @@
       "r2": 77,
       "r3": 75,
       "r4": null,
-      "egrPoints": 126.24
+      "egrPoints": 126.24,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:51.062Z",
+  "scrapedAt": "2026-10-05T14:21:12.768Z",
   "url": "https://www.europeangolfrankings.com/players/44283"
 }

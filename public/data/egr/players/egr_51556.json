@@ -7,12 +7,26 @@
   "country": "Estonia",
   "club": null,
   "ageGroup": "U14",
-  "tournamentsPlayed": 4,
-  "egrRank": 1587,
-  "egrPoints": 516.04,
-  "avgScore": 80.1,
-  "avgToCR": 80.15,
+  "tournamentsPlayed": 5,
+  "egrRank": 1304,
+  "egrPoints": 839.52,
+  "avgScore": 81.38,
+  "avgToCR": 80.73,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "34",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 85,
+      "r2": 84,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 323.48
+    },
     {
       "eventId": "12426",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:47.392Z",
+  "scrapedAt": "2026-10-05T14:23:45.627Z",
   "url": "https://www.europeangolfrankings.com/players/51556"
 }

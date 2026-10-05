@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U14",
-  "tournamentsPlayed": 10,
-  "egrRank": 521,
-  "egrPoints": 3616.6,
-  "avgScore": 74.72,
-  "avgToCR": 74.62,
+  "tournamentsPlayed": 11,
+  "egrRank": 502,
+  "egrPoints": 3780.49,
+  "avgScore": 75.17,
+  "avgToCR": 74.69,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 76,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12098",
-      "counting": true,
+      "counting": false,
       "pos": "10",
       "event": "Grand Prix de Bondues 2026",
       "venue": "Golf de Bondues",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.384Z",
+  "scrapedAt": "2026-10-05T14:23:27.301Z",
   "url": "https://www.europeangolfrankings.com/players/50619"
 }

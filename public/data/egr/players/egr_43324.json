@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Turnhouse",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 510,
-  "egrPoints": 10567.8,
-  "avgScore": 72.88,
-  "avgToCR": 73.17,
+  "tournamentsPlayed": 9,
+  "egrRank": 557,
+  "egrPoints": 10278.5,
+  "avgScore": 74.04,
+  "avgToCR": 73.43,
   "events": [
     {
       "eventId": "12882",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "11791",
-      "counting": false,
+      "counting": true,
       "pos": "10",
       "event": "Tour Finals (BUCS) 2026",
       "venue": "Princes Golf Club",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12223",
-      "counting": false,
+      "counting": true,
       "pos": "47",
       "event": "Exeter Trophy (BUCS) 2026",
       "venue": "Trevose Golf and Country Club",
@@ -151,10 +151,11 @@
       "r2": 68,
       "r3": 69,
       "r4": null,
-      "egrPoints": 738.73
+      "egrPoints": 738.73,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:40:28.849Z",
+  "scrapedAt": "2026-10-05T14:20:54.061Z",
   "url": "https://www.europeangolfrankings.com/players/43324"
 }

@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Dunbar",
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 862,
+  "tournamentsPlayed": 10,
+  "egrRank": 870,
   "egrPoints": 7531.38,
   "avgScore": 74.2,
   "avgToCR": 72.64,
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11482",
-      "counting": false,
+      "counting": true,
       "pos": "25",
       "event": "Barrie Douglas Scottish Junior Masters 2026",
       "venue": "Strathmore GC",
@@ -165,10 +165,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 834.17
+      "egrPoints": 834.17,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:43.651Z",
+  "scrapedAt": "2026-10-05T14:15:36.452Z",
   "url": "https://www.europeangolfrankings.com/players/28798"
 }

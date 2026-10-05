@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1631,
-  "egrPoints": 3841.77,
-  "avgScore": 74.8,
-  "avgToCR": 73.71,
+  "tournamentsPlayed": 9,
+  "egrRank": 1673,
+  "egrPoints": 3786.92,
+  "avgScore": 74.35,
+  "avgToCR": 73.73,
   "events": [
     {
       "eventId": "12895",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11554",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "Bang Golf City Juniors International Munich (GJG) 2026",
       "venue": "GolfCity München-Puchheim",
@@ -151,10 +151,11 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 69.62
+      "egrPoints": 69.62,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:34.300Z",
+  "scrapedAt": "2026-10-05T14:22:12.164Z",
   "url": "https://www.europeangolfrankings.com/players/47673"
 }

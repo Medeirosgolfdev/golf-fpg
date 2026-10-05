@@ -5,14 +5,28 @@
   "lastName": "PHOTIN HANSEN",
   "firstName": "Christian",
   "country": "Denmark",
-  "club": "Smorum",
+  "club": "The Scandinavian",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 76,
-  "egrPoints": 28260.6,
-  "avgScore": 71.21,
-  "avgToCR": 68.69,
+  "egrRank": 71,
+  "egrPoints": 29082.3,
+  "avgScore": 71.52,
+  "avgToCR": 68.66,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "31",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 1629.26
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -207,10 +221,11 @@
       "r2": 69,
       "r3": 78,
       "r4": null,
-      "egrPoints": 98.9
+      "egrPoints": 98.9,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:52.053Z",
+  "scrapedAt": "2026-10-05T14:16:12.064Z",
   "url": "https://www.europeangolfrankings.com/players/29779"
 }

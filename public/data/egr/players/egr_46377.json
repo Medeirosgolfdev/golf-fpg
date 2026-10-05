@@ -1,18 +1,32 @@
 {
   "id": "46377",
   "egrId": "FVNM46377",
-  "name": "Ameli Tran",
+  "name": "ameli Tran",
   "lastName": "TRAN",
-  "firstName": "Ameli",
+  "firstName": "ameli",
   "country": "Viet Nam",
   "club": "La Canada",
   "ageGroup": "U16",
   "tournamentsPlayed": 8,
-  "egrRank": 2396,
-  "egrPoints": 129.47,
-  "avgScore": 81.05,
-  "avgToCR": 80.68,
+  "egrRank": 2214,
+  "egrPoints": 186.46,
+  "avgScore": 80.05,
+  "avgToCR": 79.82,
   "events": [
+    {
+      "eventId": "12935",
+      "counting": true,
+      "pos": "5",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 80,
+      "r2": 80,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 56.99
+    },
     {
       "eventId": "11692",
       "counting": true,
@@ -123,10 +137,11 @@
       "r2": 85,
       "r3": 80,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:21.383Z",
+  "scrapedAt": "2026-10-05T14:21:55.146Z",
   "url": "https://www.europeangolfrankings.com/players/46377"
 }

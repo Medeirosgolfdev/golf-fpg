@@ -5,14 +5,28 @@
   "lastName": "GROENENDIJK",
   "firstName": "Daan",
   "country": "Netherlands",
-  "club": "Broekpolder",
+  "club": "Vlaanderen",
   "ageGroup": "U18",
-  "tournamentsPlayed": 13,
-  "egrRank": 820,
+  "tournamentsPlayed": 14,
+  "egrRank": 830,
   "egrPoints": 7812.32,
   "avgScore": 76.65,
   "avgToCR": 75.27,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": false,
+      "pos": "9",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 75,
+      "r3": null,
+      "r4": 71,
+      "egrPoints": 351.54
+    },
     {
       "eventId": "12535",
       "counting": true,
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:51.551Z",
+  "scrapedAt": "2026-10-05T14:16:09.018Z",
   "url": "https://www.europeangolfrankings.com/players/29672"
 }

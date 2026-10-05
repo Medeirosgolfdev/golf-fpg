@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Caen La Mer",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 5387,
-  "egrPoints": 505.91,
-  "avgScore": 79.33,
-  "avgToCR": 79.08,
+  "tournamentsPlayed": 3,
+  "egrRank": 4230,
+  "egrPoints": 875.45,
+  "avgScore": 79,
+  "avgToCR": 78.87,
   "events": [
+    {
+      "eventId": "12194",
+      "counting": true,
+      "pos": "53",
+      "event": "Grand Prix PGA France du Vaudreuil 2026",
+      "venue": "Golf PGA France du Vaudreuil",
+      "country": "France",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 369.54
+    },
     {
       "eventId": "12170",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:18.477Z",
+  "scrapedAt": "2026-10-05T14:23:21.057Z",
   "url": "https://www.europeangolfrankings.com/players/50424"
 }

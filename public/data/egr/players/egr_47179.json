@@ -8,11 +8,25 @@
   "club": "Volcans",
   "ageGroup": "U16",
   "tournamentsPlayed": 5,
-  "egrRank": 3126,
-  "egrPoints": 1481.29,
-  "avgScore": 74.8,
-  "avgToCR": 75.13,
+  "egrRank": 2562,
+  "egrPoints": 2088.32,
+  "avgScore": 73.92,
+  "avgToCR": 74.19,
   "events": [
+    {
+      "eventId": "12189",
+      "counting": true,
+      "pos": "4",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 607.03
+    },
     {
       "eventId": "12177",
       "counting": true,
@@ -81,10 +95,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:27.650Z",
+  "scrapedAt": "2026-10-05T14:22:03.444Z",
   "url": "https://www.europeangolfrankings.com/players/47179"
 }

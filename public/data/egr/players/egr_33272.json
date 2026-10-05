@@ -5,14 +5,28 @@
   "lastName": "HERKENHOFF",
   "firstName": "Hannes Enno",
   "country": "Germany",
-  "club": "G&LC Berlin-Wannsee",
+  "club": "Berlin Wannsee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 5,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 87.78,
-  "avgToCR": 87.14,
+  "tournamentsPlayed": 6,
+  "egrRank": 9981,
+  "egrPoints": 25.59,
+  "avgScore": 87,
+  "avgToCR": 86.7,
   "events": [
+    {
+      "eventId": "12933",
+      "counting": true,
+      "pos": "29",
+      "event": "GVBB AK16/18 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 90,
+      "r2": 79,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 25.59
+    },
     {
       "eventId": "12851",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:14.950Z",
+  "scrapedAt": "2026-10-05T14:17:39.328Z",
   "url": "https://www.europeangolfrankings.com/players/33272"
 }

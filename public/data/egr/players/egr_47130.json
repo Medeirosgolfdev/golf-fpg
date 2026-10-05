@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Gerre Losone",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 294,
-  "egrPoints": 6503.94,
-  "avgScore": 74.72,
-  "avgToCR": 72.34,
+  "tournamentsPlayed": 15,
+  "egrRank": 243,
+  "egrPoints": 7679.33,
+  "avgScore": 74.6,
+  "avgToCR": 72.08,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "30",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 75,
+      "r2": 76,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 1502.91
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11766",
-      "counting": true,
+      "counting": false,
       "pos": "26",
       "event": "Swiss International Women's Amateur 2026",
       "venue": "Golf Gerre Losone",
@@ -221,7 +235,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 22.14
+      "egrPoints": 22.14,
+      "_mantido": true
     },
     {
       "eventId": "10367",
@@ -235,10 +250,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 122.81
+      "egrPoints": 122.81,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:26.857Z",
+  "scrapedAt": "2026-10-05T14:22:02.558Z",
   "url": "https://www.europeangolfrankings.com/players/47130"
 }

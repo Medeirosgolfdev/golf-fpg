@@ -8,11 +8,25 @@
   "club": "Biarritz",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 138,
-  "egrPoints": 11496.7,
-  "avgScore": 72.67,
-  "avgToCR": 70.02,
+  "egrRank": 129,
+  "egrPoints": 11890.9,
+  "avgScore": 72.74,
+  "avgToCR": 70.17,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "39",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 75,
+      "r2": 70,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 1082.4
+    },
     {
       "eventId": "12176",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12146",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "Grand Prix des Landes Hossegor 2026",
       "venue": "Golf d' Hossegor",
@@ -207,10 +221,11 @@
       "r2": 82,
       "r3": 73,
       "r4": null,
-      "egrPoints": 688.13
+      "egrPoints": 688.13,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:24.620Z",
+  "scrapedAt": "2026-10-05T14:18:09.879Z",
   "url": "https://www.europeangolfrankings.com/players/34809"
 }

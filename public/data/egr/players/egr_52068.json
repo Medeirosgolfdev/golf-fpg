@@ -7,8 +7,8 @@
   "country": "France",
   "club": "Cannes-Mougins",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 932,
+  "tournamentsPlayed": 9,
+  "egrRank": 936,
   "egrPoints": 6938.55,
   "avgScore": 74.65,
   "avgToCR": 74.11,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11379",
-      "counting": false,
+      "counting": true,
       "pos": "29",
       "event": "Grand Prix du Cap d’Agde 2025",
       "venue": "Golf International Cap d'agde (Volcan & Azur)",
@@ -151,10 +151,11 @@
       "r2": 75,
       "r3": 79,
       "r4": null,
-      "egrPoints": 372.64
+      "egrPoints": 372.64,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:33.558Z",
+  "scrapedAt": "2026-10-05T14:23:53.587Z",
   "url": "https://www.europeangolfrankings.com/players/52068"
 }

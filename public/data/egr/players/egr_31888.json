@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Royal Portrush",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 31,
-  "egrPoints": 25004.5,
+  "tournamentsPlayed": 16,
+  "egrRank": 30,
+  "egrPoints": 24812.3,
   "avgScore": 72.68,
-  "avgToCR": 68.73,
+  "avgToCR": 68.45,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "27",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 70,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 1666.43
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12388",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Annika Invitational Europe 2026",
       "venue": "Upsala Golfklubb",
@@ -179,7 +193,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 2653.11
+      "egrPoints": 2233.52
     },
     {
       "eventId": "11653",
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:03.393Z",
+  "scrapedAt": "2026-10-05T14:17:01.875Z",
   "url": "https://www.europeangolfrankings.com/players/31888"
 }

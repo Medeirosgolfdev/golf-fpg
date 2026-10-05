@@ -5,14 +5,28 @@
   "lastName": "FAURE",
   "firstName": "Paul",
   "country": "Netherlands",
-  "club": "Rosendaelsche",
+  "club": "Vlaanderen",
   "ageGroup": "U21",
-  "tournamentsPlayed": 9,
-  "egrRank": 1051,
-  "egrPoints": 6119.2,
-  "avgScore": 74.32,
-  "avgToCR": 73.68,
+  "tournamentsPlayed": 10,
+  "egrRank": 943,
+  "egrPoints": 6915.63,
+  "avgScore": 74.28,
+  "avgToCR": 73.96,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "3",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 77,
+      "r2": 72,
+      "r3": null,
+      "r4": 73,
+      "egrPoints": 796.43
+    },
     {
       "eventId": "12900",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:36:26.939Z",
+  "scrapedAt": "2026-10-05T14:16:06.267Z",
   "url": "https://www.europeangolfrankings.com/players/29617"
 }

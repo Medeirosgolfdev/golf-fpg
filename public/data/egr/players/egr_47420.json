@@ -7,12 +7,26 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 11,
-  "egrRank": 1562,
-  "egrPoints": 4066.54,
-  "avgScore": 75.35,
-  "avgToCR": 73.64,
+  "tournamentsPlayed": 12,
+  "egrRank": 1233,
+  "egrPoints": 5385.22,
+  "avgScore": 75.26,
+  "avgToCR": 73.19,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "38",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 1469.72
+    },
     {
       "eventId": "12391",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "12868",
-      "counting": true,
+      "counting": false,
       "pos": "32",
       "event": "PGA Junior Championship by Titleist 2026",
       "venue": "Landskrona Golfklubb",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:29.852Z",
+  "scrapedAt": "2026-10-05T14:22:06.857Z",
   "url": "https://www.europeangolfrankings.com/players/47420"
 }

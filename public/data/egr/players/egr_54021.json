@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Maria Theresia",
   "ageGroup": "U16",
-  "tournamentsPlayed": 2,
-  "egrRank": 2764,
+  "tournamentsPlayed": 3,
+  "egrRank": 2778,
   "egrPoints": 61.2,
-  "avgScore": 92,
-  "avgToCR": 88.2,
+  "avgScore": 90.6,
+  "avgToCR": 88,
   "events": [
+    {
+      "eventId": "11447",
+      "counting": true,
+      "pos": "4",
+      "event": "Europafinale (JTG) 2026",
+      "venue": "Golfclub Pischelsdorf",
+      "country": "Austria",
+      "startDateRaw": "08. Sep 26",
+      "r1": 82,
+      "r2": 89,
+      "r3": 98,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12511",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:01.835Z",
+  "scrapedAt": "2026-10-05T14:24:38.255Z",
   "url": "https://www.europeangolfrankings.com/players/54021"
 }

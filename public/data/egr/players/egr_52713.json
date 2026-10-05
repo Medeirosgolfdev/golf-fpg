@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Saint Donat",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 1102,
-  "egrPoints": 5977.58,
-  "avgScore": 75.75,
-  "avgToCR": 74.79,
+  "tournamentsPlayed": 14,
+  "egrRank": 1008,
+  "egrPoints": 6470.02,
+  "avgScore": 75.44,
+  "avgToCR": 74.61,
   "events": [
+    {
+      "eventId": "12187",
+      "counting": true,
+      "pos": "10",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 75,
+      "r2": 74,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 782.1
+    },
     {
       "eventId": "12619",
       "counting": false,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12617",
-      "counting": true,
+      "counting": false,
       "pos": "13",
       "event": "Welsh Boys' Closed Championship 2026",
       "venue": "Borth & Ynyslas Golf Club",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:41.392Z",
+  "scrapedAt": "2026-10-05T14:24:06.540Z",
   "url": "https://www.europeangolfrankings.com/players/52713"
 }

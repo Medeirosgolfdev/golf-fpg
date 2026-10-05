@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Sempachersee",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 990,
-  "egrPoints": 6571.01,
-  "avgScore": 73.5,
-  "avgToCR": 72.8,
+  "tournamentsPlayed": 14,
+  "egrRank": 1013,
+  "egrPoints": 6444.3,
+  "avgScore": 73.77,
+  "avgToCR": 73.27,
   "events": [
     {
       "eventId": "12475",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12445",
-      "counting": false,
+      "counting": true,
       "pos": "19",
       "event": "Swiss Golf Junior Tour (Gams-Werdenberg) 2026",
       "venue": "Golf Gams Werdenberg",
@@ -221,7 +221,8 @@
       "r2": 75,
       "r3": 80,
       "r4": null,
-      "egrPoints": 135.3
+      "egrPoints": 135.3,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -235,10 +236,11 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 306.7
+      "egrPoints": 306.7,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:56.173Z",
+  "scrapedAt": "2026-10-05T14:19:31.498Z",
   "url": "https://www.europeangolfrankings.com/players/38509"
 }

@@ -5,14 +5,28 @@
   "lastName": "IMNI",
   "firstName": "Rim",
   "country": "Morocco",
-  "club": "Royal Agadir",
+  "club": "Samanah",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 1384,
-  "egrPoints": 734.83,
-  "avgScore": 74.33,
-  "avgToCR": 70.03,
+  "tournamentsPlayed": 2,
+  "egrRank": 630,
+  "egrPoints": 2891.85,
+  "avgScore": 74.17,
+  "avgToCR": 70.47,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "16",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 68,
+      "r2": 74,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 2157.02
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:44.717Z",
+  "scrapedAt": "2026-10-05T14:14:34.278Z",
   "url": "https://www.europeangolfrankings.com/players/26703"
 }

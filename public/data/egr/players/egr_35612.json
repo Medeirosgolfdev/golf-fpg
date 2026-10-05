@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Blairgowrie",
   "ageGroup": "U16",
-  "tournamentsPlayed": 16,
-  "egrRank": 184,
-  "egrPoints": 19438.2,
-  "avgScore": 72.08,
-  "avgToCR": 70.58,
+  "tournamentsPlayed": 15,
+  "egrRank": 194,
+  "egrPoints": 19313.1,
+  "avgScore": 72.29,
+  "avgToCR": 70.52,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "2",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 73,
+      "r2": 71,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 747.1
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "12630",
-      "counting": false,
+      "counting": true,
       "pos": "77",
       "event": "European Boys' Team Championship (Jean-Louis Dupont Trophy) 2026",
       "venue": "Barceló Montecastillo Golf",
@@ -221,7 +235,8 @@
       "r2": 68,
       "r3": null,
       "r4": null,
-      "egrPoints": 568.75
+      "egrPoints": 568.75,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -235,10 +250,11 @@
       "r2": 75,
       "r3": 73,
       "r4": null,
-      "egrPoints": 959.4
+      "egrPoints": 959.4,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:29.193Z",
+  "scrapedAt": "2026-10-05T14:18:22.823Z",
   "url": "https://www.europeangolfrankings.com/players/35612"
 }

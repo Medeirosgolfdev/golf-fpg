@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Drumpellier",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 2633,
-  "egrPoints": 1993.49,
-  "avgScore": 78.55,
-  "avgToCR": 78.35,
+  "tournamentsPlayed": 15,
+  "egrRank": 2547,
+  "egrPoints": 2110.61,
+  "avgScore": 78,
+  "avgToCR": 77.81,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "11",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 72,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 171.99
+    },
     {
       "eventId": "11719",
       "counting": false,
@@ -221,7 +235,8 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     },
     {
       "eventId": "11335",
@@ -235,10 +250,11 @@
       "r2": 82,
       "r3": 86,
       "r4": null,
-      "egrPoints": 54.87
+      "egrPoints": 54.87,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:44.037Z",
+  "scrapedAt": "2026-10-05T14:15:37.743Z",
   "url": "https://www.europeangolfrankings.com/players/28821"
 }

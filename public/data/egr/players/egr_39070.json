@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Semlin am See",
   "ageGroup": "U16",
-  "tournamentsPlayed": 13,
-  "egrRank": 763,
-  "egrPoints": 2197.21,
-  "avgScore": 78.18,
-  "avgToCR": 75.62,
+  "tournamentsPlayed": 14,
+  "egrRank": 746,
+  "egrPoints": 2306.31,
+  "avgScore": 77.45,
+  "avgToCR": 74.63,
   "events": [
     {
       "eventId": "12912",
@@ -28,8 +28,22 @@
       "egrPoints": 214.25
     },
     {
-      "eventId": "11575",
+      "eventId": "12931",
       "counting": true,
+      "pos": "3",
+      "event": "GVBB AK16-18 Meisterschaft Mädchen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 77,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 249.38
+    },
+    {
+      "eventId": "11575",
+      "counting": false,
       "pos": "12",
       "event": "German International Youth Trophy by PDI 2026",
       "venue": "Golf- und Landclub Semlin am See",
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:06.995Z",
+  "scrapedAt": "2026-10-05T14:19:49.639Z",
   "url": "https://www.europeangolfrankings.com/players/39070"
 }

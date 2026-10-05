@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bondues",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 7169,
-  "egrPoints": 218.23,
-  "avgScore": 80,
-  "avgToCR": 81.4,
+  "tournamentsPlayed": 4,
+  "egrRank": 6524,
+  "egrPoints": 304.09,
+  "avgScore": 79.86,
+  "avgToCR": 81.09,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 75,
+      "r2": 84,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 85.87
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:28.558Z",
+  "scrapedAt": "2026-10-05T14:25:37.104Z",
   "url": "https://www.europeangolfrankings.com/players/56017"
 }

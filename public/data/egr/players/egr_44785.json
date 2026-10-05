@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Hannover",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 1209,
+  "tournamentsPlayed": 11,
+  "egrRank": 1215,
   "egrPoints": 5458.08,
   "avgScore": 75,
   "avgToCR": 74.1,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12824",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "DGV-GVNB 1. AK16/18 Jungen 2026",
       "venue": "GC Harz",
@@ -179,10 +179,11 @@
       "r2": 81,
       "r3": 81,
       "r4": null,
-      "egrPoints": 208.4
+      "egrPoints": 208.4,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:59.321Z",
+  "scrapedAt": "2026-10-05T14:21:23.253Z",
   "url": "https://www.europeangolfrankings.com/players/44785"
 }

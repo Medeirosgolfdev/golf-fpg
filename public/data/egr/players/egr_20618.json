@@ -8,11 +8,25 @@
   "club": "Kingsknowe",
   "ageGroup": "Adult",
   "tournamentsPlayed": 10,
-  "egrRank": 1319,
-  "egrPoints": 807.5,
-  "avgScore": 78.14,
-  "avgToCR": 77.43,
+  "egrRank": 1283,
+  "egrPoints": 861.72,
+  "avgScore": 77.73,
+  "avgToCR": 77.1,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "6",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 75,
+      "r2": 84,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 54.22
+    },
     {
       "eventId": "11722",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 95,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-18T22:04:11.611Z",
+  "scrapedAt": "2026-10-05T14:12:34.890Z",
   "url": "https://www.europeangolfrankings.com/players/20618"
 }

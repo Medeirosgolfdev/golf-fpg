@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Glenbervie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 14,
-  "egrRank": 40,
-  "egrPoints": 33009.2,
-  "avgScore": 70.67,
-  "avgToCR": 68.8,
+  "tournamentsPlayed": 13,
+  "egrRank": 51,
+  "egrPoints": 31894.4,
+  "avgScore": 71.88,
+  "avgToCR": 69.32,
   "events": [
     {
       "eventId": "12632",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11661",
-      "counting": false,
+      "counting": true,
       "pos": "116",
       "event": "English Amateur Stroke Play (Brabazon) 2026",
       "venue": "Moortown Golf Club",
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "11774",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "R&A Student Tour Series (Malone) 2025",
       "venue": "Malone Golf Club",
@@ -207,10 +207,11 @@
       "r2": 65,
       "r3": 67,
       "r4": null,
-      "egrPoints": 3115.35
+      "egrPoints": 3115.35,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:06.779Z",
+  "scrapedAt": "2026-10-05T14:12:35.828Z",
   "url": "https://www.europeangolfrankings.com/players/20637"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Modena",
   "ageGroup": "U18",
-  "tournamentsPlayed": 18,
-  "egrRank": 631,
+  "tournamentsPlayed": 17,
+  "egrRank": 636,
   "egrPoints": 9469.76,
   "avgScore": 73.83,
   "avgToCR": 71.8,
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11903",
-      "counting": false,
+      "counting": true,
       "pos": "24",
       "event": "Gara Nazionale Modena 2026",
       "venue": "Modena Golf & CC",
@@ -263,10 +263,11 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 395.29
+      "egrPoints": 395.29,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:53.684Z",
+  "scrapedAt": "2026-10-05T14:19:28.860Z",
   "url": "https://www.europeangolfrankings.com/players/38441"
 }

@@ -7,12 +7,40 @@
   "country": "Denmark",
   "club": "Frederikshavn",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 1893,
-  "egrPoints": 3195.41,
-  "avgScore": 75.3,
-  "avgToCR": 74.44,
+  "tournamentsPlayed": 16,
+  "egrRank": 1545,
+  "egrPoints": 4208.03,
+  "avgScore": 74.32,
+  "avgToCR": 73.19,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "13",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 75,
+      "r2": 73,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 530.56
+    },
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "15",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 71,
+      "r2": 71,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 656.01
+    },
     {
       "eventId": "12604",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12545",
-      "counting": true,
+      "counting": false,
       "pos": "42",
       "event": "Carlsberg Viborg Open 2026",
       "venue": "Viborg Golfklub (61)",
@@ -155,7 +183,7 @@
     },
     {
       "eventId": "12552",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "COBRA/PUMA Skanderborg Open 2026",
       "venue": "Skanderborg Golf Klub (54)",
@@ -211,6 +239,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:42.142Z",
+  "scrapedAt": "2026-10-05T14:22:23.937Z",
   "url": "https://www.europeangolfrankings.com/players/48088"
 }

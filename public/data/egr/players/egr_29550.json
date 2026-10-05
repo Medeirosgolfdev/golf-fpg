@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Gorzowski-Zawarcie",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 1254,
-  "egrPoints": 918.55,
-  "avgScore": 77.67,
-  "avgToCR": 72.82,
+  "tournamentsPlayed": 1,
+  "egrRank": 1058,
+  "egrPoints": 1277.6,
+  "avgScore": 78.17,
+  "avgToCR": 72.42,
   "events": [
+    {
+      "eventId": "12925",
+      "counting": true,
+      "pos": "2",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 520.8
+    },
     {
       "eventId": "11351",
       "counting": true,
@@ -25,7 +39,8 @@
       "r2": 77,
       "r3": 78,
       "r4": null,
-      "egrPoints": 756.8
+      "egrPoints": 756.8,
+      "_mantido": true
     },
     {
       "eventId": "11319",
@@ -39,10 +54,11 @@
       "r2": 74,
       "r3": 77,
       "r4": null,
-      "egrPoints": 161.75
+      "egrPoints": 161.75,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:50.564Z",
+  "scrapedAt": "2026-10-05T14:16:04.938Z",
   "url": "https://www.europeangolfrankings.com/players/29550"
 }

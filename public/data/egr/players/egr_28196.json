@@ -8,11 +8,25 @@
   "club": "Stuttgart",
   "ageGroup": "U18",
   "tournamentsPlayed": 11,
-  "egrRank": 197,
-  "egrPoints": 9163.82,
-  "avgScore": 76.04,
-  "avgToCR": 73.24,
+  "egrRank": 233,
+  "egrPoints": 7910.86,
+  "avgScore": 76.91,
+  "avgToCR": 73.54,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "52",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 74,
+      "r2": 73,
+      "r3": 85,
+      "r4": null,
+      "egrPoints": 545.1
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11561",
-      "counting": true,
+      "counting": false,
       "pos": "1",
       "event": "Mid Summer Junior International (GJG) 2026",
       "venue": "Golf-Club Main-Taunus",
@@ -123,7 +137,7 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 2127.65
+      "egrPoints": 958.63
     },
     {
       "eventId": "12429",
@@ -165,10 +179,11 @@
       "r2": 79,
       "r3": 81,
       "r4": null,
-      "egrPoints": 268.67
+      "egrPoints": 268.67,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:39.320Z",
+  "scrapedAt": "2026-10-05T14:15:16.379Z",
   "url": "https://www.europeangolfrankings.com/players/28196"
 }

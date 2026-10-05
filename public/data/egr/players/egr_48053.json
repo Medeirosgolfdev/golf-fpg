@@ -8,11 +8,25 @@
   "club": "Lahden",
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 3632,
-  "egrPoints": 1146.87,
-  "avgScore": 80.3,
-  "avgToCR": 77.97,
+  "egrRank": 3736,
+  "egrPoints": 1096.96,
+  "avgScore": 80.75,
+  "avgToCR": 78.32,
   "events": [
+    {
+      "eventId": "12374",
+      "counting": true,
+      "pos": "53",
+      "event": "FootJoy Finnish Junior Tour Finaali (U21) 2026",
+      "venue": "Vanajanlinna",
+      "country": "Finland",
+      "startDateRaw": "25. Sep 26",
+      "r1": 88,
+      "r2": 89,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12914",
       "counting": true,
@@ -28,20 +42,6 @@
       "egrPoints": 0
     },
     {
-      "eventId": "12364",
-      "counting": true,
-      "pos": "36",
-      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
-      "venue": "Aulangon Golfklubi (Eversti)",
-      "country": "Finland",
-      "startDateRaw": "08. Aug 26",
-      "r1": 83,
-      "r2": 79,
-      "r3": 80,
-      "r4": null,
-      "egrPoints": 73.54
-    },
-    {
       "eventId": "12915",
       "counting": true,
       "pos": "36",
@@ -54,6 +54,20 @@
       "r3": 80,
       "r4": null,
       "egrPoints": 103.85
+    },
+    {
+      "eventId": "12364",
+      "counting": true,
+      "pos": "36",
+      "event": "FootJoy Finnish Junior Tour 7 (U18 & U21) 2026",
+      "venue": "Aulangon Golfklubi (Eversti)",
+      "country": "Finland",
+      "startDateRaw": "08. Aug 26",
+      "r1": 83,
+      "r2": 79,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 73.54
     },
     {
       "eventId": "12353",
@@ -85,7 +99,7 @@
     },
     {
       "eventId": "12351",
-      "counting": false,
+      "counting": true,
       "pos": "71",
       "event": "FootJoy Finnish Junior Tour 4 (U18 & U21) 2026",
       "venue": "Nordcenter Golf & CC (Fream)",
@@ -151,10 +165,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 49.91
+      "egrPoints": 49.91,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:07:41.248Z",
+  "scrapedAt": "2026-10-05T14:22:23.072Z",
   "url": "https://www.europeangolfrankings.com/players/48053"
 }

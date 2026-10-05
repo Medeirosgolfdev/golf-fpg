@@ -8,11 +8,25 @@
   "club": "Goyer",
   "ageGroup": "U14",
   "tournamentsPlayed": 6,
-  "egrRank": 4208,
-  "egrPoints": 871.4,
-  "avgScore": 80.6,
-  "avgToCR": 81.43,
+  "egrRank": 4010,
+  "egrPoints": 968.28,
+  "avgScore": 80.56,
+  "avgToCR": 80.86,
   "events": [
+    {
+      "eventId": "12540",
+      "counting": true,
+      "pos": "9",
+      "event": "Nationaal Strokeplay Kampioenschap Jongens U15 2026",
+      "venue": "Twentsche Golfclub",
+      "country": "Netherlands",
+      "startDateRaw": "19. Sep 26",
+      "r1": 78,
+      "r2": 82,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 239.53
+    },
     {
       "eventId": "12898",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 142.65
+      "egrPoints": 142.65,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:11.259Z",
+  "scrapedAt": "2026-10-05T14:22:50.230Z",
   "url": "https://www.europeangolfrankings.com/players/49270"
 }

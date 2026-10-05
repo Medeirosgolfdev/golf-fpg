@@ -7,12 +7,26 @@
   "country": "Portugal",
   "club": "Oporto",
   "ageGroup": "U21",
-  "tournamentsPlayed": 2,
-  "egrRank": 1882,
-  "egrPoints": 316.42,
-  "avgScore": 79.2,
-  "avgToCR": 76.14,
+  "tournamentsPlayed": 3,
+  "egrRank": 1200,
+  "egrPoints": 1000.69,
+  "avgScore": 77.25,
+  "avgToCR": 74.29,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "13",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 73,
+      "r2": 70,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 684.27
+    },
     {
       "eventId": "12629",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:36:57.918Z",
+  "scrapedAt": "2026-10-05T14:16:34.323Z",
   "url": "https://www.europeangolfrankings.com/players/30802"
 }

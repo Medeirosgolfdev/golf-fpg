@@ -7,12 +7,26 @@
   "country": "France",
   "club": "St. Nom-La-Breteche",
   "ageGroup": "U16",
-  "tournamentsPlayed": 18,
-  "egrRank": 130,
-  "egrPoints": 11918.8,
-  "avgScore": 72.4,
-  "avgToCR": 69.93,
+  "tournamentsPlayed": 17,
+  "egrRank": 78,
+  "egrPoints": 16530.4,
+  "avgScore": 72.04,
+  "avgToCR": 69.65,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "3",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 70,
+      "r2": 71,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 6519.34
+    },
     {
       "eventId": "12184",
       "counting": false,
@@ -141,7 +155,7 @@
     },
     {
       "eventId": "11842",
-      "counting": true,
+      "counting": false,
       "pos": "63",
       "event": "International French U21 2026",
       "venue": "Golf de Saint Cloud",
@@ -151,7 +165,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 1907.69
+      "egrPoints": 316.25
     },
     {
       "eventId": "12052",
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "11647",
-      "counting": false,
+      "counting": true,
       "pos": "67",
       "event": "Portuguese International Ladies' Amateur 2026",
       "venue": "Penina Hotel & Golf Resort",
@@ -249,7 +263,8 @@
       "r2": 77,
       "r3": 75,
       "r4": null,
-      "egrPoints": 168.62
+      "egrPoints": 168.62,
+      "_mantido": true
     },
     {
       "eventId": "10699",
@@ -263,10 +278,11 @@
       "r2": 83,
       "r3": 74,
       "r4": null,
-      "egrPoints": 472.05
+      "egrPoints": 472.05,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:41.699Z",
+  "scrapedAt": "2026-10-05T14:22:23.411Z",
   "url": "https://www.europeangolfrankings.com/players/48065"
 }

@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Kilmalcolm",
   "ageGroup": "U25",
-  "tournamentsPlayed": 15,
-  "egrRank": 192,
-  "egrPoints": 18522.1,
-  "avgScore": 72.15,
-  "avgToCR": 70.42,
+  "tournamentsPlayed": 14,
+  "egrRank": 185,
+  "egrPoints": 19503.6,
+  "avgScore": 73,
+  "avgToCR": 70.7,
   "events": [
     {
       "eventId": "12882",
@@ -183,7 +183,7 @@
     },
     {
       "eventId": "11375",
-      "counting": false,
+      "counting": true,
       "pos": "9",
       "event": "Stirling International (BUCS) 2025",
       "venue": "Montrose Golf Links",
@@ -221,10 +221,11 @@
       "r2": 66,
       "r3": 69,
       "r4": null,
-      "egrPoints": 796.95
+      "egrPoints": 796.95,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:33:22.516Z",
+  "scrapedAt": "2026-10-05T14:13:28.895Z",
   "url": "https://www.europeangolfrankings.com/players/23559"
 }

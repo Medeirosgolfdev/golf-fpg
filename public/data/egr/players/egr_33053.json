@@ -8,11 +8,25 @@
   "club": null,
   "ageGroup": "U21",
   "tournamentsPlayed": 10,
-  "egrRank": 1244,
-  "egrPoints": 928.34,
-  "avgScore": 78.33,
-  "avgToCR": 75.94,
+  "egrRank": 1268,
+  "egrPoints": 896.3,
+  "avgScore": 78,
+  "avgToCR": 75.8,
   "events": [
+    {
+      "eventId": "11447",
+      "counting": true,
+      "pos": "1",
+      "event": "Europafinale (JTG) 2026",
+      "venue": "Golfclub Pischelsdorf",
+      "country": "Austria",
+      "startDateRaw": "08. Sep 26",
+      "r1": 78,
+      "r2": 74,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 92.99
+    },
     {
       "eventId": "11443",
       "counting": true,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11441",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "Junior Golf Tour Open Fürth (JTG) 2026",
       "venue": "1. Golf Club Fürth e.V.",
@@ -151,10 +165,11 @@
       "r2": 95,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:12.700Z",
+  "scrapedAt": "2026-10-05T14:17:33.291Z",
   "url": "https://www.europeangolfrankings.com/players/33053"
 }

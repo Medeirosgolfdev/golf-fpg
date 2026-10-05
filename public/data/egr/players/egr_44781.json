@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Burgdorf",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 655,
-  "egrPoints": 9320.07,
-  "avgScore": 74.52,
-  "avgToCR": 72.96,
+  "tournamentsPlayed": 9,
+  "egrRank": 673,
+  "egrPoints": 9215.51,
+  "avgScore": 74.55,
+  "avgToCR": 72.73,
   "events": [
     {
       "eventId": "12908",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11660",
-      "counting": false,
+      "counting": true,
       "pos": "114",
       "event": "International Austrian Amateur 2026",
       "venue": "Fontana Golf",
@@ -151,10 +151,11 @@
       "r2": 78,
       "r3": 76,
       "r4": null,
-      "egrPoints": 104.56
+      "egrPoints": 104.56,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:59.097Z",
+  "scrapedAt": "2026-10-05T14:21:23.110Z",
   "url": "https://www.europeangolfrankings.com/players/44781"
 }

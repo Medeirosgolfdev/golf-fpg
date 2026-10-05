@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Valence St. Didier",
   "ageGroup": "U12",
-  "tournamentsPlayed": 3,
-  "egrRank": 7480,
-  "egrPoints": 186.31,
-  "avgScore": 80.6,
-  "avgToCR": 82,
+  "tournamentsPlayed": 4,
+  "egrRank": 6660,
+  "egrPoints": 284.41,
+  "avgScore": 80.14,
+  "avgToCR": 81.37,
   "events": [
+    {
+      "eventId": "12117",
+      "counting": true,
+      "pos": "14",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 77,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 98.1
+    },
     {
       "eventId": "12238",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:31.661Z",
+  "scrapedAt": "2026-10-05T14:26:28.301Z",
   "url": "https://www.europeangolfrankings.com/players/58014"
 }

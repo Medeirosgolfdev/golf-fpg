@@ -5,14 +5,28 @@
   "lastName": "NIKOLOVSKI",
   "firstName": "Teodora",
   "country": "France",
-  "club": "Maison Blanche",
+  "club": "Bordelais",
   "ageGroup": "U18",
   "tournamentsPlayed": 9,
-  "egrRank": 86,
-  "egrPoints": 15244.3,
-  "avgScore": 75.12,
-  "avgToCR": 71.12,
+  "egrRank": 80,
+  "egrPoints": 16189.8,
+  "avgScore": 75.46,
+  "avgToCR": 71.46,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "44",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 72,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 872.15
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -81,7 +95,7 @@
       "r2": 73,
       "r3": null,
       "r4": null,
-      "egrPoints": 6044.85
+      "egrPoints": 6641.25
     },
     {
       "eventId": "11653",
@@ -137,10 +151,11 @@
       "r2": 72,
       "r3": 78,
       "r4": null,
-      "egrPoints": 522.98
+      "egrPoints": 522.98,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:05.267Z",
+  "scrapedAt": "2026-10-05T14:19:46.479Z",
   "url": "https://www.europeangolfrankings.com/players/38935"
 }

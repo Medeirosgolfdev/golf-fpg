@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Penati",
   "ageGroup": "U21",
-  "tournamentsPlayed": 11,
-  "egrRank": 1032,
+  "tournamentsPlayed": 10,
+  "egrRank": 1056,
   "egrPoints": 6224.65,
-  "avgScore": 75.9,
-  "avgToCR": 74.92,
+  "avgScore": 76.87,
+  "avgToCR": 75.43,
   "events": [
     {
       "eventId": "12874",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11396",
-      "counting": false,
+      "counting": true,
       "pos": "18",
       "event": "European Winter Series #6 (Toro Tour) 2026",
       "venue": "San Roque Golf Resort",
@@ -165,10 +165,11 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 214.76
+      "egrPoints": 214.76,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:35:55.379Z",
+  "scrapedAt": "2026-10-05T14:15:35.844Z",
   "url": "https://www.europeangolfrankings.com/players/28773"
 }

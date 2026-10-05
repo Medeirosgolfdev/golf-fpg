@@ -7,26 +7,12 @@
   "country": "Germany",
   "club": "Berlin Gatow",
   "ageGroup": "U21",
-  "tournamentsPlayed": 4,
-  "egrRank": 3016,
+  "tournamentsPlayed": 3,
+  "egrRank": 3038,
   "egrPoints": 28.12,
   "avgScore": 86.25,
   "avgToCR": 85.52,
   "events": [
-    {
-      "eventId": "12724",
-      "counting": true,
-      "pos": "18",
-      "event": "PRO1PUTT Open Classic 2026",
-      "venue": "WINSTONgolf",
-      "country": "Germany",
-      "startDateRaw": "30. Mar 26",
-      "r1": 86,
-      "r2": 82,
-      "r3": 89,
-      "r4": null,
-      "egrPoints": 0
-    },
     {
       "eventId": "12728",
       "counting": true,
@@ -40,6 +26,20 @@
       "r3": 89,
       "r4": null,
       "egrPoints": 28.12
+    },
+    {
+      "eventId": "12724",
+      "counting": true,
+      "pos": "18",
+      "event": "PRO1PUTT Open Classic 2026",
+      "venue": "WINSTONgolf",
+      "country": "Germany",
+      "startDateRaw": "30. Mar 26",
+      "r1": 86,
+      "r2": 82,
+      "r3": 89,
+      "r4": null,
+      "egrPoints": 0
     },
     {
       "eventId": "11365",
@@ -67,10 +67,11 @@
       "r2": 88,
       "r3": 86,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:06:10.710Z",
+  "scrapedAt": "2026-10-05T14:19:58.149Z",
   "url": "https://www.europeangolfrankings.com/players/39532"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Neuhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 4,
-  "egrRank": 1536,
-  "egrPoints": 569.46,
-  "avgScore": 79.9,
-  "avgToCR": 79.38,
+  "tournamentsPlayed": 3,
+  "egrRank": 1544,
+  "egrPoints": 562.84,
+  "avgScore": 80.75,
+  "avgToCR": 79.63,
   "events": [
+    {
+      "eventId": "11724",
+      "counting": true,
+      "pos": "4",
+      "event": "Junior Tour Baberton Girls 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 79,
+      "r2": 78,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 86.75
+    },
     {
       "eventId": "12037",
       "counting": true,
@@ -53,7 +67,8 @@
       "r2": 79,
       "r3": 74,
       "r4": null,
-      "egrPoints": 17.71
+      "egrPoints": 17.71,
+      "_mantido": true
     },
     {
       "eventId": "11337",
@@ -67,10 +82,11 @@
       "r2": 84,
       "r3": 78,
       "r4": null,
-      "egrPoints": 75.66
+      "egrPoints": 75.66,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:29.197Z",
+  "scrapedAt": "2026-10-05T14:20:39.817Z",
   "url": "https://www.europeangolfrankings.com/players/42385"
 }

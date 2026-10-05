@@ -8,11 +8,25 @@
   "club": "Bonn-Godesberg",
   "ageGroup": "U18",
   "tournamentsPlayed": 2,
-  "egrRank": 10264,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 84.5,
-  "avgToCR": 84.9,
+  "avgScore": 82.67,
+  "avgToCR": 83.02,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "30",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11705",
       "counting": true,
@@ -39,10 +53,11 @@
       "r2": 87,
       "r3": 81,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:32.505Z",
+  "scrapedAt": "2026-10-05T14:23:51.325Z",
   "url": "https://www.europeangolfrankings.com/players/51960"
 }

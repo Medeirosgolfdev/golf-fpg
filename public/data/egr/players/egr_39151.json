@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Ayr Belleisle",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 1081,
+  "tournamentsPlayed": 16,
+  "egrRank": 1083,
   "egrPoints": 6073.45,
   "avgScore": 74.05,
   "avgToCR": 73.69,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": false,
+      "pos": "18",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 81,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 98.04
+    },
     {
       "eventId": "11721",
       "counting": false,
@@ -225,6 +239,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:08.155Z",
+  "scrapedAt": "2026-10-05T14:19:52.638Z",
   "url": "https://www.europeangolfrankings.com/players/39151"
 }

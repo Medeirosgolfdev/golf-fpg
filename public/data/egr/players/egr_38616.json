@@ -7,11 +7,11 @@
   "country": "Scotland",
   "club": "Bruntsfield Links",
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 920,
-  "egrPoints": 6999.6,
-  "avgScore": 74.24,
-  "avgToCR": 73.83,
+  "tournamentsPlayed": 9,
+  "egrRank": 1010,
+  "egrPoints": 6461.29,
+  "avgScore": 74.72,
+  "avgToCR": 74.24,
   "events": [
     {
       "eventId": "12882",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11769",
-      "counting": false,
+      "counting": true,
       "pos": "41",
       "event": "R&A Student Tour Series (La Sella) 2026",
       "venue": "La Sella Golf Club",
@@ -151,10 +151,11 @@
       "r2": 68,
       "r3": 73,
       "r4": null,
-      "egrPoints": 633.94
+      "egrPoints": 633.94,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:05:59.668Z",
+  "scrapedAt": "2026-10-05T14:19:36.992Z",
   "url": "https://www.europeangolfrankings.com/players/38616"
 }

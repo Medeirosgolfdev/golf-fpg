@@ -5,14 +5,28 @@
   "lastName": "LEGOY",
   "firstName": "Eloise",
   "country": "France",
-  "club": "Le Havre",
+  "club": "Pont Au",
   "ageGroup": "U12",
   "tournamentsPlayed": 4,
-  "egrRank": 2754,
-  "egrPoints": 62.92,
-  "avgScore": 83.86,
-  "avgToCR": 85.67,
+  "egrRank": 2593,
+  "egrPoints": 92.48,
+  "avgScore": 83.43,
+  "avgToCR": 84.1,
   "events": [
+    {
+      "eventId": "12118",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix National U12 2026",
+      "venue": "Golf de Saint-Jean-de-Monts",
+      "country": "France",
+      "startDateRaw": "12. Sep 26",
+      "r1": 82,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 29.57
+    },
     {
       "eventId": "12241",
       "counting": true,
@@ -67,10 +81,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:58:01.184Z",
+  "scrapedAt": "2026-10-05T14:25:31.654Z",
   "url": "https://www.europeangolfrankings.com/players/55881"
 }

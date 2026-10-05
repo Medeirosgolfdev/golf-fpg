@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Chantaco",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 1113,
+  "tournamentsPlayed": 7,
+  "egrRank": 1111,
   "egrPoints": 1155.26,
-  "avgScore": 76.06,
-  "avgToCR": 74.23,
+  "avgScore": 76.5,
+  "avgToCR": 74.53,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "78",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 75,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12176",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:33.149Z",
+  "scrapedAt": "2026-10-05T14:22:10.490Z",
   "url": "https://www.europeangolfrankings.com/players/47597"
 }

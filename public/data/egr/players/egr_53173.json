@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": null,
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 3465,
+  "tournamentsPlayed": 9,
+  "egrRank": 3483,
   "egrPoints": 1241.14,
   "avgScore": 78.09,
   "avgToCR": 78.24,
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "12679",
-      "counting": false,
+      "counting": true,
       "pos": "51",
       "event": "DGV-NRW 1. AK16/18 Jungen 2026",
       "venue": "Golf- und Landclub Coesfeld",
@@ -151,10 +151,11 @@
       "r2": 85,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:08:48.344Z",
+  "scrapedAt": "2026-10-05T14:24:17.243Z",
   "url": "https://www.europeangolfrankings.com/players/53173"
 }

@@ -2,17 +2,31 @@
   "id": "15986",
   "egrId": "FFRA15986",
   "name": "Clotilde De Lembeye",
-  "lastName": "LEMBEYE",
-  "firstName": "Clotilde De",
+  "lastName": "DE LEMBEYE",
+  "firstName": "Clotilde",
   "country": "France",
   "club": "Saint Cloud",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 3,
-  "egrRank": 505,
-  "egrPoints": 3795.55,
-  "avgScore": 73.67,
-  "avgToCR": 70.27,
+  "tournamentsPlayed": 4,
+  "egrRank": 416,
+  "egrPoints": 4603.81,
+  "avgScore": 73.27,
+  "avgToCR": 70.15,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "10",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 75,
+      "r2": 71,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 808.26
+    },
     {
       "eventId": "12076",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:30:42.835Z",
+  "scrapedAt": "2026-10-05T14:11:32.586Z",
   "url": "https://www.europeangolfrankings.com/players/15986"
 }

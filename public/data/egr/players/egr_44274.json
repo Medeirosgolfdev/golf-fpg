@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Olgiata",
   "ageGroup": "U16",
-  "tournamentsPlayed": 19,
-  "egrRank": 871,
+  "tournamentsPlayed": 18,
+  "egrRank": 880,
   "egrPoints": 7467.89,
   "avgScore": 74.61,
   "avgToCR": 72.63,
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11931",
-      "counting": false,
+      "counting": true,
       "pos": "48",
       "event": "LXX Gran Premio Cittá Di Milano Trofeo Gianni Albertini 2026",
       "venue": "Golf Club Milano",
@@ -225,7 +225,7 @@
     },
     {
       "eventId": "11909",
-      "counting": false,
+      "counting": true,
       "pos": "32",
       "event": "Stella D'Oro 2026",
       "venue": "Olgiata Golf Club",
@@ -277,10 +277,11 @@
       "r2": 72,
       "r3": 72,
       "r4": null,
-      "egrPoints": 683.2
+      "egrPoints": 683.2,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:50.591Z",
+  "scrapedAt": "2026-10-05T14:21:12.363Z",
   "url": "https://www.europeangolfrankings.com/players/44274"
 }

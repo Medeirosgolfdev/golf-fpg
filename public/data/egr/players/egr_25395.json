@@ -5,14 +5,28 @@
   "lastName": "MARTIN",
   "firstName": "Marie",
   "country": "Germany",
-  "club": "Westpfalz",
+  "club": "Bostalsee",
   "ageGroup": "U21",
   "tournamentsPlayed": 2,
-  "egrRank": 1785,
-  "egrPoints": 374.38,
-  "avgScore": 76.6,
-  "avgToCR": 73.52,
+  "egrRank": 1791,
+  "egrPoints": 371.56,
+  "avgScore": 80.4,
+  "avgToCR": 77.74,
   "events": [
+    {
+      "eventId": "12923",
+      "counting": true,
+      "pos": "1",
+      "event": "DGV-RP/S Meisterschaft AKOffen Damen 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 79,
+      "r2": 84,
+      "r3": 83,
+      "r4": null,
+      "egrPoints": 371.56
+    },
     {
       "eventId": "11547",
       "counting": true,
@@ -39,10 +53,11 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 374.38
+      "egrPoints": 374.38,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:34:10.420Z",
+  "scrapedAt": "2026-10-05T14:14:05.785Z",
   "url": "https://www.europeangolfrankings.com/players/25395"
 }

@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Wallenried",
   "ageGroup": "U25",
-  "tournamentsPlayed": 10,
-  "egrRank": 215,
+  "tournamentsPlayed": 9,
+  "egrRank": 229,
   "egrPoints": 17645.7,
-  "avgScore": 71.95,
-  "avgToCR": 69.92,
+  "avgScore": 73.2,
+  "avgToCR": 69.93,
   "events": [
     {
       "eventId": "12628",
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11660",
-      "counting": false,
+      "counting": true,
       "pos": "157",
       "event": "International Austrian Amateur 2026",
       "venue": "Fontana Golf",
@@ -151,10 +151,11 @@
       "r2": 72,
       "r3": 71,
       "r4": null,
-      "egrPoints": 1113.99
+      "egrPoints": 1113.99,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:37:50.010Z",
+  "scrapedAt": "2026-10-05T14:17:30.048Z",
   "url": "https://www.europeangolfrankings.com/players/32947"
 }

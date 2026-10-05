@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Sobienie Krolewskie",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 1,
-  "egrRank": 5030,
-  "egrPoints": 590.47,
-  "avgScore": 76,
-  "avgToCR": 72,
+  "tournamentsPlayed": 2,
+  "egrRank": 4169,
+  "egrPoints": 897.51,
+  "avgScore": 74.8,
+  "avgToCR": 71.7,
   "events": [
+    {
+      "eventId": "12924",
+      "counting": true,
+      "pos": "6",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 307.04
+    },
     {
       "eventId": "12628",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:30:31.207Z",
+  "scrapedAt": "2026-10-05T14:11:22.879Z",
   "url": "https://www.europeangolfrankings.com/players/14813"
 }

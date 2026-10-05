@@ -8,11 +8,25 @@
   "club": "Hardenberg",
   "ageGroup": "U18",
   "tournamentsPlayed": 18,
-  "egrRank": 1372,
-  "egrPoints": 4721.39,
-  "avgScore": 73.6,
-  "avgToCR": 72.53,
+  "egrRank": 1363,
+  "egrPoints": 4795.33,
+  "avgScore": 73.64,
+  "avgToCR": 72.44,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "9",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 71,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 252.14
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "11574",
-      "counting": true,
+      "counting": false,
       "pos": "7",
       "event": "German International Youth Trophy by PDI 2026",
       "venue": "GLC Semlin am See (A&B)",
@@ -263,10 +277,11 @@
       "r2": 80,
       "r3": 75,
       "r4": null,
-      "egrPoints": 121.63
+      "egrPoints": 121.63,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:20.448Z",
+  "scrapedAt": "2026-10-05T14:21:54.231Z",
   "url": "https://www.europeangolfrankings.com/players/46251"
 }

@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Bossey",
   "ageGroup": "U16",
-  "tournamentsPlayed": 14,
-  "egrRank": 264,
-  "egrPoints": 7067.32,
+  "tournamentsPlayed": 15,
+  "egrRank": 361,
+  "egrPoints": 5374.82,
   "avgScore": 74.87,
-  "avgToCR": 72.94,
+  "avgToCR": 72.26,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "61",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 73,
+      "r2": 80,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -43,7 +57,7 @@
     },
     {
       "eventId": "12474",
-      "counting": false,
+      "counting": true,
       "pos": "5",
       "event": "Swiss Golf Junior Tour (Markgräflerland) 2026",
       "venue": "Golfclub Markgräflerland Kandern",
@@ -165,7 +179,7 @@
       "r2": 76,
       "r3": null,
       "r4": null,
-      "egrPoints": 2005.45
+      "egrPoints": 586.38
     },
     {
       "eventId": "12440",
@@ -211,6 +225,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:55.453Z",
+  "scrapedAt": "2026-10-05T14:21:18.372Z",
   "url": "https://www.europeangolfrankings.com/players/44507"
 }

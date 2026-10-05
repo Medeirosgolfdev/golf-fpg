@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Courmayeur",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 2005,
+  "tournamentsPlayed": 11,
+  "egrRank": 2010,
   "egrPoints": 2957.06,
   "avgScore": 77.25,
   "avgToCR": 75.87,
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11917",
-      "counting": false,
+      "counting": true,
       "pos": "66",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -179,10 +179,11 @@
       "r2": 72,
       "r3": 76,
       "r4": null,
-      "egrPoints": 295.51
+      "egrPoints": 295.51,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:50.155Z",
+  "scrapedAt": "2026-10-05T14:21:11.906Z",
   "url": "https://www.europeangolfrankings.com/players/44264"
 }

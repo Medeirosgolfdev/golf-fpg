@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Grande Bastide",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 242,
-  "egrPoints": 7616.71,
-  "avgScore": 72.96,
-  "avgToCR": 70.59,
+  "tournamentsPlayed": 17,
+  "egrRank": 141,
+  "egrPoints": 11435.4,
+  "avgScore": 72.7,
+  "avgToCR": 70.25,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "6",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 72,
+      "r2": 71,
+      "r3": 69,
+      "r4": null,
+      "egrPoints": 4262.64
+    },
+    {
+      "eventId": "12188",
+      "counting": false,
+      "pos": "5",
+      "event": "Grand Prix de Valcros 2026",
+      "venue": "Golf de Valcros Hyères",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 76,
+      "r2": 77,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 158.82
+    },
     {
       "eventId": "12176",
       "counting": true,
@@ -225,6 +253,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:08.662Z",
+  "scrapedAt": "2026-10-05T14:21:35.933Z",
   "url": "https://www.europeangolfrankings.com/players/45276"
 }

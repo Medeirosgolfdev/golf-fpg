@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Fredensborg",
   "ageGroup": "U25",
-  "tournamentsPlayed": 3,
-  "egrRank": 4356,
-  "egrPoints": 812.65,
-  "avgScore": 76.75,
-  "avgToCR": 78.26,
+  "tournamentsPlayed": 4,
+  "egrRank": 3841,
+  "egrPoints": 1049.76,
+  "avgScore": 77.56,
+  "avgToCR": 77.07,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "28",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 80,
+      "r2": 74,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 237.11
+    },
     {
       "eventId": "12579",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:36:33.141Z",
+  "scrapedAt": "2026-10-05T14:16:12.110Z",
   "url": "https://www.europeangolfrankings.com/players/29780"
 }

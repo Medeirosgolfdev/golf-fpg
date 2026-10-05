@@ -7,8 +7,8 @@
   "country": "Belgium",
   "club": "Rinkven",
   "ageGroup": "U18",
-  "tournamentsPlayed": 15,
-  "egrRank": 383,
+  "tournamentsPlayed": 14,
+  "egrRank": 389,
   "egrPoints": 12843.6,
   "avgScore": 73.16,
   "avgToCR": 71.41,
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11753",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "Belgian National Championship (U16/18) 2026",
       "venue": "The National Golf Brussels",
@@ -141,7 +141,7 @@
     },
     {
       "eventId": "11729",
-      "counting": false,
+      "counting": true,
       "pos": "2",
       "event": "Junior Open Wallonie - Vlaandere 2026",
       "venue": "Royal Waterloo Golf Club",
@@ -221,10 +221,11 @@
       "r2": 72,
       "r3": 74,
       "r4": null,
-      "egrPoints": 1273.55
+      "egrPoints": 1273.55,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:49.215Z",
+  "scrapedAt": "2026-10-05T14:21:10.665Z",
   "url": "https://www.europeangolfrankings.com/players/44218"
 }

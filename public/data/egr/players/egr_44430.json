@@ -8,10 +8,10 @@
   "club": "Entfelden",
   "ageGroup": "U16",
   "tournamentsPlayed": 13,
-  "egrRank": 1432,
-  "egrPoints": 4495.38,
-  "avgScore": 73.75,
-  "avgToCR": 73.41,
+  "egrRank": 1345,
+  "egrPoints": 4886.05,
+  "avgScore": 73.95,
+  "avgToCR": 73.53,
   "events": [
     {
       "eventId": "12002",
@@ -26,6 +26,20 @@
       "r3": 81,
       "r4": null,
       "egrPoints": 1726.12
+    },
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "29",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 77,
+      "r2": 82,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 488.31
     },
     {
       "eventId": "12475",
@@ -113,7 +127,7 @@
     },
     {
       "eventId": "12448",
-      "counting": true,
+      "counting": false,
       "pos": "33",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -193,10 +207,11 @@
       "r2": 80,
       "r3": null,
       "r4": null,
-      "egrPoints": 44.22
+      "egrPoints": 44.22,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:54.047Z",
+  "scrapedAt": "2026-10-05T14:21:16.527Z",
   "url": "https://www.europeangolfrankings.com/players/44430"
 }

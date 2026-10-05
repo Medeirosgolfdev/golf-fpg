@@ -5,14 +5,28 @@
   "lastName": "GUILLAUME",
   "firstName": "Maxence",
   "country": "Belgium",
-  "club": "Bois D'Arlon",
+  "club": "GA 57",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 4487,
-  "egrPoints": 757.89,
-  "avgScore": 79.18,
-  "avgToCR": 79.57,
+  "tournamentsPlayed": 7,
+  "egrRank": 4127,
+  "egrPoints": 916.22,
+  "avgScore": 78.79,
+  "avgToCR": 78.51,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "19",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 158.33
+    },
     {
       "eventId": "12896",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:28.106Z",
+  "scrapedAt": "2026-10-05T14:20:38.050Z",
   "url": "https://www.europeangolfrankings.com/players/42347"
 }

@@ -8,11 +8,39 @@
   "club": "Hamburg",
   "ageGroup": "Adult",
   "tournamentsPlayed": 9,
-  "egrRank": 47,
-  "egrPoints": 21098.5,
-  "avgScore": 73.56,
-  "avgToCR": 69.2,
+  "egrRank": 48,
+  "egrPoints": 20618.3,
+  "avgScore": 73.72,
+  "avgToCR": 69.58,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "22",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 312.28
+    },
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "44",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 872.15
+    },
     {
       "eventId": "11766",
       "counting": true,
@@ -99,7 +127,7 @@
     },
     {
       "eventId": "12310",
-      "counting": false,
+      "counting": true,
       "pos": "7",
       "event": "R&A Student Tour Series (La Sella) 2026",
       "venue": "La Sella Golf Club",
@@ -123,7 +151,8 @@
       "r2": 75,
       "r3": 77,
       "r4": null,
-      "egrPoints": 277.65
+      "egrPoints": 277.65,
+      "_mantido": true
     },
     {
       "eventId": "10365",
@@ -137,10 +166,11 @@
       "r2": 76,
       "r3": 72,
       "r4": null,
-      "egrPoints": 477.26
+      "egrPoints": 477.26,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:34:13.960Z",
+  "scrapedAt": "2026-10-05T14:14:09.422Z",
   "url": "https://www.europeangolfrankings.com/players/25518"
 }

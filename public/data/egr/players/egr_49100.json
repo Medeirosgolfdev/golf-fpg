@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Bastide Salette",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 478,
+  "tournamentsPlayed": 10,
+  "egrRank": 474,
   "egrPoints": 4129.97,
   "avgScore": 74.47,
   "avgToCR": 73.57,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "81",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 79,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11782",
       "counting": true,
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.375Z",
+  "scrapedAt": "2026-10-05T14:22:44.496Z",
   "url": "https://www.europeangolfrankings.com/players/49100"
 }

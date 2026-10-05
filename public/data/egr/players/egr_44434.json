@@ -7,12 +7,26 @@
   "country": "Switzerland",
   "club": "Entfelden",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 2317,
-  "egrPoints": 2376.15,
-  "avgScore": 75.75,
-  "avgToCR": 75.58,
+  "tournamentsPlayed": 13,
+  "egrRank": 2209,
+  "egrPoints": 2558.62,
+  "avgScore": 76.48,
+  "avgToCR": 76.17,
   "events": [
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "47",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 86,
+      "r2": 81,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 335.37
+    },
     {
       "eventId": "12475",
       "counting": true,
@@ -193,7 +207,8 @@
       "r2": 76,
       "r3": 75,
       "r4": null,
-      "egrPoints": 291.86
+      "egrPoints": 291.86,
+      "_mantido": true
     },
     {
       "eventId": "10366",
@@ -207,10 +222,11 @@
       "r2": 82,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:54.306Z",
+  "scrapedAt": "2026-10-05T14:21:16.838Z",
   "url": "https://www.europeangolfrankings.com/players/44434"
 }

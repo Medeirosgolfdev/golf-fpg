@@ -8,11 +8,25 @@
   "club": "Unterengstringen",
   "ageGroup": "U14",
   "tournamentsPlayed": 17,
-  "egrRank": 548,
-  "egrPoints": 3397.18,
-  "avgScore": 74.05,
-  "avgToCR": 72.56,
+  "egrRank": 491,
+  "egrPoints": 3971.4,
+  "avgScore": 73.95,
+  "avgToCR": 72.27,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "15",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 72,
+      "r2": 76,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 730.21
+    },
     {
       "eventId": "12003",
       "counting": true,
@@ -169,7 +183,7 @@
     },
     {
       "eventId": "12447",
-      "counting": true,
+      "counting": false,
       "pos": "3",
       "event": "Swiss Golf Junior Tour (Sierre) 2026",
       "venue": "Golf Club de Sierre",
@@ -249,10 +263,11 @@
       "r2": 79,
       "r3": null,
       "r4": null,
-      "egrPoints": 98.04
+      "egrPoints": 98.04,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.583Z",
+  "scrapedAt": "2026-10-05T14:21:18.536Z",
   "url": "https://www.europeangolfrankings.com/players/44512"
 }

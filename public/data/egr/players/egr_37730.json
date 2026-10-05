@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Rennes Saint-Jacques",
   "ageGroup": "U16",
-  "tournamentsPlayed": 12,
-  "egrRank": 191,
+  "tournamentsPlayed": 13,
+  "egrRank": 190,
   "egrPoints": 9496.69,
   "avgScore": 75.12,
   "avgToCR": 72.34,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "89",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 79,
+      "r2": 81,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12190",
+      "counting": false,
+      "pos": "2",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 77,
+      "r2": 80,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 203.62
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -179,10 +207,11 @@
       "r2": 78,
       "r3": 77,
       "r4": null,
-      "egrPoints": 121.22
+      "egrPoints": 121.22,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:46.268Z",
+  "scrapedAt": "2026-10-05T14:19:10.139Z",
   "url": "https://www.europeangolfrankings.com/players/37730"
 }

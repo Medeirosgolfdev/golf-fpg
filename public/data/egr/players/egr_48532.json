@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Unterengstringen",
   "ageGroup": "U12",
-  "tournamentsPlayed": 9,
-  "egrRank": 2325,
-  "egrPoints": 146.43,
-  "avgScore": 84.6,
-  "avgToCR": 84.44,
+  "tournamentsPlayed": 8,
+  "egrRank": 2307,
+  "egrPoints": 155.64,
+  "avgScore": 83.17,
+  "avgToCR": 82.35,
   "events": [
     {
       "eventId": "12480",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12474",
-      "counting": false,
+      "counting": true,
       "pos": "21",
       "event": "Swiss Golf Junior Tour (Markgräflerland) 2026",
       "venue": "Golfclub Markgräflerland Kandern",
@@ -137,10 +137,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 5.6
+      "egrPoints": 5.6,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:54.199Z",
+  "scrapedAt": "2026-10-05T14:22:36.470Z",
   "url": "https://www.europeangolfrankings.com/players/48532"
 }

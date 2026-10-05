@@ -7,12 +7,26 @@
   "country": "Ireland",
   "club": "Westport",
   "ageGroup": "U21",
-  "tournamentsPlayed": 13,
-  "egrRank": 202,
-  "egrPoints": 18167.4,
-  "avgScore": 72.21,
-  "avgToCR": 70.65,
+  "tournamentsPlayed": 14,
+  "egrRank": 164,
+  "egrPoints": 20195.5,
+  "avgScore": 72.18,
+  "avgToCR": 70.5,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "14",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 68,
+      "r2": 74,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 2028.08
+    },
     {
       "eventId": "11672",
       "counting": true,
@@ -197,6 +211,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:38:39.175Z",
+  "scrapedAt": "2026-10-05T14:18:25.578Z",
   "url": "https://www.europeangolfrankings.com/players/35724"
 }

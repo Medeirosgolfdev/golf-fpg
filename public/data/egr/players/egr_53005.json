@@ -7,12 +7,26 @@
   "country": "Norway",
   "club": "Bjaavann",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 4818,
-  "egrPoints": 652.2,
-  "avgScore": 78.28,
-  "avgToCR": 78.88,
+  "tournamentsPlayed": 10,
+  "egrRank": 4659,
+  "egrPoints": 712.94,
+  "avgScore": 77.28,
+  "avgToCR": 77.64,
   "events": [
+    {
+      "eventId": "12334",
+      "counting": true,
+      "pos": "7",
+      "event": "Srixon Tour 8 (U15 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 81,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 89.24
+    },
     {
       "eventId": "12331",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "12408",
-      "counting": true,
+      "counting": false,
       "pos": "4",
       "event": "Danish Juniors Int. -Marbæk by NorSea (U14) 2026",
       "venue": "Esbjerg Golfklub (52)",
@@ -141,6 +155,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:14.120Z",
+  "scrapedAt": "2026-10-05T14:24:11.372Z",
   "url": "https://www.europeangolfrankings.com/players/53005"
 }

@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Stolper Heide",
   "ageGroup": "U14",
-  "tournamentsPlayed": 3,
-  "egrRank": 10264,
-  "egrPoints": 0,
-  "avgScore": 91.44,
-  "avgToCR": 89.76,
+  "tournamentsPlayed": 4,
+  "egrRank": 9361,
+  "egrPoints": 54.52,
+  "avgScore": 89.75,
+  "avgToCR": 88.66,
   "events": [
+    {
+      "eventId": "12932",
+      "counting": true,
+      "pos": "10",
+      "event": "GVBB AK14 Meisterschaft Jungen 2026",
+      "venue": "Golf Club Gatow",
+      "country": "Germany",
+      "startDateRaw": "18. Aug 26",
+      "r1": 81,
+      "r2": 84,
+      "r3": 89,
+      "r4": null,
+      "egrPoints": 54.52
+    },
     {
       "eventId": "12774",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:23.324Z",
+  "scrapedAt": "2026-10-05T14:26:05.330Z",
   "url": "https://www.europeangolfrankings.com/players/57004"
 }

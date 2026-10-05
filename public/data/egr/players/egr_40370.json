@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Hossegor",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 935,
-  "egrPoints": 1589.88,
-  "avgScore": 78.41,
-  "avgToCR": 75.24,
+  "tournamentsPlayed": 11,
+  "egrRank": 963,
+  "egrPoints": 1534.22,
+  "avgScore": 77.45,
+  "avgToCR": 75.58,
   "events": [
+    {
+      "eventId": "12186",
+      "counting": true,
+      "pos": "12",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 73,
+      "r2": 87,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 46.13
+    },
     {
       "eventId": "12146",
       "counting": true,
@@ -127,7 +141,7 @@
     },
     {
       "eventId": "11504",
-      "counting": true,
+      "counting": false,
       "pos": "22",
       "event": "Desert Springs Junior Championship 2026",
       "venue": "Desert Springs Resort and Golf Club",
@@ -155,6 +169,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:16.595Z",
+  "scrapedAt": "2026-10-05T14:20:11.692Z",
   "url": "https://www.europeangolfrankings.com/players/40370"
 }

@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Ormskirk",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 9,
-  "egrRank": 49,
-  "egrPoints": 30764.5,
-  "avgScore": 71.24,
-  "avgToCR": 69.39,
+  "tournamentsPlayed": 8,
+  "egrRank": 56,
+  "egrPoints": 31119.9,
+  "avgScore": 72.22,
+  "avgToCR": 69.59,
   "events": [
     {
       "eventId": "11671",
@@ -113,7 +113,7 @@
     },
     {
       "eventId": "11793",
-      "counting": false,
+      "counting": true,
       "pos": "51",
       "event": "Berkhamsted Trophy 2026",
       "venue": "Berkhamsted Golf Club",
@@ -137,10 +137,11 @@
       "r2": 74,
       "r3": 71,
       "r4": 69,
-      "egrPoints": 2205.6
+      "egrPoints": 2205.6,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:37:51.518Z",
+  "scrapedAt": "2026-10-05T14:17:31.271Z",
   "url": "https://www.europeangolfrankings.com/players/33001"
 }

@@ -8,11 +8,25 @@
   "club": "Tyski",
   "ageGroup": "U14",
   "tournamentsPlayed": 3,
-  "egrRank": 10264,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 95.89,
-  "avgToCR": 99.29,
+  "avgScore": 92.11,
+  "avgToCR": 96.04,
   "events": [
+    {
+      "eventId": "12920",
+      "counting": true,
+      "pos": "55",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 95,
+      "r2": 90,
+      "r3": 91,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11467",
       "counting": true,
@@ -53,10 +67,11 @@
       "r2": 109,
       "r3": 98,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:32.698Z",
+  "scrapedAt": "2026-10-05T14:26:15.136Z",
   "url": "https://www.europeangolfrankings.com/players/57246"
 }

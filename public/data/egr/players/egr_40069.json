@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": "Nacka",
   "ageGroup": "U18",
-  "tournamentsPlayed": 7,
-  "egrRank": 216,
-  "egrPoints": 8411.24,
-  "avgScore": 73.67,
-  "avgToCR": 71.16,
+  "tournamentsPlayed": 9,
+  "egrRank": 194,
+  "egrPoints": 9247.27,
+  "avgScore": 73.92,
+  "avgToCR": 71.31,
   "events": [
+    {
+      "eventId": "12397",
+      "counting": true,
+      "pos": "5",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 77,
+      "r2": 70,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 387.13
+    },
+    {
+      "eventId": "12404",
+      "counting": true,
+      "pos": "10",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 448.9
+    },
     {
       "eventId": "12625",
       "counting": true,
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:13.744Z",
+  "scrapedAt": "2026-10-05T14:20:05.925Z",
   "url": "https://www.europeangolfrankings.com/players/40069"
 }

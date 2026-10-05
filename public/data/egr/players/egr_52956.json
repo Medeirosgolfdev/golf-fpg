@@ -7,11 +7,11 @@
   "country": "Switzerland",
   "club": "Bossey",
   "ageGroup": "U12",
-  "tournamentsPlayed": 9,
-  "egrRank": 2470,
-  "egrPoints": 111.52,
-  "avgScore": 87.78,
-  "avgToCR": 86.43,
+  "tournamentsPlayed": 8,
+  "egrRank": 2485,
+  "egrPoints": 110.77,
+  "avgScore": 86.73,
+  "avgToCR": 85.86,
   "events": [
     {
       "eventId": "12483",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12474",
-      "counting": false,
+      "counting": true,
       "pos": "30",
       "event": "Swiss Golf Junior Tour (Markgräflerland) 2026",
       "venue": "Golfclub Markgräflerland Kandern",
@@ -137,10 +137,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 21
+      "egrPoints": 21,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:56.322Z",
+  "scrapedAt": "2026-10-05T14:24:11.001Z",
   "url": "https://www.europeangolfrankings.com/players/52956"
 }

@@ -8,11 +8,25 @@
   "club": "Haga",
   "ageGroup": "U18",
   "tournamentsPlayed": 14,
-  "egrRank": 713,
-  "egrPoints": 2414.05,
-  "avgScore": 76.17,
-  "avgToCR": 73.94,
+  "egrRank": 674,
+  "egrPoints": 2629.59,
+  "avgScore": 75.7,
+  "avgToCR": 74.47,
   "events": [
+    {
+      "eventId": "12335",
+      "counting": true,
+      "pos": "3",
+      "event": "Srixon Tour 8 Finale (U19) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 72,
+      "r2": 78,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 358.6
+    },
     {
       "eventId": "12328",
       "counting": false,
@@ -183,7 +197,7 @@
     },
     {
       "eventId": "12409",
-      "counting": true,
+      "counting": false,
       "pos": "5",
       "event": "Danish Juniors Int.-Marbæk by NorSea (U18) 2026",
       "venue": "Esbjerg Golfklub (52)",
@@ -207,10 +221,11 @@
       "r2": 75,
       "r3": 79,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:26.941Z",
+  "scrapedAt": "2026-10-05T14:18:16.027Z",
   "url": "https://www.europeangolfrankings.com/players/35270"
 }

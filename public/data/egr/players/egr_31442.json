@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Club Zur Vahr",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 643,
+  "tournamentsPlayed": 11,
+  "egrRank": 647,
   "egrPoints": 9385.54,
   "avgScore": 72.7,
   "avgToCR": 71.7,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12533",
-      "counting": false,
+      "counting": true,
       "pos": "45",
       "event": "Dutch Junior Open 2026",
       "venue": "Toxandria Golf Club",
@@ -179,10 +179,11 @@
       "r2": 71,
       "r3": 77,
       "r4": null,
-      "egrPoints": 1107.47
+      "egrPoints": 1107.47,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:59.608Z",
+  "scrapedAt": "2026-10-05T14:16:49.393Z",
   "url": "https://www.europeangolfrankings.com/players/31442"
 }

@@ -1,18 +1,32 @@
 {
   "id": "49937",
   "egrId": "MITA49937",
-  "name": "Andrea Polini",
+  "name": "andrea Polini",
   "lastName": "POLINI",
-  "firstName": "Andrea",
+  "firstName": "andrea",
   "country": "Italy",
   "club": "Franciacorta",
   "ageGroup": "U14",
-  "tournamentsPlayed": 11,
-  "egrRank": 3735,
-  "egrPoints": 1091.17,
-  "avgScore": 79,
-  "avgToCR": 79.86,
+  "tournamentsPlayed": 12,
+  "egrRank": 3573,
+  "egrPoints": 1186.42,
+  "avgScore": 78.35,
+  "avgToCR": 78.93,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "21",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 140.46
+    },
     {
       "eventId": "11998",
       "counting": false,
@@ -29,7 +43,7 @@
     },
     {
       "eventId": "11986",
-      "counting": true,
+      "counting": false,
       "pos": "39",
       "event": "Mattone d'Oro 2026",
       "venue": "Golf Club Bergamo L'Albenza",
@@ -169,6 +183,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:09.246Z",
+  "scrapedAt": "2026-10-05T14:23:10.043Z",
   "url": "https://www.europeangolfrankings.com/players/49937"
 }

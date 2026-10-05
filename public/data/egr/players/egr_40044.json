@@ -7,12 +7,26 @@
   "country": "Spain",
   "club": "Escorpion",
   "ageGroup": "U16",
-  "tournamentsPlayed": 7,
-  "egrRank": 2291,
-  "egrPoints": 2412.94,
-  "avgScore": 79.11,
-  "avgToCR": 78.88,
+  "tournamentsPlayed": 8,
+  "egrRank": 2173,
+  "egrPoints": 2622.01,
+  "avgScore": 78.55,
+  "avgToCR": 78.21,
   "events": [
+    {
+      "eventId": "12926",
+      "counting": true,
+      "pos": "15",
+      "event": "WAGR Panoramica 2026",
+      "venue": "Panoramica Golf, Sports & Resorts",
+      "country": "Spain",
+      "startDateRaw": "18. Sep 26",
+      "r1": 81,
+      "r2": 72,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 209.07
+    },
     {
       "eventId": "11776",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:13.450Z",
+  "scrapedAt": "2026-10-05T14:20:05.159Z",
   "url": "https://www.europeangolfrankings.com/players/40044"
 }

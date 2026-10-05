@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Monticello",
   "ageGroup": "U21",
-  "tournamentsPlayed": 18,
-  "egrRank": 1011,
+  "tournamentsPlayed": 16,
+  "egrRank": 1015,
   "egrPoints": 6431.35,
   "avgScore": 75.52,
   "avgToCR": 73.46,
@@ -169,7 +169,7 @@
     },
     {
       "eventId": "11888",
-      "counting": false,
+      "counting": true,
       "pos": "17",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -249,7 +249,8 @@
       "r2": 73,
       "r3": 73,
       "r4": null,
-      "egrPoints": 447.29
+      "egrPoints": 447.29,
+      "_mantido": true
     },
     {
       "eventId": "10317",
@@ -263,10 +264,11 @@
       "r2": 72,
       "r3": 79,
       "r4": null,
-      "egrPoints": 175.06
+      "egrPoints": 175.06,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:41.986Z",
+  "scrapedAt": "2026-10-05T14:15:27.868Z",
   "url": "https://www.europeangolfrankings.com/players/28508"
 }

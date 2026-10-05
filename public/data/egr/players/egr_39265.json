@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": "Royal Cinque Ports",
   "ageGroup": "U18",
-  "tournamentsPlayed": 14,
-  "egrRank": 304,
-  "egrPoints": 14708.5,
-  "avgScore": 74.28,
-  "avgToCR": 72.42,
+  "tournamentsPlayed": 15,
+  "egrRank": 291,
+  "egrPoints": 15391.3,
+  "avgScore": 74.54,
+  "avgToCR": 72.69,
   "events": [
+    {
+      "eventId": "11673",
+      "counting": true,
+      "pos": "50",
+      "event": "Swedish International Mens' Amateur Championship 2026",
+      "venue": "Sölvesborgs Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "24. Sep 26",
+      "r1": 75,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 901.04
+    },
+    {
+      "eventId": "12934",
+      "counting": false,
+      "pos": "12",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 80,
+      "r2": 73,
+      "r3": 70,
+      "r4": null,
+      "egrPoints": 216.4
+    },
     {
       "eventId": "12264",
       "counting": true,
@@ -183,7 +211,7 @@
     },
     {
       "eventId": "11387",
-      "counting": true,
+      "counting": false,
       "pos": "9",
       "event": "Triple A European Championship 2025",
       "venue": "San Roque Golf Club",
@@ -207,10 +235,11 @@
       "r2": 75,
       "r3": 76,
       "r4": null,
-      "egrPoints": 140.72
+      "egrPoints": 140.72,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:09.221Z",
+  "scrapedAt": "2026-10-05T14:19:54.485Z",
   "url": "https://www.europeangolfrankings.com/players/39265"
 }

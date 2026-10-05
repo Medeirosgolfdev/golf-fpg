@@ -7,12 +7,26 @@
   "country": "Belgium",
   "club": "Royal Sart Tilman",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 5972,
-  "egrPoints": 385.09,
-  "avgScore": 83.17,
-  "avgToCR": 81.78,
+  "tournamentsPlayed": 4,
+  "egrRank": 5817,
+  "egrPoints": 423.02,
+  "avgScore": 82.78,
+  "avgToCR": 89.86,
   "events": [
+    {
+      "eventId": "11758",
+      "counting": true,
+      "pos": "32",
+      "event": "Federal Autumn Prize 2026",
+      "venue": "Golf de Mergelhof",
+      "country": "Belgium",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 87,
+      "r3": null,
+      "r4": 78,
+      "egrPoints": 37.93
+    },
     {
       "eventId": "11753",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:30.488Z",
+  "scrapedAt": "2026-10-05T14:25:29.004Z",
   "url": "https://www.europeangolfrankings.com/players/55757"
 }

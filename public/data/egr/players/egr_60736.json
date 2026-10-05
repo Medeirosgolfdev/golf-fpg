@@ -7,12 +7,26 @@
   "country": "Denmark",
   "club": "Kobenhavns",
   "ageGroup": "U16",
-  "tournamentsPlayed": 1,
-  "egrRank": 10264,
+  "tournamentsPlayed": 2,
+  "egrRank": 10380,
   "egrPoints": 0,
-  "avgScore": 90,
-  "avgToCR": 89.9,
+  "avgScore": 91.33,
+  "avgToCR": 90.57,
   "events": [
+    {
+      "eventId": "12608",
+      "counting": true,
+      "pos": "47",
+      "event": "The Royal Trophy 2026",
+      "venue": "Københavns Golf Klub",
+      "country": "Denmark",
+      "startDateRaw": "26. Sep 26",
+      "r1": 93,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12581",
       "counting": true,
@@ -29,6 +43,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:10:31.022Z",
+  "scrapedAt": "2026-10-05T14:27:28.895Z",
   "url": "https://www.europeangolfrankings.com/players/60736"
 }

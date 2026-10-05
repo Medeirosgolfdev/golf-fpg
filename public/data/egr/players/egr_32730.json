@@ -7,11 +7,11 @@
   "country": "England",
   "club": "Sunningdale",
   "ageGroup": "U25",
-  "tournamentsPlayed": 9,
-  "egrRank": 1083,
-  "egrPoints": 5943.39,
-  "avgScore": 73.14,
-  "avgToCR": 72.52,
+  "tournamentsPlayed": 8,
+  "egrRank": 1173,
+  "egrPoints": 5635.65,
+  "avgScore": 73.6,
+  "avgToCR": 72.65,
   "events": [
     {
       "eventId": "11814",
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "12228",
-      "counting": false,
+      "counting": true,
       "pos": "39",
       "event": "Scottish Student Sport Championships (BUCS) 2026",
       "venue": "Moray Golf Club",
@@ -137,10 +137,11 @@
       "r2": 71,
       "r3": 74,
       "r4": null,
-      "egrPoints": 482.57
+      "egrPoints": 482.57,
+      "_mantido": true
     }
   ],
   "ageNum": 25,
-  "scrapedAt": "2026-09-21T12:37:41.981Z",
+  "scrapedAt": "2026-10-05T14:17:21.739Z",
   "url": "https://www.europeangolfrankings.com/players/32730"
 }

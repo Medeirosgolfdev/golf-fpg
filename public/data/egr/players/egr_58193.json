@@ -7,12 +7,26 @@
   "country": "Austria",
   "club": "Metzenhof",
   "ageGroup": "U14",
-  "tournamentsPlayed": 6,
-  "egrRank": 2241,
+  "tournamentsPlayed": 7,
+  "egrRank": 2260,
   "egrPoints": 172.6,
-  "avgScore": 98.85,
-  "avgToCR": 95.95,
+  "avgScore": 98.21,
+  "avgToCR": 95.39,
   "events": [
+    {
+      "eventId": "11447",
+      "counting": true,
+      "pos": "5",
+      "event": "Europafinale (JTG) 2026",
+      "venue": "Golfclub Pischelsdorf",
+      "country": "Austria",
+      "startDateRaw": "08. Sep 26",
+      "r1": 90,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:52.992Z",
+  "scrapedAt": "2026-10-05T14:26:32.310Z",
   "url": "https://www.europeangolfrankings.com/players/58193"
 }

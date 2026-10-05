@@ -7,11 +7,11 @@
   "country": "Germany",
   "club": "Hannover",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1680,
-  "egrPoints": 449,
+  "tournamentsPlayed": 9,
+  "egrRank": 1807,
+  "egrPoints": 362.07,
   "avgScore": 82,
-  "avgToCR": 80.17,
+  "avgToCR": 80.35,
   "events": [
     {
       "eventId": "12857",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12640",
-      "counting": false,
+      "counting": true,
       "pos": "55",
       "event": "Faldo Junior Tour (Germany) 2026",
       "venue": "Bad Saarow",
@@ -151,10 +151,11 @@
       "r2": 88,
       "r3": 91,
       "r4": null,
-      "egrPoints": 36.12
+      "egrPoints": 36.12,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:53.147Z",
+  "scrapedAt": "2026-10-05T14:21:14.890Z",
   "url": "https://www.europeangolfrankings.com/players/44351"
 }

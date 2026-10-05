@@ -7,11 +7,11 @@
   "country": "France",
   "club": "Anjou",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 1895,
-  "egrPoints": 3188.02,
-  "avgScore": 75.17,
-  "avgToCR": 75.35,
+  "tournamentsPlayed": 8,
+  "egrRank": 1955,
+  "egrPoints": 3053.29,
+  "avgScore": 75.67,
+  "avgToCR": 75.62,
   "events": [
     {
       "eventId": "12165",
@@ -57,7 +57,7 @@
     },
     {
       "eventId": "12116",
-      "counting": false,
+      "counting": true,
       "pos": "35",
       "event": "Grand Prix Jeunes Majeur Garçons U14 2026",
       "venue": "Golf Club de Besançon",
@@ -137,10 +137,11 @@
       "r2": 77,
       "r3": null,
       "r4": null,
-      "egrPoints": 134.74
+      "egrPoints": 134.74,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:04.493Z",
+  "scrapedAt": "2026-10-05T14:23:21.794Z",
   "url": "https://www.europeangolfrankings.com/players/50444"
 }

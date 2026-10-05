@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Padova",
   "ageGroup": "U18",
-  "tournamentsPlayed": 16,
-  "egrRank": 720,
-  "egrPoints": 2374.46,
-  "avgScore": 78.12,
-  "avgToCR": 74.52,
+  "tournamentsPlayed": 15,
+  "egrRank": 733,
+  "egrPoints": 2352.36,
+  "avgScore": 78.28,
+  "avgToCR": 74.6,
   "events": [
     {
       "eventId": "12003",
@@ -155,7 +155,7 @@
     },
     {
       "eventId": "11900",
-      "counting": false,
+      "counting": true,
       "pos": "13",
       "event": "LXVIII Leone Di San Marco 2026",
       "venue": "Circolo Golf Venezia",
@@ -235,10 +235,11 @@
       "r2": 84,
       "r3": 76,
       "r4": null,
-      "egrPoints": 112.75
+      "egrPoints": 112.75,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:07:26.513Z",
+  "scrapedAt": "2026-10-05T14:22:02.082Z",
   "url": "https://www.europeangolfrankings.com/players/46804"
 }

@@ -7,12 +7,40 @@
   "country": "France",
   "club": "Perigueux",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 1003,
-  "egrPoints": 1425.53,
-  "avgScore": 77.42,
-  "avgToCR": 75.52,
+  "tournamentsPlayed": 11,
+  "egrRank": 1093,
+  "egrPoints": 1188.35,
+  "avgScore": 77.75,
+  "avgToCR": 76.15,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": false,
+      "pos": "79",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 81,
+      "r2": 76,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12190",
+      "counting": true,
+      "pos": "3",
+      "event": "Golf des Volcans 2026",
+      "venue": "Grand Prix des Volcans",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 83,
+      "r2": 79,
+      "r3": 77,
+      "r4": null,
+      "egrPoints": 135.75
+    },
     {
       "eventId": "12184",
       "counting": true,
@@ -151,10 +179,11 @@
       "r2": 80,
       "r3": 76,
       "r4": null,
-      "egrPoints": 372.92
+      "egrPoints": 372.92,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:34.182Z",
+  "scrapedAt": "2026-10-05T14:23:54.759Z",
   "url": "https://www.europeangolfrankings.com/players/52152"
 }

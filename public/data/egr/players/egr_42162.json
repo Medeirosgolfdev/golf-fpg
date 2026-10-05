@@ -7,8 +7,8 @@
   "country": "Germany",
   "club": "Hetzenhof",
   "ageGroup": "U16",
-  "tournamentsPlayed": 11,
-  "egrRank": 603,
+  "tournamentsPlayed": 10,
+  "egrRank": 615,
   "egrPoints": 2995.37,
   "avgScore": 74.39,
   "avgToCR": 71.87,
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11434",
-      "counting": false,
+      "counting": true,
       "pos": "4",
       "event": "Junior Golf Tour Open Katharinenhof (JTG) 2026",
       "venue": "GC Katharienhof",
@@ -165,10 +165,11 @@
       "r2": 74,
       "r3": null,
       "r4": null,
-      "egrPoints": 284.07
+      "egrPoints": 284.07,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:25.367Z",
+  "scrapedAt": "2026-10-05T14:20:33.635Z",
   "url": "https://www.europeangolfrankings.com/players/42162"
 }

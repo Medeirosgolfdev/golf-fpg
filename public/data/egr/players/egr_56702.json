@@ -7,12 +7,26 @@
   "country": "Scotland",
   "club": "Tyneside",
   "ageGroup": "U16",
-  "tournamentsPlayed": 8,
-  "egrRank": 9744,
+  "tournamentsPlayed": 9,
+  "egrRank": 9877,
   "egrPoints": 30.45,
-  "avgScore": 85.3,
-  "avgToCR": 85.42,
+  "avgScore": 85.65,
+  "avgToCR": 85.74,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "35",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 92,
+      "r2": 87,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:09:48.991Z",
+  "scrapedAt": "2026-10-05T14:25:57.381Z",
   "url": "https://www.europeangolfrankings.com/players/56702"
 }

@@ -8,10 +8,10 @@
   "club": "Kyburg",
   "ageGroup": "U16",
   "tournamentsPlayed": 17,
-  "egrRank": 1071,
-  "egrPoints": 6137.19,
+  "egrRank": 1023,
+  "egrPoints": 6406.23,
   "avgScore": 74.05,
-  "avgToCR": 73.92,
+  "avgToCR": 73.95,
   "events": [
     {
       "eventId": "12002",
@@ -26,6 +26,20 @@
       "r3": 78,
       "r4": null,
       "egrPoints": 2067.64
+    },
+    {
+      "eventId": "12918",
+      "counting": true,
+      "pos": "9",
+      "event": "Zürcher Meisterschaften 2026",
+      "venue": "Golfclub Breitenloo",
+      "country": "Switzerland",
+      "startDateRaw": "28. Aug 26",
+      "r1": 77,
+      "r2": 76,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 677.23
     },
     {
       "eventId": "12895",
@@ -249,10 +263,11 @@
       "r2": 74,
       "r3": 76,
       "r4": null,
-      "egrPoints": 408.19
+      "egrPoints": 408.19,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:05:57.036Z",
+  "scrapedAt": "2026-10-05T14:19:32.215Z",
   "url": "https://www.europeangolfrankings.com/players/38524"
 }

@@ -8,11 +8,25 @@
   "club": "Jurmala",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 257,
+  "egrRank": 254,
   "egrPoints": 7269.97,
   "avgScore": 77.25,
   "avgToCR": 75.08,
   "events": [
+    {
+      "eventId": "12935",
+      "counting": false,
+      "pos": "3",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 72,
+      "r2": 74,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 117.5
+    },
     {
       "eventId": "11766",
       "counting": false,
@@ -221,10 +235,11 @@
       "r2": 74,
       "r3": 75,
       "r4": null,
-      "egrPoints": 118.25
+      "egrPoints": 118.25,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:30.290Z",
+  "scrapedAt": "2026-10-05T14:18:25.903Z",
   "url": "https://www.europeangolfrankings.com/players/35732"
 }

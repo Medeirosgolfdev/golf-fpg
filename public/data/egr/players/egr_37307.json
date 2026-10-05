@@ -7,11 +7,11 @@
   "country": "Norway",
   "club": "Mork",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 1344,
-  "egrPoints": 784.42,
-  "avgScore": 78.57,
-  "avgToCR": 76.92,
+  "tournamentsPlayed": 9,
+  "egrRank": 1408,
+  "egrPoints": 712.89,
+  "avgScore": 78.96,
+  "avgToCR": 77.42,
   "events": [
     {
       "eventId": "12312",
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "12292",
-      "counting": false,
+      "counting": true,
       "pos": "12",
       "event": "Srixon Tour 2 (U19) 2026",
       "venue": "Bjaavann Golfklubb (55)",
@@ -151,10 +151,11 @@
       "r2": 77,
       "r3": 82,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:39:12.252Z",
+  "scrapedAt": "2026-10-05T14:19:02.665Z",
   "url": "https://www.europeangolfrankings.com/players/37307"
 }

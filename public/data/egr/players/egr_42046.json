@@ -7,12 +7,40 @@
   "country": "Sweden",
   "club": "Tomelilla",
   "ageGroup": "U21",
-  "tournamentsPlayed": 7,
-  "egrRank": 1076,
-  "egrPoints": 1233.82,
-  "avgScore": 75.53,
-  "avgToCR": 73.29,
+  "tournamentsPlayed": 9,
+  "egrRank": 846,
+  "egrPoints": 1888.88,
+  "avgScore": 75.76,
+  "avgToCR": 73.36,
   "events": [
+    {
+      "eventId": "12397",
+      "counting": true,
+      "pos": "12",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 75,
+      "r3": 76,
+      "r4": null,
+      "egrPoints": 234.31
+    },
+    {
+      "eventId": "12404",
+      "counting": true,
+      "pos": "11",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 420.75
+    },
     {
       "eventId": "12395",
       "counting": true,
@@ -113,6 +141,6 @@
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-21T12:40:17.790Z",
+  "scrapedAt": "2026-10-05T14:20:32.239Z",
   "url": "https://www.europeangolfrankings.com/players/42046"
 }

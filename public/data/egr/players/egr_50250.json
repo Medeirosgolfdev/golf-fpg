@@ -7,12 +7,26 @@
   "country": "Poland",
   "club": "Sobienie Krolewskie",
   "ageGroup": "U14",
-  "tournamentsPlayed": 2,
-  "egrRank": 2279,
-  "egrPoints": 161.82,
-  "avgScore": 90.67,
-  "avgToCR": 86.57,
+  "tournamentsPlayed": 3,
+  "egrRank": 2259,
+  "egrPoints": 172.63,
+  "avgScore": 89.11,
+  "avgToCR": 86.04,
   "events": [
+    {
+      "eventId": "12921",
+      "counting": true,
+      "pos": "15",
+      "event": "Audi Junior Tour Masters 2026",
+      "venue": "Śląski Klub Golfowy",
+      "country": "Poland",
+      "startDateRaw": "18. Sep 26",
+      "r1": 87,
+      "r2": 89,
+      "r3": 82,
+      "r4": null,
+      "egrPoints": 10.81
+    },
     {
       "eventId": "12436",
       "counting": true,
@@ -43,6 +57,6 @@
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:53.619Z",
+  "scrapedAt": "2026-10-05T14:23:15.966Z",
   "url": "https://www.europeangolfrankings.com/players/50250"
 }

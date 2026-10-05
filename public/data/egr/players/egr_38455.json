@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U18",
-  "tournamentsPlayed": 12,
-  "egrRank": 2121,
+  "tournamentsPlayed": 11,
+  "egrRank": 2133,
   "egrPoints": 2696.24,
   "avgScore": 77.35,
   "avgToCR": 77.02,
@@ -71,7 +71,7 @@
     },
     {
       "eventId": "11943",
-      "counting": false,
+      "counting": true,
       "pos": "33",
       "event": "Querica D'Oro 2026",
       "venue": "Golf Nazionale",
@@ -179,10 +179,11 @@
       "r2": 79,
       "r3": 78,
       "r4": null,
-      "egrPoints": 101.18
+      "egrPoints": 101.18,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:54.371Z",
+  "scrapedAt": "2026-10-05T14:19:29.575Z",
   "url": "https://www.europeangolfrankings.com/players/38455"
 }

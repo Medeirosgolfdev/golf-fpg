@@ -7,12 +7,26 @@
   "country": "Turkey",
   "club": "Atasehir",
   "ageGroup": "U18",
-  "tournamentsPlayed": 8,
-  "egrRank": 145,
-  "egrPoints": 11252.8,
-  "avgScore": 74.71,
-  "avgToCR": 71.21,
+  "tournamentsPlayed": 9,
+  "egrRank": 132,
+  "egrPoints": 11813.1,
+  "avgScore": 74.67,
+  "avgToCR": 71.25,
   "events": [
+    {
+      "eventId": "12636",
+      "counting": true,
+      "pos": "16",
+      "event": "European Ladies' Club Trophy 2026",
+      "venue": "Hamburger Golf Club Falkenstein",
+      "country": "Germany",
+      "startDateRaw": "01. Oct 26",
+      "r1": 72,
+      "r2": 75,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 560.27
+    },
     {
       "eventId": "11765",
       "counting": true,
@@ -127,6 +141,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:04:59.034Z",
+  "scrapedAt": "2026-10-05T14:16:47.695Z",
   "url": "https://www.europeangolfrankings.com/players/31375"
 }

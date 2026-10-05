@@ -8,11 +8,25 @@
   "club": "Nimes Campagne",
   "ageGroup": "U18",
   "tournamentsPlayed": 10,
-  "egrRank": 758,
-  "egrPoints": 8373.71,
-  "avgScore": 74.26,
-  "avgToCR": 73.53,
+  "egrRank": 737,
+  "egrPoints": 8650.13,
+  "avgScore": 74.3,
+  "avgToCR": 73.5,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "18",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 74,
+      "r2": 75,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 712.69
+    },
     {
       "eventId": "12162",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 70,
       "r3": 75,
       "r4": null,
-      "egrPoints": 745.28
+      "egrPoints": 745.28,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:13.098Z",
+  "scrapedAt": "2026-10-05T14:17:34.962Z",
   "url": "https://www.europeangolfrankings.com/players/33111"
 }

@@ -8,11 +8,25 @@
   "club": "Lyngbygaard",
   "ageGroup": "U18",
   "tournamentsPlayed": 15,
-  "egrRank": 1426,
-  "egrPoints": 4521.89,
-  "avgScore": 74.57,
-  "avgToCR": 73.34,
+  "egrRank": 1431,
+  "egrPoints": 4541.99,
+  "avgScore": 75.1,
+  "avgToCR": 73.69,
   "events": [
+    {
+      "eventId": "12606",
+      "counting": true,
+      "pos": "34",
+      "event": "Dormy Elite Tour Finale 2026",
+      "venue": "Sct. Knuds Golfklub",
+      "country": "Denmark",
+      "startDateRaw": "18. Sep 26",
+      "r1": 79,
+      "r2": 77,
+      "r3": 78,
+      "r4": null,
+      "egrPoints": 341.02
+    },
     {
       "eventId": "12604",
       "counting": false,
@@ -221,10 +235,11 @@
       "r2": 72,
       "r3": 84,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:41.489Z",
+  "scrapedAt": "2026-10-05T14:18:57.480Z",
   "url": "https://www.europeangolfrankings.com/players/37053"
 }

@@ -7,11 +7,11 @@
   "country": "France",
   "club": "GA 57",
   "ageGroup": "U18",
-  "tournamentsPlayed": 6,
-  "egrRank": 940,
-  "egrPoints": 1583.16,
-  "avgScore": 75.53,
-  "avgToCR": 72.88,
+  "tournamentsPlayed": 5,
+  "egrRank": 1065,
+  "egrPoints": 1260.31,
+  "avgScore": 75.21,
+  "avgToCR": 72.71,
   "events": [
     {
       "eventId": "12184",
@@ -28,20 +28,6 @@
       "egrPoints": 271.38
     },
     {
-      "eventId": "12171",
-      "counting": true,
-      "pos": "1",
-      "event": "Grand Prix de la Grange aux Ormes 2026",
-      "venue": "Golf de la Grange aux Ormes",
-      "country": "France",
-      "startDateRaw": "21. Aug 26",
-      "r1": 74,
-      "r2": 71,
-      "r3": 67,
-      "r4": null,
-      "egrPoints": 291.86
-    },
-    {
       "eventId": "12172",
       "counting": true,
       "pos": "1",
@@ -54,6 +40,20 @@
       "r3": 67,
       "r4": null,
       "egrPoints": 426.71
+    },
+    {
+      "eventId": "12171",
+      "counting": true,
+      "pos": "1",
+      "event": "Grand Prix de la Grange aux Ormes 2026",
+      "venue": "Golf de la Grange aux Ormes",
+      "country": "France",
+      "startDateRaw": "21. Aug 26",
+      "r1": 74,
+      "r2": 71,
+      "r3": 67,
+      "r4": null,
+      "egrPoints": 291.86
     },
     {
       "eventId": "12154",
@@ -95,10 +95,11 @@
       "r2": 74,
       "r3": 78,
       "r4": null,
-      "egrPoints": 322.85
+      "egrPoints": 322.85,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-21T12:38:47.161Z",
+  "scrapedAt": "2026-10-05T14:18:34.122Z",
   "url": "https://www.europeangolfrankings.com/players/36032"
 }

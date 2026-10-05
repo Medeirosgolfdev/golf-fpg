@@ -7,15 +7,43 @@
   "country": "Sweden",
   "club": null,
   "ageGroup": "U21",
-  "tournamentsPlayed": 10,
-  "egrRank": 540,
-  "egrPoints": 3467.28,
-  "avgScore": 74.36,
-  "avgToCR": 71.27,
+  "tournamentsPlayed": 11,
+  "egrRank": 509,
+  "egrPoints": 3707.34,
+  "avgScore": 74.68,
+  "avgToCR": 71.46,
   "events": [
     {
-      "eventId": "12395",
+      "eventId": "12397",
       "counting": true,
+      "pos": "12",
+      "event": "Swedish Junior Tour Elite (Final) 2026",
+      "venue": "Torshälla Golfklubb",
+      "country": "Sweden",
+      "startDateRaw": "25. Sep 26",
+      "r1": 80,
+      "r2": 77,
+      "r3": 74,
+      "r4": null,
+      "egrPoints": 234.31
+    },
+    {
+      "eventId": "12404",
+      "counting": true,
+      "pos": "25",
+      "event": "JMI Final 2026",
+      "venue": "Örebro CC (Mösjö)",
+      "country": "Sweden",
+      "startDateRaw": "18. Sep 26",
+      "r1": 75,
+      "r2": 77,
+      "r3": 79,
+      "r4": null,
+      "egrPoints": 230.71
+    },
+    {
+      "eventId": "12395",
+      "counting": false,
       "pos": "17",
       "event": "Swedish Junior Tour Elite #6 2026",
       "venue": "Golfstar International (57)",
@@ -29,7 +57,7 @@
     },
     {
       "eventId": "12869",
-      "counting": true,
+      "counting": false,
       "pos": "12",
       "event": "PGA Junior Championship by Titleist 2026",
       "venue": "Landskrona Golfklubb",
@@ -151,10 +179,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:04:43.520Z",
+  "scrapedAt": "2026-10-05T14:15:36.140Z",
   "url": "https://www.europeangolfrankings.com/players/28786"
 }

@@ -7,11 +7,11 @@
   "country": "Italy",
   "club": "Sicilia's Picciolo",
   "ageGroup": "U16",
-  "tournamentsPlayed": 10,
-  "egrRank": 2149,
-  "egrPoints": 2648.12,
-  "avgScore": 76.74,
-  "avgToCR": 76.55,
+  "tournamentsPlayed": 9,
+  "egrRank": 2201,
+  "egrPoints": 2573.53,
+  "avgScore": 76.96,
+  "avgToCR": 76.71,
   "events": [
     {
       "eventId": "12000",
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11891",
-      "counting": false,
+      "counting": true,
       "pos": "15",
       "event": "Trofeo Rocco Forte 2026",
       "venue": "Verdura Golf Club",
@@ -151,10 +151,11 @@
       "r2": 73,
       "r3": 78,
       "r4": null,
-      "egrPoints": 123.88
+      "egrPoints": 123.88,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:11.218Z",
+  "scrapedAt": "2026-10-05T14:23:08.752Z",
   "url": "https://www.europeangolfrankings.com/players/49913"
 }

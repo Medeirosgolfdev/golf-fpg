@@ -7,12 +7,26 @@
   "country": "France",
   "club": "UGOLF Albi",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 2124,
-  "egrPoints": 2689.35,
-  "avgScore": 75.43,
-  "avgToCR": 75.61,
+  "tournamentsPlayed": 9,
+  "egrRank": 1958,
+  "egrPoints": 3043.82,
+  "avgScore": 74.67,
+  "avgToCR": 74.97,
   "events": [
+    {
+      "eventId": "12185",
+      "counting": true,
+      "pos": "11",
+      "event": "Grand Prix d'Albi 2026",
+      "venue": "UGOLF Albi",
+      "country": "France",
+      "startDateRaw": "11. Sep 26",
+      "r1": 71,
+      "r2": 75,
+      "r3": 71,
+      "r4": null,
+      "egrPoints": 818.4
+    },
     {
       "eventId": "12175",
       "counting": true,
@@ -71,7 +85,7 @@
     },
     {
       "eventId": "12048",
-      "counting": false,
+      "counting": true,
       "pos": "109",
       "event": "Grand Prix Elite de Landiforne 2026",
       "venue": "Golf de Moliets/Seignosse",
@@ -137,7 +151,8 @@
       "r2": 72,
       "r3": 72,
       "r4": null,
-      "egrPoints": 902.18
+      "egrPoints": 902.18,
+      "_mantido": true
     },
     {
       "eventId": "10685",
@@ -151,10 +166,11 @@
       "r2": 80,
       "r3": 73,
       "r4": null,
-      "egrPoints": 463.93
+      "egrPoints": 463.93,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:05.179Z",
+  "scrapedAt": "2026-10-05T14:19:46.000Z",
   "url": "https://www.europeangolfrankings.com/players/38925"
 }

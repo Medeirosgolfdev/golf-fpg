@@ -8,11 +8,25 @@
   "club": "Pickala",
   "ageGroup": "U14",
   "tournamentsPlayed": 15,
-  "egrRank": 491,
-  "egrPoints": 3996.5,
-  "avgScore": 76,
-  "avgToCR": 74.02,
+  "egrRank": 458,
+  "egrPoints": 4238.58,
+  "avgScore": 75.95,
+  "avgToCR": 73.87,
   "events": [
+    {
+      "eventId": "12122",
+      "counting": true,
+      "pos": "25",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 75,
+      "r2": 72,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 484.03
+    },
     {
       "eventId": "12373",
       "counting": false,
@@ -57,7 +71,7 @@
     },
     {
       "eventId": "11782",
-      "counting": true,
+      "counting": false,
       "pos": "35",
       "event": "English Girls U14 Stroke Play 2026",
       "venue": "The Gof Magog Golf Club (Wandlebury)",
@@ -221,10 +235,11 @@
       "r2": 88,
       "r3": 84,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:57:41.387Z",
+  "scrapedAt": "2026-10-05T14:22:22.895Z",
   "url": "https://www.europeangolfrankings.com/players/48048"
 }

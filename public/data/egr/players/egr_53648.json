@@ -7,12 +7,26 @@
   "country": "Germany",
   "club": "Weiherhof",
   "ageGroup": "U12",
-  "tournamentsPlayed": 4,
-  "egrRank": 2611,
+  "tournamentsPlayed": 5,
+  "egrRank": 2626,
   "egrPoints": 86.5,
-  "avgScore": 89,
-  "avgToCR": 87.35,
+  "avgScore": 90.4,
+  "avgToCR": 88.58,
   "events": [
+    {
+      "eventId": "12923",
+      "counting": true,
+      "pos": "7",
+      "event": "DGV-RP/S Meisterschaft AKOffen Damen 2026",
+      "venue": "Mainzer Golf Club",
+      "country": "Germany",
+      "startDateRaw": "12. Sep 26",
+      "r1": 91,
+      "r2": 102,
+      "r3": 101,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12891",
       "counting": true,
@@ -71,6 +85,6 @@
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:57:58.445Z",
+  "scrapedAt": "2026-10-05T14:24:33.062Z",
   "url": "https://www.europeangolfrankings.com/players/53648"
 }

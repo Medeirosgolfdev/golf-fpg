@@ -7,12 +7,26 @@
   "country": "France",
   "club": "Alpes",
   "ageGroup": "U16",
-  "tournamentsPlayed": 3,
-  "egrRank": 5337,
+  "tournamentsPlayed": 4,
+  "egrRank": 5395,
   "egrPoints": 515.82,
-  "avgScore": 78.38,
-  "avgToCR": 77,
+  "avgScore": 78.44,
+  "avgToCR": 77.01,
   "events": [
+    {
+      "eventId": "12182",
+      "counting": true,
+      "pos": "8",
+      "event": "Grand Prix de la Loire Forez 2026",
+      "venue": "Golf Club du Forez",
+      "country": "France",
+      "startDateRaw": "28. Aug 26",
+      "r1": 79,
+      "r2": 83,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12150",
       "counting": true,
@@ -57,6 +71,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:07:53.484Z",
+  "scrapedAt": "2026-10-05T14:22:41.138Z",
   "url": "https://www.europeangolfrankings.com/players/48903"
 }

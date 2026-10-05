@@ -7,12 +7,26 @@
   "country": "Romania",
   "club": "Los Naranjos",
   "ageGroup": "U16",
-  "tournamentsPlayed": 5,
-  "egrRank": 7193,
+  "tournamentsPlayed": 6,
+  "egrRank": 7281,
   "egrPoints": 216.3,
-  "avgScore": 83.62,
-  "avgToCR": 82.6,
+  "avgScore": 83.19,
+  "avgToCR": 81.86,
   "events": [
+    {
+      "eventId": "12934",
+      "counting": true,
+      "pos": "35",
+      "event": "Triple A European MASTERS 2026",
+      "venue": "San Roque Golf Resort",
+      "country": "Spain",
+      "startDateRaw": "16. Sep 26",
+      "r1": 80,
+      "r2": 78,
+      "r3": 86,
+      "r4": null,
+      "egrPoints": 0
+    },
     {
       "eventId": "12119",
       "counting": true,
@@ -85,6 +99,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:08:33.588Z",
+  "scrapedAt": "2026-10-05T14:23:53.448Z",
   "url": "https://www.europeangolfrankings.com/players/52043"
 }

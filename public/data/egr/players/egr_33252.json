@@ -7,8 +7,8 @@
   "country": "Scotland",
   "club": "Turnhouse",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 590,
+  "tournamentsPlayed": 9,
+  "egrRank": 596,
   "egrPoints": 9858.62,
   "avgScore": 73.79,
   "avgToCR": 72.43,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "11474",
-      "counting": false,
+      "counting": true,
       "pos": "8",
       "event": "Trump Invitaitonal 2026",
       "venue": "Trump International",
@@ -151,10 +151,11 @@
       "r2": 71,
       "r3": null,
       "r4": null,
-      "egrPoints": 497.66
+      "egrPoints": 497.66,
+      "_mantido": true
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:05:14.501Z",
+  "scrapedAt": "2026-10-05T14:17:38.334Z",
   "url": "https://www.europeangolfrankings.com/players/33252"
 }

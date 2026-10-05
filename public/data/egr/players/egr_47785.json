@@ -7,8 +7,8 @@
   "country": "Switzerland",
   "club": null,
   "ageGroup": "U12",
-  "tournamentsPlayed": 10,
-  "egrRank": 4087,
+  "tournamentsPlayed": 9,
+  "egrRank": 4117,
   "egrPoints": 918.88,
   "avgScore": 77.9,
   "avgToCR": 79.56,
@@ -127,7 +127,7 @@
     },
     {
       "eventId": "12443",
-      "counting": false,
+      "counting": true,
       "pos": "34",
       "event": "Swiss Golf National U14 (Payerne) 2026",
       "venue": "Golf Club Payerne",
@@ -151,10 +151,11 @@
       "r2": null,
       "r3": null,
       "r4": null,
-      "egrPoints": 30.39
+      "egrPoints": 30.39,
+      "_mantido": true
     }
   ],
   "ageNum": 12,
-  "scrapedAt": "2026-09-18T21:56:11.331Z",
+  "scrapedAt": "2026-10-05T14:22:14.961Z",
   "url": "https://www.europeangolfrankings.com/players/47785"
 }

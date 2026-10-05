@@ -1,18 +1,32 @@
 {
   "id": "23530",
   "egrId": "MPRT23530",
-  "name": "Joáo Miguel Pereira",
+  "name": "Joao Miguel Pereira",
   "lastName": "PEREIRA",
-  "firstName": "Joáo Miguel",
+  "firstName": "Joao Miguel",
   "country": "Portugal",
   "club": "Aroeira",
   "ageGroup": "Adult",
   "tournamentsPlayed": 6,
-  "egrRank": 411,
-  "egrPoints": 10856.5,
-  "avgScore": 73.2,
-  "avgToCR": 71.55,
+  "egrRank": 424,
+  "egrPoints": 12141.3,
+  "avgScore": 74.13,
+  "avgToCR": 71.73,
   "events": [
+    {
+      "eventId": "12632",
+      "counting": true,
+      "pos": "9",
+      "event": "European Amateur Team Championship, Division 2 2026",
+      "venue": "Costa Navarino (Dunes)",
+      "country": "Greece",
+      "startDateRaw": "07. Jul 26",
+      "r1": 73,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 1284.75
+    },
     {
       "eventId": "11669",
       "counting": true,
@@ -95,10 +109,11 @@
       "r2": 75,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-07-04T00:01:34.590Z",
+  "scrapedAt": "2026-10-05T14:13:27.826Z",
   "url": "https://www.europeangolfrankings.com/players/23530"
 }

@@ -7,14 +7,28 @@
   "country": "Italy",
   "club": "Torino",
   "ageGroup": "U16",
-  "tournamentsPlayed": 6,
-  "egrRank": 9987,
+  "tournamentsPlayed": 7,
+  "egrRank": 10111,
   "egrPoints": 19.01,
-  "avgScore": 86,
-  "avgToCR": 86.56,
+  "avgScore": 86.08,
+  "avgToCR": 86.88,
   "events": [
     {
       "eventId": "12004",
+      "counting": true,
+      "pos": "15",
+      "event": "Trofeo Giovanile Federale U16 2026",
+      "venue": "Circolo Golf degli Ulivi Sanremo",
+      "country": "Italy",
+      "startDateRaw": "05. Sep 26",
+      "r1": 87,
+      "r2": null,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 0
+    },
+    {
+      "eventId": "12005",
       "counting": true,
       "pos": "15",
       "event": "Trofeo Giovanile Federale U16 2026",
@@ -99,6 +113,6 @@
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:10:24.961Z",
+  "scrapedAt": "2026-10-05T14:27:09.096Z",
   "url": "https://www.europeangolfrankings.com/players/60145"
 }

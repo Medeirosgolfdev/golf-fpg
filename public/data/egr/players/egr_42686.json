@@ -7,12 +7,40 @@
   "country": "Norway",
   "club": "Haga",
   "ageGroup": "U18",
-  "tournamentsPlayed": 10,
-  "egrRank": 882,
-  "egrPoints": 7328.71,
-  "avgScore": 75,
-  "avgToCR": 73.12,
+  "tournamentsPlayed": 12,
+  "egrRank": 866,
+  "egrPoints": 7564.58,
+  "avgScore": 73.88,
+  "avgToCR": 71.96,
   "events": [
+    {
+      "eventId": "12333",
+      "counting": true,
+      "pos": "24",
+      "event": "Srixon Tour 8 (U19 Finale) 2026",
+      "venue": "Stavanger Golfklubb",
+      "country": "Norway",
+      "startDateRaw": "26. Sep 26",
+      "r1": 73,
+      "r2": 77,
+      "r3": 73,
+      "r4": null,
+      "egrPoints": 317.4
+    },
+    {
+      "eventId": "12927",
+      "counting": true,
+      "pos": "5",
+      "event": "Faldo Junior Tour (Norway) 2026",
+      "venue": "Lofoten Links",
+      "country": "Norway",
+      "startDateRaw": "19. Sep 26",
+      "r1": 81,
+      "r2": 69,
+      "r3": 72,
+      "r4": null,
+      "egrPoints": 101.39
+    },
     {
       "eventId": "12329",
       "counting": true,
@@ -113,7 +141,7 @@
     },
     {
       "eventId": "12407",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Danish Juniors Int.-Marbæk by NorSea (U18) 2026",
       "venue": "Esbjerg Golfklub (57)",
@@ -141,7 +169,7 @@
     },
     {
       "eventId": "10116",
-      "counting": true,
+      "counting": false,
       "pos": "19",
       "event": "Lübker Junior Open (GJG) 2025",
       "venue": "Lübker Golf & Spa Resort",
@@ -155,6 +183,6 @@
     }
   ],
   "ageNum": 18,
-  "scrapedAt": "2026-09-18T22:06:31.898Z",
+  "scrapedAt": "2026-10-05T14:20:44.880Z",
   "url": "https://www.europeangolfrankings.com/players/42686"
 }

@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Barlassina",
   "ageGroup": "U14",
-  "tournamentsPlayed": 9,
-  "egrRank": 6782,
+  "tournamentsPlayed": 8,
+  "egrRank": 6856,
   "egrPoints": 261.14,
   "avgScore": 83.61,
   "avgToCR": 83.91,
@@ -85,7 +85,7 @@
     },
     {
       "eventId": "11917",
-      "counting": false,
+      "counting": true,
       "pos": "86",
       "event": "Memorial Giorgio Bordoni 2026",
       "venue": "Franciacorta Golf Club",
@@ -137,10 +137,11 @@
       "r2": 88,
       "r3": null,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:25.295Z",
+  "scrapedAt": "2026-10-05T14:26:21.150Z",
   "url": "https://www.europeangolfrankings.com/players/57647"
 }

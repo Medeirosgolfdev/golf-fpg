@@ -8,11 +8,25 @@
   "club": "Bergamo Albenza",
   "ageGroup": "U14",
   "tournamentsPlayed": 19,
-  "egrRank": 1133,
-  "egrPoints": 5802.33,
-  "avgScore": 73.7,
-  "avgToCR": 73.72,
+  "egrRank": 1108,
+  "egrPoints": 5956.14,
+  "avgScore": 73.65,
+  "avgToCR": 73.57,
   "events": [
+    {
+      "eventId": "12121",
+      "counting": true,
+      "pos": "18",
+      "event": "The Amundi Evian Juniors Cup 2026",
+      "venue": "Evian Resort Golf",
+      "country": "France",
+      "startDateRaw": "22. Sep 26",
+      "r1": 72,
+      "r2": 77,
+      "r3": 75,
+      "r4": null,
+      "egrPoints": 528.64
+    },
     {
       "eventId": "12002",
       "counting": true,
@@ -253,7 +267,7 @@
     },
     {
       "eventId": "11888",
-      "counting": true,
+      "counting": false,
       "pos": "21",
       "event": "Gara Nazionale Garlenda 2026",
       "venue": "Golf Club Garlenda",
@@ -277,10 +291,11 @@
       "r2": 77,
       "r3": 78,
       "r4": null,
-      "egrPoints": 45.46
+      "egrPoints": 45.46,
+      "_mantido": true
     }
   ],
   "ageNum": 14,
-  "scrapedAt": "2026-09-18T21:56:02.524Z",
+  "scrapedAt": "2026-10-05T14:23:08.913Z",
   "url": "https://www.europeangolfrankings.com/players/49916"
 }

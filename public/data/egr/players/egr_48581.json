@@ -7,11 +7,11 @@
   "country": "Poland",
   "club": "Armada",
   "ageGroup": "U21",
-  "tournamentsPlayed": 3,
-  "egrRank": 3213,
-  "egrPoints": 1410.37,
-  "avgScore": 74.78,
-  "avgToCR": 74.41,
+  "tournamentsPlayed": 4,
+  "egrRank": 3118,
+  "egrPoints": 1493.34,
+  "avgScore": 76.27,
+  "avgToCR": 74.95,
   "events": [
     {
       "eventId": "11465",
@@ -28,6 +28,20 @@
       "egrPoints": 585
     },
     {
+      "eventId": "12924",
+      "counting": true,
+      "pos": "11",
+      "event": "Polish U19-25 Championship 2026",
+      "venue": "Wrocław Golf Club",
+      "country": "Poland",
+      "startDateRaw": "30. Jul 26",
+      "r1": 76,
+      "r2": 75,
+      "r3": 81,
+      "r4": null,
+      "egrPoints": 255.49
+    },
+    {
       "eventId": "11457",
       "counting": true,
       "pos": "6",
@@ -42,6 +56,20 @@
       "egrPoints": 128.64
     },
     {
+      "eventId": "12433",
+      "counting": true,
+      "pos": "16",
+      "event": "Polish International Amateur Championship 2026",
+      "venue": "Modry Las Golf Resort",
+      "country": "Poland",
+      "startDateRaw": "05. Jun 26",
+      "r1": 77,
+      "r2": 77,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 524.21
+    },
+    {
       "eventId": "11336",
       "counting": true,
       "pos": "2",
@@ -53,10 +81,11 @@
       "r2": 73,
       "r3": 71,
       "r4": null,
-      "egrPoints": 696.73
+      "egrPoints": 696.73,
+      "_mantido": true
     }
   ],
   "ageNum": 21,
-  "scrapedAt": "2026-09-18T22:07:50.990Z",
+  "scrapedAt": "2026-10-05T14:22:37.383Z",
   "url": "https://www.europeangolfrankings.com/players/48581"
 }

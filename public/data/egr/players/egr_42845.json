@@ -7,8 +7,8 @@
   "country": "Italy",
   "club": "Parco Roma",
   "ageGroup": "U16",
-  "tournamentsPlayed": 15,
-  "egrRank": 647,
+  "tournamentsPlayed": 14,
+  "egrRank": 651,
   "egrPoints": 2746.9,
   "avgScore": 77.65,
   "avgToCR": 74.71,
@@ -43,7 +43,7 @@
     },
     {
       "eventId": "11984",
-      "counting": false,
+      "counting": true,
       "pos": "11",
       "event": "PGAI Junior Trophy 2026",
       "venue": "Margara Golf & Country Club",
@@ -221,10 +221,11 @@
       "r2": 78,
       "r3": 77,
       "r4": null,
-      "egrPoints": 140.89
+      "egrPoints": 140.89,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:06:34.916Z",
+  "scrapedAt": "2026-10-05T14:20:49.220Z",
   "url": "https://www.europeangolfrankings.com/players/42845"
 }

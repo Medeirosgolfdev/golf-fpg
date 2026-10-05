@@ -8,11 +8,25 @@
   "club": "Kirkhill",
   "ageGroup": "U16",
   "tournamentsPlayed": 10,
-  "egrRank": 7884,
-  "egrPoints": 150.22,
-  "avgScore": 82.71,
-  "avgToCR": 82.74,
+  "egrRank": 6794,
+  "egrPoints": 267.98,
+  "avgScore": 81.71,
+  "avgToCR": 81.75,
   "events": [
+    {
+      "eventId": "11723",
+      "counting": true,
+      "pos": "16",
+      "event": "Junior Tour Baberton Boys 2026",
+      "venue": "Baberton GC",
+      "country": "Scotland",
+      "startDateRaw": "19. Sep 26",
+      "r1": 76,
+      "r2": 78,
+      "r3": 80,
+      "r4": null,
+      "egrPoints": 117.76
+    },
     {
       "eventId": "11721",
       "counting": true,
@@ -151,10 +165,11 @@
       "r2": 83,
       "r3": 83,
       "r4": null,
-      "egrPoints": 0
+      "egrPoints": 0,
+      "_mantido": true
     }
   ],
   "ageNum": 16,
-  "scrapedAt": "2026-09-18T22:04:44.186Z",
+  "scrapedAt": "2026-10-05T14:15:38.368Z",
   "url": "https://www.europeangolfrankings.com/players/28833"
 }

@@ -1,18 +1,32 @@
 {
   "id": "22407",
   "egrId": "FAUT22407",
-  "name": "KATHARINA Zeilinger",
+  "name": "Katharina Zeilinger",
   "lastName": "ZEILINGER",
-  "firstName": "KATHARINA",
+  "firstName": "Katharina",
   "country": "Austria",
   "club": "Kremstal",
   "ageGroup": "Adult",
-  "tournamentsPlayed": 7,
-  "egrRank": 139,
-  "egrPoints": 11439.2,
-  "avgScore": 73.86,
-  "avgToCR": 70.05,
+  "tournamentsPlayed": 8,
+  "egrRank": 133,
+  "egrPoints": 11788.1,
+  "avgScore": 74.21,
+  "avgToCR": 70.46,
   "events": [
+    {
+      "eventId": "11768",
+      "counting": true,
+      "pos": "53",
+      "event": "French International Amateur (Trophée Cécile De Rothschild) 2026",
+      "venue": "Golf de Morfontaine",
+      "country": "France",
+      "startDateRaw": "17. Sep 26",
+      "r1": 77,
+      "r2": 75,
+      "r3": null,
+      "r4": null,
+      "egrPoints": 348.86
+    },
     {
       "eventId": "11767",
       "counting": true,
@@ -113,6 +127,6 @@
     }
   ],
   "ageNum": 99,
-  "scrapedAt": "2026-09-21T12:32:43.803Z",
+  "scrapedAt": "2026-10-05T14:13:04.490Z",
   "url": "https://www.europeangolfrankings.com/players/22407"
 }
