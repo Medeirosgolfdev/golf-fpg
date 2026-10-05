@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-04T22:38:50.263Z",
+  "lastUpdated": "2026-10-05T06:51:22.210Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-10-04",
+  "today": "2026-10-05",
   "summary": {
-    "total": 1785,
-    "complete": 816,
-    "in_progress": 3,
+    "total": 1786,
+    "complete": 820,
+    "in_progress": 0,
     "future": 5,
     "stale": 10,
     "excluded": 951,
@@ -364,6 +364,27 @@
       "status": "future"
     },
     {
+      "ccode": "003",
+      "tcode": "10680",
+      "name": "Circuito Junior",
+      "date": "2026-10-04",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": true,
+      "player_count": 7,
+      "players_with_scorecards": 7,
+      "players_with_full_scorecards": 7,
+      "scorecards_source": "pull-torneios006.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
+      "has_manuel": false,
+      "status": "complete"
+    },
+    {
       "ccode": "000",
       "tcode": "10895",
       "name": "5º Torneio do Circuito Mid-Amateur & Senior",
@@ -377,12 +398,12 @@
       "has_classif": true,
       "player_count": 35,
       "players_with_scorecards": 35,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 33,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 0.943,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "000",
@@ -398,12 +419,12 @@
       "has_classif": true,
       "player_count": 7,
       "players_with_scorecards": 7,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 7,
       "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "007",
@@ -424,7 +445,7 @@
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 0.894,
       "has_manuel": true,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "003",
