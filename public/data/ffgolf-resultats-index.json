@@ -1,8 +1,174 @@
 {
-  "generatedAt": "2026-10-05T07:32:06.191Z",
+  "generatedAt": "2026-10-05T08:35:43.406Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1262,
+  "total": 1266,
   "tournaments": [
+    {
+      "file": "01-00-2601481214.json",
+      "trnId": "2601481214",
+      "partKey": "a456452bcad2c6a3674a4db5bcb9659b",
+      "name": "Championnat Jeunes du Val d'Oise 2026",
+      "formule": "Simple",
+      "date": "04/10/2026",
+      "dateIso": "2026-10-04",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 46,
+      "course": "Les Etangs",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "U12G",
+          "players": 18
+        },
+        {
+          "serieId": "18",
+          "label": "BENJ G",
+          "players": 16
+        },
+        {
+          "serieId": "26",
+          "label": "U12F",
+          "players": 3
+        },
+        {
+          "serieId": "27",
+          "label": "BENJ F",
+          "players": 2
+        },
+        {
+          "serieId": "29",
+          "label": "MIN F",
+          "players": 1
+        },
+        {
+          "serieId": "110",
+          "label": "MIN G",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "03-12-2601454326.json",
+      "trnId": "2601454326",
+      "partKey": "decc0ee17f2419134ac9701a6b8303b0",
+      "name": "GRAND PRIX JEUNES D'AUGERVILLE 2026",
+      "formule": "Simple",
+      "date": "03/10/2026",
+      "dateIso": "2026-10-03",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "12",
+      "seriesCount": 5,
+      "totalPlayers": 26,
+      "course": "Château d'Augerville",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12",
+          "players": 12
+        },
+        {
+          "serieId": "113",
+          "label": "benjamins",
+          "players": 9
+        },
+        {
+          "serieId": "117",
+          "label": "Minimes",
+          "players": 1
+        },
+        {
+          "serieId": "210",
+          "label": "U12",
+          "players": 3
+        },
+        {
+          "serieId": "214",
+          "label": "benjamins",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "12"
+      ]
+    },
+    {
+      "file": "03-13-2601477428.json",
+      "trnId": "2601477428",
+      "partKey": "ece6564327d667d36a1725dcc6cc906e",
+      "name": "GPJ Avoise 2026",
+      "formule": "Simple",
+      "date": "03/10/2026",
+      "dateIso": "2026-10-03",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "13",
+      "seriesCount": 6,
+      "totalPlayers": 45,
+      "course": "Château d'Avoise",
+      "sex": "MF",
+      "roundsPlayed": 2,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "U12",
+          "players": 17
+        },
+        {
+          "serieId": "113",
+          "label": "U14",
+          "players": 18
+        },
+        {
+          "serieId": "117",
+          "label": "U16",
+          "players": 4
+        },
+        {
+          "serieId": "210",
+          "label": "U12",
+          "players": 4
+        },
+        {
+          "serieId": "214",
+          "label": "U14",
+          "players": 1
+        },
+        {
+          "serieId": "218",
+          "label": "U16",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "13"
+      ]
+    },
     {
       "file": "03-03-2601473806.json",
       "trnId": "2601473806",
@@ -266,6 +432,43 @@
       "ffgolfSection": null,
       "ligues": [
         "13"
+      ]
+    },
+    {
+      "file": "01-00-2601480823.json",
+      "trnId": "2601480823",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "The Amundi Evian Juniors Cup",
+      "formule": "Simple",
+      "date": "22/09/2026",
+      "dateIso": "2026-09-22",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 2,
+      "totalPlayers": 83,
+      "course": "Evian Junior GPJM",
+      "sex": "MF",
+      "roundsPlayed": 3,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 42
+        },
+        {
+          "serieId": "22",
+          "label": "Dames",
+          "players": 41
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
       ]
     },
     {
