@@ -1,0 +1,44 @@
+{
+  "tipo": "day",
+  "periodo": "2026-10-06",
+  "since": "2026-10-06T00:00:00.000Z",
+  "until": "2026-10-06T23:59:59.999Z",
+  "projeto": "prj_e5dXWDKRiKaiVD8fYxOMQAnCEfpE",
+  "fonte": "Vercel Web Analytics (v1/query/web-analytics/visits)",
+  "nota": "Visitantes e páginas vistas do golf-fpg. Dados agregados — a API não expõe IPs nem identifica pessoas.",
+  "geradoEm": "2026-10-07T10:20:22.701Z",
+  "total": {
+    "visitors": 0,
+    "pageviews": 0
+  },
+  "dimensoes": {
+    "hour": [],
+    "requestPath": [],
+    "route": [],
+    "country": [],
+    "deviceType": [],
+    "browserName": [],
+    "osName": [],
+    "referrerHostname": [],
+    "utmSource": null,
+    "utmMedium": null,
+    "utmCampaign": null,
+    "utmContent": null,
+    "utmTerm": null
+  },
+  "cruzamentos": {
+    "requestPath x country": [],
+    "requestPath x deviceType": [],
+    "requestPath x referrerHostname": []
+  },
+  "avisos": [
+    "Indisponíveis no plano actual do Vercel (as dimensões UTM exigem Enterprise ou o add-on Web Analytics Plus): utmSource, utmMedium, utmCampaign, utmContent, utmTerm."
+  ],
+  "indisponiveis": [
+    "utmSource",
+    "utmMedium",
+    "utmCampaign",
+    "utmContent",
+    "utmTerm"
+  ]
+}
