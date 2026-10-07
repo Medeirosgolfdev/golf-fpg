@@ -1,28 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22561,
-      "name": "Tilgate Forest Golf Course (Tour Championship)",
-      "date_inicio": "9/6/2026",
-      "date_fim": "9/6/2026",
-      "rondas": 1,
-      "campo": "Tilgate Forest Golf Course",
-      "fee_18": "45.00",
-      "tour": "London (UK) Tour",
-      "type": 6
-    },
-    {
-      "t": 22241,
-      "name": "Lima Golf Club (Tour Championship)",
-      "date_inicio": "9/6/2026",
-      "date_fim": "9/6/2026",
-      "rondas": 1,
-      "campo": "Lima Golf Club",
-      "fee_18": "35.00",
-      "tour": "Lima (PE) Tour",
-      "type": 6
-    },
-    {
       "t": 22272,
       "name": "Santa Maria Country Club & Club de Golf de Panama",
       "date_inicio": "9/12/2026",
@@ -1816,6 +1794,17 @@
       "type": 6
     },
     {
+      "t": 23795,
+      "name": "Hopewell Valley Golf Course (Tour Championship)",
+      "date_inicio": "11/29/2026",
+      "date_fim": "11/29/2026",
+      "rondas": 1,
+      "campo": "Hopewell Valley Golf Club",
+      "fee_18": "81.00",
+      "tour": "Central Jersey Tour",
+      "type": 6
+    },
+    {
       "t": 23428,
       "name": "2026 Florida - Winter State Invitational",
       "date_inicio": "12/5/2026",
@@ -2201,19 +2190,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-06T14:05:12.398Z",
-  "varredura_max_t": 23789,
+  "gerado_em": "2026-10-07T14:29:18.344Z",
+  "varredura_max_t": 23795,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 40,
-    "novos": 0,
+    "pedidos": 46,
+    "novos": 1,
     "buracos_revistos": 0,
-    "catalogo": 1484,
+    "catalogo": 1490,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23789,
-  "fronteira_avancou_em": "2026-10-03",
-  "dias_sem_descoberta": 3,
-  "dias_sem_avanco": 3,
-  "ultima_descoberta": "2026-10-03"
+  "fronteira_max_t_visto": 23795,
+  "fronteira_avancou_em": "2026-10-07",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-10-07"
 }
