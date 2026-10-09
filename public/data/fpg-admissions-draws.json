@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-04T22:38:47.083Z",
-  "total": 1227,
+  "scrapedAt": "2026-10-09T23:42:38.677Z",
+  "total": 1231,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -394915,6 +394915,124 @@
         "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "10246",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10251",
+      "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
+      "date": "2026-11-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Torneio Drive Challenge_Preparação 2027 Sub 18",
+        "date": "2026-11-07",
+        "totalInscritos": 3,
+        "reservas": 0,
+        "status": "Inscrições em curso",
+        "rounds": 1,
+        "tcode": "10251",
+        "ccode": "985",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "35019",
+            "nome": "Lucas Lemos Guerreiro",
+            "clube": "Clube Benfica",
+            "hcp": 32.8,
+            "vacf": null,
+            "registo": "2026/10/07 14:44",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51081",
+            "nome": "Andres Pava",
+            "clube": "ACP Golfe",
+            "hcp": 29.3,
+            "vacf": null,
+            "registo": "2026/10/07 18:08",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "49528",
+            "nome": "Ario Kiani",
+            "clube": "Qta. Marinha",
+            "hcp": 20.5,
+            "vacf": null,
+            "registo": "2026/10/09 21:10",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10252",
+      "name": "Torneio Drive Challenge_Preparação 2027 Sub 14",
+      "date": "2026-11-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Torneio Drive Challenge_Preparação 2027 Sub 14",
+        "date": "2026-11-07",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições em curso",
+        "rounds": 1,
+        "tcode": "10252",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10253",
+      "name": "Torneio Drive Challenge_Preparação 2027 Sub 12",
+      "date": "2026-11-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Torneio Drive Challenge_Preparação 2027 Sub 12",
+        "date": "2026-11-07",
+        "totalInscritos": 1,
+        "reservas": 0,
+        "status": "Inscrições em curso",
+        "rounds": 1,
+        "tcode": "10253",
+        "ccode": "985",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "48946",
+            "nome": "Miguel Santos Pereira",
+            "clube": "Vilamoura, C. G",
+            "hcp": 13.8,
+            "vacf": null,
+            "registo": "2026/10/08 16:42",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10254",
+      "name": "Torneio Drive Challenge_Preparação 2027 Sub 10",
+      "date": "2026-11-07",
+      "expectedYear": "2026",
+      "admissions": {
+        "name": "Torneio Drive Challenge_Preparação 2027 Sub 10",
+        "date": "2026-11-07",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições em curso",
+        "rounds": 1,
+        "tcode": "10254",
         "ccode": "985",
         "players": []
       },
