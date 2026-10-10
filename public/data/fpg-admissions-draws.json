@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-09T23:42:38.677Z",
+  "scrapedAt": "2026-10-10T17:03:12.075Z",
   "total": 1231,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -392801,7 +392801,8 @@
       "tcode": "10307",
       "name": "Final Nacional do Drive Challenge",
       "date": "2026-10-10",
-      "expectedYear": "2026",
+      "expectedYear": 2026,
+      "campo": "Jamor",
       "admissions": {
         "name": "Final Nacional do Drive Challenge",
         "date": "2026-10-10",
@@ -393494,14 +393495,421 @@
         "campo": "Jamor",
         "_source": "PDF «Lista de Jogadores Apurados» da FPG, carregado a 2026-09-10"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Nacional do Drive Challenge",
+          "date": "2026-10-11",
+          "campo": "Jamor",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 57,
+          "groups": [
+            {
+              "teeTime": "08:00",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Manuel Vaz Pinto",
+                  "fed": "51430",
+                  "clube": "Lisbon SC"
+                },
+                {
+                  "nome": "Martim Ferreira",
+                  "fed": "56642",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Madalena Plantier Van Zeller",
+                  "fed": "47078",
+                  "clube": "Ilha Terceira",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Érica Furtado",
+                  "fed": "48792",
+                  "clube": "Amendoeira",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:09",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Igor Kostyn",
+                  "fed": "56072",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Tomás Câmara",
+                  "fed": "53548",
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Tomás Valadão",
+                  "fed": "36625",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Alexandre Lopes",
+                  "fed": "48102",
+                  "clube": "Vale Pisão"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:18",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Rodrigo Abreu",
+                  "fed": "42684",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Taras Zhurbei",
+                  "fed": "59450",
+                  "clube": "Quinta Lágrimas"
+                },
+                {
+                  "nome": "Rita Melo",
+                  "fed": "44607",
+                  "clube": "Vilamoura, C. G",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:27",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "André Gonçalves",
+                  "fed": "41121",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "João Lucas Fagundes",
+                  "fed": "44677",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Tiago Lúcio",
+                  "fed": "44844",
+                  "clube": "Jamor C.G."
+                },
+                {
+                  "nome": "Luís Pedro Reis",
+                  "fed": "51108",
+                  "clube": "Oporto"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:36",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Salvador Rodrigues",
+                  "fed": "39465",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Miguel Silva",
+                  "fed": "48791",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Martim Duarte",
+                  "fed": "53696",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Afonso Poiarez",
+                  "fed": "46079",
+                  "clube": "Estela"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:45",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Jack Murtagh",
+                  "fed": "41593",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "José Pedro Miranda",
+                  "fed": "38976",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Manuel Pires Nascimento",
+                  "fed": "52512",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Francisco Rodrigues",
+                  "fed": "45869",
+                  "clube": "Belas",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "08:54",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Sousa",
+                  "fed": "55301",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Lucas Duarte",
+                  "fed": "38195",
+                  "clube": "Palheiro"
+                },
+                {
+                  "nome": "Sidharth Gauba",
+                  "fed": "57368",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Afonso Rocha",
+                  "fed": "50138",
+                  "clube": "Belas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:03",
+              "startHole": 1,
+              "tee": "Amarelas",
+              "players": [
+                {
+                  "nome": "Afonso Polery",
+                  "fed": "55093",
+                  "clube": "Estela"
+                },
+                {
+                  "nome": "João Pereira",
+                  "fed": "56749",
+                  "clube": "Quinta do Peru"
+                },
+                {
+                  "nome": "Cole Wall",
+                  "fed": "55398",
+                  "clube": "Vila Sol",
+                  "tee": "Vermelhas"
+                },
+                {
+                  "nome": "Rafael Brito",
+                  "fed": "53532",
+                  "clube": "PXO Clube",
+                  "tee": "Vermelhas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:12",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "José Silva",
+                  "fed": "54845",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Miguel Maria Neves Ferreira",
+                  "fed": "57756",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Santiago Santos",
+                  "fed": "53687",
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Marta Andrade",
+                  "fed": "52270",
+                  "clube": "Citynorte"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:21",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "David Grilo",
+                  "fed": "51768",
+                  "clube": "Cantanhede"
+                },
+                {
+                  "nome": "Gonçalo Gouveia",
+                  "fed": "50398",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Catarina Sousa Conceição",
+                  "fed": "48794",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Isabel Melo",
+                  "fed": "46948",
+                  "clube": "Verdegolf"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:30",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Pedro Luís Fernandes",
+                  "fed": "52168",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "João Pedro Quadros",
+                  "fed": "45009",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Catarina Valério",
+                  "fed": "46873",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Matilde Bandeira",
+                  "fed": "48529",
+                  "clube": "Vale de Janelas"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:39",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Guilherme Matos",
+                  "fed": "57454",
+                  "clube": "Verdegolf"
+                },
+                {
+                  "nome": "Miguel Santos Pereira",
+                  "fed": "48946",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Catarina Loureiro",
+                  "fed": "49328",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Tomás Martins Bruno",
+                  "fed": "59275",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:48",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Miguel Nunes",
+                  "fed": "48052",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Gabriel Costa",
+                  "fed": "53838",
+                  "clube": "Amendoeira"
+                },
+                {
+                  "nome": "Tomás Valério",
+                  "fed": "50011",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Nicolau Rodrigues",
+                  "fed": "57486",
+                  "clube": "PXO Clube"
+                }
+              ]
+            },
+            {
+              "teeTime": "09:57",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Manuel Goulartt Medeiros",
+                  "fed": "52884",
+                  "clube": "Santo da Serra"
+                },
+                {
+                  "nome": "Tomás Sarmento de Beires",
+                  "fed": "48046",
+                  "clube": "Citynorte"
+                },
+                {
+                  "nome": "Sabrina Ribeiro Crisóstomo",
+                  "fed": "48971",
+                  "clube": "Vilamoura, C. G"
+                }
+              ]
+            },
+            {
+              "teeTime": "10:06",
+              "startHole": 1,
+              "tee": "Vermelhas",
+              "players": [
+                {
+                  "nome": "Maksim Mutalapov",
+                  "fed": "54475",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Thomas Starreveld",
+                  "fed": "55579",
+                  "clube": "Assoc. Qta.Lago"
+                },
+                {
+                  "nome": "Íris Costa",
+                  "fed": "47677",
+                  "clube": "Palheiro"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "988",
       "tcode": "10309",
       "name": "Final Nacional Drive Challenge Sub 10",
       "date": "2026-10-12",
-      "expectedYear": "2026",
+      "expectedYear": 2026,
+      "campo": "Jamor",
       "admissions": {
         "name": "Final Nacional Drive Challenge Sub 10",
         "date": "2026-10-12",
@@ -393681,7 +394089,115 @@
         "campo": "Jamor",
         "_source": "PDF «Lista de Jogadores Apurados» da FPG, carregado a 2026-09-10"
       },
-      "draws": {}
+      "draws": {
+        "1": {
+          "name": "Final Nacional Drive Challenge Sub 10",
+          "date": "2026-10-11",
+          "campo": "Jamor",
+          "clube": "Federação Portuguesa de Golfe - DRIVE",
+          "totalJogadores": 14,
+          "groups": [
+            {
+              "teeTime": "13:00",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Lucas Pereira Amorim",
+                  "fed": "54330",
+                  "clube": "Oporto"
+                },
+                {
+                  "nome": "Thiago Gonzalez Bernases",
+                  "fed": "59128",
+                  "clube": "RIO"
+                },
+                {
+                  "nome": "Henrique Santana",
+                  "fed": "55539",
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:09",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Manuel Dias",
+                  "fed": "52815",
+                  "clube": "Braga"
+                },
+                {
+                  "nome": "Francisco Ivo de Carvalho",
+                  "fed": "54255",
+                  "clube": "Belas"
+                },
+                {
+                  "nome": "Afonso Aniceto",
+                  "fed": "56026",
+                  "clube": "Santo da Serra"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:18",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Mikhail Khontulev",
+                  "fed": "58864",
+                  "clube": "Estoril"
+                },
+                {
+                  "nome": "Karol Reiff",
+                  "fed": "57110",
+                  "clube": "Vila Sol"
+                },
+                {
+                  "nome": "Vicente Henrique Rocha",
+                  "fed": "59154",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Henrique Monção",
+                  "fed": "51176",
+                  "clube": "Miramar"
+                }
+              ]
+            },
+            {
+              "teeTime": "13:27",
+              "startHole": 1,
+              "tee": "Roxas",
+              "players": [
+                {
+                  "nome": "Rafael Ribeiro Crisóstomo",
+                  "fed": "51880",
+                  "clube": "Vilamoura, C. G"
+                },
+                {
+                  "nome": "Daniel Augusto",
+                  "fed": "57640",
+                  "clube": "PXO Clube"
+                },
+                {
+                  "nome": "Miguel Freitas",
+                  "fed": "56604",
+                  "clube": "Ilha Terceira"
+                },
+                {
+                  "nome": "Afonso Martins Bruno",
+                  "fed": "59274",
+                  "clube": "Quinta do Peru"
+                }
+              ]
+            }
+          ]
+        }
+      }
     },
     {
       "ccode": "000",
