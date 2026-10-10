@@ -57,6 +57,7 @@ const SOURCES = [
   { id: "ejt", label: "Estonian Junior Tour", load: () => require("./sources/ejt") },
   { id: "egr", label: "European Golf Rankings", load: () => require("./sources/egr") },
   { id: "optimist", label: "Optimist Intl Junior Championships", load: () => require("./sources/optimist") },
+  { id: "dgv", label: "Deutscher Golf Verband (DM/DMM juvenis)", load: () => require("./sources/dgv") },
 ];
 
 function parseArgs(argv) {

@@ -201,3 +201,14 @@ Correcções na fonte do mesmo dia: UA Worlds com país da `location`; FFG com l
 ## EGR — eventos antigos (2026-09-19)
 
 As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só os pontos caducam). Calendário por ano: `/events/search?date[year]=Y` (o de 2018 dá HTTP 500 — o `scrape-egr.js` agora salta o ano e continua). `--events --year 2019 … --year 2024 --skip-existing`: +1.864 eventos juvenis (934 → 2.798); 37.859 fichas; 5.759 fichas existentes ganharam 27.857 participações; 892 órfãs resolvidas; 0 junções perdidas.
+
+## Fonte DGV — Alemanha (2026-10-10)
+
+`scripts/scrape-dgv.js` → `public/data/dgv_{tournamentNumber}.json` (1 JobFile por prova) → adapter `sources/dgv.js` (sourceId `dgv`, fonte FRACA: nome + país, chave forte `dgv{dgvPlayerId}`). Cobre as provas juvenis do Deutscher Golf Verband desde 2022: DM AK 14/16/18, DM-Vorausscheide, DMM da juventude e German International Boys/Girls (98 provas na 1.ª corrida). Divisão «AK 14 Jungen» → idade máx. 14 + sexo; Boys/Girls → 18.
+
+- **Só voltas individuais contam.** Nas DMM o foursome (Vierer, `partnerNumber` > 0) dá uma pancada por par: fica em `teamRounds` e o agregador ignora-o. Quem só jogou o foursome não é participação (fica como roster).
+- **Handicap:** o «plus» da DGV vem com sinal menos — é a nossa convenção, guarda-se tal como vem. Vem com vírgula ou ponto conforme a prova.
+- **Estrangeiros:** clube 8 e o nome do clube é o país em alemão → ISO2 (tabela `COUNTRY_DE` no scraper).
+- **Cartões:** o buraco a buraco é uma imagem PNG; do cartão só se lê par, CR, Slope, percurso e tee (`membership-card-api.golf.de/…/details`).
+- **Workflow** `update-dgv.yml` (Sex/Sáb/Dom 19:30 UTC + Seg 06:00): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
+- Ainda **não** está na `/major` (só kids2). Mapa de links: secção «DGV — Alemanha» em `docs/links-conhecidos.html`.

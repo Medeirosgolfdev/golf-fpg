@@ -33,6 +33,7 @@ continuam autenticadas.
 | **`analytics-snapshot.yml`** | ✅ Novo 2026-08-28 | `scripts/snapshot-web-analytics.js` | Diário 03:15 UTC (+ mensal no dia 1) | **Retrato do Vercel Web Analytics** para `data-archive/analytics/`. O plano Hobby só guarda 30 dias — isto copia-os para o repo antes de desaparecerem. Secret: `VERCEL_TOKEN`. Exit 2 = sem novidades. |
 | **`update-cgss-draw.yml`** | ✅ | `scripts/update-cgss-draw-results.js` | Sex/Sáb/Dom 12:10-18:10 UTC (horário) + Seg-Qui 13:10 UTC | Draws/resultados dos torneios CGSS. Sessão pública; secrets `DATAGOLF_SCORING_COOKIES` + `FPG_ADMISSIONS_COOKIES` só de fallback. Regenera `manuel-pairings.json` (`pairings-build.js`). |
 | **`update-golfbox.yml`** | ✅ | `scripts/scrape-golfbox.js` | Diário 21:00 UTC | Scope em `scripts/golfbox-scope.json` — ver "GolfBox". |
+| **`update-dgv.yml`** | ✅ | `scripts/scrape-dgv.js` | Sex/Sáb/Dom 19:30 UTC + Seg 06:00 UTC | Provas juvenis do DGV (Alemanha) → `public/data/dgv_{n}.json` + agregador. A pedido: `ids` ou `from_days` (-1800 = desde 2022). Ver `docs/claude/kids2-agregador.md` → "Fonte DGV". |
 | **`update-wagr.yml`** | ✅ | `scripts/scrape-wagr.js` | Quarta 07:00 UTC | Ver "Fonte WAGR". |
 | **`update-egr.yml`** | ✅ | scrapers EGR | Segunda 06:00 UTC | European Golf Rankings. |
 | **`update-gjgl.yml`** | ✅ | scrapers GJGL | Segunda 05:30 UTC | Global Junior Golf Live. |

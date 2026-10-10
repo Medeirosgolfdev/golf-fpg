@@ -381,6 +381,18 @@ const S = [
     d: "Onde vivem os IDs das competições estónias (e ega-golf.ch para as EGA).",
     ex: [["Estonian Junior Open", "https://golf.ee/voistlused/estonian-junior-open"], ["Estonian Junior Tour", "https://golf.ee/voistlused/estonian-junior-tour"]] },
  ]},
+ { grp: "Circuitos", id: "dgv", title: "DGV — Alemanha", sub: "Deutscher Golf Verband: DM AK 14/16/18, DM-Vorausscheide, DMM juvenis e German International Boys/Girls (desde 2022). API pública do calendário golf.de — sem cookies, com o cabeçalho X-Client-Id que a página injecta (955dcb18-b58d-417c-97be-afa895c45da5).", items: [
+  { n: "Calendário DGV (página)", a: "ok", u: "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/{tournamentNumber}",
+    d: "App em shadow DOM (<dgv-tournaments>). Sub-rotas /startliste/{volta}, /ergebnisse/{volta}, /ergebnisse/{volta}/scorekarte/{guid}. Os PDFs (Startliste com HCPI, Ergebnisliste) estão em tournament-files.golf.de/tournaments/{ano}/{n}/….",
+    ex: [["DMM AK 14 Jungen 2026 (Gifhorn)", "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/490003047173/ergebnisse"]], where: "scrape-dgv.js" },
+  { n: "Lista de provas (GraphQL)", a: "ok", u: "https://api-v2.golf.de/graphql — SearchTournaments(tournamentCategory: DGV, startDaysFromToday, endDaysFromToday)",
+    d: "Todas as provas DGV numa janela de dias; dá tournamentNumber, nome, data, hasResults. TournamentStartList dá o campo (o handicap vem a null — está só no PDF).", where: "scrape-dgv.js" },
+  { n: "Resultados", a: "ok", u: "https://api-v2.golf.de/v1.0/tournaments/{tournamentNumber}/results",
+    d: "Classificação por volta: grossResults (individuais) e teamRankings[].teamResults (DMM), com exactHandicap, totals por volta, placementText («*» = empate) e partnerNumber (>0 = foursome). Estrangeiros: clube 8 e o país em alemão.",
+    ex: [["DM Jungen AK 14 2026", "https://api-v2.golf.de/v1.0/tournaments/490002871329/results"]], where: "scrape-dgv.js" },
+  { n: "Cartão — dados do campo", a: "ok", u: "https://membership-card-api.golf.de/tournaments/{n}/rounds/{volta}/scorecards/{resultGuid}/details",
+    d: "Par, Course Rating, Slope, percurso e cor do tee. O cartão buraco a buraco (…/scorecards/{guid}?language=de) é uma IMAGEM PNG — sem strokes.", where: "scrape-dgv.js" },
+ ]},
  { grp: "Circuitos", id: "espanha", title: "Espanha", sub: "RFEG (microsite + LiveGolfScoring + mitarjeta), NextCaddy (Andaluzia, Madrid) e Catalunha.", items: [
   { n: "RFEG — competições", a: "ok", u: "https://rfegolf.es/CompetenciaPaginas/AllCompetitions.aspx",
     d: "Índice de competições; cada uma tem o seu CompetitionMicrosite.aspx e ListaResultados.aspx.", ex: [["Abrir", "https://rfegolf.es/CompetenciaPaginas/AllCompetitions.aspx"]], where: "scrape-rfegolf-node.js" },

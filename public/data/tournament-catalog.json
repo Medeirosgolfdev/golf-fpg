@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10T14:39:31.726Z",
+  "generatedAt": "2026-10-10T15:01:40.585Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -868,6 +868,114 @@
       "firstDate": "2022-02-15",
       "lastDate": "2026-10-03",
       "editionsCount": 316
+    },
+    {
+      "id": "dgv-jugend",
+      "label": "DGV Jugend",
+      "sourceId": "dgv",
+      "tournamentIds": [
+        "dgv-dgv_490001895103",
+        "dgv-dgv_490001895104",
+        "dgv-dgv_490001895105",
+        "dgv-dgv_490001895107",
+        "dgv-dgv_490001895108",
+        "dgv-dgv_490001895109",
+        "dgv-dgv_490001895714",
+        "dgv-dgv_490001895715",
+        "dgv-dgv_490001896699",
+        "dgv-dgv_490001896700",
+        "dgv-dgv_490001896701",
+        "dgv-dgv_490001896702",
+        "dgv-dgv_490001896703",
+        "dgv-dgv_490001896704",
+        "dgv-dgv_490002019336",
+        "dgv-dgv_490002019338",
+        "dgv-dgv_490002019340",
+        "dgv-dgv_490002019341",
+        "dgv-dgv_490002019342",
+        "dgv-dgv_490002019343",
+        "dgv-dgv_490002154939",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002154941",
+        "dgv-dgv_490002154942",
+        "dgv-dgv_490002154943",
+        "dgv-dgv_490002154944",
+        "dgv-dgv_490002154950",
+        "dgv-dgv_490002154951",
+        "dgv-dgv_490002154952",
+        "dgv-dgv_490002154953",
+        "dgv-dgv_490002154954",
+        "dgv-dgv_490002154955",
+        "dgv-dgv_490002155251",
+        "dgv-dgv_490002155252",
+        "dgv-dgv_490002281617",
+        "dgv-dgv_490002281733",
+        "dgv-dgv_490002281734",
+        "dgv-dgv_490002281741",
+        "dgv-dgv_490002281745",
+        "dgv-dgv_490002281747",
+        "dgv-dgv_490002394181",
+        "dgv-dgv_490002394196",
+        "dgv-dgv_490002401229",
+        "dgv-dgv_490002401231",
+        "dgv-dgv_490002401232",
+        "dgv-dgv_490002401234",
+        "dgv-dgv_490002401237",
+        "dgv-dgv_490002401238",
+        "dgv-dgv_490002401276",
+        "dgv-dgv_490002401277",
+        "dgv-dgv_490002401278",
+        "dgv-dgv_490002401280",
+        "dgv-dgv_490002401281",
+        "dgv-dgv_490002401282",
+        "dgv-dgv_490002518528",
+        "dgv-dgv_490002518529",
+        "dgv-dgv_490002518530",
+        "dgv-dgv_490002518531",
+        "dgv-dgv_490002518533",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002616706",
+        "dgv-dgv_490002617046",
+        "dgv-dgv_490002715591",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002715693",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002715695",
+        "dgv-dgv_490002747665",
+        "dgv-dgv_490002751936",
+        "dgv-dgv_490002751937",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002751940",
+        "dgv-dgv_490002751941",
+        "dgv-dgv_490002751943",
+        "dgv-dgv_490002813088",
+        "dgv-dgv_490002813292",
+        "dgv-dgv_490002813293",
+        "dgv-dgv_490002813294",
+        "dgv-dgv_490002813295",
+        "dgv-dgv_490002813297",
+        "dgv-dgv_490002871304",
+        "dgv-dgv_490002871305",
+        "dgv-dgv_490002871316",
+        "dgv-dgv_490002871317",
+        "dgv-dgv_490002871318",
+        "dgv-dgv_490002871319",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490002871321",
+        "dgv-dgv_490002871324",
+        "dgv-dgv_490002871325",
+        "dgv-dgv_490002871326",
+        "dgv-dgv_490002871327",
+        "dgv-dgv_490002871328",
+        "dgv-dgv_490002871329",
+        "dgv-dgv_490003047171",
+        "dgv-dgv_490003047172",
+        "dgv-dgv_490003047173",
+        "dgv-dgv_490003047174"
+      ],
+      "firstDate": "2022-06-02",
+      "lastDate": "2026-10-10",
+      "editionsCount": 98
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -20233,8 +20341,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -28575,8 +28683,8 @@
         "wagr-271780",
         "wagr-260258",
         "wagr-76434",
-        "wagr-225629",
-        "wagr-235690"
+        "wagr-235690",
+        "wagr-225629"
       ],
       "firstDate": "2022-09-01",
       "lastDate": "2026-09-02",
@@ -28718,36 +28826,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-creed-junior-boys-invitational",
-      "label": "Creed Junior Boys' Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235865",
-        "wagr-271900",
-        "wagr-260403",
-        "wagr-225888",
-        "wagr-219502"
-      ],
-      "firstDate": "2022-09-17",
-      "lastDate": "2026-09-19",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -28783,13 +28861,28 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271814",
-        "wagr-260297",
         "wagr-235984",
+        "wagr-260297",
         "wagr-225932",
         "wagr-76307"
       ],
       "firstDate": "2022-09-23",
       "lastDate": "2026-09-04",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-creed-junior-boys-invitational",
+      "label": "Creed Junior Boys' Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271900",
+        "wagr-260403",
+        "wagr-225888",
+        "wagr-235865",
+        "wagr-219502"
+      ],
+      "firstDate": "2022-09-17",
+      "lastDate": "2026-09-19",
       "editionsCount": 5
     },
     {
@@ -28973,6 +29066,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -29000,6 +29108,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -35667,8 +35790,8 @@
       "tournamentIds": [
         "wagr-234228",
         "wagr-259370",
-        "wagr-75214",
-        "wagr-224362"
+        "wagr-224362",
+        "wagr-75214"
       ],
       "firstDate": "2022-07-03",
       "lastDate": "2025-06-29",
@@ -35717,28 +35840,14 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-dm-vorausscheid",
       "label": "DM Vorausscheid",
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-270968",
         "wagr-259174",
-        "wagr-224698",
-        "wagr-234453"
+        "wagr-234453",
+        "wagr-224698"
       ],
       "firstDate": "2023-07-14",
       "lastDate": "2026-07-24",
@@ -36050,20 +36159,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -44871,84 +44966,6 @@
       "editionsCount": 3
     },
     {
-      "id": "egr-dgv-dm-ak18-jungen",
-      "label": "DGV DM AK18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11324",
-        "egr-egr7018",
-        "egr-egr4792"
-      ],
-      "firstDate": "2020-09-11",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-dgv-dm-ak18-madchen",
-      "label": "DGV DM AK18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11325",
-        "egr-egr8490",
-        "egr-egr7021"
-      ],
-      "firstDate": "2022-09-23",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-dgv-dm-ak16-jungen",
-      "label": "DGV DM AK16 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11326",
-        "egr-egr7019",
-        "egr-egr5018"
-      ],
-      "firstDate": "2020-09-11",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-dgv-dm-ak14-jungen",
-      "label": "DGV DM AK14 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11327",
-        "egr-egr8487",
-        "egr-egr4793"
-      ],
-      "firstDate": "2020-09-11",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-dgv-dm-ak16-madchen",
-      "label": "DGV DM AK16 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11328",
-        "egr-egr8491",
-        "egr-egr4794"
-      ],
-      "firstDate": "2020-09-11",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-dgv-dm-ak14-madchen",
-      "label": "DGV DM AK14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11329",
-        "egr-egr7023",
-        "egr-egr5096"
-      ],
-      "firstDate": "2020-09-11",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
       "id": "egr-nationaal-strokeplay-kampioenschap-meisjes-u15",
       "label": "Nationaal Strokeplay Kampioenschap Meisjes U15",
       "sourceId": "egr",
@@ -45284,19 +45301,6 @@
       ],
       "firstDate": "2021-07-06",
       "lastDate": "2023-07-11",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-german-boys",
-      "label": "German Boys",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr7755",
-        "egr-egr6509",
-        "egr-egr5508"
-      ],
-      "firstDate": "2021-06-03",
-      "lastDate": "2023-06-01",
       "editionsCount": 3
     },
     {
@@ -46540,8 +46544,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -46574,19 +46578,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -46597,19 +46588,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -47172,19 +47150,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-pga-west-junior-championship",
-      "label": "PGA WEST Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270202",
-        "wagr-258222",
-        "wagr-233922"
-      ],
-      "firstDate": "2024-06-18",
-      "lastDate": "2026-06-16",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-pacific-northwest-junior-boys-amateur-championship",
       "label": "Pacific Northwest Junior Boys' Amateur Championship",
       "sourceId": "wagr",
@@ -47312,6 +47277,19 @@
       ],
       "firstDate": "2023-08-02",
       "lastDate": "2025-08-05",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-pga-west-junior-championship",
+      "label": "PGA WEST Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270202",
+        "wagr-258222",
+        "wagr-233922"
+      ],
+      "firstDate": "2024-06-18",
+      "lastDate": "2026-06-16",
       "editionsCount": 3
     },
     {
@@ -47471,16 +47449,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -47913,6 +47891,19 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-european-juniors-international",
       "label": "European  Juniors International",
       "sourceId": "wagr",
@@ -47975,19 +47966,6 @@
       ],
       "firstDate": "2022-01-24",
       "lastDate": "2025-07-08",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-ping-masters",
-      "label": "PING Masters",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-267299",
-        "wagr-74176",
-        "wagr-222950"
-      ],
-      "firstDate": "2022-04-23",
-      "lastDate": "2026-05-16",
       "editionsCount": 3
     },
     {
@@ -60056,78 +60034,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-dm-ak18-jungen",
-      "label": "DM AK18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12908",
-        "egr-egr5516"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-ak18-madchen",
-      "label": "DM AK18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12909",
-        "egr-egr5518"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-ak16-jungen",
-      "label": "DM AK16 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12910",
-        "egr-egr5515"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-ak14-jungen",
-      "label": "DM AK14 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12911",
-        "egr-egr5954"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-ak16-madchen",
-      "label": "DM AK16 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12912",
-        "egr-egr5517"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-ak14-madchen",
-      "label": "DM AK14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12913",
-        "egr-egr5957"
-      ],
-      "firstDate": "2021-08-27",
-      "lastDate": "2026-09-04",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-r-a-boys-amateur",
       "label": "R&A Boys Amateur",
       "sourceId": "egr",
@@ -61784,18 +61690,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-german-international-amateur-boys-championship",
-      "label": "German International Amateur Boys Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10616",
-        "egr-egr9708"
-      ],
-      "firstDate": "2024-05-30",
-      "lastDate": "2025-05-15",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-footjoy-finnish-junior-tour-1",
       "label": "FootJoy Finnish Junior Tour 1",
       "sourceId": "egr",
@@ -61985,30 +61879,6 @@
       ],
       "firstDate": "2024-07-31",
       "lastDate": "2024-07-31",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak18-madchen",
-      "label": "DM-Vorausscheid AK18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9713",
-        "egr-egr5869"
-      ],
-      "firstDate": "2021-07-09",
-      "lastDate": "2024-07-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak14-madchen",
-      "label": "DM-Vorausscheid AK14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9715",
-        "egr-egr5893"
-      ],
-      "firstDate": "2021-07-09",
-      "lastDate": "2024-07-26",
       "editionsCount": 2
     },
     {
@@ -62264,30 +62134,6 @@
       "editionsCount": 2
     },
     {
-      "id": "egr-dgv-dm-vorausscheid-ak16-madchen",
-      "label": "DGV-DM-Vorausscheid AK16 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8310",
-        "egr-egr6912"
-      ],
-      "firstDate": "2022-07-22",
-      "lastDate": "2023-07-14",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-dgv-dm-vorausscheid-ak18-madchen",
-      "label": "DGV-DM-Vorausscheid AK18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8311",
-        "egr-egr6913"
-      ],
-      "firstDate": "2022-07-22",
-      "lastDate": "2023-07-14",
-      "editionsCount": 2
-    },
-    {
       "id": "egr-italian-national-u14-championships",
       "label": "Italian National U14 Championships",
       "sourceId": "egr",
@@ -62345,18 +62191,6 @@
       ],
       "firstDate": "2023-06-17",
       "lastDate": "2023-06-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-german-girls",
-      "label": "German Girls",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr7754",
-        "egr-egr6508"
-      ],
-      "firstDate": "2022-06-02",
-      "lastDate": "2023-06-01",
       "editionsCount": 2
     },
     {
@@ -67532,30 +67366,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
-      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262838",
-        "wagr-272877"
-      ],
-      "firstDate": "2025-03-27",
-      "lastDate": "2026-03-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-north-and-south-junior-amateur",
       "label": "North and South Junior Amateur",
       "sourceId": "wagr",
@@ -68060,6 +67870,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
+      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-262838",
+        "wagr-272877"
+      ],
+      "firstDate": "2025-03-27",
+      "lastDate": "2026-03-26",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-ajga-albany-junior-presented-by-uhy",
       "label": "AJGA Albany Junior presented by UHY",
       "sourceId": "wagr",
@@ -68324,6 +68146,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-rg-golf-junior-championship",
       "label": "RG Golf Junior Championship",
       "sourceId": "wagr",
@@ -68537,6 +68371,18 @@
       ],
       "firstDate": "2025-03-27",
       "lastDate": "2026-03-12",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -69656,18 +69502,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-ulster-u18-boys-open-championship",
-      "label": "Ulster U18 Boys Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-76324",
-        "wagr-226606"
-      ],
-      "firstDate": "2022-11-02",
-      "lastDate": "2023-07-19",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-scottish-boys-amateur-championship",
       "label": "Scottish Boys' Amateur Championship",
       "sourceId": "wagr",
@@ -69872,15 +69706,15 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-european-boys-team-championship-jean-louis-dupont-trophy",
-      "label": "European Boys' Team Championship, Jean-Louis Dupont Trophy",
+      "id": "wagr-ping-masters",
+      "label": "PING Masters",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-224396",
-        "wagr-75278"
+        "wagr-74176",
+        "wagr-222950"
       ],
-      "firstDate": "2022-07-05",
-      "lastDate": "2023-07-11",
+      "firstDate": "2022-04-23",
+      "lastDate": "2023-07-15",
       "editionsCount": 2
     },
     {
@@ -70172,6 +70006,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-ulster-u18-boys-open-championship",
+      "label": "Ulster U18 Boys Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-76324",
+        "wagr-226606"
+      ],
+      "firstDate": "2022-11-02",
+      "lastDate": "2023-07-19",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-new-jersey-junior-pga-championship",
       "label": "New Jersey Junior PGA Championship",
       "sourceId": "wagr",
@@ -70205,6 +70051,18 @@
       ],
       "firstDate": "2024-06-24",
       "lastDate": "2025-06-23",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-european-boys-team-championship-jean-louis-dupont-trophy",
+      "label": "European Boys' Team Championship, Jean-Louis Dupont Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-224396",
+        "wagr-75278"
+      ],
+      "firstDate": "2022-07-05",
+      "lastDate": "2023-07-11",
       "editionsCount": 2
     },
     {
@@ -70313,6 +70171,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -96201,72 +96071,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-dm-vorausscheid-jungen-ak14",
-      "label": "DM-Vorausscheid Jungen AK14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12835"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-jungen-ak16",
-      "label": "DM-Vorausscheid Jungen AK16",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12836"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-jungen-ak18",
-      "label": "DM-Vorausscheid Jungen AK18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12837"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-madchen-ak-14",
-      "label": "DM-Vorausscheid Mädchen AK 14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12838"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-madchen-ak16",
-      "label": "DM-Vorausscheid Mädchen AK16",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12839"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-madchen-ak18",
-      "label": "DM-Vorausscheid Mädchen AK18",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12840"
-      ],
-      "firstDate": "2026-07-24",
-      "lastDate": "2026-07-24",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-scottish-girls-amateur-championship-closed",
       "label": "Scottish Girls' Amateur Championship (Closed)",
       "sourceId": "egr",
@@ -96682,28 +96486,6 @@
       ],
       "firstDate": "2026-06-05",
       "lastDate": "2026-06-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-german-international-amateur-championship-girls",
-      "label": "German International Amateur Championship Girls",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12790"
-      ],
-      "firstDate": "2026-06-04",
-      "lastDate": "2026-06-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-german-international-amateur-championship-boys",
-      "label": "German International Amateur Championship Boys",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr12789"
-      ],
-      "firstDate": "2026-06-04",
-      "lastDate": "2026-06-04",
       "editionsCount": 1
     },
     {
@@ -97422,72 +97204,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-dm-vorausscheid-ak-18-jungen",
-      "label": "DM-Vorausscheid AK 18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11001"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak-16-jungen",
-      "label": "DM-Vorausscheid AK 16 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11002"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak-14-jungen",
-      "label": "DM-Vorausscheid AK 14 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11003"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak-18-madchen",
-      "label": "DM-Vorausscheid AK 18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11004"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak-16-madchen",
-      "label": "DM-Vorausscheid AK 16 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11005"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak-14-madchen",
-      "label": "DM-Vorausscheid AK 14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr11006"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-munster-u16-amateur-open-championship",
       "label": "Munster U16 Amateur Open Championship",
       "sourceId": "egr",
@@ -98203,17 +97919,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-german-international-amateur-girls-championship",
-      "label": "German International Amateur Girls Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr10615"
-      ],
-      "firstDate": "2025-05-15",
-      "lastDate": "2025-05-15",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-the-3-foundation-trophy-sgf",
       "label": "The 3 Foundation Trophy (SGF)",
       "sourceId": "egr",
@@ -98456,39 +98161,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-deutsche-meisterschaft-ak18-madchen",
-      "label": "Deutsche Meisterschaft AK18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9720"
-      ],
-      "firstDate": "2024-09-06",
-      "lastDate": "2024-09-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-deutsche-meisterschaft-ak14-madchen",
-      "label": "Deutsche Meisterschaft AK14 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9722"
-      ],
-      "firstDate": "2024-09-06",
-      "lastDate": "2024-09-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-deutsche-meisterschaft-ak16-jungen",
-      "label": "Deutsche Meisterschaft AK16 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9724"
-      ],
-      "firstDate": "2024-09-06",
-      "lastDate": "2024-09-06",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-italian-national-closed-boys-u18-match-play-championships",
       "label": "Italian National Closed Boys U18 Match Play Championships",
       "sourceId": "egr",
@@ -98695,28 +98367,6 @@
       ],
       "firstDate": "2024-07-29",
       "lastDate": "2024-07-29",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak18-jungen",
-      "label": "DM Vorausscheid AK18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9710"
-      ],
-      "firstDate": "2024-07-26",
-      "lastDate": "2024-07-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dm-vorausscheid-ak14-jungen",
-      "label": "DM Vorausscheid AK14 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9712"
-      ],
-      "firstDate": "2024-07-26",
-      "lastDate": "2024-07-26",
       "editionsCount": 1
     },
     {
@@ -99776,17 +99426,6 @@
       "editionsCount": 1
     },
     {
-      "id": "egr-dgv-dm-vorausscheid-jungen-ak14",
-      "label": "DGV-DM-Vorausscheid Jungen AK14",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8359"
-      ],
-      "firstDate": "2023-07-14",
-      "lastDate": "2023-07-14",
-      "editionsCount": 1
-    },
-    {
       "id": "egr-leinster-boys-open-amateur-championship",
       "label": "Leinster Boys Open Amateur Championship",
       "sourceId": "egr",
@@ -100543,28 +100182,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2022-07-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-dm-vorausscheid-ak16-jungen",
-      "label": "DGV DM-Vorausscheid AK16 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr6910"
-      ],
-      "firstDate": "2022-07-22",
-      "lastDate": "2022-07-22",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-dm-vorausscheid-ak18-jungen",
-      "label": "DGV DM-Vorausscheid AK18 Jungen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr6909"
-      ],
-      "firstDate": "2022-07-22",
-      "lastDate": "2022-07-22",
       "editionsCount": 1
     },
     {
@@ -101371,6 +100988,72 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-dm-ak18-jungen",
+      "label": "DM AK18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5516"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-ak16-jungen",
+      "label": "DM AK16 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5515"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-ak16-madchen",
+      "label": "DM AK16 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5517"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-ak18-madchen",
+      "label": "DM AK18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5518"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-ak14-jungen",
+      "label": "DM AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5954"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-ak14-madchen",
+      "label": "DM AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5957"
+      ],
+      "firstDate": "2021-08-27",
+      "lastDate": "2021-08-27",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-preis-von-refrath",
       "label": "Preis von Refrath",
       "sourceId": "egr",
@@ -101756,11 +101439,33 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-dm-vorausscheid-ak18-madchen",
+      "label": "DM Vorausscheid AK18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5869"
+      ],
+      "firstDate": "2021-07-09",
+      "lastDate": "2021-07-09",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-dm-vorausscheid-ak16-madchen",
       "label": "DM Vorausscheid AK16 Mädchen",
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr5513"
+      ],
+      "firstDate": "2021-07-09",
+      "lastDate": "2021-07-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dm-vorausscheid-ak14-madchen",
+      "label": "DM Vorausscheid AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5893"
       ],
       "firstDate": "2021-07-09",
       "lastDate": "2021-07-09",
@@ -101929,6 +101634,17 @@
       ],
       "firstDate": "2021-06-12",
       "lastDate": "2021-06-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-german-boys",
+      "label": "German Boys",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5508"
+      ],
+      "firstDate": "2021-06-03",
+      "lastDate": "2021-06-03",
       "editionsCount": 1
     },
     {
@@ -102303,6 +102019,61 @@
       ],
       "firstDate": "2020-09-12",
       "lastDate": "2020-09-12",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-dm-ak18-jungen",
+      "label": "DGV-DM AK18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr4792"
+      ],
+      "firstDate": "2020-09-11",
+      "lastDate": "2020-09-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-dm-ak14-jungen",
+      "label": "DGV-DM AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr4793"
+      ],
+      "firstDate": "2020-09-11",
+      "lastDate": "2020-09-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-dm-ak16-jungen",
+      "label": "DGV-DM AK16 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5018"
+      ],
+      "firstDate": "2020-09-11",
+      "lastDate": "2020-09-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-dm-ak16-madchen",
+      "label": "DGV-DM AK16 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr4794"
+      ],
+      "firstDate": "2020-09-11",
+      "lastDate": "2020-09-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-dm-ak14-madchen",
+      "label": "DGV-DM AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr5096"
+      ],
+      "firstDate": "2020-09-11",
+      "lastDate": "2020-09-11",
       "editionsCount": 1
     },
     {
@@ -108983,6 +108754,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-faldo-junior-tour-17th-asia-grand-final",
       "label": "Faldo Junior Tour - 17th Asia Grand Final",
       "sourceId": "wagr",
@@ -111359,6 +111141,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -111818,17 +111611,6 @@
       ],
       "firstDate": "2025-07-21",
       "lastDate": "2025-07-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -112390,17 +112172,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -113504,39 +113275,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-west-of-ireland-winter-series-by-cora-systems-1",
-      "label": "West of Ireland Winter Series by Cora Systems - 1",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-265207"
-      ],
-      "firstDate": "2025-10-11",
-      "lastDate": "2025-10-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-west-junior-youth-event-spring",
-      "label": "West Junior Youth Event - Spring",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263491"
-      ],
-      "firstDate": "2025-03-29",
-      "lastDate": "2025-03-29",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-irish-junior-open-elite-tour",
-      "label": "Irish Junior Open Elite Tour",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-254093"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2024-10-19",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-gjg-lisboa-junior-games",
       "label": "GJG Lisboa Junior Games",
       "sourceId": "wagr",
@@ -113732,6 +113470,28 @@
       ],
       "firstDate": "2026-08-05",
       "lastDate": "2026-08-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-west-junior-youth-event-spring",
+      "label": "West Junior Youth Event - Spring",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263491"
+      ],
+      "firstDate": "2025-03-29",
+      "lastDate": "2025-03-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-west-of-ireland-winter-series-by-cora-systems-1",
+      "label": "West of Ireland Winter Series by Cora Systems - 1",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-265207"
+      ],
+      "firstDate": "2025-10-11",
+      "lastDate": "2025-10-11",
       "editionsCount": 1
     },
     {
@@ -116826,6 +116586,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-irish-junior-open-elite-tour",
+      "label": "Irish Junior Open Elite Tour",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-254093"
+      ],
+      "firstDate": "2024-10-19",
+      "lastDate": "2024-10-19",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-ncr-cup-16th-junior-golf-tournament",
       "label": "NCR CUP - 16TH JUNIOR GOLF TOURNAMENT",
       "sourceId": "wagr",
@@ -117494,17 +117265,6 @@
       ],
       "firstDate": "2023-05-05",
       "lastDate": "2023-05-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-bwgv-junior-invitational",
-      "label": "BWGV Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-219847"
-      ],
-      "firstDate": "2022-03-11",
-      "lastDate": "2022-03-11",
       "editionsCount": 1
     },
     {
@@ -118660,17 +118420,6 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {
