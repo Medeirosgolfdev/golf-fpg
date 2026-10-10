@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-10T17:03:16.983Z",
+  "lastUpdated": "2026-10-10T23:06:14.722Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-10-10",
   "summary": {
-    "total": 1790,
+    "total": 1791,
     "complete": 820,
-    "in_progress": 1,
+    "in_progress": 2,
     "future": 4,
     "stale": 10,
     "excluded": 955,
@@ -449,6 +449,27 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": true,
+      "status": "in_progress"
+    },
+    {
+      "ccode": "007",
+      "tcode": "11075",
+      "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+      "date": "2026-10-10",
+      "rounds": 1,
+      "has_admissions": false,
+      "admissions_count": 0,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": true,
+      "player_count": 64,
+      "players_with_scorecards": 62,
+      "players_with_full_scorecards": 62,
+      "scorecards_source": "pull-torneios001.json",
+      "scorecards_ratio": 0.969,
+      "full_scorecards_ratio": 0.969,
+      "has_manuel": false,
       "status": "in_progress"
     },
     {

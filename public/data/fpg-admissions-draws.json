@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-10T17:03:12.075Z",
-  "total": 1231,
+  "scrapedAt": "2026-10-10T23:06:10.991Z",
+  "total": 1232,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -393902,6 +393902,18 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11075",
+      "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+      "date": "2026-10-10",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
+      },
+      "draws": {}
     },
     {
       "ccode": "988",
