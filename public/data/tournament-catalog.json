@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10T15:01:40.585Z",
+  "generatedAt": "2026-10-10T15:07:16.677Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -20341,8 +20341,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-22",
-      "lastDate": "2026-06-20",
+      "firstDate": "2019-06-23",
+      "lastDate": "2026-06-21",
       "editionsCount": 7
     },
     {
@@ -28826,6 +28826,36 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-271309",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-creed-junior-boys-invitational",
+      "label": "Creed Junior Boys' Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235865",
+        "wagr-271900",
+        "wagr-260403",
+        "wagr-225888",
+        "wagr-219502"
+      ],
+      "firstDate": "2022-09-17",
+      "lastDate": "2026-09-19",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -28868,21 +28898,6 @@
       ],
       "firstDate": "2022-09-23",
       "lastDate": "2026-09-04",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-creed-junior-boys-invitational",
-      "label": "Creed Junior Boys' Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271900",
-        "wagr-260403",
-        "wagr-225888",
-        "wagr-235865",
-        "wagr-219502"
-      ],
-      "firstDate": "2022-09-17",
-      "lastDate": "2026-09-19",
       "editionsCount": 5
     },
     {
@@ -29066,21 +29081,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986",
-        "wagr-74879"
-      ],
-      "firstDate": "2022-06-20",
-      "lastDate": "2026-07-06",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -29108,21 +29108,6 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271309",
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -35840,6 +35825,20 @@
       "editionsCount": 4
     },
     {
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259377",
+        "wagr-234649",
+        "wagr-271132",
+        "wagr-224807"
+      ],
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
+      "editionsCount": 4
+    },
+    {
       "id": "wagr-dm-vorausscheid",
       "label": "DM Vorausscheid",
       "sourceId": "wagr",
@@ -36159,6 +36158,20 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986"
+      ],
+      "firstDate": "2023-06-19",
+      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -46544,8 +46557,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-270533",
-        "wagr-234217"
+        "wagr-234217",
+        "wagr-270533"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -46578,6 +46591,19 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461",
+        "wagr-257236",
+        "wagr-251444"
+      ],
+      "firstDate": "2024-05-03",
+      "lastDate": "2026-04-30",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -46588,6 +46614,19 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-233861",
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2024-06-19",
+      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -47150,6 +47189,19 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-pga-west-junior-championship",
+      "label": "PGA WEST Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270202",
+        "wagr-258222",
+        "wagr-233922"
+      ],
+      "firstDate": "2024-06-18",
+      "lastDate": "2026-06-16",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-pacific-northwest-junior-boys-amateur-championship",
       "label": "Pacific Northwest Junior Boys' Amateur Championship",
       "sourceId": "wagr",
@@ -47277,19 +47329,6 @@
       ],
       "firstDate": "2023-08-02",
       "lastDate": "2025-08-05",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-pga-west-junior-championship",
-      "label": "PGA WEST Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270202",
-        "wagr-258222",
-        "wagr-233922"
-      ],
-      "firstDate": "2024-06-18",
-      "lastDate": "2026-06-16",
       "editionsCount": 3
     },
     {
@@ -47449,16 +47488,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-271132",
-        "wagr-234649",
-        "wagr-224807"
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
       ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -47888,19 +47927,6 @@
       ],
       "firstDate": "2024-07-16",
       "lastDate": "2026-07-14",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
-      ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -67366,6 +67392,30 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
+      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-262838",
+        "wagr-272877"
+      ],
+      "firstDate": "2025-03-27",
+      "lastDate": "2026-03-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236605",
+        "wagr-261130"
+      ],
+      "firstDate": "2024-10-19",
+      "lastDate": "2025-10-25",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-north-and-south-junior-amateur",
       "label": "North and South Junior Amateur",
       "sourceId": "wagr",
@@ -67870,18 +67920,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
-      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262838",
-        "wagr-272877"
-      ],
-      "firstDate": "2025-03-27",
-      "lastDate": "2026-03-26",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-ajga-albany-junior-presented-by-uhy",
       "label": "AJGA Albany Junior presented by UHY",
       "sourceId": "wagr",
@@ -68146,18 +68184,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2025-06-17",
-      "lastDate": "2026-06-23",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-rg-golf-junior-championship",
       "label": "RG Golf Junior Championship",
       "sourceId": "wagr",
@@ -68371,18 +68397,6 @@
       ],
       "firstDate": "2025-03-27",
       "lastDate": "2026-03-12",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071",
-        "wagr-77024"
-      ],
-      "firstDate": "2022-06-14",
-      "lastDate": "2026-06-15",
       "editionsCount": 2
     },
     {
@@ -70171,18 +70185,6 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076",
-        "wagr-224241"
-      ],
-      "firstDate": "2023-06-27",
-      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -108754,17 +108756,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461"
-      ],
-      "firstDate": "2026-04-30",
-      "lastDate": "2026-04-30",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-faldo-junior-tour-17th-asia-grand-final",
       "label": "Faldo Junior Tour - 17th Asia Grand Final",
       "sourceId": "wagr",
@@ -111141,17 +111132,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261130"
-      ],
-      "firstDate": "2025-10-25",
-      "lastDate": "2025-10-25",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -111611,6 +111591,17 @@
       ],
       "firstDate": "2025-07-21",
       "lastDate": "2025-07-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071"
+      ],
+      "firstDate": "2026-06-15",
+      "lastDate": "2026-06-15",
       "editionsCount": 1
     },
     {
@@ -112172,6 +112163,17 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-haskins-junior-invitational",
+      "label": "Haskins Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259106"
+      ],
+      "firstDate": "2025-07-15",
+      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -118420,6 +118422,17 @@
       ],
       "firstDate": "2022-05-14",
       "lastDate": "2022-05-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076"
+      ],
+      "firstDate": "2024-06-24",
+      "lastDate": "2024-06-24",
       "editionsCount": 1
     },
     {
