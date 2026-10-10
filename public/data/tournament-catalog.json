@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-10T17:34:58.382Z",
+  "generatedAt": "2026-10-10T22:48:58.700Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -968,14 +968,16 @@
         "dgv-dgv_490002871327",
         "dgv-dgv_490002871328",
         "dgv-dgv_490002871329",
+        "dgv-dgv_490003047170",
         "dgv-dgv_490003047171",
         "dgv-dgv_490003047172",
         "dgv-dgv_490003047173",
-        "dgv-dgv_490003047174"
+        "dgv-dgv_490003047174",
+        "dgv-dgv_490003047175"
       ],
       "firstDate": "2022-06-02",
       "lastDate": "2026-10-10",
-      "editionsCount": 98
+      "editionsCount": 100
     },
     {
       "id": "rfeg-circuito-juvenil",
@@ -15091,6 +15093,25 @@
       "editionsCount": 9
     },
     {
+      "id": "uskids-eagles-landing-golf-course-tour-championship",
+      "label": "Eagles Landing Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-13191",
+        "uskids-16684",
+        "uskids-20364",
+        "uskids-12120",
+        "uskids-9306",
+        "uskids-14213",
+        "uskids-19316",
+        "uskids-21972",
+        "uskids-23142"
+      ],
+      "firstDate": "2020-10-11",
+      "lastDate": "2026-10-11",
+      "editionsCount": 9
+    },
+    {
       "id": "uskids-country-club-de-tegucigalpa",
       "label": "Country Club de Tegucigalpa",
       "sourceId": "uskids",
@@ -17400,24 +17421,6 @@
       ],
       "firstDate": "2022-01-25",
       "lastDate": "2026-06-02",
-      "editionsCount": 8
-    },
-    {
-      "id": "uskids-eagles-landing-golf-course-tour-championship",
-      "label": "Eagles Landing Golf Course (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-13191",
-        "uskids-16684",
-        "uskids-20364",
-        "uskids-12120",
-        "uskids-9306",
-        "uskids-14213",
-        "uskids-19316",
-        "uskids-21972"
-      ],
-      "firstDate": "2020-10-11",
-      "lastDate": "2026-05-31",
       "editionsCount": 8
     },
     {
@@ -42938,6 +42941,19 @@
       "editionsCount": 3
     },
     {
+      "id": "uskids-azata-golf-tour-championship",
+      "label": "Azata Golf (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-21932",
+        "uskids-21094",
+        "uskids-22772"
+      ],
+      "firstDate": "2026-02-22",
+      "lastDate": "2026-10-11",
+      "editionsCount": 3
+    },
+    {
       "id": "uskids-atlas-valley-country-club",
       "label": "Atlas Valley Country Club",
       "sourceId": "uskids",
@@ -56556,18 +56572,6 @@
       "editionsCount": 2
     },
     {
-      "id": "uskids-azata-golf-tour-championship",
-      "label": "Azata Golf (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-21932",
-        "uskids-21094"
-      ],
-      "firstDate": "2026-02-22",
-      "lastDate": "2026-05-17",
-      "editionsCount": 2
-    },
-    {
       "id": "uskids-duquesa-golf-club",
       "label": "Duquesa Golf Club",
       "sourceId": "uskids",
@@ -58173,6 +58177,18 @@
       ],
       "firstDate": "2024-10-13",
       "lastDate": "2025-10-12",
+      "editionsCount": 2
+    },
+    {
+      "id": "uskids-mill-creek-golf-club-tour-championship",
+      "label": "Mill Creek Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-20971",
+        "uskids-23576"
+      ],
+      "firstDate": "2026-03-01",
+      "lastDate": "2026-10-11",
       "editionsCount": 2
     },
     {
@@ -89803,17 +89819,6 @@
       "editionsCount": 1
     },
     {
-      "id": "uskids-mill-creek-golf-club-tour-championship",
-      "label": "Mill Creek Golf Club (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-20971"
-      ],
-      "firstDate": "2026-03-01",
-      "lastDate": "2026-03-01",
-      "editionsCount": 1
-    },
-    {
       "id": "uskids-clovelly-country-club-tour-championship",
       "label": "Clovelly Country Club (Tour Championship)",
       "sourceId": "uskids",
@@ -93562,6 +93567,50 @@
       ],
       "firstDate": "2026-04-19",
       "lastDate": "2026-04-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-bucharest-golf-club-tour-championship",
+      "label": "Bucharest Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23490"
+      ],
+      "firstDate": "2026-10-11",
+      "lastDate": "2026-10-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-woodruff-golf-course-tour-championship",
+      "label": "Woodruff Golf Course (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23614"
+      ],
+      "firstDate": "2026-10-11",
+      "lastDate": "2026-10-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-black-rock-creek-golf-club-tour-championship",
+      "label": "Black Rock Creek Golf Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23379"
+      ],
+      "firstDate": null,
+      "lastDate": null,
+      "editionsCount": 1
+    },
+    {
+      "id": "uskids-atlas-valley-country-club-tour-championship",
+      "label": "Atlas Valley Country Club (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-22893"
+      ],
+      "firstDate": "2026-10-11",
+      "lastDate": "2026-10-11",
       "editionsCount": 1
     },
     {
