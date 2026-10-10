@@ -1,0 +1,824 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta (Startliste Runde 1) com o HCPI de cada jogador(a) à data da lista. Nomes da API golf.de (TournamentStartList), HCPI lido do PDF da DGV pela mesma ordem (conferido: mesmo número de nomes e de handicaps). Na DGV um handicap «plus» escreve-se com sinal menos — é a convenção destas listas (plus em negativo). Usada pelo agregador kids2 (util/hcp-listas.js) para acrescentar um ponto ao hcpHistory de quem já tem ficha.",
+ "id": "dgv-dmm-ak16-jungen-2026-10-10",
+ "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)",
+ "fonte": "Startliste Runde 1 — Deutscher Golf Verband (golf.de/sport/turnierkalender/dgv-turniere.html#/490003047174)",
+ "data": "2026-10-10",
+ "torneio": "DMM AK 16 Jungen im Golf- & Landclub Semlin am See 2026, Deutsche Mannschaftsmeisterschaft (GLC Semlin am See, 10-11/10/2026) — Rapazes",
+ "nascidosDesde": 2010,
+ "sexo": "M",
+ "ficheiro": "OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-10_DGV_Startliste_R1_DMM_AK16_Jungen_Semlin.pdf",
+ "dgvTournamentNumber": 490003047174,
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Noah Wittek",
+   "country": "Germany",
+   "hcp": 2.7,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001195452
+  },
+  {
+   "pos": 2,
+   "lista": "entry",
+   "name": "Aaditya Sharma",
+   "country": "Germany",
+   "hcp": -1,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001263190
+  },
+  {
+   "pos": 3,
+   "lista": "entry",
+   "name": "Max Merlin Seidel",
+   "country": "Germany",
+   "hcp": 1.7,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001395575
+  },
+  {
+   "pos": 4,
+   "lista": "entry",
+   "name": "Sören Zawieja",
+   "country": "Germany",
+   "hcp": -0.1,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001470243
+  },
+  {
+   "pos": 5,
+   "lista": "entry",
+   "name": "Yuke Lu",
+   "country": "Germany",
+   "hcp": -0.3,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001270215
+  },
+  {
+   "pos": 6,
+   "lista": "entry",
+   "name": "Friedrich Grenz",
+   "country": "Germany",
+   "hcp": 1.8,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001200476
+  },
+  {
+   "pos": 7,
+   "lista": "entry",
+   "name": "Timo Issler",
+   "country": "Germany",
+   "hcp": -3.8,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001547385
+  },
+  {
+   "pos": 8,
+   "lista": "entry",
+   "name": "Frederik Ritter",
+   "country": "Germany",
+   "hcp": -0.8,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001466460
+  },
+  {
+   "pos": 9,
+   "lista": "entry",
+   "name": "Alwin Türklitz",
+   "country": "Germany",
+   "hcp": -1.4,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001218600
+  },
+  {
+   "pos": 10,
+   "lista": "entry",
+   "name": "Fabian Beerli",
+   "country": "Germany",
+   "hcp": -0.7,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001389992
+  },
+  {
+   "pos": 11,
+   "lista": "entry",
+   "name": "Luca Leitz",
+   "country": "Germany",
+   "hcp": -0.1,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001371024
+  },
+  {
+   "pos": 12,
+   "lista": "entry",
+   "name": "Fabian Fußbahn",
+   "country": "Germany",
+   "hcp": 0.6,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001209898
+  },
+  {
+   "pos": 13,
+   "lista": "entry",
+   "name": "Julius Gellermann",
+   "country": "Germany",
+   "hcp": -0.6,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001472414
+  },
+  {
+   "pos": 14,
+   "lista": "entry",
+   "name": "Philip Lüders",
+   "country": "Germany",
+   "hcp": -0.5,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001432963
+  },
+  {
+   "pos": 15,
+   "lista": "entry",
+   "name": "Ludwig Karl Opava",
+   "country": "Germany",
+   "hcp": 3.6,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001637385
+  },
+  {
+   "pos": 16,
+   "lista": "entry",
+   "name": "David Hasche",
+   "country": "Germany",
+   "hcp": 6.2,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001785703
+  },
+  {
+   "pos": 17,
+   "lista": "entry",
+   "name": "Anton Tuerk",
+   "country": "Germany",
+   "hcp": 2.1,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001839340
+  },
+  {
+   "pos": 18,
+   "lista": "entry",
+   "name": "Yuquan Nian",
+   "country": "Germany",
+   "hcp": 5.1,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001478752
+  },
+  {
+   "pos": 19,
+   "lista": "entry",
+   "name": "Lois Gaus",
+   "country": "Germany",
+   "hcp": -1,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001280840
+  },
+  {
+   "pos": 20,
+   "lista": "entry",
+   "name": "Theo Brauer",
+   "country": "Germany",
+   "hcp": 0,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001410286
+  },
+  {
+   "pos": 21,
+   "lista": "entry",
+   "name": "Adrian Brey",
+   "country": "Germany",
+   "hcp": 12.8,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001164340
+  },
+  {
+   "pos": 22,
+   "lista": "entry",
+   "name": "Arthur Armsen",
+   "country": "Germany",
+   "hcp": 7.9,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001537595
+  },
+  {
+   "pos": 23,
+   "lista": "entry",
+   "name": "Benjamin Geilert",
+   "country": "Germany",
+   "hcp": -0.1,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001236054
+  },
+  {
+   "pos": 24,
+   "lista": "entry",
+   "name": "Raphael Andreas Schubert",
+   "country": "Germany",
+   "hcp": 0.7,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001392896
+  },
+  {
+   "pos": 25,
+   "lista": "entry",
+   "name": "Theo Altmannsberger",
+   "country": "Germany",
+   "hcp": 8.1,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001688852
+  },
+  {
+   "pos": 26,
+   "lista": "entry",
+   "name": "Laurens Schäfer",
+   "country": "Germany",
+   "hcp": 5.5,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001274567
+  },
+  {
+   "pos": 27,
+   "lista": "entry",
+   "name": "Moritz Simet",
+   "country": "Germany",
+   "hcp": 7.6,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001211777
+  },
+  {
+   "pos": 28,
+   "lista": "entry",
+   "name": "Manuel Reithmeier",
+   "country": "Germany",
+   "hcp": 3.1,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001687935
+  },
+  {
+   "pos": 29,
+   "lista": "entry",
+   "name": "Johann Michalski",
+   "country": "Germany",
+   "hcp": 9.2,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001420795
+  },
+  {
+   "pos": 30,
+   "lista": "entry",
+   "name": "Konstantin Nachtwey",
+   "country": "Germany",
+   "hcp": 10.6,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001244318
+  },
+  {
+   "pos": 31,
+   "lista": "entry",
+   "name": "Jan Schürmann",
+   "country": "Germany",
+   "hcp": 2.8,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001174515
+  },
+  {
+   "pos": 32,
+   "lista": "entry",
+   "name": "Nick Rose",
+   "country": "Germany",
+   "hcp": 1.4,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001419093
+  },
+  {
+   "pos": 33,
+   "lista": "entry",
+   "name": "Elias-Jia Rui Fan",
+   "country": "Germany",
+   "hcp": 1.1,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001641110
+  },
+  {
+   "pos": 34,
+   "lista": "entry",
+   "name": "Max Bobbert",
+   "country": "Germany",
+   "hcp": 5.1,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001621699
+  },
+  {
+   "pos": 35,
+   "lista": "entry",
+   "name": "Maximilian Endlich",
+   "country": "Germany",
+   "hcp": -0.9,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001663007
+  },
+  {
+   "pos": 36,
+   "lista": "entry",
+   "name": "Vincent Schneider",
+   "country": "Germany",
+   "hcp": -0.3,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001233289
+  },
+  {
+   "pos": 37,
+   "lista": "entry",
+   "name": "Ben Nelitz",
+   "country": "Germany",
+   "hcp": -0.5,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001208831
+  },
+  {
+   "pos": 38,
+   "lista": "entry",
+   "name": "Julius Melzer",
+   "country": "Germany",
+   "hcp": 0.7,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001639836
+  },
+  {
+   "pos": 39,
+   "lista": "entry",
+   "name": "Ferdinand Löffler",
+   "country": "Germany",
+   "hcp": 5.5,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001313593
+  },
+  {
+   "pos": 40,
+   "lista": "entry",
+   "name": "Maddox Cordes",
+   "country": "Germany",
+   "hcp": 2.8,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001841210
+  },
+  {
+   "pos": 41,
+   "lista": "entry",
+   "name": "Elias Almeling",
+   "country": "Germany",
+   "hcp": -1.4,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001211877
+  },
+  {
+   "pos": 42,
+   "lista": "entry",
+   "name": "Luis Kuhfuss",
+   "country": "Germany",
+   "hcp": 0.6,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001741731
+  },
+  {
+   "pos": 43,
+   "lista": "entry",
+   "name": "Levi Berthold Brecht",
+   "country": "Germany",
+   "hcp": 1.1,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001270872
+  },
+  {
+   "pos": 44,
+   "lista": "entry",
+   "name": "Richard Schmer",
+   "country": "Germany",
+   "hcp": 0.9,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001238131
+  },
+  {
+   "pos": 45,
+   "lista": "entry",
+   "name": "Julius Merkel",
+   "country": "Germany",
+   "hcp": 11.7,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001577050
+  },
+  {
+   "pos": 46,
+   "lista": "entry",
+   "name": "Ole Buchholz",
+   "country": "Germany",
+   "hcp": 6.2,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001472455
+  },
+  {
+   "pos": 47,
+   "lista": "entry",
+   "name": "Tim Alscheid",
+   "country": "Germany",
+   "hcp": 0.2,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001393915
+  },
+  {
+   "pos": 48,
+   "lista": "entry",
+   "name": "Jannik Hutmacher",
+   "country": "Germany",
+   "hcp": 2.1,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001529343
+  },
+  {
+   "pos": 49,
+   "lista": "entry",
+   "name": "Erik Hausotter",
+   "country": "Germany",
+   "hcp": 4.9,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001370246
+  },
+  {
+   "pos": 50,
+   "lista": "entry",
+   "name": "Jonas Müller",
+   "country": "Germany",
+   "hcp": 2.1,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001753207
+  },
+  {
+   "pos": 51,
+   "lista": "entry",
+   "name": "Jonas Merks-Wasielewski",
+   "country": "Germany",
+   "hcp": 3.8,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001432389
+  },
+  {
+   "pos": 52,
+   "lista": "entry",
+   "name": "Maximilian Schuster",
+   "country": "Germany",
+   "hcp": 4.5,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001226046
+  },
+  {
+   "pos": 53,
+   "lista": "entry",
+   "name": "Ferdinand Michahelles",
+   "country": "Germany",
+   "hcp": 4,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001529494
+  },
+  {
+   "pos": 54,
+   "lista": "entry",
+   "name": "Jonas Alexander Schoeler",
+   "country": "Germany",
+   "hcp": 9.3,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001545517
+  },
+  {
+   "pos": 55,
+   "lista": "entry",
+   "name": "David Nejedl",
+   "country": "Germany",
+   "hcp": 8.4,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001323137
+  },
+  {
+   "pos": 56,
+   "lista": "entry",
+   "name": "Emil Andreiko",
+   "country": "Germany",
+   "hcp": 2.6,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001836594
+  },
+  {
+   "pos": 57,
+   "lista": "entry",
+   "name": "Emanuel Schmitt",
+   "country": "Germany",
+   "hcp": 17,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001373734
+  },
+  {
+   "pos": 58,
+   "lista": "entry",
+   "name": "Timo Schmitt",
+   "country": "Germany",
+   "hcp": 17.7,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001739302
+  },
+  {
+   "pos": 59,
+   "lista": "entry",
+   "name": "Henri Wiesmann",
+   "country": "Germany",
+   "hcp": 7.7,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001105292
+  },
+  {
+   "pos": 60,
+   "lista": "entry",
+   "name": "Philipp Valentin Van Doornick",
+   "country": "Germany",
+   "hcp": 14.9,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001492772
+  },
+  {
+   "pos": 61,
+   "lista": "entry",
+   "name": "Max Neubauer",
+   "country": "Germany",
+   "hcp": -1.5,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001562446
+  },
+  {
+   "pos": 62,
+   "lista": "entry",
+   "name": "Paul Straßburg",
+   "country": "Germany",
+   "hcp": -2.8,
+   "clube": "Hannover, GC",
+   "dgvPlayerId": 490001221491
+  },
+  {
+   "pos": 63,
+   "lista": "entry",
+   "name": "Anton Manderscheid",
+   "country": "Germany",
+   "hcp": 3.5,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001420066
+  },
+  {
+   "pos": 64,
+   "lista": "entry",
+   "name": "Julian Eck",
+   "country": "Germany",
+   "hcp": -2,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001353720
+  },
+  {
+   "pos": 65,
+   "lista": "entry",
+   "name": "Haolin Andy Li",
+   "country": "Germany",
+   "hcp": -0.5,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001451475
+  },
+  {
+   "pos": 66,
+   "lista": "entry",
+   "name": "Kecheng Ren",
+   "country": "Germany",
+   "hcp": 0.2,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001368201
+  },
+  {
+   "pos": 67,
+   "lista": "entry",
+   "name": "Toni Baumgärtner",
+   "country": "Germany",
+   "hcp": -1.8,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001383140
+  },
+  {
+   "pos": 68,
+   "lista": "entry",
+   "name": "Luis Brinkmann",
+   "country": "Germany",
+   "hcp": -3.1,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001268008
+  },
+  {
+   "pos": 69,
+   "lista": "entry",
+   "name": "Leonardo Könemund",
+   "country": "Germany",
+   "hcp": 1.9,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001362997
+  },
+  {
+   "pos": 70,
+   "lista": "entry",
+   "name": "Alexandre Cayet",
+   "country": "Germany",
+   "hcp": 1.8,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001551890
+  },
+  {
+   "pos": 71,
+   "lista": "entry",
+   "name": "Leonard Bartsch",
+   "country": "Germany",
+   "hcp": -3.2,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001471993
+  },
+  {
+   "pos": 72,
+   "lista": "entry",
+   "name": "Edward Horn",
+   "country": "Germany",
+   "hcp": -1.5,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001680502
+  },
+  {
+   "pos": 73,
+   "lista": "entry",
+   "name": "Luis Richard Druve",
+   "country": "Germany",
+   "hcp": 3.1,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001223733
+  },
+  {
+   "pos": 74,
+   "lista": "entry",
+   "name": "Richard Rückert",
+   "country": "Germany",
+   "hcp": 5.4,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001614200
+  },
+  {
+   "pos": 75,
+   "lista": "entry",
+   "name": "Benjamin Hubertus",
+   "country": "Germany",
+   "hcp": 28.3,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490002037754
+  },
+  {
+   "pos": 76,
+   "lista": "entry",
+   "name": "Jannik Heimberg",
+   "country": "Germany",
+   "hcp": 11.4,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490002014019
+  },
+  {
+   "pos": 77,
+   "lista": "entry",
+   "name": "Jean Offermanns",
+   "country": "Germany",
+   "hcp": 0.2,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001536275
+  },
+  {
+   "pos": 78,
+   "lista": "entry",
+   "name": "Max Henning",
+   "country": "Germany",
+   "hcp": 7.5,
+   "clube": "Kölner GC",
+   "dgvPlayerId": 490001571398
+  },
+  {
+   "pos": 79,
+   "lista": "entry",
+   "name": "Mika Noel Scheckenbach",
+   "country": "Germany",
+   "hcp": 1.4,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001373930
+  },
+  {
+   "pos": 80,
+   "lista": "entry",
+   "name": "Adrien Derguini",
+   "country": "Germany",
+   "hcp": 8.6,
+   "clube": "Hetzenhof, GC",
+   "dgvPlayerId": 490001574708
+  },
+  {
+   "pos": 81,
+   "lista": "entry",
+   "name": "Ambros Armsen",
+   "country": "Germany",
+   "hcp": 3.8,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001537590
+  },
+  {
+   "pos": 82,
+   "lista": "entry",
+   "name": "Fabian Buhl",
+   "country": "Germany",
+   "hcp": -2.8,
+   "clube": "Aschheim, GP",
+   "dgvPlayerId": 490001234762
+  },
+  {
+   "pos": 83,
+   "lista": "entry",
+   "name": "Constantin Hartenstein",
+   "country": "Germany",
+   "hcp": 5,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001575788
+  },
+  {
+   "pos": 84,
+   "lista": "entry",
+   "name": "Jonas Wiegmann",
+   "country": "Germany",
+   "hcp": 6.6,
+   "clube": "Hamburg-Holm, GC",
+   "dgvPlayerId": 490001788942
+  },
+  {
+   "pos": 85,
+   "lista": "entry",
+   "name": "Tommy Ledulé",
+   "country": "Germany",
+   "hcp": 2.7,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001213471
+  },
+  {
+   "pos": 86,
+   "lista": "entry",
+   "name": "Levi Schmidt",
+   "country": "Germany",
+   "hcp": -1.6,
+   "clube": "Neuhof, GC",
+   "dgvPlayerId": 490001420375
+  },
+  {
+   "pos": 87,
+   "lista": "entry",
+   "name": "Konstantin Rimbeck",
+   "country": "Germany",
+   "hcp": 9.1,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001282333
+  },
+  {
+   "pos": 88,
+   "lista": "entry",
+   "name": "Valentin Gushurst",
+   "country": "Germany",
+   "hcp": 9.5,
+   "clube": "Starnberg, GC",
+   "dgvPlayerId": 490001760398
+  },
+  {
+   "pos": 89,
+   "lista": "entry",
+   "name": "Linus Engering",
+   "country": "Germany",
+   "hcp": 3.2,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001540571
+  },
+  {
+   "pos": 90,
+   "lista": "entry",
+   "name": "Rafael Loe",
+   "country": "Germany",
+   "hcp": 3.5,
+   "clube": "Dortmunder GC",
+   "dgvPlayerId": 490001701635
+  }
+ ]
+}

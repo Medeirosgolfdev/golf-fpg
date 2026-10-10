@@ -1,0 +1,85 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta com o índex de inscrição (IDX_INS) de cada jogador(a). Lida do JSON público das saídas da FFG (pages.ffgolf.org/departs/competition/2601477509/1/005901/json). A FFG não tem «plus» nesta lista; se aparecer «+» guarda-se em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+ "id": "ffg-gpj-rennes-benjamines-2026-10-10",
+ "label": "GP Jeunes de Rennes — Benjamins Raparigas (FFG, départs 10/10/2026)",
+ "fonte": "Départs Tour 1 — Fédération Française de Golf (pages.ffgolf.org/departs/competition/2601477509?tour=1)",
+ "data": "2026-10-10",
+ "torneio": "Grand Prix Jeunes de Rennes (Golf Bluegreen Rennes St Jacques, 10-11/10/2026) — Benjamines",
+ "nascidosDesde": 2012,
+ "sexo": "F",
+ "ffgTrnId": "2601477509",
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Violette Mondaut",
+   "country": "France",
+   "hcp": 4.4,
+   "clube": "LANNIRON QUIMPER",
+   "licFFG": "521909348"
+  },
+  {
+   "pos": 2,
+   "lista": "entry",
+   "name": "Pauline Picard",
+   "country": "France",
+   "hcp": 5,
+   "clube": "RCF LA BOULIE",
+   "licFFG": "525925322"
+  },
+  {
+   "pos": 3,
+   "lista": "entry",
+   "name": "Aïkimi Chasles Schnell",
+   "country": "France",
+   "hcp": 5.4,
+   "clube": "RENNES ST JACQUES",
+   "licFFG": "522557342"
+  },
+  {
+   "pos": 4,
+   "lista": "entry",
+   "name": "Zoé Davy",
+   "country": "France",
+   "hcp": 7.4,
+   "clube": "SAINT MALO",
+   "licFFG": "535449328"
+  },
+  {
+   "pos": 5,
+   "lista": "entry",
+   "name": "Eloïse Marty-Mahe",
+   "country": "France",
+   "hcp": 9.9,
+   "clube": "RENNES ST JACQUES",
+   "licFFG": "535265339"
+  },
+  {
+   "pos": 6,
+   "lista": "entry",
+   "name": "Noémie Le Bris",
+   "country": "France",
+   "hcp": 15,
+   "clube": "BREST IROISE",
+   "licFFG": "510173332"
+  },
+  {
+   "pos": 7,
+   "lista": "entry",
+   "name": "Coline Morel",
+   "country": "France",
+   "hcp": 18.9,
+   "clube": "GRANVILLE",
+   "licFFG": "527891329"
+  },
+  {
+   "pos": 8,
+   "lista": "entry",
+   "name": "Andrea Torest",
+   "country": "France",
+   "hcp": 20.2,
+   "clube": "BADEN",
+   "licFFG": "523571342"
+  }
+ ]
+}

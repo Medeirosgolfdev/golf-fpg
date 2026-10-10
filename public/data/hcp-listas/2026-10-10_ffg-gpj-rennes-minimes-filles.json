@@ -1,0 +1,22 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta com o índex de inscrição (IDX_INS) de cada jogador(a). Lida do JSON público das saídas da FFG (pages.ffgolf.org/departs/competition/2601477509/1/005901/json). A FFG não tem «plus» nesta lista; se aparecer «+» guarda-se em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+ "id": "ffg-gpj-rennes-minimes-filles-2026-10-10",
+ "label": "GP Jeunes de Rennes — Minimes Raparigas (FFG, départs 10/10/2026)",
+ "fonte": "Départs Tour 1 — Fédération Française de Golf (pages.ffgolf.org/departs/competition/2601477509?tour=1)",
+ "data": "2026-10-10",
+ "torneio": "Grand Prix Jeunes de Rennes (Golf Bluegreen Rennes St Jacques, 10-11/10/2026) — Minimes Filles",
+ "nascidosDesde": 2010,
+ "sexo": "F",
+ "ffgTrnId": "2601477509",
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Louise Garnier-Gueguen",
+   "country": "France",
+   "hcp": 12.5,
+   "clube": "CH. CHEVERNY",
+   "licFFG": "532751292"
+  }
+ ]
+}

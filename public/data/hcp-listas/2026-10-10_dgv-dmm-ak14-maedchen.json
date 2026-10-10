@@ -1,0 +1,518 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta (Startliste Runde 1) com o HCPI de cada jogador(a) à data da lista. Nomes da API golf.de (TournamentStartList), HCPI lido do PDF da DGV pela mesma ordem (conferido: mesmo número de nomes e de handicaps). Na DGV um handicap «plus» escreve-se com sinal menos — é a convenção destas listas (plus em negativo). Usada pelo agregador kids2 (util/hcp-listas.js) para acrescentar um ponto ao hcpHistory de quem já tem ficha.",
+ "id": "dgv-dmm-ak14-maedchen-2026-10-10",
+ "label": "DMM AK 14 Mädchen — Raparigas (DGV, Startliste 10/10/2026)",
+ "fonte": "Startliste Runde 1 — Deutscher Golf Verband (golf.de/sport/turnierkalender/dgv-turniere.html#/490003047170)",
+ "data": "2026-10-10",
+ "torneio": "DMM AK 14 Mädchen im Golf Club Großensee 2026, Deutsche Mannschaftsmeisterschaft (GC Großensee, 10-11/10/2026) — Raparigas",
+ "nascidosDesde": 2012,
+ "sexo": "F",
+ "ficheiro": "OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-10_DGV_Startliste_R1_DMM_AK14_Maedchen_Grossensee_Tee1 + _Tee10.pdf",
+ "dgvTournamentNumber": 490003047170,
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Greta Spötter",
+   "country": "Germany",
+   "hcp": 3.8,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001564104
+  },
+  {
+   "pos": 2,
+   "lista": "entry",
+   "name": "Diana Liang",
+   "country": "Germany",
+   "hcp": 8.7,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001527253
+  },
+  {
+   "pos": 3,
+   "lista": "entry",
+   "name": "Lena Ilg",
+   "country": "Germany",
+   "hcp": 1.7,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001655999
+  },
+  {
+   "pos": 4,
+   "lista": "entry",
+   "name": "Filippa Waeber",
+   "country": "Germany",
+   "hcp": 7.1,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001820150
+  },
+  {
+   "pos": 5,
+   "lista": "entry",
+   "name": "Lilian Yilian Wu",
+   "country": "Germany",
+   "hcp": 5.7,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001640763
+  },
+  {
+   "pos": 6,
+   "lista": "entry",
+   "name": "Kayra Destina Pekdemir",
+   "country": "Germany",
+   "hcp": 3.8,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001547711
+  },
+  {
+   "pos": 7,
+   "lista": "entry",
+   "name": "Laura-Sophie Hettwer",
+   "country": "Germany",
+   "hcp": 6.1,
+   "clube": "Zur Vahr, Club",
+   "dgvPlayerId": 490001503377
+  },
+  {
+   "pos": 8,
+   "lista": "entry",
+   "name": "Lina Spötter",
+   "country": "Germany",
+   "hcp": 11.8,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001564105
+  },
+  {
+   "pos": 9,
+   "lista": "entry",
+   "name": "Annabell Caspary",
+   "country": "Germany",
+   "hcp": 6.3,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001726618
+  },
+  {
+   "pos": 10,
+   "lista": "entry",
+   "name": "Mia Freier",
+   "country": "Germany",
+   "hcp": 0.3,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001554670
+  },
+  {
+   "pos": 11,
+   "lista": "entry",
+   "name": "Clara Schlagböhmer",
+   "country": "Germany",
+   "hcp": 6.1,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001520173
+  },
+  {
+   "pos": 12,
+   "lista": "entry",
+   "name": "Seohee Yun",
+   "country": "Germany",
+   "hcp": 5.7,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001725038
+  },
+  {
+   "pos": 13,
+   "lista": "entry",
+   "name": "Juliane Tochtermann",
+   "country": "Germany",
+   "hcp": 8.7,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001452899
+  },
+  {
+   "pos": 14,
+   "lista": "entry",
+   "name": "Leticia Diaz Sanchez",
+   "country": "Germany",
+   "hcp": 7.1,
+   "clube": "Zur Vahr, Club",
+   "dgvPlayerId": 490001773888
+  },
+  {
+   "pos": 15,
+   "lista": "entry",
+   "name": "Paulina Vernier",
+   "country": "Germany",
+   "hcp": 15.6,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001806667
+  },
+  {
+   "pos": 16,
+   "lista": "entry",
+   "name": "Yueran Wang",
+   "country": "Germany",
+   "hcp": 21.1,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001743645
+  },
+  {
+   "pos": 17,
+   "lista": "entry",
+   "name": "Sophie Niederauer",
+   "country": "Germany",
+   "hcp": 1.7,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001361907
+  },
+  {
+   "pos": 18,
+   "lista": "entry",
+   "name": "Emilia Emmerich",
+   "country": "Germany",
+   "hcp": 4.1,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001776613
+  },
+  {
+   "pos": 19,
+   "lista": "entry",
+   "name": "Marie Ehret",
+   "country": "Germany",
+   "hcp": 6.1,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001287272
+  },
+  {
+   "pos": 20,
+   "lista": "entry",
+   "name": "Lina Griesbach",
+   "country": "Germany",
+   "hcp": 3.9,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001553049
+  },
+  {
+   "pos": 21,
+   "lista": "entry",
+   "name": "Greta Marie Fasching",
+   "country": "Germany",
+   "hcp": 10.9,
+   "clube": "Zur Vahr, Club",
+   "dgvPlayerId": 490001725893
+  },
+  {
+   "pos": 22,
+   "lista": "entry",
+   "name": "Annik Förster",
+   "country": "Germany",
+   "hcp": 19.5,
+   "clube": "Braunschweig, GK",
+   "dgvPlayerId": 490001777695
+  },
+  {
+   "pos": 23,
+   "lista": "entry",
+   "name": "Laeticia Hapka",
+   "country": "Germany",
+   "hcp": 11,
+   "clube": "Hösel, GC",
+   "dgvPlayerId": 490001595958
+  },
+  {
+   "pos": 24,
+   "lista": "entry",
+   "name": "Amiya Walth",
+   "country": "Germany",
+   "hcp": 0.2,
+   "clube": "St. Leon-Rot e.V., GC",
+   "dgvPlayerId": 490001147925
+  },
+  {
+   "pos": 25,
+   "lista": "entry",
+   "name": "Lenia Fischer",
+   "country": "Germany",
+   "hcp": 4.1,
+   "clube": "Münchener GC",
+   "dgvPlayerId": 490001765805
+  },
+  {
+   "pos": 26,
+   "lista": "entry",
+   "name": "Romy Sander",
+   "country": "Germany",
+   "hcp": -2.5,
+   "clube": "Frankfurter GC",
+   "dgvPlayerId": 490001407333
+  },
+  {
+   "pos": 27,
+   "lista": "entry",
+   "name": "Hannah Levsen",
+   "country": "Germany",
+   "hcp": 0.8,
+   "clube": "Hamburger GC",
+   "dgvPlayerId": 490001495668
+  },
+  {
+   "pos": 28,
+   "lista": "entry",
+   "name": "Melia Kahnert",
+   "country": "Germany",
+   "hcp": 16.5,
+   "clube": "Zur Vahr, Club",
+   "dgvPlayerId": 490001759232
+  },
+  {
+   "pos": 29,
+   "lista": "entry",
+   "name": "Nora Belle Ugurlu",
+   "country": "Germany",
+   "hcp": 13.2,
+   "clube": "Hubbelrath, GC",
+   "dgvPlayerId": 490001804458
+  },
+  {
+   "pos": 30,
+   "lista": "entry",
+   "name": "Charlotte Hetzler",
+   "country": "Germany",
+   "hcp": 9.3,
+   "clube": "Mannheim-Viernheim, GC",
+   "dgvPlayerId": 490001439947
+  },
+  {
+   "pos": 31,
+   "lista": "entry",
+   "name": "Charlene Steinhauser",
+   "country": "Germany",
+   "hcp": 6.8,
+   "clube": "München Eichenried, GC",
+   "dgvPlayerId": 490001300962
+  },
+  {
+   "pos": 32,
+   "lista": "entry",
+   "name": "Zoé Lilou Bohne",
+   "country": "Germany",
+   "hcp": 14.1,
+   "clube": "Hamburg Wendlohe, GC",
+   "dgvPlayerId": 490001693885
+  },
+  {
+   "pos": 33,
+   "lista": "entry",
+   "name": "Elin Zhou",
+   "country": "Germany",
+   "hcp": 28.4,
+   "clube": "Bergisch Land, GC",
+   "dgvPlayerId": 490001854194
+  },
+  {
+   "pos": 34,
+   "lista": "entry",
+   "name": "Xiaoyi Coco Li",
+   "country": "Germany",
+   "hcp": 5.1,
+   "clube": "Main-Taunus, GC",
+   "dgvPlayerId": 490001461028
+  },
+  {
+   "pos": 35,
+   "lista": "entry",
+   "name": "Nike Renée Oesemann",
+   "country": "Germany",
+   "hcp": 9.3,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001727375
+  },
+  {
+   "pos": 36,
+   "lista": "entry",
+   "name": "Tilla Kluth",
+   "country": "Germany",
+   "hcp": 17.4,
+   "clube": "Hubbelrath, GC",
+   "dgvPlayerId": 490001764852
+  },
+  {
+   "pos": 37,
+   "lista": "entry",
+   "name": "Theresa Maier",
+   "country": "Germany",
+   "hcp": 7.2,
+   "clube": "Mannheim-Viernheim, GC",
+   "dgvPlayerId": 490001482951
+  },
+  {
+   "pos": 38,
+   "lista": "entry",
+   "name": "Mathilda Müller",
+   "country": "Germany",
+   "hcp": 5.8,
+   "clube": "München Eichenried, GC",
+   "dgvPlayerId": 490001642117
+  },
+  {
+   "pos": 39,
+   "lista": "entry",
+   "name": "Josephine Schaefer",
+   "country": "Germany",
+   "hcp": 18.9,
+   "clube": "Hamburg Wendlohe, GC",
+   "dgvPlayerId": 490001879038
+  },
+  {
+   "pos": 40,
+   "lista": "entry",
+   "name": "Olivia Tippi Koch",
+   "country": "Germany",
+   "hcp": 27.3,
+   "clube": "Bergisch Land, GC",
+   "dgvPlayerId": 490001737452
+  },
+  {
+   "pos": 41,
+   "lista": "entry",
+   "name": "Alexandra Tigan",
+   "country": "Germany",
+   "hcp": 11.7,
+   "clube": "Main-Taunus, GC",
+   "dgvPlayerId": 490001771659
+  },
+  {
+   "pos": 42,
+   "lista": "entry",
+   "name": "Marlene Ute Nehls",
+   "country": "Germany",
+   "hcp": 9.8,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001730009
+  },
+  {
+   "pos": 43,
+   "lista": "entry",
+   "name": "Stella van Kampen",
+   "country": "Germany",
+   "hcp": 30.6,
+   "clube": "Hubbelrath, GC",
+   "dgvPlayerId": 490001434938
+  },
+  {
+   "pos": 44,
+   "lista": "entry",
+   "name": "Coral Aragonés Povea",
+   "country": "Germany",
+   "hcp": 6.2,
+   "clube": "Mannheim-Viernheim, GC",
+   "dgvPlayerId": 490001499687
+  },
+  {
+   "pos": 45,
+   "lista": "entry",
+   "name": "Lillian Horwood-Köhler",
+   "country": "Germany",
+   "hcp": 16.5,
+   "clube": "München Eichenried, GC",
+   "dgvPlayerId": 490001760289
+  },
+  {
+   "pos": 46,
+   "lista": "entry",
+   "name": "Tara Kim",
+   "country": "Germany",
+   "hcp": 22.2,
+   "clube": "Hamburg Wendlohe, GC",
+   "dgvPlayerId": 490001791738
+  },
+  {
+   "pos": 47,
+   "lista": "entry",
+   "name": "Leonie Schuwerack",
+   "country": "Germany",
+   "hcp": 35.5,
+   "clube": "Bergisch Land, GC",
+   "dgvPlayerId": 490001534124
+  },
+  {
+   "pos": 48,
+   "lista": "entry",
+   "name": "Johanna Schopf",
+   "country": "Germany",
+   "hcp": 16.7,
+   "clube": "Main-Taunus, GC",
+   "dgvPlayerId": 490001774210
+  },
+  {
+   "pos": 49,
+   "lista": "entry",
+   "name": "Victoria Kauder",
+   "country": "Germany",
+   "hcp": 4.1,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001549825
+  },
+  {
+   "pos": 50,
+   "lista": "entry",
+   "name": "Clara Derichsweiler",
+   "country": "Germany",
+   "hcp": 18.1,
+   "clube": "Hubbelrath, GC",
+   "dgvPlayerId": 490001547804
+  },
+  {
+   "pos": 51,
+   "lista": "entry",
+   "name": "Charlotte Barwise",
+   "country": "Germany",
+   "hcp": 1.3,
+   "clube": "Mannheim-Viernheim, GC",
+   "dgvPlayerId": 490002056008
+  },
+  {
+   "pos": 52,
+   "lista": "entry",
+   "name": "Lea-Celine Lagneau",
+   "country": "Germany",
+   "hcp": 3.7,
+   "clube": "München Eichenried, GC",
+   "dgvPlayerId": 490001382856
+  },
+  {
+   "pos": 53,
+   "lista": "entry",
+   "name": "Sophie Charlotte Feklist",
+   "country": "Germany",
+   "hcp": 11.6,
+   "clube": "Hamburg Wendlohe, GC",
+   "dgvPlayerId": 490001535916
+  },
+  {
+   "pos": 54,
+   "lista": "entry",
+   "name": "Anne-Marie Kleuser",
+   "country": "Germany",
+   "hcp": 11.4,
+   "clube": "Bergisch Land, GC",
+   "dgvPlayerId": 490001731510
+  },
+  {
+   "pos": 55,
+   "lista": "entry",
+   "name": "Louisa Schätzle",
+   "country": "Germany",
+   "hcp": 19.8,
+   "clube": "Main-Taunus, GC",
+   "dgvPlayerId": 490001833877
+  },
+  {
+   "pos": 56,
+   "lista": "entry",
+   "name": "Louiza Sofie Menzel",
+   "country": "Germany",
+   "hcp": 7.2,
+   "clube": "Berlin-Wannsee, G&LC",
+   "dgvPlayerId": 490001790743
+  }
+ ]
+}

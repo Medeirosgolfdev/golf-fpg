@@ -1,0 +1,121 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta com o índex de inscrição (IDX_INS) de cada jogador(a). Lida do JSON público das saídas da FFG (pages.ffgolf.org/departs/competition/2601477509/1/005901/json). A FFG não tem «plus» nesta lista; se aparecer «+» guarda-se em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+ "id": "ffg-gpj-rennes-u12-filles-2026-10-10",
+ "label": "GP Jeunes de Rennes — U12 Raparigas (FFG, départs 10/10/2026)",
+ "fonte": "Départs Tour 1 — Fédération Française de Golf (pages.ffgolf.org/departs/competition/2601477509?tour=1)",
+ "data": "2026-10-10",
+ "torneio": "Grand Prix Jeunes de Rennes (Golf Bluegreen Rennes St Jacques, 10-11/10/2026) — U12 Filles",
+ "nascidosDesde": 2014,
+ "sexo": "F",
+ "ffgTrnId": "2601477509",
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Agathe Loussouarn",
+   "country": "France",
+   "hcp": 4.1,
+   "clube": "ST SAMSON",
+   "licFFG": "532675339"
+  },
+  {
+   "pos": 2,
+   "lista": "entry",
+   "name": "Alix Germain",
+   "country": "France",
+   "hcp": 4.5,
+   "clube": "GUERANDE",
+   "licFFG": "541010351"
+  },
+  {
+   "pos": 3,
+   "lista": "entry",
+   "name": "Alice Gautier",
+   "country": "France",
+   "hcp": 5.6,
+   "clube": "BADEN",
+   "licFFG": "530550333"
+  },
+  {
+   "pos": 4,
+   "lista": "entry",
+   "name": "Lola Lucas",
+   "country": "France",
+   "hcp": 8.8,
+   "clube": "L'ODET",
+   "licFFG": "531236369"
+  },
+  {
+   "pos": 5,
+   "lista": "entry",
+   "name": "Elena Laussot",
+   "country": "France",
+   "hcp": 10.6,
+   "clube": "LE MANS",
+   "licFFG": "531273337"
+  },
+  {
+   "pos": 6,
+   "lista": "entry",
+   "name": "Lily Rahimian",
+   "country": "France",
+   "hcp": 10.7,
+   "clube": "DINARD",
+   "licFFG": "510682345"
+  },
+  {
+   "pos": 7,
+   "lista": "entry",
+   "name": "Chloe Chevalier",
+   "country": "France",
+   "hcp": 12.6,
+   "clube": "CICE BLOSSAC",
+   "licFFG": "523354372"
+  },
+  {
+   "pos": 8,
+   "lista": "entry",
+   "name": "Clarisse Mourlon",
+   "country": "France",
+   "hcp": 13.9,
+   "clube": "ST SYLVAIN D'ANJOU",
+   "licFFG": "049479307"
+  },
+  {
+   "pos": 9,
+   "lista": "entry",
+   "name": "Manon Cado Le Bras",
+   "country": "France",
+   "hcp": 16.6,
+   "clube": "BAIE DE MORLAIX",
+   "licFFG": "041634363"
+  },
+  {
+   "pos": 10,
+   "lista": "entry",
+   "name": "Louane Davisseau",
+   "country": "France",
+   "hcp": 18.6,
+   "clube": "CHERBOURG",
+   "licFFG": "003330363"
+  },
+  {
+   "pos": 11,
+   "lista": "entry",
+   "name": "Elise Leroy",
+   "country": "France",
+   "hcp": 19.2,
+   "clube": "ILE D'OR",
+   "licFFG": "042860389"
+  },
+  {
+   "pos": 12,
+   "lista": "entry",
+   "name": "Clémence Chevalier",
+   "country": "France",
+   "hcp": 30.7,
+   "clube": "ILE D'OR",
+   "licFFG": "534833360"
+  }
+ ]
+}

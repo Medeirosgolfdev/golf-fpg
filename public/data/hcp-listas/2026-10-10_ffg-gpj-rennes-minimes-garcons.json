@@ -1,0 +1,67 @@
+{
+ "_doc": "Lista de saídas da 1.ª volta com o índex de inscrição (IDX_INS) de cada jogador(a). Lida do JSON público das saídas da FFG (pages.ffgolf.org/departs/competition/2601477509/1/005901/json). A FFG não tem «plus» nesta lista; se aparecer «+» guarda-se em negativo. Usada pelo agregador kids2 (util/hcp-listas.js).",
+ "id": "ffg-gpj-rennes-minimes-garcons-2026-10-10",
+ "label": "GP Jeunes de Rennes — Minimes Rapazes (FFG, départs 10/10/2026)",
+ "fonte": "Départs Tour 1 — Fédération Française de Golf (pages.ffgolf.org/departs/competition/2601477509?tour=1)",
+ "data": "2026-10-10",
+ "torneio": "Grand Prix Jeunes de Rennes (Golf Bluegreen Rennes St Jacques, 10-11/10/2026) — Minimes Garçons",
+ "nascidosDesde": 2010,
+ "sexo": "M",
+ "ffgTrnId": "2601477509",
+ "players": [
+  {
+   "pos": 1,
+   "lista": "entry",
+   "name": "Leo Davy",
+   "country": "France",
+   "hcp": 2.6,
+   "clube": "SAINT MALO",
+   "licFFG": "044951326"
+  },
+  {
+   "pos": 2,
+   "lista": "entry",
+   "name": "Tom Vincendeau-Recoquillon",
+   "country": "France",
+   "hcp": 3.7,
+   "clube": "CAP MALO",
+   "licFFG": "533505350"
+  },
+  {
+   "pos": 3,
+   "lista": "entry",
+   "name": "Gabriel Landry",
+   "country": "France",
+   "hcp": 3.8,
+   "clube": "RENNES ST JACQUES",
+   "licFFG": "003353339"
+  },
+  {
+   "pos": 4,
+   "lista": "entry",
+   "name": "Iwen Besnoux",
+   "country": "France",
+   "hcp": 6.9,
+   "clube": "BEGARD",
+   "licFFG": "045508283"
+  },
+  {
+   "pos": 5,
+   "lista": "entry",
+   "name": "Jules Menger",
+   "country": "France",
+   "hcp": 7.1,
+   "clube": "CICE BLOSSAC",
+   "licFFG": "525655310"
+  },
+  {
+   "pos": 6,
+   "lista": "entry",
+   "name": "Paul Lesieur",
+   "country": "France",
+   "hcp": 7.3,
+   "clube": "SAINT CAST",
+   "licFFG": "535472329"
+  }
+ ]
+}
