@@ -99,6 +99,9 @@ const PENDING_EVENTS = [
   { tcode: "11057", level: "C" },
   { tcode: "11064", level: "B" },
   { tcode: "11071", level: "A" },
+  // Troféu João Sousa CGSS 2026 (007/11075, 10-10) = Nível A (OM_CALENDAR da UI;
+  // a Mariana confirmou a 10/10 que conta para a OM). Termos não arquivados.
+  { tcode: "11075", level: "A" },
 ];
 
 /* ── O que os Termos da Competição de cada prova dizem sobre os JUNIORES ──

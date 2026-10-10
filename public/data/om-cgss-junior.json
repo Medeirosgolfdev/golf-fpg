@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-02T14:32:35.843Z",
+  "generated": "2026-10-10T15:36:32.883Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
@@ -2238,6 +2238,62 @@
           "pts": 18
         }
       ]
+    },
+    {
+      "tcode": "11075",
+      "ccode": "007",
+      "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+      "date": "2026-10-10",
+      "level": "A",
+      "course": "Santo da Serra - Machico-Desertas",
+      "scoring": "Stableford Net",
+      "juniorScoring": "Stableford Net",
+      "juniorBasis": "sem-termos",
+      "termos": null,
+      "oficialJr": {
+        "nome": "OM JUNIORES",
+        "scoring": "Stableford Net"
+      },
+      "nJuniors": 4,
+      "juniors": [
+        {
+          "fed": "47374",
+          "name": "Carlota Braz Gil",
+          "club": "Santo da Serra",
+          "gross": 85,
+          "score": "36",
+          "pos": 1,
+          "pts": 25
+        },
+        {
+          "fed": "38006",
+          "name": "Marcelo Gaspar",
+          "club": "Santo da Serra",
+          "gross": 85,
+          "score": "32",
+          "pos": 2,
+          "pts": 20
+        },
+        {
+          "fed": "41124",
+          "name": "Manuel Gouveia",
+          "club": "Santo da Serra",
+          "gross": 91,
+          "score": "30",
+          "pos": 3,
+          "pts": 18
+        },
+        {
+          "fed": "52393",
+          "name": "Mateus Penucho",
+          "club": "Santo da Serra",
+          "gross": 92,
+          "score": "27",
+          "pos": 4,
+          "pts": 14
+        }
+      ],
+      "pending": true
     }
   ],
   "ranking": [
@@ -2318,7 +2374,7 @@
       "total": 101,
       "played": 6,
       "bestDrop3": 59,
-      "lastResult": 3,
+      "lastResult": null,
       "rank": 1
     },
     {
@@ -2382,13 +2438,118 @@
           "gross": 84,
           "score": "72",
           "pts": 20
+        },
+        {
+          "tcode": "11075",
+          "ccode": "007",
+          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+          "date": "2026-10-10",
+          "level": "A",
+          "pos": 4,
+          "gross": 92,
+          "score": "27",
+          "pts": 14
         }
       ],
-      "total": 73,
-      "played": 5,
-      "bestDrop3": 35,
-      "lastResult": 2,
+      "total": 87,
+      "played": 6,
+      "bestDrop3": 49,
+      "lastResult": 4,
       "rank": 2
+    },
+    {
+      "fed": "41124",
+      "name": "Manuel Gouveia",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "10986",
+          "ccode": "007",
+          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
+          "date": "2026-01-24",
+          "level": "A",
+          "pos": 3,
+          "gross": 101,
+          "score": "101",
+          "pts": 18
+        },
+        {
+          "tcode": "10994",
+          "ccode": "007",
+          "name": "Torneio de Carnaval CGSS 2026",
+          "date": "2026-02-14",
+          "level": "C",
+          "pos": 2,
+          "gross": 86,
+          "score": "86",
+          "pts": 12
+        },
+        {
+          "tcode": "11050",
+          "ccode": "007",
+          "name": "Torneio CGSS RALI 2026",
+          "date": "2026-08-01",
+          "level": "C",
+          "pos": 5,
+          "gross": 98,
+          "score": "27",
+          "pts": 7
+        },
+        {
+          "tcode": "11075",
+          "ccode": "007",
+          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+          "date": "2026-10-10",
+          "level": "A",
+          "pos": 3,
+          "gross": 91,
+          "score": "30",
+          "pts": 18
+        }
+      ],
+      "total": 55,
+      "played": 4,
+      "bestDrop3": 18,
+      "lastResult": 3,
+      "rank": 3
+    },
+    {
+      "fed": "47374",
+      "name": "Carlota Braz Gil",
+      "club": "Santo da Serra",
+      "gender": "F",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "11071",
+          "ccode": "007",
+          "name": "TAÇA DO CLUBE CGSS 2026",
+          "date": "2026-09-26",
+          "level": "A",
+          "pos": 1,
+          "gross": 83,
+          "score": "69",
+          "pts": 25
+        },
+        {
+          "tcode": "11075",
+          "ccode": "007",
+          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+          "date": "2026-10-10",
+          "level": "A",
+          "pos": 1,
+          "gross": 85,
+          "score": "36",
+          "pts": 25
+        }
+      ],
+      "total": 50,
+      "played": 2,
+      "bestDrop3": 0,
+      "lastResult": 1,
+      "rank": 4
     },
     {
       "fed": "50398",
@@ -2435,7 +2596,7 @@
       "played": 3,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 3
+      "rank": 5
     },
     {
       "fed": "40990",
@@ -2471,79 +2632,7 @@
       "played": 2,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 3
-    },
-    {
-      "fed": "41124",
-      "name": "Manuel Gouveia",
-      "club": "Santo da Serra",
-      "gender": "M",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "10986",
-          "ccode": "007",
-          "name": "TORNEIO DA RESTAURAÇÃO CGSS 2026",
-          "date": "2026-01-24",
-          "level": "A",
-          "pos": 3,
-          "gross": 101,
-          "score": "101",
-          "pts": 18
-        },
-        {
-          "tcode": "10994",
-          "ccode": "007",
-          "name": "Torneio de Carnaval CGSS 2026",
-          "date": "2026-02-14",
-          "level": "C",
-          "pos": 2,
-          "gross": 86,
-          "score": "86",
-          "pts": 12
-        },
-        {
-          "tcode": "11050",
-          "ccode": "007",
-          "name": "Torneio CGSS RALI 2026",
-          "date": "2026-08-01",
-          "level": "C",
-          "pos": 5,
-          "gross": 98,
-          "score": "27",
-          "pts": 7
-        }
-      ],
-      "total": 37,
-      "played": 3,
-      "bestDrop3": 0,
-      "lastResult": null,
       "rank": 5
-    },
-    {
-      "fed": "47374",
-      "name": "Carlota Braz Gil",
-      "club": "Santo da Serra",
-      "gender": "F",
-      "canWin": true,
-      "events": [
-        {
-          "tcode": "11071",
-          "ccode": "007",
-          "name": "TAÇA DO CLUBE CGSS 2026",
-          "date": "2026-09-26",
-          "level": "A",
-          "pos": 1,
-          "gross": 83,
-          "score": "69",
-          "pts": 25
-        }
-      ],
-      "total": 25,
-      "played": 1,
-      "bestDrop3": 0,
-      "lastResult": 1,
-      "rank": 6
     },
     {
       "fed": "41108",
@@ -2582,6 +2671,31 @@
       "rank": 7
     },
     {
+      "fed": "38006",
+      "name": "Marcelo Gaspar",
+      "club": "Santo da Serra",
+      "gender": "M",
+      "canWin": true,
+      "events": [
+        {
+          "tcode": "11075",
+          "ccode": "007",
+          "name": "TROFÉU JOÃO SOUSA CGSS 2026",
+          "date": "2026-10-10",
+          "level": "A",
+          "pos": 2,
+          "gross": 85,
+          "score": "32",
+          "pts": 20
+        }
+      ],
+      "total": 20,
+      "played": 1,
+      "bestDrop3": 0,
+      "lastResult": 2,
+      "rank": 8
+    },
+    {
       "fed": "41130",
       "name": "Vasco Leal Gouveia",
       "club": "Santo da Serra",
@@ -2604,7 +2718,7 @@
       "played": 1,
       "bestDrop3": 0,
       "lastResult": null,
-      "rank": 8
+      "rank": 9
     }
   ]
 }
