@@ -1,8 +1,117 @@
 {
-  "generatedAt": "2026-10-11T08:25:13.384Z",
+  "generatedAt": "2026-10-11T09:36:10.741Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1266,
+  "total": 1268,
   "tournaments": [
+    {
+      "file": "03-06-2601405352.json",
+      "trnId": "2601405352",
+      "partKey": "957878e8bcc901290b115790945ff6ed",
+      "name": "Grand Prix Jeunes Occitanie 5 Ecogolf de l'Ariège",
+      "formule": "Simple",
+      "date": "10/10/2026",
+      "dateIso": "2026-10-10",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "06",
+      "seriesCount": 5,
+      "totalPlayers": 61,
+      "course": "Ariège",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "19",
+          "label": "BenG",
+          "players": 18
+        },
+        {
+          "serieId": "113",
+          "label": "U12G",
+          "players": 29
+        },
+        {
+          "serieId": "117",
+          "label": "MinG",
+          "players": 3
+        },
+        {
+          "serieId": "211",
+          "label": "BenF",
+          "players": 8
+        },
+        {
+          "serieId": "215",
+          "label": "U12F",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "06"
+      ]
+    },
+    {
+      "file": "03-11-2601477509.json",
+      "trnId": "2601477509",
+      "partKey": "1ee6f966779f4fbd9ac33b57ec9686b2",
+      "name": "GRAND PRIX JEUNES DE RENNES",
+      "formule": "Simple",
+      "date": "10/10/2026",
+      "dateIso": "2026-10-10",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "11",
+      "seriesCount": 6,
+      "totalPlayers": 94,
+      "course": "Armor 18",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "MF",
+          "players": 1
+        },
+        {
+          "serieId": "111",
+          "label": "MG",
+          "players": 6
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 20
+        },
+        {
+          "serieId": "119",
+          "label": "U12G",
+          "players": 47
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 8
+        },
+        {
+          "serieId": "217",
+          "label": "U12F",
+          "players": 12
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "11"
+      ]
+    },
     {
       "file": "01-00-2601481214.json",
       "trnId": "2601481214",
