@@ -328,6 +328,37 @@ interface FFGResSerie {
   glfOrg?: string | null;
   players: FFGResPlayer[];
 }
+/** Cartão de uma série de um torneio do portal FFG (`ffgolf-course-overrides.json` →
+ *  `resultats`). `tee` é o nome mostrado na linha de metros — nos GP Jeunes é muitas
+ *  vezes uma MISTURA de tees («misto: Azuis + Vermelhas»), detalhada em `teePorBuraco`. */
+interface FFGSerieCourse {
+  tee: string;
+  misto?: boolean;
+  par: number[];
+  meters: number[];
+  metersTotal?: number;
+  teePorBuraco?: string[];
+  nota?: string;
+}
+
+/** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,
+ *  MG/MF = Minimes = U16 — os GP Jeunes usam as duas grafias). */
+const serieCourseKey = (label: string): string => {
+  const k = String(label || "").toUpperCase().replace(/\s+/g, "");
+  const alias: Record<string, string> = { BG: "U14G", BF: "U14F", MG: "U16G", MF: "U16F" };
+  return alias[k] || k;
+};
+
+/** Distâncias por série de um torneio do portal FFG, se publicadas (null = não há). */
+async function loadFfgSerieCourses(trnId: string): Promise<Record<string, FFGSerieCourse> | null> {
+  try {
+    const o = await cachedFetchJson<{ resultats?: Record<string, { series?: Record<string, FFGSerieCourse> }> }>("/data/ffgolf-course-overrides.json");
+    return o?.resultats?.[trnId]?.series ?? null;
+  } catch {
+    return null;
+  }
+}
+
 interface FFGResTournament {
   trnId: string;
   partKey: string;
@@ -342,6 +373,10 @@ interface FFGResTournament {
    *  adapter selecciona o tee certo pela maioria de sex da série. */
   _ggCourse?: { par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number; name?: string;
                 courses?: Array<{ teeName?: string; par: number[]; meters: number[]; si: number[]; parTotal?: number; metersTotal?: number }> } | null;
+  /** Distâncias POR SÉRIE vindas de `ffgolf-course-overrides.json` → `resultats[trnId].series`
+   *  (marcas jovens publicadas pela Liga/clube, ex.: GP Jeunes de Rennes 2026). Chave
+   *  normalizada por `serieCourseKey`. Ganha ao `_ggCourse` na série a que se aplica. */
+  _serieCourses?: Record<string, FFGSerieCourse> | null;
   details: {
     trnId: string;
     series: FFGResSerie[];
@@ -602,12 +637,21 @@ function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: string): FP
     else if (females > males) chosenCourse = sortedByMeters[sortedByMeters.length - 1]; // tee mais curto
     // Empate ou só 1 tee → fica com o ggC default (primeiro do scrape)
   }
+  // Distâncias publicadas para ESTA série (marcas jovens da Liga/clube) ganham ao GG:
+  // num GP Jeunes cada escalão joga as suas marcas, muitas vezes misturando tees.
+  const serieCourse = seriesToUse.length === 1
+    ? data._serieCourses?.[serieCourseKey(seriesToUse[0].label || seriesToUse[0].serieId)]
+    : undefined;
+  if (serieCourse && Array.isArray(serieCourse.meters) && serieCourse.meters.length === 18) {
+    chosenCourse = { par: serieCourse.par, meters: serieCourse.meters, si: chosenCourse?.si, metersTotal: serieCourse.metersTotal };
+  }
   const ggMeters = chosenCourse?.meters && chosenCourse.meters.length === 18 ? chosenCourse.meters : [];
   const ggSi = chosenCourse?.si && chosenCourse.si.length === 18 ? chosenCourse.si : [];
 
   // teeName fictício "FFG" para que o ScorecardLB inclua a linha de metros.
   // Sem teeName, o teeMetersMap não é populado e a linha "m" por buraco fica vazia.
-  const ffgTeeName = (ggC as any)?.name || "Tees";
+  // Com distâncias da série, o nome diz que o tee é MISTO (ex.: «… — misto: Azuis + Vermelhas»).
+  const ffgTeeName = serieCourse?.tee || (ggC as any)?.name || "Tees";
   const players: FPGPlayer[] = sorted.map((p, idx) => {
     const rounds: FPGRoundScore[] = [];
     if (p.scoresR1 && p.scoresR1.length === 18 && p.t1 != null) {
@@ -1948,6 +1992,8 @@ function FFGContentLegacy() {
               try {
                 const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${t.file}`);
                 if (!td) return;
+                const serieCourses = await loadFfgSerieCourses(td.trnId);
+                if (serieCourses) td._serieCourses = serieCourses;
                 // Enriquecer com metros/SI do GolfGenius quando disponível.
                 // Os ficheiros `ffgolf/{year}_{slug}.json` foram gerados pelo scrape-ffgolf.js
                 // (Playwright + course statistics widget) e contêm course.meters[18] + course.si[18].
@@ -2590,6 +2636,8 @@ const isIntlName = (name?: string | null) => /\binternationa(l|ux?)\b/i.test(nam
 async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<CircuitDivision[]> {
   const td = await cachedFetchJson<FFGResTournament>(`/data/ffgolf-resultats/${meta.file}`);
   if (!td) return [];
+  const serieCourses = await loadFfgSerieCourses(td.trnId);
+  if (serieCourses) td._serieCourses = serieCourses;
   if (meta.ffgolfSlug && meta.year) {
     try {
       const ggData = await cachedFetchJson<{ course?: { par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number; name?: string }; courses?: Array<{ teeName?: string; par?: number[]; meters?: number[]; si?: number[]; parTotal?: number; metersTotal?: number }> }>(`/data/ffgolf/${meta.year}_${meta.ffgolfSlug}.json`);

@@ -13,5 +13,70 @@
       "metersTotal": 5257,
       "nota": "Todos os 87 jogadores nas Jaunes. O par inferido dos marcadores dava 75 (errado nos buracos 2, 13, 14 e 17)."
     }
+  },
+  "resultats": {
+    "_formato": "Torneios do PORTAL FFG (ffgolf-resultats) sem gémeo no GolfGenius: chave = trnId → series. Chave de série normalizada: U12G/U12F/U14G/U14F/U16G/U16F (BG/BF = U14, MG/MF = U16). Lido pela FFGPage (_serieCourses). Distâncias das marcas jovens publicadas pela Liga/clube — muitas vezes NÃO é um tee fixo (teePorBuraco).",
+    "2601477509": {
+      "torneio": "Grand Prix Jeunes de Rennes 2026 (10-11/10/2026)",
+      "course": "Armor — Golf Bluegreen Rennes St Jacques",
+      "fonte": "https://liguebretagnegolf.org/wp-content/uploads/2026/09/PARCOURS-JEUNES-RENNES-2026.pdf",
+      "arquivo": "OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-10_LBG_Parcours_Jeunes_Rennes_Armor_distancias.pdf",
+      "series": {
+        "U16G": {
+          "tee": "Minimes Garçons (#10) — misto: Brancas + Amarelas + Azuis",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [457, 339, 342, 160, 451, 365, 381, 336, 155, 354, 156, 339, 360, 447, 315, 358, 159, 484],
+          "metersTotal": 5958,
+          "teePorBuraco": ["Brancas", "Brancas", "Amarelas", "Brancas", "Amarelas", "Brancas", "Brancas", "Brancas", "Azuis", "Brancas", "Amarelas", "Amarelas", "Brancas", "Amarelas", "Brancas", "Brancas", "Brancas", "Amarelas"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Brancas, Amarelas, Azuis), conforme o «Parcours Jeunes» da Liga."
+        },
+        "U14G": {
+          "tee": "Benjamins (#11) — misto: Amarelas + Azuis",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [448, 306, 342, 128, 451, 332, 314, 336, 155, 317, 149, 339, 317, 447, 275, 358, 129, 406],
+          "metersTotal": 5549,
+          "teePorBuraco": ["Amarelas", "Amarelas", "Amarelas", "Amarelas", "Amarelas", "Amarelas", "Azuis", "Amarelas", "Azuis", "Amarelas", "Azuis", "Amarelas", "Azuis", "Amarelas", "Amarelas", "Amarelas", "Amarelas", "Azuis"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Amarelas, Azuis), conforme o «Parcours Jeunes» da Liga."
+        },
+        "U12G": {
+          "tee": "U12 Garçons / Poussins (#12) — misto: Azuis + Vermelhas",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [433, 265, 295, 107, 368, 300, 314, 292, 130, 270, 121, 290, 317, 356, 255, 298, 113, 381],
+          "metersTotal": 4905,
+          "teePorBuraco": ["Azuis", "Azuis", "Vermelhas", "Vermelhas", "Vermelhas", "Azuis", "Azuis", "Azuis", "Vermelhas", "Vermelhas", "Vermelhas", "Vermelhas", "Azuis", "Vermelhas", "Azuis", "Azuis", "Azuis", "Vermelhas"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Azuis, Vermelhas), conforme o «Parcours Jeunes» da Liga."
+        },
+        "U16F": {
+          "tee": "Minimes Filles (#20) — misto: Azuis + Vermelhas",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [433, 265, 315, 107, 398, 300, 314, 292, 155, 307, 121, 310, 290, 387, 255, 298, 113, 381],
+          "metersTotal": 5041,
+          "teePorBuraco": ["Azuis", "Azuis", "Azuis", "Vermelhas", "Azuis", "Azuis", "Azuis", "Azuis", "Azuis", "Azuis", "Vermelhas", "Azuis", "Vermelhas", "Azuis", "Azuis", "Azuis", "Azuis", "Vermelhas"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Azuis, Vermelhas), conforme o «Parcours Jeunes» da Liga."
+        },
+        "U14F": {
+          "tee": "Benjamines (#21) — misto: Vermelhas + partidas no fairway",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [402, 265, 295, 107, 368, 260, 314, 292, 130, 215, 121, 290, 290, 356, 228, 250, 113, 381],
+          "metersTotal": 4677,
+          "teePorBuraco": ["Vermelhas", "Vermelhas", "Vermelhas", "Vermelhas", "Vermelhas", "Fairway", "Vermelhas", "Vermelhas", "Vermelhas", "Fairway", "Vermelhas", "Vermelhas", "Vermelhas", "Vermelhas", "Vermelhas", "Fairway", "Vermelhas", "Vermelhas"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Vermelhas, partidas no fairway), conforme o «Parcours Jeunes» da Liga."
+        },
+        "U12F": {
+          "tee": "U12 Filles / Poussines (#22) — misto: Vermelhas + partidas no fairway",
+          "misto": true,
+          "par": [5, 4, 4, 3, 5, 4, 4, 4, 3, 4, 3, 4, 4, 5, 4, 4, 3, 5],
+          "meters": [402, 265, 250, 107, 310, 260, 314, 250, 110, 215, 110, 250, 290, 310, 228, 205, 100, 330],
+          "metersTotal": 4306,
+          "teePorBuraco": ["Vermelhas", "Vermelhas", "Fairway", "Vermelhas", "Fairway", "Fairway", "Vermelhas", "Fairway", "Fairway", "Fairway", "Fairway", "Fairway", "Vermelhas", "Fairway", "Vermelhas", "Fairway", "Fairway", "Fairway"],
+          "nota": "Não é um tee fixo: os buracos jogam-se de tees diferentes (Vermelhas, partidas no fairway), conforme o «Parcours Jeunes» da Liga."
+        }
+      }
+    }
   }
 }
