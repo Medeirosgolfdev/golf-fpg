@@ -52,6 +52,8 @@ import { ResumoTable } from "../ui/ResumoTable";
 import DriveAllRoundsScorecardLB from "../ui/DriveAllRoundsScorecardLB";
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../data/nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../data/featuredTournaments";
+import { cachedFetchJson } from "../data/fetchCache";
+import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
 import AdmissionsTab from "../ui/AdmissionsTab";
 import DrawTab, { buildDrawResults } from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
@@ -1342,6 +1344,15 @@ function DriveContent() {
     }).catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
+  // Classificação por equipas (regiões) das Finais — drive-equipas.json, chave «ccode-tcode».
+  // Opcional: sem o ficheiro a página funciona igual, só não aparece o separador «Equipas».
+  const [equipasIdx, setEquipasIdx] = useState<Record<string, DriveEquipasData | null>>({});
+  useEffect(() => {
+    cachedFetchJson<Record<string, DriveEquipasData | null>>("/data/drive-equipas.json")
+      .then((d) => { if (d) setEquipasIdx(d); })
+      .catch(() => {});
+  }, []);
+
   // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
   const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
   const [raw, setRaw] = useState<Tournament[]>([]);
@@ -1462,8 +1473,10 @@ function DriveContent() {
         d.inscritos = undefined;
         d.draw = undefined;
         const t = d.results as any;
+        const eqData = equipasIdx[`${t?.ccode}-${t?.tcode}`];
+        const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <DriveEquipasTab data={eqData} /> } : null;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any}
-          extraTabs={[extras?.seasonTab, extras?.pastEditionsTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
+          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
     // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.
@@ -1471,7 +1484,7 @@ function DriveContent() {
     if (filterManuel) out = out.filter(e => e.hasManuel);
     if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao as any)));
     return out;
-  }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup]);
+  }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, equipasIdx]);
 
   // Pool INTEGRAL para a tab "Edições anteriores" — TODOS os torneios (todos os
   // anos/séries/regiões), sem os filtros da sidebar nem os sintéticos futuros.
