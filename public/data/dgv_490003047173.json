@@ -5,10 +5,10 @@
  "endDate": "2026-10-11",
  "source": "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/490003047173/ergebnisse",
  "dgvTournamentNumber": 490003047173,
- "course": "Golfclub Gifhorn",
+ "course": "1-18",
  "venue": "Golfclub Gifhorn",
  "format": "Round 1 - Klassischer_Vierer - Zählspiel\nRound 2 - Einzel - Zählspiel",
- "lastUpdatedAt": "2026-10-10T15:33:47Z",
+ "lastUpdatedAt": "2026-10-11T14:45:42Z",
  "rounds": [
   {
    "round": 1,
@@ -18,7 +18,15 @@
   {
    "round": 2,
    "date": "2026-10-11",
-   "format": "einzel"
+   "format": "einzel",
+   "course": {
+    "courseName": "1-18",
+    "par": 72,
+    "courseRating": 72,
+    "slope": 129,
+    "tee": "Gelb",
+    "date": "2026-10-11"
+   }
   }
  ],
  "divisions": [
@@ -26,22 +34,245 @@
    "division": "AK 14 Jungen",
    "source": "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/490003047173/ergebnisse",
    "par": null,
-   "parTotal": null,
-   "courseRating": null,
-   "slope": null,
-   "teeName": null,
+   "parTotal": 72,
+   "courseRating": 72,
+   "slope": 129,
+   "teeName": "Gelb",
    "players": [
     {
      "pos": null,
-     "name": "Alexander Mylius",
+     "name": "Maximilian Leonard Schultz",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 3.1,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001540260",
+     "total": 70,
+     "toPar": -2,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 70
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frederik Endlich",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 1.8,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001663008",
+     "total": 73,
+     "toPar": 1,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 73
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 72
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jingyang Feng",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 4.4,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001609934",
+     "total": 75,
+     "toPar": 3,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 75
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 75
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Moritz Subtil",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 2.6,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001505169",
+     "total": 75,
+     "toPar": 3,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 75
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 77
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paul Frederik Fritzsching",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 0.5,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001367979",
+     "total": 75,
+     "toPar": 3,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 75
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 72
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Marlon Hauschild",
      "country": "DE",
      "club": "Berlin-Wannsee, G&LC",
-     "hcp": 3.1,
+     "hcp": 2.2,
      "team": "Berlin-Wannsee, G&LC",
-     "detailId": "dgv490001584066",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "detailId": "dgv490001711456",
+     "total": 76,
+     "toPar": 4,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 76
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 83
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Victor Larens",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 1.1,
+     "team": "Münchener GC",
+     "detailId": "dgv490001770149",
+     "total": 76,
+     "toPar": 4,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 76
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lauris Eder",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 4.7,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001589217",
+     "total": 77,
+     "toPar": 5,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 77
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paul Maximilian Nagler",
+     "country": "DE",
+     "club": "Berlin-Wannsee, G&LC",
+     "hcp": 2.8,
+     "team": "Berlin-Wannsee, G&LC",
+     "detailId": "dgv490001750799",
+     "total": 77,
+     "toPar": 5,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 77
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
@@ -53,15 +284,76 @@
     },
     {
      "pos": null,
-     "name": "Anton Melcher",
+     "name": "Henry Hornik",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 3.4,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001618771",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 78
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Leopold Scheuren",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 5.5,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001762718",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Luis Wolf",
      "country": "DE",
      "club": "Hösel, GC",
-     "hcp": 4.8,
+     "hcp": 2.6,
      "team": "Hösel, GC",
-     "detailId": "dgv490001555939",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "detailId": "dgv490001572937",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
@@ -73,55 +365,454 @@
     },
     {
      "pos": null,
-     "name": "Ben Kalden",
+     "name": "Maximilian Duve",
+     "country": "DE",
+     "club": "Hösel, GC",
+     "hcp": 2.9,
+     "team": "Hösel, GC",
+     "detailId": "dgv490001491275",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Niclas Schwahn",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 7.5,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001396737",
+     "total": 79,
+     "toPar": 7,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 79
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Tom Kuhlen",
      "country": "DE",
      "club": "Mainzer GC",
-     "hcp": 28.7,
+     "hcp": 9.8,
      "team": "Mainzer GC",
-     "detailId": "dgv490001740644",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "detailId": "dgv490001534074",
+     "total": 79,
+     "toPar": 7,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 79
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
        "date": "2026-10-10",
        "format": "vierer",
-       "teamGross": 111
+       "teamGross": 81
       }
      ]
     },
     {
      "pos": null,
-     "name": "Benjamin Schneider",
+     "name": "Vincent Poruba",
      "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 12.5,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001653734",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "München Eichenried, GC",
+     "hcp": 3.6,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001613504",
+     "total": 79,
+     "toPar": 7,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 79
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
        "date": "2026-10-10",
        "format": "vierer",
-       "teamGross": 88
+       "teamGross": 81
       }
      ]
     },
     {
      "pos": null,
-     "name": "Bennet Niclas Teichmann",
+     "name": "Alexander Mylius",
+     "country": "DE",
+     "club": "Berlin-Wannsee, G&LC",
+     "hcp": 3.1,
+     "team": "Berlin-Wannsee, G&LC",
+     "detailId": "dgv490001584066",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 76
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frederik Maximilian Gustav Roeb",
+     "country": "DE",
+     "club": "Berlin-Wannsee, G&LC",
+     "hcp": 1.3,
+     "team": "Berlin-Wannsee, G&LC",
+     "detailId": "dgv490001556357",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Liam Xu",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 4,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490001703905",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Matteo Landmann",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 4.7,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001533958",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Maximilian Wolfenstetter",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 5.1,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001809405",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paul Fritsch",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 2.5,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001092656",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 75
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Emil Arzac",
+     "country": "DE",
+     "club": "Hösel, GC",
+     "hcp": 6.3,
+     "team": "Hösel, GC",
+     "detailId": "dgv490001666493",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jasper Maximilian Timmann",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 5.5,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001526488",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Oskar Arnold",
+     "country": "DE",
+     "club": "Berlin-Wannsee, G&LC",
+     "hcp": 6.8,
+     "team": "Berlin-Wannsee, G&LC",
+     "detailId": "dgv490001852983",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Enrico Wichary",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 5.7,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001660678",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Leo Lumb",
+     "country": "DE",
+     "club": "München Eichenried, GC",
+     "hcp": 5.4,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001744175",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Mattis Bürkle",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 4.1,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001495373",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 77
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Maximilian Hoffmann",
      "country": "DE",
      "club": "Hannover, GC",
-     "hcp": 10,
+     "hcp": 9.9,
      "team": "Hannover, GC",
-     "detailId": "dgv490001170758",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "detailId": "dgv490001496961",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
@@ -133,15 +824,22 @@
     },
     {
      "pos": null,
-     "name": "Carl Luca Merz",
+     "name": "Maximilian Knauf",
      "country": "DE",
      "club": "Freiburger GC",
-     "hcp": 9.3,
+     "hcp": 4.1,
      "team": "Freiburger GC",
-     "detailId": "dgv490001540486",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "detailId": "dgv490001383892",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
@@ -153,21 +851,1621 @@
     },
     {
      "pos": null,
-     "name": "Carl von Bethmann",
+     "name": "Philipp Heider",
      "country": "DE",
-     "club": "Altenhof, GC",
-     "hcp": 6.3,
-     "team": "Altenhof, GC",
-     "detailId": "dgv490001377776",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "Neuhof, GC",
+     "hcp": 0.3,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001440611",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 77
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Anton Melcher",
+     "country": "DE",
+     "club": "Hösel, GC",
+     "hcp": 4.8,
+     "team": "Hösel, GC",
+     "detailId": "dgv490001555939",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Fausto Rentsch",
+     "country": "DE",
+     "club": "Berlin-Wannsee, G&LC",
+     "hcp": 2.2,
+     "team": "Berlin-Wannsee, G&LC",
+     "detailId": "dgv490001502083",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 83
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jakob Witschel",
+     "country": "DE",
+     "club": "München Eichenried, GC",
+     "hcp": 5.9,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001560221",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jonas Parchow",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 5.4,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001728337",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 92
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Maximilian Oberlin",
+     "country": "DE",
+     "club": "Freiburger GC",
+     "hcp": 4.9,
+     "team": "Freiburger GC",
+     "detailId": "dgv490001817138",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
        "date": "2026-10-10",
        "format": "vierer",
        "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Niklas Hahn",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 15.3,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001539717",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Oskar Wenzel",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 9,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001665202",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Rafael Maatje",
+     "country": "DE",
+     "club": "Mainzer GC",
+     "hcp": 9.8,
+     "team": "Mainzer GC",
+     "detailId": "dgv490001629125",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ferdinand von Baum",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 9.4,
+     "team": "Münchener GC",
+     "detailId": "dgv490001723819",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Georg Nordheider",
+     "country": "DE",
+     "club": "Freiburger GC",
+     "hcp": 5.1,
+     "team": "Freiburger GC",
+     "detailId": "dgv490001527068",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Julian Dickgreber",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 12.4,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001698408",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Louis Ferdinand Schultz",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 5.1,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001540257",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "N.N.",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 3.6,
+     "team": "Münchener GC",
+     "detailId": "dgv490001699496",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ruben Schwarzweller",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 8.1,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001815084",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Titus Kolominski",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 11.4,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001658853",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Valentin Braun",
+     "country": "DE",
+     "club": "Mainzer GC",
+     "hcp": 9.6,
+     "team": "Mainzer GC",
+     "detailId": "dgv490001683292",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Bennet Niclas Teichmann",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 10,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001170758",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 87
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Felix Ramos de Loureiro",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 8.1,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001706058",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Luis Maier",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 3.2,
+     "team": "Münchener GC",
+     "detailId": "dgv490001623262",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paul Beysiegel",
+     "country": "DE",
+     "club": "Mainzer GC",
+     "hcp": 5.8,
+     "team": "Mainzer GC",
+     "detailId": "dgv490001821997",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Qianbin Zhu",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 1.7,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001848223",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 75
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Eli Fu",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": 4.8,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001726892",
+     "total": 86,
+     "toPar": 14,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 86
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Felix Schätzle",
+     "country": "DE",
+     "club": "München Eichenried, GC",
+     "hcp": 6.7,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001652104",
+     "total": 86,
+     "toPar": 14,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 86
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jan Schumacher",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 12.6,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001508272",
+     "total": 86,
+     "toPar": 14,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 86
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 99
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Louis Maximilian Menne",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 9.2,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001724334",
+     "total": 86,
+     "toPar": 14,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 86
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Milo Maximilian Hlousek",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 16.4,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490002030658",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Yun Zhao",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 11.1,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490001893864",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ferdinand Kirchhoff",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 12.1,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001642495",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ferdinand Rieth",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 17.6,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001822098",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jaron Mattis Jacobi",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 8.9,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001470625",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Luca Wunderlich",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 6.6,
+     "team": "Münchener GC",
+     "detailId": "dgv490001724129",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Constantin Fritz",
+     "country": "DE",
+     "club": "München Eichenried, GC",
+     "hcp": 3.8,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001446606",
+     "total": 89,
+     "toPar": 17,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 89
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Johann Sonnenberg",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 13.5,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001385377",
+     "total": 89,
+     "toPar": 17,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 89
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Miguel Kemp",
+     "country": "DE",
+     "club": "Hösel, GC",
+     "hcp": 9,
+     "team": "Hösel, GC",
+     "detailId": "dgv490001525373",
+     "total": 89,
+     "toPar": 17,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 89
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Moritz Winter",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 20.7,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490001770332",
+     "total": 90,
+     "toPar": 18,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 90
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Tom Furnivall",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 8.7,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490002043826",
+     "total": 91,
+     "toPar": 19,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 91
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Benjamin Schneider",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 12.5,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001653734",
+     "total": 92,
+     "toPar": 20,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 92
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Emin Yilmaz",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 20.2,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001623566",
+     "total": 93,
+     "toPar": 21,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 93
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 93
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ferdinand Weinheimer",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 8.2,
+     "team": "Münchener GC",
+     "detailId": "dgv490001737154",
+     "total": 93,
+     "toPar": 21,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 93
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Carl von Bethmann",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 6.3,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001377776",
+     "total": 94,
+     "toPar": 22,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 94
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Maximilian Krause",
+     "country": "DE",
+     "club": "München Eichenried, GC",
+     "hcp": 8.7,
+     "team": "München Eichenried, GC",
+     "detailId": "dgv490001599349",
+     "total": 94,
+     "toPar": 22,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 94
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 84
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Carl Luca Merz",
+     "country": "DE",
+     "club": "Freiburger GC",
+     "hcp": 9.3,
+     "team": "Freiburger GC",
+     "detailId": "dgv490001540486",
+     "total": 95,
+     "toPar": 23,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 95
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Louis Erlwein",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 5.7,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001610099",
+     "total": 95,
+     "toPar": 23,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 95
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 98
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paul Hans Otten",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 26.4,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490001704993",
+     "total": 95,
+     "toPar": 23,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 95
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 95
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Samuel Wilhelm",
+     "country": "DE",
+     "club": "Mainzer GC",
+     "hcp": 13,
+     "team": "Mainzer GC",
+     "detailId": "dgv490001671238",
+     "total": 95,
+     "toPar": 23,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 95
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 111
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Felix Constantin Beermann",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 12.1,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001746096",
+     "total": 96,
+     "toPar": 24,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 96
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 92
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frederik Urban",
+     "country": "DE",
+     "club": "Hubbelrath, GC",
+     "hcp": 24.4,
+     "team": "Hubbelrath, GC",
+     "detailId": "dgv490001658883",
+     "total": 98,
+     "toPar": 26,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 98
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 99
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ben Kalden",
+     "country": "DE",
+     "club": "Mainzer GC",
+     "hcp": 28.7,
+     "team": "Mainzer GC",
+     "detailId": "dgv490001740644",
+     "total": 99,
+     "toPar": 27,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 99
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 111
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frederick Spickenbom",
+     "country": "DE",
+     "club": "Hösel, GC",
+     "hcp": 17.8,
+     "team": "Hösel, GC",
+     "detailId": "dgv490001360465",
+     "total": 99,
+     "toPar": 27,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 99
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 99
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Valentin Grüne",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 20.7,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001549799",
+     "total": 99,
+     "toPar": 27,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 99
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 99
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Karl-Leo Gleichenstein",
+     "country": "DE",
+     "club": "Freiburger GC",
+     "hcp": 16.6,
+     "team": "Freiburger GC",
+     "detailId": "dgv490001534270",
+     "total": 100,
+     "toPar": 28,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 100
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 109
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Constantin Kirchhoff",
+     "country": "DE",
+     "club": "Altenhof, GC",
+     "hcp": 20.1,
+     "team": "Altenhof, GC",
+     "detailId": "dgv490001724587",
+     "total": 101,
+     "toPar": 29,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 101
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 101
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frederic Strasser",
+     "country": "DE",
+     "club": "Freiburger GC",
+     "hcp": 17.9,
+     "team": "Freiburger GC",
+     "detailId": "dgv490001762186",
+     "total": 102,
+     "toPar": 30,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 102
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 102
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Milo Schoetzau",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 16.2,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001177171",
+     "total": 103,
+     "toPar": 31,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 103
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Theodor Schoofs",
+     "country": "DE",
+     "club": "Meerbusch, GC",
+     "hcp": 23.6,
+     "team": "Meerbusch, GC",
+     "detailId": "dgv490002040359",
+     "total": 103,
+     "toPar": 31,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 103
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 111
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Henry Stahlknecht",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 21,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001809765",
+     "total": 104,
+     "toPar": 32,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 104
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 102
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Erik Kura",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 35,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001594098",
+     "total": 109,
+     "toPar": 37,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 109
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 109
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Justus Bähr",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 22.5,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001868722",
+     "total": 110,
+     "toPar": 38,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 110
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 116
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Maximilian Georg Anton Strangemann",
+     "country": "DE",
+     "club": "Zur Vahr, Club",
+     "hcp": 21.5,
+     "team": "Zur Vahr, Club",
+     "detailId": "dgv490001722182",
+     "total": 115,
+     "toPar": 43,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 115
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-10",
+       "format": "vierer",
+       "teamGross": 102
       }
      ]
     },
@@ -213,46 +2511,6 @@
     },
     {
      "pos": null,
-     "name": "Constantin Fritz",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 3.8,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001446606",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Emil Arzac",
-     "country": "DE",
-     "club": "Hösel, GC",
-     "hcp": 6.3,
-     "team": "Hösel, GC",
-     "detailId": "dgv490001666493",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Enes Georgiadis",
      "country": "DE",
      "club": "St. Leon-Rot e.V., GC",
@@ -268,186 +2526,6 @@
        "date": "2026-10-10",
        "format": "vierer",
        "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Enrico Wichary",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 5.7,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001660678",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Fausto Rentsch",
-     "country": "DE",
-     "club": "Berlin-Wannsee, G&LC",
-     "hcp": 2.2,
-     "team": "Berlin-Wannsee, G&LC",
-     "detailId": "dgv490001502083",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 83
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Felix Constantin Beermann",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 12.1,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001746096",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 92
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Felix Ramos de Loureiro",
-     "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 8.1,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001706058",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Felix Schätzle",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 6.7,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001652104",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ferdinand Kirchhoff",
-     "country": "DE",
-     "club": "Altenhof, GC",
-     "hcp": 12.1,
-     "team": "Altenhof, GC",
-     "detailId": "dgv490001642495",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ferdinand Rieth",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 17.6,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001822098",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ferdinand Weinheimer",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 8.2,
-     "team": "Münchener GC",
-     "detailId": "dgv490001737154",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Frederik Endlich",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": 1.8,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001663008",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 72
       }
      ]
     },
@@ -473,66 +2551,6 @@
     },
     {
      "pos": null,
-     "name": "Frederik Maximilian Gustav Roeb",
-     "country": "DE",
-     "club": "Berlin-Wannsee, G&LC",
-     "hcp": 1.3,
-     "team": "Berlin-Wannsee, G&LC",
-     "detailId": "dgv490001556357",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Frederik Urban",
-     "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 24.4,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001658883",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 99
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Georg Nordheider",
-     "country": "DE",
-     "club": "Freiburger GC",
-     "hcp": 5.1,
-     "team": "Freiburger GC",
-     "detailId": "dgv490001527068",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Gurveer Singh Kalsi",
      "country": "DE",
      "club": "St. Leon-Rot e.V., GC",
@@ -548,146 +2566,6 @@
        "date": "2026-10-10",
        "format": "vierer",
        "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Henry Hornik",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 3.4,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001618771",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 78
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Henry Stahlknecht",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 21,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001809765",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 102
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Jakob Witschel",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 5.9,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001560221",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Jan Schumacher",
-     "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 12.6,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001508272",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 99
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Jaron Mattis Jacobi",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 8.9,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001470625",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Johann Sonnenberg",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 13.5,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001385377",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Jonas Parchow",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 5.4,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001728337",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 92
       }
      ]
     },
@@ -713,106 +2591,6 @@
     },
     {
      "pos": null,
-     "name": "Julian Dickgreber",
-     "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 12.4,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001698408",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Justus Bähr",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 22.5,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001868722",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 116
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Karl-Leo Gleichenstein",
-     "country": "DE",
-     "club": "Freiburger GC",
-     "hcp": 16.6,
-     "team": "Freiburger GC",
-     "detailId": "dgv490001534270",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 109
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lauris Eder",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 4.7,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001589217",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Leo Lumb",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 5.4,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001744175",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Leonard Lenke",
      "country": "DE",
      "club": "Hannover, GC",
@@ -833,66 +2611,6 @@
     },
     {
      "pos": null,
-     "name": "Leopold Scheuren",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 5.5,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001762718",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Liam Xu",
-     "country": "DE",
-     "club": "Meerbusch, GC",
-     "hcp": 4,
-     "team": "Meerbusch, GC",
-     "detailId": "dgv490001703905",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Louis Erlwein",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 5.7,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001610099",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 98
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Louis Köhle",
      "country": "DE",
      "club": "Münchener GC",
@@ -908,26 +2626,6 @@
        "date": "2026-10-10",
        "format": "vierer",
        "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Louis Maximilian Menne",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 9.2,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001724334",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
       }
      ]
     },
@@ -973,46 +2671,6 @@
     },
     {
      "pos": null,
-     "name": "Luis Maier",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 3.2,
-     "team": "Münchener GC",
-     "detailId": "dgv490001623262",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Luis Wolf",
-     "country": "DE",
-     "club": "Hösel, GC",
-     "hcp": 2.6,
-     "team": "Hösel, GC",
-     "detailId": "dgv490001572937",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Lukas Reischl",
      "country": "DE",
      "club": "Wörthsee, GC",
@@ -1028,306 +2686,6 @@
        "date": "2026-10-10",
        "format": "vierer",
        "teamGross": 98
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Marlon Hauschild",
-     "country": "DE",
-     "club": "Berlin-Wannsee, G&LC",
-     "hcp": 2.2,
-     "team": "Berlin-Wannsee, G&LC",
-     "detailId": "dgv490001711456",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 83
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Matteo Landmann",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 4.7,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001533958",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Mattis Bürkle",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 4.1,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001495373",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 77
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Duve",
-     "country": "DE",
-     "club": "Hösel, GC",
-     "hcp": 2.9,
-     "team": "Hösel, GC",
-     "detailId": "dgv490001491275",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Georg Anton Strangemann",
-     "country": "DE",
-     "club": "Zur Vahr, Club",
-     "hcp": 21.5,
-     "team": "Zur Vahr, Club",
-     "detailId": "dgv490001722182",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 102
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Hoffmann",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 9.9,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001496961",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 87
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Knauf",
-     "country": "DE",
-     "club": "Freiburger GC",
-     "hcp": 4.1,
-     "team": "Freiburger GC",
-     "detailId": "dgv490001383892",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Krause",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 8.7,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001599349",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Leonard Schultz",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 3.1,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001540260",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Oberlin",
-     "country": "DE",
-     "club": "Freiburger GC",
-     "hcp": 4.9,
-     "team": "Freiburger GC",
-     "detailId": "dgv490001817138",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Maximilian Wolfenstetter",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 5.1,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001809405",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Miguel Kemp",
-     "country": "DE",
-     "club": "Hösel, GC",
-     "hcp": 9,
-     "team": "Hösel, GC",
-     "detailId": "dgv490001525373",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Milo Maximilian Hlousek",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 16.4,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490002030658",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Milo Schoetzau",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 16.2,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001177171",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Moritz Subtil",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 2.6,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001505169",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 77
       }
      ]
     },
@@ -1353,292 +2711,12 @@
     },
     {
      "pos": null,
-     "name": "Moritz Winter",
-     "country": "DE",
-     "club": "Meerbusch, GC",
-     "hcp": 20.7,
-     "team": "Meerbusch, GC",
-     "detailId": "dgv490001770332",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "N.N.",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 3.6,
-     "team": "Münchener GC",
-     "detailId": "dgv490001699496",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Niclas Schwahn",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 7.5,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001396737",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
      "name": "Nicolas Roelofsen",
      "country": "DE",
      "club": "Meerbusch, GC",
      "hcp": 30.5,
      "team": "Meerbusch, GC",
      "detailId": "dgv490001594720",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 111
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Niklas Hahn",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 15.3,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001539717",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 84
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Oskar Wenzel",
-     "country": "DE",
-     "club": "Altenhof, GC",
-     "hcp": 9,
-     "team": "Altenhof, GC",
-     "detailId": "dgv490001665202",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paul Beysiegel",
-     "country": "DE",
-     "club": "Mainzer GC",
-     "hcp": 5.8,
-     "team": "Mainzer GC",
-     "detailId": "dgv490001821997",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paul Frederik Fritzsching",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": 0.5,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001367979",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 72
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paul Fritsch",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": 2.5,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001092656",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 75
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paul Maximilian Nagler",
-     "country": "DE",
-     "club": "Berlin-Wannsee, G&LC",
-     "hcp": 2.8,
-     "team": "Berlin-Wannsee, G&LC",
-     "detailId": "dgv490001750799",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 76
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Philipp Heider",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 0.3,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001440611",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 77
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Qianbin Zhu",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": 1.7,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001848223",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 75
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Rafael Maatje",
-     "country": "DE",
-     "club": "Mainzer GC",
-     "hcp": 9.8,
-     "team": "Mainzer GC",
-     "detailId": "dgv490001629125",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ruben Schwarzweller",
-     "country": "DE",
-     "club": "Altenhof, GC",
-     "hcp": 8.1,
-     "team": "Altenhof, GC",
-     "detailId": "dgv490001815084",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Samuel Wilhelm",
-     "country": "DE",
-     "club": "Mainzer GC",
-     "hcp": 13,
-     "team": "Mainzer GC",
-     "detailId": "dgv490001671238",
      "total": null,
      "toPar": null,
      "rounds": [],
@@ -1670,246 +2748,86 @@
        "teamGross": 77
       }
      ]
-    },
-    {
-     "pos": null,
-     "name": "Theodor Schoofs",
-     "country": "DE",
-     "club": "Meerbusch, GC",
-     "hcp": 23.6,
-     "team": "Meerbusch, GC",
-     "detailId": "dgv490002040359",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 111
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Titus Kolominski",
-     "country": "DE",
-     "club": "Hubbelrath, GC",
-     "hcp": 11.4,
-     "team": "Hubbelrath, GC",
-     "detailId": "dgv490001658853",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Tom Furnivall",
-     "country": "DE",
-     "club": "Meerbusch, GC",
-     "hcp": 8.7,
-     "team": "Meerbusch, GC",
-     "detailId": "dgv490002043826",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Tom Kuhlen",
-     "country": "DE",
-     "club": "Mainzer GC",
-     "hcp": 9.8,
-     "team": "Mainzer GC",
-     "detailId": "dgv490001534074",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Valentin Braun",
-     "country": "DE",
-     "club": "Mainzer GC",
-     "hcp": 9.6,
-     "team": "Mainzer GC",
-     "detailId": "dgv490001683292",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Victor Larens",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 1.1,
-     "team": "Münchener GC",
-     "detailId": "dgv490001770149",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Vincent Poruba",
-     "country": "DE",
-     "club": "München Eichenried, GC",
-     "hcp": 3.6,
-     "team": "München Eichenried, GC",
-     "detailId": "dgv490001613504",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Yun Zhao",
-     "country": "DE",
-     "club": "Meerbusch, GC",
-     "hcp": 11.1,
-     "team": "Meerbusch, GC",
-     "detailId": "dgv490001893864",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
     }
    ],
    "teams": [
     {
      "pos": "1",
      "name": "St. Leon-Rot e.V., GC",
-     "total": "3"
+     "total": "31"
     },
     {
      "pos": "2",
-     "name": "Neuhof, GC",
-     "total": "10"
+     "name": "Hamburger GC",
+     "total": "41"
     },
     {
      "pos": "3",
-     "name": "Berlin-Wannsee, G&LC",
-     "total": "12"
+     "name": "Neuhof, GC",
+     "total": "45"
     },
     {
      "pos": "4",
-     "name": "Hamburger GC",
-     "total": "14"
+     "name": "Berlin-Wannsee, G&LC",
+     "total": "46"
     },
     {
      "pos": "5",
      "name": "Hösel, GC",
-     "total": "17"
+     "total": "66"
     },
     {
      "pos": "6",
      "name": "Münchener GC",
-     "total": "17"
+     "total": "74"
     },
     {
      "pos": "7",
      "name": "München Eichenried, GC",
-     "total": "21"
+     "total": "80"
     },
     {
      "pos": "8",
      "name": "Mainzer GC",
-     "total": "23"
+     "total": "89"
     },
     {
      "pos": "9",
-     "name": "Altenhof, GC",
-     "total": "29"
+     "name": "Hubbelrath, GC",
+     "total": "101"
     },
     {
      "pos": "10",
-     "name": "Hubbelrath, GC",
-     "total": "30"
+     "name": "Wörthsee, GC",
+     "total": "105"
     },
     {
      "pos": "11",
      "name": "Meerbusch, GC",
-     "total": "30"
+     "total": "113"
     },
     {
      "pos": "12",
      "name": "Freiburger GC",
-     "total": "32"
+     "total": "116"
     },
     {
      "pos": "13",
-     "name": "Zur Vahr, Club",
-     "total": "33"
+     "name": "Altenhof, GC",
+     "total": "117"
     },
     {
      "pos": "14",
-     "name": "Wörthsee, GC",
-     "total": "34"
+     "name": "Zur Vahr, Club",
+     "total": "130"
     },
     {
      "pos": "15",
      "name": "Hannover, GC",
-     "total": "37"
+     "total": "145"
     }
    ]
   }
  ],
- "scrapedAt": "2026-10-10T22:48:43.684Z"
+ "scrapedAt": "2026-10-11T23:03:10.316Z"
 }

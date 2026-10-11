@@ -1,24 +1,32 @@
 {
  "tournament": "DMM AK 16 Mädchen im Golfclub Mülheim an der Ruhr 2026",
  "year": 2026,
- "startDate": "2026-10-10",
+ "startDate": "2026-10-11",
  "endDate": "2026-10-11",
  "source": "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/490003047171/ergebnisse",
  "dgvTournamentNumber": 490003047171,
- "course": "Golfclub Mülheim an der Ruhr",
+ "course": "1-18",
  "venue": "Golfclub Mülheim an der Ruhr",
  "format": "Round 1 - Klassischer_Vierer - Zählspiel\nRound 2 - Einzel - Zählspiel",
- "lastUpdatedAt": "2026-10-10T15:49:51Z",
+ "lastUpdatedAt": "2026-10-11T14:14:43Z",
  "rounds": [
   {
    "round": 1,
-   "date": "2026-10-10",
+   "date": "2026-10-11",
    "format": "vierer"
   },
   {
    "round": 2,
    "date": "2026-10-11",
-   "format": "einzel"
+   "format": "einzel",
+   "course": {
+    "courseName": "1-18",
+    "par": 72,
+    "courseRating": 74.6,
+    "slope": 133,
+    "tee": "Rot",
+    "date": "2026-10-11"
+   }
   }
  ],
  "divisions": [
@@ -26,48 +34,116 @@
    "division": "AK 16 Mädchen",
    "source": "https://www.golf.de/sport/turnierkalender/dgv-turniere.html#/490003047171/ergebnisse",
    "par": null,
-   "parTotal": null,
-   "courseRating": null,
-   "slope": null,
-   "teeName": null,
+   "parTotal": 72,
+   "courseRating": 74.6,
+   "slope": 133,
+   "teeName": "Rot",
    "players": [
     {
      "pos": null,
-     "name": "Abigail Plevey",
+     "name": "Greta Lungmuss",
      "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 4.8,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001788758",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "Dortmunder GC",
+     "hcp": 26.6,
+     "team": "Dortmunder GC",
+     "detailId": "dgv490001725332",
+     "total": 0,
+     "toPar": -72,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 0
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
-       "teamGross": 85
+       "teamGross": 92
       }
      ]
     },
     {
      "pos": null,
-     "name": "Amelie Dai",
+     "name": "Cecilie Volckens",
      "country": "DE",
-     "club": "Kölner GC",
-     "hcp": 1,
-     "team": "Kölner GC",
-     "detailId": "dgv490001473370",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": -4,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001559690",
+     "total": 71,
+     "toPar": -1,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 71
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
-       "teamGross": 83
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Clarissa von Doetinchem",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 0.1,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001223375",
+     "total": 71,
+     "toPar": -1,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 71
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 74
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Cosima Feßmann",
+     "country": "DE",
+     "club": "Reichswald, GC Am",
+     "hcp": -4.7,
+     "team": "Reichswald, GC Am",
+     "detailId": "dgv490001193540",
+     "total": 71,
+     "toPar": -1,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 71
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 79
       }
      ]
     },
@@ -79,13 +155,20 @@
      "hcp": -2.3,
      "team": "Marienburger GC",
      "detailId": "dgv490001503846",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "total": 72,
+     "toPar": 0,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 72
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 83
       }
@@ -93,19 +176,134 @@
     },
     {
      "pos": null,
-     "name": "Anna Kaitlyn Wabo",
+     "name": "Amelie Dai",
      "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 3.3,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001393211",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "Kölner GC",
+     "hcp": 1,
+     "team": "Kölner GC",
+     "detailId": "dgv490001473370",
+     "total": 73,
+     "toPar": 1,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 73
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 83
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Christina Archontoglou",
+     "country": "DE",
+     "club": "Reichswald, GC Am",
+     "hcp": -0.5,
+     "team": "Reichswald, GC Am",
+     "detailId": "dgv490001665201",
+     "total": 74,
+     "toPar": 2,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 74
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Leila Bechtold",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 2.6,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001480745",
+     "total": 76,
+     "toPar": 4,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 76
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lorena Guth",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": -3.7,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001625266",
+     "total": 76,
+     "toPar": 4,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 76
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 78
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Marie Runge",
+     "country": "DE",
+     "club": "Burgdorfer GC",
+     "hcp": 0.9,
+     "team": "Burgdorfer GC",
+     "detailId": "dgv490001691612",
+     "total": 76,
+     "toPar": 4,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 76
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 85
       }
@@ -113,21 +311,136 @@
     },
     {
      "pos": null,
-     "name": "Annikki Vesper Kruse",
+     "name": "Elisabeth Jessen",
      "country": "DE",
-     "club": "Burgdorfer GC",
-     "hcp": 7.4,
-     "team": "Burgdorfer GC",
-     "detailId": "dgv490001055089",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "club": "Berliner GC Stolper Heide",
+     "hcp": 4.8,
+     "team": "Berliner GC Stolper Heide",
+     "detailId": "dgv490001456413",
+     "total": 77,
+     "toPar": 5,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 77
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
-       "teamGross": 94
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Cosima Stark",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 2,
+     "team": "Münchener GC",
+     "detailId": "dgv490001427852",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Delia Eschbach",
+     "country": "DE",
+     "club": "Mannheim-Viernheim, GC",
+     "hcp": 1.1,
+     "team": "Mannheim-Viernheim, GC",
+     "detailId": "dgv490001541041",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Emilia Weik",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 4.6,
+     "team": "Münchener GC",
+     "detailId": "dgv490001732814",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Michelle Loe",
+     "country": "DE",
+     "club": "Dortmunder GC",
+     "hcp": 0.1,
+     "team": "Dortmunder GC",
+     "detailId": "dgv490001701638",
+     "total": 78,
+     "toPar": 6,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 78
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 92
       }
      ]
     },
@@ -139,15 +452,454 @@
      "hcp": 8.7,
      "team": "Burgdorfer GC",
      "detailId": "dgv490001473244",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Helena Baraka",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": -3.9,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001214052",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 78
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lucy Marie Mullen",
+     "country": "DE",
+     "club": "Dortmunder GC",
+     "hcp": 3.6,
+     "team": "Dortmunder GC",
+     "detailId": "dgv490001311945",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 78
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paula Schmitter",
+     "country": "DE",
+     "club": "Marienburger GC",
+     "hcp": 3,
+     "team": "Marienburger GC",
+     "detailId": "dgv490001280130",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 83
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Sophia Leininger",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 2.5,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001297363",
+     "total": 80,
+     "toPar": 8,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 80
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 89
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Luise Jung",
+     "country": "DE",
+     "club": "St. Leon-Rot e.V., GC",
+     "hcp": -3,
+     "team": "St. Leon-Rot e.V., GC",
+     "detailId": "dgv490001426350",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 80
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Philina de Riese",
+     "country": "DE",
+     "club": "Burgdorfer GC",
+     "hcp": 0.2,
+     "team": "Burgdorfer GC",
+     "detailId": "dgv490001741871",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Sophia Vetter",
+     "country": "DE",
+     "club": "Berliner GC Stolper Heide",
+     "hcp": 2.1,
+     "team": "Berliner GC Stolper Heide",
+     "detailId": "dgv490001464865",
+     "total": 81,
+     "toPar": 9,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 81
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Anna Kaitlyn Wabo",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 3.3,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001393211",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Frieda Taisia Renting",
+     "country": "DE",
+     "club": "Dortmunder GC",
+     "hcp": 1.9,
+     "team": "Dortmunder GC",
+     "detailId": "dgv490001554014",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 78
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Julina Ciesla",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 2,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001455408",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Luisa Schlattmann",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 3.9,
+     "team": "Münchener GC",
+     "detailId": "dgv490001423680",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 88
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Mathilda Hashem",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 9.3,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001529537",
+     "total": 82,
+     "toPar": 10,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 82
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 91
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Abigail Plevey",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 4.8,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001788758",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 85
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Fritzi Horn",
+     "country": "DE",
+     "club": "Berliner GC Stolper Heide",
+     "hcp": 0.3,
+     "team": "Berliner GC Stolper Heide",
+     "detailId": "dgv490001731797",
+     "total": 83,
+     "toPar": 11,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 83
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Elena Archontoglou",
+     "country": "DE",
+     "club": "Reichswald, GC Am",
+     "hcp": 1.2,
+     "team": "Reichswald, GC Am",
+     "detailId": "dgv490001665205",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Hanxi Lin",
+     "country": "DE",
+     "club": "Mannheim-Viernheim, GC",
+     "hcp": 4.4,
+     "team": "Mannheim-Viernheim, GC",
+     "detailId": "dgv490001451463",
+     "total": 84,
+     "toPar": 12,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 84
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 86
       }
      ]
     },
@@ -159,15 +911,751 @@
      "hcp": 6.6,
      "team": "Reichswald, GC Am",
      "detailId": "dgv490001485218",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 79
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Helene Sonnenberg",
+     "country": "DE",
+     "club": "Hannover, GC",
+     "hcp": 6,
+     "team": "Hannover, GC",
+     "detailId": "dgv490001385380",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 86
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Jana Gieseke",
+     "country": "DE",
+     "club": "Hof Hausen, GC",
+     "hcp": 8.2,
+     "team": "Hof Hausen, GC",
+     "detailId": "dgv490001494995",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 90
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Philippa Runzheimer",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 3.4,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001641018",
+     "total": 85,
+     "toPar": 13,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 85
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 89
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Greta Grohs",
+     "country": "DE",
+     "club": "Mannheim-Viernheim, GC",
+     "hcp": 0.6,
+     "team": "Mannheim-Viernheim, GC",
+     "detailId": "dgv490002055436",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Johanna Hetzler",
+     "country": "DE",
+     "club": "Mannheim-Viernheim, GC",
+     "hcp": 4.6,
+     "team": "Mannheim-Viernheim, GC",
+     "detailId": "dgv490001168435",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lena Szymanska",
+     "country": "DE",
+     "club": "Berliner GC Stolper Heide",
+     "hcp": 2.5,
+     "team": "Berliner GC Stolper Heide",
+     "detailId": "dgv490002002384",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 81
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Nicole Zhang",
+     "country": "DE",
+     "club": "Kölner GC",
+     "hcp": 4.1,
+     "team": "Kölner GC",
+     "detailId": "dgv490001500620",
+     "total": 87,
+     "toPar": 15,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 87
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 83
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ella Sofia Houengaard",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 4.2,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001450245",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 74
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Hui Fei Jenny Zhang",
+     "country": "DE",
+     "club": "Hamburg-Walddörfer, GC",
+     "hcp": 7.4,
+     "team": "Hamburg-Walddörfer, GC",
+     "detailId": "dgv490001242076",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Melissa Paulina Ohm",
+     "country": "DE",
+     "club": "Hamburger GC",
+     "hcp": 11.3,
+     "team": "Hamburger GC",
+     "detailId": "dgv490001808062",
+     "total": 88,
+     "toPar": 16,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 88
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 91
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lilly May Wölflick",
+     "country": "DE",
+     "club": "Neuhof, GC",
+     "hcp": 2.9,
+     "team": "Neuhof, GC",
+     "detailId": "dgv490001376685",
+     "total": 89,
+     "toPar": 17,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 89
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 82
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Helena Ruppert",
+     "country": "DE",
+     "club": "Marienburger GC",
+     "hcp": 10.1,
+     "team": "Marienburger GC",
+     "detailId": "dgv490001693940",
+     "total": 91,
+     "toPar": 19,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 91
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 106
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Annikki Vesper Kruse",
+     "country": "DE",
+     "club": "Burgdorfer GC",
+     "hcp": 7.4,
+     "team": "Burgdorfer GC",
+     "detailId": "dgv490001055089",
+     "total": 94,
+     "toPar": 22,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 94
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Dorothy Kirschner",
+     "country": "DE",
+     "club": "Marienburger GC",
+     "hcp": 3.9,
+     "team": "Marienburger GC",
+     "detailId": "dgv490001507992",
+     "total": 96,
+     "toPar": 24,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 96
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 96
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Hai Xin Li",
+     "country": "DE",
+     "club": "Kölner GC",
+     "hcp": 9.1,
+     "team": "Kölner GC",
+     "detailId": "dgv490001777858",
+     "total": 96,
+     "toPar": 24,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 96
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 105
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Philippa Schaeffer",
+     "country": "DE",
+     "club": "Hamburg-Walddörfer, GC",
+     "hcp": 19.6,
+     "team": "Hamburg-Walddörfer, GC",
+     "detailId": "dgv490001644969",
+     "total": 96,
+     "toPar": 24,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 96
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 94
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Carina Sonia Kocherscheidt",
+     "country": "DE",
+     "club": "Hof Hausen, GC",
+     "hcp": 12.1,
+     "team": "Hof Hausen, GC",
+     "detailId": "dgv490001424582",
+     "total": 97,
+     "toPar": 25,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 97
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 97
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Valentina Klöppel",
+     "country": "DE",
+     "club": "Münchener GC",
+     "hcp": 3.6,
+     "team": "Münchener GC",
+     "detailId": "dgv490001299911",
+     "total": 97,
+     "toPar": 25,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 97
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 97
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Ka Hui Jessie Zhang",
+     "country": "DE",
+     "club": "Hamburg-Walddörfer, GC",
+     "hcp": 19.1,
+     "team": "Hamburg-Walddörfer, GC",
+     "detailId": "dgv490001229740",
+     "total": 98,
+     "toPar": 26,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 98
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 112
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Seoah Im",
+     "country": "DE",
+     "club": "Hof Hausen, GC",
+     "hcp": 13.9,
+     "team": "Hof Hausen, GC",
+     "detailId": "dgv490001854261",
+     "total": 99,
+     "toPar": 27,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 99
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 90
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lea Charlotta Lange",
+     "country": "DE",
+     "club": "Hamburg-Walddörfer, GC",
+     "hcp": 21.4,
+     "team": "Hamburg-Walddörfer, GC",
+     "detailId": "dgv490001744766",
+     "total": 100,
+     "toPar": 28,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 100
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 112
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Stella Malmström",
+     "country": "DE",
+     "club": "Hof Hausen, GC",
+     "hcp": 17.9,
+     "team": "Hof Hausen, GC",
+     "detailId": "dgv490001491113",
+     "total": 101,
+     "toPar": 29,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 101
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 106
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Paula Stürzer",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 27.8,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001624145",
+     "total": 103,
+     "toPar": 31,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 103
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 105
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Xining Chen",
+     "country": "DE",
+     "club": "Kölner GC",
+     "hcp": 14.1,
+     "team": "Kölner GC",
+     "detailId": "dgv490001817373",
+     "total": 103,
+     "toPar": 31,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 103
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 103
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Karoline Neufang",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 25.8,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001441118",
+     "total": 110,
+     "toPar": 38,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 110
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 123
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Heidi Ellis",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 17.4,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001521308",
+     "total": 119,
+     "toPar": 47,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 119
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 105
+      }
+     ]
+    },
+    {
+     "pos": null,
+     "name": "Lilli Sophie Brandl",
+     "country": "DE",
+     "club": "Wörthsee, GC",
+     "hcp": 29.7,
+     "team": "Wörthsee, GC",
+     "detailId": "dgv490001723718",
+     "total": 124,
+     "toPar": 52,
+     "rounds": [
+      {
+       "day": 2,
+       "date": "2026-10-11",
+       "format": "einzel",
+       "gross": 124
+      }
+     ],
+     "teamRounds": [
+      {
+       "day": 1,
+       "date": "2026-10-11",
+       "format": "vierer",
+       "teamGross": 124
       }
      ]
     },
@@ -185,129 +1673,9 @@
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Cecilie Volckens",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": -4,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001559690",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Christina Archontoglou",
-     "country": "DE",
-     "club": "Reichswald, GC Am",
-     "hcp": -0.5,
-     "team": "Reichswald, GC Am",
-     "detailId": "dgv490001665201",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Clarissa von Doetinchem",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 0.1,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001223375",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 74
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Cosima Feßmann",
-     "country": "DE",
-     "club": "Reichswald, GC Am",
-     "hcp": -4.7,
-     "team": "Reichswald, GC Am",
-     "detailId": "dgv490001193540",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Cosima Stark",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 2,
-     "team": "Münchener GC",
-     "detailId": "dgv490001427852",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Delia Eschbach",
-     "country": "DE",
-     "club": "Mannheim-Viernheim, GC",
-     "hcp": 1.1,
-     "team": "Mannheim-Viernheim, GC",
-     "detailId": "dgv490001541041",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
       }
      ]
     },
@@ -325,349 +1693,9 @@
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 123
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Elena Archontoglou",
-     "country": "DE",
-     "club": "Reichswald, GC Am",
-     "hcp": 1.2,
-     "team": "Reichswald, GC Am",
-     "detailId": "dgv490001665205",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Elisabeth Jessen",
-     "country": "DE",
-     "club": "Berliner GC Stolper Heide",
-     "hcp": 4.8,
-     "team": "Berliner GC Stolper Heide",
-     "detailId": "dgv490001456413",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ella Sofia Houengaard",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 4.2,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001450245",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 74
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Emilia Weik",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 4.6,
-     "team": "Münchener GC",
-     "detailId": "dgv490001732814",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Frieda Taisia Renting",
-     "country": "DE",
-     "club": "Dortmunder GC",
-     "hcp": 1.9,
-     "team": "Dortmunder GC",
-     "detailId": "dgv490001554014",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 78
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Fritzi Horn",
-     "country": "DE",
-     "club": "Berliner GC Stolper Heide",
-     "hcp": 0.3,
-     "team": "Berliner GC Stolper Heide",
-     "detailId": "dgv490001731797",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Greta Grohs",
-     "country": "DE",
-     "club": "Mannheim-Viernheim, GC",
-     "hcp": 0.6,
-     "team": "Mannheim-Viernheim, GC",
-     "detailId": "dgv490002055436",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Greta Lungmuss",
-     "country": "DE",
-     "club": "Dortmunder GC",
-     "hcp": 26.6,
-     "team": "Dortmunder GC",
-     "detailId": "dgv490001725332",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 92
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Hai Xin Li",
-     "country": "DE",
-     "club": "Kölner GC",
-     "hcp": 9.1,
-     "team": "Kölner GC",
-     "detailId": "dgv490001777858",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 105
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Hanxi Lin",
-     "country": "DE",
-     "club": "Mannheim-Viernheim, GC",
-     "hcp": 4.4,
-     "team": "Mannheim-Viernheim, GC",
-     "detailId": "dgv490001451463",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Heidi Ellis",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 17.4,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001521308",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 105
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Helena Baraka",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": -3.9,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001214052",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 78
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Helena Ruppert",
-     "country": "DE",
-     "club": "Marienburger GC",
-     "hcp": 10.1,
-     "team": "Marienburger GC",
-     "detailId": "dgv490001693940",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 106
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Helene Sonnenberg",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 6,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001385380",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Hui Fei Jenny Zhang",
-     "country": "DE",
-     "club": "Hamburg-Walddörfer, GC",
-     "hcp": 7.4,
-     "team": "Hamburg-Walddörfer, GC",
-     "detailId": "dgv490001242076",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Jana Gieseke",
-     "country": "DE",
-     "club": "Hof Hausen, GC",
-     "hcp": 8.2,
-     "team": "Hof Hausen, GC",
-     "detailId": "dgv490001494995",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 90
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Johanna Hetzler",
-     "country": "DE",
-     "club": "Mannheim-Viernheim, GC",
-     "hcp": 4.6,
-     "team": "Mannheim-Viernheim, GC",
-     "detailId": "dgv490001168435",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
       }
      ]
     },
@@ -685,329 +1713,9 @@
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 106
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Julina Ciesla",
-     "country": "DE",
-     "club": "Hannover, GC",
-     "hcp": 2,
-     "team": "Hannover, GC",
-     "detailId": "dgv490001455408",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 86
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Ka Hui Jessie Zhang",
-     "country": "DE",
-     "club": "Hamburg-Walddörfer, GC",
-     "hcp": 19.1,
-     "team": "Hamburg-Walddörfer, GC",
-     "detailId": "dgv490001229740",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 112
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Karoline Neufang",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 25.8,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001441118",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 123
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lea Charlotta Lange",
-     "country": "DE",
-     "club": "Hamburg-Walddörfer, GC",
-     "hcp": 21.4,
-     "team": "Hamburg-Walddörfer, GC",
-     "detailId": "dgv490001744766",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 112
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Leila Bechtold",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 2.6,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001480745",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lena Szymanska",
-     "country": "DE",
-     "club": "Berliner GC Stolper Heide",
-     "hcp": 2.5,
-     "team": "Berliner GC Stolper Heide",
-     "detailId": "dgv490002002384",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 81
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lilly May Wölflick",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 2.9,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001376685",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 82
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lorena Guth",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": -3.7,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001625266",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 78
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Lucy Marie Mullen",
-     "country": "DE",
-     "club": "Dortmunder GC",
-     "hcp": 3.6,
-     "team": "Dortmunder GC",
-     "detailId": "dgv490001311945",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 78
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Luisa Schlattmann",
-     "country": "DE",
-     "club": "Münchener GC",
-     "hcp": 3.9,
-     "team": "Münchener GC",
-     "detailId": "dgv490001423680",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 88
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Luise Jung",
-     "country": "DE",
-     "club": "St. Leon-Rot e.V., GC",
-     "hcp": -3,
-     "team": "St. Leon-Rot e.V., GC",
-     "detailId": "dgv490001426350",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 80
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Marie Runge",
-     "country": "DE",
-     "club": "Burgdorfer GC",
-     "hcp": 0.9,
-     "team": "Burgdorfer GC",
-     "detailId": "dgv490001691612",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Mathilda Hashem",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 9.3,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001529537",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 91
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Melissa Paulina Ohm",
-     "country": "DE",
-     "club": "Hamburger GC",
-     "hcp": 11.3,
-     "team": "Hamburger GC",
-     "detailId": "dgv490001808062",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 91
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Michelle Loe",
-     "country": "DE",
-     "club": "Dortmunder GC",
-     "hcp": 0.1,
-     "team": "Dortmunder GC",
-     "detailId": "dgv490001701638",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 92
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Nicole Zhang",
-     "country": "DE",
-     "club": "Kölner GC",
-     "hcp": 4.1,
-     "team": "Kölner GC",
-     "detailId": "dgv490001500620",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 83
       }
      ]
     },
@@ -1025,47 +1733,7 @@
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 105
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paula Schmitter",
-     "country": "DE",
-     "club": "Marienburger GC",
-     "hcp": 3,
-     "team": "Marienburger GC",
-     "detailId": "dgv490001280130",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 83
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Paula Stürzer",
-     "country": "DE",
-     "club": "Wörthsee, GC",
-     "hcp": 27.8,
-     "team": "Wörthsee, GC",
-     "detailId": "dgv490001624145",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 105
       }
@@ -1085,147 +1753,7 @@
      "teamRounds": [
       {
        "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 106
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Philina de Riese",
-     "country": "DE",
-     "club": "Burgdorfer GC",
-     "hcp": 0.2,
-     "team": "Burgdorfer GC",
-     "detailId": "dgv490001741871",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 85
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Philippa Runzheimer",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 3.4,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001641018",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 89
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Philippa Schaeffer",
-     "country": "DE",
-     "club": "Hamburg-Walddörfer, GC",
-     "hcp": 19.6,
-     "team": "Hamburg-Walddörfer, GC",
-     "detailId": "dgv490001644969",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 94
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Seoah Im",
-     "country": "DE",
-     "club": "Hof Hausen, GC",
-     "hcp": 13.9,
-     "team": "Hof Hausen, GC",
-     "detailId": "dgv490001854261",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 90
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Sophia Leininger",
-     "country": "DE",
-     "club": "Neuhof, GC",
-     "hcp": 2.5,
-     "team": "Neuhof, GC",
-     "detailId": "dgv490001297363",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 89
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Sophia Vetter",
-     "country": "DE",
-     "club": "Berliner GC Stolper Heide",
-     "hcp": 2.1,
-     "team": "Berliner GC Stolper Heide",
-     "detailId": "dgv490001464865",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
-       "format": "vierer",
-       "teamGross": 79
-      }
-     ]
-    },
-    {
-     "pos": null,
-     "name": "Stella Malmström",
-     "country": "DE",
-     "club": "Hof Hausen, GC",
-     "hcp": 17.9,
-     "team": "Hof Hausen, GC",
-     "detailId": "dgv490001491113",
-     "total": null,
-     "toPar": null,
-     "rounds": [],
-     "teamRounds": [
-      {
-       "day": 1,
-       "date": "2026-10-10",
+       "date": "2026-10-11",
        "format": "vierer",
        "teamGross": 106
       }
@@ -1236,80 +1764,80 @@
     {
      "pos": "1",
      "name": "St. Leon-Rot e.V., GC",
-     "total": "14"
+     "total": "25"
     },
     {
      "pos": "2",
-     "name": "Berliner GC Stolper Heide",
-     "total": "16"
+     "name": "Reichswald, GC Am",
+     "total": "30"
     },
     {
      "pos": "3",
-     "name": "Reichswald, GC Am",
-     "total": "17"
+     "name": "Berliner GC Stolper Heide",
+     "total": "41"
     },
     {
      "pos": "4",
      "name": "Hamburger GC",
-     "total": "21"
+     "total": "43"
     },
     {
      "pos": "5",
      "name": "Münchener GC",
-     "total": "23"
+     "total": "45"
     },
     {
      "pos": "6",
-     "name": "Mannheim-Viernheim, GC",
-     "total": "24"
+     "name": "Dortmunder GC",
+     "total": "50"
     },
     {
      "pos": "7",
-     "name": "Dortmunder GC",
-     "total": "26"
+     "name": "Neuhof, GC",
+     "total": "52"
     },
     {
      "pos": "8",
-     "name": "Neuhof, GC",
-     "total": "27"
+     "name": "Burgdorfer GC",
+     "total": "56"
     },
     {
      "pos": "9",
-     "name": "Hannover, GC",
-     "total": "27"
+     "name": "Mannheim-Viernheim, GC",
+     "total": "57"
     },
     {
      "pos": "10",
-     "name": "Burgdorfer GC",
-     "total": "35"
+     "name": "Hannover, GC",
+     "total": "57"
     },
     {
      "pos": "11",
-     "name": "Kölner GC",
-     "total": "44"
+     "name": "Marienburger GC",
+     "total": "62"
     },
     {
      "pos": "12",
-     "name": "Marienburger GC",
-     "total": "45"
+     "name": "Kölner GC",
+     "total": "82"
     },
     {
      "pos": "13",
      "name": "Hof Hausen, GC",
-     "total": "52"
+     "total": "112"
     },
     {
      "pos": "14",
      "name": "Hamburg-Walddörfer, GC",
-     "total": "62"
+     "total": "116"
     },
     {
      "pos": "15",
      "name": "Wörthsee, GC",
-     "total": "84"
+     "total": "200"
     }
    ]
   }
  ],
- "scrapedAt": "2026-10-10T22:48:47.223Z"
+ "scrapedAt": "2026-10-11T23:03:18.444Z"
 }
