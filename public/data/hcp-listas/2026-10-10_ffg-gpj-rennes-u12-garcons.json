@@ -14,9 +14,10 @@
    "lista": "entry",
    "name": "Gabin Tosatto",
    "country": "France",
-   "hcp": 0,
+   "hcp": -0.2,
    "clube": "GUERANDE",
-   "licFFG": "041033333"
+   "licFFG": "041033333",
+   "nota": "Plus 0,2: o JSON das saídas da FFG dá 0.0 (corta o sinal); o live-recording da FFG e o live do clube dão -0.2 / +0,2."
   },
   {
    "pos": 2,
