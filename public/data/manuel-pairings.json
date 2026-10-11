@@ -1,5 +1,5 @@
 {
-  "geradoEm": "2026-10-10T23:06:13.490Z",
+  "geradoEm": "2026-10-11T16:32:55.107Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
@@ -672,21 +672,30 @@
       "teeTime": "09:57",
       "startHole": 1,
       "campo": "Jamor",
-      "manuelScore": null,
+      "manuelScore": {
+        "gross": 82,
+        "toPar": 12
+      },
       "companheiros": [
         {
           "nome": "Tomás Sarmento de Beires",
           "fed": "48046",
           "clube": "Citynorte",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 80,
+            "toPar": 10
+          }
         },
         {
           "nome": "Sabrina Ribeiro Crisóstomo",
           "fed": "48971",
           "clube": "Vilamoura, C. G",
           "pais": null,
-          "score": null
+          "score": {
+            "gross": 66,
+            "toPar": -4
+          }
         }
       ]
     },
