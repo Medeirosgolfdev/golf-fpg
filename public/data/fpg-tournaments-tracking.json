@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-11T23:20:23.631Z",
+  "lastUpdated": "2026-10-12T07:14:50.925Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-10-11",
+  "today": "2026-10-12",
   "summary": {
     "total": 1793,
-    "complete": 822,
-    "in_progress": 2,
+    "complete": 824,
+    "in_progress": 0,
     "future": 4,
     "stale": 10,
     "excluded": 955,
@@ -419,13 +419,13 @@
       "has_draws": true,
       "draws_rounds_with_data": 1,
       "draws_players_total": 14,
-      "has_classif": false,
-      "player_count": 0,
-      "players_with_scorecards": 0,
-      "players_with_full_scorecards": 0,
-      "scorecards_source": null,
-      "scorecards_ratio": 0,
-      "full_scorecards_ratio": 0,
+      "has_classif": true,
+      "player_count": 14,
+      "players_with_scorecards": 14,
+      "players_with_full_scorecards": 14,
+      "scorecards_source": "drive-data-2026-10.json",
+      "scorecards_ratio": 1,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
       "status": "excluded",
       "excluded_reason": "Drive sem Manuel — coberto pelo pipeline drive-data"
@@ -486,12 +486,12 @@
       "has_classif": true,
       "player_count": 65,
       "players_with_scorecards": 65,
-      "players_with_full_scorecards": 31,
-      "scorecards_source": "pull-torneios006.json",
+      "players_with_full_scorecards": 65,
+      "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0.477,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "000",
@@ -508,11 +508,11 @@
       "player_count": 13,
       "players_with_scorecards": 13,
       "players_with_full_scorecards": 13,
-      "scorecards_source": "pull-torneios006.json",
+      "scorecards_source": "pull-torneios002.json",
       "scorecards_ratio": 1,
       "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "003",
