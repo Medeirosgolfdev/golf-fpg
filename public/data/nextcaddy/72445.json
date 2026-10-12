@@ -1,0 +1,713 @@
+{
+  "tourId": 72445,
+  "url": "https://www.nextcaddy.com/tour/72445",
+  "scrapedAt": "2026-10-12T12:07:04.925Z",
+  "meta": {
+    "name": "LEGS 20/07/26",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-07-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-20",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 17.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2364247
+        },
+        {
+          "pos": 2,
+          "name": "Leo Lee Potts",
+          "licencia": "AM83344726",
+          "hcp": 19.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2364249
+        },
+        {
+          "pos": 3,
+          "name": "Michael Barnes",
+          "licencia": "AM83611565",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2364293
+        },
+        {
+          "pos": 4,
+          "name": "David Robert Lethbridge",
+          "licencia": "AM83321938",
+          "hcp": 25.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2364245
+        },
+        {
+          "pos": 5,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2364254
+        },
+        {
+          "pos": 6,
+          "name": "Bruce Mcintyre",
+          "licencia": "AM83287761",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2364246
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "David Robert Lethbridge",
+      "licencia": "AM83321938",
+      "hcp": 25.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Bruce Mcintyre",
+      "licencia": "AM83287761",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ian Sandells",
+      "licencia": "AM83907255",
+      "hcp": 17.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Leo Lee Potts",
+      "licencia": "AM83344726",
+      "hcp": 19.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Michael Barnes",
+      "licencia": "AM83611565",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 29.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161074,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            13
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            45
+          ],
+          [
+            "Peor",
+            33
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161075,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            8
+          ],
+          [
+            "2",
+            3
+          ],
+          [
+            "3",
+            7
+          ],
+          [
+            "4",
+            7
+          ],
+          [
+            "5",
+            7
+          ],
+          [
+            "6",
+            6
+          ],
+          [
+            "7",
+            6
+          ],
+          [
+            "8",
+            5
+          ],
+          [
+            "9",
+            8
+          ],
+          [
+            "10",
+            6
+          ],
+          [
+            "11",
+            6
+          ],
+          [
+            "12",
+            5
+          ],
+          [
+            "13",
+            11
+          ],
+          [
+            "14",
+            7
+          ],
+          [
+            "15",
+            5
+          ],
+          [
+            "16",
+            5
+          ],
+          [
+            "17",
+            7
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161076,
+        "datos": [
+          [
+            "Hoyo",
+            "IAN SANDELLS ",
+            "LEO POTTS",
+            "MICHAEL    BARNES "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            4
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            6
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            6
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            6
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            6
+          ],
+          [
+            "Hoyo 8",
+            2,
+            0,
+            6
+          ],
+          [
+            "Hoyo 9",
+            2,
+            1,
+            8
+          ],
+          [
+            "Hoyo 10",
+            2,
+            3,
+            8
+          ],
+          [
+            "Hoyo 11",
+            2,
+            4,
+            8
+          ],
+          [
+            "Hoyo 12",
+            2,
+            5,
+            7
+          ],
+          [
+            "Hoyo 13",
+            2,
+            4,
+            7
+          ],
+          [
+            "Hoyo 14",
+            2,
+            3,
+            7
+          ],
+          [
+            "Hoyo 15",
+            2,
+            2,
+            7
+          ],
+          [
+            "Hoyo 16",
+            2,
+            3,
+            7
+          ],
+          [
+            "Hoyo 17",
+            2,
+            2,
+            7
+          ],
+          [
+            "Hoyo 18",
+            2,
+            2,
+            8
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161077,
+        "datos": [
+          [
+            "Hoyo",
+            "IAN SANDELLS ",
+            "LEO POTTS",
+            "MICHAEL    BARNES "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77614
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martinez Garcia, Jesus",
+          "holeNumber": 8,
+          "createdAt": "15/03/26 10:22:14"
+        },
+        {
+          "playerName": "Martos Herrero, Rafael",
+          "holeNumber": 5,
+          "createdAt": "15/03/26 10:35:15"
+        },
+        {
+          "playerName": "Piernavieja Dominguez, Cesar",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 10:47:38"
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos",
+          "holeNumber": 8,
+          "createdAt": "15/03/26 10:47:56"
+        },
+        {
+          "playerName": "Rodriguez Diaz, Jose Luis",
+          "holeNumber": 10,
+          "createdAt": "15/03/26 10:57:26"
+        },
+        {
+          "playerName": "Visser Visser, Linda Carol",
+          "holeNumber": 6,
+          "createdAt": "15/03/26 10:57:51"
+        },
+        {
+          "playerName": "Segovia Delgado, Jorge",
+          "holeNumber": 9,
+          "createdAt": "15/03/26 11:10:07"
+        },
+        {
+          "playerName": "Martinez Diaz, Jose Luis",
+          "holeNumber": 16,
+          "createdAt": "15/03/26 11:23:49"
+        },
+        {
+          "playerName": "Martinez Garcia, Jesus",
+          "holeNumber": 14,
+          "createdAt": "15/03/26 11:25:33"
+        },
+        {
+          "playerName": "Visser Visser, Linda Carol",
+          "holeNumber": 9,
+          "createdAt": "15/03/26 11:36:01"
+        },
+        {
+          "playerName": "Abril Fernandez, Antonio",
+          "holeNumber": 10,
+          "createdAt": "15/03/26 11:53:23"
+        },
+        {
+          "playerName": "De La Cruz Murie, Jose Luis",
+          "holeNumber": 16,
+          "createdAt": "15/03/26 12:06:43"
+        },
+        {
+          "playerName": "Rodriguez Diaz, Jose Luis",
+          "holeNumber": 18,
+          "createdAt": "15/03/26 12:23:07"
+        },
+        {
+          "playerName": "Torija Arbizu, Carlos",
+          "holeNumber": 15,
+          "createdAt": "15/03/26 12:27:51"
+        },
+        {
+          "playerName": "Montoya Alarcon, Luis Domingo",
+          "holeNumber": 13,
+          "createdAt": "15/03/26 12:28:40"
+        },
+        {
+          "playerName": "Esteban Madrid, Juan Antonio",
+          "holeNumber": 3,
+          "createdAt": "15/03/26 12:30:41"
+        },
+        {
+          "playerName": "Martinez Jereskes, Carlos",
+          "holeNumber": 4,
+          "createdAt": "15/03/26 12:36:47"
+        },
+        {
+          "playerName": "Mendo Romero, Jose Luis",
+          "holeNumber": 14,
+          "createdAt": "15/03/26 12:37:02"
+        },
+        {
+          "playerName": "Sanchez Pereira, Manuel",
+          "holeNumber": 4,
+          "createdAt": "15/03/26 12:53:34"
+        },
+        {
+          "playerName": "Esteban Madrid, Juan Antonio",
+          "holeNumber": 6,
+          "createdAt": "15/03/26 12:56:41"
+        },
+        {
+          "playerName": "Garcia De La Herran Muñoz, Carlos",
+          "holeNumber": 5,
+          "createdAt": "15/03/26 13:27:02"
+        },
+        {
+          "playerName": "Borreiros Cabrera, Miguel Angel",
+          "holeNumber": 5,
+          "createdAt": "15/03/26 13:28:19"
+        },
+        {
+          "playerName": "Monserrat Naranjo, Cristian",
+          "holeNumber": 4,
+          "createdAt": "15/03/26 13:38:12"
+        },
+        {
+          "playerName": "Corral Quintana, Adolfo",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 13:45:58"
+        },
+        {
+          "playerName": "Peñas Dominguez, Beatriz",
+          "holeNumber": 16,
+          "createdAt": "15/03/26 14:56:40"
+        },
+        {
+          "playerName": "Japon Pleguezuelo, Manuel",
+          "holeNumber": 3,
+          "createdAt": "15/03/26 15:34:30"
+        },
+        {
+          "playerName": "Icaza Bilbao, Javier Maria",
+          "holeNumber": 5,
+          "createdAt": "15/03/26 15:54:01"
+        },
+        {
+          "playerName": "Ansede Cascudo, Celso",
+          "holeNumber": 4,
+          "createdAt": "15/03/26 15:54:20"
+        },
+        {
+          "playerName": "Garraza Michaus, David",
+          "holeNumber": 3,
+          "createdAt": "15/03/26 16:05:32"
+        },
+        {
+          "playerName": "Gonzalez De Chavez Menendez, Maria Concepcion Jero",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 16:09:31"
+        },
+        {
+          "playerName": "Japon Pleguezuelo, Manuel",
+          "holeNumber": 7,
+          "createdAt": "15/03/26 16:10:02"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:04.972Z"
+}

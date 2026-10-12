@@ -1,0 +1,205 @@
+{
+  "tourId": 71867,
+  "url": "https://www.nextcaddy.com/tour/71867",
+  "scrapedAt": "2026-10-12T12:06:42.636Z",
+  "meta": {
+    "name": "6ª PRUEBA LIGA INFANTIL 18 HOYOS",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-06-28",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Cadete Masculino",
+    "categories": [
+      "INFANTIL",
+      "Cadete Masculino",
+      "Infantil Masculino",
+      "Alevin Masculino",
+      "Benjamin Masculino",
+      "Señoras",
+      "Junior Masculino",
+      "Junior Femenino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 64,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion General 18 Hoyos",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cayetano Rodriguez Nuñez",
+          "licencia": "AM85978342",
+          "hcp": 44.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 50,
+          "toPar": -14,
+          "inscribedId": 2351573
+        },
+        {
+          "pos": 2,
+          "name": "Gala Morales Perez",
+          "licencia": "AM85978344",
+          "hcp": 20.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2350195
+        },
+        {
+          "pos": 3,
+          "name": "Armand Urpi Sala",
+          "licencia": "AM85907623",
+          "hcp": 12.5,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350194
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Ramirez Rodriguez",
+          "licencia": "AM85977523",
+          "hcp": 17.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2351572
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion General 18 Hoyos",
+      "jugadores": 4
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Armand Urpi Sala",
+      "licencia": "AM85907623",
+      "hcp": 12.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Gala Morales Perez",
+      "licencia": "AM85978344",
+      "hcp": 20.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Antonio Ramirez Rodriguez",
+      "licencia": "AM85977523",
+      "hcp": 17.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Cayetano Rodriguez Nuñez",
+      "licencia": "AM85978342",
+      "hcp": 44.1,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Armand Urpi Sala",
+          "hcp": 12.5,
+          "ins": "2350194",
+          "jid": "77009",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Antonio Ramirez Rodriguez",
+          "hcp": 17.9,
+          "ins": "2351572",
+          "jid": "77009",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Gala Morales Perez",
+          "hcp": 20.2,
+          "ins": "2350195",
+          "jid": "77009",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Cayetano Rodriguez Nuñez",
+          "hcp": 44.1,
+          "ins": "2351573",
+          "jid": "77009",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77009
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/992158037_71867-6-prueba-liga-infantil-18-hoyos.pdf"
+  ]
+}

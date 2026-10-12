@@ -1,0 +1,753 @@
+{
+  "tourId": 71948,
+  "url": "https://www.nextcaddy.com/tour/71948",
+  "scrapedAt": "2026-10-12T12:07:06.510Z",
+  "meta": {
+    "name": "IIII TORNEO FIDEL CASTRO VIERNES MAÑANA",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-07-24",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-24",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cayetano Quintana Hernández",
+          "licencia": "AM91030333",
+          "hcp": 29.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2366349
+        },
+        {
+          "pos": 2,
+          "name": "Salvador Gomez Díaz",
+          "licencia": "AMG8031461",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2366338
+        },
+        {
+          "pos": 3,
+          "name": "Guillermo Dumois Ruiz",
+          "licencia": "AMG8491314",
+          "hcp": 25.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2366331
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Caldentey Raya",
+          "licencia": "AMG8478505",
+          "hcp": 32.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2366343
+        },
+        {
+          "pos": 5,
+          "name": "Javier Ramon De Vega Dominguez",
+          "licencia": "AM07615118",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2366341
+        },
+        {
+          "pos": 6,
+          "name": "Juan Jose Fernandez Gisbert",
+          "licencia": "AM00077296",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2366342
+        },
+        {
+          "pos": 7,
+          "name": "Salvador Gomez Villegas",
+          "licencia": "AM07786210",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2366347
+        },
+        {
+          "pos": 8,
+          "name": "Fidel Castro Mingorance",
+          "licencia": "AMG8914074",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2366335
+        },
+        {
+          "pos": 9,
+          "name": "Ignacio Gonzalez Perez",
+          "licencia": "AMG8821371",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2366333
+        },
+        {
+          "pos": 10,
+          "name": "Manuela Bravo Vazquez",
+          "licencia": "AMG8372853",
+          "hcp": 34.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2366337
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Dominguez Sacramento",
+          "licencia": "AMG8470857",
+          "hcp": 14.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2366348
+        },
+        {
+          "pos": 2,
+          "name": "Carlos Gonzalez De Canales Coca",
+          "licencia": "AM06357217",
+          "hcp": 8.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2366346
+        },
+        {
+          "pos": 3,
+          "name": "Yolanda Arauz Ojanguren",
+          "licencia": "AM95769149",
+          "hcp": 14.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2367787
+        },
+        {
+          "pos": 4,
+          "name": "Alejandra Fernandez Arauz",
+          "licencia": "AM95815292",
+          "hcp": 3.2,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2367788
+        },
+        {
+          "pos": 5,
+          "name": "Alfredo Menendez Gonzalez",
+          "licencia": "AM02112172",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2366336
+        },
+        {
+          "pos": 6,
+          "name": "Fernando De Vega Perez",
+          "licencia": "AM07974767",
+          "hcp": 13.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2366332
+        },
+        {
+          "pos": 7,
+          "name": "Jorge Bel Perez",
+          "licencia": "AM05606424",
+          "hcp": 4.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2366340
+        },
+        {
+          "pos": 8,
+          "name": "Diego Cascajo Ysern",
+          "licencia": "AM02796853",
+          "hcp": 2.5,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2366339
+        },
+        {
+          "pos": 9,
+          "name": "Guillermo Grande Gil",
+          "licencia": "AM07438981",
+          "hcp": 7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2366329
+        },
+        {
+          "pos": 10,
+          "name": "Rafael Fernandez Baez",
+          "licencia": "AM95769148",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2367786
+        },
+        {
+          "pos": 11,
+          "name": "Eduardo Gonzalez De Boado Fedriani",
+          "licencia": "AM02310762",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2366330
+        },
+        {
+          "pos": 12,
+          "name": "Rafael Fernandez-Basterra Sanchez",
+          "licencia": "AM02927540",
+          "hcp": 4.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2366344
+        },
+        {
+          "pos": 13,
+          "name": "Antonio Borrachero Garro",
+          "licencia": "AM07740926",
+          "hcp": 3.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2366345
+        },
+        {
+          "pos": 14,
+          "name": "Diego Cascajo Biedma",
+          "licencia": "AM02754820",
+          "hcp": 6.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2366334
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Segunda Categoria",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Primera Categoria",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Guillermo Grande Gil",
+      "licencia": "AM07438981",
+      "hcp": 7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Eduardo Gonzalez De Boado Fedriani",
+      "licencia": "AM02310762",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Guillermo Dumois Ruiz",
+      "licencia": "AMG8491314",
+      "hcp": 25.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Fernando De Vega Perez",
+      "licencia": "AM07974767",
+      "hcp": 13.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Ignacio Gonzalez Perez",
+      "licencia": "AMG8821371",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Diego Cascajo Biedma",
+      "licencia": "AM02754820",
+      "hcp": 6.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Fidel Castro Mingorance",
+      "licencia": "AMG8914074",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Alfredo Menendez Gonzalez",
+      "licencia": "AM02112172",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Salvador Gomez Díaz",
+      "licencia": "AMG8031461",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Diego Cascajo Ysern",
+      "licencia": "AM02796853",
+      "hcp": 2.5,
+      "nivel": "M"
+    },
+    {
+      "orden": 11,
+      "name": "Jorge Bel Perez",
+      "licencia": "AM05606424",
+      "hcp": 4.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Javier Ramon De Vega Dominguez",
+      "licencia": "AM07615118",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Juan Jose Fernandez Gisbert",
+      "licencia": "AM00077296",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Daniel Caldentey Raya",
+      "licencia": "AMG8478505",
+      "hcp": 32.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Rafael Fernandez-Basterra Sanchez",
+      "licencia": "AM02927540",
+      "hcp": 4.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Antonio Borrachero Garro",
+      "licencia": "AM07740926",
+      "hcp": 3.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Carlos Gonzalez De Canales Coca",
+      "licencia": "AM06357217",
+      "hcp": 8.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Salvador Gomez Villegas",
+      "licencia": "AM07786210",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Antonio Dominguez Sacramento",
+      "licencia": "AMG8470857",
+      "hcp": 14.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Cayetano Quintana Hernández",
+      "licencia": "AM91030333",
+      "hcp": 29.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Rafael Fernandez Baez",
+      "licencia": "AM95769148",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Manuela Bravo Vazquez",
+      "licencia": "AMG8372853",
+      "hcp": 34.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Yolanda Arauz Ojanguren",
+      "licencia": "AM95769149",
+      "hcp": 14.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Alejandra Fernandez Arauz",
+      "licencia": "AM95815292",
+      "hcp": 3.2,
+      "nivel": "J"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Guillermo Grande Gil",
+          "hcp": 7,
+          "ins": "2366329",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Antonio Borrachero Garro",
+          "hcp": 3.7,
+          "ins": "2366345",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Carlos Gonzalez De Canales Coca",
+          "hcp": 8.7,
+          "ins": "2366346",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Salvador Gomez Villegas",
+          "hcp": 21.2,
+          "ins": "2366347",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Guillermo Dumois Ruiz",
+          "hcp": 25.7,
+          "ins": "2366331",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Fernando De Vega Perez",
+          "hcp": 13.7,
+          "ins": "2366332",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 11,
+          "name": "Manuela Bravo Vazquez",
+          "hcp": 34.2,
+          "ins": "2366337",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Javier Ramon De Vega Dominguez",
+          "hcp": 25,
+          "ins": "2366341",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Juan Jose Fernandez Gisbert",
+          "hcp": 20.3,
+          "ins": "2366342",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 12,
+          "name": "Daniel Caldentey Raya",
+          "hcp": 32.7,
+          "ins": "2366343",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Salvador Gomez Díaz",
+          "hcp": 36,
+          "ins": "2366338",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Antonio Dominguez Sacramento",
+          "hcp": 14.5,
+          "ins": "2366348",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 13,
+          "name": "Cayetano Quintana Hernández",
+          "hcp": 29.9,
+          "ins": "2366349",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Ignacio Gonzalez Perez",
+          "hcp": 25.6,
+          "ins": "2366333",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Diego Cascajo Biedma",
+          "hcp": 6.2,
+          "ins": "2366334",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Fidel Castro Mingorance",
+          "hcp": 19,
+          "ins": "2366335",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 14,
+          "name": "Alfredo Menendez Gonzalez",
+          "hcp": 9.8,
+          "ins": "2366336",
+          "jid": "77095",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Eduardo Gonzalez De Boado Fedriani",
+          "hcp": 0.7,
+          "ins": "2366330",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Diego Cascajo Ysern",
+          "hcp": 2.5,
+          "ins": "2366339",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Jorge Bel Perez",
+          "hcp": 4.2,
+          "ins": "2366340",
+          "jid": "77095",
+          "nivel": "M"
+        },
+        {
+          "time": "09:00",
+          "tee": 15,
+          "name": "Rafael Fernandez-Basterra Sanchez",
+          "hcp": 4.6,
+          "ins": "2366344",
+          "jid": "77095",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77095
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

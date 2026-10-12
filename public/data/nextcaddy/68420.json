@@ -1,0 +1,450 @@
+{
+  "tourId": 68420,
+  "url": "https://www.nextcaddy.com/tour/68420",
+  "scrapedAt": "2026-10-12T12:03:13.003Z",
+  "meta": {
+    "name": "LIGA INFANTIL 5 HOYOS 2ª PRUEBA",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-02-22",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-02-22",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Angel Martinez Sande",
+          "licencia": "AM85000556",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2261193
+        },
+        {
+          "pos": 2,
+          "name": "Lucas Rosell Carrasco",
+          "licencia": "AM85020282",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2261194
+        },
+        {
+          "pos": 3,
+          "name": "Irene Barrio Garcia",
+          "licencia": "AM85348758",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2265116
+        },
+        {
+          "pos": 4,
+          "name": "Ana Rincon Sanchez",
+          "licencia": "AM85416142",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2261192
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 4
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Rincon Sanchez",
+      "licencia": "AM85416142",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Barrio Garcia",
+      "licencia": "AM85348758",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Miguel Angel Martinez Sande",
+      "licencia": "AM85000556",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Lucas Rosell Carrasco",
+      "licencia": "AM85020282",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Ana Rincon Sanchez",
+          "hcp": 54,
+          "ins": "2261192",
+          "jid": "73027",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Miguel Angel Martinez Sande",
+          "hcp": 54,
+          "ins": "2261193",
+          "jid": "73027",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Lucas Rosell Carrasco",
+          "hcp": 54,
+          "ins": "2261194",
+          "jid": "73027",
+          "nivel": "B"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Irene Barrio Garcia",
+          "hcp": 54,
+          "ins": "2265116",
+          "jid": "73027",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73027
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gomez Gonzalez-Santiago, Guillermo",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 14:36:41"
+        },
+        {
+          "playerName": "Goizueta Fagalde, Maria",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 14:44:09"
+        },
+        {
+          "playerName": "Van Panhuys, Paul",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 14:44:36"
+        },
+        {
+          "playerName": "Melendez Suarez De Lezo, Eduardo",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 14:45:31"
+        },
+        {
+          "playerName": "Garcia-Iglesias March, Camila",
+          "holeNumber": 10,
+          "createdAt": "26/08/25 14:51:37"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto",
+          "holeNumber": 1,
+          "createdAt": "26/08/25 15:05:18"
+        },
+        {
+          "playerName": "Otero Pita, Daniel",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 15:10:21"
+        },
+        {
+          "playerName": "Estevan Rodriguez, Valeria",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 15:11:28"
+        },
+        {
+          "playerName": "Estevan Pastor, Rafael",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 15:23:53"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 15:27:39"
+        },
+        {
+          "playerName": "Van Panhuys, Paul",
+          "holeNumber": 14,
+          "createdAt": "26/08/25 15:30:18"
+        },
+        {
+          "playerName": "Garcia-Iglesias March, Mauro",
+          "holeNumber": 4,
+          "createdAt": "26/08/25 15:32:26"
+        },
+        {
+          "playerName": "Estevan Rodriguez, Paloma",
+          "holeNumber": 5,
+          "createdAt": "26/08/25 15:48:53"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 15:51:38"
+        },
+        {
+          "playerName": "Gridilla Saavedra, Javier",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 15:51:40"
+        },
+        {
+          "playerName": "Vega Espinar, Juan",
+          "holeNumber": 13,
+          "createdAt": "26/08/25 15:59:37"
+        },
+        {
+          "playerName": "Osborne Cologan, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "26/08/25 16:03:03"
+        },
+        {
+          "playerName": "Gomez Gonzalez-Santiago, Guillermo",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 16:38:05"
+        },
+        {
+          "playerName": "Neira Lopez, Javier",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 16:39:42"
+        },
+        {
+          "playerName": "Estevan Rodriguez, Paloma",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 16:51:11"
+        },
+        {
+          "playerName": "Neira  Moreno, Javier",
+          "holeNumber": 4,
+          "createdAt": "26/08/25 16:55:57"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 17:08:49"
+        },
+        {
+          "playerName": "Ybarra Manrique, Humberto",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 17:16:56"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 17,
+          "createdAt": "26/08/25 17:22:34"
+        },
+        {
+          "playerName": "Garcia-Iglesias March, Camila",
+          "holeNumber": 1,
+          "createdAt": "26/08/25 17:24:34"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 17,
+          "createdAt": "26/08/25 17:28:06"
+        },
+        {
+          "playerName": "Garcia-Iglesias March, Camila",
+          "holeNumber": 2,
+          "createdAt": "26/08/25 17:34:43"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 18,
+          "createdAt": "26/08/25 17:38:11"
+        },
+        {
+          "playerName": "Garcia-Iglesias March, Mauro",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 17:42:00"
+        },
+        {
+          "playerName": "Osborne Coloma, Gabriel",
+          "holeNumber": 14,
+          "createdAt": "26/08/25 17:54:32"
+        },
+        {
+          "playerName": "Gomez Gonzalez-Santiago, Guillermo",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 18:00:34"
+        },
+        {
+          "playerName": "Neira  Moreno, Javier",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 18:00:37"
+        },
+        {
+          "playerName": "Ybarra Manrique, Miguel",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 18:05:53"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 3,
+          "createdAt": "26/08/25 18:21:14"
+        },
+        {
+          "playerName": "Estevan Rodriguez, Valeria",
+          "holeNumber": 15,
+          "createdAt": "26/08/25 18:25:22"
+        },
+        {
+          "playerName": "Fernandez-Duran Soto, Maria",
+          "holeNumber": 17,
+          "createdAt": "26/08/25 18:31:42"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 4,
+          "createdAt": "26/08/25 18:38:10"
+        },
+        {
+          "playerName": "Mejia Rojo, Jose Antonio",
+          "holeNumber": 8,
+          "createdAt": "26/08/25 18:48:23"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel",
+          "holeNumber": 4,
+          "createdAt": "26/08/25 19:06:24"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 16,
+          "createdAt": "26/08/25 19:07:56"
+        },
+        {
+          "playerName": "Osborne Gordon, Alejandro",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 19:17:24"
+        },
+        {
+          "playerName": "Gimenez Ceballos, Ernesto",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 19:49:19"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 19:55:42"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 19:59:55"
+        },
+        {
+          "playerName": "Ybarra Navarrete, Borja",
+          "holeNumber": 11,
+          "createdAt": "26/08/25 20:01:45"
+        },
+        {
+          "playerName": "Ybarra Navarrete, Borja",
+          "holeNumber": 15,
+          "createdAt": "26/08/25 20:01:45"
+        },
+        {
+          "playerName": "Ybarra Navarrete, Borja",
+          "holeNumber": 17,
+          "createdAt": "26/08/25 20:01:45"
+        },
+        {
+          "playerName": "Bohorquez Erquicia, Javier",
+          "holeNumber": 9,
+          "createdAt": "26/08/25 20:55:01"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Huerta Paez, Manuel",
+          "holeNumber": 12,
+          "createdAt": "26/08/25 15:41:41"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/68420_cartel_426.pdf"
+  ]
+}

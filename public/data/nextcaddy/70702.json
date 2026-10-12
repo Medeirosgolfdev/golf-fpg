@@ -1,0 +1,261 @@
+{
+  "tourId": 70702,
+  "url": "https://www.nextcaddy.com/tour/70702",
+  "scrapedAt": "2026-10-12T12:05:26.506Z",
+  "meta": {
+    "name": "5ª PRUEBA LIGA INFANTIL 5 HOYOS",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-05-17",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-17",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Irene Barrio Garcia",
+          "licencia": "AM85348758",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2317666
+        },
+        {
+          "pos": 2,
+          "name": "Ana Sampedro Morillo",
+          "licencia": "AM85977520",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 9,
+          "inscribedId": 2317668
+        },
+        {
+          "pos": 3,
+          "name": "Juan Martinez Sande",
+          "licencia": "AM85000561",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 14,
+          "inscribedId": 2320735
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "licencia": "AM85491699",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2317667
+        },
+        {
+          "pos": 5,
+          "name": "Lucas Rosell Carrasco",
+          "licencia": "AM85020282",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2317665
+        },
+        {
+          "pos": 6,
+          "name": "Miguel Angel Martinez Sande",
+          "licencia": "AM85000556",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 16,
+          "inscribedId": 2320736
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lucas Rosell Carrasco",
+      "licencia": "AM85020282",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Francisco Javier Torollo De La Escalera",
+      "licencia": "AM85491699",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Martinez Sande",
+      "licencia": "AM85000561",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Angel Martinez Sande",
+      "licencia": "AM85000556",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Irene Barrio Garcia",
+      "licencia": "AM85348758",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Sampedro Morillo",
+      "licencia": "AM85977520",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Lucas Rosell Carrasco",
+          "hcp": 54,
+          "ins": "2317665",
+          "jid": "75674",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Irene Barrio Garcia",
+          "hcp": 54,
+          "ins": "2317666",
+          "jid": "75674",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "hcp": 54,
+          "ins": "2317667",
+          "jid": "75674",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Ana Sampedro Morillo",
+          "hcp": 54,
+          "ins": "2317668",
+          "jid": "75674",
+          "nivel": "A"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Juan Martinez Sande",
+          "hcp": 54,
+          "ins": "2320735",
+          "jid": "75674",
+          "nivel": "B"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Miguel Angel Martinez Sande",
+          "hcp": 54,
+          "ins": "2320736",
+          "jid": "75674",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75674
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lopez Lopez, Vega",
+          "holeNumber": 4,
+          "createdAt": "24/11/25 11:51:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1987076809_70702-5-prueba-liga-infantil-5-hoyos.pdf"
+  ]
+}

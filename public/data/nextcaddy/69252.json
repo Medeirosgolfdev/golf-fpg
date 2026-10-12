@@ -1,0 +1,476 @@
+{
+  "tourId": 69252,
+  "url": "https://www.nextcaddy.com/tour/69252",
+  "scrapedAt": "2026-10-12T12:04:10.148Z",
+  "meta": {
+    "name": "Economato Santa Caridad",
+    "organizer": null,
+    "course": "Escuela Pública la Cartuja",
+    "courseCode": "AMG3",
+    "dateStart": "2026-03-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Economato Santa Caridad",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pedro Gordillo Cañas",
+          "licencia": "AMG3469250",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2283516
+        },
+        {
+          "pos": 2,
+          "name": "Bernardo Alvarez-Ossorio Alvarez",
+          "licencia": "AM02221801",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2283513
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Gonzalez-Valverde Hortal",
+          "licencia": "AME7349108",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2283509
+        },
+        {
+          "pos": 4,
+          "name": "Carmen Fernandez Moline",
+          "licencia": "AME7146725",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2283512
+        },
+        {
+          "pos": 5,
+          "name": "Carmen Obando Santaella",
+          "licencia": "AME7349106",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2283508
+        },
+        {
+          "pos": 6,
+          "name": "Jose Baron Alonso",
+          "licencia": "AME7134292",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2283510
+        },
+        {
+          "pos": 7,
+          "name": "Rafael Chias Ojembarrena",
+          "licencia": "AMG3894087",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2283515
+        },
+        {
+          "pos": 8,
+          "name": "Jesus Claveria Muniesa",
+          "licencia": "AMA9375366",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2283514
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Economato Santa Caridad",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carmen Obando Santaella",
+      "licencia": "AME7349106",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Fernandez Moline",
+      "licencia": "AME7146725",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ignacio Gonzalez-Valverde Hortal",
+      "licencia": "AME7349108",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Baron Alonso",
+      "licencia": "AME7134292",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Bernardo Alvarez-Ossorio Alvarez",
+      "licencia": "AM02221801",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jesus Claveria Muniesa",
+      "licencia": "AMA9375366",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Rafael Chias Ojembarrena",
+      "licencia": "AMG3894087",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Pedro Gordillo Cañas",
+      "licencia": "AMG3469250",
+      "hcp": 36,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Carmen Obando Santaella",
+          "hcp": 22.9,
+          "ins": "2283508",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Ignacio Gonzalez-Valverde Hortal",
+          "hcp": 18.5,
+          "ins": "2283509",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Jose Baron Alonso",
+          "hcp": 25.9,
+          "ins": "2283510",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Carmen Fernandez Moline",
+          "hcp": 29.5,
+          "ins": "2283512",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Bernardo Alvarez-Ossorio Alvarez",
+          "hcp": 18.3,
+          "ins": "2283513",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Jesus Claveria Muniesa",
+          "hcp": 30,
+          "ins": "2283514",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Rafael Chias Ojembarrena",
+          "hcp": 36,
+          "ins": "2283515",
+          "jid": "73997",
+          "nivel": "S"
+        },
+        {
+          "time": "13:10",
+          "tee": 1,
+          "name": "Pedro Gordillo Cañas",
+          "hcp": 36,
+          "ins": "2283516",
+          "jid": "73997",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73997
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Manzanera Redondo, Virginia - Lopez Gimenez, Blanca",
+          "holeNumber": 2,
+          "createdAt": "28/09/25 09:48:08"
+        },
+        {
+          "playerName": "Martin-Falquina Garre, Sara - Alonso De Noriega Muñiz, Lucia",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 09:51:06"
+        },
+        {
+          "playerName": "Castillejo Oriol, Catalina - Campomanes Eguiguren, Macarena",
+          "holeNumber": 1,
+          "createdAt": "28/09/25 10:36:27"
+        },
+        {
+          "playerName": "Cusi Costa, M. Eugenia - Cusi Costa, Elena",
+          "holeNumber": 2,
+          "createdAt": "28/09/25 10:38:18"
+        },
+        {
+          "playerName": "Martinez-Reboredo Ferreiro, Natalia - Urgoiti Lacarra, Ana",
+          "holeNumber": 1,
+          "createdAt": "28/09/25 10:44:58"
+        },
+        {
+          "playerName": "Jessen Rubio, Monica - Castillo Dolagaray, Maria",
+          "holeNumber": 2,
+          "createdAt": "28/09/25 10:48:23"
+        },
+        {
+          "playerName": "Martinez-Reboredo Ferreiro, Natalia - Urgoiti Lacarra, Ana",
+          "holeNumber": 3,
+          "createdAt": "28/09/25 11:18:11"
+        },
+        {
+          "playerName": "De Donesteve Goyoaga, Cristina - Juste Saenz De Tejada, Virginia",
+          "holeNumber": 9,
+          "createdAt": "28/09/25 11:19:07"
+        },
+        {
+          "playerName": "Cardenas Duro, Maria Del Mar - Garcia Martinez, Olga",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 11:24:57"
+        },
+        {
+          "playerName": "Jessen Rubio, Monica - Castillo Dolagaray, Maria",
+          "holeNumber": 5,
+          "createdAt": "28/09/25 11:32:16"
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda - Ruberte Herrero, M Angeles",
+          "holeNumber": 7,
+          "createdAt": "28/09/25 11:43:47"
+        },
+        {
+          "playerName": "Jimenez Salvador, Elena Belen - Piñon Gorricho, Maria Jesus",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 11:58:35"
+        },
+        {
+          "playerName": "Fernandez-Miranda Taboada, Maria Teresa - Gallo Alonso De Armiño, Ana",
+          "holeNumber": 10,
+          "createdAt": "28/09/25 12:04:20"
+        },
+        {
+          "playerName": "Martinez-Reboredo Ferreiro, Natalia - Urgoiti Lacarra, Ana",
+          "holeNumber": 7,
+          "createdAt": "28/09/25 12:06:04"
+        },
+        {
+          "playerName": "Berzosa Galindo, Raquel - Izcue Salinas, Mª Jesus",
+          "holeNumber": 13,
+          "createdAt": "28/09/25 12:12:36"
+        },
+        {
+          "playerName": "Martinez-Reboredo Ferreiro, Natalia - Urgoiti Lacarra, Ana",
+          "holeNumber": 8,
+          "createdAt": "28/09/25 12:18:24"
+        },
+        {
+          "playerName": "Cid Pertierra, Beatriz - Barturen Antepara, Patricia",
+          "holeNumber": 11,
+          "createdAt": "28/09/25 12:19:57"
+        },
+        {
+          "playerName": "Manzanera Redondo, Virginia - Lopez Gimenez, Blanca",
+          "holeNumber": 15,
+          "createdAt": "28/09/25 12:21:05"
+        },
+        {
+          "playerName": "Tamarit Cortina, Esther - Barbeito Guenechea, Lourdes",
+          "holeNumber": 5,
+          "createdAt": "28/09/25 12:21:12"
+        },
+        {
+          "playerName": "Castillejo Oriol, Casilda - Ruberte Herrero, M Angeles",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 12:39:06"
+        },
+        {
+          "playerName": "Martinez-Reboredo Ferreiro, Natalia - Urgoiti Lacarra, Ana",
+          "holeNumber": 10,
+          "createdAt": "28/09/25 12:49:21"
+        },
+        {
+          "playerName": "De Donesteve Goyoaga, Cristina - Juste Saenz De Tejada, Virginia",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 12:51:22"
+        },
+        {
+          "playerName": "Obieta Vilallonga, Rafaela - Ribera Segura, Sara",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 12:52:59"
+        },
+        {
+          "playerName": "Jimenez Salvador, Elena Belen - Piñon Gorricho, Maria Jesus",
+          "holeNumber": 17,
+          "createdAt": "28/09/25 12:57:54"
+        },
+        {
+          "playerName": "Jessen Rubio, Monica - Castillo Dolagaray, Maria",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 13:03:54"
+        },
+        {
+          "playerName": "Quijano Gonzalez, Sylvia - Allende Eulate, Maria Pia",
+          "holeNumber": 14,
+          "createdAt": "28/09/25 13:04:08"
+        },
+        {
+          "playerName": "Obieta Vilallonga, Rafaela - Ribera Segura, Sara",
+          "holeNumber": 15,
+          "createdAt": "28/09/25 13:31:49"
+        },
+        {
+          "playerName": "Fernandez-Miranda Taboada, Maria Teresa - Gallo Alonso De Armiño, Ana",
+          "holeNumber": 18,
+          "createdAt": "28/09/25 13:34:21"
+        },
+        {
+          "playerName": "Beñaran Arocena, Susana - Bernagaud Planes, Pascale",
+          "holeNumber": 18,
+          "createdAt": "28/09/25 13:58:18"
+        },
+        {
+          "playerName": "Tamarit Cortina, Esther - Barbeito Guenechea, Lourdes",
+          "holeNumber": 12,
+          "createdAt": "28/09/25 14:18:42"
+        },
+        {
+          "playerName": "Tamarit Cortina, Esther - Barbeito Guenechea, Lourdes",
+          "holeNumber": 15,
+          "createdAt": "28/09/25 14:39:45"
+        },
+        {
+          "playerName": "Tamarit Cortina, Esther - Barbeito Guenechea, Lourdes",
+          "holeNumber": 18,
+          "createdAt": "28/09/25 14:39:45"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

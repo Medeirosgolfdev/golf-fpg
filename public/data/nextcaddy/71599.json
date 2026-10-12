@@ -1,0 +1,845 @@
+{
+  "tourId": 71599,
+  "url": "https://www.nextcaddy.com/tour/71599",
+  "scrapedAt": "2026-10-12T12:06:14.268Z",
+  "meta": {
+    "name": "TORNEO ESCUELA GOLF 14/06/2026 (18 HOYOS)",
+    "organizer": null,
+    "course": "Club Zaudín Golf",
+    "courseCode": "AM95",
+    "dateStart": "2026-06-14",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Alevin Masculino",
+    "categories": [
+      "Alevin Masculino",
+      "Caballeros",
+      "Señoras",
+      "Benjamin Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-14",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 60,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Fernando Lozano Perez",
+          "licencia": "AM95017747",
+          "hcp": 32.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": -12,
+          "inscribedId": 2341571
+        },
+        {
+          "pos": 2,
+          "name": "Alonso Limon Fernandez",
+          "licencia": "AM95491887",
+          "hcp": 40.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": -11,
+          "inscribedId": 2341558
+        },
+        {
+          "pos": 3,
+          "name": "Matias Aguirre Caballero",
+          "licencia": "AM95963240",
+          "hcp": 16.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 45,
+          "toPar": -9,
+          "inscribedId": 2341565
+        },
+        {
+          "pos": 4,
+          "name": "Luis Gutierrez Loro",
+          "licencia": "AM95915165",
+          "hcp": 12.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2341562
+        },
+        {
+          "pos": 5,
+          "name": "Gonzalo Albarracin Rabadan",
+          "licencia": "AM07989891",
+          "hcp": 21.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2341568
+        },
+        {
+          "pos": 6,
+          "name": "Juan Santos Conde",
+          "licencia": "AM95963072",
+          "hcp": 7.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2341563
+        },
+        {
+          "pos": 7,
+          "name": "Alejandro Gomez Morillo",
+          "licencia": "AMF7965735",
+          "hcp": 13.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2341554
+        },
+        {
+          "pos": 8,
+          "name": "Lucia Grimaldi Ferrer",
+          "licencia": "AM95949848",
+          "hcp": 17.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2341560
+        },
+        {
+          "pos": 9,
+          "name": "Miguel Sedeño Martin",
+          "licencia": "AM95967511",
+          "hcp": 15,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2341555
+        },
+        {
+          "pos": 10,
+          "name": "Hugo Lopez Diaz",
+          "licencia": "AM71373692",
+          "hcp": 16,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2341561
+        },
+        {
+          "pos": 11,
+          "name": "Pablo Feliu Touron-Figueroa",
+          "licencia": "AM95993035",
+          "hcp": 25.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2341566
+        },
+        {
+          "pos": 12,
+          "name": "Lucas Santos Conde",
+          "licencia": "AM95157797",
+          "hcp": 29.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2341564
+        },
+        {
+          "pos": 13,
+          "name": "Pedro Ortega Peinado",
+          "licencia": "AMF7090571",
+          "hcp": 12.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2342753
+        },
+        {
+          "pos": 14,
+          "name": "Miguel Cotan Mendez",
+          "licencia": "AM95252670",
+          "hcp": 25.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2341569
+        },
+        {
+          "pos": 15,
+          "name": "Pablo Barragan Diaz",
+          "licencia": "AM95936348",
+          "hcp": 28.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2341556
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alejandro Gomez Morillo",
+      "licencia": "AMF7965735",
+      "hcp": 13.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Barragan Diaz",
+      "licencia": "AM95936348",
+      "hcp": 28.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Alonso Limon Fernandez",
+      "licencia": "AM95491887",
+      "hcp": 40.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Gutierrez Loro",
+      "licencia": "AM95915165",
+      "hcp": 12.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Santos Conde",
+      "licencia": "AM95963072",
+      "hcp": 7.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Matias Aguirre Caballero",
+      "licencia": "AM95963240",
+      "hcp": 16.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Pablo Feliu Touron-Figueroa",
+      "licencia": "AM95993035",
+      "hcp": 25.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Gonzalo Albarracin Rabadan",
+      "licencia": "AM07989891",
+      "hcp": 21.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Fernando Lozano Perez",
+      "licencia": "AM95017747",
+      "hcp": 32.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Miguel Sedeño Martin",
+      "licencia": "AM95967511",
+      "hcp": 15,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Hugo Lopez Diaz",
+      "licencia": "AM71373692",
+      "hcp": 16,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Cotan Mendez",
+      "licencia": "AM95252670",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Pedro Ortega Peinado",
+      "licencia": "AMF7090571",
+      "hcp": 12.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Lucia Grimaldi Ferrer",
+      "licencia": "AM95949848",
+      "hcp": 17.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Lucas Santos Conde",
+      "licencia": "AM95157797",
+      "hcp": 29.2,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Juan Santos Conde",
+          "hcp": 7.8,
+          "ins": "2341563",
+          "jid": "76703",
+          "nivel": "I"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Luis Gutierrez Loro",
+          "hcp": 12.7,
+          "ins": "2341562",
+          "jid": "76703",
+          "nivel": "C"
+        },
+        {
+          "time": "08:50",
+          "tee": 1,
+          "name": "Alejandro Gomez Morillo",
+          "hcp": 13.2,
+          "ins": "2341554",
+          "jid": "76703",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Miguel Sedeño Martin",
+          "hcp": 15,
+          "ins": "2341555",
+          "jid": "76703",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Hugo Lopez Diaz",
+          "hcp": 16,
+          "ins": "2341561",
+          "jid": "76703",
+          "nivel": "A"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Matias Aguirre Caballero",
+          "hcp": 16.2,
+          "ins": "2341565",
+          "jid": "76703",
+          "nivel": "C"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Lucia Grimaldi Ferrer",
+          "hcp": 17.1,
+          "ins": "2341560",
+          "jid": "76703",
+          "nivel": "A"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Gonzalo Albarracin Rabadan",
+          "hcp": 21.4,
+          "ins": "2341568",
+          "jid": "76703",
+          "nivel": "I"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Pablo Feliu Touron-Figueroa",
+          "hcp": 25.2,
+          "ins": "2341566",
+          "jid": "76703",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Miguel Cotan Mendez",
+          "hcp": 25.3,
+          "ins": "2341569",
+          "jid": "76703",
+          "nivel": "A"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Pablo Barragan Diaz",
+          "hcp": 28.1,
+          "ins": "2341556",
+          "jid": "76703",
+          "nivel": "C"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Lucas Santos Conde",
+          "hcp": 29.2,
+          "ins": "2341564",
+          "jid": "76703",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Fernando Lozano Perez",
+          "hcp": 32.1,
+          "ins": "2341571",
+          "jid": "76703",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alonso Limon Fernandez",
+          "hcp": 40.4,
+          "ins": "2341558",
+          "jid": "76703",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Pedro Ortega Peinado",
+          "hcp": 12.4,
+          "ins": "2342753",
+          "jid": "76703",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76703
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Pizarro Maderal, Francisco Javier",
+          "holeNumber": 4,
+          "createdAt": "23/04/26 11:45:57"
+        },
+        {
+          "playerName": "Pizarro Maderal, Francisco Javier",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 12:45:23"
+        },
+        {
+          "playerName": "Pizarro Maderal, Francisco Javier",
+          "holeNumber": 13,
+          "createdAt": "23/04/26 13:16:10"
+        },
+        {
+          "playerName": "Pizarro Maderal, Francisco Javier",
+          "holeNumber": 15,
+          "createdAt": "23/04/26 13:33:01"
+        },
+        {
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 12:51:04"
+        },
+        {
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 15,
+          "createdAt": "23/04/26 13:39:37"
+        },
+        {
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 1,
+          "createdAt": "23/04/26 14:20:09"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Salvador",
+          "holeNumber": 5,
+          "createdAt": "23/04/26 14:18:55"
+        },
+        {
+          "playerName": "Perez Garrido, Andres",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 10:12:37"
+        },
+        {
+          "playerName": "Matias Lucas, Santiago",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 09:20:11"
+        },
+        {
+          "playerName": "Almaraz Sanchez, Diego",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 11:10:22"
+        },
+        {
+          "playerName": "Bajo Prieto, Jose Maria",
+          "holeNumber": 9,
+          "createdAt": "23/04/26 11:33:02"
+        },
+        {
+          "playerName": "Bajo Prieto, Jose Maria",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 11:33:02"
+        },
+        {
+          "playerName": "Bajo Prieto, Jose Maria",
+          "holeNumber": 16,
+          "createdAt": "23/04/26 11:33:02"
+        },
+        {
+          "playerName": "Huertas Pascual, Ivan",
+          "holeNumber": 5,
+          "createdAt": "23/04/26 09:37:08"
+        },
+        {
+          "playerName": "De Antonio Palermo, Alberto",
+          "holeNumber": 1,
+          "createdAt": "23/04/26 11:36:21"
+        },
+        {
+          "playerName": "De Antonio Palermo, Alberto",
+          "holeNumber": 3,
+          "createdAt": "23/04/26 11:51:03"
+        },
+        {
+          "playerName": "De Antonio Palermo, Alberto",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 12:36:21"
+        },
+        {
+          "playerName": "De Antonio Perez-Villamil, Dario",
+          "holeNumber": 11,
+          "createdAt": "23/04/26 12:20:47"
+        },
+        {
+          "playerName": "De Antonio Perez-Villamil, Dario",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 12:49:40"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 3,
+          "createdAt": "23/04/26 11:50:51"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 13:37:28"
+        },
+        {
+          "playerName": "Vazquez De Prada Martinez, Jesus",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 12:49:43"
+        },
+        {
+          "playerName": "Vazquez De Prada Martinez, Jesus",
+          "holeNumber": 1,
+          "createdAt": "23/04/26 13:34:36"
+        },
+        {
+          "playerName": "Vazquez De Prada Martinez, Jesus",
+          "holeNumber": 6,
+          "createdAt": "23/04/26 14:30:25"
+        },
+        {
+          "playerName": "Rojano Martinez, Jose Manuel",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 13:18:43"
+        },
+        {
+          "playerName": "Gonzalez Pertejo, Jose Antonio",
+          "holeNumber": 9,
+          "createdAt": "23/04/26 12:45:38"
+        },
+        {
+          "playerName": "Gonzalez Pertejo, Jose Antonio",
+          "holeNumber": 11,
+          "createdAt": "23/04/26 13:07:38"
+        },
+        {
+          "playerName": "Alvarez Requejo, Jose Maria",
+          "holeNumber": 1,
+          "createdAt": "23/04/26 13:33:40"
+        },
+        {
+          "playerName": "San Jose De La Rosa, Mariano",
+          "holeNumber": 12,
+          "createdAt": "23/04/26 12:57:34"
+        },
+        {
+          "playerName": "San Jose De La Rosa, Mariano",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 13:18:08"
+        },
+        {
+          "playerName": "Seisdedos Alonso, Angel Antonio",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 10:33:23"
+        },
+        {
+          "playerName": "Seisdedos Alonso, Angel Antonio",
+          "holeNumber": 6,
+          "createdAt": "23/04/26 11:18:26"
+        },
+        {
+          "playerName": "Hernandez Maestre, Enrique",
+          "holeNumber": 6,
+          "createdAt": "23/04/26 09:04:24"
+        },
+        {
+          "playerName": "Amarillas Gundin, Vicente",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 12:27:36"
+        },
+        {
+          "playerName": "Amarillas Gundin, Vicente",
+          "holeNumber": 12,
+          "createdAt": "23/04/26 12:49:57"
+        },
+        {
+          "playerName": "Martin Alvarez, Marino",
+          "holeNumber": 13,
+          "createdAt": "23/04/26 14:17:06"
+        },
+        {
+          "playerName": "Tavera Hernandez, Victor",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 12:27:56"
+        },
+        {
+          "playerName": "Tavera Hernandez, Victor",
+          "holeNumber": 12,
+          "createdAt": "23/04/26 13:14:50"
+        },
+        {
+          "playerName": "Tavera Hernandez, Victor",
+          "holeNumber": 16,
+          "createdAt": "23/04/26 13:51:33"
+        },
+        {
+          "playerName": "Tavera Hernandez, Victor",
+          "holeNumber": 17,
+          "createdAt": "23/04/26 14:01:19"
+        },
+        {
+          "playerName": "Tavera Hernandez, Victor",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 14:09:16"
+        },
+        {
+          "playerName": "Asuncion Guerra, Tomas",
+          "holeNumber": 5,
+          "createdAt": "23/04/26 11:54:59"
+        },
+        {
+          "playerName": "Asuncion Guerra, Tomas",
+          "holeNumber": 2,
+          "createdAt": "23/04/26 14:30:53"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 2,
+          "createdAt": "23/04/26 11:45:22"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 9,
+          "createdAt": "23/04/26 12:45:12"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 16,
+          "createdAt": "23/04/26 13:58:08"
+        },
+        {
+          "playerName": "Delgado Prieto, Martiniano",
+          "holeNumber": 5,
+          "createdAt": "23/04/26 11:47:21"
+        },
+        {
+          "playerName": "Delgado Prieto, Martiniano",
+          "holeNumber": 17,
+          "createdAt": "23/04/26 13:46:24"
+        },
+        {
+          "playerName": "Martin Alonso, Diego",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 09:57:54"
+        },
+        {
+          "playerName": "Martin Alonso, Diego",
+          "holeNumber": 14,
+          "createdAt": "23/04/26 10:39:09"
+        },
+        {
+          "playerName": "Garcia Carranza, Julio Cesar",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 12:21:02"
+        },
+        {
+          "playerName": "Garcia Carranza, Julio Cesar",
+          "holeNumber": 17,
+          "createdAt": "23/04/26 13:53:36"
+        },
+        {
+          "playerName": "Peñalba Lopez, Carlos",
+          "holeNumber": 1,
+          "createdAt": "23/04/26 14:17:50"
+        },
+        {
+          "playerName": "Magariño Alvarez, David",
+          "holeNumber": 6,
+          "createdAt": "23/04/26 14:45:02"
+        },
+        {
+          "playerName": "Magariño Alvarez, David",
+          "holeNumber": 10,
+          "createdAt": "23/04/26 14:45:02"
+        },
+        {
+          "playerName": "Magariño Alvarez, David",
+          "holeNumber": 11,
+          "createdAt": "23/04/26 14:45:02"
+        },
+        {
+          "playerName": "Perez Calvo, Guillermo",
+          "holeNumber": 8,
+          "createdAt": "23/04/26 12:27:46"
+        },
+        {
+          "playerName": "Castillo Bravo, Ruben",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 13:13:28"
+        },
+        {
+          "playerName": "Castillo Bravo, Ruben",
+          "holeNumber": 3,
+          "createdAt": "23/04/26 13:42:17"
+        },
+        {
+          "playerName": "Carbajo Cascon, Jose Miguel",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 13:10:10"
+        },
+        {
+          "playerName": "Martin Arguello, Carlos",
+          "holeNumber": 13,
+          "createdAt": "23/04/26 12:52:49"
+        },
+        {
+          "playerName": "Martin Arguello, Carlos",
+          "holeNumber": 18,
+          "createdAt": "23/04/26 13:36:48"
+        },
+        {
+          "playerName": "Poncela Hernandez, Jose Ramon",
+          "holeNumber": 5,
+          "createdAt": "23/04/26 14:29:55"
+        }
+      ]
+    },
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Asuncion Guerra, Tomas",
+          "holeNumber": 3,
+          "createdAt": "23/04/26 11:36:31"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3482647767_71599-torneo-escuela-golf-14-06-2026-18-hoyos.pdf"
+  ]
+}

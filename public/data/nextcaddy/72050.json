@@ -1,0 +1,609 @@
+{
+  "tourId": 72050,
+  "url": "https://www.nextcaddy.com/tour/72050",
+  "scrapedAt": "2026-10-12T12:06:45.827Z",
+  "meta": {
+    "name": "Liga Masculina 30.06.2026",
+    "organizer": null,
+    "course": "Real Club de Campo de Malaga",
+    "courseCode": "AM01",
+    "dateStart": "2026-06-30",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Arjona Martin",
+          "licencia": "AM01616751",
+          "hcp": 8.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2353103
+        },
+        {
+          "pos": 2,
+          "name": "Luis Miguel Narbona Medina",
+          "licencia": "AM01209618",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2353104
+        },
+        {
+          "pos": 3,
+          "name": "Marcos. Ant Garcia Miñana",
+          "licencia": "AM01359500",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2353105
+        },
+        {
+          "pos": 4,
+          "name": "Jesus Manuel Tortosa Burgos",
+          "licencia": "AM01615363",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2353106
+        },
+        {
+          "pos": 5,
+          "name": "Diego Blanco Fernandez",
+          "licencia": "AM01137673",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2353107
+        },
+        {
+          "pos": 6,
+          "name": "Salvador Diaz Rico",
+          "licencia": "AM01696539",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2353108
+        },
+        {
+          "pos": 7,
+          "name": "Gabriel Romero Muñoz",
+          "licencia": "AM01933056",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2353109
+        },
+        {
+          "pos": 8,
+          "name": "Candido Zambrana Fernandez",
+          "licencia": "AM01284780",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2353111
+        },
+        {
+          "pos": 9,
+          "name": "Daniel Garcia Lluch",
+          "licencia": "AM01610480",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2353110
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Arjona Martin",
+      "licencia": "AM01616751",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Luis Miguel Narbona Medina",
+      "licencia": "AM01209618",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Marcos. Ant Garcia Miñana",
+      "licencia": "AM01359500",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jesus Manuel Tortosa Burgos",
+      "licencia": "AM01615363",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Diego Blanco Fernandez",
+      "licencia": "AM01137673",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Salvador Diaz Rico",
+      "licencia": "AM01696539",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Gabriel Romero Muñoz",
+      "licencia": "AM01933056",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Daniel Garcia Lluch",
+      "licencia": "AM01610480",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Candido Zambrana Fernandez",
+      "licencia": "AM01284780",
+      "hcp": 23.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160540,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            39
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            59
+          ],
+          [
+            "Peor",
+            61
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160541,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            9
+          ],
+          [
+            "2",
+            9
+          ],
+          [
+            "3",
+            4
+          ],
+          [
+            "4",
+            10
+          ],
+          [
+            "5",
+            17
+          ],
+          [
+            "6",
+            4
+          ],
+          [
+            "7",
+            15
+          ],
+          [
+            "8",
+            12
+          ],
+          [
+            "9",
+            6
+          ],
+          [
+            "10",
+            11
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            10
+          ],
+          [
+            "13",
+            10
+          ],
+          [
+            "14",
+            12
+          ],
+          [
+            "15",
+            15
+          ],
+          [
+            "16",
+            15
+          ],
+          [
+            "17",
+            13
+          ],
+          [
+            "18",
+            12
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160542,
+        "datos": [
+          [
+            "Hoyo",
+            "ANTONIO   ARJONA MARTIN",
+            "LUIS M. NARBONA MEDINA",
+            "MARCOS GARCIA MIÑANA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            1,
+            3
+          ],
+          [
+            "Hoyo 6",
+            -4,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            -4,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            -2,
+            4
+          ],
+          [
+            "Hoyo 9",
+            -5,
+            -2,
+            3
+          ],
+          [
+            "Hoyo 10",
+            -4,
+            -2,
+            3
+          ],
+          [
+            "Hoyo 11",
+            -5,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -6,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            -6,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            -7,
+            -2,
+            3
+          ],
+          [
+            "Hoyo 17",
+            -6,
+            0,
+            3
+          ],
+          [
+            "Hoyo 18",
+            -6,
+            0,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160543,
+        "datos": [
+          [
+            "Hoyo",
+            "ANTONIO   ARJONA MARTIN",
+            "LUIS M. NARBONA MEDINA",
+            "MARCOS GARCIA MIÑANA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77199
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:02.678Z"
+}

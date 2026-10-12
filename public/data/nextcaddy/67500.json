@@ -1,0 +1,611 @@
+{
+  "tourId": 67500,
+  "url": "https://www.nextcaddy.com/tour/67500",
+  "scrapedAt": "2026-10-12T12:02:18.681Z",
+  "meta": {
+    "name": "NORDICOS NORTE 14.01.2026",
+    "organizer": null,
+    "course": "Real Club de Golf Guadalmina",
+    "courseCode": "AM51",
+    "dateStart": "2026-01-14",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-14",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lena Hoglund Karin",
+          "licencia": "AM51345826",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2244644
+        },
+        {
+          "pos": 2,
+          "name": "Annika Norrby Svanberg",
+          "licencia": "AM51321893",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2244649
+        },
+        {
+          "pos": 3,
+          "name": "Viveca Nordstrom",
+          "licencia": "AM51148720",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2244607
+        },
+        {
+          "pos": 4,
+          "name": "Irene Lundgren Berit",
+          "licencia": "AM51612200",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2244646
+        },
+        {
+          "pos": 5,
+          "name": "Ann-Christin Lindstrom",
+          "licencia": "AM51776063",
+          "hcp": 32.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2244634
+        },
+        {
+          "pos": 6,
+          "name": "Eun Hee Eriksson",
+          "licencia": "AM51615541",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2244657
+        },
+        {
+          "pos": 7,
+          "name": "Kristina Bjornander",
+          "licencia": "AM51886623",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2244650
+        },
+        {
+          "pos": 8,
+          "name": "Camilla Grahn",
+          "licencia": "AM51903646",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2244608
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carsten Magnusson",
+          "licencia": "AM51701603",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2244636
+        },
+        {
+          "pos": 2,
+          "name": "Sven-Olof Krantz",
+          "licencia": "AM51945369",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2244600
+        },
+        {
+          "pos": 3,
+          "name": "Jan Svanberg Rudolf",
+          "licencia": "AM51321900",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2244638
+        },
+        {
+          "pos": 4,
+          "name": "Wilhelm Redelius Arne",
+          "licencia": "AM51611034",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2244599
+        },
+        {
+          "pos": 5,
+          "name": "Erik Grahn",
+          "licencia": "AM51903652",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2244640
+        },
+        {
+          "pos": 6,
+          "name": "Jan Eriksson",
+          "licencia": "AM51615542",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2244575
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jan Eriksson",
+      "licencia": "AM51615542",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Wilhelm Redelius Arne",
+      "licencia": "AM51611034",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Sven-Olof Krantz",
+      "licencia": "AM51945369",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carsten Magnusson",
+      "licencia": "AM51701603",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jan Svanberg Rudolf",
+      "licencia": "AM51321900",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Erik Grahn",
+      "licencia": "AM51903652",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Viveca Nordstrom",
+      "licencia": "AM51148720",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Camilla Grahn",
+      "licencia": "AM51903646",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ann-Christin Lindstrom",
+      "licencia": "AM51776063",
+      "hcp": 32.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Lena Hoglund Karin",
+      "licencia": "AM51345826",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Irene Lundgren Berit",
+      "licencia": "AM51612200",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Annika Norrby Svanberg",
+      "licencia": "AM51321893",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Kristina Bjornander",
+      "licencia": "AM51886623",
+      "hcp": 28.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Eun Hee Eriksson",
+      "licencia": "AM51615541",
+      "hcp": 23.8,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Jan Eriksson",
+          "hcp": 26.8,
+          "ins": "2244575",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Wilhelm Redelius Arne",
+          "hcp": 23.2,
+          "ins": "2244599",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Sven-Olof Krantz",
+          "hcp": 22.8,
+          "ins": "2244600",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Viveca Nordstrom",
+          "hcp": 24.8,
+          "ins": "2244607",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Camilla Grahn",
+          "hcp": 30.7,
+          "ins": "2244608",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Ann-Christin Lindstrom",
+          "hcp": 32.1,
+          "ins": "2244634",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Carsten Magnusson",
+          "hcp": 18.5,
+          "ins": "2244636",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Jan Svanberg Rudolf",
+          "hcp": 25.8,
+          "ins": "2244638",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Erik Grahn",
+          "hcp": 29.9,
+          "ins": "2244640",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Lena Hoglund Karin",
+          "hcp": 18,
+          "ins": "2244644",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Irene Lundgren Berit",
+          "hcp": 25.5,
+          "ins": "2244646",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Annika Norrby Svanberg",
+          "hcp": 30.5,
+          "ins": "2244649",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Kristina Bjornander",
+          "hcp": 28.2,
+          "ins": "2244650",
+          "jid": "71962",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Eun Hee Eriksson",
+          "hcp": 23.8,
+          "ins": "2244657",
+          "jid": "71962",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71962
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Walsoe, Alexander",
+          "holeNumber": 9,
+          "createdAt": "05/07/25 16:57:55"
+        },
+        {
+          "playerName": "O`sullivan, Ross",
+          "holeNumber": 10,
+          "createdAt": "05/07/25 16:57:55"
+        },
+        {
+          "playerName": "Lomax, David",
+          "holeNumber": 1,
+          "createdAt": "05/07/25 16:57:55"
+        },
+        {
+          "playerName": "Lomax, David",
+          "holeNumber": 18,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Howarth, Andrew",
+          "holeNumber": 5,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Abbasciano, Jordan Antony",
+          "holeNumber": 9,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Marco, Adrian De",
+          "holeNumber": 13,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Solbrig, Christian Andreas",
+          "holeNumber": 5,
+          "createdAt": "05/07/25 16:57:56"
+        },
+        {
+          "playerName": "Burke, Kevin",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 16:57:58"
+        },
+        {
+          "playerName": "Li, Ni",
+          "holeNumber": 14,
+          "createdAt": "05/07/25 16:57:58"
+        },
+        {
+          "playerName": "Hillier, Caron",
+          "holeNumber": 2,
+          "createdAt": "05/07/25 16:58:00"
+        },
+        {
+          "playerName": "Hillier, Caron",
+          "holeNumber": 16,
+          "createdAt": "05/07/25 16:58:00"
+        },
+        {
+          "playerName": "Mott, Joanna",
+          "holeNumber": 10,
+          "createdAt": "05/07/25 16:58:01"
+        },
+        {
+          "playerName": "Clelland, George",
+          "holeNumber": 8,
+          "createdAt": "05/07/25 16:58:02"
+        },
+        {
+          "playerName": "Marshall, Robert",
+          "holeNumber": 1,
+          "createdAt": "05/07/25 16:58:03"
+        },
+        {
+          "playerName": "Ford, Graham Peter",
+          "holeNumber": 9,
+          "createdAt": "05/07/25 16:58:03"
+        },
+        {
+          "playerName": "Ford, Julie",
+          "holeNumber": 11,
+          "createdAt": "05/07/25 16:58:04"
+        },
+        {
+          "playerName": "Harrington, Martin",
+          "holeNumber": 17,
+          "createdAt": "05/07/25 16:58:05"
+        },
+        {
+          "playerName": "Smith Mallabar, Tracy",
+          "holeNumber": 13,
+          "createdAt": "05/07/25 16:58:07"
+        },
+        {
+          "playerName": "Rivas Lledo, Abraham",
+          "holeNumber": 15,
+          "createdAt": "05/07/25 16:58:07"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

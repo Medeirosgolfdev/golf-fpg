@@ -1,0 +1,627 @@
+{
+  "tourId": 67294,
+  "url": "https://www.nextcaddy.com/tour/67294",
+  "scrapedAt": "2026-10-12T12:25:35.266Z",
+  "meta": {
+    "name": "5º TORNEO INFANTIL (5 HOYOS)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-01-11",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-11",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      8,
+      4,
+      14,
+      10,
+      12,
+      18,
+      2,
+      6,
+      16
+    ],
+    "meters": [
+      253,
+      294,
+      265,
+      388,
+      134,
+      283,
+      322,
+      429,
+      125
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Benjumea Rodriguez",
+          "licencia": "AM02483394",
+          "hcp": 50.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2243148,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                3,
+                4,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Valdenebro Olavarria",
+          "licencia": "AM02466882",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2243147,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "licencia": "AM02466106",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2243100,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Gonzalo Osborne Duque",
+          "licencia": "AM02517851",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2243080,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                4,
+                5,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Enrique Osborne Loring",
+          "licencia": "AM02488226",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2243158,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                8,
+                3,
+                3,
+                8,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Jose Maria Estrada Garcia De Alvear",
+          "licencia": "AM02508016",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2244003,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                8,
+                6,
+                5,
+                4,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Maria Ruiz-Cabello Galobart",
+          "licencia": "AM02467957",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2243150,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                7,
+                5,
+                4,
+                3,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Alfonso Gonzalez Cortes",
+          "licencia": "AM02028921",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2243088,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                8,
+                5,
+                5,
+                8,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Rocio Farran Galobart",
+          "licencia": "AM02518039",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2243152,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                9,
+                8,
+                6,
+                7,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Gonzalo Osborne Duque",
+      "licencia": "AM02517851",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Alfonso Gonzalez Cortes",
+      "licencia": "AM02028921",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Jeronimo Rodriguez Astolfi",
+      "licencia": "AM02466106",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Valdenebro Olavarria",
+      "licencia": "AM02466882",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Pablo Benjumea Rodriguez",
+      "licencia": "AM02483394",
+      "hcp": 50.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Enrique Osborne Loring",
+      "licencia": "AM02488226",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Maria Estrada Garcia De Alvear",
+      "licencia": "AM02508016",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Ruiz-Cabello Galobart",
+      "licencia": "AM02467957",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Rocio Farran Galobart",
+      "licencia": "AM02518039",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Pablo Benjumea Rodriguez",
+          "hcp": 50.5,
+          "ins": "2243148",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Ignacio Valdenebro Olavarria",
+          "hcp": 51,
+          "ins": "2243147",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Enrique Osborne Loring",
+          "hcp": 51,
+          "ins": "2243158",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "hcp": 51.5,
+          "ins": "2243100",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Gonzalo Osborne Duque",
+          "hcp": 53.5,
+          "ins": "2243080",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Alfonso Gonzalez Cortes",
+          "hcp": 54,
+          "ins": "2243088",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Maria Ruiz-Cabello Galobart",
+          "hcp": 54,
+          "ins": "2243150",
+          "jid": "71704",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Rocio Farran Galobart",
+          "hcp": 54,
+          "ins": "2243152",
+          "jid": "71704",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71704
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Larrucea De La Rica, Javier",
+          "holeNumber": 10,
+          "createdAt": "21/06/25 16:44:26"
+        },
+        {
+          "playerName": "Larrucea De La Rica, Javier",
+          "holeNumber": 8,
+          "createdAt": "21/06/25 16:44:26"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

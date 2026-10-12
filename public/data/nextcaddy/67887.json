@@ -1,0 +1,713 @@
+{
+  "tourId": 67887,
+  "url": "https://www.nextcaddy.com/tour/67887",
+  "scrapedAt": "2026-10-12T12:26:34.611Z",
+  "meta": {
+    "name": "2 prueba pequecircuito race to powa",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-01-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-25",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      3,
+      3,
+      3,
+      4,
+      4,
+      4,
+      3,
+      4
+    ],
+    "si": [
+      13,
+      11,
+      7,
+      17,
+      5,
+      1,
+      9,
+      3,
+      15
+    ],
+    "meters": [
+      196,
+      136,
+      85,
+      94,
+      215,
+      250,
+      222,
+      118,
+      190
+    ],
+    "parTotal": 32
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enzo Ramirez Rueda",
+          "licencia": "AM83497090",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2251320,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                6,
+                5,
+                6,
+                8,
+                9,
+                6,
+                5
+              ],
+              "total": 60,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Villalobos Gonzalez",
+          "licencia": "AM83492505",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2251321,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                6,
+                5,
+                7,
+                9,
+                6,
+                9,
+                5,
+                7
+              ],
+              "total": 63,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Avril Cardenas Martin",
+          "licencia": "AM83494926",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2251322,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                5,
+                5,
+                7,
+                null,
+                null,
+                7,
+                9
+              ],
+              "total": null,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "MARTA OCA ACOSTA",
+          "licencia": "AM83492501",
+          "hcp": 54,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2251318,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                null,
+                null,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "CARLA OCA ACOSTA",
+          "licencia": "AM83492502",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2251319,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                5,
+                null,
+                7,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Arianna Rose Ruiz Connolly",
+          "licencia": "AM83480557",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2251317,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                7,
+                7,
+                9,
+                7,
+                null,
+                9,
+                6,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                136,
+                85,
+                94,
+                215,
+                250,
+                222,
+                118,
+                190
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Arianna Rose Ruiz Connolly",
+      "licencia": "AM83480557",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "MARTA OCA ACOSTA",
+      "licencia": "AM83492501",
+      "hcp": 54,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "CARLA OCA ACOSTA",
+      "licencia": "AM83492502",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Avril Cardenas Martin",
+      "licencia": "AM83494926",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Enzo Ramirez Rueda",
+      "licencia": "AM83497090",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Villalobos Gonzalez",
+      "licencia": "AM83492505",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157416,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            0
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            2
+          ],
+          [
+            "Peor",
+            33
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157417,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            18
+          ],
+          [
+            "2",
+            15
+          ],
+          [
+            "3",
+            13
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            17
+          ],
+          [
+            "6",
+            15
+          ],
+          [
+            "7",
+            12
+          ],
+          [
+            "8",
+            9
+          ],
+          [
+            "9",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157418,
+        "datos": [
+          [
+            "Hoyo",
+            "miguel villalobos gonzalez",
+            "ENZO RAMIREZ RUEDA",
+            "AVRIL CARDENAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 2",
+            3,
+            4,
+            4
+          ],
+          [
+            "Hoyo 3",
+            3,
+            5,
+            4
+          ],
+          [
+            "Hoyo 4",
+            5,
+            6,
+            4
+          ],
+          [
+            "Hoyo 5",
+            7,
+            6,
+            5
+          ],
+          [
+            "Hoyo 6",
+            7,
+            8,
+            7
+          ],
+          [
+            "Hoyo 7",
+            9,
+            10,
+            9
+          ],
+          [
+            "Hoyo 8",
+            9,
+            11,
+            11
+          ],
+          [
+            "Hoyo 9",
+            11,
+            11,
+            13
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157419,
+        "datos": [
+          [
+            "Hoyo",
+            "miguel villalobos gonzalez",
+            "ENZO RAMIREZ RUEDA",
+            "AVRIL CARDENAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 2",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            2,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 7",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 8",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 9",
+            2,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72403
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:43.261Z"
+}

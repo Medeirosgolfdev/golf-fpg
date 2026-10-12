@@ -1,0 +1,339 @@
+{
+  "tourId": 70258,
+  "url": "https://www.nextcaddy.com/tour/70258",
+  "scrapedAt": "2026-10-12T12:04:48.243Z",
+  "meta": {
+    "name": "SUECOS. NORTE 24.4",
+    "organizer": null,
+    "course": "Real Club de Golf Guadalmina",
+    "courseCode": "AM51",
+    "dateStart": "2026-04-24",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-24",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Arne Lindstrom",
+          "licencia": "AM51072462",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2304182
+        },
+        {
+          "pos": 2,
+          "name": "Carsten Magnusson",
+          "licencia": "AM51701603",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2304183
+        },
+        {
+          "pos": 3,
+          "name": "Claes Wretlind",
+          "licencia": "AM51280129",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2304179
+        },
+        {
+          "pos": 4,
+          "name": "Billy Hoglund Lars",
+          "licencia": "AM51345824",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2304185
+        },
+        {
+          "pos": 5,
+          "name": "Anders Lofgren",
+          "licencia": "AM51900863",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2304181
+        },
+        {
+          "pos": 6,
+          "name": "Peder Bjornander",
+          "licencia": "AM51886621",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2304180
+        },
+        {
+          "pos": 7,
+          "name": "Lennart Hans Osterlund",
+          "licencia": "AM51086735",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2304173
+        },
+        {
+          "pos": 8,
+          "name": "Claes Forsgardh",
+          "licencia": "AM51284315",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2304184
+        },
+        {
+          "pos": 9,
+          "name": "Peter Gavrell",
+          "licencia": "AM51603867",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2304176
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lennart Hans Osterlund",
+      "licencia": "AM51086735",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Peter Gavrell",
+      "licencia": "AM51603867",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Claes Wretlind",
+      "licencia": "AM51280129",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Peder Bjornander",
+      "licencia": "AM51886621",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Anders Lofgren",
+      "licencia": "AM51900863",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Arne Lindstrom",
+      "licencia": "AM51072462",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Carsten Magnusson",
+      "licencia": "AM51701603",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Claes Forsgardh",
+      "licencia": "AM51284315",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Billy Hoglund Lars",
+      "licencia": "AM51345824",
+      "hcp": 26.8,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Lennart Hans Osterlund",
+          "hcp": 14.8,
+          "ins": "2304173",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Peter Gavrell",
+          "hcp": 22,
+          "ins": "2304176",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Claes Wretlind",
+          "hcp": 21.4,
+          "ins": "2304179",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Peder Bjornander",
+          "hcp": 22.3,
+          "ins": "2304180",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Anders Lofgren",
+          "hcp": 19.1,
+          "ins": "2304181",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Arne Lindstrom",
+          "hcp": 28.1,
+          "ins": "2304182",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Carsten Magnusson",
+          "hcp": 18.3,
+          "ins": "2304183",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Claes Forsgardh",
+          "hcp": 21.2,
+          "ins": "2304184",
+          "jid": "75182",
+          "nivel": "S"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Billy Hoglund Lars",
+          "hcp": 26.8,
+          "ins": "2304185",
+          "jid": "75182",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75182
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3937796696_70258-suecos-norte-24-4.pdf"
+  ]
+}

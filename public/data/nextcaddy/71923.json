@@ -1,0 +1,984 @@
+{
+  "tourId": 71923,
+  "url": "https://www.nextcaddy.com/tour/71923",
+  "scrapedAt": "2026-10-12T12:06:40.941Z",
+  "meta": {
+    "name": "Torneo Junio",
+    "organizer": null,
+    "course": "Arruzafa Golf",
+    "courseCode": "AMJ7",
+    "dateStart": "2026-06-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap 2A Subcategoria General, Hcp Desde 36.0",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Cerezo Cabrero",
+          "licencia": "AMJ7474632",
+          "hcp": 40.9,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2351288
+        },
+        {
+          "pos": 2,
+          "name": "Luis Martin Alcaide",
+          "licencia": "AM57413918",
+          "hcp": 45.8,
+          "nivel": "Y",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2352029
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Montero Perez-Barquero",
+          "licencia": "AM06171805",
+          "hcp": 38.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2351874
+        },
+        {
+          "pos": 4,
+          "name": "Javier Sánchez Álvarez",
+          "licencia": "AMK3033884",
+          "hcp": 47.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2351870
+        },
+        {
+          "pos": 5,
+          "name": "Gonzalo Perez Gonzalez",
+          "licencia": "AMK3021846",
+          "hcp": 43.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2352026
+        },
+        {
+          "pos": 6,
+          "name": "Luis Sanchez Vasco",
+          "licencia": "AM10487638",
+          "hcp": 48.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2351871
+        },
+        {
+          "pos": 7,
+          "name": "Angel Melendez Teodoro",
+          "licencia": "AMJ7474121",
+          "hcp": 48,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2351209
+        },
+        {
+          "pos": 8,
+          "name": "Mariano Rosa Aguayo",
+          "licencia": "AM06929249",
+          "hcp": 40.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2351875
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Garrido Gimenez",
+          "licencia": "AMJ7524158",
+          "hcp": 54,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2352025
+        },
+        {
+          "pos": 10,
+          "name": "Pablo Mejias San Nicolas",
+          "licencia": "AMJ7028932",
+          "hcp": 40.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2351873
+        },
+        {
+          "pos": 11,
+          "name": "Nicolas Martin Alcaide",
+          "licencia": "AM57529339",
+          "hcp": 54,
+          "nivel": "Y",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2352030
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap 1A Subcategoria General, Hcp Hasta 36.0",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Romero Campos",
+          "licencia": "AM95011130",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2351208
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Susin Romero",
+          "licencia": "AMJ7166814",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2351284
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio De Leon Y Aroca",
+          "licencia": "AMJ7072681",
+          "hcp": 30.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2352031
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Salinas Castelo",
+          "licencia": "AMJ7487853",
+          "hcp": 34.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2352027
+        },
+        {
+          "pos": 5,
+          "name": "Jorge Hernandez Fernandez",
+          "licencia": "AMJ7509409",
+          "hcp": 30.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2351289
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Suarez-Varela Gimenez",
+          "licencia": "AM06618727",
+          "hcp": 17.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2351285
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Javier Martinez Almansa",
+          "licencia": "AMJ7343540",
+          "hcp": 34.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2351283
+        },
+        {
+          "pos": 8,
+          "name": "Rafael Montero Merina",
+          "licencia": "AM06192060",
+          "hcp": 17.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2352028
+        },
+        {
+          "pos": 9,
+          "name": "Fernando Onieva Calero",
+          "licencia": "AMJ7475034",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2351287
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Cerezo Garcia",
+          "licencia": "AM10355948",
+          "hcp": 15.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351286
+        },
+        {
+          "pos": 11,
+          "name": "Javier Sanchez Fernandez",
+          "licencia": "AM70065466",
+          "hcp": 36,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2351869
+        },
+        {
+          "pos": 12,
+          "name": "Ramon Mendez Garcia",
+          "licencia": "AM06962513",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2351210
+        },
+        {
+          "pos": 13,
+          "name": "Miguel Angel Serrano Galan",
+          "licencia": "AM06949258",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2351876
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap 2A Subcategoria General, Hcp Desde 36.0",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "Handicap 1A Subcategoria General, Hcp Hasta 36.0",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Juan Romero Campos",
+      "licencia": "AM95011130",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Angel Melendez Teodoro",
+      "licencia": "AMJ7474121",
+      "hcp": 48,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Ramon Mendez Garcia",
+      "licencia": "AM06962513",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Javier Martinez Almansa",
+      "licencia": "AMJ7343540",
+      "hcp": 34.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Susin Romero",
+      "licencia": "AMJ7166814",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Rafael Suarez-Varela Gimenez",
+      "licencia": "AM06618727",
+      "hcp": 17.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Cerezo Garcia",
+      "licencia": "AM10355948",
+      "hcp": 15.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Fernando Onieva Calero",
+      "licencia": "AMJ7475034",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Cerezo Cabrero",
+      "licencia": "AMJ7474632",
+      "hcp": 40.9,
+      "nivel": "M"
+    },
+    {
+      "orden": 10,
+      "name": "Jorge Hernandez Fernandez",
+      "licencia": "AMJ7509409",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Javier Sanchez Fernandez",
+      "licencia": "AM70065466",
+      "hcp": 36,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Javier Sánchez Álvarez",
+      "licencia": "AMK3033884",
+      "hcp": 47.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Luis Sanchez Vasco",
+      "licencia": "AM10487638",
+      "hcp": 48.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Pablo Mejias San Nicolas",
+      "licencia": "AMJ7028932",
+      "hcp": 40.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Montero Perez-Barquero",
+      "licencia": "AM06171805",
+      "hcp": 38.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Mariano Rosa Aguayo",
+      "licencia": "AM06929249",
+      "hcp": 40.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Miguel Angel Serrano Galan",
+      "licencia": "AM06949258",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Carlos Garrido Gimenez",
+      "licencia": "AMJ7524158",
+      "hcp": 54,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Gonzalo Perez Gonzalez",
+      "licencia": "AMK3021846",
+      "hcp": 43.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 20,
+      "name": "Miguel Salinas Castelo",
+      "licencia": "AMJ7487853",
+      "hcp": 34.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Rafael Montero Merina",
+      "licencia": "AM06192060",
+      "hcp": 17.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Luis Martin Alcaide",
+      "licencia": "AM57413918",
+      "hcp": 45.8,
+      "nivel": "Y"
+    },
+    {
+      "orden": 23,
+      "name": "Nicolas Martin Alcaide",
+      "licencia": "AM57529339",
+      "hcp": 54,
+      "nivel": "Y"
+    },
+    {
+      "orden": 24,
+      "name": "Ignacio De Leon Y Aroca",
+      "licencia": "AMJ7072681",
+      "hcp": 30.4,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "18:00",
+          "tee": 1,
+          "name": "Carlos Garrido Gimenez",
+          "hcp": 54,
+          "ins": "2352025",
+          "jid": "77070",
+          "nivel": "M"
+        },
+        {
+          "time": "18:00",
+          "tee": 1,
+          "name": "Miguel Salinas Castelo",
+          "hcp": 34.9,
+          "ins": "2352027",
+          "jid": "77070",
+          "nivel": "M"
+        },
+        {
+          "time": "18:00",
+          "tee": 1,
+          "name": "Rafael Montero Merina",
+          "hcp": 17.1,
+          "ins": "2352028",
+          "jid": "77070",
+          "nivel": "S"
+        },
+        {
+          "time": "18:09",
+          "tee": 1,
+          "name": "Gonzalo Perez Gonzalez",
+          "hcp": 43.1,
+          "ins": "2352026",
+          "jid": "77070",
+          "nivel": "B"
+        },
+        {
+          "time": "18:09",
+          "tee": 1,
+          "name": "Luis Martin Alcaide",
+          "hcp": 45.8,
+          "ins": "2352029",
+          "jid": "77070",
+          "nivel": "Y"
+        },
+        {
+          "time": "18:09",
+          "tee": 1,
+          "name": "Nicolas Martin Alcaide",
+          "hcp": 54,
+          "ins": "2352030",
+          "jid": "77070",
+          "nivel": "Y"
+        },
+        {
+          "time": "18:09",
+          "tee": 1,
+          "name": "Ignacio De Leon Y Aroca",
+          "hcp": 30.4,
+          "ins": "2352031",
+          "jid": "77070",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160504,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            171
+          ],
+          [
+            "Birdie",
+            27
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            131
+          ],
+          [
+            "Peor",
+            87
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160505,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            19
+          ],
+          [
+            "2",
+            11
+          ],
+          [
+            "3",
+            24
+          ],
+          [
+            "4",
+            24
+          ],
+          [
+            "5",
+            25
+          ],
+          [
+            "6",
+            14
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            21
+          ],
+          [
+            "9",
+            22
+          ],
+          [
+            "10",
+            17
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            23
+          ],
+          [
+            "13",
+            23
+          ],
+          [
+            "14",
+            20
+          ],
+          [
+            "15",
+            17
+          ],
+          [
+            "16",
+            16
+          ],
+          [
+            "17",
+            15
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160506,
+        "datos": [
+          [
+            "Hoyo",
+            "Francisco Cerezo Cabrero",
+            "JUAN ROMERO CAMPOS",
+            "MANUEL SUSIN ROMERO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -5,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -5,
+            -5,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -5,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -5,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -6,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -6,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            -6,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            -5,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -6,
+            -5,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -6,
+            -5,
+            -3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160507,
+        "datos": [
+          [
+            "Hoyo",
+            "Francisco Cerezo Cabrero",
+            "JUAN ROMERO CAMPOS",
+            "MANUEL SUSIN ROMERO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77070
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

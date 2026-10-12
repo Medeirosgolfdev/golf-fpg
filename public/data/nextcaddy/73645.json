@@ -1,0 +1,526 @@
+{
+  "tourId": 73645,
+  "url": "https://www.nextcaddy.com/tour/73645",
+  "scrapedAt": "2026-10-12T12:26:33.629Z",
+  "meta": {
+    "name": "LIGA INFANTIL 5 HOYOS 7ª PRUEBA",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-09-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-20",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5
+    ],
+    "si": [
+      14,
+      2,
+      12,
+      6,
+      18,
+      4,
+      8,
+      16,
+      10
+    ],
+    "meters": [
+      196,
+      225,
+      73,
+      246,
+      271,
+      281,
+      96,
+      220,
+      339
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "licencia": "AM85491699",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2400900,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                8,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Javier Larrea Clemente",
+          "licencia": "AM85523992",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2406567,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                4,
+                9,
+                7,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Ana Rincon Sanchez",
+          "licencia": "AM85416142",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2404428,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                4,
+                null,
+                7,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Irene Barrio Garcia",
+          "licencia": "AM85348758",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2404430,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                6,
+                4,
+                null,
+                8,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Marcos Iñiguez Lazo",
+          "licencia": "AM85023597",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2404429,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                11,
+                9,
+                9,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Ana Sampedro Morillo",
+          "licencia": "AM85977520",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2406569,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                11,
+                6,
+                null,
+                7,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Lucas Rosell Carrasco",
+          "licencia": "AM85020282",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2406835,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                6,
+                11,
+                10,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francisco Javier Torollo De La Escalera",
+      "licencia": "AM85491699",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marcos Iñiguez Lazo",
+      "licencia": "AM85023597",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Larrea Clemente",
+      "licencia": "AM85523992",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Lucas Rosell Carrasco",
+      "licencia": "AM85020282",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Ana Rincon Sanchez",
+      "licencia": "AM85416142",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Irene Barrio Garcia",
+      "licencia": "AM85348758",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Ana Sampedro Morillo",
+      "licencia": "AM85977520",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Irene Barrio Garcia",
+          "hcp": 54,
+          "ins": "2404430",
+          "jid": "78891",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Ana Rincon Sanchez",
+          "hcp": 54,
+          "ins": "2404428",
+          "jid": "78891",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Ana Sampedro Morillo",
+          "hcp": 54,
+          "ins": "2406569",
+          "jid": "78891",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "hcp": 54,
+          "ins": "2400900",
+          "jid": "78891",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Marcos Iñiguez Lazo",
+          "hcp": 54,
+          "ins": "2404429",
+          "jid": "78891",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Javier Larrea Clemente",
+          "hcp": 54,
+          "ins": "2406567",
+          "jid": "78891",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78891
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Sanchez-Arjona Valls, Pedro",
+          "holeNumber": 6,
+          "createdAt": "06/03/26 10:54:19"
+        },
+        {
+          "playerName": "Mesa Mateo, Antonio",
+          "holeNumber": 13,
+          "createdAt": "06/03/26 12:33:04"
+        },
+        {
+          "playerName": "Molina Mackinlay, Guillermo",
+          "holeNumber": 15,
+          "createdAt": "06/03/26 13:51:23"
+        },
+        {
+          "playerName": "Maestro Aguilera, Carlos",
+          "holeNumber": 13,
+          "createdAt": "06/03/26 12:19:03"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/240761999_73645-liga-infantil-5-hoyos.pdf"
+  ]
+}

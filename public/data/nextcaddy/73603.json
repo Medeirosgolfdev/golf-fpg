@@ -31,7 +31,67 @@
   "leaderboardPdfOnly": true,
   "categoryNames": {},
   "inscritos": [],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:15",
+          "tee": 1,
+          "name": "Elena Perez-Bryan Del Castillo",
+          "hcp": 53,
+          "ins": "2403732",
+          "jid": "78840",
+          "nivel": "B"
+        },
+        {
+          "time": "15:15",
+          "tee": 1,
+          "name": "Sergio Morillo Gonzalez",
+          "hcp": 54,
+          "ins": "2403316",
+          "jid": "78840",
+          "nivel": "B"
+        },
+        {
+          "time": "15:15",
+          "tee": 1,
+          "name": "Gabriela Sans Prado",
+          "hcp": 54,
+          "ins": "2407734",
+          "jid": "78840",
+          "nivel": "B"
+        },
+        {
+          "time": "15:25",
+          "tee": 1,
+          "name": "Paula Labrot-Moreno Sanchez",
+          "hcp": 54,
+          "ins": "2407959",
+          "jid": "78840",
+          "nivel": "B"
+        },
+        {
+          "time": "15:25",
+          "tee": 1,
+          "name": "Carola Krauel Pineda",
+          "hcp": 54,
+          "ins": "2408013",
+          "jid": "78840",
+          "nivel": "B"
+        },
+        {
+          "time": "15:25",
+          "tee": 1,
+          "name": "Martina Borrero Gimilio",
+          "hcp": 54,
+          "ins": "2408647",
+          "jid": "78840",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -67,5 +127,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-09-21T09:56:09.206Z"
+  "horariosScrapedAt": "2026-10-12T12:10:08.563Z"
 }

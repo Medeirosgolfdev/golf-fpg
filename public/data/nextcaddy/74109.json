@@ -1,0 +1,385 @@
+{
+  "tourId": 74109,
+  "url": "https://www.nextcaddy.com/tour/74109",
+  "scrapedAt": "2026-10-12T12:08:42.100Z",
+  "meta": {
+    "name": "VENTANA ROTA 4",
+    "organizer": null,
+    "course": "Villa Nueva Golf Resort",
+    "courseCode": "AMD5",
+    "dateStart": "2026-10-01",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-01",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jor Garcia-Morales Rodriguez-Arias",
+          "licencia": "9900384974",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2412996
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Blanco Hernandez",
+          "licencia": "9918455253",
+          "hcp": 10.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2412991
+        },
+        {
+          "pos": 3,
+          "name": "Juan Antolin Martin Oncina",
+          "licencia": "9918406255",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2412989
+        },
+        {
+          "pos": 4,
+          "name": "Javier Vivas Oliva",
+          "licencia": "9901513022",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2412985
+        },
+        {
+          "pos": 5,
+          "name": "Julian Alvarez Arroyo",
+          "licencia": "9900384973",
+          "hcp": 32.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2412988
+        },
+        {
+          "pos": 6,
+          "name": "Guzman Escudero Garcia",
+          "licencia": "9918400914",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2412986
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Sanchez Sanchez",
+          "licencia": "9918400488",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2412987
+        },
+        {
+          "pos": 8,
+          "name": "Jose Maria Cid Delgado",
+          "licencia": "9918396801",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2412990
+        },
+        {
+          "pos": 9,
+          "name": "Pedro Marino Blanco Van De Voort",
+          "licencia": "EXX1912540",
+          "hcp": 30.2,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2413023
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Javier Vivas Oliva",
+      "licencia": "9901513022",
+      "hcp": 23.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Guzman Escudero Garcia",
+      "licencia": "9918400914",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio Sanchez Sanchez",
+      "licencia": "9918400488",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Julian Alvarez Arroyo",
+      "licencia": "9900384973",
+      "hcp": 32.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Antolin Martin Oncina",
+      "licencia": "9918406255",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Maria Cid Delgado",
+      "licencia": "9918396801",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Miguel Blanco Hernandez",
+      "licencia": "9918455253",
+      "hcp": 10.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jor Garcia-Morales Rodriguez-Arias",
+      "licencia": "9900384974",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Pedro Marino Blanco Van De Voort",
+      "licencia": "EXX1912540",
+      "hcp": 30.2,
+      "nivel": "M"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Antonio Sanchez Sanchez",
+          "hcp": 27.3,
+          "ins": "2412987",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Pedro Marino Blanco Van De Voort",
+          "hcp": 30.2,
+          "ins": "2413023",
+          "jid": "79368",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Julian Alvarez Arroyo",
+          "hcp": 32.9,
+          "ins": "2412988",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Guzman Escudero Garcia",
+          "hcp": 18,
+          "ins": "2412986",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Juan Antolin Martin Oncina",
+          "hcp": 26.7,
+          "ins": "2412989",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Jor Garcia-Morales Rodriguez-Arias",
+          "hcp": 19,
+          "ins": "2412996",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Miguel Blanco Hernandez",
+          "hcp": 10.9,
+          "ins": "2412991",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Jose Maria Cid Delgado",
+          "hcp": 22.2,
+          "ins": "2412990",
+          "jid": "79368",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Javier Vivas Oliva",
+          "hcp": 23.5,
+          "ins": "2412985",
+          "jid": "79368",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79368
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Perez Gomez, Jose Manuel",
+          "holeNumber": 2,
+          "createdAt": "24/03/26 08:39:05"
+        },
+        {
+          "playerName": "Perez Carmona, Manuel",
+          "holeNumber": 6,
+          "createdAt": "24/03/26 09:41:04"
+        },
+        {
+          "playerName": "Fernandez Siguenza, Fernando",
+          "holeNumber": 6,
+          "createdAt": "24/03/26 09:46:42"
+        },
+        {
+          "playerName": "Martinez Jimenez, Pedro",
+          "holeNumber": 8,
+          "createdAt": "24/03/26 09:50:46"
+        },
+        {
+          "playerName": "Martin Terron, Antonio",
+          "holeNumber": 9,
+          "createdAt": "24/03/26 10:18:55"
+        },
+        {
+          "playerName": "Pavon Duarte, Antonio",
+          "holeNumber": 6,
+          "createdAt": "24/03/26 10:52:02"
+        },
+        {
+          "playerName": "Uribe Sarabia, Jose Manuel",
+          "holeNumber": 8,
+          "createdAt": "24/03/26 11:03:01"
+        },
+        {
+          "playerName": "Ocaña Martin, Fernando",
+          "holeNumber": 7,
+          "createdAt": "24/03/26 11:34:30"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2577425523_74109-ventana-rota-4.pdf"
+  ]
+}

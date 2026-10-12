@@ -1,0 +1,695 @@
+{
+  "tourId": 67428,
+  "url": "https://www.nextcaddy.com/tour/67428",
+  "scrapedAt": "2026-10-12T12:02:14.624Z",
+  "meta": {
+    "name": "COMPETICION SEMANAL 10/01/26",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-01-10",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-11",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alistair Marshall",
+          "licencia": "AM83888581",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2243251
+        },
+        {
+          "pos": 2,
+          "name": "JASON LAW",
+          "licencia": "TAM8716987",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2243250
+        },
+        {
+          "pos": 3,
+          "name": "Alvaro Martinez Navarro",
+          "licencia": "AM83701334",
+          "hcp": 3.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2243253
+        },
+        {
+          "pos": 4,
+          "name": "Nicolas Meixner",
+          "licencia": "AM84083045",
+          "hcp": 2.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2243247
+        },
+        {
+          "pos": 5,
+          "name": "JACQUES PACCANI",
+          "licencia": "TAM0002555",
+          "hcp": 11.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2243254
+        },
+        {
+          "pos": 6,
+          "name": "Liam Butler Triggs",
+          "licencia": "AM58072140",
+          "hcp": 5.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2243249
+        },
+        {
+          "pos": 7,
+          "name": "Yury Tabolich",
+          "licencia": "AM83995173",
+          "hcp": 9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2243252
+        },
+        {
+          "pos": 8,
+          "name": "Tobias Becker",
+          "licencia": "AM83354541",
+          "hcp": 13.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2243255
+        },
+        {
+          "pos": 9,
+          "name": "Julio Mellado Roldan",
+          "licencia": "AMI5171908",
+          "hcp": 10.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2243248
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Nicolas Meixner",
+      "licencia": "AM84083045",
+      "hcp": 2.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Alistair Marshall",
+      "licencia": "AM83888581",
+      "hcp": 9.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Yury Tabolich",
+      "licencia": "AM83995173",
+      "hcp": 9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "JACQUES PACCANI",
+      "licencia": "TAM0002555",
+      "hcp": 11.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Julio Mellado Roldan",
+      "licencia": "AMI5171908",
+      "hcp": 10.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Liam Butler Triggs",
+      "licencia": "AM58072140",
+      "hcp": 5.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "JASON LAW",
+      "licencia": "TAM8716987",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Alvaro Martinez Navarro",
+      "licencia": "AM83701334",
+      "hcp": 3.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Tobias Becker",
+      "licencia": "AM83354541",
+      "hcp": 13.1,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:54",
+          "tee": 19,
+          "name": "Liam Butler Triggs",
+          "hcp": 5.2,
+          "ins": "2243249",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "08:54",
+          "tee": 19,
+          "name": "JASON LAW",
+          "hcp": 1.5,
+          "ins": "2243250",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "08:54",
+          "tee": 19,
+          "name": "Alvaro Martinez Navarro",
+          "hcp": 3.2,
+          "ins": "2243253",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "09:03",
+          "tee": 19,
+          "name": "Alistair Marshall",
+          "hcp": 9.1,
+          "ins": "2243251",
+          "jid": "71888",
+          "nivel": "S"
+        },
+        {
+          "time": "09:03",
+          "tee": 19,
+          "name": "Yury Tabolich",
+          "hcp": 9,
+          "ins": "2243252",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "09:03",
+          "tee": 19,
+          "name": "JACQUES PACCANI",
+          "hcp": 11.4,
+          "ins": "2243254",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "09:12",
+          "tee": 19,
+          "name": "Nicolas Meixner",
+          "hcp": 2.6,
+          "ins": "2243247",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "09:12",
+          "tee": 19,
+          "name": "Julio Mellado Roldan",
+          "hcp": 10.6,
+          "ins": "2243248",
+          "jid": "71888",
+          "nivel": "M"
+        },
+        {
+          "time": "09:12",
+          "tee": 19,
+          "name": "Tobias Becker",
+          "hcp": 13.1,
+          "ins": "2243255",
+          "jid": "71888",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157112,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            67
+          ],
+          [
+            "Birdie",
+            9
+          ],
+          [
+            "Eagle",
+            1
+          ],
+          [
+            "Bogey",
+            50
+          ],
+          [
+            "Peor",
+            31
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157113,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            3
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            3
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            4
+          ],
+          [
+            "6",
+            7
+          ],
+          [
+            "7",
+            4
+          ],
+          [
+            "8",
+            5
+          ],
+          [
+            "9",
+            4
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            8
+          ],
+          [
+            "12",
+            2
+          ],
+          [
+            "13",
+            5
+          ],
+          [
+            "14",
+            8
+          ],
+          [
+            "15",
+            8
+          ],
+          [
+            "16",
+            9
+          ],
+          [
+            "17",
+            10
+          ],
+          [
+            "18",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157114,
+        "datos": [
+          [
+            "Hoyo",
+            "ALISTAIR MARSHALL ",
+            "JASON LAW",
+            "NICOLAS MEIXENER"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            3
+          ],
+          [
+            "Hoyo 7",
+            1,
+            2,
+            3
+          ],
+          [
+            "Hoyo 8",
+            0,
+            2,
+            4
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            4
+          ],
+          [
+            "Hoyo 10",
+            1,
+            3,
+            4
+          ],
+          [
+            "Hoyo 11",
+            2,
+            4,
+            5
+          ],
+          [
+            "Hoyo 12",
+            1,
+            3,
+            6
+          ],
+          [
+            "Hoyo 13",
+            1,
+            3,
+            6
+          ],
+          [
+            "Hoyo 14",
+            1,
+            2,
+            5
+          ],
+          [
+            "Hoyo 15",
+            2,
+            2,
+            5
+          ],
+          [
+            "Hoyo 16",
+            1,
+            2,
+            5
+          ],
+          [
+            "Hoyo 17",
+            2,
+            2,
+            5
+          ],
+          [
+            "Hoyo 18",
+            2,
+            4,
+            5
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157115,
+        "datos": [
+          [
+            "Hoyo",
+            "ALISTAIR MARSHALL ",
+            "JASON LAW",
+            "NICOLAS MEIXENER"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            2,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71888
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

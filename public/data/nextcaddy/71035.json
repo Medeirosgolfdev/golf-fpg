@@ -1,0 +1,295 @@
+{
+  "tourId": 71035,
+  "url": "https://www.nextcaddy.com/tour/71035",
+  "scrapedAt": "2026-10-12T12:05:40.376Z",
+  "meta": {
+    "name": "TORNEO ESCUELA GOLF 24/05/2026 (18 HOYOS)",
+    "organizer": null,
+    "course": "Club Zaudín Golf",
+    "courseCode": "AM95",
+    "dateStart": "2026-05-24",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Alevin Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-24",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 66,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Albarracin Rabadan",
+          "licencia": "AM07989891",
+          "hcp": 25.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 51,
+          "toPar": -15,
+          "inscribedId": 2325574
+        },
+        {
+          "pos": 2,
+          "name": "Pablo Feliu Touron-Figueroa",
+          "licencia": "AM95993035",
+          "hcp": 32.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2325572
+        },
+        {
+          "pos": 3,
+          "name": "Ana Diaz-Barcelo Gomez",
+          "licencia": "AM95468352",
+          "hcp": 39.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2325576
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Cornejo Martinez",
+          "licencia": "AM95068376",
+          "hcp": 29.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2325573
+        },
+        {
+          "pos": 5,
+          "name": "Roberto Perez Rodriguez",
+          "licencia": "AM95017952",
+          "hcp": 23.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2326923
+        },
+        {
+          "pos": 6,
+          "name": "Luis Gutierrez Loro",
+          "licencia": "AM95915165",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2325571
+        },
+        {
+          "pos": 7,
+          "name": "Isabel Diaz-Barcelo Gomez",
+          "licencia": "AM95468356",
+          "hcp": 42,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2325575
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Luis Gutierrez Loro",
+      "licencia": "AM95915165",
+      "hcp": 12.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Feliu Touron-Figueroa",
+      "licencia": "AM95993035",
+      "hcp": 32.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Cornejo Martinez",
+      "licencia": "AM95068376",
+      "hcp": 29.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Gonzalo Albarracin Rabadan",
+      "licencia": "AM07989891",
+      "hcp": 25.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Roberto Perez Rodriguez",
+      "licencia": "AM95017952",
+      "hcp": 23.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Isabel Diaz-Barcelo Gomez",
+      "licencia": "AM95468356",
+      "hcp": 42,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Diaz-Barcelo Gomez",
+      "licencia": "AM95468352",
+      "hcp": 39.7,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Luis Gutierrez Loro",
+          "hcp": 12.8,
+          "ins": "2325571",
+          "jid": "76066",
+          "nivel": "C"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Gonzalo Albarracin Rabadan",
+          "hcp": 25.7,
+          "ins": "2325574",
+          "jid": "76066",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Roberto Perez Rodriguez",
+          "hcp": 23.8,
+          "ins": "2326923",
+          "jid": "76066",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Miguel Cornejo Martinez",
+          "hcp": 29.1,
+          "ins": "2325573",
+          "jid": "76066",
+          "nivel": "C"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Pablo Feliu Touron-Figueroa",
+          "hcp": 32.8,
+          "ins": "2325572",
+          "jid": "76066",
+          "nivel": "C"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ana Diaz-Barcelo Gomez",
+          "hcp": 39.7,
+          "ins": "2325576",
+          "jid": "76066",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Isabel Diaz-Barcelo Gomez",
+          "hcp": 42,
+          "ins": "2325575",
+          "jid": "76066",
+          "nivel": "C"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76066
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Rancaño Gijon, Jose Maria",
+          "holeNumber": 14,
+          "createdAt": "04/12/25 17:14:44"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2949888598_71035-torneo-escuela-golf-24-05-2026-18-hoyos.pdf"
+  ]
+}

@@ -1,0 +1,623 @@
+{
+  "tourId": 69678,
+  "url": "https://www.nextcaddy.com/tour/69678",
+  "scrapedAt": "2026-10-12T12:26:05.278Z",
+  "meta": {
+    "name": "4ª PRUEBA LIGA INFANTIL (9 HOYOS)",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-04-12",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Cadete Masculino",
+    "categories": [
+      "INFANTIL",
+      "Cadete Masculino",
+      "Señoras",
+      "Infantil Masculino",
+      "Alevin Masculino",
+      "Benjamin Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-12",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5
+    ],
+    "si": [
+      14,
+      2,
+      12,
+      6,
+      18,
+      4,
+      8,
+      16,
+      10
+    ],
+    "meters": [
+      292,
+      331,
+      121,
+      328,
+      370,
+      342,
+      145,
+      279,
+      403
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pilar Ramirez Rodriguez",
+          "licencia": "AM85077487",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2295879,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                7,
+                7,
+                6,
+                6,
+                4,
+                9,
+                9
+              ],
+              "total": 61,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Rodrigo Marin Fernandez",
+          "licencia": "AMG3481821",
+          "hcp": 48,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2295878,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                8,
+                null,
+                8,
+                6,
+                7,
+                5,
+                5,
+                7
+              ],
+              "total": null,
+              "meters": [
+                312,
+                346,
+                135,
+                350,
+                396,
+                360,
+                160,
+                299,
+                421
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Lorenzo Morales Perez",
+          "licencia": "AM85419489",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2294316,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                6,
+                9,
+                7,
+                7,
+                4,
+                6,
+                7
+              ],
+              "total": 60,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Javier Rituerto Borges",
+          "licencia": "AM85348748",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2294315,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                7,
+                8,
+                7,
+                5,
+                6,
+                7
+              ],
+              "total": 60,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Beatriz Fernandez Gallegos",
+          "licencia": "AM85983183",
+          "hcp": 46.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2295875,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                null,
+                6,
+                8,
+                7,
+                6,
+                6,
+                6,
+                7
+              ],
+              "total": null,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Victor Manuel Torollo De La Escalera",
+          "licencia": "AM85475937",
+          "hcp": 49.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2294313,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                7,
+                5,
+                9,
+                7,
+                8,
+                4,
+                6,
+                7
+              ],
+              "total": 62,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Carmen Fernandez Gallegos",
+          "licencia": "AM85983182",
+          "hcp": 47.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2295876,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                6,
+                8,
+                6,
+                5,
+                7,
+                6
+              ],
+              "total": null,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Fernando Barrio Garcia",
+          "licencia": "AM85348752",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2294314,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                11,
+                9,
+                6,
+                8,
+                7,
+                6,
+                6,
+                10
+              ],
+              "total": 72,
+              "meters": [
+                312,
+                346,
+                135,
+                350,
+                396,
+                360,
+                160,
+                299,
+                421
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Roberto Marin Fernandez",
+          "licencia": "AMG3481822",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2295877,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                9,
+                9,
+                8,
+                8,
+                9,
+                6,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                312,
+                346,
+                135,
+                350,
+                396,
+                360,
+                160,
+                299,
+                421
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Victor Manuel Torollo De La Escalera",
+      "licencia": "AM85475937",
+      "hcp": 49.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Rituerto Borges",
+      "licencia": "AM85348748",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Lorenzo Morales Perez",
+      "licencia": "AM85419489",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Fernando Barrio Garcia",
+      "licencia": "AM85348752",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Beatriz Fernandez Gallegos",
+      "licencia": "AM85983183",
+      "hcp": 46.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Fernandez Gallegos",
+      "licencia": "AM85983182",
+      "hcp": 47.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Pilar Ramirez Rodriguez",
+      "licencia": "AM85077487",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Roberto Marin Fernandez",
+      "licencia": "AMG3481822",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Marin Fernandez",
+      "licencia": "AMG3481821",
+      "hcp": 48,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Beatriz Fernandez Gallegos",
+          "hcp": 46.2,
+          "ins": "2295875",
+          "jid": "74463",
+          "nivel": "I"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Carmen Fernandez Gallegos",
+          "hcp": 47.4,
+          "ins": "2295876",
+          "jid": "74463",
+          "nivel": "I"
+        },
+        {
+          "time": "11:30",
+          "tee": 1,
+          "name": "Rodrigo Marin Fernandez",
+          "hcp": 48,
+          "ins": "2295878",
+          "jid": "74463",
+          "nivel": "I"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Victor Manuel Torollo De La Escalera",
+          "hcp": 49.9,
+          "ins": "2294313",
+          "jid": "74463",
+          "nivel": "B"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Fernando Barrio Garcia",
+          "hcp": 54,
+          "ins": "2294314",
+          "jid": "74463",
+          "nivel": "A"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Javier Rituerto Borges",
+          "hcp": 54,
+          "ins": "2294315",
+          "jid": "74463",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Lorenzo Morales Perez",
+          "hcp": 54,
+          "ins": "2294316",
+          "jid": "74463",
+          "nivel": "B"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Roberto Marin Fernandez",
+          "hcp": 54,
+          "ins": "2295877",
+          "jid": "74463",
+          "nivel": "I"
+        },
+        {
+          "time": "11:50",
+          "tee": 1,
+          "name": "Pilar Ramirez Rodriguez",
+          "hcp": 54,
+          "ins": "2295879",
+          "jid": "74463",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74463
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

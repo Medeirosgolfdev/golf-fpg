@@ -1,0 +1,851 @@
+{
+  "tourId": 74014,
+  "url": "https://www.nextcaddy.com/tour/74014",
+  "scrapedAt": "2026-10-12T12:08:31.209Z",
+  "meta": {
+    "name": "CAMPEONATO DE GOLF PEDIATRAS",
+    "organizer": null,
+    "course": "Club de Golf Bellavista",
+    "courseCode": "AM07",
+    "dateStart": "2026-09-26",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-26",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "2A Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Ripoll Font",
+          "licencia": "0101320474",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2410037
+        },
+        {
+          "pos": 2,
+          "name": "Mª Angeles Rio Fernandez",
+          "licencia": "AM85360725",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2410041
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Gaztelu Gª De Paredes",
+          "licencia": "AMC9612892",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2410038
+        },
+        {
+          "pos": 4,
+          "name": "Maribel Jimenez Ramos",
+          "licencia": "AM95128311",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2410044
+        },
+        {
+          "pos": 5,
+          "name": "Yolanda Litran Gonzalez",
+          "licencia": "AM85139393",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2410043
+        },
+        {
+          "pos": 6,
+          "name": "Pedro Pajuelo Sanchez",
+          "licencia": "AM85200901",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2410028
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Anguita Barreda",
+          "licencia": "AM00928875",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2410034
+        },
+        {
+          "pos": 8,
+          "name": "Jose Luis Garcia Montes",
+          "licencia": "AMG3162724",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2410025
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Gonzalez-Meneses Lopez",
+          "licencia": "AM00818928",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2410047
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "1A Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Eduardo Martinez-Bone Montero",
+          "licencia": "AMG8810396",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2410036
+        },
+        {
+          "pos": 2,
+          "name": "Emilia Hidalgo-Barquero Rosal",
+          "licencia": "9906286643",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2410032
+        },
+        {
+          "pos": 3,
+          "name": "Cristobal Guerrero Lopez",
+          "licencia": "AM07021482",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2410585
+        },
+        {
+          "pos": 4,
+          "name": "Luis Armengou Martin-Niclos",
+          "licencia": "AM95235123",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2410042
+        },
+        {
+          "pos": 5,
+          "name": "Jose Melero Romero",
+          "licencia": "AMB2357286",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2410035
+        },
+        {
+          "pos": 6,
+          "name": "Carmen Moya Espinosa",
+          "licencia": "AM85200902",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2410029
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Carrasco Claver",
+          "licencia": "9906222396",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2410033
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Jose De La Puente Gomez",
+          "licencia": "AM05093827",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2410046
+        },
+        {
+          "pos": 9,
+          "name": "Margarita Cueto Perez",
+          "licencia": "AM91110558",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2410027
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Scratch",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Eduardo Martinez-Bone Montero",
+          "licencia": "AMG8810396",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2410036
+        },
+        {
+          "pos": 2,
+          "name": "Fernando Carrasco Claver",
+          "licencia": "9906222396",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2410033
+        },
+        {
+          "pos": 3,
+          "name": "Juan Ripoll Font",
+          "licencia": "0101320474",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2410037
+        },
+        {
+          "pos": 4,
+          "name": "Emilia Hidalgo-Barquero Rosal",
+          "licencia": "9906286643",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2410032
+        },
+        {
+          "pos": 5,
+          "name": "Cristobal Guerrero Lopez",
+          "licencia": "AM07021482",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2410585
+        },
+        {
+          "pos": 6,
+          "name": "Jose Melero Romero",
+          "licencia": "AMB2357286",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2410035
+        },
+        {
+          "pos": 7,
+          "name": "Luis Armengou Martin-Niclos",
+          "licencia": "AM95235123",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2410042
+        },
+        {
+          "pos": 8,
+          "name": "Mª Angeles Rio Fernandez",
+          "licencia": "AM85360725",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2410041
+        },
+        {
+          "pos": 9,
+          "name": "Carmen Moya Espinosa",
+          "licencia": "AM85200902",
+          "hcp": 18.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2410029
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Gaztelu Gª De Paredes",
+          "licencia": "AMC9612892",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2410038
+        },
+        {
+          "pos": 11,
+          "name": "Yolanda Litran Gonzalez",
+          "licencia": "AM85139393",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2410043
+        },
+        {
+          "pos": 12,
+          "name": "Maribel Jimenez Ramos",
+          "licencia": "AM95128311",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2410044
+        },
+        {
+          "pos": 13,
+          "name": "Pedro Pajuelo Sanchez",
+          "licencia": "AM85200901",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2410028
+        },
+        {
+          "pos": 14,
+          "name": "Francisco Jose De La Puente Gomez",
+          "licencia": "AM05093827",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2410046
+        },
+        {
+          "pos": 15,
+          "name": "Jose Luis Garcia Montes",
+          "licencia": "AMG3162724",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 2410025
+        },
+        {
+          "pos": 16,
+          "name": "Francisco Anguita Barreda",
+          "licencia": "AM00928875",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2410034
+        },
+        {
+          "pos": 17,
+          "name": "Margarita Cueto Perez",
+          "licencia": "AM91110558",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2410027
+        },
+        {
+          "pos": 18,
+          "name": "Antonio Gonzalez-Meneses Lopez",
+          "licencia": "AM00818928",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 36,
+          "inscribedId": 2410047
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "2A Categoria",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "1A Categoria",
+      "jugadores": 9
+    },
+    "3": {
+      "name": "Scratch",
+      "jugadores": 18
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Luis Garcia Montes",
+      "licencia": "AMG3162724",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Pedro Pajuelo Sanchez",
+      "licencia": "AM85200901",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Fernando Carrasco Claver",
+      "licencia": "9906222396",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Anguita Barreda",
+      "licencia": "AM00928875",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Melero Romero",
+      "licencia": "AMB2357286",
+      "hcp": 15.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Eduardo Martinez-Bone Montero",
+      "licencia": "AMG8810396",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Ripoll Font",
+      "licencia": "0101320474",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Gaztelu Gª De Paredes",
+      "licencia": "AMC9612892",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Armengou Martin-Niclos",
+      "licencia": "AM95235123",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Francisco Jose De La Puente Gomez",
+      "licencia": "AM05093827",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Antonio Gonzalez-Meneses Lopez",
+      "licencia": "AM00818928",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Cristobal Guerrero Lopez",
+      "licencia": "AM07021482",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Margarita Cueto Perez",
+      "licencia": "AM91110558",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Moya Espinosa",
+      "licencia": "AM85200902",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Emilia Hidalgo-Barquero Rosal",
+      "licencia": "9906286643",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Mª Angeles Rio Fernandez",
+      "licencia": "AM85360725",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Yolanda Litran Gonzalez",
+      "licencia": "AM85139393",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Maribel Jimenez Ramos",
+      "licencia": "AM95128311",
+      "hcp": 26.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Fernando Carrasco Claver",
+          "hcp": 10.4,
+          "ins": "2410033",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Jose Melero Romero",
+          "hcp": 15.1,
+          "ins": "2410035",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Carmen Moya Espinosa",
+          "hcp": 18.6,
+          "ins": "2410029",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Luis Armengou Martin-Niclos",
+          "hcp": 18.6,
+          "ins": "2410042",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Eduardo Martinez-Bone Montero",
+          "hcp": 21,
+          "ins": "2410036",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Emilia Hidalgo-Barquero Rosal",
+          "hcp": 21.1,
+          "ins": "2410032",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Maribel Jimenez Ramos",
+          "hcp": 26.1,
+          "ins": "2410044",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Francisco Jose De La Puente Gomez",
+          "hcp": 22.1,
+          "ins": "2410046",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Pedro Pajuelo Sanchez",
+          "hcp": 23.4,
+          "ins": "2410028",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Francisco Anguita Barreda",
+          "hcp": 24.1,
+          "ins": "2410034",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Cristobal Guerrero Lopez",
+          "hcp": 21.3,
+          "ins": "2410585",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Margarita Cueto Perez",
+          "hcp": 21.7,
+          "ins": "2410027",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Ripoll Font",
+          "hcp": 26.4,
+          "ins": "2410037",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Yolanda Litran Gonzalez",
+          "hcp": 27.6,
+          "ins": "2410043",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Carlos Gaztelu Gª De Paredes",
+          "hcp": 31.4,
+          "ins": "2410038",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Antonio Gonzalez-Meneses Lopez",
+          "hcp": 36,
+          "ins": "2410047",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Mª Angeles Rio Fernandez",
+          "hcp": 25.5,
+          "ins": "2410041",
+          "jid": "79270",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jose Luis Garcia Montes",
+          "hcp": 30.6,
+          "ins": "2410025",
+          "jid": "79270",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79270
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3346735807_74014-campeonato-de-golf-pediatras.pdf"
+  ]
+}

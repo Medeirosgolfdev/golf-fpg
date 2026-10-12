@@ -1,0 +1,646 @@
+{
+  "tourId": 67729,
+  "url": "https://www.nextcaddy.com/tour/67729",
+  "scrapedAt": "2026-10-12T12:07:44.397Z",
+  "meta": {
+    "name": "Torneo Ranking Escuela Cat. Especial 2026",
+    "organizer": null,
+    "course": "Club de Golf la Cañada",
+    "courseCode": "AM11",
+    "dateStart": "2026-08-18",
+    "dateEnd": null,
+    "format": "Medal Play (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "juvenil",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-18",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 36,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Timur Tsyrenzhapov",
+          "licencia": "AM11017651",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -10,
+          "inscribedId": 2383405
+        },
+        {
+          "pos": 2,
+          "name": "Sara Alonso Gonzalez",
+          "licencia": "AM11923131",
+          "hcp": 49.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": -9,
+          "inscribedId": 2376979
+        },
+        {
+          "pos": 3,
+          "name": "Irene Godino Guillen",
+          "licencia": "AM11079946",
+          "hcp": 52.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -8,
+          "inscribedId": 2384999
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Torroba Cervera",
+          "licencia": "CM02078087",
+          "hcp": 48.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": -6,
+          "inscribedId": 2383358
+        },
+        {
+          "pos": 5,
+          "name": "Malena Viera Villalba",
+          "licencia": "AM11026370",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": -5,
+          "inscribedId": 2371597
+        },
+        {
+          "pos": 6,
+          "name": "Cristobal Lopez Carrasco",
+          "licencia": "AM11353951",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": -2,
+          "inscribedId": 2381585
+        },
+        {
+          "pos": 7,
+          "name": "Carlota Alonso Gonzalez",
+          "licencia": "AM11374330",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2376978
+        },
+        {
+          "pos": 8,
+          "name": "Jorge Garcia Alfonso",
+          "licencia": "AM11373230",
+          "hcp": 40.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": 2,
+          "inscribedId": 2379560
+        },
+        {
+          "pos": 9,
+          "name": "Lucia Martinez Herrera",
+          "licencia": "AM11523393",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 53,
+          "toPar": 17,
+          "inscribedId": 2374659
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Malena Viera Villalba",
+          "licencia": "AM11026370",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": 13,
+          "inscribedId": 2371597
+        },
+        {
+          "pos": 2,
+          "name": "Timur Tsyrenzhapov",
+          "licencia": "AM11017651",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 52,
+          "toPar": 16,
+          "inscribedId": 2383405
+        },
+        {
+          "pos": 3,
+          "name": "Sara Alonso Gonzalez",
+          "licencia": "AM11923131",
+          "hcp": 49.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2376979
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Torroba Cervera",
+          "licencia": "CM02078087",
+          "hcp": 48.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2383358
+        },
+        {
+          "pos": 5,
+          "name": "Irene Godino Guillen",
+          "licencia": "AM11079946",
+          "hcp": 52.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 56,
+          "toPar": 20,
+          "inscribedId": 2384999
+        },
+        {
+          "pos": 6,
+          "name": "Jorge Garcia Alfonso",
+          "licencia": "AM11373230",
+          "hcp": 40.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 22,
+          "inscribedId": 2379560
+        },
+        {
+          "pos": 7,
+          "name": "Cristobal Lopez Carrasco",
+          "licencia": "AM11353951",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 61,
+          "toPar": 25,
+          "inscribedId": 2381585
+        },
+        {
+          "pos": 8,
+          "name": "Carlota Alonso Gonzalez",
+          "licencia": "AM11374330",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": 30,
+          "inscribedId": 2376978
+        },
+        {
+          "pos": 9,
+          "name": "Lucia Martinez Herrera",
+          "licencia": "AM11523393",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 46,
+          "inscribedId": 2374659
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Malena Viera Villalba",
+      "licencia": "AM11026370",
+      "hcp": 33.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Lucia Martinez Herrera",
+      "licencia": "AM11523393",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Carlota Alonso Gonzalez",
+      "licencia": "AM11374330",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Sara Alonso Gonzalez",
+      "licencia": "AM11923131",
+      "hcp": 49.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Irene Godino Guillen",
+      "licencia": "AM11079946",
+      "hcp": 52.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Jorge Garcia Alfonso",
+      "licencia": "AM11373230",
+      "hcp": 40.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Cristobal Lopez Carrasco",
+      "licencia": "AM11353951",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Alfonso Torroba Cervera",
+      "licencia": "CM02078087",
+      "hcp": 48.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Timur Tsyrenzhapov",
+      "licencia": "AM11017651",
+      "hcp": 52,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Malena Viera Villalba",
+          "hcp": 33.2,
+          "ins": "2371597",
+          "jid": "72211",
+          "nivel": "A"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Jorge Garcia Alfonso",
+          "hcp": 40.4,
+          "ins": "2379560",
+          "jid": "72211",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Alfonso Torroba Cervera",
+          "hcp": 48.9,
+          "ins": "2383358",
+          "jid": "72211",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Sara Alonso Gonzalez",
+          "hcp": 49.7,
+          "ins": "2376979",
+          "jid": "72211",
+          "nivel": "I"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Timur Tsyrenzhapov",
+          "hcp": 52,
+          "ins": "2383405",
+          "jid": "72211",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Irene Godino Guillen",
+          "hcp": 52.5,
+          "ins": "2384999",
+          "jid": "72211",
+          "nivel": "I"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Carlota Alonso Gonzalez",
+          "hcp": 54,
+          "ins": "2376978",
+          "jid": "72211",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Lucia Martinez Herrera",
+          "hcp": 54,
+          "ins": "2374659",
+          "jid": "72211",
+          "nivel": "A"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Cristobal Lopez Carrasco",
+          "hcp": 54,
+          "ins": "2381585",
+          "jid": "72211",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72211
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lamela Pablos, Francisco Javier",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 09:17:01"
+        },
+        {
+          "playerName": "Vazquez Gomez, Juan Gabriel",
+          "holeNumber": 6,
+          "createdAt": "26/07/25 09:49:44"
+        },
+        {
+          "playerName": "Gimenez Zamora, Antonio Jose",
+          "holeNumber": 6,
+          "createdAt": "26/07/25 09:50:02"
+        },
+        {
+          "playerName": "Gil Lavado, Francisco Jose",
+          "holeNumber": 3,
+          "createdAt": "26/07/25 10:04:56"
+        },
+        {
+          "playerName": "Saavedra Roldan, Monica",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 10:17:38"
+        },
+        {
+          "playerName": "Albaiceta Montaño, Daniel",
+          "holeNumber": 15,
+          "createdAt": "26/07/25 10:22:17"
+        },
+        {
+          "playerName": "Rodriguez Edenborg, Marcos",
+          "holeNumber": 6,
+          "createdAt": "26/07/25 10:28:53"
+        },
+        {
+          "playerName": "Garcia Fajardo, Alvaro",
+          "holeNumber": 6,
+          "createdAt": "26/07/25 10:33:08"
+        },
+        {
+          "playerName": "Chamorro Nevado, Javier",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 10:44:07"
+        },
+        {
+          "playerName": "Rodriguez Edenborg, Marcos",
+          "holeNumber": 7,
+          "createdAt": "26/07/25 10:48:12"
+        },
+        {
+          "playerName": "Chamorro Nevado, Javier",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 10:53:21"
+        },
+        {
+          "playerName": "Neira Lopez, Santiago",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 10:59:50"
+        },
+        {
+          "playerName": "Salgado Romero, Ignacio",
+          "holeNumber": 3,
+          "createdAt": "26/07/25 11:01:21"
+        },
+        {
+          "playerName": "Millan Ordoñez, Jose",
+          "holeNumber": 14,
+          "createdAt": "26/07/25 11:22:11"
+        },
+        {
+          "playerName": "Vizcaino Fernandez, Raul",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 11:23:50"
+        },
+        {
+          "playerName": "Garcia Fajardo, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 11:34:28"
+        },
+        {
+          "playerName": "Jimenez Romero, Rafael",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 11:35:06"
+        },
+        {
+          "playerName": "Millan Ordoñez, Jose",
+          "holeNumber": 15,
+          "createdAt": "26/07/25 11:37:36"
+        },
+        {
+          "playerName": "Cornago Diufain, Juan Antonio",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 11:53:26"
+        },
+        {
+          "playerName": "Millan Ordoñez, Jose",
+          "holeNumber": 16,
+          "createdAt": "26/07/25 11:53:30"
+        },
+        {
+          "playerName": "Palomeque Lopez, Ramon",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 12:13:27"
+        },
+        {
+          "playerName": "Martinez-Avial Areces, Raul",
+          "holeNumber": 4,
+          "createdAt": "26/07/25 12:13:40"
+        },
+        {
+          "playerName": "Vazquez Montero, Carlos",
+          "holeNumber": 11,
+          "createdAt": "26/07/25 12:24:47"
+        },
+        {
+          "playerName": "Gimenez Zamora, Antonio Jose",
+          "holeNumber": 16,
+          "createdAt": "26/07/25 12:29:03"
+        },
+        {
+          "playerName": "Mayoral Leyva, Eloy",
+          "holeNumber": 18,
+          "createdAt": "26/07/25 12:32:18"
+        },
+        {
+          "playerName": "Fernandez Moline, Carmen",
+          "holeNumber": 9,
+          "createdAt": "26/07/25 12:44:19"
+        },
+        {
+          "playerName": "Chamorro Nevado, Javier",
+          "holeNumber": 18,
+          "createdAt": "26/07/25 12:44:19"
+        },
+        {
+          "playerName": "Cornago Diufain, Juan Antonio",
+          "holeNumber": 14,
+          "createdAt": "26/07/25 12:44:49"
+        },
+        {
+          "playerName": "Vazquez Montero, Carlos",
+          "holeNumber": 15,
+          "createdAt": "26/07/25 12:53:52"
+        },
+        {
+          "playerName": "Rodriguez Edenborg, Marcos",
+          "holeNumber": 16,
+          "createdAt": "26/07/25 13:03:45"
+        },
+        {
+          "playerName": "Vazquez Montero, Carlos",
+          "holeNumber": 16,
+          "createdAt": "26/07/25 13:09:04"
+        },
+        {
+          "playerName": "Cornago Diufain, Juan Antonio",
+          "holeNumber": 16,
+          "createdAt": "26/07/25 13:14:37"
+        },
+        {
+          "playerName": "Neira Lopez, Santiago",
+          "holeNumber": 18,
+          "createdAt": "26/07/25 13:23:55"
+        },
+        {
+          "playerName": "Liaño Moral, Raquel",
+          "holeNumber": 14,
+          "createdAt": "26/07/25 14:05:07"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/29523699_reglamento_ranking_escuela_juvenil_c.g._la_canada_2026.pdf"
+  ]
+}

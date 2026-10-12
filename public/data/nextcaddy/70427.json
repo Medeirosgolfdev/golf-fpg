@@ -1,0 +1,584 @@
+{
+  "tourId": 70427,
+  "url": "https://www.nextcaddy.com/tour/70427",
+  "scrapedAt": "2026-10-12T12:05:01.240Z",
+  "meta": {
+    "name": "IV PRUEBA LIGA SCRATCH 02/05/2026",
+    "organizer": null,
+    "course": "Real Club de Campo de Cordoba",
+    "courseCode": "AM06",
+    "dateStart": "2026-05-02",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-02",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan De Dios Benitez Sillero",
+          "licencia": "AM06296627",
+          "hcp": 3.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2308704
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Angel Muñoz Polonio",
+          "licencia": "AM06990295",
+          "hcp": 12.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2309468
+        },
+        {
+          "pos": 3,
+          "name": "Javier Jesus Perales Calvento",
+          "licencia": "AM06489063",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2309775
+        },
+        {
+          "pos": 4,
+          "name": "Andres Pastor Ayllon",
+          "licencia": "AM00079487",
+          "hcp": 5.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2309949
+        },
+        {
+          "pos": 5,
+          "name": "Jacinto Caballero Perez",
+          "licencia": "AM06911594",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2309948
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Juan De Dios Benitez Sillero",
+      "licencia": "AM06296627",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Angel Muñoz Polonio",
+      "licencia": "AM06990295",
+      "hcp": 12.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Jesus Perales Calvento",
+      "licencia": "AM06489063",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Jacinto Caballero Perez",
+      "licencia": "AM06911594",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Andres Pastor Ayllon",
+      "licencia": "AM00079487",
+      "hcp": 5.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Luis Marin Serrano",
+      "licencia": "AM06373370",
+      "hcp": null,
+      "nivel": "J"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Juan De Dios Benitez Sillero",
+          "hcp": 3.7,
+          "ins": "2308704",
+          "jid": "75366",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Miguel Angel Muñoz Polonio",
+          "hcp": 12.7,
+          "ins": "2309468",
+          "jid": "75366",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Andres Pastor Ayllon",
+          "hcp": 5.5,
+          "ins": "2309949",
+          "jid": "75366",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Javier Jesus Perales Calvento",
+          "hcp": 14.9,
+          "ins": "2309775",
+          "jid": "75366",
+          "nivel": "M"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Jacinto Caballero Perez",
+          "hcp": 14.9,
+          "ins": "2309948",
+          "jid": "75366",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159050,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            29
+          ],
+          [
+            "Birdie",
+            4
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            39
+          ],
+          [
+            "Peor",
+            17
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159051,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            2
+          ],
+          [
+            "2",
+            2
+          ],
+          [
+            "3",
+            0
+          ],
+          [
+            "4",
+            7
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            6
+          ],
+          [
+            "7",
+            5
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            4
+          ],
+          [
+            "10",
+            4
+          ],
+          [
+            "11",
+            -1
+          ],
+          [
+            "12",
+            7
+          ],
+          [
+            "13",
+            8
+          ],
+          [
+            "14",
+            3
+          ],
+          [
+            "15",
+            2
+          ],
+          [
+            "16",
+            3
+          ],
+          [
+            "17",
+            8
+          ],
+          [
+            "18",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159052,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN DE DIOS BENITEZ SILLERO",
+            "MIGUEL ANGEL MUÑOZ POLONIO",
+            "JAVIER JESUS PERALES CALVENTO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 16",
+            1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159053,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN DE DIOS BENITEZ SILLERO",
+            "MIGUEL ANGEL MUÑOZ POLONIO",
+            "JAVIER JESUS PERALES CALVENTO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75366
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

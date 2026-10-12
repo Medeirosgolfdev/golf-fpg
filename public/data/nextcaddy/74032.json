@@ -1,0 +1,835 @@
+{
+  "tourId": 74032,
+  "url": "https://www.nextcaddy.com/tour/74032",
+  "scrapedAt": "2026-10-12T12:08:37.067Z",
+  "meta": {
+    "name": "Torneo Privado Metro de Madrid",
+    "organizer": null,
+    "course": "Escuela de la Real Federación de Golf de Madrid",
+    "courseCode": "CM41",
+    "dateStart": "2026-09-29",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-29",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Torneo Privado Metro Madrid Scratch General",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rufino Huertas Huertas",
+          "licencia": "CM41626432",
+          "hcp": 11.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2411863
+        },
+        {
+          "pos": 2,
+          "name": "Raul Marcos Gonzalez",
+          "licencia": "CM00454017",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2411872
+        },
+        {
+          "pos": 3,
+          "name": "Angel Clemente Fernandez",
+          "licencia": "CM41770360",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2411873
+        },
+        {
+          "pos": 4,
+          "name": "Dionisio Sanchez Muñoz",
+          "licencia": "CM41626934",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2411864
+        },
+        {
+          "pos": 5,
+          "name": "Juan Carlos Fernandez Rodriguez",
+          "licencia": "CM00301101",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2411865
+        },
+        {
+          "pos": 6,
+          "name": "Raul Escobar Perez",
+          "licencia": "CM41796786",
+          "hcp": 32.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2411874
+        },
+        {
+          "pos": 7,
+          "name": "Guzman Montero Perez",
+          "licencia": "CM00008886",
+          "hcp": 22.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2411871
+        },
+        {
+          "pos": 8,
+          "name": "Juan Manuel Treceño Lopez-Duque",
+          "licencia": "CMA8779313",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2411870
+        },
+        {
+          "pos": 9,
+          "name": "Severo De Las Heras Bautista",
+          "licencia": "CM41795220",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2411875
+        },
+        {
+          "pos": 10,
+          "name": "Angel Menes Vallano",
+          "licencia": "CM00036336",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2411869
+        },
+        {
+          "pos": 11,
+          "name": "Carlos Torres Sanchez",
+          "licencia": "CM15960624",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2411881
+        },
+        {
+          "pos": 12,
+          "name": "Pedro Sanchez Pinilla",
+          "licencia": "CM14219404",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2411867
+        },
+        {
+          "pos": 13,
+          "name": "Miguel Angel Benito Varea",
+          "licencia": "CM15672386",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2411877
+        },
+        {
+          "pos": 14,
+          "name": "Juan Carlos Pascual Segovia",
+          "licencia": "CM81185636",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2411861
+        },
+        {
+          "pos": 15,
+          "name": "Mª Angeles Dorado Marin",
+          "licencia": "CM41798887",
+          "hcp": 35.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2411876
+        },
+        {
+          "pos": 16,
+          "name": "Manuel Pedro Jerez Linde",
+          "licencia": "CME8808667",
+          "hcp": 38.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2411878
+        },
+        {
+          "pos": 17,
+          "name": "Antonio Salazar Calzado",
+          "licencia": "CM00509655",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2411866
+        },
+        {
+          "pos": 18,
+          "name": "Ignacio Jose Fernandez Agraz",
+          "licencia": "CM41073999",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2411879
+        },
+        {
+          "pos": 19,
+          "name": "Jaime De La Peña Llerandi",
+          "licencia": "CM41490836",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2411880
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Maria Atienza Garcia",
+          "licencia": "CM41001899",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2411868
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Torneo Privado Metro Madrid Handicap General",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Raul Escobar Perez",
+          "licencia": "CM41796786",
+          "hcp": 32.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2411874
+        },
+        {
+          "pos": 2,
+          "name": "Raul Marcos Gonzalez",
+          "licencia": "CM00454017",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2411872
+        },
+        {
+          "pos": 3,
+          "name": "Angel Clemente Fernandez",
+          "licencia": "CM41770360",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2411873
+        },
+        {
+          "pos": 4,
+          "name": "Rufino Huertas Huertas",
+          "licencia": "CM41626432",
+          "hcp": 11.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2411863
+        },
+        {
+          "pos": 5,
+          "name": "Dionisio Sanchez Muñoz",
+          "licencia": "CM41626934",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2411864
+        },
+        {
+          "pos": 6,
+          "name": "Guzman Montero Perez",
+          "licencia": "CM00008886",
+          "hcp": 22.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2411871
+        },
+        {
+          "pos": 7,
+          "name": "Juan Manuel Treceño Lopez-Duque",
+          "licencia": "CMA8779313",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2411870
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Torres Sanchez",
+          "licencia": "CM15960624",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411881
+        },
+        {
+          "pos": 9,
+          "name": "Miguel Angel Benito Varea",
+          "licencia": "CM15672386",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411877
+        },
+        {
+          "pos": 10,
+          "name": "Mª Angeles Dorado Marin",
+          "licencia": "CM41798887",
+          "hcp": 35.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411876
+        },
+        {
+          "pos": 11,
+          "name": "Severo De Las Heras Bautista",
+          "licencia": "CM41795220",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2411875
+        },
+        {
+          "pos": 12,
+          "name": "Pedro Sanchez Pinilla",
+          "licencia": "CM14219404",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2411867
+        },
+        {
+          "pos": 13,
+          "name": "Juan Carlos Fernandez Rodriguez",
+          "licencia": "CM00301101",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2411865
+        },
+        {
+          "pos": 14,
+          "name": "Angel Menes Vallano",
+          "licencia": "CM00036336",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2411869
+        },
+        {
+          "pos": 15,
+          "name": "Juan Carlos Pascual Segovia",
+          "licencia": "CM81185636",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2411861
+        },
+        {
+          "pos": 16,
+          "name": "Manuel Pedro Jerez Linde",
+          "licencia": "CME8808667",
+          "hcp": 38.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2411878
+        },
+        {
+          "pos": 17,
+          "name": "Ignacio Jose Fernandez Agraz",
+          "licencia": "CM41073999",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2411879
+        },
+        {
+          "pos": 18,
+          "name": "Antonio Salazar Calzado",
+          "licencia": "CM00509655",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2411866
+        },
+        {
+          "pos": 19,
+          "name": "Jaime De La Peña Llerandi",
+          "licencia": "CM41490836",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2411880
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Maria Atienza Garcia",
+          "licencia": "CM41001899",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2411868
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Torneo Privado Metro Madrid Scratch General",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Torneo Privado Metro Madrid Handicap General",
+      "jugadores": 20
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Juan Carlos Pascual Segovia",
+      "licencia": "CM81185636",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rufino Huertas Huertas",
+      "licencia": "CM41626432",
+      "hcp": 11.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Dionisio Sanchez Muñoz",
+      "licencia": "CM41626934",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Juan Carlos Fernandez Rodriguez",
+      "licencia": "CM00301101",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Antonio Salazar Calzado",
+      "licencia": "CM00509655",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Pedro Sanchez Pinilla",
+      "licencia": "CM14219404",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Carlos Maria Atienza Garcia",
+      "licencia": "CM41001899",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Angel Menes Vallano",
+      "licencia": "CM00036336",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Manuel Treceño Lopez-Duque",
+      "licencia": "CMA8779313",
+      "hcp": 21.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Guzman Montero Perez",
+      "licencia": "CM00008886",
+      "hcp": 22.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Raul Marcos Gonzalez",
+      "licencia": "CM00454017",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Angel Clemente Fernandez",
+      "licencia": "CM41770360",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Raul Escobar Perez",
+      "licencia": "CM41796786",
+      "hcp": 32.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Severo De Las Heras Bautista",
+      "licencia": "CM41795220",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Miguel Angel Benito Varea",
+      "licencia": "CM15672386",
+      "hcp": 34.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Manuel Pedro Jerez Linde",
+      "licencia": "CME8808667",
+      "hcp": 38.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Jose Fernandez Agraz",
+      "licencia": "CM41073999",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Jaime De La Peña Llerandi",
+      "licencia": "CM41490836",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Carlos Torres Sanchez",
+      "licencia": "CM15960624",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Mª Angeles Dorado Marin",
+      "licencia": "CM41798887",
+      "hcp": 35.7,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79288
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Pavon Rodriguez, Juan Luis - Pavon  Etayo, Juan Luis",
+          "holeNumber": 6,
+          "createdAt": "21/03/26 09:16:42"
+        },
+        {
+          "playerName": "Muñoz Zamora, David - Sanchez De Luque, Alvaro",
+          "holeNumber": 9,
+          "createdAt": "21/03/26 09:30:55"
+        },
+        {
+          "playerName": "Chaparro Riqueni, Alvaro - Lopez Guerrero, Alberto",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 09:39:08"
+        },
+        {
+          "playerName": "Delgado Palomo, Enrique - Rich Delgado, Josephine",
+          "holeNumber": 11,
+          "createdAt": "21/03/26 10:10:21"
+        },
+        {
+          "playerName": "Carrere Lovera, Maria Luisa - Toro Gomez, Martin",
+          "holeNumber": 11,
+          "createdAt": "21/03/26 10:14:03"
+        },
+        {
+          "playerName": "Perez Martinez, Manuel Ramon - Menendez Pasagali, Antonio",
+          "holeNumber": 17,
+          "createdAt": "21/03/26 10:36:55"
+        },
+        {
+          "playerName": "Garcia Pulido, Juan Jose - Orellana Diaz, Jose Alberto",
+          "holeNumber": 7,
+          "createdAt": "21/03/26 10:48:13"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos - Valverde Garcia, Cristina",
+          "holeNumber": 8,
+          "createdAt": "21/03/26 11:06:28"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos - Valverde Garcia, Cristina",
+          "holeNumber": 11,
+          "createdAt": "21/03/26 11:45:54"
+        },
+        {
+          "playerName": "De Noriega Del Rio, Alfonso - Bolaños Bigeriego, Guillermo",
+          "holeNumber": 18,
+          "createdAt": "21/03/26 11:58:54"
+        },
+        {
+          "playerName": "Ortega Amezaga, Carlos - Valverde Garcia, Cristina",
+          "holeNumber": 12,
+          "createdAt": "21/03/26 12:01:08"
+        },
+        {
+          "playerName": "Pavon Rodriguez, Juan Luis - Pavon  Etayo, Juan Luis",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 12:03:57"
+        },
+        {
+          "playerName": "Garcia Pulido, Juan Jose - Orellana Diaz, Jose Alberto",
+          "holeNumber": 12,
+          "createdAt": "21/03/26 12:15:49"
+        },
+        {
+          "playerName": "Leal-Graciani Gonzalez, Gonzalo - Grande Gil, Guillermo",
+          "holeNumber": 12,
+          "createdAt": "21/03/26 12:21:18"
+        },
+        {
+          "playerName": "Lozano Rubio, Juan Carlos - Venegas Romero, Antonia",
+          "holeNumber": 5,
+          "createdAt": "21/03/26 12:29:51"
+        },
+        {
+          "playerName": "Garcia Hoyo, Fernando - Usabal Perez, Alberto",
+          "holeNumber": 12,
+          "createdAt": "21/03/26 12:30:31"
+        },
+        {
+          "playerName": "Muñoz Zamora, David - Sanchez De Luque, Alvaro",
+          "holeNumber": 2,
+          "createdAt": "21/03/26 12:30:39"
+        },
+        {
+          "playerName": "Marques Martin, Pablo - Nuñez Paya, Concha",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 12:42:24"
+        },
+        {
+          "playerName": "Adnot, Sebastian - Adnot, Clemence",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 13:07:30"
+        },
+        {
+          "playerName": "Perez Martinez, Manuel Ramon - Menendez Pasagali, Antonio",
+          "holeNumber": 8,
+          "createdAt": "21/03/26 13:22:34"
+        },
+        {
+          "playerName": "Leal-Graciani Gonzalez, Gonzalo - Grande Gil, Guillermo",
+          "holeNumber": 18,
+          "createdAt": "21/03/26 14:02:05"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/780179083_74032-torneo-privado-metro-de-madrid.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:11.185Z"
+}

@@ -1,0 +1,616 @@
+{
+  "tourId": 69525,
+  "url": "https://www.nextcaddy.com/tour/69525",
+  "scrapedAt": "2026-10-12T12:04:14.568Z",
+  "meta": {
+    "name": "TOVE ",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-04-01",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-01",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rudi Brustis Landsdorf",
+          "licencia": "AM83072650",
+          "hcp": 19.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2290354
+        },
+        {
+          "pos": 2,
+          "name": "Lisbeth Friberg Harpsoe",
+          "licencia": "AM83238673",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2290347
+        },
+        {
+          "pos": 3,
+          "name": "Francoise Landsdorf",
+          "licencia": "AM83072649",
+          "hcp": 29.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2290353
+        },
+        {
+          "pos": 4,
+          "name": "Ingeborg Koll",
+          "licencia": "AM83820787",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2290352
+        },
+        {
+          "pos": 5,
+          "name": "Tonny Gjelsted",
+          "licencia": "AM83606793",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2290348
+        },
+        {
+          "pos": 6,
+          "name": "Maud Jakobsson",
+          "licencia": "AM83052337",
+          "hcp": 14.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2290350
+        },
+        {
+          "pos": 7,
+          "name": "Tove Maria Pedersen",
+          "licencia": "AM83125631",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2290355
+        },
+        {
+          "pos": 8,
+          "name": "Niklas Johan Jakobsson",
+          "licencia": "AM83052328",
+          "hcp": 9.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2290351
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lisbeth Friberg Harpsoe",
+      "licencia": "AM83238673",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maud Jakobsson",
+      "licencia": "AM83052337",
+      "hcp": 14.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Ingeborg Koll",
+      "licencia": "AM83820787",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francoise Landsdorf",
+      "licencia": "AM83072649",
+      "hcp": 29.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Tove Maria Pedersen",
+      "licencia": "AM83125631",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Tonny Gjelsted",
+      "licencia": "AM83606793",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Niklas Johan Jakobsson",
+      "licencia": "AM83052328",
+      "hcp": 9.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Rudi Brustis Landsdorf",
+      "licencia": "AM83072650",
+      "hcp": 19.3,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158552,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            27
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            60
+          ],
+          [
+            "Peor",
+            47
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158553,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            8
+          ],
+          [
+            "2",
+            5
+          ],
+          [
+            "3",
+            8
+          ],
+          [
+            "4",
+            18
+          ],
+          [
+            "5",
+            11
+          ],
+          [
+            "6",
+            9
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            16
+          ],
+          [
+            "9",
+            8
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            6
+          ],
+          [
+            "12",
+            12
+          ],
+          [
+            "13",
+            9
+          ],
+          [
+            "14",
+            12
+          ],
+          [
+            "15",
+            6
+          ],
+          [
+            "16",
+            6
+          ],
+          [
+            "17",
+            10
+          ],
+          [
+            "18",
+            12
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158554,
+        "datos": [
+          [
+            "Hoyo",
+            "RUDI LANDSDORF",
+            "LISBETH FRIBERG HARPSOE",
+            "INGEBORG     KOLL "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -3,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -4,
+            0,
+            2
+          ],
+          [
+            "Hoyo 5",
+            -3,
+            2,
+            2
+          ],
+          [
+            "Hoyo 6",
+            -3,
+            3,
+            2
+          ],
+          [
+            "Hoyo 7",
+            -3,
+            3,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            2,
+            3
+          ],
+          [
+            "Hoyo 9",
+            -3,
+            4,
+            3
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            5,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            5,
+            2
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            5,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            5,
+            1
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            5,
+            2
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            5,
+            4
+          ],
+          [
+            "Hoyo 16",
+            -4,
+            4,
+            6
+          ],
+          [
+            "Hoyo 17",
+            -3,
+            4,
+            4
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            4,
+            5
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158555,
+        "datos": [
+          [
+            "Hoyo",
+            "RUDI LANDSDORF",
+            "LISBETH FRIBERG HARPSOE",
+            "INGEBORG     KOLL "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74296
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Baldwyn, Neil",
+          "holeNumber": 8,
+          "createdAt": "08/10/25 16:32:54"
+        },
+        {
+          "playerName": "Meehan, Patrick Robert",
+          "holeNumber": 18,
+          "createdAt": "08/10/25 16:35:53"
+        },
+        {
+          "playerName": "Parsons, Mark",
+          "holeNumber": 3,
+          "createdAt": "08/10/25 16:37:22"
+        },
+        {
+          "playerName": "Whelan, Paul",
+          "holeNumber": 8,
+          "createdAt": "08/10/25 16:38:59"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:54.197Z"
+}

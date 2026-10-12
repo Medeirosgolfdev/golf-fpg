@@ -1,0 +1,808 @@
+{
+  "tourId": 67293,
+  "url": "https://www.nextcaddy.com/tour/67293",
+  "scrapedAt": "2026-10-12T12:24:36.900Z",
+  "meta": {
+    "name": "5º TORNEO INFANTIL (9 HOYOS - P&P)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-01-11",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-11",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      8,
+      4,
+      14,
+      10,
+      12,
+      18,
+      2,
+      6,
+      16
+    ],
+    "meters": [
+      113,
+      112,
+      64,
+      62,
+      92,
+      64,
+      114,
+      65,
+      82
+    ],
+    "parTotal": 27
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "licencia": "AM02488032",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2242996,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                7,
+                3,
+                3,
+                6,
+                5,
+                4,
+                3,
+                3
+              ],
+              "total": 38,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Borja Valdenebro Olavarria",
+          "licencia": "AM02466870",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2243146,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                5,
+                4,
+                7,
+                4,
+                5,
+                3,
+                3
+              ],
+              "total": 39,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Beltran Martinez Mangas",
+          "licencia": "AM02416122",
+          "hcp": 50,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2243143,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                4,
+                5,
+                6,
+                2,
+                4,
+                6,
+                4
+              ],
+              "total": 40,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Faustino Martinez Mangas",
+          "licencia": "AM02416116",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2243104,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                4,
+                3,
+                4,
+                6,
+                6,
+                4,
+                6
+              ],
+              "total": 42,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Angel Osborne Duque",
+          "licencia": "AM02517852",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2243246,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                4,
+                8,
+                6,
+                8,
+                5,
+                4,
+                5
+              ],
+              "total": 48,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Lucas Garcia Garcia",
+          "licencia": "AM02478496",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2243081,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                6,
+                6,
+                4,
+                5,
+                5,
+                5
+              ],
+              "total": 44,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Casilda Miralles Serra",
+          "licencia": "AM02191892",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2243001,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                6,
+                3,
+                9,
+                4,
+                8,
+                4,
+                5
+              ],
+              "total": 51,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Dominguez Feito",
+          "licencia": "AM02997769",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2242997,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                6,
+                4,
+                5,
+                6,
+                8,
+                3,
+                3
+              ],
+              "total": 48,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Eric Verstrynge Ruiz",
+          "licencia": "AM02497604",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2243002,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                4,
+                4,
+                6,
+                6,
+                5,
+                4,
+                6
+              ],
+              "total": 47,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Juan Mantecon Yñiguez",
+          "licencia": "AM02488139",
+          "hcp": 50.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2243099,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                8,
+                5,
+                6,
+                4,
+                5,
+                6,
+                5
+              ],
+              "total": 51,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Maria De La Lastra Romero",
+          "licencia": "AM02474797",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2243093,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                9,
+                7,
+                6,
+                7,
+                6,
+                6,
+                3,
+                5
+              ],
+              "total": 54,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Rafael Muñoz-Rojas Salinas",
+      "licencia": "AM02488032",
+      "hcp": 52,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Dominguez Feito",
+      "licencia": "AM02997769",
+      "hcp": 52.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Eric Verstrynge Ruiz",
+      "licencia": "AM02497604",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Lucas Garcia Garcia",
+      "licencia": "AM02478496",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Mantecon Yñiguez",
+      "licencia": "AM02488139",
+      "hcp": 50.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Faustino Martinez Mangas",
+      "licencia": "AM02416116",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Beltran Martinez Mangas",
+      "licencia": "AM02416122",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Borja Valdenebro Olavarria",
+      "licencia": "AM02466870",
+      "hcp": 52,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Angel Osborne Duque",
+      "licencia": "AM02517852",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Casilda Miralles Serra",
+      "licencia": "AM02191892",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Maria De La Lastra Romero",
+      "licencia": "AM02474797",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Beltran Martinez Mangas",
+          "hcp": 50,
+          "ins": "2243143",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Juan Mantecon Yñiguez",
+          "hcp": 50.8,
+          "ins": "2243099",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "10:50",
+          "tee": 1,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "hcp": 52,
+          "ins": "2242996",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Borja Valdenebro Olavarria",
+          "hcp": 52,
+          "ins": "2243146",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Carlos Dominguez Feito",
+          "hcp": 52.5,
+          "ins": "2242997",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Casilda Miralles Serra",
+          "hcp": 53,
+          "ins": "2243001",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Faustino Martinez Mangas",
+          "hcp": 53,
+          "ins": "2243104",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Eric Verstrynge Ruiz",
+          "hcp": 53.5,
+          "ins": "2243002",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Angel Osborne Duque",
+          "hcp": 53.5,
+          "ins": "2243246",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Lucas Garcia Garcia",
+          "hcp": 54,
+          "ins": "2243081",
+          "jid": "71703",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "Maria De La Lastra Romero",
+          "hcp": 54,
+          "ins": "2243093",
+          "jid": "71703",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71703
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Irujo  Espinosa Los Monteros, Francisco",
+          "holeNumber": 14,
+          "createdAt": "26/06/25 10:06:51"
+        },
+        {
+          "playerName": "Mendizabal Oteiza, Jose Ignacio",
+          "holeNumber": 3,
+          "createdAt": "26/06/25 10:07:24"
+        },
+        {
+          "playerName": "Zarranz Sanchez, Ana",
+          "holeNumber": 18,
+          "createdAt": "26/06/25 10:59:16"
+        },
+        {
+          "playerName": "Baraza Alonso, Francisco Javier",
+          "holeNumber": 2,
+          "createdAt": "26/06/25 11:15:02"
+        },
+        {
+          "playerName": "Varela De Seijas Flores, Eduardo",
+          "holeNumber": 16,
+          "createdAt": "26/06/25 11:27:01"
+        },
+        {
+          "playerName": "Taberna Aldaz, Fco. Javier",
+          "holeNumber": 10,
+          "createdAt": "26/06/25 11:48:05"
+        },
+        {
+          "playerName": "Lopez Garcia, Cristobal",
+          "holeNumber": 18,
+          "createdAt": "26/06/25 11:55:30"
+        },
+        {
+          "playerName": "Sagardoy Fidalgo, Jose Antonio",
+          "holeNumber": 11,
+          "createdAt": "26/06/25 12:11:59"
+        },
+        {
+          "playerName": "Eugui Huarte Mendicoa, Javier",
+          "holeNumber": 15,
+          "createdAt": "26/06/25 12:14:56"
+        },
+        {
+          "playerName": "Hernandez Rogriguez, Pedro",
+          "holeNumber": 18,
+          "createdAt": "26/06/25 13:22:01"
+        },
+        {
+          "playerName": "Rodriguez Martin, Roberto",
+          "holeNumber": 2,
+          "createdAt": "26/06/25 13:31:38"
+        },
+        {
+          "playerName": "Antoñanzas Alvear, Fernando",
+          "holeNumber": 16,
+          "createdAt": "26/06/25 13:48:22"
+        },
+        {
+          "playerName": "Montes Ros, Pablo",
+          "holeNumber": 18,
+          "createdAt": "26/06/25 13:56:37"
+        },
+        {
+          "playerName": "Sagardoy Fidalgo, Jose Antonio",
+          "holeNumber": 18,
+          "createdAt": "26/06/25 13:57:09"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

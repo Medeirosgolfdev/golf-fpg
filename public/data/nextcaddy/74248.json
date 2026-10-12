@@ -1,0 +1,258 @@
+{
+  "tourId": 74248,
+  "url": "https://www.nextcaddy.com/tour/74248",
+  "scrapedAt": "2026-10-12T12:08:49.376Z",
+  "meta": {
+    "name": "TORNEO ESCUELA GOLF 4/10/2026 (18 HOYOS)",
+    "organizer": null,
+    "course": "Club Zaudín Golf",
+    "courseCode": "AM95",
+    "dateStart": "2026-10-04",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Benjamin Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-04",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 62,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Mauleon Sanchez",
+          "licencia": "AM95962926",
+          "hcp": 41.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 59,
+          "toPar": -23,
+          "inscribedId": 2417490
+        },
+        {
+          "pos": 2,
+          "name": "Mateo Ferreiro Molero",
+          "licencia": "AM95492847",
+          "hcp": 30.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": -13,
+          "inscribedId": 2417492
+        },
+        {
+          "pos": 3,
+          "name": "Luis Gutierrez Loro",
+          "licencia": "AM95915165",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": -10,
+          "inscribedId": 2418210
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Perez Pedraza",
+          "licencia": "AM95077283",
+          "hcp": 20.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2417509
+        },
+        {
+          "pos": 5,
+          "name": "Ana Diaz-Barcelo Gomez",
+          "licencia": "AM95468352",
+          "hcp": 31.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2417491
+        },
+        {
+          "pos": null,
+          "name": "Gonzalo Albarracin Rabadan",
+          "licencia": "AM07989891",
+          "hcp": 19.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2417496
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Manuel Mauleon Sanchez",
+      "licencia": "AM95962926",
+      "hcp": 41.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Mateo Ferreiro Molero",
+      "licencia": "AM95492847",
+      "hcp": 30.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Gonzalo Albarracin Rabadan",
+      "licencia": "AM07989891",
+      "hcp": 19.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Gutierrez Loro",
+      "licencia": "AM95915165",
+      "hcp": 10.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Ana Diaz-Barcelo Gomez",
+      "licencia": "AM95468352",
+      "hcp": 31.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Carlos Perez Pedraza",
+      "licencia": "AM95077283",
+      "hcp": 20.5,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Gonzalo Albarracin Rabadan",
+          "hcp": 19.8,
+          "ins": "2417496",
+          "jid": "79543",
+          "nivel": "I"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Carlos Perez Pedraza",
+          "hcp": 20.5,
+          "ins": "2417509",
+          "jid": "79543",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Mateo Ferreiro Molero",
+          "hcp": 30.9,
+          "ins": "2417492",
+          "jid": "79543",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Ana Diaz-Barcelo Gomez",
+          "hcp": 31.7,
+          "ins": "2417491",
+          "jid": "79543",
+          "nivel": "I"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Manuel Mauleon Sanchez",
+          "hcp": 41.7,
+          "ins": "2417490",
+          "jid": "79543",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79543
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jewell, Robert Edward",
+          "holeNumber": 6,
+          "createdAt": "29/03/26 11:29:10"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/288215617_74248-torneo-escuela-golf-4-10-2026-18-hoyos.pdf"
+  ]
+}

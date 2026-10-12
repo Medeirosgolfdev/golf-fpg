@@ -1,0 +1,666 @@
+{
+  "tourId": 71482,
+  "url": "https://www.nextcaddy.com/tour/71482",
+  "scrapedAt": "2026-10-12T12:06:04.793Z",
+  "meta": {
+    "name": "LEGS 08/06",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-06-09",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-09",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Tomas Acha Garcia",
+          "licencia": "AM83287132",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2338014
+        },
+        {
+          "pos": 2,
+          "name": "Stephen Broadway May",
+          "licencia": "AM83480761",
+          "hcp": 23.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2338013
+        },
+        {
+          "pos": 3,
+          "name": "Susan Wood",
+          "licencia": "AM83931328",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2338021
+        },
+        {
+          "pos": 4,
+          "name": "Karen Grant",
+          "licencia": "AM83603624",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2338017
+        },
+        {
+          "pos": 5,
+          "name": "David Robert Lethbridge",
+          "licencia": "AM83321938",
+          "hcp": 24.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2338020
+        },
+        {
+          "pos": 6,
+          "name": "Leo Rollis",
+          "licencia": "AM83486762",
+          "hcp": 3.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2338016
+        },
+        {
+          "pos": 7,
+          "name": "Maria Escamilla Banderas",
+          "licencia": "AM83783189",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2338018
+        },
+        {
+          "pos": 8,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2338012
+        },
+        {
+          "pos": 9,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2338015
+        },
+        {
+          "pos": 10,
+          "name": "Susan Instone",
+          "licencia": "AM83784416",
+          "hcp": 35.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2338022
+        },
+        {
+          "pos": 11,
+          "name": "Markus Ruulio",
+          "licencia": "AM83040750",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2338011
+        },
+        {
+          "pos": 12,
+          "name": "Andrew Scott",
+          "licencia": "AM83889877",
+          "hcp": 28.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2338019
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 12
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Markus Ruulio",
+      "licencia": "AM83040750",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Stephen Broadway May",
+      "licencia": "AM83480761",
+      "hcp": 23.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Tomas Acha Garcia",
+      "licencia": "AM83287132",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Ian Sandells",
+      "licencia": "AM83907255",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Andrew Scott",
+      "licencia": "AM83889877",
+      "hcp": 28.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "David Robert Lethbridge",
+      "licencia": "AM83321938",
+      "hcp": 24.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Karen Grant",
+      "licencia": "AM83603624",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Escamilla Banderas",
+      "licencia": "AM83783189",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Susan Wood",
+      "licencia": "AM83931328",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Susan Instone",
+      "licencia": "AM83784416",
+      "hcp": 35.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Leo Rollis",
+      "licencia": "AM83486762",
+      "hcp": 3.8,
+      "nivel": "C"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160002,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            50
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            74
+          ],
+          [
+            "Peor",
+            61
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160003,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            12
+          ],
+          [
+            "2",
+            11
+          ],
+          [
+            "3",
+            10
+          ],
+          [
+            "4",
+            17
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            13
+          ],
+          [
+            "7",
+            3
+          ],
+          [
+            "8",
+            6
+          ],
+          [
+            "9",
+            11
+          ],
+          [
+            "10",
+            7
+          ],
+          [
+            "11",
+            14
+          ],
+          [
+            "12",
+            13
+          ],
+          [
+            "13",
+            18
+          ],
+          [
+            "14",
+            17
+          ],
+          [
+            "15",
+            13
+          ],
+          [
+            "16",
+            18
+          ],
+          [
+            "17",
+            8
+          ],
+          [
+            "18",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160004,
+        "datos": [
+          [
+            "Hoyo",
+            "TOMAS ACHA GARCIA",
+            "STEPHEN BROADWAY MAY",
+            "KAREN GRANT "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            2,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160005,
+        "datos": [
+          [
+            "Hoyo",
+            "TOMAS ACHA GARCIA",
+            "STEPHEN BROADWAY MAY",
+            "KAREN GRANT "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 5",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 15",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            1,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76536
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:00.399Z"
+}

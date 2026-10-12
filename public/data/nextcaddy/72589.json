@@ -1,0 +1,350 @@
+{
+  "tourId": 72589,
+  "url": "https://www.nextcaddy.com/tour/72589",
+  "scrapedAt": "2026-10-12T12:07:14.693Z",
+  "meta": {
+    "name": "DAMAS IND STB SUR",
+    "organizer": null,
+    "course": "Real Club de Golf Guadalmina",
+    "courseCode": "AM51",
+    "dateStart": "2026-07-28",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras Facebook",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-28",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Nichola Pagett",
+          "licencia": "AM51344352",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2368540
+        },
+        {
+          "pos": 2,
+          "name": "Marguerite Jordan",
+          "licencia": "AM51315516",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2368537
+        },
+        {
+          "pos": 3,
+          "name": "Maria Eugenia Urra Huarte",
+          "licencia": "AM51058147",
+          "hcp": 29.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2368539
+        },
+        {
+          "pos": 4,
+          "name": "Maria Cleffi",
+          "licencia": "AM51894497",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2368541
+        },
+        {
+          "pos": 5,
+          "name": "Edda Cichini",
+          "licencia": "AM51799392",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2368542
+        },
+        {
+          "pos": 6,
+          "name": "Lynn Nathan",
+          "licencia": "AM51619458",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2368538
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marguerite Jordan",
+      "licencia": "AM51315516",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Lynn Nathan",
+      "licencia": "AM51619458",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Eugenia Urra Huarte",
+      "licencia": "AM51058147",
+      "hcp": 29.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Nichola Pagett",
+      "licencia": "AM51344352",
+      "hcp": 34.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Cleffi",
+      "licencia": "AM51894497",
+      "hcp": 23.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Edda Cichini",
+      "licencia": "AM51799392",
+      "hcp": 30.9,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Maria Cleffi",
+          "hcp": 23.6,
+          "ins": "2368541",
+          "jid": "77765",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Marguerite Jordan",
+          "hcp": 25.1,
+          "ins": "2368537",
+          "jid": "77765",
+          "nivel": "S"
+        },
+        {
+          "time": "09:00",
+          "tee": 1,
+          "name": "Lynn Nathan",
+          "hcp": 28.9,
+          "ins": "2368538",
+          "jid": "77765",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Maria Eugenia Urra Huarte",
+          "hcp": 29.7,
+          "ins": "2368539",
+          "jid": "77765",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Edda Cichini",
+          "hcp": 30.9,
+          "ins": "2368542",
+          "jid": "77765",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Nichola Pagett",
+          "hcp": 34.6,
+          "ins": "2368540",
+          "jid": "77765",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77765
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Valle Hernandez, Jose Alberto",
+          "holeNumber": 14,
+          "createdAt": "15/07/26 10:58:04"
+        },
+        {
+          "playerName": "Plaza Lopez-Berges, Elias",
+          "holeNumber": 11,
+          "createdAt": "15/07/26 11:01:47"
+        },
+        {
+          "playerName": "Correa Garcia, Luis Angel",
+          "holeNumber": 18,
+          "createdAt": "15/07/26 11:30:52"
+        },
+        {
+          "playerName": "De Sebastian Sanz, Carlos",
+          "holeNumber": 15,
+          "createdAt": "15/07/26 11:51:35"
+        },
+        {
+          "playerName": "Garcia Garcia, Victor Diego",
+          "holeNumber": 18,
+          "createdAt": "15/07/26 11:59:49"
+        },
+        {
+          "playerName": "Velasco Frutos, Jose Miguel",
+          "holeNumber": 15,
+          "createdAt": "15/07/26 12:03:22"
+        },
+        {
+          "playerName": "Vega Rodriguez, Julio",
+          "holeNumber": 14,
+          "createdAt": "15/07/26 12:12:20"
+        },
+        {
+          "playerName": "Garcia Garcia, Victor Diego",
+          "holeNumber": 1,
+          "createdAt": "15/07/26 12:25:25"
+        },
+        {
+          "playerName": "Vega Rodriguez, Julio",
+          "holeNumber": 16,
+          "createdAt": "15/07/26 12:44:17"
+        },
+        {
+          "playerName": "Velasco Frutos, Jose Miguel",
+          "holeNumber": 18,
+          "createdAt": "15/07/26 12:53:27"
+        },
+        {
+          "playerName": "Bermejo Barrios, Angel",
+          "holeNumber": 4,
+          "createdAt": "15/07/26 13:15:11"
+        },
+        {
+          "playerName": "Plaza Lopez-Berges, Elias",
+          "holeNumber": 2,
+          "createdAt": "15/07/26 13:27:23"
+        },
+        {
+          "playerName": "Sanchez Morales, Jose Nelson",
+          "holeNumber": 1,
+          "createdAt": "15/07/26 14:17:05"
+        },
+        {
+          "playerName": "Plaza Lopez-Berges, Elias",
+          "holeNumber": 7,
+          "createdAt": "15/07/26 14:44:20"
+        },
+        {
+          "playerName": "Galvan Rueda, Alberto",
+          "holeNumber": 9,
+          "createdAt": "15/07/26 15:03:04"
+        },
+        {
+          "playerName": "Seisdedos Alonso, Angel Antonio",
+          "holeNumber": 13,
+          "createdAt": "15/07/26 15:32:46"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Plaza Lopez-Berges, Elias",
+          "holeNumber": 15,
+          "createdAt": "15/07/26 12:02:58"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2676205997_72589-damas-ind-stb-sur.pdf"
+  ]
+}

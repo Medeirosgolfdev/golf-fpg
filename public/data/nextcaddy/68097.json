@@ -1,0 +1,442 @@
+{
+  "tourId": 68097,
+  "url": "https://www.nextcaddy.com/tour/68097",
+  "scrapedAt": "2026-10-12T12:02:46.830Z",
+  "meta": {
+    "name": "ESCUELA COMPETICION 01-02-2026 (9 HOYOS)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-02-01",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-02-01",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jaime Haya Pereyra",
+          "licencia": "AM02169765",
+          "hcp": 42.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -10,
+          "inscribedId": 2254000
+        },
+        {
+          "pos": 2,
+          "name": "Maria Salido Maesso",
+          "licencia": "AM02169811",
+          "hcp": 45.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2253999
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Caruz Ladron De Guevara",
+          "licencia": "AM02091782",
+          "hcp": 42.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2253997
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "licencia": "AM02413274",
+          "hcp": 46,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2254001
+        },
+        {
+          "pos": 5,
+          "name": "Mateo Pablo De La Lastra Romero",
+          "licencia": "AM02084464",
+          "hcp": 36.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2254005
+        },
+        {
+          "pos": 6,
+          "name": "Ignacio Ladron De Guevara Pablo-Romero",
+          "licencia": "AM02091534",
+          "hcp": 47.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2253993
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Ruiz-Cabello Galobart",
+          "licencia": "AM02069324",
+          "hcp": 46.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2253998
+        },
+        {
+          "pos": 8,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "licencia": "AM02488032",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2253995
+        },
+        {
+          "pos": 9,
+          "name": "Pablo Solis Toro",
+          "licencia": "AM02490990",
+          "hcp": 47.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2253994
+        },
+        {
+          "pos": 10,
+          "name": "Tiago Bores Casas",
+          "licencia": "AM96486479",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2254563
+        },
+        {
+          "pos": 11,
+          "name": "Beatriz Abaurre Romero",
+          "licencia": "AM02377545",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2254002
+        },
+        {
+          "pos": 12,
+          "name": "Lucas Garcia Garcia",
+          "licencia": "AM02478496",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2253996
+        },
+        {
+          "pos": 13,
+          "name": "Dolores Piñar De La Paz",
+          "licencia": "AM02470303",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2254004
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ignacio Ladron De Guevara Pablo-Romero",
+      "licencia": "AM02091534",
+      "hcp": 47.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Solis Toro",
+      "licencia": "AM02490990",
+      "hcp": 47.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Rafael Muñoz-Rojas Salinas",
+      "licencia": "AM02488032",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Lucas Garcia Garcia",
+      "licencia": "AM02478496",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Pablo Caruz Ladron De Guevara",
+      "licencia": "AM02091782",
+      "hcp": 42.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Fernando Ruiz-Cabello Galobart",
+      "licencia": "AM02069324",
+      "hcp": 46.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Jaime Haya Pereyra",
+      "licencia": "AM02169765",
+      "hcp": 42.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Ignacio Fernandez De Bobadilla Diaz",
+      "licencia": "AM02413274",
+      "hcp": 46,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Mateo Pablo De La Lastra Romero",
+      "licencia": "AM02084464",
+      "hcp": 36.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Tiago Bores Casas",
+      "licencia": "AM96486479",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Salido Maesso",
+      "licencia": "AM02169811",
+      "hcp": 45.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Beatriz Abaurre Romero",
+      "licencia": "AM02377545",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Dolores Piñar De La Paz",
+      "licencia": "AM02470303",
+      "hcp": 53,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Mateo Pablo De La Lastra Romero",
+          "hcp": 36.3,
+          "ins": "2254005",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Pablo Caruz Ladron De Guevara",
+          "hcp": 42.7,
+          "ins": "2253997",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Jaime Haya Pereyra",
+          "hcp": 42.7,
+          "ins": "2254000",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Maria Salido Maesso",
+          "hcp": 45.5,
+          "ins": "2253999",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "hcp": 46,
+          "ins": "2254001",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Fernando Ruiz-Cabello Galobart",
+          "hcp": 46.7,
+          "ins": "2253998",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Ignacio Ladron De Guevara Pablo-Romero",
+          "hcp": 47.2,
+          "ins": "2253993",
+          "jid": "72641",
+          "nivel": "A"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Pablo Solis Toro",
+          "hcp": 47.2,
+          "ins": "2253994",
+          "jid": "72641",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "hcp": 51,
+          "ins": "2253995",
+          "jid": "72641",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Dolores Piñar De La Paz",
+          "hcp": 53,
+          "ins": "2254004",
+          "jid": "72641",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Lucas Garcia Garcia",
+          "hcp": 54,
+          "ins": "2253996",
+          "jid": "72641",
+          "nivel": "B"
+        },
+        {
+          "time": "13:20",
+          "tee": 1,
+          "name": "Beatriz Abaurre Romero",
+          "hcp": 54,
+          "ins": "2254002",
+          "jid": "72641",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72641
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/68097_cartel_447.pdf"
+  ]
+}

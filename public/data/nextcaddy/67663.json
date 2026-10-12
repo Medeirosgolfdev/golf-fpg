@@ -1,0 +1,565 @@
+{
+  "tourId": 67663,
+  "url": "https://www.nextcaddy.com/tour/67663",
+  "scrapedAt": "2026-10-12T12:02:36.000Z",
+  "meta": {
+    "name": "ASOCIACIÓN DEL PERSONAL DE LA CAIXA 25/01",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-01-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-25",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Manuel Gonzalez Noain",
+          "licencia": "AM74246998",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2251416
+        },
+        {
+          "pos": 2,
+          "name": "Juan Antonio Camino De Miguel",
+          "licencia": "AM60192083",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2251418
+        },
+        {
+          "pos": 3,
+          "name": "Jose Manuel Merchan Villada",
+          "licencia": "AM70988346",
+          "hcp": 15.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2251417
+        },
+        {
+          "pos": 4,
+          "name": "Jose Antonio Muñoz Lopez",
+          "licencia": "AM01359498",
+          "hcp": 21.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2251419
+        },
+        {
+          "pos": 5,
+          "name": "Veronica Carmona Rivas",
+          "licencia": "AM01359499",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2251413
+        },
+        {
+          "pos": 6,
+          "name": "Nuria Sanchez Carrion",
+          "licencia": "AM00797711",
+          "hcp": 24.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2251421
+        },
+        {
+          "pos": 7,
+          "name": "Maria Dolores Carrillo Villada",
+          "licencia": "AM70986600",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2251415
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Veronica Carmona Rivas",
+      "licencia": "AM01359499",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Dolores Carrillo Villada",
+      "licencia": "AM70986600",
+      "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Nuria Sanchez Carrion",
+      "licencia": "AM00797711",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Manuel Gonzalez Noain",
+      "licencia": "AM74246998",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Manuel Merchan Villada",
+      "licencia": "AM70988346",
+      "hcp": 15.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Antonio Camino De Miguel",
+      "licencia": "AM60192083",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Antonio Muñoz Lopez",
+      "licencia": "AM01359498",
+      "hcp": 21.3,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 157420,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            14
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            39
+          ],
+          [
+            "Peor",
+            59
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 157421,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            13
+          ],
+          [
+            "2",
+            6
+          ],
+          [
+            "3",
+            14
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            7
+          ],
+          [
+            "6",
+            15
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            18
+          ],
+          [
+            "9",
+            12
+          ],
+          [
+            "10",
+            12
+          ],
+          [
+            "11",
+            7
+          ],
+          [
+            "12",
+            11
+          ],
+          [
+            "13",
+            9
+          ],
+          [
+            "14",
+            12
+          ],
+          [
+            "15",
+            8
+          ],
+          [
+            "16",
+            10
+          ],
+          [
+            "17",
+            7
+          ],
+          [
+            "18",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 157422,
+        "datos": [
+          [
+            "Hoyo",
+            "JOSE MANUEL GONZALEZ NOAIN",
+            "JUAN ANTONIO CAMINO DE MIGUEL",
+            "JOSE MANUEL MERCHAN VILLADA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 4",
+            2,
+            2,
+            1
+          ],
+          [
+            "Hoyo 5",
+            3,
+            2,
+            1
+          ],
+          [
+            "Hoyo 6",
+            4,
+            1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            4,
+            1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            5,
+            2,
+            1
+          ],
+          [
+            "Hoyo 9",
+            6,
+            3,
+            3
+          ],
+          [
+            "Hoyo 10",
+            7,
+            4,
+            3
+          ],
+          [
+            "Hoyo 11",
+            6,
+            5,
+            4
+          ],
+          [
+            "Hoyo 12",
+            6,
+            5,
+            4
+          ],
+          [
+            "Hoyo 13",
+            6,
+            4,
+            4
+          ],
+          [
+            "Hoyo 14",
+            5,
+            3,
+            5
+          ],
+          [
+            "Hoyo 15",
+            6,
+            4,
+            6
+          ],
+          [
+            "Hoyo 16",
+            6,
+            5,
+            6
+          ],
+          [
+            "Hoyo 17",
+            6,
+            4,
+            7
+          ],
+          [
+            "Hoyo 18",
+            5,
+            5,
+            6
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 157423,
+        "datos": [
+          [
+            "Hoyo",
+            "JOSE MANUEL GONZALEZ NOAIN",
+            "JUAN ANTONIO CAMINO DE MIGUEL",
+            "JOSE MANUEL MERCHAN VILLADA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72145
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:41.489Z"
+}

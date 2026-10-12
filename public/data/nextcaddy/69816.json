@@ -1,0 +1,896 @@
+{
+  "tourId": 69816,
+  "url": "https://www.nextcaddy.com/tour/69816",
+  "scrapedAt": "2026-10-12T12:04:35.064Z",
+  "meta": {
+    "name": "TORNEO AMIGOS ISIDORO SAN JOSÉ",
+    "organizer": null,
+    "course": "Real Club de Campo de Cordoba",
+    "courseCode": "AM06",
+    "dateStart": "2026-04-15",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-15",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alberto Romero Gago",
+          "licencia": "CM00280809",
+          "hcp": 24.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2298448
+        },
+        {
+          "pos": 2,
+          "name": "Jon Aramburu Sagarzazu",
+          "licencia": "CM00206547",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2298439
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Pertejo Barrena",
+          "licencia": "CM11102847",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2298441
+        },
+        {
+          "pos": 4,
+          "name": "Juan Carlos Lavandeira Adan",
+          "licencia": "CM87074484",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2298446
+        },
+        {
+          "pos": 5,
+          "name": "Isidoro Matias Gonzalez Garcia-Morales",
+          "licencia": "CM12948003",
+          "hcp": 17.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2298445
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Otaola Ubieta",
+          "licencia": "CM05460975",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2298447
+        },
+        {
+          "pos": 7,
+          "name": "Vicente Carrio Montiel",
+          "licencia": "CM00386740",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2298440
+        },
+        {
+          "pos": 8,
+          "name": "Fco. Javier Sanz Fernandez",
+          "licencia": "CM22622146",
+          "hcp": 31.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2298449
+        },
+        {
+          "pos": 9,
+          "name": "Rogelio Fuertes Gallego",
+          "licencia": "CM18417361",
+          "hcp": 33.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2298444
+        },
+        {
+          "pos": 10,
+          "name": "Sergio Aguirre Vila-Coro",
+          "licencia": "CM02620949",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2298437
+        },
+        {
+          "pos": 11,
+          "name": "Iñigo De Loyola Pertejo Garcia",
+          "licencia": "CM11779935",
+          "hcp": 25.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2298442
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Delgado Espinosa",
+          "licencia": "CM81351710",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2298443
+        },
+        {
+          "pos": 13,
+          "name": "Miguel Tomas Suarez-Zuloaga Ruyra",
+          "licencia": "CME5157554",
+          "hcp": 28.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2298450
+        },
+        {
+          "pos": 14,
+          "name": "Marc Año Año",
+          "licencia": "CM00157543",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2298438
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Sergio Aguirre Vila-Coro",
+      "licencia": "CM02620949",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Marc Año Año",
+      "licencia": "CM00157543",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Jon Aramburu Sagarzazu",
+      "licencia": "CM00206547",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Vicente Carrio Montiel",
+      "licencia": "CM00386740",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Ignacio Pertejo Barrena",
+      "licencia": "CM11102847",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Iñigo De Loyola Pertejo Garcia",
+      "licencia": "CM11779935",
+      "hcp": 25.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 7,
+      "name": "Carlos Delgado Espinosa",
+      "licencia": "CM81351710",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Rogelio Fuertes Gallego",
+      "licencia": "CM18417361",
+      "hcp": 33.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Isidoro Matias Gonzalez Garcia-Morales",
+      "licencia": "CM12948003",
+      "hcp": 17.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Carlos Lavandeira Adan",
+      "licencia": "CM87074484",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Fernando Otaola Ubieta",
+      "licencia": "CM05460975",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Alberto Romero Gago",
+      "licencia": "CM00280809",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Fco. Javier Sanz Fernandez",
+      "licencia": "CM22622146",
+      "hcp": 31.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Miguel Tomas Suarez-Zuloaga Ruyra",
+      "licencia": "CME5157554",
+      "hcp": 28.3,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Sergio Aguirre Vila-Coro",
+          "hcp": 27.6,
+          "ins": "2298437",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Juan Carlos Lavandeira Adan",
+          "hcp": 13.6,
+          "ins": "2298446",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:00",
+          "tee": 1,
+          "name": "Fernando Otaola Ubieta",
+          "hcp": 21.2,
+          "ins": "2298447",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Jon Aramburu Sagarzazu",
+          "hcp": 22,
+          "ins": "2298439",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Ignacio Pertejo Barrena",
+          "hcp": 13.8,
+          "ins": "2298441",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Rogelio Fuertes Gallego",
+          "hcp": 33.9,
+          "ins": "2298444",
+          "jid": "74619",
+          "nivel": "M"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Vicente Carrio Montiel",
+          "hcp": 26.1,
+          "ins": "2298440",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Iñigo De Loyola Pertejo Garcia",
+          "hcp": 25.7,
+          "ins": "2298442",
+          "jid": "74619",
+          "nivel": "J"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Isidoro Matias Gonzalez Garcia-Morales",
+          "hcp": 17.2,
+          "ins": "2298445",
+          "jid": "74619",
+          "nivel": "M"
+        },
+        {
+          "time": "12:20",
+          "tee": 1,
+          "name": "Alberto Romero Gago",
+          "hcp": 24.1,
+          "ins": "2298448",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Marc Año Año",
+          "hcp": 36,
+          "ins": "2298438",
+          "jid": "74619",
+          "nivel": "M"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Carlos Delgado Espinosa",
+          "hcp": 36,
+          "ins": "2298443",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Fco. Javier Sanz Fernandez",
+          "hcp": 31.5,
+          "ins": "2298449",
+          "jid": "74619",
+          "nivel": "S"
+        },
+        {
+          "time": "12:30",
+          "tee": 1,
+          "name": "Miguel Tomas Suarez-Zuloaga Ruyra",
+          "hcp": 28.3,
+          "ins": "2298450",
+          "jid": "74619",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158774,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            21
+          ],
+          [
+            "Birdie",
+            2
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            55
+          ],
+          [
+            "Peor",
+            105
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158775,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            28
+          ],
+          [
+            "2",
+            21
+          ],
+          [
+            "3",
+            22
+          ],
+          [
+            "4",
+            27
+          ],
+          [
+            "5",
+            19
+          ],
+          [
+            "6",
+            14
+          ],
+          [
+            "7",
+            17
+          ],
+          [
+            "8",
+            22
+          ],
+          [
+            "9",
+            18
+          ],
+          [
+            "10",
+            22
+          ],
+          [
+            "11",
+            21
+          ],
+          [
+            "12",
+            21
+          ],
+          [
+            "13",
+            8
+          ],
+          [
+            "14",
+            15
+          ],
+          [
+            "15",
+            16
+          ],
+          [
+            "16",
+            20
+          ],
+          [
+            "17",
+            14
+          ],
+          [
+            "18",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158776,
+        "datos": [
+          [
+            "Hoyo",
+            "ALBERTO ROMERO GAGO",
+            "JON ARAMBURU SAGARZAZU",
+            "IGNACIO PERTEJO BARRENA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            2,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 13",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            3,
+            4
+          ],
+          [
+            "Hoyo 15",
+            1,
+            3,
+            4
+          ],
+          [
+            "Hoyo 16",
+            1,
+            4,
+            6
+          ],
+          [
+            "Hoyo 17",
+            1,
+            4,
+            6
+          ],
+          [
+            "Hoyo 18",
+            1,
+            4,
+            6
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158777,
+        "datos": [
+          [
+            "Hoyo",
+            "ALBERTO ROMERO GAGO",
+            "JON ARAMBURU SAGARZAZU",
+            "IGNACIO PERTEJO BARRENA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            2,
+            2,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74619
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Peña Perez, Manuel - Ureña Serrano, Antonio Manuel",
+          "holeNumber": 6,
+          "createdAt": "22/10/25 16:28:55"
+        },
+        {
+          "playerName": "Romero Abad, Tomas - Parra Cano, Miguel Angel",
+          "holeNumber": 16,
+          "createdAt": "22/10/25 16:37:55"
+        },
+        {
+          "playerName": "Pindado Galdon, Jaime - Mora  Gragera, Salvador",
+          "holeNumber": 14,
+          "createdAt": "22/10/25 16:40:58"
+        },
+        {
+          "playerName": "Perez De Los Santos, Patricio - Sanchez Espigares, Gerardo",
+          "holeNumber": 8,
+          "createdAt": "22/10/25 17:10:20"
+        },
+        {
+          "playerName": "Ductor Jimenez, Manuel - Brioir, Ronald",
+          "holeNumber": 10,
+          "createdAt": "22/10/25 17:21:09"
+        },
+        {
+          "playerName": "Perez De Los Santos, Patricio - Sanchez Espigares, Gerardo",
+          "holeNumber": 10,
+          "createdAt": "22/10/25 17:39:42"
+        },
+        {
+          "playerName": "Ductor Jimenez, Manuel - Brioir, Ronald",
+          "holeNumber": 12,
+          "createdAt": "22/10/25 17:49:15"
+        },
+        {
+          "playerName": "Perez De Los Santos, Patricio - Sanchez Espigares, Gerardo",
+          "holeNumber": 12,
+          "createdAt": "22/10/25 18:13:12"
+        },
+        {
+          "playerName": "Castrillon Guerrero, Ricardo - Gil Cano, Manuel",
+          "holeNumber": 4,
+          "createdAt": "22/10/25 18:16:03"
+        },
+        {
+          "playerName": "Rosado Sabido, Fernando - Romero Andrada, Alejandro",
+          "holeNumber": 16,
+          "createdAt": "22/10/25 18:56:42"
+        },
+        {
+          "playerName": "Pindado Galdon, Jaime - Mora  Gragera, Salvador",
+          "holeNumber": 7,
+          "createdAt": "22/10/25 19:17:19"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

@@ -1,0 +1,911 @@
+{
+  "tourId": 74213,
+  "url": "https://www.nextcaddy.com/tour/74213",
+  "scrapedAt": "2026-10-12T12:08:48.865Z",
+  "meta": {
+    "name": "ACEDO",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-10-04",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-04",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Jesus Mata Calvente",
+          "licencia": "AMC4932093",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2418331
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Manjon Borrego",
+          "licencia": "AM93619831",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2418340
+        },
+        {
+          "pos": 3,
+          "name": "Ruben Mesa Gonzalez",
+          "licencia": "AM72981593",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2418349
+        },
+        {
+          "pos": 4,
+          "name": "Jose Enrique Niebla Sanchez",
+          "licencia": "AM93317882",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2418352
+        },
+        {
+          "pos": 5,
+          "name": "Eduardo Delgado Rojas",
+          "licencia": "AMC4907917",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2418332
+        },
+        {
+          "pos": 6,
+          "name": "David Santiago Serrano Rodriguez",
+          "licencia": "AM93985173",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2418338
+        },
+        {
+          "pos": 7,
+          "name": "Rafael Padron Fernandez",
+          "licencia": "AM24986262",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2418307
+        },
+        {
+          "pos": 8,
+          "name": "Jose Luis Garcia Garcia",
+          "licencia": "AM93235892",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2418333
+        },
+        {
+          "pos": 9,
+          "name": "Enrique Marquez Garcia",
+          "licencia": "AM00942501",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2418308
+        },
+        {
+          "pos": 10,
+          "name": "Dario Acedo Del Olmo Godino",
+          "licencia": "AM72967374",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2418304
+        },
+        {
+          "pos": 11,
+          "name": "Mario Alberto Rueda Velasco",
+          "licencia": "AM51221519",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2418306
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Sanchez Jimenez",
+          "licencia": "AM93701743",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2418305
+        },
+        {
+          "pos": 13,
+          "name": "Jose Antonio Benitez Dominguez",
+          "licencia": "AM93315205",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2418341
+        },
+        {
+          "pos": 14,
+          "name": "Victoriano Gil Moreno",
+          "licencia": "AM93135441",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2418354
+        },
+        {
+          "pos": 15,
+          "name": "Antonio Guerrero Rodriguez",
+          "licencia": "AM00376875",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2418323
+        },
+        {
+          "pos": 16,
+          "name": "Francisco Lopez Gomez",
+          "licencia": "AM70614447",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2418350
+        },
+        {
+          "pos": 17,
+          "name": "Diego Mesa Espinosa",
+          "licencia": "AM72981583",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2418330
+        },
+        {
+          "pos": 18,
+          "name": "Francisco Sanchez Puertas",
+          "licencia": "AM70810260",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2418353
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 18
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Dario Acedo Del Olmo Godino",
+      "licencia": "AM72967374",
+      "hcp": 13.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Antonio Sanchez Jimenez",
+      "licencia": "AM93701743",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Mario Alberto Rueda Velasco",
+      "licencia": "AM51221519",
+      "hcp": 9.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Rafael Padron Fernandez",
+      "licencia": "AM24986262",
+      "hcp": 19.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Enrique Marquez Garcia",
+      "licencia": "AM00942501",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Antonio Guerrero Rodriguez",
+      "licencia": "AM00376875",
+      "hcp": 20.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Diego Mesa Espinosa",
+      "licencia": "AM72981583",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Antonio Jesus Mata Calvente",
+      "licencia": "AMC4932093",
+      "hcp": 23.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Eduardo Delgado Rojas",
+      "licencia": "AMC4907917",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Luis Garcia Garcia",
+      "licencia": "AM93235892",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "David Santiago Serrano Rodriguez",
+      "licencia": "AM93985173",
+      "hcp": 18.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Rafael Manjon Borrego",
+      "licencia": "AM93619831",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Antonio Benitez Dominguez",
+      "licencia": "AM93315205",
+      "hcp": 10.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Ruben Mesa Gonzalez",
+      "licencia": "AM72981593",
+      "hcp": 20.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Francisco Lopez Gomez",
+      "licencia": "AM70614447",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Enrique Niebla Sanchez",
+      "licencia": "AM93317882",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Sanchez Puertas",
+      "licencia": "AM70810260",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Victoriano Gil Moreno",
+      "licencia": "AM93135441",
+      "hcp": 17.9,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 162018,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            77
+          ],
+          [
+            "Birdie",
+            11
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            119
+          ],
+          [
+            "Peor",
+            71
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162019,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            3
+          ],
+          [
+            "2",
+            17
+          ],
+          [
+            "3",
+            33
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            13
+          ],
+          [
+            "6",
+            15
+          ],
+          [
+            "7",
+            20
+          ],
+          [
+            "8",
+            19
+          ],
+          [
+            "9",
+            14
+          ],
+          [
+            "10",
+            15
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            17
+          ],
+          [
+            "13",
+            20
+          ],
+          [
+            "14",
+            15
+          ],
+          [
+            "15",
+            7
+          ],
+          [
+            "16",
+            15
+          ],
+          [
+            "17",
+            14
+          ],
+          [
+            "18",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162020,
+        "datos": [
+          [
+            "Hoyo",
+            "ANTONIO MATA CALVENTE",
+            "RUBEN MESA GONZALEZ",
+            "RAFAEL MANJON BORREGO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            -4
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -4,
+            -3
+          ],
+          [
+            "Hoyo 13",
+            -3,
+            -4,
+            -3
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -2,
+            -4
+          ],
+          [
+            "Hoyo 15",
+            -4,
+            -4,
+            -4
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            -2,
+            -4
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -2,
+            -5
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -4,
+            -4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162021,
+        "datos": [
+          [
+            "Hoyo",
+            "ANTONIO MATA CALVENTE",
+            "RUBEN MESA GONZALEZ",
+            "RAFAEL MANJON BORREGO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -2,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79485
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Barazar Herrera, Francisco Antonio",
+          "holeNumber": 9,
+          "createdAt": "12/04/26 10:36:08"
+        },
+        {
+          "playerName": "Castro Adell, Enrique",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 10:34:00"
+        },
+        {
+          "playerName": "Allen, Tomas",
+          "holeNumber": 17,
+          "createdAt": "12/04/26 12:15:47"
+        },
+        {
+          "playerName": "Espina Pichardo, Manuel",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 11:51:12"
+        },
+        {
+          "playerName": "Pablo Gil, Manuel",
+          "holeNumber": 9,
+          "createdAt": "12/04/26 10:48:04"
+        },
+        {
+          "playerName": "Gallardo Navarro, Jose Antonio",
+          "holeNumber": 11,
+          "createdAt": "12/04/26 11:12:24"
+        },
+        {
+          "playerName": "Lainez Aracama, Ignacio",
+          "holeNumber": 11,
+          "createdAt": "12/04/26 12:30:33"
+        },
+        {
+          "playerName": "Lainez Aracama, Ignacio",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 12:50:51"
+        },
+        {
+          "playerName": "Borrero Naranjo, Juana",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 11:03:41"
+        },
+        {
+          "playerName": "Cobos Rodriguez, Francisco Javier",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 10:34:57"
+        },
+        {
+          "playerName": "Cobos Rodriguez, Francisco Javier",
+          "holeNumber": 6,
+          "createdAt": "12/04/26 14:31:22"
+        },
+        {
+          "playerName": "Santos Genero, Alfonso",
+          "holeNumber": 11,
+          "createdAt": "12/04/26 10:22:49"
+        },
+        {
+          "playerName": "Martinez Carballo, Oscar",
+          "holeNumber": 10,
+          "createdAt": "12/04/26 09:54:28"
+        },
+        {
+          "playerName": "Martinez Carballo, Oscar",
+          "holeNumber": 12,
+          "createdAt": "12/04/26 10:25:18"
+        },
+        {
+          "playerName": "Martinez Carballo, Oscar",
+          "holeNumber": 17,
+          "createdAt": "12/04/26 11:46:59"
+        },
+        {
+          "playerName": "Martinez Carballo, Oscar",
+          "holeNumber": 1,
+          "createdAt": "12/04/26 12:29:19"
+        },
+        {
+          "playerName": "Navarrete De Carcer, Juan Antonio",
+          "holeNumber": 6,
+          "createdAt": "12/04/26 15:10:48"
+        },
+        {
+          "playerName": "Rubiales Ortiz, Sergio",
+          "holeNumber": 5,
+          "createdAt": "12/04/26 10:00:33"
+        },
+        {
+          "playerName": "Rubiales Ortiz, Sergio",
+          "holeNumber": 10,
+          "createdAt": "12/04/26 11:22:39"
+        },
+        {
+          "playerName": "Jimenez Exposito, Marco Antonio",
+          "holeNumber": 11,
+          "createdAt": "12/04/26 12:19:38"
+        },
+        {
+          "playerName": "Guillen Vicente-Arche, Juan Luis",
+          "holeNumber": 7,
+          "createdAt": "12/04/26 10:50:04"
+        },
+        {
+          "playerName": "Caballero Gomez, Jose Maria",
+          "holeNumber": 10,
+          "createdAt": "12/04/26 09:59:21"
+        },
+        {
+          "playerName": "Joergensen, Orla Martin",
+          "holeNumber": 5,
+          "createdAt": "12/04/26 09:52:08"
+        },
+        {
+          "playerName": "Alvarez Orden, Francisco Javier",
+          "holeNumber": 7,
+          "createdAt": "12/04/26 14:22:34"
+        },
+        {
+          "playerName": "Pinelo Herrera, Jose Manuel",
+          "holeNumber": 8,
+          "createdAt": "12/04/26 14:18:41"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:12.123Z"
+}

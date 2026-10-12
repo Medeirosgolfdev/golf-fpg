@@ -1,0 +1,931 @@
+{
+  "tourId": 74339,
+  "url": "https://www.nextcaddy.com/tour/74339",
+  "scrapedAt": "2026-10-12T12:08:56.612Z",
+  "meta": {
+    "name": "WWW",
+    "organizer": null,
+    "course": "Miraflores Golf",
+    "courseCode": "AM76",
+    "dateStart": "2026-10-07",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros Facebo",
+    "categories": [
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-07",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Holst Michael",
+          "licencia": "AM76475091",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2421109
+        },
+        {
+          "pos": 2,
+          "name": "Mikael Schmidt",
+          "licencia": "AM76515032",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2421124
+        },
+        {
+          "pos": 3,
+          "name": "Marc Antoine Enlart",
+          "licencia": "AM76965471",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2421190
+        },
+        {
+          "pos": 4,
+          "name": "Stephen Carey",
+          "licencia": "AM76081398",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2421192
+        },
+        {
+          "pos": 5,
+          "name": "Michael Partridge",
+          "licencia": "AM76951885",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2421116
+        },
+        {
+          "pos": 6,
+          "name": "Olli-Pekka Vilianen",
+          "licencia": "AM76482058",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2421095
+        },
+        {
+          "pos": 7,
+          "name": "Philip Orr",
+          "licencia": "AM76937266",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2421094
+        },
+        {
+          "pos": 8,
+          "name": "Paul Barrett",
+          "licencia": "AM76943935",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2421120
+        },
+        {
+          "pos": 9,
+          "name": "Michael De Rijk",
+          "licencia": "AM76898521",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2421193
+        },
+        {
+          "pos": 10,
+          "name": "Martin Schmier",
+          "licencia": "AM76086891",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2421113
+        },
+        {
+          "pos": 11,
+          "name": "Robert Richards",
+          "licencia": "AM76959136",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2421183
+        },
+        {
+          "pos": 12,
+          "name": "Allan Watts",
+          "licencia": "AM76168571",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2421200
+        },
+        {
+          "pos": 13,
+          "name": "Brian Pinfield",
+          "licencia": "AM76920245",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2421185
+        },
+        {
+          "pos": 14,
+          "name": "Arthur Charles Armstrong",
+          "licencia": "AM76077049",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2421199
+        },
+        {
+          "pos": 15,
+          "name": "Oyvind Froysaa",
+          "licencia": "AM76951476",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2421118
+        },
+        {
+          "pos": 16,
+          "name": "Garry Miller",
+          "licencia": "AM76473524",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2421111
+        },
+        {
+          "pos": 17,
+          "name": "Leonard Richard",
+          "licencia": "AM76928396",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2421106
+        },
+        {
+          "pos": 18,
+          "name": "Francis Donegan",
+          "licencia": "AM76955135",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2421181
+        },
+        {
+          "pos": 19,
+          "name": "Terry Bunn",
+          "licencia": "AM76249419",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2421096
+        },
+        {
+          "pos": 20,
+          "name": "Adrian De Marco",
+          "licencia": "AM76154350",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2421101
+        },
+        {
+          "pos": 21,
+          "name": "Graham John Robinson",
+          "licencia": "AM76783754",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2421103
+        },
+        {
+          "pos": 22,
+          "name": "Johannes Smeets",
+          "licencia": "AM76491914",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2421093
+        },
+        {
+          "pos": 23,
+          "name": "Johan Schadd",
+          "licencia": "AM76495390",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2421125
+        },
+        {
+          "pos": 24,
+          "name": "Roberts Coombes",
+          "licencia": "AM76964782",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2421126
+        },
+        {
+          "pos": 25,
+          "name": "Aalto Reino Antero",
+          "licencia": "AM76498090",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2421187
+        },
+        {
+          "pos": 26,
+          "name": "Isidre Sabate Muzas",
+          "licencia": "AM76624933",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2421097
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 26
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Johannes Smeets",
+      "licencia": "AM76491914",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Philip Orr",
+      "licencia": "AM76937266",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Olli-Pekka Vilianen",
+      "licencia": "AM76482058",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Terry Bunn",
+      "licencia": "AM76249419",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Isidre Sabate Muzas",
+      "licencia": "AM76624933",
+      "hcp": 32.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Adrian De Marco",
+      "licencia": "AM76154350",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Graham John Robinson",
+      "licencia": "AM76783754",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Leonard Richard",
+      "licencia": "AM76928396",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Holst Michael",
+      "licencia": "AM76475091",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Garry Miller",
+      "licencia": "AM76473524",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Martin Schmier",
+      "licencia": "AM76086891",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Michael Partridge",
+      "licencia": "AM76951885",
+      "hcp": 9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Oyvind Froysaa",
+      "licencia": "AM76951476",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Paul Barrett",
+      "licencia": "AM76943935",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Mikael Schmidt",
+      "licencia": "AM76515032",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Johan Schadd",
+      "licencia": "AM76495390",
+      "hcp": 16.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Roberts Coombes",
+      "licencia": "AM76964782",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Francis Donegan",
+      "licencia": "AM76955135",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Robert Richards",
+      "licencia": "AM76959136",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Brian Pinfield",
+      "licencia": "AM76920245",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Aalto Reino Antero",
+      "licencia": "AM76498090",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Marc Antoine Enlart",
+      "licencia": "AM76965471",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Stephen Carey",
+      "licencia": "AM76081398",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Michael De Rijk",
+      "licencia": "AM76898521",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Arthur Charles Armstrong",
+      "licencia": "AM76077049",
+      "hcp": 30.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Allan Watts",
+      "licencia": "AM76168571",
+      "hcp": 24.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 162070,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            94
+          ],
+          [
+            "Birdie",
+            9
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            167
+          ],
+          [
+            "Peor",
+            133
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162071,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            21
+          ],
+          [
+            "2",
+            25
+          ],
+          [
+            "3",
+            45
+          ],
+          [
+            "4",
+            31
+          ],
+          [
+            "5",
+            27
+          ],
+          [
+            "6",
+            33
+          ],
+          [
+            "7",
+            21
+          ],
+          [
+            "8",
+            32
+          ],
+          [
+            "9",
+            25
+          ],
+          [
+            "10",
+            22
+          ],
+          [
+            "11",
+            19
+          ],
+          [
+            "12",
+            34
+          ],
+          [
+            "13",
+            13
+          ],
+          [
+            "14",
+            36
+          ],
+          [
+            "15",
+            16
+          ],
+          [
+            "16",
+            25
+          ],
+          [
+            "17",
+            30
+          ],
+          [
+            "18",
+            15
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162072,
+        "datos": [
+          [
+            "Hoyo",
+            "MICHAEL HOLST ",
+            "MARC ANTOINE ENLART",
+            "MIKAEL SCHMIDT"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -3,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -3,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -4,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -6,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -7,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -8,
+            -4,
+            -4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162073,
+        "datos": [
+          [
+            "Hoyo",
+            "MICHAEL HOLST ",
+            "MARC ANTOINE ENLART",
+            "MIKAEL SCHMIDT"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79637
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:12.970Z"
+}

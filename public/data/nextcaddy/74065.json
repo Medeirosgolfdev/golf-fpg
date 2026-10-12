@@ -1,0 +1,143 @@
+{
+  "tourId": 74065,
+  "url": "https://www.nextcaddy.com/tour/74065",
+  "scrapedAt": "2026-10-12T12:08:27.720Z",
+  "meta": {
+    "name": "CIRCUITO INFANTIL MCDONALD´S 2026 2027 18 hoyos",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": "2026-09-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "INFANTIL",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Mcdonald´s 18 Hoyos",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ander Olascoaga Sainz De Vicuña",
+          "licencia": "VB09732561",
+          "hcp": 9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2412184
+        },
+        {
+          "pos": 2,
+          "name": "Izan Zugasti Saldanha",
+          "licencia": "VB09728806",
+          "hcp": 10.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2412185
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Mcdonald´s 18 Hoyos",
+      "jugadores": 2
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ander Olascoaga Sainz De Vicuña",
+      "licencia": "VB09732561",
+      "hcp": 9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Izan Zugasti Saldanha",
+      "licencia": "VB09728806",
+      "hcp": 10.4,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Ander Olascoaga Sainz De Vicuña",
+          "hcp": 9,
+          "ins": "2412184",
+          "jid": "79324",
+          "nivel": "I"
+        },
+        {
+          "time": "14:30",
+          "tee": 1,
+          "name": "Izan Zugasti Saldanha",
+          "hcp": 10.4,
+          "ins": "2412185",
+          "jid": "79324",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79324
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

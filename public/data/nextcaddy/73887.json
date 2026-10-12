@@ -1,0 +1,249 @@
+{
+  "tourId": 73887,
+  "url": "https://www.nextcaddy.com/tour/73887",
+  "scrapedAt": "2026-10-12T12:08:21.974Z",
+  "meta": {
+    "name": "1º TORNEO INFANTIL (5 hoyos)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-09-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-20",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Delage Ruiz",
+          "licencia": "AM02517969",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2406643
+        },
+        {
+          "pos": 2,
+          "name": "Bosco Martinez Mangas",
+          "licencia": "AM02516251",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2406617
+        },
+        {
+          "pos": 3,
+          "name": "Gonzalo Delage Ruiz",
+          "licencia": "AM02517968",
+          "hcp": 50,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2406644
+        },
+        {
+          "pos": 4,
+          "name": "Jaime De La Lastra Romero",
+          "licencia": "AM02000157",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2406597
+        },
+        {
+          "pos": 5,
+          "name": "Maria Antonia Rodriguez Astolfi",
+          "licencia": "AM02466105",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2406607
+        },
+        {
+          "pos": 6,
+          "name": "Patricio Valdenebro Olavarria",
+          "licencia": "AM02530079",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2406618
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jaime De La Lastra Romero",
+      "licencia": "AM02000157",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Bosco Martinez Mangas",
+      "licencia": "AM02516251",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Patricio Valdenebro Olavarria",
+      "licencia": "AM02530079",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Delage Ruiz",
+      "licencia": "AM02517969",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Gonzalo Delage Ruiz",
+      "licencia": "AM02517968",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Antonia Rodriguez Astolfi",
+      "licencia": "AM02466105",
+      "hcp": 53,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Bosco Martinez Mangas",
+          "hcp": 48,
+          "ins": "2406617",
+          "jid": "79140",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Gonzalo Delage Ruiz",
+          "hcp": 50,
+          "ins": "2406644",
+          "jid": "79140",
+          "nivel": "B"
+        },
+        {
+          "time": "14:40",
+          "tee": 1,
+          "name": "Maria Antonia Rodriguez Astolfi",
+          "hcp": 53,
+          "ins": "2406607",
+          "jid": "79140",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Ignacio Delage Ruiz",
+          "hcp": 53,
+          "ins": "2406643",
+          "jid": "79140",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Jaime De La Lastra Romero",
+          "hcp": 54,
+          "ins": "2406597",
+          "jid": "79140",
+          "nivel": "B"
+        },
+        {
+          "time": "14:50",
+          "tee": 1,
+          "name": "Patricio Valdenebro Olavarria",
+          "hcp": 54,
+          "ins": "2406618",
+          "jid": "79140",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79140
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

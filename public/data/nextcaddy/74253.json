@@ -1,0 +1,756 @@
+{
+  "tourId": 74253,
+  "url": "https://www.nextcaddy.com/tour/74253",
+  "scrapedAt": "2026-10-12T12:25:10.887Z",
+  "meta": {
+    "name": "TORNEO ESCUELA GOLF 4/10/2026 (9 HOYOS)",
+    "organizer": null,
+    "course": "Club Zaudín Golf",
+    "courseCode": "AM95",
+    "dateStart": "2026-10-04",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-04",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      16,
+      6,
+      2,
+      14,
+      4,
+      10,
+      12,
+      18,
+      8
+    ],
+    "meters": [
+      275,
+      274,
+      123,
+      381,
+      288,
+      318,
+      325,
+      414,
+      135
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Benjamin 9 Hoyos",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Barco Benitez",
+          "licencia": "AM95373691",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2417523,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                6,
+                8,
+                5,
+                7,
+                7,
+                8,
+                5
+              ],
+              "total": 57,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Angel Mazo Luengo",
+          "licencia": "AM95348534",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2417520,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                5,
+                8,
+                7,
+                7,
+                6,
+                8,
+                5
+              ],
+              "total": 60,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Diaz-Barcelo Gomez",
+          "licencia": "AM95000868",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2417522,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                6,
+                null,
+                null,
+                7,
+                null,
+                null,
+                5
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Beltran Pozo Torres",
+          "licencia": "AMF7000200",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2417525,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                12,
+                6,
+                7,
+                10,
+                13,
+                9,
+                7,
+                13,
+                7
+              ],
+              "total": 84,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Fernandez Delgado",
+          "licencia": "AM95018753",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2417524,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                15,
+                7,
+                10,
+                10,
+                14,
+                11,
+                8,
+                9,
+                7
+              ],
+              "total": 91,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Cayetana Pozo Torres",
+          "licencia": "AMF7000197",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2417526,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                5,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Ralph Emerson Takieddine",
+          "licencia": "AM95017443",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2417518,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                9,
+                5,
+                15,
+                13,
+                14,
+                14,
+                16,
+                9
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Alevin 9 Hoyos",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Navas Santaella",
+          "licencia": "AM95938816",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2418212,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                7,
+                8,
+                13,
+                11,
+                11,
+                8,
+                13,
+                5
+              ],
+              "total": 86,
+              "meters": [
+                317,
+                345,
+                156,
+                469,
+                341,
+                356,
+                352,
+                453,
+                165
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Cesar Vargas Casares",
+          "licencia": "AM95173708",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2417517,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                9,
+                6,
+                null,
+                10,
+                8,
+                8,
+                9,
+                7
+              ],
+              "total": null,
+              "meters": [
+                282,
+                314,
+                128,
+                439,
+                314,
+                329,
+                329,
+                423,
+                146
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Margherita Takieddine",
+          "licencia": "AM95017446",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2417519,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                11,
+                7,
+                11,
+                9,
+                10,
+                9,
+                11,
+                7
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Diaz-Barcelo Gomez",
+          "licencia": "AM95000910",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2417521,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                15,
+                8,
+                7,
+                11,
+                12,
+                11,
+                10,
+                13,
+                15
+              ],
+              "total": 102,
+              "meters": [
+                282,
+                314,
+                128,
+                439,
+                314,
+                329,
+                329,
+                423,
+                146
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Benjamin 9 Hoyos",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Alevin 9 Hoyos",
+      "jugadores": 4
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Cesar Vargas Casares",
+      "licencia": "AM95173708",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Ignacio Diaz-Barcelo Gomez",
+      "licencia": "AM95000910",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Ralph Emerson Takieddine",
+      "licencia": "AM95017443",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Angel Mazo Luengo",
+      "licencia": "AM95348534",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Diaz-Barcelo Gomez",
+      "licencia": "AM95000868",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Rodrigo Barco Benitez",
+      "licencia": "AM95373691",
+      "hcp": 52,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Fernandez Delgado",
+      "licencia": "AM95018753",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Beltran Pozo Torres",
+      "licencia": "AMF7000200",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Margherita Takieddine",
+      "licencia": "AM95017446",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Cayetana Pozo Torres",
+      "licencia": "AMF7000197",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Miguel Navas Santaella",
+      "licencia": "AM95938816",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Rodrigo Barco Benitez",
+          "hcp": 52,
+          "ins": "2417523",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Cesar Vargas Casares",
+          "hcp": 54,
+          "ins": "2417517",
+          "jid": "79548",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Angel Mazo Luengo",
+          "hcp": 54,
+          "ins": "2417520",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:11",
+          "tee": 1,
+          "name": "Ralph Emerson Takieddine",
+          "hcp": 54,
+          "ins": "2417518",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:11",
+          "tee": 1,
+          "name": "Margherita Takieddine",
+          "hcp": 54,
+          "ins": "2417519",
+          "jid": "79548",
+          "nivel": "A"
+        },
+        {
+          "time": "10:11",
+          "tee": 1,
+          "name": "Alvaro Fernandez Delgado",
+          "hcp": 54,
+          "ins": "2417524",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:22",
+          "tee": 1,
+          "name": "Ignacio Diaz-Barcelo Gomez",
+          "hcp": 54,
+          "ins": "2417521",
+          "jid": "79548",
+          "nivel": "A"
+        },
+        {
+          "time": "10:22",
+          "tee": 1,
+          "name": "Carlos Diaz-Barcelo Gomez",
+          "hcp": 54,
+          "ins": "2417522",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:33",
+          "tee": 1,
+          "name": "Beltran Pozo Torres",
+          "hcp": 54,
+          "ins": "2417525",
+          "jid": "79548",
+          "nivel": "B"
+        },
+        {
+          "time": "10:33",
+          "tee": 1,
+          "name": "Cayetana Pozo Torres",
+          "hcp": 54,
+          "ins": "2417526",
+          "jid": "79548",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79548
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Herrerias Catalicio, Iker",
+          "holeNumber": 3,
+          "createdAt": "29/03/26 15:41:25"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/4238973938_74253-torneo-escuela-golf-4-10-2026-9-hoyos.pdf"
+  ]
+}

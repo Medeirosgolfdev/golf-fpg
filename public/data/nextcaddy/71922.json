@@ -1,0 +1,669 @@
+{
+  "tourId": 71922,
+  "url": "https://www.nextcaddy.com/tour/71922",
+  "scrapedAt": "2026-10-12T12:06:35.794Z",
+  "meta": {
+    "name": "LIGA LOS JUEVES AL GOLF 2026",
+    "organizer": null,
+    "course": "Benalmadena Golf",
+    "courseCode": "AMC8",
+    "dateStart": "2026-06-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Andrea Pia La Torre Polloni",
+          "licencia": "AMC8347391",
+          "hcp": 31.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2350690
+        },
+        {
+          "pos": 2,
+          "name": "Adriana Elisa Fernandez Carrasco",
+          "licencia": "AMI5934701",
+          "hcp": 41.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2350669
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alvaro Lozano Arjona",
+          "licencia": "AMK4091206",
+          "hcp": 30.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2350665
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Valle Serrano",
+          "licencia": "AMC8051492",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2350625
+        },
+        {
+          "pos": 3,
+          "name": "Jesus Terrazas Abad",
+          "licencia": "AMI5974282",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2350671
+        },
+        {
+          "pos": 4,
+          "name": "Ruize Yang",
+          "licencia": "AMC8028583",
+          "hcp": 26.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2350672
+        },
+        {
+          "pos": 5,
+          "name": "Nicholas Dimarco",
+          "licencia": "AMC8470104",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350666
+        },
+        {
+          "pos": 6,
+          "name": "Salvador Cuesta Toro",
+          "licencia": "AM15170440",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350634
+        },
+        {
+          "pos": 7,
+          "name": "Hilario Castillo Cachinero",
+          "licencia": "AM15372121",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350632
+        },
+        {
+          "pos": 8,
+          "name": "Santiago Del Castillo Alvarez",
+          "licencia": "AMI4991257",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350624
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Pedrosa Jodar",
+          "licencia": "AMC8071629",
+          "hcp": 14,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2350627
+        },
+        {
+          "pos": 10,
+          "name": "Frank Bannon",
+          "licencia": "AM60984338",
+          "hcp": 13.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2350620
+        },
+        {
+          "pos": 11,
+          "name": "Tomas Eklund Norrby",
+          "licencia": "AM01884324",
+          "hcp": 7.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350615
+        },
+        {
+          "pos": 12,
+          "name": "Juan Carlos Valencia Azcona",
+          "licencia": "4411890072",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350618
+        },
+        {
+          "pos": 13,
+          "name": "Dean Van Amber",
+          "licencia": "AMC8029905",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350667
+        },
+        {
+          "pos": 14,
+          "name": "Juan Jose Cruz Morales",
+          "licencia": "AMC8414082",
+          "hcp": 26.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350637
+        },
+        {
+          "pos": 15,
+          "name": "Heming Yang",
+          "licencia": "AMC8000815",
+          "hcp": 40.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350673
+        },
+        {
+          "pos": 16,
+          "name": "Victor Libano Medrano",
+          "licencia": "AMC4696207",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2350622
+        },
+        {
+          "pos": 17,
+          "name": "Jose Romero Repiso",
+          "licencia": "AMC8919600",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2350674
+        },
+        {
+          "pos": 18,
+          "name": "Jose Sanchez Gallar",
+          "licencia": "AM15081582",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2350635
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 18
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Tomas Eklund Norrby",
+      "licencia": "AM01884324",
+      "hcp": 7.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Carlos Valencia Azcona",
+      "licencia": "4411890072",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Frank Bannon",
+      "licencia": "AM60984338",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Victor Libano Medrano",
+      "licencia": "AMC4696207",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Santiago Del Castillo Alvarez",
+      "licencia": "AMI4991257",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Luis Valle Serrano",
+      "licencia": "AMC8051492",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio Pedrosa Jodar",
+      "licencia": "AMC8071629",
+      "hcp": 14,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Hilario Castillo Cachinero",
+      "licencia": "AM15372121",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Salvador Cuesta Toro",
+      "licencia": "AM15170440",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Sanchez Gallar",
+      "licencia": "AM15081582",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Jose Cruz Morales",
+      "licencia": "AMC8414082",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Alvaro Lozano Arjona",
+      "licencia": "AMK4091206",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Nicholas Dimarco",
+      "licencia": "AMC8470104",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Dean Van Amber",
+      "licencia": "AMC8029905",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jesus Terrazas Abad",
+      "licencia": "AMI5974282",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Ruize Yang",
+      "licencia": "AMC8028583",
+      "hcp": 26.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Heming Yang",
+      "licencia": "AMC8000815",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Romero Repiso",
+      "licencia": "AMC8919600",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Adriana Elisa Fernandez Carrasco",
+      "licencia": "AMI5934701",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Andrea Pia La Torre Polloni",
+      "licencia": "AMC8347391",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "17:30",
+          "tee": 1,
+          "name": "Adriana Elisa Fernandez Carrasco",
+          "hcp": 26.4,
+          "ins": "2350669",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:30",
+          "tee": 1,
+          "name": "Alvaro Lozano Arjona",
+          "hcp": 26.4,
+          "ins": "2350665",
+          "jid": "77069",
+          "nivel": "M"
+        },
+        {
+          "time": "17:30",
+          "tee": 1,
+          "name": "Juan Jose Cruz Morales",
+          "hcp": 26.4,
+          "ins": "2350637",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:30",
+          "tee": 2,
+          "name": "Ruize Yang",
+          "hcp": 26.1,
+          "ins": "2350672",
+          "jid": "77069",
+          "nivel": "I"
+        },
+        {
+          "time": "17:30",
+          "tee": 2,
+          "name": "Heming Yang",
+          "hcp": 26.4,
+          "ins": "2350673",
+          "jid": "77069",
+          "nivel": "B"
+        },
+        {
+          "time": "17:30",
+          "tee": 2,
+          "name": "Andrea Pia La Torre Polloni",
+          "hcp": 26.4,
+          "ins": "2350690",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:30",
+          "tee": 3,
+          "name": "Victor Libano Medrano",
+          "hcp": 22.8,
+          "ins": "2350622",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:30",
+          "tee": 3,
+          "name": "Jesus Terrazas Abad",
+          "hcp": 22.9,
+          "ins": "2350671",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:30",
+          "tee": 3,
+          "name": "Dean Van Amber",
+          "hcp": 24.7,
+          "ins": "2350667",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:42",
+          "tee": 6,
+          "name": "Jose Sanchez Gallar",
+          "hcp": 19.8,
+          "ins": "2350635",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:42",
+          "tee": 6,
+          "name": "Nicholas Dimarco",
+          "hcp": 12.4,
+          "ins": "2350666",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:42",
+          "tee": 6,
+          "name": "Juan Carlos Valencia Azcona",
+          "hcp": 11.2,
+          "ins": "2350618",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:54",
+          "tee": 7,
+          "name": "Jose Romero Repiso",
+          "hcp": 14.7,
+          "ins": "2350674",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:54",
+          "tee": 7,
+          "name": "Frank Bannon",
+          "hcp": 13.7,
+          "ins": "2350620",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:54",
+          "tee": 7,
+          "name": "Hilario Castillo Cachinero",
+          "hcp": 23.3,
+          "ins": "2350632",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "17:54",
+          "tee": 7,
+          "name": "Salvador Cuesta Toro",
+          "hcp": 23.8,
+          "ins": "2350634",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "18:06",
+          "tee": 8,
+          "name": "Tomas Eklund Norrby",
+          "hcp": 7.8,
+          "ins": "2350615",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "18:06",
+          "tee": 8,
+          "name": "Santiago Del Castillo Alvarez",
+          "hcp": 26.4,
+          "ins": "2350624",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "18:06",
+          "tee": 8,
+          "name": "Antonio Pedrosa Jodar",
+          "hcp": 14,
+          "ins": "2350627",
+          "jid": "77069",
+          "nivel": "S"
+        },
+        {
+          "time": "18:06",
+          "tee": 8,
+          "name": "Jose Luis Valle Serrano",
+          "hcp": 22.5,
+          "ins": "2350625",
+          "jid": "77069",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77069
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3961970134_71922-liga-los-jueves-al-golf-2026.pdf"
+  ]
+}

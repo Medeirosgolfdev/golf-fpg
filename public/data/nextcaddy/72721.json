@@ -1,0 +1,658 @@
+{
+  "tourId": 72721,
+  "url": "https://www.nextcaddy.com/tour/72721",
+  "scrapedAt": "2026-10-12T12:07:19.559Z",
+  "meta": {
+    "name": "LEGS 03/08/26",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-08-03",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-03",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Lee Potts",
+          "licencia": "AM83344726",
+          "hcp": 19.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2374126
+        },
+        {
+          "pos": 2,
+          "name": "Michael Barnes",
+          "licencia": "AM83611565",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2374127
+        },
+        {
+          "pos": 3,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2374132
+        },
+        {
+          "pos": 4,
+          "name": "Tomas Acha Garcia",
+          "licencia": "AM83287132",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2374130
+        },
+        {
+          "pos": 5,
+          "name": "Maria Escamilla Banderas",
+          "licencia": "AM83783189",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2374133
+        },
+        {
+          "pos": 6,
+          "name": "Karen Grant",
+          "licencia": "AM83603624",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2374136
+        },
+        {
+          "pos": 7,
+          "name": "Stephen Broadway May",
+          "licencia": "AM83480761",
+          "hcp": 21.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2374134
+        },
+        {
+          "pos": 8,
+          "name": "Susan Wood",
+          "licencia": "AM83931328",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2374131
+        },
+        {
+          "pos": 9,
+          "name": "Bruce Mcintyre",
+          "licencia": "AM83287761",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374135
+        },
+        {
+          "pos": 10,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374137
+        },
+        {
+          "pos": 11,
+          "name": "Andrew Scott",
+          "licencia": "AM83889877",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2374141
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Leo Lee Potts",
+      "licencia": "AM83344726",
+      "hcp": 19.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Michael Barnes",
+      "licencia": "AM83611565",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Tomas Acha Garcia",
+      "licencia": "AM83287132",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Ian Sandells",
+      "licencia": "AM83907255",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Stephen Broadway May",
+      "licencia": "AM83480761",
+      "hcp": 21.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Bruce Mcintyre",
+      "licencia": "AM83287761",
+      "hcp": 23.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Andrew Scott",
+      "licencia": "AM83889877",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Susan Wood",
+      "licencia": "AM83931328",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Escamilla Banderas",
+      "licencia": "AM83783189",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Karen Grant",
+      "licencia": "AM83603624",
+      "hcp": 26.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 29.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161314,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            44
+          ],
+          [
+            "Birdie",
+            4
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            71
+          ],
+          [
+            "Peor",
+            79
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161315,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            16
+          ],
+          [
+            "2",
+            10
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            25
+          ],
+          [
+            "5",
+            15
+          ],
+          [
+            "6",
+            10
+          ],
+          [
+            "7",
+            22
+          ],
+          [
+            "8",
+            20
+          ],
+          [
+            "9",
+            19
+          ],
+          [
+            "10",
+            18
+          ],
+          [
+            "11",
+            7
+          ],
+          [
+            "12",
+            11
+          ],
+          [
+            "13",
+            12
+          ],
+          [
+            "14",
+            14
+          ],
+          [
+            "15",
+            15
+          ],
+          [
+            "16",
+            23
+          ],
+          [
+            "17",
+            17
+          ],
+          [
+            "18",
+            17
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161316,
+        "datos": [
+          [
+            "Hoyo",
+            "LEO POTTS",
+            "MICHAEL    BARNES ",
+            "IAN SANDELLS "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -5,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -5,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -6,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -8,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -8,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -8,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -6,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -4,
+            -3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161317,
+        "datos": [
+          [
+            "Hoyo",
+            "LEO POTTS",
+            "MICHAEL    BARNES ",
+            "IAN SANDELLS "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77930
+    }
+  ],
+  "scoreTypes": {
+    "hole_in_one": {
+      "scoreTypeKey": "hole_in_one",
+      "players": [
+        {
+          "playerName": "Cebreros Fernandez, Enrique",
+          "holeNumber": 7,
+          "createdAt": "09/02/26 09:47:10"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:05.821Z"
+}

@@ -1,0 +1,560 @@
+{
+  "tourId": 67707,
+  "url": "https://www.nextcaddy.com/tour/67707",
+  "scrapedAt": "2026-10-12T12:03:50.977Z",
+  "meta": {
+    "name": "4ª Prueba III Liga Iniciación (P3)",
+    "organizer": null,
+    "course": "Club de Golf la Cañada",
+    "courseCode": "AM11",
+    "dateStart": "2026-03-15",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-15",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+          "licencia": "EXX1911521",
+          "hcp": 36,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2278224
+        },
+        {
+          "pos": 2,
+          "name": "Borja Garcia Roman",
+          "licencia": "AM11000669",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2271854
+        },
+        {
+          "pos": 3,
+          "name": "Amit Thadani",
+          "licencia": "EXX1911519",
+          "hcp": 36,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2277537
+        },
+        {
+          "pos": null,
+          "name": "Oscar Pernia",
+          "licencia": "EXX1911522",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2278380
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Salmeron Papay",
+          "licencia": "EXX1911523",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2279422
+        },
+        {
+          "pos": null,
+          "name": "Enrique Soriano Palacios",
+          "licencia": "AM11507723",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2279180
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Borja Garcia Roman",
+      "licencia": "AM11000669",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Amit Thadani",
+      "licencia": "EXX1911519",
+      "hcp": 36,
+      "nivel": "M"
+    },
+    {
+      "orden": 3,
+      "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+      "licencia": "EXX1911521",
+      "hcp": 36,
+      "nivel": "M"
+    },
+    {
+      "orden": 4,
+      "name": "Oscar Pernia",
+      "licencia": "EXX1911522",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Enrique Soriano Palacios",
+      "licencia": "AM11507723",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Salmeron Papay",
+      "licencia": "EXX1911523",
+      "hcp": 36,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Borja Garcia Roman",
+          "hcp": 28,
+          "ins": "2271854",
+          "jid": "72189",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Amit Thadani",
+          "hcp": 36,
+          "ins": "2277537",
+          "jid": "72189",
+          "nivel": "M"
+        },
+        {
+          "time": "12:40",
+          "tee": 1,
+          "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+          "hcp": 36,
+          "ins": "2278224",
+          "jid": "72189",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Oscar Pernia",
+          "hcp": 36,
+          "ins": "2278380",
+          "jid": "72189",
+          "nivel": "M"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Enrique Soriano Palacios",
+          "hcp": 36,
+          "ins": "2279180",
+          "jid": "72189",
+          "nivel": "S"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Alvaro Salmeron Papay",
+          "hcp": 36,
+          "ins": "2279422",
+          "jid": "72189",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72189
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Villavieja Urzainqui, Angel Javier",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Fernandez Gonzalez, Antonio",
+          "holeNumber": 8,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Fernandez Gonzalez, Antonio",
+          "holeNumber": 13,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 6,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 13,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:31"
+        },
+        {
+          "playerName": "Claros Dominguez, Antonio Jesus",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:48:32"
+        },
+        {
+          "playerName": "Alvarez Macho, Antonio Manuel",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:48:32"
+        },
+        {
+          "playerName": "Sanchez Ariza, Antonio",
+          "holeNumber": 6,
+          "createdAt": "19/07/25 14:48:33"
+        },
+        {
+          "playerName": "Song Ahn, Fan Min",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:48:36"
+        },
+        {
+          "playerName": "Carrere Lovera, Francisco Javier",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:37"
+        },
+        {
+          "playerName": "Carrere Lovera, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "19/07/25 14:48:37"
+        },
+        {
+          "playerName": "Garrido Merida, Francisco Manuel",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:48:37"
+        },
+        {
+          "playerName": "Garcia Frias, Gonzalo",
+          "holeNumber": 10,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Garcia Frias, Gonzalo",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Garcia Frias, Gonzalo",
+          "holeNumber": 17,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 3,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 4,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 8,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Jaime Pareja-Obregon, Cristobal",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Lanza Ruiz, Javier",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Lanza Ruiz, Javier",
+          "holeNumber": 17,
+          "createdAt": "19/07/25 14:48:39"
+        },
+        {
+          "playerName": "Ruiz Rando, Jose Antonio",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:44"
+        },
+        {
+          "playerName": "Sierra Jimenez, Juan Carlos",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:48:47"
+        },
+        {
+          "playerName": "Montero Romero, Juan",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:48:49"
+        },
+        {
+          "playerName": "Montero Romero, Juan",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:49"
+        },
+        {
+          "playerName": "Montero Romero, Juan",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 14:48:49"
+        },
+        {
+          "playerName": "Leon Diaz, Julio Cesar",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:48:50"
+        },
+        {
+          "playerName": "Lopez Morenas, Manuel",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:48:53"
+        },
+        {
+          "playerName": "Reina Millan, Manuel",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:48:54"
+        },
+        {
+          "playerName": "Sanchez Lacasa, Manuel",
+          "holeNumber": 3,
+          "createdAt": "19/07/25 14:48:54"
+        },
+        {
+          "playerName": "Lozano Mouloud, Mayidi",
+          "holeNumber": 10,
+          "createdAt": "19/07/25 14:48:57"
+        },
+        {
+          "playerName": "Gambero Sedo, Rafael",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:49:00"
+        },
+        {
+          "playerName": "Mendez Estebanez, Raul",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:49:03"
+        },
+        {
+          "playerName": "Mendez Estebanez, Raul",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:49:03"
+        },
+        {
+          "playerName": "Mendez Estebanez, Raul",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:49:03"
+        },
+        {
+          "playerName": "Mendez Estebanez, Raul",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 14:49:03"
+        },
+        {
+          "playerName": "Garcia Navas, Ruben",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:49:05"
+        },
+        {
+          "playerName": "Cuenca Fenton, Santiago",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:49:07"
+        },
+        {
+          "playerName": "Cuenca Fenton, Santiago",
+          "holeNumber": 3,
+          "createdAt": "19/07/25 14:49:07"
+        },
+        {
+          "playerName": "Perez Cordero, Pablo",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:49:12"
+        },
+        {
+          "playerName": "Perez Cordero, Pablo",
+          "holeNumber": 8,
+          "createdAt": "19/07/25 14:49:12"
+        },
+        {
+          "playerName": "Perez Cordero, Pablo",
+          "holeNumber": 11,
+          "createdAt": "19/07/25 14:49:12"
+        },
+        {
+          "playerName": "Perez Cordero, Pablo",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 14:49:12"
+        },
+        {
+          "playerName": "Perez Cordero, Pablo",
+          "holeNumber": 18,
+          "createdAt": "19/07/25 14:49:12"
+        },
+        {
+          "playerName": "Lopez Romero, Jose",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:49:14"
+        },
+        {
+          "playerName": "arbanas, andrija",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:49:15"
+        },
+        {
+          "playerName": "frelek, nikodem",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:49:16"
+        },
+        {
+          "playerName": "Carrere Lovera, Jose Maria",
+          "holeNumber": 13,
+          "createdAt": "19/07/25 14:49:20"
+        },
+        {
+          "playerName": "Carrere Lovera, Jose Maria",
+          "holeNumber": 14,
+          "createdAt": "19/07/25 14:49:20"
+        },
+        {
+          "playerName": "Rodriguez De Pablo, Jose Miguel",
+          "holeNumber": 2,
+          "createdAt": "19/07/25 14:49:20"
+        },
+        {
+          "playerName": "Alonso Tejon, Ruben",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:49:21"
+        },
+        {
+          "playerName": "Alonso Tejon, Ruben",
+          "holeNumber": 5,
+          "createdAt": "19/07/25 14:49:21"
+        },
+        {
+          "playerName": "Alonso Tejon, Ruben",
+          "holeNumber": 16,
+          "createdAt": "19/07/25 14:49:21"
+        },
+        {
+          "playerName": "Diaz Canovas, Javier",
+          "holeNumber": 9,
+          "createdAt": "19/07/25 14:49:22"
+        },
+        {
+          "playerName": "Gonzalez Garcia, Jose Luis",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:49:22"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Muñoz Mora, Juan Jose",
+          "holeNumber": 1,
+          "createdAt": "19/07/25 14:48:48"
+        },
+        {
+          "playerName": "frelek, nikodem",
+          "holeNumber": 7,
+          "createdAt": "19/07/25 14:49:15"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3544131946_reglamento_liga_iniciacion_c.g._la_canada_2025-2026.pdf"
+  ]
+}

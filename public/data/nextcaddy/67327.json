@@ -1,0 +1,209 @@
+{
+  "tourId": 67327,
+  "url": "https://www.nextcaddy.com/tour/67327",
+  "scrapedAt": "2026-10-12T12:02:24.896Z",
+  "meta": {
+    "name": "2ª Prueba III Liga Iniciación (P3)",
+    "organizer": null,
+    "course": "Club de Golf la Cañada",
+    "courseCode": "AM11",
+    "dateStart": "2026-01-18",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-18",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Manuel Martin Sabio",
+          "licencia": "AM11499392",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2245066
+        },
+        {
+          "pos": 2,
+          "name": "Adolfo Faerna Garcia",
+          "licencia": "EXX1468004",
+          "hcp": 36,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2247690
+        },
+        {
+          "pos": 3,
+          "name": "Jose Manuel Poyatos Acosta",
+          "licencia": "AM11477974",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2245578
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Gallego Madrid",
+          "licencia": "EXX1911430",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2246877
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 4
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Victor Manuel Martin Sabio",
+      "licencia": "AM11499392",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Manuel Poyatos Acosta",
+      "licencia": "AM11477974",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Antonio Gallego Madrid",
+      "licencia": "EXX1911430",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Adolfo Faerna Garcia",
+      "licencia": "EXX1468004",
+      "hcp": 36,
+      "nivel": "M"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Victor Manuel Martin Sabio",
+          "hcp": 36,
+          "ins": "2245066",
+          "jid": "71739",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Antonio Gallego Madrid",
+          "hcp": 36,
+          "ins": "2246877",
+          "jid": "71739",
+          "nivel": "M"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Adolfo Faerna Garcia",
+          "hcp": 36,
+          "ins": "2247690",
+          "jid": "71739",
+          "nivel": "M"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Jose Manuel Poyatos Acosta",
+          "hcp": 36,
+          "ins": "2245578",
+          "jid": "71739",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71739
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "John Mcleod, Ewan",
+          "holeNumber": 3,
+          "createdAt": "24/06/25 13:28:08"
+        },
+        {
+          "playerName": "Thornton, Robert",
+          "holeNumber": 7,
+          "createdAt": "24/06/25 13:30:10"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3625663831_reglamento_liga_iniciacion_c.g._la_canada_2025-2026.pdf"
+  ]
+}

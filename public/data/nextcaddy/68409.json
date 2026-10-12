@@ -1,0 +1,283 @@
+{
+  "tourId": 68409,
+  "url": "https://www.nextcaddy.com/tour/68409",
+  "scrapedAt": "2026-10-12T12:03:07.567Z",
+  "meta": {
+    "name": "TORNEO NIÑOS 9 HOYOS",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-02-21",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-02-21",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 2,
+          "name": "Mar Rosa Curcho",
+          "licencia": "AMG8952909",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2265436
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Gonzalez Diaz",
+          "licencia": "AMG8991768",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2265434
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Villaran Grygorenko",
+          "licencia": "AMG8517616",
+          "hcp": 54,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2265432
+        },
+        {
+          "pos": 5,
+          "name": "Marcoarturo Ayala Galan",
+          "licencia": "AM07952951",
+          "hcp": 46.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2265616
+        },
+        {
+          "pos": 6,
+          "name": "Julia Coello Baquero",
+          "licencia": "AMG8989359",
+          "hcp": 28.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2265435
+        },
+        {
+          "pos": 7,
+          "name": "Blanca Gonzalez Diaz",
+          "licencia": "AMG8973463",
+          "hcp": 48.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2265433
+        },
+        {
+          "pos": 8,
+          "name": "Ana Coello Baquero",
+          "licencia": "AMG8353564",
+          "hcp": 54,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2265431
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Coello Baquero",
+      "licencia": "AMG8353564",
+      "hcp": 54,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Blanca Gonzalez Diaz",
+      "licencia": "AMG8973463",
+      "hcp": 48.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Julia Coello Baquero",
+      "licencia": "AMG8989359",
+      "hcp": 28.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Mar Rosa Curcho",
+      "licencia": "AMG8952909",
+      "hcp": 44.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Daniel Villaran Grygorenko",
+      "licencia": "AMG8517616",
+      "hcp": 54,
+      "nivel": "M"
+    },
+    {
+      "orden": 2,
+      "name": "Ignacio Gonzalez Diaz",
+      "licencia": "AMG8991768",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Marcoarturo Ayala Galan",
+      "licencia": "AM07952951",
+      "hcp": 46.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Liberto Quinta Rodriguez",
+      "licencia": "AMG8519270",
+      "hcp": 54,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Ana Coello Baquero",
+          "hcp": 54,
+          "ins": "2265431",
+          "jid": "73015",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Blanca Gonzalez Diaz",
+          "hcp": 48.6,
+          "ins": "2265433",
+          "jid": "73015",
+          "nivel": "I"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Julia Coello Baquero",
+          "hcp": 28.1,
+          "ins": "2265435",
+          "jid": "73015",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Mar Rosa Curcho",
+          "hcp": 44.6,
+          "ins": "2265436",
+          "jid": "73015",
+          "nivel": "B"
+        },
+        {
+          "time": "10:09",
+          "tee": 10,
+          "name": "Daniel Villaran Grygorenko",
+          "hcp": 54,
+          "ins": "2265432",
+          "jid": "73015",
+          "nivel": "M"
+        },
+        {
+          "time": "10:09",
+          "tee": 10,
+          "name": "Ignacio Gonzalez Diaz",
+          "hcp": 53,
+          "ins": "2265434",
+          "jid": "73015",
+          "nivel": "B"
+        },
+        {
+          "time": "10:09",
+          "tee": 10,
+          "name": "Marcoarturo Ayala Galan",
+          "hcp": 46.8,
+          "ins": "2265616",
+          "jid": "73015",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73015
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

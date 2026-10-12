@@ -1,0 +1,908 @@
+{
+  "tourId": 69053,
+  "url": "https://www.nextcaddy.com/tour/69053",
+  "scrapedAt": "2026-10-12T12:26:39.275Z",
+  "meta": {
+    "name": "TORNEO INFANTIL 9 HOYOS",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-03-14",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "INFANTIL",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-14",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      5,
+      4,
+      4,
+      3,
+      4,
+      3,
+      5,
+      3,
+      4,
+      5,
+      4,
+      4
+    ],
+    "si": [
+      16,
+      14,
+      12,
+      8,
+      4,
+      18,
+      6,
+      10,
+      2,
+      13,
+      9,
+      17,
+      7,
+      15,
+      5,
+      11,
+      1,
+      3
+    ],
+    "meters": [
+      221,
+      250,
+      137,
+      352,
+      323,
+      252,
+      415,
+      316,
+      353,
+      130,
+      293,
+      112,
+      433,
+      124,
+      291,
+      408,
+      365,
+      265
+    ],
+    "parTotal": 72
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mar Rosa Curcho",
+          "licencia": "AMG8952909",
+          "hcp": 41.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2280967,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                4,
+                6,
+                4,
+                7,
+                3,
+                5,
+                6,
+                6,
+                7
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ana Coello Baquero",
+          "licencia": "AMG8353564",
+          "hcp": 50.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2280962,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                6,
+                5,
+                7,
+                4,
+                5,
+                7,
+                7,
+                7
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Sergio Muriel Varela",
+          "licencia": "AMG8517615",
+          "hcp": 54,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2280966,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                7,
+                5,
+                6,
+                7,
+                4,
+                7,
+                8,
+                9,
+                8
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Marcoarturo Ayala Galan",
+          "licencia": "AM07952951",
+          "hcp": 46.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2280963,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                6,
+                5,
+                7,
+                6,
+                8,
+                9,
+                8,
+                5,
+                6
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Daniel Villaran Grygorenko",
+          "licencia": "AMG8517616",
+          "hcp": 54,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2280965,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                3,
+                null,
+                4,
+                9,
+                6,
+                7,
+                null,
+                9,
+                7
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Liberto Quinta Rodriguez",
+          "licencia": "AMG8519270",
+          "hcp": 54,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2280964,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                5,
+                8,
+                4,
+                null,
+                7,
+                7,
+                null,
+                7,
+                9
+              ],
+              "total": null,
+              "meters": [
+                221,
+                250,
+                137,
+                352,
+                323,
+                252,
+                415,
+                316,
+                353,
+                130,
+                293,
+                112,
+                433,
+                124,
+                291,
+                408,
+                365,
+                265
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Coello Baquero",
+      "licencia": "AMG8353564",
+      "hcp": 50.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Mar Rosa Curcho",
+      "licencia": "AMG8952909",
+      "hcp": 41.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Marcoarturo Ayala Galan",
+      "licencia": "AM07952951",
+      "hcp": 46.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Liberto Quinta Rodriguez",
+      "licencia": "AMG8519270",
+      "hcp": 54,
+      "nivel": "M"
+    },
+    {
+      "orden": 3,
+      "name": "Daniel Villaran Grygorenko",
+      "licencia": "AMG8517616",
+      "hcp": 54,
+      "nivel": "M"
+    },
+    {
+      "orden": 4,
+      "name": "Sergio Muriel Varela",
+      "licencia": "AMG8517615",
+      "hcp": 54,
+      "nivel": "M"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:50",
+          "tee": 10,
+          "name": "Ana Coello Baquero",
+          "hcp": 50.7,
+          "ins": "2280962",
+          "jid": "73781",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 10,
+          "name": "Liberto Quinta Rodriguez",
+          "hcp": 54,
+          "ins": "2280964",
+          "jid": "73781",
+          "nivel": "M"
+        },
+        {
+          "time": "09:50",
+          "tee": 10,
+          "name": "Mar Rosa Curcho",
+          "hcp": 41.9,
+          "ins": "2280967",
+          "jid": "73781",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Marcoarturo Ayala Galan",
+          "hcp": 46.9,
+          "ins": "2280963",
+          "jid": "73781",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Daniel Villaran Grygorenko",
+          "hcp": 54,
+          "ins": "2280965",
+          "jid": "73781",
+          "nivel": "M"
+        },
+        {
+          "time": "10:00",
+          "tee": 10,
+          "name": "Sergio Muriel Varela",
+          "hcp": 54,
+          "ins": "2280966",
+          "jid": "73781",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158214,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            2
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            13
+          ],
+          [
+            "Peor",
+            35
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158215,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            13
+          ],
+          [
+            "2",
+            10
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            11
+          ],
+          [
+            "5",
+            14
+          ],
+          [
+            "6",
+            16
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            19
+          ],
+          [
+            "9",
+            20
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158216,
+        "datos": [
+          [
+            "Hoyo",
+            "MAR ROSA CURCHO",
+            "ANA COELLO BAQUERO",
+            "SERGIO MURIEL VARELA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -4,
+            -3,
+            -4
+          ],
+          [
+            "Hoyo 15",
+            -6,
+            -5,
+            -4
+          ],
+          [
+            "Hoyo 16",
+            -7,
+            -6,
+            -4
+          ],
+          [
+            "Hoyo 17",
+            -8,
+            -6,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -8,
+            -6,
+            -2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158217,
+        "datos": [
+          [
+            "Hoyo",
+            "MAR ROSA CURCHO",
+            "ANA COELLO BAQUERO",
+            "SERGIO MURIEL VARELA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73781
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

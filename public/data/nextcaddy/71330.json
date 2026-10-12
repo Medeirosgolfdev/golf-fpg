@@ -1,0 +1,138 @@
+{
+  "tourId": 71330,
+  "url": "https://www.nextcaddy.com/tour/71330",
+  "scrapedAt": "2026-10-12T12:06:01.717Z",
+  "meta": {
+    "name": "8º TORNEO INFANTIL (5 hoyos)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-06-07",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-07",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ana Vico Sanchez",
+          "licencia": "AM02415483",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2335806
+        },
+        {
+          "pos": 2,
+          "name": "Maria Isabel Ladron De Guevara Pablo-Romero",
+          "licencia": "AM02474780",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2335807
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 2
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Vico Sanchez",
+      "licencia": "AM02415483",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Isabel Ladron De Guevara Pablo-Romero",
+      "licencia": "AM02474780",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:50",
+          "tee": 1,
+          "name": "Ana Vico Sanchez",
+          "hcp": 54,
+          "ins": "2335806",
+          "jid": "76380",
+          "nivel": "B"
+        },
+        {
+          "time": "13:50",
+          "tee": 1,
+          "name": "Maria Isabel Ladron De Guevara Pablo-Romero",
+          "hcp": 54,
+          "ins": "2335807",
+          "jid": "76380",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76380
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1166787817_reglas_locales_pineda_28.05.26.pdf"
+  ]
+}

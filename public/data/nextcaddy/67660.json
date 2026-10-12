@@ -1,0 +1,797 @@
+{
+  "tourId": 67660,
+  "url": "https://www.nextcaddy.com/tour/67660",
+  "scrapedAt": "2026-10-12T12:02:35.824Z",
+  "meta": {
+    "name": "LIGA DE DAMAS 1ª PRUEBA",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-01-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras Facebook",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion Handicap 1ª Categoria",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "licencia": "AM85888809",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2250757
+        },
+        {
+          "pos": 2,
+          "name": "Marina Soler Mateos",
+          "licencia": "AM85614851",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2250761
+        },
+        {
+          "pos": 3,
+          "name": "Magdalena Sainz De La Maza Ramirez",
+          "licencia": "AM85769836",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2250762
+        },
+        {
+          "pos": 4,
+          "name": "Laura Maria Vila Villa",
+          "licencia": "AMG3812494",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2250763
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "licencia": "AM85888809",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2250757
+        },
+        {
+          "pos": 2,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "licencia": "AM25155798",
+          "hcp": 25.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2250758
+        },
+        {
+          "pos": 3,
+          "name": "Rocio Victoria De Toledo Lopez",
+          "licencia": "CB00069573",
+          "hcp": 37.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2250759
+        },
+        {
+          "pos": 4,
+          "name": "Marina Soler Mateos",
+          "licencia": "AM85614851",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2250761
+        },
+        {
+          "pos": 5,
+          "name": "Carol Maria Osuna Feore",
+          "licencia": "AM85355004",
+          "hcp": 34.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2250755
+        },
+        {
+          "pos": 6,
+          "name": "Magdalena Sainz De La Maza Ramirez",
+          "licencia": "AM85769836",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2250762
+        },
+        {
+          "pos": 7,
+          "name": "Ana Maria Montes O Connor",
+          "licencia": "AM85278684",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2250756
+        },
+        {
+          "pos": 8,
+          "name": "Laura Maria Vila Villa",
+          "licencia": "AMG3812494",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2250763
+        },
+        {
+          "pos": null,
+          "name": "Gloria Mª Carmona Albarran",
+          "licencia": "AM85053895",
+          "hcp": 36.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2250764
+        },
+        {
+          "pos": null,
+          "name": "Heike Thielsch",
+          "licencia": "AM85795757",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2250760
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Handicap 1ª Categoria",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carol Maria Osuna Feore",
+      "licencia": "AM85355004",
+      "hcp": 34.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Maria Montes O Connor",
+      "licencia": "AM85278684",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Angeles Cortabitarte Gutierrez",
+      "licencia": "AM85888809",
+      "hcp": 23.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Paula Gallegos Miralles De Imperial",
+      "licencia": "AM25155798",
+      "hcp": 25.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Rocio Victoria De Toledo Lopez",
+      "licencia": "CB00069573",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Heike Thielsch",
+      "licencia": "AM85795757",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Marina Soler Mateos",
+      "licencia": "AM85614851",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Magdalena Sainz De La Maza Ramirez",
+      "licencia": "AM85769836",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Laura Maria Vila Villa",
+      "licencia": "AMG3812494",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Gloria Mª Carmona Albarran",
+      "licencia": "AM85053895",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Marina Soler Mateos",
+          "hcp": 10.7,
+          "ins": "2250761",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Magdalena Sainz De La Maza Ramirez",
+          "hcp": 16.3,
+          "ins": "2250762",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Laura Maria Vila Villa",
+          "hcp": 23.1,
+          "ins": "2250763",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "hcp": 23.6,
+          "ins": "2250757",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Ana Maria Montes O Connor",
+          "hcp": 24.7,
+          "ins": "2250756",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "hcp": 25.1,
+          "ins": "2250758",
+          "jid": "72142",
+          "nivel": "M"
+        },
+        {
+          "time": "11:40",
+          "tee": 1,
+          "name": "Heike Thielsch",
+          "hcp": 33.9,
+          "ins": "2250760",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Carol Maria Osuna Feore",
+          "hcp": 34.1,
+          "ins": "2250755",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Gloria Mª Carmona Albarran",
+          "hcp": 36,
+          "ins": "2250764",
+          "jid": "72142",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Rocio Victoria De Toledo Lopez",
+          "hcp": 36,
+          "ins": "2250759",
+          "jid": "72142",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72142
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Garcia Sangra, Borja - Calle Benjumeda, Rafael De La",
+          "holeNumber": 2,
+          "createdAt": "12/07/25 09:18:39"
+        },
+        {
+          "playerName": "Custodio Rueda, Juan Miguel - Camacho Carranza, Oscar",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 09:32:17"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Perez-Barbadillo Lopez-Carrizosa, Iñigo",
+          "holeNumber": 5,
+          "createdAt": "12/07/25 09:34:42"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel - Lopez Caballo, Benjamin",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 09:35:28"
+        },
+        {
+          "playerName": "Guerrero Peman, Juan Gualberto - Guerrero Picardo, Ignacio",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 09:38:57"
+        },
+        {
+          "playerName": "Osborne Coloma, Gabriel - Neira Lopez, Javier",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 10:03:02"
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Sanchez, Borja",
+          "holeNumber": 6,
+          "createdAt": "12/07/25 10:09:20"
+        },
+        {
+          "playerName": "Martin Soldevilla, Enrique - Osborne Halcon, Enrique",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 10:26:49"
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Sanchez, Borja",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 10:35:59"
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Sanchez, Borja",
+          "holeNumber": 9,
+          "createdAt": "12/07/25 10:54:18"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Perez-Barbadillo Lopez-Carrizosa, Iñigo",
+          "holeNumber": 10,
+          "createdAt": "12/07/25 11:02:06"
+        },
+        {
+          "playerName": "Paredes Alvarez-Ossorio, Alberto Jose - Paredes Gonzalez-Santiago, Juan Carlos",
+          "holeNumber": 6,
+          "createdAt": "12/07/25 11:04:27"
+        },
+        {
+          "playerName": "Guerrero Peman, Juan Gualberto - Guerrero Picardo, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 11:20:52"
+        },
+        {
+          "playerName": "Moreno Pascual De Pobil, Alfonso - Pombo Jimenez, Jaime",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 11:31:44"
+        },
+        {
+          "playerName": "Paredes Alvarez-Ossorio, Alberto Jose - Paredes Gonzalez-Santiago, Juan Carlos",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 11:36:28"
+        },
+        {
+          "playerName": "Guardiola Noguera, Salvador - Gonzalez Sanchez, Borja",
+          "holeNumber": 14,
+          "createdAt": "12/07/25 12:13:42"
+        },
+        {
+          "playerName": "Diaz De Bustamante Zulueta, Manuel - De Chavarri Navasques, Maria Casilda",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 12:15:14"
+        },
+        {
+          "playerName": "Custodio Rueda, Juan Miguel - Camacho Carranza, Oscar",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 12:19:57"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel - Lopez Caballo, Benjamin",
+          "holeNumber": 14,
+          "createdAt": "12/07/25 12:22:40"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel - Lopez Caballo, Benjamin",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 12:22:40"
+        },
+        {
+          "playerName": "Esteban Garmendia, Antonio - Esteban Garate, Pablo",
+          "holeNumber": 14,
+          "createdAt": "12/07/25 12:23:32"
+        },
+        {
+          "playerName": "Guerrero Peman, Juan Gualberto - Guerrero Picardo, Ignacio",
+          "holeNumber": 13,
+          "createdAt": "12/07/25 12:34:43"
+        },
+        {
+          "playerName": "Custodio Rueda, Juan Miguel - Camacho Carranza, Oscar",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 12:48:52"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel - Lopez Caballo, Benjamin",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 12:57:18"
+        },
+        {
+          "playerName": "Huerta Paez, Manuel - Lopez Caballo, Benjamin",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 12:57:18"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto - Perez-Barbadillo Lopez-Carrizosa, Iñigo",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 12:57:57"
+        },
+        {
+          "playerName": "Cruz Rodriguez, Pedro - Zapata Barreras, Alfonso",
+          "holeNumber": 11,
+          "createdAt": "12/07/25 13:03:49"
+        },
+        {
+          "playerName": "Ollero Borrero, Juan - Ollero Carbo, Juan",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 13:04:37"
+        },
+        {
+          "playerName": "Paredes Alvarez-Ossorio, Alberto Jose - Paredes Gonzalez-Santiago, Juan Carlos",
+          "holeNumber": 14,
+          "createdAt": "12/07/25 13:05:14"
+        },
+        {
+          "playerName": "Garcia Sangra, Borja - Calle Benjumeda, Rafael De La",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 13:13:36"
+        },
+        {
+          "playerName": "Esteban Garmendia, Antonio - Esteban Garate, Pablo",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 13:14:43"
+        },
+        {
+          "playerName": "Diaz De La Peña Lopez, Rosa - Arias Hormaechea, Monica",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 13:16:15"
+        },
+        {
+          "playerName": "Paredes Lopez, Sandra - Sanchez Blanco, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 13:34:18"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 13:50:49"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 14:00:28"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto - Ollero Medina, Manuel",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 14:15:54"
+        },
+        {
+          "playerName": "Rodriguez-Guanter Asporosa, Pablo - De La Lastra Lozano, Pablo",
+          "holeNumber": 2,
+          "createdAt": "12/07/25 14:26:36"
+        },
+        {
+          "playerName": "Argueso Davila, Alvaro - Domecq Nuñez, Fernando",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 14:32:07"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 5,
+          "createdAt": "12/07/25 14:37:32"
+        },
+        {
+          "playerName": "Alvarez Nuñez, Beltran - Feria Melgarejo, Jose Luis",
+          "holeNumber": 1,
+          "createdAt": "12/07/25 14:42:45"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 5,
+          "createdAt": "12/07/25 14:46:15"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Van Panhuys, Eduardo",
+          "holeNumber": 5,
+          "createdAt": "12/07/25 14:52:57"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 6,
+          "createdAt": "12/07/25 15:02:51"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 15:22:32"
+        },
+        {
+          "playerName": "Bernal Fernandez De La Reguera, Cristina - Garate De Las Heras, Maria",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 15:23:56"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 15:35:47"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Van Panhuys, Eduardo",
+          "holeNumber": 9,
+          "createdAt": "12/07/25 15:49:04"
+        },
+        {
+          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 16:01:02"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 10,
+          "createdAt": "12/07/25 16:14:44"
+        },
+        {
+          "playerName": "Bellido Perez, Juan Pedro - Naranjo Alba, Daniel",
+          "holeNumber": 10,
+          "createdAt": "12/07/25 16:14:53"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Van Panhuys, Eduardo",
+          "holeNumber": 10,
+          "createdAt": "12/07/25 16:20:02"
+        },
+        {
+          "playerName": "Alvarez Nuñez, Beltran - Feria Melgarejo, Jose Luis",
+          "holeNumber": 8,
+          "createdAt": "12/07/25 16:20:19"
+        },
+        {
+          "playerName": "Bellido Perez, Juan Pedro - Naranjo Alba, Daniel",
+          "holeNumber": 11,
+          "createdAt": "12/07/25 16:26:12"
+        },
+        {
+          "playerName": "Martinez Caballero, Jose Antonio - Romero De Las Cuevas, Meliton",
+          "holeNumber": 4,
+          "createdAt": "12/07/25 16:37:43"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 13,
+          "createdAt": "12/07/25 16:47:02"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Van Panhuys, Eduardo",
+          "holeNumber": 12,
+          "createdAt": "12/07/25 16:53:55"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 14,
+          "createdAt": "12/07/25 17:01:46"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto - Ollero Medina, Manuel",
+          "holeNumber": 13,
+          "createdAt": "12/07/25 17:07:28"
+        },
+        {
+          "playerName": "Lozano Maldonado, Juan Bosco - Rivero Ximenez, Javier",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 17:27:04"
+        },
+        {
+          "playerName": "Araque Muñoz, Ignacio - Salamero Sanchez-Gabriel, Jose R",
+          "holeNumber": 10,
+          "createdAt": "12/07/25 17:41:18"
+        },
+        {
+          "playerName": "Rodriguez-Guanter Asporosa, Pablo - De La Lastra Lozano, Pablo",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 17:47:32"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio - Pierrard Hardy, Fernando",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 17:54:33"
+        },
+        {
+          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
+          "holeNumber": 15,
+          "createdAt": "12/07/25 17:57:23"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Santiago - Van Panhuys, Eduardo",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 17:58:01"
+        },
+        {
+          "playerName": "Milans Del Bosch Aguilar, Flavia - Osborne Cologan, Ignacio",
+          "holeNumber": 16,
+          "createdAt": "12/07/25 18:19:21"
+        },
+        {
+          "playerName": "Bellido Perez, Juan Pedro - Naranjo Alba, Daniel",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 18:26:48"
+        },
+        {
+          "playerName": "Estrada Vazquez, Jose Maria - Garcia De Alvear, Rafael Maria",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 18:28:13"
+        },
+        {
+          "playerName": "Pablo-Romero Carranza, Maria Isabel - Ladron De Guevara Ruiz, Ignacio",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 18:34:05"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto - Ollero Medina, Manuel",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 18:38:08"
+        },
+        {
+          "playerName": "Argueso Davila, Alvaro - Domecq Nuñez, Fernando",
+          "holeNumber": 17,
+          "createdAt": "12/07/25 18:43:58"
+        },
+        {
+          "playerName": "Del Rio Montes, Andres - Del Rio Riera, Eugenia",
+          "holeNumber": 18,
+          "createdAt": "12/07/25 19:07:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/67660_cartel_316.pdf"
+  ]
+}

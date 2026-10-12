@@ -1,0 +1,762 @@
+{
+  "tourId": 74058,
+  "url": "https://www.nextcaddy.com/tour/74058",
+  "scrapedAt": "2026-10-12T12:08:32.269Z",
+  "meta": {
+    "name": "Torneo Privado Somontes",
+    "organizer": null,
+    "course": "Escuela de la Real Federación de Golf de Madrid",
+    "courseCode": "CM41",
+    "dateStart": "2026-09-26",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-26",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Femenino Scratch General",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Simran Belaramani Samtani",
+          "licencia": "CMD4969648",
+          "hcp": 40.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2411852
+        },
+        {
+          "pos": 2,
+          "name": "Carmela Rodriguez Bernal",
+          "licencia": "LV57530871",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2411842
+        },
+        {
+          "pos": 3,
+          "name": "Teresa Herrero Lecanda",
+          "licencia": "CME5482095",
+          "hcp": 42,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2412553
+        },
+        {
+          "pos": 4,
+          "name": "Greta Rodriguez Bernal",
+          "licencia": "LV57530872",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2411843
+        },
+        {
+          "pos": 5,
+          "name": "Mencia Lamo Ortega",
+          "licencia": "CMA8982732",
+          "hcp": 44.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2412527
+        },
+        {
+          "pos": 6,
+          "name": "Belén Bolivar Reina",
+          "licencia": "CME5017181",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2411848
+        },
+        {
+          "pos": null,
+          "name": "Ines Lamo Ortega",
+          "licencia": "CMA8528247",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2412530
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Femenino Handicap General",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Simran Belaramani Samtani",
+          "licencia": "CMD4969648",
+          "hcp": 40.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2411852
+        },
+        {
+          "pos": 2,
+          "name": "Carmela Rodriguez Bernal",
+          "licencia": "LV57530871",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2411842
+        },
+        {
+          "pos": 3,
+          "name": "Mencia Lamo Ortega",
+          "licencia": "CMA8982732",
+          "hcp": 44.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2412527
+        },
+        {
+          "pos": 4,
+          "name": "Teresa Herrero Lecanda",
+          "licencia": "CME5482095",
+          "hcp": 42,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2412553
+        },
+        {
+          "pos": 5,
+          "name": "Greta Rodriguez Bernal",
+          "licencia": "LV57530872",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2411843
+        },
+        {
+          "pos": 6,
+          "name": "Belén Bolivar Reina",
+          "licencia": "CME5017181",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2411848
+        },
+        {
+          "pos": null,
+          "name": "Ines Lamo Ortega",
+          "licencia": "CMA8528247",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2412530
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Masculino Scratch General",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Izaguirre Albacete",
+          "licencia": "CM02960984",
+          "hcp": 47.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2411851
+        },
+        {
+          "pos": 2,
+          "name": "Juan Manuel De Gracia Lasanta",
+          "licencia": "CME5499235",
+          "hcp": 45.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2411844
+        },
+        {
+          "pos": 3,
+          "name": "Javier Serrano Agudo",
+          "licencia": "CME5517872",
+          "hcp": 43.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2411849
+        },
+        {
+          "pos": 4,
+          "name": "Lucas Garcia-Valdes Mendaza",
+          "licencia": "CME5998439",
+          "hcp": 41.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2411855
+        },
+        {
+          "pos": 5,
+          "name": "Jaime Garcia-Valdes Mendaza",
+          "licencia": "CME5998437",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2411856
+        },
+        {
+          "pos": 6,
+          "name": "Luis Ferrer Herranz",
+          "licencia": "CM00958796",
+          "hcp": 42.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2412721
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Villalgordo Gonzalez",
+          "licencia": "CME5477933",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2411853
+        },
+        {
+          "pos": 8,
+          "name": "Ignacio Cediel Borlado",
+          "licencia": "CME5517985",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2411854
+        },
+        {
+          "pos": 9,
+          "name": "Samuel Ng Gonzalez-Quevedo",
+          "licencia": "CME5518818",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2411847
+        },
+        {
+          "pos": 10,
+          "name": "Alonso Criado Garrido",
+          "licencia": "AMA9516158",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2411845
+        },
+        {
+          "pos": 11,
+          "name": "Pablo Pereiro Rochen",
+          "licencia": "CME5477806",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2412531
+        },
+        {
+          "pos": 12,
+          "name": "Roman Pereiro Rochen",
+          "licencia": "CME5522395",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2412532
+        },
+        {
+          "pos": 13,
+          "name": "Yizhou Zhang",
+          "licencia": "CME5017974",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2411850
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Masculino Handicap General",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Izaguirre Albacete",
+          "licencia": "CM02960984",
+          "hcp": 47.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2411851
+        },
+        {
+          "pos": 2,
+          "name": "Juan Manuel De Gracia Lasanta",
+          "licencia": "CME5499235",
+          "hcp": 45.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2411844
+        },
+        {
+          "pos": 3,
+          "name": "Samuel Ng Gonzalez-Quevedo",
+          "licencia": "CME5518818",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2411847
+        },
+        {
+          "pos": 4,
+          "name": "Lucas Garcia-Valdes Mendaza",
+          "licencia": "CME5998439",
+          "hcp": 41.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2411855
+        },
+        {
+          "pos": 5,
+          "name": "Javier Serrano Agudo",
+          "licencia": "CME5517872",
+          "hcp": 43.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2411849
+        },
+        {
+          "pos": 6,
+          "name": "Luis Ferrer Herranz",
+          "licencia": "CM00958796",
+          "hcp": 42.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2412721
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Garcia-Valdes Mendaza",
+          "licencia": "CME5998437",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2411856
+        },
+        {
+          "pos": 8,
+          "name": "Alonso Criado Garrido",
+          "licencia": "AMA9516158",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2411845
+        },
+        {
+          "pos": 9,
+          "name": "Jaime Villalgordo Gonzalez",
+          "licencia": "CME5477933",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2411853
+        },
+        {
+          "pos": 10,
+          "name": "Ignacio Cediel Borlado",
+          "licencia": "CME5517985",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2411854
+        },
+        {
+          "pos": 11,
+          "name": "Pablo Pereiro Rochen",
+          "licencia": "CME5477806",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2412531
+        },
+        {
+          "pos": 12,
+          "name": "Roman Pereiro Rochen",
+          "licencia": "CME5522395",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2412532
+        },
+        {
+          "pos": 13,
+          "name": "Yizhou Zhang",
+          "licencia": "CME5017974",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2411850
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Femenino Scratch General",
+      "jugadores": 7
+    },
+    "2": {
+      "name": "Femenino Handicap General",
+      "jugadores": 7
+    },
+    "3": {
+      "name": "Masculino Scratch General",
+      "jugadores": 13
+    },
+    "4": {
+      "name": "Masculino Handicap General",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carmela Rodriguez Bernal",
+      "licencia": "LV57530871",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Greta Rodriguez Bernal",
+      "licencia": "LV57530872",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Belén Bolivar Reina",
+      "licencia": "CME5017181",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Simran Belaramani Samtani",
+      "licencia": "CMD4969648",
+      "hcp": 40.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Mencia Lamo Ortega",
+      "licencia": "CMA8982732",
+      "hcp": 44.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Ines Lamo Ortega",
+      "licencia": "CMA8528247",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Teresa Herrero Lecanda",
+      "licencia": "CME5482095",
+      "hcp": 42,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Juan Manuel De Gracia Lasanta",
+      "licencia": "CME5499235",
+      "hcp": 45.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alonso Criado Garrido",
+      "licencia": "AMA9516158",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Samuel Ng Gonzalez-Quevedo",
+      "licencia": "CME5518818",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Serrano Agudo",
+      "licencia": "CME5517872",
+      "hcp": 43.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Yizhou Zhang",
+      "licencia": "CME5017974",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Miguel Izaguirre Albacete",
+      "licencia": "CM02960984",
+      "hcp": 47.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Jaime Villalgordo Gonzalez",
+      "licencia": "CME5477933",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Ignacio Cediel Borlado",
+      "licencia": "CME5517985",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Lucas Garcia-Valdes Mendaza",
+      "licencia": "CME5998439",
+      "hcp": 41.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Jaime Garcia-Valdes Mendaza",
+      "licencia": "CME5998437",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Pablo Pereiro Rochen",
+      "licencia": "CME5477806",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Roman Pereiro Rochen",
+      "licencia": "CME5522395",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Luis Ferrer Herranz",
+      "licencia": "CM00958796",
+      "hcp": 42.8,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79317
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1544753394_74058-torneo-privado-somontes.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:11.384Z"
+}

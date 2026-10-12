@@ -1,0 +1,779 @@
+{
+  "tourId": 67292,
+  "url": "https://www.nextcaddy.com/tour/67292",
+  "scrapedAt": "2026-10-12T12:24:10.334Z",
+  "meta": {
+    "name": "5º TORNEO INFANTIL (9 HOYOS)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-01-11",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-01-11",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      8,
+      4,
+      14,
+      10,
+      12,
+      18,
+      2,
+      6,
+      16
+    ],
+    "meters": [
+      253,
+      294,
+      265,
+      388,
+      134,
+      283,
+      322,
+      429,
+      125
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jaime Haya Pereyra",
+          "licencia": "AM02169765",
+          "hcp": 43.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2243154,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                6,
+                6,
+                4,
+                5,
+                7,
+                7,
+                3
+              ],
+              "total": 50,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Piñar Valentin",
+          "licencia": "AM02467920",
+          "hcp": 40.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2243097,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                6,
+                5,
+                5,
+                6,
+                6,
+                6,
+                3
+              ],
+              "total": 49,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Marcos Fernandez Pina",
+          "licencia": "AM02466760",
+          "hcp": 40.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2243090,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                5,
+                6,
+                5,
+                5,
+                5,
+                7,
+                4
+              ],
+              "total": 50,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Ruiz-Cabello Galobart",
+          "licencia": "AM02069324",
+          "hcp": 47.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2243151,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                6,
+                6,
+                4,
+                5,
+                6,
+                8,
+                7
+              ],
+              "total": 53,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Solis Toro",
+          "licencia": "AM02490990",
+          "hcp": 50.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2243086,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                8,
+                4,
+                6,
+                7,
+                7,
+                4
+              ],
+              "total": 56,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "licencia": "AM02413274",
+          "hcp": 46.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2243009,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                7,
+                7,
+                4,
+                5,
+                7,
+                9,
+                5
+              ],
+              "total": 56,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Ramon Barrero Muñoz",
+          "licencia": "AM02988253",
+          "hcp": 54,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2244002,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                7,
+                8,
+                7,
+                7,
+                5,
+                8,
+                5
+              ],
+              "total": 61,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Rodrigo Rojo Navarro",
+          "licencia": "AM02492223",
+          "hcp": 44.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2243096,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                8,
+                8,
+                6,
+                5,
+                5,
+                7,
+                5
+              ],
+              "total": 57,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Andres De La Rosa Tassara",
+          "licencia": "AM02082590",
+          "hcp": 36.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2243103,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                8,
+                6,
+                6,
+                4,
+                6,
+                4,
+                8,
+                4
+              ],
+              "total": 53,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Mateo Pablo De La Lastra Romero",
+          "licencia": "AM02084464",
+          "hcp": 36.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2243092,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                7,
+                9,
+                6,
+                5,
+                6,
+                8,
+                4
+              ],
+              "total": 57,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Victor Pedro Correa Exposito",
+          "licencia": "AM02474782",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2243083,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                7,
+                8,
+                8,
+                6,
+                9,
+                7,
+                null,
+                7
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 12,
+          "name": "Fernando Aguado Medina",
+          "licencia": "AM02074859",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2243157,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                8,
+                5,
+                9,
+                null,
+                8,
+                8,
+                9,
+                10
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ignacio Fernandez De Bobadilla Diaz",
+      "licencia": "AM02413274",
+      "hcp": 46.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Victor Pedro Correa Exposito",
+      "licencia": "AM02474782",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Solis Toro",
+      "licencia": "AM02490990",
+      "hcp": 50.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Marcos Fernandez Pina",
+      "licencia": "AM02466760",
+      "hcp": 40.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Mateo Pablo De La Lastra Romero",
+      "licencia": "AM02084464",
+      "hcp": 36.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Rodrigo Rojo Navarro",
+      "licencia": "AM02492223",
+      "hcp": 44.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio Piñar Valentin",
+      "licencia": "AM02467920",
+      "hcp": 40.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Andres De La Rosa Tassara",
+      "licencia": "AM02082590",
+      "hcp": 36.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Fernando Ruiz-Cabello Galobart",
+      "licencia": "AM02069324",
+      "hcp": 47.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Jaime Haya Pereyra",
+      "licencia": "AM02169765",
+      "hcp": 43.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Fernando Aguado Medina",
+      "licencia": "AM02074859",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Ramon Barrero Muñoz",
+      "licencia": "AM02988253",
+      "hcp": 54,
+      "nivel": "C"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Mateo Pablo De La Lastra Romero",
+          "hcp": 36.3,
+          "ins": "2243092",
+          "jid": "71702",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Andres De La Rosa Tassara",
+          "hcp": 36.4,
+          "ins": "2243103",
+          "jid": "71702",
+          "nivel": "I"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Ignacio Piñar Valentin",
+          "hcp": 40.1,
+          "ins": "2243097",
+          "jid": "71702",
+          "nivel": "I"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Marcos Fernandez Pina",
+          "hcp": 40.6,
+          "ins": "2243090",
+          "jid": "71702",
+          "nivel": "B"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Jaime Haya Pereyra",
+          "hcp": 43.6,
+          "ins": "2243154",
+          "jid": "71702",
+          "nivel": "A"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Rodrigo Rojo Navarro",
+          "hcp": 44.5,
+          "ins": "2243096",
+          "jid": "71702",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Ignacio Fernandez De Bobadilla Diaz",
+          "hcp": 46.6,
+          "ins": "2243009",
+          "jid": "71702",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Fernando Ruiz-Cabello Galobart",
+          "hcp": 47.5,
+          "ins": "2243151",
+          "jid": "71702",
+          "nivel": "A"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Pablo Solis Toro",
+          "hcp": 50.7,
+          "ins": "2243086",
+          "jid": "71702",
+          "nivel": "B"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Fernando Aguado Medina",
+          "hcp": 54,
+          "ins": "2243157",
+          "jid": "71702",
+          "nivel": "I"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Victor Pedro Correa Exposito",
+          "hcp": 54,
+          "ins": "2243083",
+          "jid": "71702",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 71702
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

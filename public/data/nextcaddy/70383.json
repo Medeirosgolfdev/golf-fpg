@@ -1,0 +1,957 @@
+{
+  "tourId": 70383,
+  "url": "https://www.nextcaddy.com/tour/70383",
+  "scrapedAt": "2026-10-12T12:23:10.203Z",
+  "meta": {
+    "name": "7º TORNEO INFANTIL (9 HOYOS - P&P)",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-05-03",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-03",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      8,
+      4,
+      14,
+      10,
+      12,
+      18,
+      2,
+      6,
+      16
+    ],
+    "meters": [
+      113,
+      112,
+      64,
+      62,
+      92,
+      64,
+      114,
+      65,
+      82
+    ],
+    "parTotal": 27
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Mantecon Yñiguez",
+          "licencia": "AM02488139",
+          "hcp": 51.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2309307,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                4,
+                5,
+                3,
+                4,
+                3,
+                4,
+                3
+              ],
+              "total": 36,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Borja Valdenebro Olavarria",
+          "licencia": "AM02466870",
+          "hcp": 51.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2309320,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                5
+              ],
+              "total": 39,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Faustino Martinez Mangas",
+          "licencia": "AM02416116",
+          "hcp": 51.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2309322,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                3,
+                3,
+                6,
+                6,
+                5
+              ],
+              "total": 38,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Beltran Martin-Prat Llorente",
+          "licencia": "AM02028985",
+          "hcp": 51,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2309892,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                4,
+                3,
+                5,
+                5,
+                3,
+                3
+              ],
+              "total": 39,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Valdenebro Olavarria",
+          "licencia": "AM02466882",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2309321,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                4,
+                3,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5
+              ],
+              "total": 41,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Angel Osborne Duque",
+          "licencia": "AM02517852",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2309872,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                3,
+                3,
+                5,
+                9,
+                6,
+                5,
+                3,
+                4
+              ],
+              "total": 44,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Beltran Martinez Mangas",
+          "licencia": "AM02416122",
+          "hcp": 43.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2309323,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                3,
+                3,
+                null,
+                8,
+                4,
+                5,
+                4,
+                5
+              ],
+              "total": null,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "licencia": "AM02466106",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2309327,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                6,
+                6,
+                7,
+                4,
+                4,
+                4
+              ],
+              "total": 44,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Enrique Osborne Loring",
+          "licencia": "AM02488226",
+          "hcp": 52,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2309881,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                4,
+                7,
+                4,
+                4,
+                5,
+                6,
+                4
+              ],
+              "total": 44,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 10,
+          "name": "Jaime Delage Ruiz",
+          "licencia": "AM02498149",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2309354,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                6,
+                4,
+                6,
+                4,
+                5,
+                5,
+                4
+              ],
+              "total": 44,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 11,
+          "name": "Carlos Dominguez Feito",
+          "licencia": "AM02997769",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2309305,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                null,
+                4,
+                5,
+                5,
+                4,
+                4,
+                null,
+                6
+              ],
+              "total": null,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 12,
+          "name": "Eric Verstrynge Ruiz",
+          "licencia": "AM02497604",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2309332,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                9,
+                4,
+                4,
+                7,
+                5,
+                7,
+                4,
+                5
+              ],
+              "total": 50,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 13,
+          "name": "Jose Maria Estrada Garcia De Alvear",
+          "licencia": "AM02508016",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2309331,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                10,
+                5,
+                5,
+                7,
+                4,
+                5,
+                5,
+                6
+              ],
+              "total": 57,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 14,
+          "name": "Fernando Domecq Rodriguez-Vizcaino",
+          "licencia": "AM02487029",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2309359,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                5,
+                6,
+                5,
+                5,
+                7,
+                6,
+                5,
+                5
+              ],
+              "total": 53,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 15,
+          "name": "Pablo Benjumea Rodriguez",
+          "licencia": "AM02483394",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2309341,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                6,
+                7,
+                4,
+                null,
+                6,
+                6,
+                5,
+                6
+              ],
+              "total": null,
+              "meters": [
+                113,
+                112,
+                64,
+                62,
+                92,
+                64,
+                114,
+                65,
+                82
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Carlos Dominguez Feito",
+      "licencia": "AM02997769",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Juan Mantecon Yñiguez",
+      "licencia": "AM02488139",
+      "hcp": 51.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Borja Valdenebro Olavarria",
+      "licencia": "AM02466870",
+      "hcp": 51.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Valdenebro Olavarria",
+      "licencia": "AM02466882",
+      "hcp": 52.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Faustino Martinez Mangas",
+      "licencia": "AM02416116",
+      "hcp": 51.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Beltran Martinez Mangas",
+      "licencia": "AM02416122",
+      "hcp": 43.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jeronimo Rodriguez Astolfi",
+      "licencia": "AM02466106",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Maria Estrada Garcia De Alvear",
+      "licencia": "AM02508016",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Eric Verstrynge Ruiz",
+      "licencia": "AM02497604",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Pablo Benjumea Rodriguez",
+      "licencia": "AM02483394",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Jaime Delage Ruiz",
+      "licencia": "AM02498149",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Fernando Domecq Rodriguez-Vizcaino",
+      "licencia": "AM02487029",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Angel Osborne Duque",
+      "licencia": "AM02517852",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Enrique Osborne Loring",
+      "licencia": "AM02488226",
+      "hcp": 52,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Beltran Martin-Prat Llorente",
+      "licencia": "AM02028985",
+      "hcp": 51,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Beltran Martinez Mangas",
+          "hcp": 43.8,
+          "ins": "2309323",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Pablo Benjumea Rodriguez",
+          "hcp": 48,
+          "ins": "2309341",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Beltran Martin-Prat Llorente",
+          "hcp": 51,
+          "ins": "2309892",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Juan Mantecon Yñiguez",
+          "hcp": 51.4,
+          "ins": "2309307",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Fernando Domecq Rodriguez-Vizcaino",
+          "hcp": 51.5,
+          "ins": "2309359",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Borja Valdenebro Olavarria",
+          "hcp": 51.7,
+          "ins": "2309320",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Faustino Martinez Mangas",
+          "hcp": 51.7,
+          "ins": "2309322",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Enrique Osborne Loring",
+          "hcp": 52,
+          "ins": "2309881",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Ignacio Valdenebro Olavarria",
+          "hcp": 52.5,
+          "ins": "2309321",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jose Maria Estrada Garcia De Alvear",
+          "hcp": 53,
+          "ins": "2309331",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "hcp": 53.5,
+          "ins": "2309327",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Angel Osborne Duque",
+          "hcp": 53.5,
+          "ins": "2309872",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Carlos Dominguez Feito",
+          "hcp": 54,
+          "ins": "2309305",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Eric Verstrynge Ruiz",
+          "hcp": 54,
+          "ins": "2309332",
+          "jid": "75322",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Jaime Delage Ruiz",
+          "hcp": 54,
+          "ins": "2309354",
+          "jid": "75322",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75322
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/60082331_70383-7-torneo-infantil-9-hoyos-p-p.pdf"
+  ]
+}

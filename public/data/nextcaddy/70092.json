@@ -1,0 +1,932 @@
+{
+  "tourId": 70092,
+  "url": "https://www.nextcaddy.com/tour/70092",
+  "scrapedAt": "2026-10-12T12:24:00.544Z",
+  "meta": {
+    "name": "TORNEO ESCUELA GOLF 19/04/2026 (9 HOYOS)",
+    "organizer": null,
+    "course": "Club Zaudín Golf",
+    "courseCode": "AM95",
+    "dateStart": "2026-04-19",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Especial Azul Mas",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-19",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      3,
+      5,
+      4,
+      4,
+      4,
+      3,
+      4,
+      4
+    ],
+    "si": [
+      16,
+      6,
+      2,
+      14,
+      4,
+      10,
+      12,
+      18,
+      8,
+      5,
+      7,
+      15,
+      9,
+      11,
+      13,
+      17,
+      1,
+      3
+    ],
+    "meters": [
+      282,
+      314,
+      128,
+      439,
+      314,
+      329,
+      329,
+      423,
+      146,
+      331,
+      150,
+      444,
+      329,
+      314,
+      326,
+      128,
+      347,
+      331
+    ],
+    "parTotal": 71
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Benjamines",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Barco Benitez",
+          "licencia": "AM95373691",
+          "hcp": 53.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2300838,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                5,
+                4,
+                9,
+                4,
+                7,
+                6,
+                8,
+                5
+              ],
+              "total": 54,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Luis Parra Guijarro",
+          "licencia": "AM95169461",
+          "hcp": 50,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2300844,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                5,
+                9,
+                6,
+                9,
+                7,
+                9,
+                7
+              ],
+              "total": 64,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Gonzalo Suarez Gomez",
+          "licencia": "AM95473217",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2300837,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                6,
+                7,
+                8,
+                6,
+                9,
+                8,
+                8,
+                6
+              ],
+              "total": 67,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Angel Mazo Luengo",
+          "licencia": "AM95348534",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2300839,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                8,
+                5,
+                10,
+                8,
+                8,
+                10,
+                10,
+                5
+              ],
+              "total": 74,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Miguel Martin Perez",
+          "licencia": "AM95024327",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2300847,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                6,
+                10,
+                9,
+                11,
+                9,
+                10,
+                5
+              ],
+              "total": 74,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Mª Asuncion Sedeño Martin",
+          "licencia": "AM95349030",
+          "hcp": 35.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2300842,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                8,
+                5,
+                9,
+                8,
+                6,
+                7,
+                null,
+                6
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Sofia Muñoz Garcia",
+          "licencia": "AMF7000440",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2300835,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                9,
+                6,
+                11,
+                7,
+                9,
+                10,
+                18,
+                8
+              ],
+              "total": 88,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Maria Rojas Murube",
+          "licencia": "AM95497711",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2300845,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                11,
+                11,
+                8,
+                12,
+                10,
+                8,
+                8,
+                11,
+                8
+              ],
+              "total": 87,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Alfonso Martinez Illescas",
+          "licencia": "AM95017608",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2300836,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                10,
+                7,
+                14,
+                12,
+                11,
+                11,
+                13,
+                8
+              ],
+              "total": 93,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135
+              ]
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Marco Soto Carbajosa",
+          "licencia": "AM95472597",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2300840,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                275,
+                274,
+                123,
+                381,
+                288,
+                318,
+                325,
+                414,
+                135,
+                289,
+                119,
+                426,
+                272,
+                308,
+                320,
+                123,
+                298,
+                286
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Alevines",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enrique Muñoz Garcia",
+          "licencia": "AMF7090052",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2300834,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                5,
+                6,
+                8,
+                5,
+                8,
+                6,
+                8,
+                6
+              ],
+              "total": 60,
+              "meters": [
+                282,
+                314,
+                128,
+                439,
+                314,
+                329,
+                329,
+                423,
+                146
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Navas Santaella",
+          "licencia": "AM95938816",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2300841,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                14,
+                10,
+                8,
+                12,
+                7,
+                12,
+                11,
+                14,
+                8
+              ],
+              "total": 96,
+              "meters": [
+                282,
+                314,
+                128,
+                439,
+                314,
+                329,
+                329,
+                423,
+                146
+              ]
+            }
+          ]
+        },
+        {
+          "pos": null,
+          "name": "Jose Francisco Parra Guijarro",
+          "licencia": "AM95070078",
+          "hcp": 53.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2300843,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                282,
+                314,
+                128,
+                439,
+                314,
+                329,
+                329,
+                423,
+                146,
+                331,
+                150,
+                444,
+                329,
+                314,
+                326,
+                128,
+                347,
+                331
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Benjamines",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Alevines",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Enrique Muñoz Garcia",
+      "licencia": "AMF7090052",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Navas Santaella",
+      "licencia": "AM95938816",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Francisco Parra Guijarro",
+      "licencia": "AM95070078",
+      "hcp": 53.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Sofia Muñoz Garcia",
+      "licencia": "AMF7000440",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Mª Asuncion Sedeño Martin",
+      "licencia": "AM95349030",
+      "hcp": 35.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Rojas Murube",
+      "licencia": "AM95497711",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Alfonso Martinez Illescas",
+      "licencia": "AM95017608",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Gonzalo Suarez Gomez",
+      "licencia": "AM95473217",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Rodrigo Barco Benitez",
+      "licencia": "AM95373691",
+      "hcp": 53.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Angel Mazo Luengo",
+      "licencia": "AM95348534",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Marco Soto Carbajosa",
+      "licencia": "AM95472597",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Luis Parra Guijarro",
+      "licencia": "AM95169461",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Miguel Martin Perez",
+      "licencia": "AM95024327",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Gonzalo Suarez Gomez",
+          "hcp": 51.5,
+          "ins": "2300837",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Mª Asuncion Sedeño Martin",
+          "hcp": 35.3,
+          "ins": "2300842",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Luis Parra Guijarro",
+          "hcp": 50,
+          "ins": "2300844",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:41",
+          "tee": 1,
+          "name": "Rodrigo Barco Benitez",
+          "hcp": 53.9,
+          "ins": "2300838",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:41",
+          "tee": 1,
+          "name": "Jose Francisco Parra Guijarro",
+          "hcp": 53.8,
+          "ins": "2300843",
+          "jid": "74994",
+          "nivel": "A"
+        },
+        {
+          "time": "09:41",
+          "tee": 1,
+          "name": "Miguel Martin Perez",
+          "hcp": 54,
+          "ins": "2300847",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:52",
+          "tee": 1,
+          "name": "Enrique Muñoz Garcia",
+          "hcp": 54,
+          "ins": "2300834",
+          "jid": "74994",
+          "nivel": "A"
+        },
+        {
+          "time": "09:52",
+          "tee": 1,
+          "name": "Alfonso Martinez Illescas",
+          "hcp": 54,
+          "ins": "2300836",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "09:52",
+          "tee": 1,
+          "name": "Angel Mazo Luengo",
+          "hcp": 54,
+          "ins": "2300839",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "10:03",
+          "tee": 1,
+          "name": "Marco Soto Carbajosa",
+          "hcp": 54,
+          "ins": "2300840",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "10:03",
+          "tee": 1,
+          "name": "Miguel Navas Santaella",
+          "hcp": 54,
+          "ins": "2300841",
+          "jid": "74994",
+          "nivel": "A"
+        },
+        {
+          "time": "10:14",
+          "tee": 1,
+          "name": "Sofia Muñoz Garcia",
+          "hcp": 54,
+          "ins": "2300835",
+          "jid": "74994",
+          "nivel": "B"
+        },
+        {
+          "time": "10:14",
+          "tee": 1,
+          "name": "Maria Rojas Murube",
+          "hcp": 54,
+          "ins": "2300845",
+          "jid": "74994",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74994
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": []
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

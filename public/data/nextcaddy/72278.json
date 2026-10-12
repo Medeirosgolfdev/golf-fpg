@@ -1,0 +1,726 @@
+{
+  "tourId": 72278,
+  "url": "https://www.nextcaddy.com/tour/72278",
+  "scrapedAt": "2026-10-12T12:06:56.199Z",
+  "meta": {
+    "name": "LEGS 13/07",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-07-13",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-07-13",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2360616
+        },
+        {
+          "pos": 2,
+          "name": "Karen Grant",
+          "licencia": "AM83603624",
+          "hcp": 27.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2360613
+        },
+        {
+          "pos": 3,
+          "name": "Stephen Broadway May",
+          "licencia": "AM83480761",
+          "hcp": 22.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2360612
+        },
+        {
+          "pos": 4,
+          "name": "Michael John Preston",
+          "licencia": "AM83773049",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2360615
+        },
+        {
+          "pos": 5,
+          "name": "Michael Barnes",
+          "licencia": "AM83611565",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2360619
+        },
+        {
+          "pos": 6,
+          "name": "Leo Lee Potts",
+          "licencia": "AM83344726",
+          "hcp": 19.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2360614
+        },
+        {
+          "pos": 7,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2360617
+        },
+        {
+          "pos": 8,
+          "name": "Bruce Mcintyre",
+          "licencia": "AM83287761",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2360620
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Stephen Broadway May",
+      "licencia": "AM83480761",
+      "hcp": 22.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Lee Potts",
+      "licencia": "AM83344726",
+      "hcp": 19.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Michael John Preston",
+      "licencia": "AM83773049",
+      "hcp": 21.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Ian Sandells",
+      "licencia": "AM83907255",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Michael Barnes",
+      "licencia": "AM83611565",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Bruce Mcintyre",
+      "licencia": "AM83287761",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Karen Grant",
+      "licencia": "AM83603624",
+      "hcp": 27.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 29.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160920,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            26
+          ],
+          [
+            "Birdie",
+            2
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            54
+          ],
+          [
+            "Peor",
+            47
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160921,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            8
+          ],
+          [
+            "2",
+            5
+          ],
+          [
+            "3",
+            8
+          ],
+          [
+            "4",
+            12
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            3
+          ],
+          [
+            "7",
+            13
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            13
+          ],
+          [
+            "10",
+            9
+          ],
+          [
+            "11",
+            6
+          ],
+          [
+            "12",
+            6
+          ],
+          [
+            "13",
+            15
+          ],
+          [
+            "14",
+            9
+          ],
+          [
+            "15",
+            10
+          ],
+          [
+            "16",
+            5
+          ],
+          [
+            "17",
+            11
+          ],
+          [
+            "18",
+            8
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160922,
+        "datos": [
+          [
+            "Hoyo",
+            "IAN SANDELLS ",
+            "KAREN GRANT ",
+            "STEPHEN BROADWAY MAY"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            2,
+            4
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            3,
+            2
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            3,
+            2
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            3,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -3,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -4,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -4,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -3,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            -4,
+            -2,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160923,
+        "datos": [
+          [
+            "Hoyo",
+            "IAN SANDELLS ",
+            "KAREN GRANT ",
+            "STEPHEN BROADWAY MAY"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -2,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77439
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Pariente Serrano, Matilde",
+          "holeNumber": 2,
+          "createdAt": "21/03/26 11:26:11"
+        },
+        {
+          "playerName": "Ballesteros Martinez-Blanco, Maria Herminia",
+          "holeNumber": 1,
+          "createdAt": "21/03/26 13:06:35"
+        },
+        {
+          "playerName": "Ballesteros Martinez-Blanco, Maria Herminia",
+          "holeNumber": 4,
+          "createdAt": "21/03/26 13:27:36"
+        },
+        {
+          "playerName": "Ferrandez Del Cacho, Mercedes",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 12:02:32"
+        },
+        {
+          "playerName": "Fernandez-Monzon Ravena, Maria Teresa",
+          "holeNumber": 13,
+          "createdAt": "21/03/26 12:29:47"
+        },
+        {
+          "playerName": "Ortega Almendro, Isabel",
+          "holeNumber": 13,
+          "createdAt": "21/03/26 12:39:25"
+        },
+        {
+          "playerName": "Alhambra Gomez, Maria Catalina",
+          "holeNumber": 13,
+          "createdAt": "21/03/26 12:23:18"
+        },
+        {
+          "playerName": "Sanchez  Garcia, Maria Del Pilar",
+          "holeNumber": 7,
+          "createdAt": "21/03/26 11:23:57"
+        },
+        {
+          "playerName": "Sanchez  Garcia, Maria Del Pilar",
+          "holeNumber": 1,
+          "createdAt": "21/03/26 13:02:12"
+        },
+        {
+          "playerName": "Alvarez Prada, Carmen",
+          "holeNumber": 14,
+          "createdAt": "21/03/26 12:57:28"
+        },
+        {
+          "playerName": "Ruiz Rodero, M Luisa",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 12:53:35"
+        },
+        {
+          "playerName": "Ruiz Rodero, M Luisa",
+          "holeNumber": 17,
+          "createdAt": "21/03/26 13:14:05"
+        },
+        {
+          "playerName": "Ruiz Rodero, M Luisa",
+          "holeNumber": 1,
+          "createdAt": "21/03/26 13:28:40"
+        },
+        {
+          "playerName": "Obispo De Torres, Maria Cruz",
+          "holeNumber": 12,
+          "createdAt": "21/03/26 12:21:47"
+        },
+        {
+          "playerName": "Obispo De Torres, Maria Cruz",
+          "holeNumber": 14,
+          "createdAt": "21/03/26 12:37:16"
+        },
+        {
+          "playerName": "Miguel Rodriguez, Gloria",
+          "holeNumber": 10,
+          "createdAt": "21/03/26 12:01:13"
+        },
+        {
+          "playerName": "Fernandez-Ardavin Martinez, Marta",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 13:14:07"
+        },
+        {
+          "playerName": "Alfaro Garcia, Julia",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 12:10:45"
+        },
+        {
+          "playerName": "Serrano Villajos, Maria Gemma",
+          "holeNumber": 7,
+          "createdAt": "21/03/26 11:36:34"
+        },
+        {
+          "playerName": "Fernandez Gonzalez, Paula",
+          "holeNumber": 15,
+          "createdAt": "21/03/26 13:03:58"
+        },
+        {
+          "playerName": "Fernandez Gonzalez, Paula",
+          "holeNumber": 17,
+          "createdAt": "21/03/26 13:20:59"
+        },
+        {
+          "playerName": "Garcia Diez, Concepcion",
+          "holeNumber": 16,
+          "createdAt": "21/03/26 12:59:21"
+        },
+        {
+          "playerName": "Chornet Duato, Carmen",
+          "holeNumber": 6,
+          "createdAt": "21/03/26 13:24:54"
+        },
+        {
+          "playerName": "Buesa Galiano, Carmen",
+          "holeNumber": 7,
+          "createdAt": "21/03/26 11:29:16"
+        },
+        {
+          "playerName": "Barrero Rodriguez, Paloma",
+          "holeNumber": 18,
+          "createdAt": "21/03/26 12:55:08"
+        },
+        {
+          "playerName": "Lopez Prieto, Gemma Trinidad",
+          "holeNumber": 2,
+          "createdAt": "21/03/26 12:40:33"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:03.958Z"
+}

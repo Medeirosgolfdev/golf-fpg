@@ -1,0 +1,215 @@
+{
+  "tourId": 72055,
+  "url": "https://www.nextcaddy.com/tour/72055",
+  "scrapedAt": "2026-10-12T12:06:46.019Z",
+  "meta": {
+    "name": "Club Tulipán",
+    "organizer": null,
+    "course": "Golf Río Real",
+    "courseCode": "AM52",
+    "dateStart": "2026-06-30",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jeroen De Groot",
+          "licencia": "AM43962176",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2353321
+        },
+        {
+          "pos": 2,
+          "name": "Patrick Van Der Spek",
+          "licencia": "AM57979149",
+          "hcp": 7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2353277
+        },
+        {
+          "pos": 3,
+          "name": "Loulou Krulder",
+          "licencia": "AM51946868",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2353326
+        },
+        {
+          "pos": 4,
+          "name": "Marijke De Nier",
+          "licencia": "AM86346285",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2353280
+        },
+        {
+          "pos": 5,
+          "name": "Frank Van Grieken",
+          "licencia": "AM24267462",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2353324
+        },
+        {
+          "pos": 6,
+          "name": "Henk Steenbergen",
+          "licencia": "AM72517893",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2353282
+        },
+        {
+          "pos": 7,
+          "name": "Helga Van Der Zon",
+          "licencia": "AM24979386",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2353281
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Patrick Van Der Spek",
+      "licencia": "AM57979149",
+      "hcp": 7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Henk Steenbergen",
+      "licencia": "AM72517893",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jeroen De Groot",
+      "licencia": "AM43962176",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Frank Van Grieken",
+      "licencia": "AM24267462",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Marijke De Nier",
+      "licencia": "AM86346285",
+      "hcp": 23.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Helga Van Der Zon",
+      "licencia": "AM24979386",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Loulou Krulder",
+      "licencia": "AM51946868",
+      "hcp": 15.3,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77205
+    }
+  ],
+  "scoreTypes": null,
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1803016436_72055-club-tulipan.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:02.672Z"
+}

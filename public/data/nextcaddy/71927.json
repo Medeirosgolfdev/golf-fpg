@@ -1,0 +1,659 @@
+{
+  "tourId": 71927,
+  "url": "https://www.nextcaddy.com/tour/71927",
+  "scrapedAt": "2026-10-12T12:06:35.942Z",
+  "meta": {
+    "name": "Liga Masculina  25.06.2026",
+    "organizer": null,
+    "course": "Real Club de Campo de Malaga",
+    "courseCode": "AM01",
+    "dateStart": "2026-06-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Roque Orellana Garcia",
+          "licencia": "AM01901604",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2350874
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Garcia Lluch",
+          "licencia": "AM01610480",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2350871
+        },
+        {
+          "pos": 3,
+          "name": "Luis Miguel Narbona Medina",
+          "licencia": "AM01209618",
+          "hcp": 19.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2350873
+        },
+        {
+          "pos": 4,
+          "name": "Jesus Manuel Tortosa Burgos",
+          "licencia": "AM01615363",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350877
+        },
+        {
+          "pos": 5,
+          "name": "Diego Blanco Fernandez",
+          "licencia": "AM01137673",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350869
+        },
+        {
+          "pos": 6,
+          "name": "Salvador Diaz Rico",
+          "licencia": "AM01696539",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350870
+        },
+        {
+          "pos": 7,
+          "name": "Marcos. Ant Garcia Miñana",
+          "licencia": "AM01359500",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2350872
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Arjona Martin",
+          "licencia": "AM01616751",
+          "hcp": 8.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2350868
+        },
+        {
+          "pos": 9,
+          "name": "Candido Zambrana Fernandez",
+          "licencia": "AM01284780",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2350880
+        },
+        {
+          "pos": 10,
+          "name": "Gabriel Romero Muñoz",
+          "licencia": "AM01933056",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2350875
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Arjona Martin",
+      "licencia": "AM01616751",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Diego Blanco Fernandez",
+      "licencia": "AM01137673",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Salvador Diaz Rico",
+      "licencia": "AM01696539",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Daniel Garcia Lluch",
+      "licencia": "AM01610480",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Marcos. Ant Garcia Miñana",
+      "licencia": "AM01359500",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Luis Miguel Narbona Medina",
+      "licencia": "AM01209618",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Roque Orellana Garcia",
+      "licencia": "AM01901604",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Gabriel Romero Muñoz",
+      "licencia": "AM01933056",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jesus Manuel Tortosa Burgos",
+      "licencia": "AM01615363",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Candido Zambrana Fernandez",
+      "licencia": "AM01284780",
+      "hcp": 23.4,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160384,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            34
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            78
+          ],
+          [
+            "Peor",
+            63
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160385,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            8
+          ],
+          [
+            "2",
+            15
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            18
+          ],
+          [
+            "6",
+            6
+          ],
+          [
+            "7",
+            16
+          ],
+          [
+            "8",
+            9
+          ],
+          [
+            "9",
+            9
+          ],
+          [
+            "10",
+            15
+          ],
+          [
+            "11",
+            13
+          ],
+          [
+            "12",
+            13
+          ],
+          [
+            "13",
+            11
+          ],
+          [
+            "14",
+            17
+          ],
+          [
+            "15",
+            11
+          ],
+          [
+            "16",
+            9
+          ],
+          [
+            "17",
+            8
+          ],
+          [
+            "18",
+            15
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160386,
+        "datos": [
+          [
+            "Hoyo",
+            "ROQUE ORELLANA GARCIA",
+            "DANIEL GARCIA LLUCH",
+            "LUIS M. NARBONA MEDINA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 17",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 18",
+            1,
+            1,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160387,
+        "datos": [
+          [
+            "Hoyo",
+            "ROQUE ORELLANA GARCIA",
+            "DANIEL GARCIA LLUCH",
+            "LUIS M. NARBONA MEDINA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77074
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Abollo Garcia, Eduardo Jose",
+          "holeNumber": 11,
+          "createdAt": "15/02/26 09:43:31"
+        },
+        {
+          "playerName": "Tamayo Gonzalez, Sergio",
+          "holeNumber": 6,
+          "createdAt": "15/02/26 10:17:30"
+        },
+        {
+          "playerName": "Oviedo Granados, Jose Luis",
+          "holeNumber": 4,
+          "createdAt": "15/02/26 12:34:58"
+        },
+        {
+          "playerName": "Cuadrado De Llano, Rodrigo",
+          "holeNumber": 6,
+          "createdAt": "15/02/26 13:10:32"
+        },
+        {
+          "playerName": "Rios Rey, Antonio",
+          "holeNumber": 7,
+          "createdAt": "15/02/26 14:28:46"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:02.170Z"
+}

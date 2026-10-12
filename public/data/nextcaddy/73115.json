@@ -1,0 +1,691 @@
+{
+  "tourId": 73115,
+  "url": "https://www.nextcaddy.com/tour/73115",
+  "scrapedAt": "2026-10-12T12:07:47.206Z",
+  "meta": {
+    "name": "PREMIO LA BOSS",
+    "organizer": null,
+    "course": "la Estancia Golf",
+    "courseCode": "AMG9",
+    "dateStart": "2026-08-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-20",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion Fenemina",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Luisa Martin-Gonzalez Hernan",
+          "licencia": "CM06147096",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2388595
+        },
+        {
+          "pos": 2,
+          "name": "Laura Botas Bañuelos",
+          "licencia": "AMG9927127",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2388608
+        },
+        {
+          "pos": 3,
+          "name": "Laura Gomez-Arnau Botas",
+          "licencia": "CM18508338",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2388604
+        },
+        {
+          "pos": 4,
+          "name": "Maria Diez Polanco Martin-Gonzalez",
+          "licencia": "AME8619673",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388598
+        },
+        {
+          "pos": 5,
+          "name": "Pilar Cavestany Corsini",
+          "licencia": "CM01142457",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2388601
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificacion Masculina",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jeronimo Zamora Lopez",
+          "licencia": "AM02277914",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2388612
+        },
+        {
+          "pos": 2,
+          "name": "Luis San Gil Cabanas",
+          "licencia": "CM12140680",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2388602
+        },
+        {
+          "pos": 3,
+          "name": "Alvaro Rengifo Abbad",
+          "licencia": "CM01141319",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2388603
+        },
+        {
+          "pos": 4,
+          "name": "Javier Diez De Polanco",
+          "licencia": "CM06076849",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388594
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Lopez Casas",
+          "licencia": "AMG9207921",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388597
+        },
+        {
+          "pos": 6,
+          "name": "Fernando Vizcaino De Sas",
+          "licencia": "CM06057792",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388596
+        },
+        {
+          "pos": 7,
+          "name": "Juan Carlos Ortiz Ginard",
+          "licencia": "CM00135110",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388607
+        },
+        {
+          "pos": 8,
+          "name": "Pablo David Fernandez",
+          "licencia": "CMD4506576",
+          "hcp": 29,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388605
+        },
+        {
+          "pos": 9,
+          "name": "Javier Moreno Martinez",
+          "licencia": "AMG9946257",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2388600
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificacion General",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jeronimo Zamora Lopez",
+          "licencia": "AM02277914",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2388612
+        },
+        {
+          "pos": 2,
+          "name": "Maria Luisa Martin-Gonzalez Hernan",
+          "licencia": "CM06147096",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2388595
+        },
+        {
+          "pos": 3,
+          "name": "Luis San Gil Cabanas",
+          "licencia": "CM12140680",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2388602
+        },
+        {
+          "pos": 4,
+          "name": "Laura Botas Bañuelos",
+          "licencia": "AMG9927127",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2388608
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Rengifo Abbad",
+          "licencia": "CM01141319",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2388603
+        },
+        {
+          "pos": 6,
+          "name": "Laura Gomez-Arnau Botas",
+          "licencia": "CM18508338",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2388604
+        },
+        {
+          "pos": 7,
+          "name": "Javier Diez De Polanco",
+          "licencia": "CM06076849",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388594
+        },
+        {
+          "pos": 8,
+          "name": "Fernando Lopez Casas",
+          "licencia": "AMG9207921",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388597
+        },
+        {
+          "pos": 9,
+          "name": "Fernando Vizcaino De Sas",
+          "licencia": "CM06057792",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2388596
+        },
+        {
+          "pos": 10,
+          "name": "Juan Carlos Ortiz Ginard",
+          "licencia": "CM00135110",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388607
+        },
+        {
+          "pos": 11,
+          "name": "Pablo David Fernandez",
+          "licencia": "CMD4506576",
+          "hcp": 29,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388605
+        },
+        {
+          "pos": 12,
+          "name": "Maria Diez Polanco Martin-Gonzalez",
+          "licencia": "AME8619673",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2388598
+        },
+        {
+          "pos": 13,
+          "name": "Pilar Cavestany Corsini",
+          "licencia": "CM01142457",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2388601
+        },
+        {
+          "pos": 14,
+          "name": "Javier Moreno Martinez",
+          "licencia": "AMG9946257",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2388600
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Fenemina",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificacion Masculina",
+      "jugadores": 9
+    },
+    "3": {
+      "name": "Clasificacion General",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Javier Diez De Polanco",
+      "licencia": "CM06076849",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Vizcaino De Sas",
+      "licencia": "CM06057792",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Fernando Lopez Casas",
+      "licencia": "AMG9207921",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Moreno Martinez",
+      "licencia": "AMG9946257",
+      "hcp": 24,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Luis San Gil Cabanas",
+      "licencia": "CM12140680",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Rengifo Abbad",
+      "licencia": "CM01141319",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Pablo David Fernandez",
+      "licencia": "CMD4506576",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Carlos Ortiz Ginard",
+      "licencia": "CM00135110",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jeronimo Zamora Lopez",
+      "licencia": "AM02277914",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Luisa Martin-Gonzalez Hernan",
+      "licencia": "CM06147096",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Diez Polanco Martin-Gonzalez",
+      "licencia": "AME8619673",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Pilar Cavestany Corsini",
+      "licencia": "CM01142457",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Laura Gomez-Arnau Botas",
+      "licencia": "CM18508338",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Laura Botas Bañuelos",
+      "licencia": "AMG9927127",
+      "hcp": 28,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Alvaro Rengifo Abbad",
+          "hcp": 14.7,
+          "ins": "2388603",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Luis San Gil Cabanas",
+          "hcp": 20.2,
+          "ins": "2388602",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Javier Diez De Polanco",
+          "hcp": 16.5,
+          "ins": "2388594",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Pilar Cavestany Corsini",
+          "hcp": 24.2,
+          "ins": "2388601",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Laura Botas Bañuelos",
+          "hcp": 28,
+          "ins": "2388608",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "09:50",
+          "tee": 1,
+          "name": "Maria Luisa Martin-Gonzalez Hernan",
+          "hcp": 20.3,
+          "ins": "2388595",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Jeronimo Zamora Lopez",
+          "hcp": 21.2,
+          "ins": "2388612",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Fernando Lopez Casas",
+          "hcp": 21.2,
+          "ins": "2388597",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Juan Carlos Ortiz Ginard",
+          "hcp": 15,
+          "ins": "2388607",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Fernando Vizcaino De Sas",
+          "hcp": 26.4,
+          "ins": "2388596",
+          "jid": "78333",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Laura Gomez-Arnau Botas",
+          "hcp": 36,
+          "ins": "2388604",
+          "jid": "78333",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Pablo David Fernandez",
+          "hcp": 26.4,
+          "ins": "2388605",
+          "jid": "78333",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Maria Diez Polanco Martin-Gonzalez",
+          "hcp": 36,
+          "ins": "2388598",
+          "jid": "78333",
+          "nivel": "M"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Javier Moreno Martinez",
+          "hcp": 24,
+          "ins": "2388600",
+          "jid": "78333",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78333
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/790896251_73115-premio-la-boss.pdf"
+  ]
+}

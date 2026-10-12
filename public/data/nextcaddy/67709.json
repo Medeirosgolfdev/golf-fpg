@@ -1,0 +1,300 @@
+{
+  "tourId": 67709,
+  "url": "https://www.nextcaddy.com/tour/67709",
+  "scrapedAt": "2026-10-12T12:04:28.020Z",
+  "meta": {
+    "name": "5ª Prueba III Liga Iniciación (P3)",
+    "organizer": null,
+    "course": "Club de Golf la Cañada",
+    "courseCode": "AM11",
+    "dateStart": "2026-04-12",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-12",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+          "licencia": "EXX1911521",
+          "hcp": 36,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2289944
+        },
+        {
+          "pos": 2,
+          "name": "Jose Miguel Gonzalez Mena",
+          "licencia": "AM11026874",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2295666
+        },
+        {
+          "pos": 3,
+          "name": "Alvaro Salmeron Papay",
+          "licencia": "EXX1911523",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2289947
+        },
+        {
+          "pos": 4,
+          "name": "Ana Ruiz Dominguez",
+          "licencia": "AM11082229",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2295669
+        },
+        {
+          "pos": 5,
+          "name": "Eva Leticia Gil Aguilar",
+          "licencia": "AM11028650",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2295658
+        },
+        {
+          "pos": 6,
+          "name": "Lorenzo Perez Romero",
+          "licencia": "AM11000837",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2295665
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+      "licencia": "EXX1911521",
+      "hcp": 36,
+      "nivel": "M"
+    },
+    {
+      "orden": 2,
+      "name": "Alvaro Salmeron Papay",
+      "licencia": "EXX1911523",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Lorenzo Perez Romero",
+      "licencia": "AM11000837",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Miguel Gonzalez Mena",
+      "licencia": "AM11026874",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Eva Leticia Gil Aguilar",
+      "licencia": "AM11028650",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Ruiz Dominguez",
+      "licencia": "AM11082229",
+      "hcp": 36,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Alvaro Salmeron Papay",
+          "hcp": 36,
+          "ins": "2289947",
+          "jid": "72191",
+          "nivel": "M"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Eva Leticia Gil Aguilar",
+          "hcp": 36,
+          "ins": "2295658",
+          "jid": "72191",
+          "nivel": "S"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Lorenzo Perez Romero",
+          "hcp": 36,
+          "ins": "2295665",
+          "jid": "72191",
+          "nivel": "M"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Jose Miguel Gonzalez Mena",
+          "hcp": 36,
+          "ins": "2295666",
+          "jid": "72191",
+          "nivel": "M"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Ana Ruiz Dominguez",
+          "hcp": 36,
+          "ins": "2295669",
+          "jid": "72191",
+          "nivel": "M"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Gonzalez Martin, Juan Antonio Gonzalez Martin,",
+          "hcp": 36,
+          "ins": "2289944",
+          "jid": "72191",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 72191
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Cluck, Carl",
+          "holeNumber": 8,
+          "createdAt": "14/07/25 10:57:48"
+        },
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 8,
+          "createdAt": "14/07/25 11:10:28"
+        },
+        {
+          "playerName": "Fennelly, Barry",
+          "holeNumber": 9,
+          "createdAt": "14/07/25 11:27:13"
+        },
+        {
+          "playerName": "Marney, Michael",
+          "holeNumber": 2,
+          "createdAt": "14/07/25 12:02:46"
+        },
+        {
+          "playerName": "Jorfi, Louis",
+          "holeNumber": 13,
+          "createdAt": "14/07/25 12:20:50"
+        },
+        {
+          "playerName": "Rodgers, Glynn",
+          "holeNumber": 15,
+          "createdAt": "14/07/25 12:48:34"
+        },
+        {
+          "playerName": "Fennelly, Barry",
+          "holeNumber": 15,
+          "createdAt": "14/07/25 12:48:43"
+        },
+        {
+          "playerName": "Pearse, Tony",
+          "holeNumber": 5,
+          "createdAt": "14/07/25 12:59:22"
+        },
+        {
+          "playerName": "Taylor, Patrick",
+          "holeNumber": 8,
+          "createdAt": "14/07/25 13:26:34"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3544131946_reglamento_liga_iniciacion_c.g._la_canada_2025-2026.pdf"
+  ]
+}

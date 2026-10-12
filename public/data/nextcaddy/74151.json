@@ -1,0 +1,828 @@
+{
+  "tourId": 74151,
+  "url": "https://www.nextcaddy.com/tour/74151",
+  "scrapedAt": "2026-10-12T12:08:40.793Z",
+  "meta": {
+    "name": "pull",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-09-30",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gaspar Dominguez Gomez",
+          "licencia": "AMG8380000",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2414516
+        },
+        {
+          "pos": 2,
+          "name": "Ely Andres Vallotton",
+          "licencia": "AMG8930221",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2414508
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Gonzalez Rincon",
+          "licencia": "AMG8383977",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2414511
+        },
+        {
+          "pos": 4,
+          "name": "Juan Dominguez Gomez",
+          "licencia": "AM07377467",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2414517
+        },
+        {
+          "pos": 5,
+          "name": "Marcelino Chao Gomez",
+          "licencia": "AMG8040502",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2414506
+        },
+        {
+          "pos": 6,
+          "name": "Marisela Del Moral Segovia",
+          "licencia": "AM96763635",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2414510
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Leandro Vieira",
+          "licencia": "AM07316971",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2414513
+        },
+        {
+          "pos": 8,
+          "name": "Fausto Arroyo Artes",
+          "licencia": "AMG8497582",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2414518
+        },
+        {
+          "pos": 9,
+          "name": "Oscar Vazquez Rodriguez",
+          "licencia": "AMG8171988",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2414512
+        },
+        {
+          "pos": 10,
+          "name": "Jaime Garcia Nuñez",
+          "licencia": "AMI7766561",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2414507
+        },
+        {
+          "pos": 11,
+          "name": "Adolfo Castaño Praxedes",
+          "licencia": "AMG8265071",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2414509
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Martin Garcia",
+          "licencia": "AM07613329",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2414514
+        },
+        {
+          "pos": 13,
+          "name": "Nizar El Arfaoui Akcha",
+          "licencia": "AM91608561",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2414515
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marcelino Chao Gomez",
+      "licencia": "AMG8040502",
+      "hcp": 10.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Jaime Garcia Nuñez",
+      "licencia": "AMI7766561",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ely Andres Vallotton",
+      "licencia": "AMG8930221",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Adolfo Castaño Praxedes",
+      "licencia": "AMG8265071",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jorge Gonzalez Rincon",
+      "licencia": "AMG8383977",
+      "hcp": 9.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Oscar Vazquez Rodriguez",
+      "licencia": "AMG8171988",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio Leandro Vieira",
+      "licencia": "AM07316971",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Antonio Martin Garcia",
+      "licencia": "AM07613329",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Nizar El Arfaoui Akcha",
+      "licencia": "AM91608561",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Gaspar Dominguez Gomez",
+      "licencia": "AMG8380000",
+      "hcp": 24.2,
+      "nivel": "M"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Dominguez Gomez",
+      "licencia": "AM07377467",
+      "hcp": 17.4,
+      "nivel": "M"
+    },
+    {
+      "orden": 12,
+      "name": "Fausto Arroyo Artes",
+      "licencia": "AMG8497582",
+      "hcp": 15.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Marisela Del Moral Segovia",
+      "licencia": "AM96763635",
+      "hcp": 24.3,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "15:50",
+          "tee": 1,
+          "name": "Marcelino Chao Gomez",
+          "hcp": 10.7,
+          "ins": "2414506",
+          "jid": "79410",
+          "nivel": "M"
+        },
+        {
+          "time": "15:50",
+          "tee": 1,
+          "name": "Jaime Garcia Nuñez",
+          "hcp": 9.8,
+          "ins": "2414507",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "15:50",
+          "tee": 1,
+          "name": "Ely Andres Vallotton",
+          "hcp": 10.5,
+          "ins": "2414508",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Antonio Leandro Vieira",
+          "hcp": 13.7,
+          "ins": "2414513",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Nizar El Arfaoui Akcha",
+          "hcp": 15.3,
+          "ins": "2414515",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Antonio Martin Garcia",
+          "hcp": 14.8,
+          "ins": "2414514",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:00",
+          "tee": 1,
+          "name": "Jorge Gonzalez Rincon",
+          "hcp": 9.9,
+          "ins": "2414511",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Marisela Del Moral Segovia",
+          "hcp": 24.3,
+          "ins": "2414510",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Adolfo Castaño Praxedes",
+          "hcp": 12.5,
+          "ins": "2414509",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:10",
+          "tee": 1,
+          "name": "Oscar Vazquez Rodriguez",
+          "hcp": 24.9,
+          "ins": "2414512",
+          "jid": "79410",
+          "nivel": "S"
+        },
+        {
+          "time": "16:20",
+          "tee": 1,
+          "name": "Gaspar Dominguez Gomez",
+          "hcp": 24.2,
+          "ins": "2414516",
+          "jid": "79410",
+          "nivel": "M"
+        },
+        {
+          "time": "16:20",
+          "tee": 1,
+          "name": "Juan Dominguez Gomez",
+          "hcp": 17.4,
+          "ins": "2414517",
+          "jid": "79410",
+          "nivel": "M"
+        },
+        {
+          "time": "16:20",
+          "tee": 1,
+          "name": "Fausto Arroyo Artes",
+          "hcp": 15.9,
+          "ins": "2414518",
+          "jid": "79410",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161946,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            56
+          ],
+          [
+            "Birdie",
+            8
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            104
+          ],
+          [
+            "Peor",
+            59
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161947,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            10
+          ],
+          [
+            "2",
+            15
+          ],
+          [
+            "3",
+            11
+          ],
+          [
+            "4",
+            8
+          ],
+          [
+            "5",
+            11
+          ],
+          [
+            "6",
+            5
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            17
+          ],
+          [
+            "9",
+            18
+          ],
+          [
+            "10",
+            10
+          ],
+          [
+            "11",
+            14
+          ],
+          [
+            "12",
+            8
+          ],
+          [
+            "13",
+            10
+          ],
+          [
+            "14",
+            11
+          ],
+          [
+            "15",
+            18
+          ],
+          [
+            "16",
+            10
+          ],
+          [
+            "17",
+            18
+          ],
+          [
+            "18",
+            18
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161948,
+        "datos": [
+          [
+            "Hoyo",
+            "GASPAR DOMINGUEZ GOMEZ",
+            "ELY ANDRES VALLOTTON ",
+            "JORGE GONZALEZ RINCON"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -5,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -5,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 10",
+            -6,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -6,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -6,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -2,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161949,
+        "datos": [
+          [
+            "Hoyo",
+            "GASPAR DOMINGUEZ GOMEZ",
+            "ELY ANDRES VALLOTTON ",
+            "JORGE GONZALEZ RINCON"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79410
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez-Camino Bertin, Nicolas",
+          "holeNumber": 10,
+          "createdAt": "25/03/26 14:22:55"
+        },
+        {
+          "playerName": "Gonzalez-Camino Bertin, Nicolas",
+          "holeNumber": 16,
+          "createdAt": "25/03/26 14:22:55"
+        },
+        {
+          "playerName": "Gonzalez-Camino Bertin, Nicolas",
+          "holeNumber": 17,
+          "createdAt": "25/03/26 14:22:55"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

@@ -1,0 +1,602 @@
+{
+  "tourId": 70966,
+  "url": "https://www.nextcaddy.com/tour/70966",
+  "scrapedAt": "2026-10-12T12:05:33.370Z",
+  "meta": {
+    "name": "LIGA SEÑORAS 20.05.26",
+    "organizer": null,
+    "course": "Real Club de Campo de Malaga",
+    "courseCode": "AM01",
+    "dateStart": "2026-05-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "SEÑORAS",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-21",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sagrario Montero Martin",
+          "licencia": "AM01609175",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2324561
+        },
+        {
+          "pos": 2,
+          "name": "Dorte Oulund",
+          "licencia": "AM60975119",
+          "hcp": 34.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2324566
+        },
+        {
+          "pos": 3,
+          "name": "Josefa Perez Palomo",
+          "licencia": "AM01250033",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2324563
+        },
+        {
+          "pos": 4,
+          "name": "Laura Beatriz Rodriguez Ferrer",
+          "licencia": "AM01359495",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2324567
+        },
+        {
+          "pos": 5,
+          "name": "Luz Maria Robledo De Antonio",
+          "licencia": "AM01052704",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2324564
+        },
+        {
+          "pos": 6,
+          "name": "Kirsten Hansen",
+          "licencia": "AM01248327",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2324562
+        },
+        {
+          "pos": 7,
+          "name": "Maria Eugenia Duran Gimenez",
+          "licencia": "AM01031948",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2324565
+        },
+        {
+          "pos": null,
+          "name": "Francisca Benavides Rioboo",
+          "licencia": "AM01314489",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2324568
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Sagrario Montero Martin",
+      "licencia": "AM01609175",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Kirsten Hansen",
+      "licencia": "AM01248327",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Josefa Perez Palomo",
+      "licencia": "AM01250033",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Luz Maria Robledo De Antonio",
+      "licencia": "AM01052704",
+      "hcp": 27.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Eugenia Duran Gimenez",
+      "licencia": "AM01031948",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Dorte Oulund",
+      "licencia": "AM60975119",
+      "hcp": 34.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Laura Beatriz Rodriguez Ferrer",
+      "licencia": "AM01359495",
+      "hcp": 27.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Francisca Benavides Rioboo",
+      "licencia": "AM01314489",
+      "hcp": 29.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159512,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            11
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            36
+          ],
+          [
+            "Peor",
+            57
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159513,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            6
+          ],
+          [
+            "4",
+            8
+          ],
+          [
+            "5",
+            11
+          ],
+          [
+            "6",
+            11
+          ],
+          [
+            "7",
+            12
+          ],
+          [
+            "8",
+            14
+          ],
+          [
+            "9",
+            3
+          ],
+          [
+            "10",
+            4
+          ],
+          [
+            "11",
+            8
+          ],
+          [
+            "12",
+            14
+          ],
+          [
+            "13",
+            8
+          ],
+          [
+            "14",
+            10
+          ],
+          [
+            "15",
+            14
+          ],
+          [
+            "16",
+            13
+          ],
+          [
+            "17",
+            10
+          ],
+          [
+            "18",
+            9
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159514,
+        "datos": [
+          [
+            "Hoyo",
+            "SAGRARIO MONTERO MARTIN",
+            "DORTE OULUND ",
+            "PEPA PEREZ PALOMO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -5,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -5,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -3,
+            -7,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -5,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -4,
+            0
+          ],
+          [
+            "Hoyo 9",
+            1,
+            -6,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -4,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159515,
+        "datos": [
+          [
+            "Hoyo",
+            "SAGRARIO MONTERO MARTIN",
+            "DORTE OULUND ",
+            "PEPA PEREZ PALOMO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 7",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            2,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75970
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Calles Roman, Javier",
+          "holeNumber": 3,
+          "createdAt": "03/12/25 10:13:40"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:58.780Z"
+}

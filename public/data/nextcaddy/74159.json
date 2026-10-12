@@ -1,0 +1,213 @@
+{
+  "tourId": 74159,
+  "url": "https://www.nextcaddy.com/tour/74159",
+  "scrapedAt": "2026-10-12T12:08:41.192Z",
+  "meta": {
+    "name": "TORNEO GUARDIA CIVIL 2026",
+    "organizer": null,
+    "course": "Escuela Pública la Cartuja",
+    "courseCode": "AMG3",
+    "dateStart": "2026-09-30",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Torneo Guardia Civil 2026",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Ignacio Martin De Oliva Alvarez",
+          "licencia": "AM00991041",
+          "hcp": 32.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2414730
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Angel Garcia Pinto",
+          "licencia": "AMG3893544",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2414738
+        },
+        {
+          "pos": 3,
+          "name": "Fernando Antonio De Cozar Montilla",
+          "licencia": "AM00615241",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2414731
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Dorantes Sanchez",
+          "licencia": "AMG3482682",
+          "hcp": 39.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2414747
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Torneo Guardia Civil 2026",
+      "jugadores": 4
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Ignacio Martin De Oliva Alvarez",
+      "licencia": "AM00991041",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Antonio De Cozar Montilla",
+      "licencia": "AM00615241",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Angel Garcia Pinto",
+      "licencia": "AMG3893544",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Dorantes Sanchez",
+      "licencia": "AMG3482682",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Miguel Tena Montes",
+      "licencia": "AMG3079345",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Santos Garcia Santana",
+      "licencia": "AMG3532042",
+      "hcp": null,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Jose Ignacio Martin De Oliva Alvarez",
+          "hcp": 30,
+          "ins": "2414730",
+          "jid": "79418",
+          "nivel": "S"
+        },
+        {
+          "time": "17:00",
+          "tee": 1,
+          "name": "Fernando Antonio De Cozar Montilla",
+          "hcp": 14.8,
+          "ins": "2414731",
+          "jid": "79418",
+          "nivel": "S"
+        },
+        {
+          "time": "17:20",
+          "tee": 1,
+          "name": "Miguel Angel Garcia Pinto",
+          "hcp": 21.1,
+          "ins": "2414738",
+          "jid": "79418",
+          "nivel": "S"
+        },
+        {
+          "time": "17:40",
+          "tee": 1,
+          "name": "Antonio Dorantes Sanchez",
+          "hcp": 30,
+          "ins": "2414747",
+          "jid": "79418",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79418
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1554888115_74159-torneo-guardia-civil-2026.pdf"
+  ]
+}

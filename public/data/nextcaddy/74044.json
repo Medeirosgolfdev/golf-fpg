@@ -1,0 +1,1274 @@
+{
+  "tourId": 74044,
+  "url": "https://www.nextcaddy.com/tour/74044",
+  "scrapedAt": "2026-10-12T12:08:33.554Z",
+  "meta": {
+    "name": "TAMISUEL 26 SEPTIEMBRE",
+    "organizer": null,
+    "course": "Fairplay Golf & Spa Resort",
+    "courseCode": "AM48",
+    "dateStart": "2026-09-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Senior",
+      "Infantil",
+      "Profesional",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 29,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Flavio Cassina",
+          "licencia": "AM81903347",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 28
+            },
+            {
+              "round": 2,
+              "gross": 37
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 65,
+          "toPar": 7,
+          "inscribedId": 2411785
+        },
+        {
+          "pos": 4,
+          "name": "Matilde Galvez Periañez",
+          "licencia": "AMG1908686",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 32
+            },
+            {
+              "round": 2,
+              "gross": 27
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            }
+          ],
+          "total": 59,
+          "toPar": 13,
+          "inscribedId": 2411793
+        },
+        {
+          "pos": 5,
+          "name": "Santiago Gutierrez Duque",
+          "licencia": "AMG1147679",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            }
+          ],
+          "total": 56,
+          "toPar": 16,
+          "inscribedId": 2411786
+        },
+        {
+          "pos": 6,
+          "name": "Pedro Luis Gomez Martinez",
+          "licencia": "AMG1610076",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 23
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            }
+          ],
+          "total": 55,
+          "toPar": 17,
+          "inscribedId": 2411789
+        },
+        {
+          "pos": 7,
+          "name": "Jose Valiente Galan",
+          "licencia": "AMG1050672",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 30
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2411792
+        },
+        {
+          "pos": 8,
+          "name": "Rosamaria Artal Rozas",
+          "licencia": "AMG1232338",
+          "hcp": 39.7,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 28
+            },
+            {
+              "round": 2,
+              "gross": 26
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 41
+            },
+            {
+              "round": 2,
+              "ch": 41
+            }
+          ],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2411796
+        },
+        {
+          "pos": 9,
+          "name": "Francisco Mangas Montes",
+          "licencia": "AMG1604659",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 29
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 17
+            },
+            {
+              "round": 2,
+              "ch": 17
+            }
+          ],
+          "total": 53,
+          "toPar": 19,
+          "inscribedId": 2411787
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Carlos Hernandez Leon",
+          "licencia": "AMG1328068",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 26
+            },
+            {
+              "round": 2,
+              "gross": 26
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            }
+          ],
+          "total": 52,
+          "toPar": 20,
+          "inscribedId": 2411788
+        },
+        {
+          "pos": 11,
+          "name": "Juan Francisco Lazo Cordoba",
+          "licencia": "AMG1249416",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 26
+            },
+            {
+              "round": 2,
+              "gross": 22
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            }
+          ],
+          "total": 48,
+          "toPar": 24,
+          "inscribedId": 2411791
+        },
+        {
+          "pos": 12,
+          "name": "Roberto Buil Gascon",
+          "licencia": "AMG1267955",
+          "hcp": 32.8,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 16
+            },
+            {
+              "round": 2,
+              "gross": 27
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 31
+            },
+            {
+              "round": 2,
+              "ch": 31
+            }
+          ],
+          "total": 43,
+          "toPar": 29,
+          "inscribedId": 2411795
+        },
+        {
+          "pos": 13,
+          "name": "Willy Riesen",
+          "licencia": "AM65956233",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 20
+            },
+            {
+              "round": 2,
+              "gross": 11
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 24
+            },
+            {
+              "round": 2,
+              "ch": 24
+            }
+          ],
+          "total": 31,
+          "toPar": 41,
+          "inscribedId": 2411794
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Desde 18.1 Hcp",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 3,
+          "name": "Matilde Galvez Periañez",
+          "licencia": "AMG1908686",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 32
+            },
+            {
+              "round": 2,
+              "gross": 27
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            }
+          ],
+          "total": 59,
+          "toPar": 13,
+          "inscribedId": 2411793
+        },
+        {
+          "pos": 4,
+          "name": "Pedro Luis Gomez Martinez",
+          "licencia": "AMG1610076",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 23
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            }
+          ],
+          "total": 55,
+          "toPar": 17,
+          "inscribedId": 2411789
+        },
+        {
+          "pos": 5,
+          "name": "Rosamaria Artal Rozas",
+          "licencia": "AMG1232338",
+          "hcp": 39.7,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 28
+            },
+            {
+              "round": 2,
+              "gross": 26
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 41
+            },
+            {
+              "round": 2,
+              "ch": 41
+            }
+          ],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2411796
+        },
+        {
+          "pos": 6,
+          "name": "Roberto Buil Gascon",
+          "licencia": "AMG1267955",
+          "hcp": 32.8,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 16
+            },
+            {
+              "round": 2,
+              "gross": 27
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 31
+            },
+            {
+              "round": 2,
+              "ch": 31
+            }
+          ],
+          "total": 43,
+          "toPar": 29,
+          "inscribedId": 2411795
+        },
+        {
+          "pos": 7,
+          "name": "Willy Riesen",
+          "licencia": "AM65956233",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 20
+            },
+            {
+              "round": 2,
+              "gross": 11
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 24
+            },
+            {
+              "round": 2,
+              "ch": 24
+            }
+          ],
+          "total": 31,
+          "toPar": 41,
+          "inscribedId": 2411794
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Individual Hasta 18 Hcp",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Flavio Cassina",
+          "licencia": "AM81903347",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 28
+            },
+            {
+              "round": 2,
+              "gross": 37
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 65,
+          "toPar": 7,
+          "inscribedId": 2411785
+        },
+        {
+          "pos": 2,
+          "name": "Santiago Gutierrez Duque",
+          "licencia": "AMG1147679",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 32
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            }
+          ],
+          "total": 56,
+          "toPar": 16,
+          "inscribedId": 2411786
+        },
+        {
+          "pos": 3,
+          "name": "Jose Valiente Galan",
+          "licencia": "AMG1050672",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 30
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 54,
+          "toPar": 18,
+          "inscribedId": 2411792
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Mangas Montes",
+          "licencia": "AMG1604659",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 24
+            },
+            {
+              "round": 2,
+              "gross": 29
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 17
+            },
+            {
+              "round": 2,
+              "ch": 17
+            }
+          ],
+          "total": 53,
+          "toPar": 19,
+          "inscribedId": 2411787
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Carlos Hernandez Leon",
+          "licencia": "AMG1328068",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 26
+            },
+            {
+              "round": 2,
+              "gross": 26
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            }
+          ],
+          "total": 52,
+          "toPar": 20,
+          "inscribedId": 2411788
+        },
+        {
+          "pos": 6,
+          "name": "Juan Francisco Lazo Cordoba",
+          "licencia": "AMG1249416",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 26
+            },
+            {
+              "round": 2,
+              "gross": 22
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            }
+          ],
+          "total": 48,
+          "toPar": 24,
+          "inscribedId": 2411791
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Handicap Individual Desde 18.1 Hcp",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pedro Luis Gomez Martinez",
+          "licencia": "AMG1610076",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411789
+        },
+        {
+          "pos": 4,
+          "name": "Roberto Buil Gascon",
+          "licencia": "AMG1267955",
+          "hcp": 32.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2411795
+        },
+        {
+          "pos": 5,
+          "name": "Matilde Galvez Periañez",
+          "licencia": "AMG1908686",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2411793
+        },
+        {
+          "pos": 6,
+          "name": "Rosamaria Artal Rozas",
+          "licencia": "AMG1232338",
+          "hcp": 39.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2411796
+        },
+        {
+          "pos": 7,
+          "name": "Willy Riesen",
+          "licencia": "AM65956233",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2411794
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Handicap Individual Hasta 18 Hcp",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Flavio Cassina",
+          "licencia": "AM81903347",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2411785
+        },
+        {
+          "pos": 2,
+          "name": "Santiago Gutierrez Duque",
+          "licencia": "AMG1147679",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411786
+        },
+        {
+          "pos": 3,
+          "name": "Jose Valiente Galan",
+          "licencia": "AMG1050672",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2411792
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Mangas Montes",
+          "licencia": "AMG1604659",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2411787
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Carlos Hernandez Leon",
+          "licencia": "AMG1328068",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2411788
+        },
+        {
+          "pos": 6,
+          "name": "Juan Francisco Lazo Cordoba",
+          "licencia": "AMG1249416",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2411791
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap Individual Desde 18.1 Hcp",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 2,
+          "name": "Matilde Galvez Periañez",
+          "licencia": "AMG1908686",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2411793
+        },
+        {
+          "pos": 4,
+          "name": "Rosamaria Artal Rozas",
+          "licencia": "AMG1232338",
+          "hcp": 39.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2411796
+        },
+        {
+          "pos": 5,
+          "name": "Pedro Luis Gomez Martinez",
+          "licencia": "AMG1610076",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2411789
+        },
+        {
+          "pos": 6,
+          "name": "Willy Riesen",
+          "licencia": "AM65956233",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2411794
+        },
+        {
+          "pos": 7,
+          "name": "Roberto Buil Gascon",
+          "licencia": "AMG1267955",
+          "hcp": 32.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2411795
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Handicap Individual Hasta 18 Hcp",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Flavio Cassina",
+          "licencia": "AM81903347",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2411785
+        },
+        {
+          "pos": 2,
+          "name": "Juan Francisco Lazo Cordoba",
+          "licencia": "AMG1249416",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2411791
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Carlos Hernandez Leon",
+          "licencia": "AMG1328068",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2411788
+        },
+        {
+          "pos": 4,
+          "name": "Santiago Gutierrez Duque",
+          "licencia": "AMG1147679",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2411786
+        },
+        {
+          "pos": 5,
+          "name": "Jose Valiente Galan",
+          "licencia": "AMG1050672",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2411792
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Mangas Montes",
+          "licencia": "AMG1604659",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2411787
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    },
+    "2": {
+      "name": "Handicap Individual Desde 18.1 Hcp",
+      "jugadores": 5
+    },
+    "3": {
+      "name": "Handicap Individual Hasta 18 Hcp",
+      "jugadores": 6
+    },
+    "4": {
+      "name": "Handicap Individual Desde 18.1 Hcp",
+      "jugadores": 5
+    },
+    "5": {
+      "name": "Handicap Individual Hasta 18 Hcp",
+      "jugadores": 6
+    },
+    "6": {
+      "name": "Handicap Individual Desde 18.1 Hcp",
+      "jugadores": 5
+    },
+    "7": {
+      "name": "Handicap Individual Hasta 18 Hcp",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Flavio Cassina",
+      "licencia": "AM81903347",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Santiago Gutierrez Duque",
+      "licencia": "AMG1147679",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Mangas Montes",
+      "licencia": "AMG1604659",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Carlos Hernandez Leon",
+      "licencia": "AMG1328068",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Pedro Luis Gomez Martinez",
+      "licencia": "AMG1610076",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Juan Francisco Lazo Cordoba",
+      "licencia": "AMG1249416",
+      "hcp": 10,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Valiente Galan",
+      "licencia": "AMG1050672",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Matilde Galvez Periañez",
+      "licencia": "AMG1908686",
+      "hcp": 34.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rosamaria Artal Rozas",
+      "licencia": "AMG1232338",
+      "hcp": 39.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Willy Riesen",
+      "licencia": "AM65956233",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Roberto Buil Gascon",
+      "licencia": "AMG1267955",
+      "hcp": 32.8,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79302
+    },
+    {
+      "roundNumber": 2,
+      "roundId": 79316
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jameson, Christopher J.",
+          "holeNumber": 4,
+          "createdAt": "25/03/26 10:29:02"
+        },
+        {
+          "playerName": "Cantos Ruiz, Jesus",
+          "holeNumber": 7,
+          "createdAt": "25/03/26 11:23:39"
+        },
+        {
+          "playerName": "Davies, Christopher",
+          "holeNumber": 17,
+          "createdAt": "25/03/26 13:36:12"
+        },
+        {
+          "playerName": "Gago Perez, Valentin",
+          "holeNumber": 17,
+          "createdAt": "25/03/26 11:34:45"
+        },
+        {
+          "playerName": "James, Edward",
+          "holeNumber": 6,
+          "createdAt": "25/03/26 13:57:52"
+        },
+        {
+          "playerName": "Becerra Moya, Miguel Angel",
+          "holeNumber": 17,
+          "createdAt": "25/03/26 13:19:58"
+        },
+        {
+          "playerName": "Romero Abad, Tomas",
+          "holeNumber": 14,
+          "createdAt": "25/03/26 12:40:06"
+        },
+        {
+          "playerName": "Verwater, Adriana",
+          "holeNumber": 3,
+          "createdAt": "25/03/26 13:05:57"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3098647514_74044-tamisuel-26-septiembre.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:11.275Z"
+}

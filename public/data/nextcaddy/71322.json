@@ -1,0 +1,639 @@
+{
+  "tourId": 71322,
+  "url": "https://www.nextcaddy.com/tour/71322",
+  "scrapedAt": "2026-10-12T12:05:55.587Z",
+  "meta": {
+    "name": "TORNEO JUEVES",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-06-04",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-04",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Asuncion Francia Moncalvillo",
+          "licencia": "8810503772",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2333722
+        },
+        {
+          "pos": 2,
+          "name": "Julio Miguel Arevalo",
+          "licencia": "CM00670792",
+          "hcp": 26.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2333719
+        },
+        {
+          "pos": 3,
+          "name": "Juan Carlos Puente Garcia",
+          "licencia": "7760006858",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2333720
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Angel Romero Ramos",
+          "licencia": "AM75964213",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2333718
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Martinez Mimoso",
+          "licencia": "CP04942147",
+          "hcp": 19.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2333717
+        },
+        {
+          "pos": 6,
+          "name": "Roque Agudo Casarrubios",
+          "licencia": "8810503428",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2333716
+        },
+        {
+          "pos": 7,
+          "name": "Maria Del Carmen Fernandez Cañete",
+          "licencia": "CM00670788",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2333721
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Roque Agudo Casarrubios",
+      "licencia": "8810503428",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Martinez Mimoso",
+      "licencia": "CP04942147",
+      "hcp": 19.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Angel Romero Ramos",
+      "licencia": "AM75964213",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Julio Miguel Arevalo",
+      "licencia": "CM00670792",
+      "hcp": 26.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Carlos Puente Garcia",
+      "licencia": "7760006858",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Del Carmen Fernandez Cañete",
+      "licencia": "CM00670788",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Asuncion Francia Moncalvillo",
+      "licencia": "8810503772",
+      "hcp": 30.2,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Roque Agudo Casarrubios",
+          "hcp": 13.8,
+          "ins": "2333716",
+          "jid": "76372",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Fernando Martinez Mimoso",
+          "hcp": 19.4,
+          "ins": "2333717",
+          "jid": "76372",
+          "nivel": "M"
+        },
+        {
+          "time": "09:10",
+          "tee": 1,
+          "name": "Miguel Angel Romero Ramos",
+          "hcp": 25.7,
+          "ins": "2333718",
+          "jid": "76372",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Julio Miguel Arevalo",
+          "hcp": 26.5,
+          "ins": "2333719",
+          "jid": "76372",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Juan Carlos Puente Garcia",
+          "hcp": 36,
+          "ins": "2333720",
+          "jid": "76372",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Maria Del Carmen Fernandez Cañete",
+          "hcp": 26.5,
+          "ins": "2333721",
+          "jid": "76372",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Asuncion Francia Moncalvillo",
+          "hcp": 30.2,
+          "ins": "2333722",
+          "jid": "76372",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 159906,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            11
+          ],
+          [
+            "Birdie",
+            2
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            38
+          ],
+          [
+            "Peor",
+            66
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 159907,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            10
+          ],
+          [
+            "2",
+            9
+          ],
+          [
+            "3",
+            9
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            13
+          ],
+          [
+            "6",
+            13
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            10
+          ],
+          [
+            "10",
+            13
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            11
+          ],
+          [
+            "13",
+            10
+          ],
+          [
+            "14",
+            5
+          ],
+          [
+            "15",
+            12
+          ],
+          [
+            "16",
+            14
+          ],
+          [
+            "17",
+            16
+          ],
+          [
+            "18",
+            16
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159908,
+        "datos": [
+          [
+            "Hoyo",
+            "ASUNCION  FRANCIA MONCALVILLO",
+            "JULIO MIGUEL AREVALO",
+            "JUAN CARLOS PUENTE GARCIA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            2,
+            3
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            2,
+            5
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            0,
+            7
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            8
+          ],
+          [
+            "Hoyo 7",
+            1,
+            1,
+            6
+          ],
+          [
+            "Hoyo 8",
+            0,
+            1,
+            8
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            6
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            5
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            3
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            3
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            1,
+            5
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            3,
+            5
+          ],
+          [
+            "Hoyo 18",
+            1,
+            2,
+            5
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159909,
+        "datos": [
+          [
+            "Hoyo",
+            "ASUNCION  FRANCIA MONCALVILLO",
+            "JULIO MIGUEL AREVALO",
+            "JUAN CARLOS PUENTE GARCIA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 7",
+            2,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 17",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 18",
+            2,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 76372
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "tourId": 71866,
+  "url": "https://www.nextcaddy.com/tour/71866",
+  "scrapedAt": "2026-10-12T12:06:42.406Z",
+  "meta": {
+    "name": "6ª PRUEBA LIGA INFANTIL 9 HOYOS",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-06-28",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Cadete Masculino",
+    "categories": [
+      "INFANTIL",
+      "Cadete Masculino",
+      "Señoras",
+      "Infantil Masculino",
+      "Alevin Masculino",
+      "Benjamin Masculino",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion General Handicap 9 Hoyos",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Manuel Torollo De La Escalera",
+          "licencia": "AM85475937",
+          "hcp": 48.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2351575
+        },
+        {
+          "pos": 2,
+          "name": "Javier Rituerto Borges",
+          "licencia": "AM85348748",
+          "hcp": 50.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2348816
+        },
+        {
+          "pos": 3,
+          "name": "Lorenzo Morales Perez",
+          "licencia": "AM85419489",
+          "hcp": 53.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2350193
+        },
+        {
+          "pos": 4,
+          "name": "Pilar Ramirez Rodriguez",
+          "licencia": "AM85077487",
+          "hcp": 53.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2351574
+        },
+        {
+          "pos": 5,
+          "name": "Rodrigo Marin Fernandez",
+          "licencia": "AMG3481821",
+          "hcp": 47.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2351580
+        },
+        {
+          "pos": null,
+          "name": "Roberto Marin Fernandez",
+          "licencia": "AMG3481822",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2351578
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion General Handicap 9 Hoyos",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Javier Rituerto Borges",
+      "licencia": "AM85348748",
+      "hcp": 50.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Lorenzo Morales Perez",
+      "licencia": "AM85419489",
+      "hcp": 53.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Victor Manuel Torollo De La Escalera",
+      "licencia": "AM85475937",
+      "hcp": 48.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Pilar Ramirez Rodriguez",
+      "licencia": "AM85077487",
+      "hcp": 53.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Roberto Marin Fernandez",
+      "licencia": "AMG3481822",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Marin Fernandez",
+      "licencia": "AMG3481821",
+      "hcp": 47.4,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Rodrigo Marin Fernandez",
+          "hcp": 47.4,
+          "ins": "2351580",
+          "jid": "77008",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Victor Manuel Torollo De La Escalera",
+          "hcp": 48.3,
+          "ins": "2351575",
+          "jid": "77008",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Javier Rituerto Borges",
+          "hcp": 50.9,
+          "ins": "2348816",
+          "jid": "77008",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Lorenzo Morales Perez",
+          "hcp": 53.1,
+          "ins": "2350193",
+          "jid": "77008",
+          "nivel": "B"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Pilar Ramirez Rodriguez",
+          "hcp": 53.9,
+          "ins": "2351574",
+          "jid": "77008",
+          "nivel": "A"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Roberto Marin Fernandez",
+          "hcp": 54,
+          "ins": "2351578",
+          "jid": "77008",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77008
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3655334705_71866-6-prueba-liga-infantil-9-hoyos.pdf"
+  ]
+}

@@ -1,0 +1,837 @@
+{
+  "tourId": 70332,
+  "url": "https://www.nextcaddy.com/tour/70332",
+  "scrapedAt": "2026-10-12T12:04:54.975Z",
+  "meta": {
+    "name": "LEGS 27.4",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-04-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Stephen Broadway May",
+          "licencia": "AM83480761",
+          "hcp": 22.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2307481
+        },
+        {
+          "pos": 2,
+          "name": "Markus Ruulio",
+          "licencia": "AM83040750",
+          "hcp": 10.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2307483
+        },
+        {
+          "pos": 3,
+          "name": "Tomas Acha Garcia",
+          "licencia": "AM83287132",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2307484
+        },
+        {
+          "pos": 4,
+          "name": "Ruth Eyre Pugh",
+          "licencia": "AM83064436",
+          "hcp": 16.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2307488
+        },
+        {
+          "pos": 5,
+          "name": "Michael John Preston",
+          "licencia": "AM83773049",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2307485
+        },
+        {
+          "pos": 6,
+          "name": "Bruce Mcintyre",
+          "licencia": "AM83287761",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2307487
+        },
+        {
+          "pos": 7,
+          "name": "David Robert Lethbridge",
+          "licencia": "AM83321938",
+          "hcp": 24.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2307482
+        },
+        {
+          "pos": 8,
+          "name": "Jose Muñoz Perez",
+          "licencia": "AM83326777",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2307493
+        },
+        {
+          "pos": 9,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": 28.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2307494
+        },
+        {
+          "pos": 10,
+          "name": "Maria Escamilla Banderas",
+          "licencia": "AM83783189",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2307490
+        },
+        {
+          "pos": 11,
+          "name": "Susan Instone",
+          "licencia": "AM83784416",
+          "hcp": 35.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2307495
+        },
+        {
+          "pos": 12,
+          "name": "Ian Sandells",
+          "licencia": "AM83907255",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2307491
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 12
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Stephen Broadway May",
+      "licencia": "AM83480761",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "David Robert Lethbridge",
+      "licencia": "AM83321938",
+      "hcp": 24.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Markus Ruulio",
+      "licencia": "AM83040750",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Tomas Acha Garcia",
+      "licencia": "AM83287132",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Michael John Preston",
+      "licencia": "AM83773049",
+      "hcp": 21.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Bruce Mcintyre",
+      "licencia": "AM83287761",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Ian Sandells",
+      "licencia": "AM83907255",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Muñoz Perez",
+      "licencia": "AM83326777",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ruth Eyre Pugh",
+      "licencia": "AM83064436",
+      "hcp": 16.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Escamilla Banderas",
+      "licencia": "AM83783189",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Susan Instone",
+      "licencia": "AM83784416",
+      "hcp": 35.3,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158998,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            37
+          ],
+          [
+            "Birdie",
+            4
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            87
+          ],
+          [
+            "Peor",
+            64
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158999,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            9
+          ],
+          [
+            "2",
+            12
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            17
+          ],
+          [
+            "5",
+            10
+          ],
+          [
+            "6",
+            9
+          ],
+          [
+            "7",
+            17
+          ],
+          [
+            "8",
+            13
+          ],
+          [
+            "9",
+            18
+          ],
+          [
+            "10",
+            11
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            17
+          ],
+          [
+            "13",
+            16
+          ],
+          [
+            "14",
+            6
+          ],
+          [
+            "15",
+            7
+          ],
+          [
+            "16",
+            15
+          ],
+          [
+            "17",
+            8
+          ],
+          [
+            "18",
+            7
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 159000,
+        "datos": [
+          [
+            "Hoyo",
+            "STEPHEN BROADWAY MAY",
+            "MARKUS RUULIO ",
+            "TOMAS ACHA GARCIA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            -3
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 14",
+            -2,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 15",
+            -2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -3,
+            1,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 159001,
+        "datos": [
+          [
+            "Hoyo",
+            "STEPHEN BROADWAY MAY",
+            "MARKUS RUULIO ",
+            "TOMAS ACHA GARCIA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            0,
+            2,
+            0
+          ],
+          [
+            "Hoyo 17",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -2,
+            -1,
+            2
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75271
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 6,
+          "createdAt": "08/11/25 11:03:44"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 11:35:12"
+        },
+        {
+          "playerName": "Andrades Torrecillas, Jose Ignacio",
+          "holeNumber": 10,
+          "createdAt": "08/11/25 12:17:11"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro",
+          "holeNumber": 3,
+          "createdAt": "08/11/25 10:25:48"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 11:45:03"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro",
+          "holeNumber": 14,
+          "createdAt": "08/11/25 13:42:55"
+        },
+        {
+          "playerName": "Berbel Anaya, Pedro",
+          "holeNumber": 17,
+          "createdAt": "08/11/25 13:42:55"
+        },
+        {
+          "playerName": "Brandariz Borrero, Eduardo",
+          "holeNumber": 17,
+          "createdAt": "08/11/25 13:46:59"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 3,
+          "createdAt": "08/11/25 10:12:00"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 4,
+          "createdAt": "08/11/25 10:24:24"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 9,
+          "createdAt": "08/11/25 11:44:37"
+        },
+        {
+          "playerName": "Lope Sanabria, Ignacio De",
+          "holeNumber": 18,
+          "createdAt": "08/11/25 13:54:06"
+        },
+        {
+          "playerName": "Esteban Garate, Pablo",
+          "holeNumber": 18,
+          "createdAt": "08/11/25 13:26:55"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto",
+          "holeNumber": 5,
+          "createdAt": "08/11/25 10:39:43"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto",
+          "holeNumber": 9,
+          "createdAt": "08/11/25 11:44:57"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto",
+          "holeNumber": 11,
+          "createdAt": "08/11/25 12:19:23"
+        },
+        {
+          "playerName": "Gonzalez Sanchez, Roberto",
+          "holeNumber": 15,
+          "createdAt": "08/11/25 13:12:51"
+        },
+        {
+          "playerName": "Laviña Richi, Manuel",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 10:18:14"
+        },
+        {
+          "playerName": "Mochales Gutierrez, Cristina",
+          "holeNumber": 13,
+          "createdAt": "08/11/25 10:51:22"
+        },
+        {
+          "playerName": "Neira  Moreno, Javier",
+          "holeNumber": 2,
+          "createdAt": "08/11/25 10:07:56"
+        },
+        {
+          "playerName": "Neira  Moreno, Javier",
+          "holeNumber": 10,
+          "createdAt": "08/11/25 12:17:33"
+        },
+        {
+          "playerName": "Neira  Moreno, Javier",
+          "holeNumber": 14,
+          "createdAt": "08/11/25 13:07:57"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 10:50:21"
+        },
+        {
+          "playerName": "Ollero Marin, Ernesto",
+          "holeNumber": 10,
+          "createdAt": "08/11/25 11:26:33"
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 10,
+          "createdAt": "08/11/25 12:16:22"
+        },
+        {
+          "playerName": "Pierrard Hardy, Fernando",
+          "holeNumber": 18,
+          "createdAt": "08/11/25 14:00:15"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 1,
+          "createdAt": "08/11/25 09:51:41"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 3,
+          "createdAt": "08/11/25 10:13:23"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 5,
+          "createdAt": "08/11/25 11:00:42"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 10,
+          "createdAt": "08/11/25 12:37:48"
+        },
+        {
+          "playerName": "Saenz Denis, Juan Ignacio",
+          "holeNumber": 17,
+          "createdAt": "08/11/25 13:55:00"
+        },
+        {
+          "playerName": "Salamero Rodriguez-Varo, Fernando",
+          "holeNumber": 17,
+          "createdAt": "08/11/25 13:10:43"
+        },
+        {
+          "playerName": "Suanzes Fernandez De Cañete, Ramon",
+          "holeNumber": 8,
+          "createdAt": "08/11/25 10:14:12"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:56.277Z"
+}

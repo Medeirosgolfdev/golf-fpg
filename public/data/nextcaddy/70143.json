@@ -1,0 +1,523 @@
+{
+  "tourId": 70143,
+  "url": "https://www.nextcaddy.com/tour/70143",
+  "scrapedAt": "2026-10-12T12:04:44.054Z",
+  "meta": {
+    "name": "TORNEO INFANTIL/JUVENIL ABRIL 2026 4 HOYOS PandP",
+    "organizer": null,
+    "course": "Real Club de Campo de Cordoba",
+    "courseCode": "AM06",
+    "dateStart": "2026-04-19",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "INFANTIL",
+      "JUVENIL",
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-19",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alejandra Bejarano Acasuso",
+          "licencia": "AM06412583",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2301705
+        },
+        {
+          "pos": 2,
+          "name": "Carla Bejarano Acasuso",
+          "licencia": "AM06412579",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2301704
+        },
+        {
+          "pos": 3,
+          "name": "JOSE LOPEZ VILLAR",
+          "licencia": "AM06000010",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2301701
+        },
+        {
+          "pos": 4,
+          "name": "ALVARO LOPEZ VILLAR",
+          "licencia": "AM06000011",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2301702
+        },
+        {
+          "pos": 5,
+          "name": "FERNANDO GARCIA GRANDE",
+          "licencia": "AM06060102",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2301703
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 5
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "JOSE LOPEZ VILLAR",
+      "licencia": "AM06000010",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "ALVARO LOPEZ VILLAR",
+      "licencia": "AM06000011",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "FERNANDO GARCIA GRANDE",
+      "licencia": "AM06060102",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Carla Bejarano Acasuso",
+      "licencia": "AM06412579",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Alejandra Bejarano Acasuso",
+      "licencia": "AM06412583",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "FERNANDO GARCIA GRANDE",
+          "hcp": 54,
+          "ins": "2301703",
+          "jid": "75047",
+          "nivel": "A"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Carla Bejarano Acasuso",
+          "hcp": 54,
+          "ins": "2301704",
+          "jid": "75047",
+          "nivel": "B"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Alejandra Bejarano Acasuso",
+          "hcp": 54,
+          "ins": "2301705",
+          "jid": "75047",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "JOSE LOPEZ VILLAR",
+          "hcp": 54,
+          "ins": "2301701",
+          "jid": "75047",
+          "nivel": "B"
+        },
+        {
+          "time": "11:20",
+          "tee": 1,
+          "name": "ALVARO LOPEZ VILLAR",
+          "hcp": 54,
+          "ins": "2301702",
+          "jid": "75047",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158842,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            0
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            3
+          ],
+          [
+            "Peor",
+            17
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158843,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            17
+          ],
+          [
+            "2",
+            10
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            20
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158844,
+        "datos": [
+          [
+            "Hoyo",
+            "ALEJANDRA BEJARANO ACASUSO",
+            "CARLA BEJARANO ACASUSO",
+            "JOSE LOPEZ VILLAR"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            0,
+            2,
+            3
+          ],
+          [
+            "Hoyo 4",
+            0,
+            3,
+            4
+          ],
+          [
+            "Hoyo 5",
+            2,
+            5,
+            6
+          ],
+          [
+            "Hoyo 6",
+            4,
+            7,
+            8
+          ],
+          [
+            "Hoyo 7",
+            6,
+            9,
+            10
+          ],
+          [
+            "Hoyo 8",
+            8,
+            11,
+            12
+          ],
+          [
+            "Hoyo 9",
+            10,
+            13,
+            14
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158845,
+        "datos": [
+          [
+            "Hoyo",
+            "ALEJANDRA BEJARANO ACASUSO",
+            "CARLA BEJARANO ACASUSO",
+            "JOSE LOPEZ VILLAR"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 2",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 6",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 7",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 8",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 9",
+            2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75047
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

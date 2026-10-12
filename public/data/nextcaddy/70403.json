@@ -1,0 +1,283 @@
+{
+  "tourId": 70403,
+  "url": "https://www.nextcaddy.com/tour/70403",
+  "scrapedAt": "2026-10-12T12:05:00.836Z",
+  "meta": {
+    "name": "TORNEO INFANTIL 9",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-05-02",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-05-02",
+    "year": 2026
+  },
+  "course": null,
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Daniel Villaran Grygorenko",
+          "licencia": "AMG8517616",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2309999
+        },
+        {
+          "pos": 2,
+          "name": "Liberto Quinta Rodriguez",
+          "licencia": "AMG8519270",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2309998
+        },
+        {
+          "pos": 3,
+          "name": "Ana Coello Baquero",
+          "licencia": "AMG8353564",
+          "hcp": 48.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2309997
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Gonzalez Diaz",
+          "licencia": "AMG8991768",
+          "hcp": 50.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2310003
+        },
+        {
+          "pos": 6,
+          "name": "Sergio Muriel Varela",
+          "licencia": "AMG8517615",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2310358
+        },
+        {
+          "pos": null,
+          "name": "Blanca Gonzalez Diaz",
+          "licencia": "AMG8973463",
+          "hcp": 48.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2310002
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Coello Baquero",
+      "licencia": "AMG8353564",
+      "hcp": 48.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Blanca Gonzalez Diaz",
+      "licencia": "AMG8973463",
+      "hcp": 48.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Clara Bescansa Gutierrez",
+      "licencia": "AMG8947907",
+      "hcp": 39.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Liberto Quinta Rodriguez",
+      "licencia": "AMG8519270",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Daniel Villaran Grygorenko",
+      "licencia": "AMG8517616",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Gonzalez Diaz",
+      "licencia": "AMG8991768",
+      "hcp": 50.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Sergio Muriel Varela",
+      "licencia": "AMG8517615",
+      "hcp": 51.5,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Ana Coello Baquero",
+          "hcp": 48.3,
+          "ins": "2309997",
+          "jid": "75342",
+          "nivel": "B"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Daniel Villaran Grygorenko",
+          "hcp": 54,
+          "ins": "2309999",
+          "jid": "75342",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Blanca Gonzalez Diaz",
+          "hcp": 48.6,
+          "ins": "2310002",
+          "jid": "75342",
+          "nivel": "I"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Liberto Quinta Rodriguez",
+          "hcp": 54,
+          "ins": "2309998",
+          "jid": "75342",
+          "nivel": "I"
+        },
+        {
+          "time": "09:40",
+          "tee": 1,
+          "name": "Ignacio Gonzalez Diaz",
+          "hcp": 50.6,
+          "ins": "2310003",
+          "jid": "75342",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 75342
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Torres Barranco-Polain, Lorenzo De",
+          "holeNumber": 12,
+          "createdAt": "15/11/25 10:46:28"
+        },
+        {
+          "playerName": "Caballero Cano, Maximo",
+          "holeNumber": 5,
+          "createdAt": "15/11/25 11:28:42"
+        },
+        {
+          "playerName": "Morales Garcia, Juan",
+          "holeNumber": 10,
+          "createdAt": "15/11/25 09:14:09"
+        },
+        {
+          "playerName": "Venegas Alonso, Francisco",
+          "holeNumber": 3,
+          "createdAt": "15/11/25 09:31:01"
+        },
+        {
+          "playerName": "Venegas Alonso, Francisco",
+          "holeNumber": 15,
+          "createdAt": "15/11/25 12:28:17"
+        },
+        {
+          "playerName": "Guirado Exposito, Juan Antonio",
+          "holeNumber": 2,
+          "createdAt": "15/11/25 11:11:18"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

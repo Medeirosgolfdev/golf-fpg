@@ -1,0 +1,294 @@
+{
+  "tourId": 74181,
+  "url": "https://www.nextcaddy.com/tour/74181",
+  "scrapedAt": "2026-10-12T12:08:41.612Z",
+  "meta": {
+    "name": "PAST CAPTAIN",
+    "organizer": null,
+    "course": "Real Club de Golf Guadalmina",
+    "courseCode": "AM51",
+    "dateStart": "2026-09-30",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-09-30",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Elena Santos Martinez",
+          "licencia": "0202066797",
+          "hcp": 27,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2415674
+        },
+        {
+          "pos": 2,
+          "name": "Margareta Forsgardh",
+          "licencia": "AM51608834",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2415676
+        },
+        {
+          "pos": 3,
+          "name": "Leona Poelstra",
+          "licencia": "AM51943742",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2415672
+        },
+        {
+          "pos": 4,
+          "name": "Laura - Jane Sullivan",
+          "licencia": "AM51977554",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2415671
+        },
+        {
+          "pos": 5,
+          "name": "Linda Joan Jones",
+          "licencia": "AM51359468",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2415679
+        },
+        {
+          "pos": 6,
+          "name": "Anne Langgard",
+          "licencia": "AM51200050",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2415670
+        },
+        {
+          "pos": null,
+          "name": "Lynn Nathan",
+          "licencia": "AM51619458",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2415675
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Anne Langgard",
+      "licencia": "AM51200050",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Laura - Jane Sullivan",
+      "licencia": "AM51977554",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Leona Poelstra",
+      "licencia": "AM51943742",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Elena Santos Martinez",
+      "licencia": "0202066797",
+      "hcp": 27,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Lynn Nathan",
+      "licencia": "AM51619458",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Margareta Forsgardh",
+      "licencia": "AM51608834",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Linda Joan Jones",
+      "licencia": "AM51359468",
+      "hcp": 23.1,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Anne Langgard",
+          "hcp": 15.7,
+          "ins": "2415670",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Laura - Jane Sullivan",
+          "hcp": 16,
+          "ins": "2415671",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Leona Poelstra",
+          "hcp": 17.3,
+          "ins": "2415672",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:00",
+          "tee": 1,
+          "name": "Elena Santos Martinez",
+          "hcp": 27,
+          "ins": "2415674",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Lynn Nathan",
+          "hcp": 29.5,
+          "ins": "2415675",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Margareta Forsgardh",
+          "hcp": 15.5,
+          "ins": "2415676",
+          "jid": "79440",
+          "nivel": "S"
+        },
+        {
+          "time": "11:10",
+          "tee": 1,
+          "name": "Linda Joan Jones",
+          "hcp": 23.1,
+          "ins": "2415679",
+          "jid": "79440",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79440
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Machin Calle, Jesus",
+          "holeNumber": 10,
+          "createdAt": "18/04/26 14:43:14"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2549340425_74181-past-captain.pdf"
+  ]
+}

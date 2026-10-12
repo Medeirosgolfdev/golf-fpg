@@ -1,0 +1,538 @@
+{
+  "tourId": 69105,
+  "url": "https://www.nextcaddy.com/tour/69105",
+  "scrapedAt": "2026-10-12T12:03:53.271Z",
+  "meta": {
+    "name": "TORNEO CLUB DE GOLF LA BANDERA",
+    "organizer": null,
+    "course": "Club Deportivo Añoreta Golf",
+    "courseCode": "AM75",
+    "dateStart": "2026-03-15",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Especial Azul Mas",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-15",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "1º Torneo Club De Golf La Bandera.",
+      "expectedJugadores": 24,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Antonio Gomez Lopez",
+          "licencia": "AMK2601084",
+          "hcp": 27.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2280780
+        },
+        {
+          "pos": 2,
+          "name": "Julio Fernandez Moya",
+          "licencia": "AMK2803693",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2280766
+        },
+        {
+          "pos": 3,
+          "name": "Rafael Barranco Cepas",
+          "licencia": "AMK3965345",
+          "hcp": 19.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2280793
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Aranda Perez",
+          "licencia": "AMK2909031",
+          "hcp": 19.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2280804
+        },
+        {
+          "pos": 5,
+          "name": "Borja Cabrera Amian",
+          "licencia": "AMK2968742",
+          "hcp": 22.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2280789
+        },
+        {
+          "pos": 6,
+          "name": "Sebastian Perez Cuevas",
+          "licencia": "AMK2617044",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2280772
+        },
+        {
+          "pos": 7,
+          "name": "Martin Miguel Cantero Pineda",
+          "licencia": "AMK2902170",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2280807
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Robles Montañez",
+          "licencia": "AMK2317328",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2280787
+        },
+        {
+          "pos": 9,
+          "name": "Enrique Jose Gomez Gomez",
+          "licencia": "AMK2932320",
+          "hcp": 11.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2280803
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Lopez Jerez",
+          "licencia": "AMK2755099",
+          "hcp": 20.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2280769
+        },
+        {
+          "pos": 11,
+          "name": "Manuel Ocaña Sainz",
+          "licencia": "AMK2257060",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2280805
+        },
+        {
+          "pos": 12,
+          "name": "Clemente Angel Castillo Segura",
+          "licencia": "AMK2934634",
+          "hcp": 13,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2280763
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Javier Fernandez Carrasco",
+          "licencia": "AMK2816594",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2280785
+        },
+        {
+          "pos": 14,
+          "name": "Adolfo Segura Montero",
+          "licencia": "AMK2160624",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2280810
+        },
+        {
+          "pos": 15,
+          "name": "Jose Manuel Sillero Vigil",
+          "licencia": "AMK2985881",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2280796
+        },
+        {
+          "pos": 16,
+          "name": "Jose Alfonso Reus Lara",
+          "licencia": "AMK2985885",
+          "hcp": 19.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2280797
+        },
+        {
+          "pos": 17,
+          "name": "Alvaro Cordobes Garcia",
+          "licencia": "AMK2169902",
+          "hcp": 21.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2280798
+        },
+        {
+          "pos": 18,
+          "name": "Pablo Clavero Amador",
+          "licencia": "AMK2168899",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2280813
+        },
+        {
+          "pos": 19,
+          "name": "Luis Miguel Villarrubia Martos",
+          "licencia": "AMK2883899",
+          "hcp": 31.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2280808
+        },
+        {
+          "pos": null,
+          "name": "Keith Roe",
+          "licencia": "AMK2052890",
+          "hcp": 32.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2280812
+        },
+        {
+          "pos": null,
+          "name": "Alberto Gomez Lopez",
+          "licencia": "AMK2975378",
+          "hcp": 20.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2280778
+        },
+        {
+          "pos": null,
+          "name": "Christian Far Boggiano",
+          "licencia": "AMD7345812",
+          "hcp": 8.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2280782
+        },
+        {
+          "pos": null,
+          "name": "Jose Rafael Garcia Lopez",
+          "licencia": "AMK2968305",
+          "hcp": 23.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2281708
+        },
+        {
+          "pos": null,
+          "name": "John Francis Kavanagh",
+          "licencia": "AMK2918899",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2280811
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1º Torneo Club De Golf La Bandera.",
+      "jugadores": 24
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Clemente Angel Castillo Segura",
+      "licencia": "AMK2934634",
+      "hcp": 13,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Julio Fernandez Moya",
+      "licencia": "AMK2803693",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Lopez Jerez",
+      "licencia": "AMK2755099",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Sebastian Perez Cuevas",
+      "licencia": "AMK2617044",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Alberto Gomez Lopez",
+      "licencia": "AMK2975378",
+      "hcp": 20.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Antonio Gomez Lopez",
+      "licencia": "AMK2601084",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Christian Far Boggiano",
+      "licencia": "AMD7345812",
+      "hcp": 8.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Francisco Javier Fernandez Carrasco",
+      "licencia": "AMK2816594",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Robles Montañez",
+      "licencia": "AMK2317328",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Borja Cabrera Amian",
+      "licencia": "AMK2968742",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Rafael Barranco Cepas",
+      "licencia": "AMK3965345",
+      "hcp": 19.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Manuel Sillero Vigil",
+      "licencia": "AMK2985881",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Alfonso Reus Lara",
+      "licencia": "AMK2985885",
+      "hcp": 19.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Alvaro Cordobes Garcia",
+      "licencia": "AMK2169902",
+      "hcp": 21.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Enrique Jose Gomez Gomez",
+      "licencia": "AMK2932320",
+      "hcp": 11.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Daniel Aranda Perez",
+      "licencia": "AMK2909031",
+      "hcp": 19.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Manuel Ocaña Sainz",
+      "licencia": "AMK2257060",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Martin Miguel Cantero Pineda",
+      "licencia": "AMK2902170",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Luis Miguel Villarrubia Martos",
+      "licencia": "AMK2883899",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "John Francis Kavanagh",
+      "licencia": "AMK2918899",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Pablo Clavero Amador",
+      "licencia": "AMK2168899",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Jose Rafael Garcia Lopez",
+      "licencia": "AMK2968305",
+      "hcp": 23.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Adolfo Segura Montero",
+      "licencia": "AMK2160624",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Keith Roe",
+      "licencia": "AMK2052890",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73841
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/69105_cartel_1.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:52.091Z"
+}

@@ -1,0 +1,241 @@
+{
+  "tourId": 74372,
+  "url": "https://www.nextcaddy.com/tour/74372",
+  "scrapedAt": "2026-10-12T12:08:57.040Z",
+  "meta": {
+    "name": "SKANDINAVISK MATCH 06/10",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-10-07",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-07",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Niklas Johan Jakobsson",
+          "licencia": "AM83052328",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2420544
+        },
+        {
+          "pos": 2,
+          "name": "Annette Rosengren",
+          "licencia": "AM83883513",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2420565
+        },
+        {
+          "pos": 3,
+          "name": "Britt Haldskov Spring",
+          "licencia": "AM76914378",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2420568
+        },
+        {
+          "pos": 4,
+          "name": "Maud Jakobsson",
+          "licencia": "AM83052337",
+          "hcp": 13.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2420542
+        },
+        {
+          "pos": 5,
+          "name": "Tove Maria Pedersen",
+          "licencia": "AM83125631",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2420571
+        },
+        {
+          "pos": 6,
+          "name": "Ingeborg Koll",
+          "licencia": "AM83820787",
+          "hcp": 30.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2420561
+        },
+        {
+          "pos": 7,
+          "name": "Lisbeth Friberg Harpsoe",
+          "licencia": "AM83238673",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2420564
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Maud Jakobsson",
+      "licencia": "AM83052337",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ingeborg Koll",
+      "licencia": "AM83820787",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Lisbeth Friberg Harpsoe",
+      "licencia": "AM83238673",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Annette Rosengren",
+      "licencia": "AM83883513",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Britt Haldskov Spring",
+      "licencia": "AM76914378",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Tove Maria Pedersen",
+      "licencia": "AM83125631",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Niklas Johan Jakobsson",
+      "licencia": "AM83052328",
+      "hcp": 9.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79670
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Martin Delgado, Manuel",
+          "holeNumber": 1,
+          "createdAt": "07/04/26 11:57:46"
+        },
+        {
+          "playerName": "Palenzuela Sanchez, Jose",
+          "holeNumber": 11,
+          "createdAt": "07/04/26 14:33:47"
+        },
+        {
+          "playerName": "Aparicio Rite, Antonio",
+          "holeNumber": 17,
+          "createdAt": "07/04/26 11:52:29"
+        },
+        {
+          "playerName": "Aparicio Rite, Antonio",
+          "holeNumber": 2,
+          "createdAt": "07/04/26 12:51:02"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3544511552_74372-skandinavisk-match-06-10.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:13.204Z"
+}

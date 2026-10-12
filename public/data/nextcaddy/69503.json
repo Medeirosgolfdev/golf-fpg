@@ -1,0 +1,724 @@
+{
+  "tourId": 69503,
+  "url": "https://www.nextcaddy.com/tour/69503",
+  "scrapedAt": "2026-10-12T12:25:58.469Z",
+  "meta": {
+    "name": "ACADEMIA INFANTIL ELITE",
+    "organizer": null,
+    "course": "Baviera Golf",
+    "courseCode": "AM58",
+    "dateStart": "2026-04-02",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "INFANTIL",
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-02",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      4,
+      4,
+      5,
+      3,
+      5,
+      4,
+      3,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      3,
+      4,
+      4,
+      4
+    ],
+    "si": [
+      17,
+      12,
+      18,
+      2,
+      6,
+      5,
+      13,
+      16,
+      4,
+      11,
+      8,
+      1,
+      9,
+      7,
+      14,
+      10,
+      3,
+      15
+    ],
+    "meters": [
+      271,
+      298,
+      288,
+      472,
+      149,
+      500,
+      280,
+      140,
+      320,
+      158,
+      283,
+      519,
+      309,
+      265,
+      146,
+      268,
+      372,
+      288
+    ],
+    "parTotal": 71
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jorge De Jesús Romero Pacheco",
+          "licencia": "AM58998856",
+          "hcp": 23.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2289667,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                5,
+                4,
+                4,
+                3,
+                7,
+                6,
+                5,
+                6,
+                6,
+                4,
+                6,
+                6,
+                5,
+                3,
+                5,
+                5,
+                3
+              ],
+              "total": 86,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Fernando Valls Hernandez",
+          "licencia": "AM58353686",
+          "hcp": 23.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2289671,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                6,
+                5,
+                8,
+                5,
+                3,
+                6,
+                3,
+                6,
+                6,
+                6,
+                3,
+                3,
+                4,
+                4,
+                5
+              ],
+              "total": 88,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Beatriz Barcelo Rosillo",
+          "licencia": "AM58984303",
+          "hcp": 44.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2289670,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                7,
+                6,
+                6,
+                5,
+                5,
+                5,
+                8,
+                4,
+                8,
+                null,
+                5,
+                4,
+                null,
+                6,
+                null,
+                6
+              ],
+              "total": null,
+              "meters": [
+                236,
+                257,
+                250,
+                429,
+                126,
+                461,
+                234,
+                118,
+                289,
+                125,
+                256,
+                492,
+                272,
+                230,
+                128,
+                249,
+                340,
+                252
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Julius Runol",
+          "licencia": "AM58984430",
+          "hcp": 30.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2289665,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                5,
+                6,
+                null,
+                4,
+                7,
+                6,
+                4,
+                5,
+                5,
+                5,
+                7,
+                6,
+                4,
+                3,
+                7,
+                5,
+                5
+              ],
+              "total": null,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Doña Del Rio",
+          "licencia": "AM58984242",
+          "hcp": 35.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2289669,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                8,
+                4,
+                6,
+                5,
+                4,
+                7,
+                5,
+                6,
+                8,
+                6,
+                4,
+                4,
+                null,
+                6,
+                8
+              ],
+              "total": null,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Irene Araguez España",
+          "licencia": "AM58966585",
+          "hcp": 33.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2289666,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                6,
+                7,
+                7,
+                5,
+                6,
+                null,
+                3,
+                7,
+                8,
+                6,
+                7,
+                6,
+                5,
+                4,
+                5,
+                7,
+                5
+              ],
+              "total": null,
+              "meters": [
+                236,
+                257,
+                250,
+                429,
+                126,
+                461,
+                234,
+                118,
+                289,
+                125,
+                256,
+                492,
+                272,
+                230,
+                128,
+                249,
+                340,
+                252
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 7,
+          "name": "Telmo Martinez Chacon",
+          "licencia": "AM58035532",
+          "hcp": 32,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2289672,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                6,
+                null,
+                5,
+                7,
+                6,
+                4,
+                null,
+                3,
+                8,
+                7,
+                7,
+                7,
+                5,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 8,
+          "name": "Walid Mario Plouzeau",
+          "licencia": "AM58508070",
+          "hcp": 37.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2289668,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                7,
+                null,
+                null,
+                null,
+                8,
+                6,
+                5,
+                4,
+                null,
+                null,
+                6,
+                8,
+                6,
+                null,
+                null,
+                7
+              ],
+              "total": null,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 9,
+          "name": "Alejandro Criado Rodriguez",
+          "licencia": "AM58353919",
+          "hcp": 52.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2289673,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                8,
+                8,
+                7,
+                7,
+                7,
+                8,
+                7,
+                null,
+                8,
+                null,
+                null,
+                7,
+                null,
+                6,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                271,
+                298,
+                288,
+                472,
+                149,
+                500,
+                280,
+                140,
+                320,
+                158,
+                283,
+                519,
+                309,
+                265,
+                146,
+                268,
+                372,
+                288
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Julius Runol",
+      "licencia": "AM58984430",
+      "hcp": 30.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Jorge De Jesús Romero Pacheco",
+      "licencia": "AM58998856",
+      "hcp": 23.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Walid Mario Plouzeau",
+      "licencia": "AM58508070",
+      "hcp": 37.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Pablo Doña Del Rio",
+      "licencia": "AM58984242",
+      "hcp": 35.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Fernando Valls Hernandez",
+      "licencia": "AM58353686",
+      "hcp": 23.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Telmo Martinez Chacon",
+      "licencia": "AM58035532",
+      "hcp": 32,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Alejandro Criado Rodriguez",
+      "licencia": "AM58353919",
+      "hcp": 52.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Irene Araguez España",
+      "licencia": "AM58966585",
+      "hcp": 33.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Beatriz Barcelo Rosillo",
+      "licencia": "AM58984303",
+      "hcp": 44.2,
+      "nivel": "C"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74274
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/69503_cartel_109.pdf"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:09:54.093Z"
+}

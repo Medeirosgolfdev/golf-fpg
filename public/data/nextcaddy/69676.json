@@ -1,0 +1,521 @@
+{
+  "tourId": 69676,
+  "url": "https://www.nextcaddy.com/tour/69676",
+  "scrapedAt": "2026-10-12T12:04:30.534Z",
+  "meta": {
+    "name": "4ª PRUEBA LIGA DE DAMAS (LUNES)",
+    "organizer": null,
+    "course": "Real Club Sevilla Golf",
+    "courseCode": "AM85",
+    "dateStart": "2026-04-13",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Especial",
+    "categories": [
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-04-13",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap 3ª Categoria",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carol Maria Osuna Feore",
+          "licencia": "AM85355004",
+          "hcp": 34.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2294227
+        },
+        {
+          "pos": 2,
+          "name": "Inmaculada Robina Ramirez",
+          "licencia": "AM96816564",
+          "hcp": 36.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2294242
+        },
+        {
+          "pos": 3,
+          "name": "Rocio Victoria De Toledo Lopez",
+          "licencia": "CB00069573",
+          "hcp": 37.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2294196
+        },
+        {
+          "pos": 4,
+          "name": "Maria Victoria Martinez Peso",
+          "licencia": "AMG3351533",
+          "hcp": 29.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2294232
+        },
+        {
+          "pos": 5,
+          "name": "Heike Thielsch",
+          "licencia": "AM85795757",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2294201
+        },
+        {
+          "pos": 6,
+          "name": "Mª Angeles Morales Aguilar",
+          "licencia": "AMG3958902",
+          "hcp": 43.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2294236
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap 2ª Categoria",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Gallegos Miralles De Imperial",
+          "licencia": "AM25155798",
+          "hcp": 24.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2295884
+        },
+        {
+          "pos": 2,
+          "name": "Ana Ordoñez Cocovi",
+          "licencia": "AM85142580",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2294230
+        },
+        {
+          "pos": 3,
+          "name": "Virginia Daroca Bruño",
+          "licencia": "AM85127300",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2294225
+        },
+        {
+          "pos": 4,
+          "name": "Susana Mª Gordillo Limon",
+          "licencia": "AM85600714",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2294206
+        },
+        {
+          "pos": 5,
+          "name": "Sonsoles Espinosa Goñi",
+          "licencia": "AM85600005",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2295883
+        },
+        {
+          "pos": 6,
+          "name": "Catalina Lara Coronado",
+          "licencia": "AM85813664",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2295887
+        },
+        {
+          "pos": 7,
+          "name": "Mercedes Menchon Orta",
+          "licencia": "AM85601178",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2294215
+        },
+        {
+          "pos": null,
+          "name": "Pia Jaraquemada Ovando",
+          "licencia": "AM85348869",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2294237
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap 1ª Categoria",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "licencia": "AM85888809",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2294240
+        },
+        {
+          "pos": 2,
+          "name": "Laura Maria Vila Villa",
+          "licencia": "AMG3812494",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2294219
+        },
+        {
+          "pos": 3,
+          "name": "Fatima Blanco Muñoz",
+          "licencia": "AM85885109",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2295885
+        },
+        {
+          "pos": 4,
+          "name": "Maria Valle Garcia De Dionisio",
+          "licencia": "AM85753124",
+          "hcp": 10.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2294199
+        },
+        {
+          "pos": 5,
+          "name": "Marina Soler Mateos",
+          "licencia": "AM85614851",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2294204
+        },
+        {
+          "pos": 6,
+          "name": "Jennifer Smith",
+          "licencia": "AM85885800",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2295886
+        },
+        {
+          "pos": 7,
+          "name": "Magdalena Sainz De La Maza Ramirez",
+          "licencia": "AM85769836",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2294216
+        },
+        {
+          "pos": 8,
+          "name": "Gloria Osorio Sanchez",
+          "licencia": "AM85126347",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2294207
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap 3ª Categoria",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Handicap 2ª Categoria",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Handicap 1ª Categoria",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Virginia Daroca Bruño",
+      "licencia": "AM85127300",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carol Maria Osuna Feore",
+      "licencia": "AM85355004",
+      "hcp": 34.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ana Ordoñez Cocovi",
+      "licencia": "AM85142580",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Victoria Martinez Peso",
+      "licencia": "AMG3351533",
+      "hcp": 29.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Mª Angeles Morales Aguilar",
+      "licencia": "AMG3958902",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Pia Jaraquemada Ovando",
+      "licencia": "AM85348869",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Maria Angeles Cortabitarte Gutierrez",
+      "licencia": "AM85888809",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Inmaculada Robina Ramirez",
+      "licencia": "AM96816564",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Maria Angeles Cortabitarte Gutierrez",
+          "hcp": 23.2,
+          "ins": "2294240",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Ana Ordoñez Cocovi",
+          "hcp": 25.4,
+          "ins": "2294230",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Pia Jaraquemada Ovando",
+          "hcp": 29.9,
+          "ins": "2294237",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:30",
+          "tee": 1,
+          "name": "Maria Victoria Martinez Peso",
+          "hcp": 29.8,
+          "ins": "2294232",
+          "jid": "74461",
+          "nivel": "M"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Virginia Daroca Bruño",
+          "hcp": 30.2,
+          "ins": "2294225",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Carol Maria Osuna Feore",
+          "hcp": 34.9,
+          "ins": "2294227",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Inmaculada Robina Ramirez",
+          "hcp": 36,
+          "ins": "2294242",
+          "jid": "74461",
+          "nivel": "S"
+        },
+        {
+          "time": "10:40",
+          "tee": 1,
+          "name": "Mª Angeles Morales Aguilar",
+          "hcp": 36,
+          "ins": "2294236",
+          "jid": "74461",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 74461
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

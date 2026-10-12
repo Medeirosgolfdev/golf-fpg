@@ -1,0 +1,639 @@
+{
+  "tourId": 73024,
+  "url": "https://www.nextcaddy.com/tour/73024",
+  "scrapedAt": "2026-10-12T12:07:43.890Z",
+  "meta": {
+    "name": "LEGS 17/08/26",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-08-17",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-08-17",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Susan Wood",
+          "licencia": "AM83931328",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2386806
+        },
+        {
+          "pos": 2,
+          "name": "STEVE ANDREWS",
+          "licencia": "TAM8788888",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386803
+        },
+        {
+          "pos": 3,
+          "name": "Markus Ruulio",
+          "licencia": "AM83040750",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2386797
+        },
+        {
+          "pos": 4,
+          "name": "Maria Escamilla Banderas",
+          "licencia": "AM83783189",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2386805
+        },
+        {
+          "pos": 5,
+          "name": "Tomas Acha Garcia",
+          "licencia": "AM83287132",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2386804
+        },
+        {
+          "pos": 6,
+          "name": "David Robert Lethbridge",
+          "licencia": "AM83321938",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2386813
+        },
+        {
+          "pos": 7,
+          "name": "Norma Mcintyre Harrison",
+          "licencia": "AM83287762",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2386816
+        },
+        {
+          "pos": 8,
+          "name": "Andrew Scott",
+          "licencia": "AM83889877",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2386808
+        },
+        {
+          "pos": 9,
+          "name": "Bruce Mcintyre",
+          "licencia": "AM83287761",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2386802
+        },
+        {
+          "pos": null,
+          "name": "Michael Barnes",
+          "licencia": "AM83611565",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2386795
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Michael Barnes",
+      "licencia": "AM83611565",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Markus Ruulio",
+      "licencia": "AM83040750",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Bruce Mcintyre",
+      "licencia": "AM83287761",
+      "hcp": 23.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "STEVE ANDREWS",
+      "licencia": "TAM8788888",
+      "hcp": 16,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Tomas Acha Garcia",
+      "licencia": "AM83287132",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Andrew Scott",
+      "licencia": "AM83889877",
+      "hcp": 30.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "David Robert Lethbridge",
+      "licencia": "AM83321938",
+      "hcp": 25.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Escamilla Banderas",
+      "licencia": "AM83783189",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Susan Wood",
+      "licencia": "AM83931328",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Norma Mcintyre Harrison",
+      "licencia": "AM83287762",
+      "hcp": 29.6,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 161462,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            33
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            47
+          ],
+          [
+            "Peor",
+            59
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161463,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            12
+          ],
+          [
+            "2",
+            10
+          ],
+          [
+            "3",
+            13
+          ],
+          [
+            "4",
+            10
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            21
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            13
+          ],
+          [
+            "9",
+            12
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            10
+          ],
+          [
+            "12",
+            15
+          ],
+          [
+            "13",
+            12
+          ],
+          [
+            "14",
+            6
+          ],
+          [
+            "15",
+            8
+          ],
+          [
+            "16",
+            2
+          ],
+          [
+            "17",
+            5
+          ],
+          [
+            "18",
+            8
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161464,
+        "datos": [
+          [
+            "Hoyo",
+            "SUSAN WOOD",
+            "STEVE ANDREWS",
+            "MARIA ESCAMILLA BANDERAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            4,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            4,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            4,
+            1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            4,
+            2,
+            4
+          ],
+          [
+            "Hoyo 8",
+            3,
+            1,
+            5
+          ],
+          [
+            "Hoyo 9",
+            4,
+            1,
+            7
+          ],
+          [
+            "Hoyo 10",
+            5,
+            1,
+            6
+          ],
+          [
+            "Hoyo 11",
+            4,
+            2,
+            7
+          ],
+          [
+            "Hoyo 12",
+            3,
+            1,
+            6
+          ],
+          [
+            "Hoyo 13",
+            2,
+            1,
+            7
+          ],
+          [
+            "Hoyo 14",
+            3,
+            3,
+            6
+          ],
+          [
+            "Hoyo 15",
+            2,
+            3,
+            5
+          ],
+          [
+            "Hoyo 16",
+            2,
+            5,
+            6
+          ],
+          [
+            "Hoyo 17",
+            1,
+            4,
+            5
+          ],
+          [
+            "Hoyo 18",
+            0,
+            3,
+            4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161465,
+        "datos": [
+          [
+            "Hoyo",
+            "SUSAN WOOD",
+            "STEVE ANDREWS",
+            "MARIA ESCAMILLA BANDERAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            2,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            2,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 78237
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Lara Coronado, Catalina",
+          "holeNumber": 5,
+          "createdAt": "22/02/26 12:21:38"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:06.904Z"
+}

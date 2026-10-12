@@ -1,0 +1,932 @@
+{
+  "tourId": 71933,
+  "url": "https://www.nextcaddy.com/tour/71933",
+  "scrapedAt": "2026-10-12T12:06:38.181Z",
+  "meta": {
+    "name": "DIRTY DOZEN 26/06",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-06-26",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-06-26",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Robert Langley",
+          "licencia": "AM83351863",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2351657
+        },
+        {
+          "pos": 2,
+          "name": "Gordon Millar",
+          "licencia": "AM83072078",
+          "hcp": 12.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2351672
+        },
+        {
+          "pos": 3,
+          "name": "Luis Bernal Iglesias",
+          "licencia": "AMI5215938",
+          "hcp": 7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2351684
+        },
+        {
+          "pos": 4,
+          "name": "Christopher Goodwin",
+          "licencia": "AM83937252",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2351663
+        },
+        {
+          "pos": 5,
+          "name": "Simon Hebden",
+          "licencia": "AM83906605",
+          "hcp": 5.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2351667
+        },
+        {
+          "pos": 6,
+          "name": "Philip Farmer",
+          "licencia": "AM83932440",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2351683
+        },
+        {
+          "pos": 7,
+          "name": "Piero Repetto",
+          "licencia": "AM22342914",
+          "hcp": 22.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2351658
+        },
+        {
+          "pos": 8,
+          "name": "BARRY WANLESS",
+          "licencia": "TAM0011223",
+          "hcp": 11.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2351677
+        },
+        {
+          "pos": 9,
+          "name": "Brown Mark Oswald",
+          "licencia": "AM83983445",
+          "hcp": 16.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2351659
+        },
+        {
+          "pos": 10,
+          "name": "Alistair Marshall",
+          "licencia": "AM83888581",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2351673
+        },
+        {
+          "pos": 11,
+          "name": "Charles Holding",
+          "licencia": "AM83498362",
+          "hcp": 18.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2351679
+        },
+        {
+          "pos": 12,
+          "name": "Ian Appleton",
+          "licencia": "AM83963703",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2351676
+        },
+        {
+          "pos": 13,
+          "name": "Michael Mccafferty",
+          "licencia": "AM83376217",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2351687
+        },
+        {
+          "pos": 14,
+          "name": "Steve Barnes",
+          "licencia": "AM83371794",
+          "hcp": 10.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2351686
+        },
+        {
+          "pos": 15,
+          "name": "Janet Cox",
+          "licencia": "AM83791391",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2351680
+        },
+        {
+          "pos": 16,
+          "name": "Allan Peirson",
+          "licencia": "AM83892479",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2351656
+        },
+        {
+          "pos": 17,
+          "name": "Jarmo Kuljunlahti",
+          "licencia": "AM83012594",
+          "hcp": 8.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351685
+        },
+        {
+          "pos": 18,
+          "name": "Astrid Ceelen",
+          "licencia": "AM83795441",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351664
+        },
+        {
+          "pos": 19,
+          "name": "Alison Marshall",
+          "licencia": "AM83915437",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351675
+        },
+        {
+          "pos": 20,
+          "name": "Enrique Garcia Vega",
+          "licencia": "AM83092687",
+          "hcp": 15.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351660
+        },
+        {
+          "pos": 21,
+          "name": "Nigel Oldroyd",
+          "licencia": "AM83979499",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351661
+        },
+        {
+          "pos": 22,
+          "name": "Darrell Parker",
+          "licencia": "AM83795440",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2351674
+        },
+        {
+          "pos": 23,
+          "name": "Kevin Eadie",
+          "licencia": "AM22133282",
+          "hcp": 16.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2351681
+        },
+        {
+          "pos": 24,
+          "name": "James Eadie",
+          "licencia": "AM22993312",
+          "hcp": 17.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2351682
+        },
+        {
+          "pos": 25,
+          "name": "Henry Andrew Bourne",
+          "licencia": "AM83898968",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2351670
+        },
+        {
+          "pos": null,
+          "name": "Kevin White",
+          "licencia": "AM24372711",
+          "hcp": 20.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2351668
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 26
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Allan Peirson",
+      "licencia": "AM83892479",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Robert Langley",
+      "licencia": "AM83351863",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Piero Repetto",
+      "licencia": "AM22342914",
+      "hcp": 22.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Brown Mark Oswald",
+      "licencia": "AM83983445",
+      "hcp": 16.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Enrique Garcia Vega",
+      "licencia": "AM83092687",
+      "hcp": 15.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Nigel Oldroyd",
+      "licencia": "AM83979499",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Christopher Goodwin",
+      "licencia": "AM83937252",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Simon Hebden",
+      "licencia": "AM83906605",
+      "hcp": 5.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Kevin White",
+      "licencia": "AM24372711",
+      "hcp": 20.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Henry Andrew Bourne",
+      "licencia": "AM83898968",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Gordon Millar",
+      "licencia": "AM83072078",
+      "hcp": 12.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Alistair Marshall",
+      "licencia": "AM83888581",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Darrell Parker",
+      "licencia": "AM83795440",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Ian Appleton",
+      "licencia": "AM83963703",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "BARRY WANLESS",
+      "licencia": "TAM0011223",
+      "hcp": 11.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Charles Holding",
+      "licencia": "AM83498362",
+      "hcp": 18.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Kevin Eadie",
+      "licencia": "AM22133282",
+      "hcp": 16.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "James Eadie",
+      "licencia": "AM22993312",
+      "hcp": 17.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Philip Farmer",
+      "licencia": "AM83932440",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Luis Bernal Iglesias",
+      "licencia": "AMI5215938",
+      "hcp": 7,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Jarmo Kuljunlahti",
+      "licencia": "AM83012594",
+      "hcp": 8.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Steve Barnes",
+      "licencia": "AM83371794",
+      "hcp": 10.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Michael Mccafferty",
+      "licencia": "AM83376217",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Astrid Ceelen",
+      "licencia": "AM83795441",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alison Marshall",
+      "licencia": "AM83915437",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Janet Cox",
+      "licencia": "AM83791391",
+      "hcp": 16.3,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 160404,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            130
+          ],
+          [
+            "Birdie",
+            13
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            174
+          ],
+          [
+            "Peor",
+            82
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 160405,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            24
+          ],
+          [
+            "2",
+            8
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            18
+          ],
+          [
+            "5",
+            21
+          ],
+          [
+            "6",
+            24
+          ],
+          [
+            "7",
+            22
+          ],
+          [
+            "8",
+            22
+          ],
+          [
+            "9",
+            10
+          ],
+          [
+            "10",
+            17
+          ],
+          [
+            "11",
+            18
+          ],
+          [
+            "12",
+            16
+          ],
+          [
+            "13",
+            12
+          ],
+          [
+            "14",
+            22
+          ],
+          [
+            "15",
+            22
+          ],
+          [
+            "16",
+            24
+          ],
+          [
+            "17",
+            7
+          ],
+          [
+            "18",
+            28
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 160406,
+        "datos": [
+          [
+            "Hoyo",
+            "ROBERT LANGLEY ",
+            "GORDON MILLAR ",
+            "LUIS BERNAL IGLESIAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -3,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -3,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -6,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -5,
+            -5,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -6,
+            -4,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -4,
+            -3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 160407,
+        "datos": [
+          [
+            "Hoyo",
+            "ROBERT LANGLEY ",
+            "GORDON MILLAR ",
+            "LUIS BERNAL IGLESIAS"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77080
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-12T12:10:02.205Z"
+}

@@ -1,0 +1,825 @@
+{
+  "tourId": 69141,
+  "url": "https://www.nextcaddy.com/tour/69141",
+  "scrapedAt": "2026-10-12T12:03:49.193Z",
+  "meta": {
+    "name": "POOL TORTUGAS",
+    "organizer": null,
+    "course": "Los Moriscos Club de Golf",
+    "courseCode": "AM67",
+    "dateStart": "2026-03-14",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-03-14",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Clasificacion Pool Tortugas",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Perez Ortiz",
+          "licencia": "AME4821428",
+          "hcp": 28.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2280371
+        },
+        {
+          "pos": 2,
+          "name": "Jesus Porres Ureña",
+          "licencia": "AM65111843",
+          "hcp": 13.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2280370
+        },
+        {
+          "pos": 3,
+          "name": "Fernando Urbano Alonso",
+          "licencia": "AM65263183",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2280367
+        },
+        {
+          "pos": 4,
+          "name": "Raul Rodriguez Artacho",
+          "licencia": "AM00612270",
+          "hcp": 14.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2280375
+        },
+        {
+          "pos": 5,
+          "name": "Jose Maria Perez-Victoria Moreno Barreda",
+          "licencia": "AM65601387",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2280376
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Javier Sierra Carrillo De Albornoz",
+          "licencia": "AM65604564",
+          "hcp": 17.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2280374
+        },
+        {
+          "pos": 7,
+          "name": "Miguel Jose Rojas Sierra",
+          "licencia": "AM65197170",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2280373
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Sierra Martinez",
+          "licencia": "CM00302062",
+          "hcp": 14.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2280366
+        },
+        {
+          "pos": 9,
+          "name": "Juan Antonio Jimenez Villafranca",
+          "licencia": "AM65922105",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2280377
+        },
+        {
+          "pos": 10,
+          "name": "Ignacio Perez-Victoria Moreno De Barreda",
+          "licencia": "AM65265509",
+          "hcp": 26.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2280368
+        },
+        {
+          "pos": 11,
+          "name": "Jorge Tamayo Gonzalez",
+          "licencia": "AM65903222",
+          "hcp": 16.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2280369
+        },
+        {
+          "pos": 12,
+          "name": "Jorge Tamayo Alba",
+          "licencia": "AM65942166",
+          "hcp": 5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2280372
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Clasificacion Pool Tortugas",
+      "jugadores": 12
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Manuel Sierra Martinez",
+      "licencia": "CM00302062",
+      "hcp": 14.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Urbano Alonso",
+      "licencia": "AM65263183",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Perez-Victoria Moreno De Barreda",
+      "licencia": "AM65265509",
+      "hcp": 26.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Jorge Tamayo Gonzalez",
+      "licencia": "AM65903222",
+      "hcp": 16.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Jesus Porres Ureña",
+      "licencia": "AM65111843",
+      "hcp": 13.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Ignacio Perez Ortiz",
+      "licencia": "AME4821428",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jorge Tamayo Alba",
+      "licencia": "AM65942166",
+      "hcp": 5,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Miguel Jose Rojas Sierra",
+      "licencia": "AM65197170",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Javier Sierra Carrillo De Albornoz",
+      "licencia": "AM65604564",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Raul Rodriguez Artacho",
+      "licencia": "AM00612270",
+      "hcp": 14.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Maria Perez-Victoria Moreno Barreda",
+      "licencia": "AM65601387",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Antonio Jimenez Villafranca",
+      "licencia": "AM65922105",
+      "hcp": 21.7,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:04",
+          "tee": 1,
+          "name": "Manuel Sierra Martinez",
+          "hcp": 14.2,
+          "ins": "2280366",
+          "jid": "73882",
+          "nivel": "M"
+        },
+        {
+          "time": "09:04",
+          "tee": 1,
+          "name": "Fernando Urbano Alonso",
+          "hcp": 15.5,
+          "ins": "2280367",
+          "jid": "73882",
+          "nivel": "S"
+        },
+        {
+          "time": "09:04",
+          "tee": 1,
+          "name": "Ignacio Perez-Victoria Moreno De Barreda",
+          "hcp": 26.5,
+          "ins": "2280368",
+          "jid": "73882",
+          "nivel": "M"
+        },
+        {
+          "time": "09:04",
+          "tee": 1,
+          "name": "Jorge Tamayo Gonzalez",
+          "hcp": 16.3,
+          "ins": "2280369",
+          "jid": "73882",
+          "nivel": "M"
+        },
+        {
+          "time": "09:12",
+          "tee": 1,
+          "name": "Jesus Porres Ureña",
+          "hcp": 13.1,
+          "ins": "2280370",
+          "jid": "73882",
+          "nivel": "M"
+        },
+        {
+          "time": "09:12",
+          "tee": 1,
+          "name": "Ignacio Perez Ortiz",
+          "hcp": 28.4,
+          "ins": "2280371",
+          "jid": "73882",
+          "nivel": "S"
+        },
+        {
+          "time": "09:12",
+          "tee": 1,
+          "name": "Jorge Tamayo Alba",
+          "hcp": 5,
+          "ins": "2280372",
+          "jid": "73882",
+          "nivel": "J"
+        },
+        {
+          "time": "09:12",
+          "tee": 1,
+          "name": "Miguel Jose Rojas Sierra",
+          "hcp": 19.6,
+          "ins": "2280373",
+          "jid": "73882",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Francisco Javier Sierra Carrillo De Albornoz",
+          "hcp": 17.6,
+          "ins": "2280374",
+          "jid": "73882",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Raul Rodriguez Artacho",
+          "hcp": 14.6,
+          "ins": "2280375",
+          "jid": "73882",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Jose Maria Perez-Victoria Moreno Barreda",
+          "hcp": 23.3,
+          "ins": "2280376",
+          "jid": "73882",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 1,
+          "name": "Juan Antonio Jimenez Villafranca",
+          "hcp": 21.7,
+          "ins": "2280377",
+          "jid": "73882",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 158200,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            33
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            74
+          ],
+          [
+            "Peor",
+            96
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 158201,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            24
+          ],
+          [
+            "2",
+            18
+          ],
+          [
+            "3",
+            21
+          ],
+          [
+            "4",
+            30
+          ],
+          [
+            "5",
+            8
+          ],
+          [
+            "6",
+            21
+          ],
+          [
+            "7",
+            16
+          ],
+          [
+            "8",
+            22
+          ],
+          [
+            "9",
+            17
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            15
+          ],
+          [
+            "12",
+            17
+          ],
+          [
+            "13",
+            14
+          ],
+          [
+            "14",
+            28
+          ],
+          [
+            "15",
+            22
+          ],
+          [
+            "16",
+            17
+          ],
+          [
+            "17",
+            7
+          ],
+          [
+            "18",
+            21
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 158202,
+        "datos": [
+          [
+            "Hoyo",
+            "IGNACIO PEREZ ORTIZ",
+            "JESUS PORRES UREÑA",
+            "FERNANDO   URBANO ALONSO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            3,
+            2,
+            4
+          ],
+          [
+            "Hoyo 3",
+            4,
+            1,
+            5
+          ],
+          [
+            "Hoyo 4",
+            4,
+            3,
+            7
+          ],
+          [
+            "Hoyo 5",
+            4,
+            3,
+            7
+          ],
+          [
+            "Hoyo 6",
+            4,
+            5,
+            8
+          ],
+          [
+            "Hoyo 7",
+            4,
+            4,
+            6
+          ],
+          [
+            "Hoyo 8",
+            4,
+            4,
+            7
+          ],
+          [
+            "Hoyo 9",
+            4,
+            5,
+            7
+          ],
+          [
+            "Hoyo 10",
+            2,
+            4,
+            6
+          ],
+          [
+            "Hoyo 11",
+            0,
+            4,
+            5
+          ],
+          [
+            "Hoyo 12",
+            2,
+            3,
+            5
+          ],
+          [
+            "Hoyo 13",
+            2,
+            4,
+            5
+          ],
+          [
+            "Hoyo 14",
+            2,
+            6,
+            7
+          ],
+          [
+            "Hoyo 15",
+            3,
+            6,
+            7
+          ],
+          [
+            "Hoyo 16",
+            2,
+            6,
+            7
+          ],
+          [
+            "Hoyo 17",
+            2,
+            6,
+            6
+          ],
+          [
+            "Hoyo 18",
+            4,
+            5,
+            6
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 158203,
+        "datos": [
+          [
+            "Hoyo",
+            "IGNACIO PEREZ ORTIZ",
+            "JESUS PORRES UREÑA",
+            "FERNANDO   URBANO ALONSO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            2,
+            1,
+            2
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            2,
+            1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            2,
+            -1,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73882
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Bourne, Henry Andrew",
+          "holeNumber": 11,
+          "createdAt": "19/09/25 14:45:18"
+        },
+        {
+          "playerName": "Hebden, Simon",
+          "holeNumber": 15,
+          "createdAt": "19/09/25 14:45:18"
+        },
+        {
+          "playerName": "Oldroyd, Nigel",
+          "holeNumber": 15,
+          "createdAt": "19/09/25 14:45:19"
+        },
+        {
+          "playerName": "Marshall, Alison",
+          "holeNumber": 3,
+          "createdAt": "19/09/25 14:45:20"
+        },
+        {
+          "playerName": "Marshall, Alison",
+          "holeNumber": 18,
+          "createdAt": "19/09/25 14:45:20"
+        },
+        {
+          "playerName": "Loven, Anja",
+          "holeNumber": 3,
+          "createdAt": "19/09/25 14:45:20"
+        },
+        {
+          "playerName": "Ceelen, Astrid",
+          "holeNumber": 2,
+          "createdAt": "19/09/25 14:45:21"
+        },
+        {
+          "playerName": "Ceelen, Astrid",
+          "holeNumber": 9,
+          "createdAt": "19/09/25 14:45:21"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

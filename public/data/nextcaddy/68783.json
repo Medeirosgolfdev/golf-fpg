@@ -1,0 +1,282 @@
+{
+  "tourId": 68783,
+  "url": "https://www.nextcaddy.com/tour/68783",
+  "scrapedAt": "2026-10-12T12:03:21.534Z",
+  "meta": {
+    "name": "Holandeses Viernes 27.2.26 Norte",
+    "organizer": null,
+    "course": "Real Club de Golf Guadalmina",
+    "courseCode": "AM51",
+    "dateStart": "2026-02-27",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-02-27",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Resultados Holandeses Viernes 27.02.2026",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Udo Oidtmann",
+          "licencia": "AM51614528",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2269436
+        },
+        {
+          "pos": 2,
+          "name": "Norman Patrick Tjon-Pian-Gi",
+          "licencia": "AM51934876",
+          "hcp": 13,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2269438
+        },
+        {
+          "pos": 3,
+          "name": "John Kremer",
+          "licencia": "AM51343506",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2269439
+        },
+        {
+          "pos": 4,
+          "name": "Tjeert Van Der Veen",
+          "licencia": "AM51359853",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2269442
+        },
+        {
+          "pos": 5,
+          "name": "Hans Wielaard",
+          "licencia": "AM51605011",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2269429
+        },
+        {
+          "pos": 6,
+          "name": "Menno Van Den Over",
+          "licencia": "AM51324359",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2269437
+        },
+        {
+          "pos": 7,
+          "name": "Arnold Sijnja",
+          "licencia": "AM51286935",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2269441
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Resultados Holandeses Viernes 27.02.2026",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Hans Wielaard",
+      "licencia": "AM51605011",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Udo Oidtmann",
+      "licencia": "AM51614528",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Norman Patrick Tjon-Pian-Gi",
+      "licencia": "AM51934876",
+      "hcp": 13,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "John Kremer",
+      "licencia": "AM51343506",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Arnold Sijnja",
+      "licencia": "AM51286935",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Tjeert Van Der Veen",
+      "licencia": "AM51359853",
+      "hcp": 27.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Menno Van Den Over",
+      "licencia": "AM51324359",
+      "hcp": 26.2,
+      "nivel": "S"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Hans Wielaard",
+          "hcp": 19.3,
+          "ins": "2269429",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Udo Oidtmann",
+          "hcp": 21.1,
+          "ins": "2269436",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Menno Van Den Over",
+          "hcp": 26.2,
+          "ins": "2269437",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Norman Patrick Tjon-Pian-Gi",
+          "hcp": 13,
+          "ins": "2269438",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "John Kremer",
+          "hcp": 15.3,
+          "ins": "2269439",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Arnold Sijnja",
+          "hcp": 26.5,
+          "ins": "2269441",
+          "jid": "73479",
+          "nivel": "S"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Tjeert Van Der Veen",
+          "hcp": 27.7,
+          "ins": "2269442",
+          "jid": "73479",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 73479
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}
