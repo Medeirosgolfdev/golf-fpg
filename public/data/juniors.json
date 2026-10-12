@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-12T13:30:39.133Z",
+  "generatedAt": "2026-10-12T15:07:10.644Z",
   "juniors": [
     {
       "id": "u391389",
@@ -334731,6 +334731,10 @@
         "_secondary": [
           {
             "sourceId": "egr",
+            "key": "theo altmannsberger|"
+          },
+          {
+            "sourceId": "egr",
             "key": "theo altmannsberger|DE"
           },
           {
@@ -334755,6 +334759,7 @@
         "uskids-20590",
         "uskids-20592",
         "uskids-20594",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -334777,6 +334782,7 @@
         "confidence": "strong",
         "evidence": [
           "uskids:580954",
+          "egr:theo altmannsberger|",
           "egr:theo altmannsberger|DE",
           "dgv:dgv-dgv490001688852"
         ],
@@ -401785,7 +401791,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golfclub Neuhof",
+      "club": "Neuhof",
       "sources": {
         "uskids": {
           "memberId": "602059",
@@ -401799,6 +401805,10 @@
           {
             "sourceId": "avtrophy",
             "key": "avtrophy-gb47560109"
+          },
+          {
+            "sourceId": "egr",
+            "key": "matteo landmann|"
           },
           {
             "sourceId": "egr",
@@ -401831,6 +401841,7 @@
         "uskids-20443",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "avtrophy-avtrophy_2026",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -401859,6 +401870,7 @@
           "uskids:602059",
           "gjgl:Matteo_Landmann",
           "avtrophy:avtrophy-gb47560109",
+          "egr:matteo landmann|",
           "egr:matteo landmann|DE",
           "dgv:dgv-dgv490001533958",
           "dob:2013-05-17"
@@ -598292,6 +598304,7 @@
       "tournamentIds": [
         "fpg-000-10920-20260128-all",
         "england-england_english-girls-open-stroke-play-2026",
+        "egr-egr12937",
         "egr-egr12388",
         "egr-egr11095",
         "egr-egr10959",
@@ -965721,7 +965734,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Hofhausen vor der Sonne",
+      "club": "Hof Hausen",
       "sources": {
         "ffgolf": {
           "lic": "E61634634",
@@ -965742,6 +965755,10 @@
           },
           {
             "sourceId": "egr",
+            "key": "thibault hess|"
+          },
+          {
+            "sourceId": "egr",
             "key": "thibault hess|DE"
           },
           {
@@ -965755,6 +965772,7 @@
         "gjgl-european-spring-junior-2026-spain",
         "gjgl-gjg-algarve-juniors-international-2025-portugal",
         "coc-coc_2023",
+        "egr-egr12938",
         "egr-egr12760",
         "egr-egr12038",
         "egr-egr11843",
@@ -965805,6 +965823,7 @@
           "ffgolf:E61634634",
           "gjgl:Thibault_Hess",
           "coc:coc-9747598815552094231",
+          "egr:thibault hess|",
           "egr:thibault hess|DE",
           "dgv:dgv-dgv490001365171"
         ],
@@ -1508393,6 +1508412,7 @@
       },
       "tournamentIds": [
         "england-england_english-girls-u16-u14-2025_div1",
+        "egr-egr12937",
         "egr-egr12388",
         "egr-egr12783",
         "egr-egr12759",
@@ -1539468,6 +1539488,7 @@
       },
       "tournamentIds": [
         "gjgl-bogogno-junior-games-2026-italy",
+        "egr-egr12937",
         "egr-egr12783",
         "egr-egr12759",
         "egr-egr11066",
@@ -1548847,6 +1548868,10 @@
           },
           {
             "sourceId": "egr",
+            "key": "philipp heider|"
+          },
+          {
+            "sourceId": "egr",
             "key": "philipp heider|DE"
           },
           {
@@ -1548861,6 +1548886,7 @@
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "avtrophy-avtrophy_2026",
+        "egr-egr12938",
         "egr-egr12858",
         "egr-egr12798",
         "egr-egr12781",
@@ -1548902,6 +1548928,7 @@
         "evidence": [
           "gjgl:Philipp_Heider",
           "avtrophy:avtrophy-gb47454038",
+          "egr:philipp heider|",
           "egr:philipp heider|DE",
           "dgv:dgv-dgv490001440611",
           "dob:2012-03-03"
@@ -1548923,12 +1548950,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "GC Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Emil_Andreiko"
+          },
+          {
+            "sourceId": "egr",
+            "key": "emil andreiko|"
           },
           {
             "sourceId": "egr",
@@ -1548948,6 +1548979,7 @@
         "gjgl-junior-golf-challenge-schwabisch-hall-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11068",
@@ -1548975,6 +1549007,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Emil_Andreiko",
+          "egr:emil andreiko|",
           "egr:emil andreiko|DE",
           "dgv:dgv-dgv490001836594"
         ],
@@ -1548994,12 +1549027,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golfclub Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Tanapon Ken_Kanithasen"
+          },
+          {
+            "sourceId": "egr",
+            "key": "tanapon ken kanithasen|"
           },
           {
             "sourceId": "egr",
@@ -1549015,6 +1549052,7 @@
         "gjgl-european-juniors-international-2025-germany",
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -1549039,6 +1549077,7 @@
         "confidence": "strong",
         "evidence": [
           "gjgl:Tanapon Ken_Kanithasen",
+          "egr:tanapon ken kanithasen|",
           "egr:tanapon ken kanithasen|DE",
           "dgv:dgv-dgv490001390450",
           "dob:2012-01-16"
@@ -1550213,12 +1550252,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Frankfurter Golfclub",
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Elias_Almeling"
+          },
+          {
+            "sourceId": "egr",
+            "key": "elias almeling|"
           },
           {
             "sourceId": "egr",
@@ -1550233,6 +1550276,7 @@
       "tournamentIds": [
         "gjgl-european-spring-junior-2026-spain",
         "gjgl-gjg-spanish-juniors-international-2026-spain",
+        "egr-egr12938",
         "egr-egr12280",
         "egr-egr12780",
         "egr-egr12760",
@@ -1550267,6 +1550311,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Elias_Almeling",
+          "egr:elias almeling|",
           "egr:elias almeling|DE",
           "dgv:dgv-dgv490001211877"
         ],
@@ -1550654,6 +1550699,7 @@
         "gjgl-european-spring-junior-2026-spain",
         "gjgl-gjg-spanish-juniors-international-2026-spain",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12937",
         "egr-egr12783",
         "egr-egr12759",
         "egr-egr11029",
@@ -1552408,6 +1552454,10 @@
           },
           {
             "sourceId": "egr",
+            "key": "robert polchen|"
+          },
+          {
+            "sourceId": "egr",
             "key": "robert polchen|DE"
           },
           {
@@ -1552423,6 +1552473,7 @@
         "gjgl-lake-constance-junior-games-2026-germany",
         "gjgl-lubker-junior-open-2025-denmark",
         "gjgl-magix-moments-junior-international-2025-germany",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11065",
@@ -1552446,6 +1552497,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Robert_Pölchen",
+          "egr:robert polchen|",
           "egr:robert polchen|DE",
           "dgv:dgv-dgv490001759259"
         ],
@@ -1556353,12 +1556405,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golfclub Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Tom_Brouwers"
+          },
+          {
+            "sourceId": "egr",
+            "key": "tom brouwers|"
           },
           {
             "sourceId": "egr",
@@ -1556373,6 +1556429,7 @@
       "tournamentIds": [
         "gjgl-gjg-french-junior-classics-2025-france",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr10422",
@@ -1556415,6 +1556472,7 @@
         "confidence": "strong",
         "evidence": [
           "gjgl:Tom_Brouwers",
+          "egr:tom brouwers|",
           "egr:tom brouwers|DE",
           "dgv:dgv-dgv490001448682",
           "dob:2010-02-08"
@@ -1556717,7 +1556775,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golf Club Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
@@ -1556727,6 +1556785,10 @@
           {
             "sourceId": "coc",
             "key": "coc-9747599626529161290"
+          },
+          {
+            "sourceId": "egr",
+            "key": "samuel seegert|"
           },
           {
             "sourceId": "egr",
@@ -1556746,6 +1556808,7 @@
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "coc-coc_2023",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11030",
@@ -1556789,6 +1556852,7 @@
         "evidence": [
           "gjgl:Samuel Johann_Seegert",
           "coc:coc-9747599626529161290",
+          "egr:samuel seegert|",
           "egr:samuel seegert|DE",
           "dgv:dgv-dgv490001216100"
         ],
@@ -1558577,12 +1558641,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Frankfurter Golfclub",
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Leonard_Bartsch"
+          },
+          {
+            "sourceId": "egr",
+            "key": "leonard bartsch|"
           },
           {
             "sourceId": "egr",
@@ -1558600,6 +1558668,7 @@
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr10462",
@@ -1558624,7 +1558693,6 @@
         "dgv-dgv_490002871320",
         "dgv-dgv_490002871328",
         "dgv-dgv_490003047174",
-        "wagr-271631",
         "wagr-256737",
         "wagr-275398"
       ],
@@ -1558640,6 +1558708,7 @@
         "confidence": "strong",
         "evidence": [
           "gjgl:Leonard_Bartsch",
+          "egr:leonard bartsch|",
           "egr:leonard bartsch|DE",
           "dgv:dgv-dgv490001471993",
           "dob:2011-10-04"
@@ -1563632,7 +1563701,7 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "GLC Kronberg im Taunus",
+      "club": "Kronberg",
       "sources": {
         "_secondary": [
           {
@@ -1563642,6 +1563711,10 @@
           {
             "sourceId": "avtrophy",
             "key": "avtrophy-gb47601908"
+          },
+          {
+            "sourceId": "egr",
+            "key": "rayk reinhardt|"
           },
           {
             "sourceId": "egr",
@@ -1563658,6 +1563731,7 @@
         "gjgl-gjg-spanish-junior-classics-2026-spain",
         "gjgl-tulip-golf-challenge-2025-netherlands",
         "avtrophy-avtrophy_2026",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -1563677,6 +1563751,7 @@
         "evidence": [
           "gjgl:Rayk_Reinhardt",
           "avtrophy:avtrophy-gb47601908",
+          "egr:rayk reinhardt|",
           "egr:rayk reinhardt|DE",
           "dgv:dgv-dgv490001491411",
           "dob:2012-03-18"
@@ -1566309,6 +1566384,7 @@
         "gjgl-gjg-mulheim-junior-open-2026-germany",
         "gjgl-golfing-knights-junior-open-2026-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
+        "egr-egr12937",
         "egr-egr12799",
         "egr-egr12782",
         "egr-egr11064",
@@ -1567440,12 +1567516,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "GC Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Moritz_Subtil"
+          },
+          {
+            "sourceId": "egr",
+            "key": "moritz subtil|"
           },
           {
             "sourceId": "egr",
@@ -1567462,6 +1567542,7 @@
         "gjgl-magix-moments-junior-international-2025-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -1567490,6 +1567571,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Moritz_Subtil",
+          "egr:moritz subtil|",
           "egr:moritz subtil|DE",
           "dgv:dgv-dgv490001505169"
         ],
@@ -1571175,12 +1571257,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Frankfurter Golf Club e.V.",
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Edward_Horn"
+          },
+          {
+            "sourceId": "egr",
+            "key": "edward horn|"
           },
           {
             "sourceId": "egr",
@@ -1571195,6 +1571281,7 @@
       "tournamentIds": [
         "gjgl-gjg-season-kickoff-2026-spain",
         "gjgl-gjg-spanish-junior-classics-2026-spain",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11065",
@@ -1571219,7 +1571306,6 @@
         "dgv-dgv_490002871320",
         "dgv-dgv_490002871328",
         "dgv-dgv_490003047174",
-        "wagr-271631",
         "wagr-259618",
         "wagr-258101"
       ],
@@ -1571235,6 +1571321,7 @@
         "confidence": "strong",
         "evidence": [
           "gjgl:Edward_Horn",
+          "egr:edward horn|",
           "egr:edward horn|DE",
           "dgv:dgv-dgv490001680502",
           "dob:2010-05-02"
@@ -1573168,6 +1573255,7 @@
       "tournamentIds": [
         "gjgl-golfing-knights-junior-open-2026-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
+        "egr-egr12937",
         "egr-egr12511",
         "egr-egr12799",
         "egr-egr12782",
@@ -1573291,6 +1573379,7 @@
       "tournamentIds": [
         "gjgl-golfing-knights-junior-open-2026-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
+        "egr-egr12937",
         "egr-egr12783",
         "egr-egr12759",
         "egr-egr11067",
@@ -1573384,6 +1573473,7 @@
         "gjgl-golfing-knights-junior-open-2026-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12937",
         "egr-egr12799",
         "egr-egr12782",
         "egr-egr12762",
@@ -1573438,6 +1573528,7 @@
       "tournamentIds": [
         "gjgl-golfing-knights-junior-open-2026-germany",
         "gjgl-mid-summer-juniors-international-2026-germany",
+        "egr-egr12937",
         "egr-egr12799",
         "egr-egr12782",
         "egr-egr11067",
@@ -1573477,19 +1573568,26 @@
           {
             "sourceId": "gjgl",
             "key": "Marie_Reinarz"
+          },
+          {
+            "sourceId": "egr",
+            "key": "marie reinarz|DE"
           }
         ]
       },
       "tournamentIds": [
-        "gjgl-golfing-knights-junior-open-2026-germany"
+        "gjgl-golfing-knights-junior-open-2026-germany",
+        "egr-egr12937"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "gjgl:Marie_Reinarz"
+          "gjgl:Marie_Reinarz",
+          "egr:marie reinarz|DE"
         ],
         "mergedFromSources": [
-          "gjgl"
+          "gjgl",
+          "egr"
         ]
       }
     },
@@ -1573563,12 +1573661,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Frankfurter Golfclub",
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Ferdinand_Glaessgen"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ferdinand glaessgen|"
           },
           {
             "sourceId": "egr",
@@ -1573586,6 +1573688,7 @@
         "gjgl-loretto-juniors-international-2026-scotland",
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11065",
@@ -1573611,6 +1573714,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Ferdinand_Glaessgen",
+          "egr:ferdinand glaessgen|",
           "egr:ferdinand glaessgen|DE",
           "dgv:dgv-dgv490001152691"
         ],
@@ -1573671,12 +1573775,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Aschaffenburg AGC",
+      "club": "Aschaffenburg",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Kaleb_Brede"
+          },
+          {
+            "sourceId": "egr",
+            "key": "kaleb brede|"
           },
           {
             "sourceId": "egr",
@@ -1573686,6 +1573794,7 @@
       },
       "tournamentIds": [
         "gjgl-golfing-knights-junior-open-2026-germany",
+        "egr-egr12938",
         "egr-egr12858",
         "egr-egr12780",
         "egr-egr12760",
@@ -1573697,6 +1573806,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Kaleb_Brede",
+          "egr:kaleb brede|",
           "egr:kaleb brede|DE"
         ],
         "mergedFromSources": [
@@ -1573775,15 +1573885,27 @@
       "aliases": [],
       "dob": null,
       "sex": "M",
-      "nationality": "KR",
-      "country": "KR",
+      "nationality": "DE",
+      "country": "DE",
       "region": null,
-      "club": "Hof Hausen vor der Sonne",
+      "club": "Hof Hausen",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Sangsoo_Kim"
+          },
+          {
+            "sourceId": "egr",
+            "key": "sangsoo kim|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "sangsoo kim|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001450679"
           }
         ]
       },
@@ -1573793,6 +1573915,7 @@
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11065",
@@ -1573807,12 +1573930,17 @@
         "dgv-dgv_490002813297"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "gjgl:Sangsoo_Kim"
+          "gjgl:Sangsoo_Kim",
+          "egr:sangsoo kim|",
+          "egr:sangsoo kim|DE",
+          "dgv:dgv-dgv490001450679"
         ],
         "mergedFromSources": [
-          "gjgl"
+          "gjgl",
+          "egr",
+          "dgv"
         ]
       }
     },
@@ -1578620,6 +1578748,7 @@
       },
       "tournamentIds": [
         "gjgl-lake-constance-junior-games-2026-germany",
+        "egr-egr12937",
         "egr-egr12783",
         "egr-egr12759",
         "egr-egr11066",
@@ -1582674,12 +1582803,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golf- und Landclub Kronberg",
+      "club": "Kronberg",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Constantin_Carbonare"
+          },
+          {
+            "sourceId": "egr",
+            "key": "constantin marco carbonare|"
           },
           {
             "sourceId": "egr",
@@ -1582690,6 +1582823,7 @@
       "tournamentIds": [
         "gjgl-mid-summer-juniors-international-2026-germany",
         "gjgl-migros-golfcard-gjg-international-2026-switzerland",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr11065",
         "egr-egr11094",
@@ -1582699,6 +1582833,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Constantin_Carbonare",
+          "egr:constantin marco carbonare|",
           "egr:constantin marco carbonare|DE"
         ],
         "mergedFromSources": [
@@ -1584676,6 +1584811,7 @@
       "tournamentIds": [
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr10462",
@@ -1584726,12 +1584862,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Golfclub Neuhof",
+      "club": "Neuhof",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Lauris_Eder"
+          },
+          {
+            "sourceId": "egr",
+            "key": "lauris eder|"
           },
           {
             "sourceId": "egr",
@@ -1584745,6 +1584885,7 @@
       },
       "tournamentIds": [
         "gjgl-rhein-main-junior-golf-open-2025-germany",
+        "egr-egr12938",
         "egr-egr12798",
         "egr-egr12781",
         "egr-egr12761",
@@ -1584769,6 +1584910,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Lauris_Eder",
+          "egr:lauris eder|",
           "egr:lauris eder|DE",
           "dgv:dgv-dgv490001589217"
         ],
@@ -1585361,6 +1585503,10 @@
           },
           {
             "sourceId": "egr",
+            "key": "jasper maximilian timmann|"
+          },
+          {
+            "sourceId": "egr",
             "key": "jasper maximilian timmann|DE"
           },
           {
@@ -1585372,6 +1585518,7 @@
       "tournamentIds": [
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "avtrophy-avtrophy_2026",
+        "egr-egr12938",
         "egr-egr12858",
         "egr-egr12798",
         "egr-egr12781",
@@ -1585392,6 +1585539,7 @@
         "evidence": [
           "gjgl:Jasper Maximilian_Timmann",
           "avtrophy:avtrophy-gb47562401",
+          "egr:jasper maximilian timmann|",
           "egr:jasper maximilian timmann|DE",
           "dgv:dgv-dgv490001526488",
           "dob:2013-02-05"
@@ -1585564,12 +1585712,16 @@
       "nationality": "DE",
       "country": "DE",
       "region": null,
-      "club": "Licher-Golf-Club",
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "gjgl",
             "key": "Oscar_Walter"
+          },
+          {
+            "sourceId": "egr",
+            "key": "oscar walter|"
           },
           {
             "sourceId": "egr",
@@ -1585584,6 +1585736,7 @@
       "tournamentIds": [
         "gjgl-rhein-main-junior-golf-open-2026-germany",
         "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12938",
         "egr-egr12780",
         "egr-egr12760",
         "egr-egr11065",
@@ -1585612,6 +1585765,7 @@
         "confidence": "probable",
         "evidence": [
           "gjgl:Oscar_Walter",
+          "egr:oscar walter|",
           "egr:oscar walter|DE",
           "dgv:dgv-dgv490001240154"
         ],
@@ -1585757,6 +1585911,7 @@
       },
       "tournamentIds": [
         "gjgl-rhein-main-junior-golf-open-2026-germany",
+        "egr-egr12937",
         "egr-egr12783",
         "egr-egr12759",
         "egr-egr11066",
@@ -1660299,34 +1660454,49 @@
     {
       "id": "xfdcfd92693",
       "canonicalName": "Ricardo E. Lillo",
-      "aliases": [],
+      "aliases": [
+        "Ricardo E Lillo"
+      ],
       "dob": null,
       "sex": "M",
       "nationality": "CL",
       "country": "CL",
       "region": null,
-      "club": null,
+      "club": "Frankfurt",
       "sources": {
         "_secondary": [
           {
             "sourceId": "coc",
             "key": "coc-11880482935926702551"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ricardo e. lillo|"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001535368"
           }
         ]
       },
       "tournamentIds": [
         "coc-coc_2025",
+        "egr-egr12938",
         "dgv-dgv_490002518530",
         "dgv-dgv_490002715692",
         "dgv-dgv_490002813294"
       ],
       "_match": {
-        "confidence": "strong",
+        "confidence": "probable",
         "evidence": [
-          "coc:coc-11880482935926702551"
+          "coc:coc-11880482935926702551",
+          "egr:ricardo e. lillo|",
+          "dgv:dgv-dgv490001535368"
         ],
         "mergedFromSources": [
-          "coc"
+          "coc",
+          "egr",
+          "dgv"
         ]
       }
     },
@@ -1669988,6 +1670158,7 @@
       },
       "tournamentIds": [
         "avtrophy-avtrophy_2026",
+        "egr-egr12937",
         "egr-egr12799",
         "egr-egr12782",
         "egr-egr12762",
@@ -1713577,6 +1713748,3477 @@
       }
     },
     {
+      "id": "x338ab86d96",
+      "canonicalName": "Moritz Küls",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "moritz kuls|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001160884"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11843",
+        "egr-egr11030",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr10613",
+        "egr-egr9603",
+        "egr-egr9599",
+        "egr-egr8346",
+        "egr-egr8270",
+        "egr-egr8106",
+        "egr-egr6395",
+        "egr-egr5954",
+        "egr-egr5442",
+        "egr-egr5290",
+        "egr-egr4793",
+        "egr-egr11660",
+        "egr-egr12820",
+        "egr-egr11672",
+        "egr-egr12887",
+        "egr-egr11654",
+        "egr-egr11566",
+        "egr-egr11538",
+        "egr-egr12874",
+        "dgv-dgv_490001895105",
+        "dgv-dgv_490001896699",
+        "dgv-dgv_490002019338",
+        "dgv-dgv_490002154941",
+        "dgv-dgv_490002154952",
+        "dgv-dgv_490002281734",
+        "dgv-dgv_490002394196",
+        "dgv-dgv_490002401237",
+        "dgv-dgv_490002401278",
+        "dgv-dgv_490002518528",
+        "dgv-dgv_490002617046",
+        "dgv-dgv_490002715695",
+        "dgv-dgv_490002813297",
+        "dgv-dgv_490002871305",
+        "dgv-dgv_490002871321",
+        "dgv-dgv_490002871324",
+        "dgv-dgv_490003047175"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": -3.5,
+          "source": "entry-list",
+          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:moritz kuls|DE",
+          "dgv:dgv-dgv490001160884"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x2a2b948b23",
+      "canonicalName": "Levi Schmidt",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "levi schmidt|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "levi schmidt|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001420375"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr10422",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr10968",
+        "egr-egr9603",
+        "egr-egr8670",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr12820",
+        "egr-egr11560",
+        "egr-egr12784",
+        "dgv-dgv_490002019340",
+        "dgv-dgv_490002518530",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002751940",
+        "dgv-dgv_490002813294",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490003047174"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": -1.6,
+          "source": "entry-list",
+          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:levi schmidt|",
+          "egr:levi schmidt|DE",
+          "dgv:dgv-dgv490001420375"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xf5ef4af014",
+      "canonicalName": "Luis Kuhfuss",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "luis kuhfuss|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "luis kuhfuss|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001741731"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr9596",
+        "egr-egr9595",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490002871328",
+        "dgv-dgv_490003047174"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 0.6,
+          "source": "entry-list",
+          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:luis kuhfuss|",
+          "egr:luis kuhfuss|DE",
+          "dgv:dgv-dgv490001741731"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x8f491b50f9",
+      "canonicalName": "Noah Bayer",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hanau",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "noah bayer|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "noah bayer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001870683"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr12820",
+        "egr-egr11566",
+        "egr-egr11560",
+        "egr-egr11538",
+        "egr-egr11546",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490002871328"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:noah bayer|",
+          "egr:noah bayer|DE",
+          "dgv:dgv-dgv490001870683"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x02b636561a",
+      "canonicalName": "Elias Rehling",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "elias rehling|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "elias rehling|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001115993"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr9600",
+        "egr-egr9599",
+        "egr-egr12820",
+        "egr-egr11566",
+        "egr-egr12856",
+        "egr-egr11538",
+        "egr-egr12717",
+        "egr-egr12784",
+        "dgv-dgv_490002518529",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002813297",
+        "dgv-dgv_490002871321"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:elias rehling|",
+          "egr:elias rehling|DE",
+          "dgv:dgv-dgv490001115993"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xee66f72417",
+      "canonicalName": "Luca Leitz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "luca leitz|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "luca leitz|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001371024"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr10958",
+        "egr-egr9994",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr11546",
+        "dgv-dgv_490002401234",
+        "dgv-dgv_490002401280",
+        "dgv-dgv_490002518530",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490003047174"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": -0.1,
+          "source": "entry-list",
+          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:luca leitz|",
+          "egr:luca leitz|DE",
+          "dgv:dgv-dgv490001371024"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xaf8e71bf92",
+      "canonicalName": "Nikola Durdov",
+      "aliases": [],
+      "dob": "2009-01-22",
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "nikola durdov|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "nikola durdov|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001650391"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12876",
+        "egr-egr12760",
+        "egr-egr11030",
+        "egr-egr11026",
+        "egr-egr11022",
+        "egr-egr9682",
+        "egr-egr9678",
+        "egr-egr8187",
+        "egr-egr11660",
+        "egr-egr12820",
+        "egr-egr11672",
+        "egr-egr12887",
+        "egr-egr12439",
+        "egr-egr11671",
+        "egr-egr11747",
+        "egr-egr12713",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002154955",
+        "dgv-dgv_490002401237",
+        "dgv-dgv_490002518528",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002871305",
+        "dgv-dgv_490002871324",
+        "dgv-dgv_490003047175"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": -2.8,
+          "source": "entry-list",
+          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:nikola durdov|",
+          "egr:nikola durdov|DE",
+          "dgv:dgv-dgv490001650391",
+          "dob:2009-01-22"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x0678f8e655",
+      "canonicalName": "Henri Fittkau",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Rosenhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "henri fittkau|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "henri fittkau|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12858",
+        "egr-egr12760",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:henri fittkau|",
+          "egr:henri fittkau|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xeed9225986",
+      "canonicalName": "Lasse Döhrer",
+      "aliases": [],
+      "dob": "2010-12-09",
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Idstein",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lasse dohrer|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "lasse dohrer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001459198"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr8810",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr12820",
+        "egr-egr11566",
+        "egr-egr11560",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002401234",
+        "dgv-dgv_490002401280",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490002871328"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:lasse dohrer|",
+          "egr:lasse dohrer|DE",
+          "dgv:dgv-dgv490001459198",
+          "dob:2010-12-09"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x40a8a8dba2",
+      "canonicalName": "Bobby Blankenburg",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kassel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "bobby blankenburg|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "bobby blankenburg|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11063"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:bobby blankenburg|",
+          "egr:bobby blankenburg|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xcaceeb1c12",
+      "canonicalName": "Leonard Laborde",
+      "aliases": [],
+      "dob": "2011-03-07",
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "leonard laborde|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "leonard laborde|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001343370"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11068",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr10968",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr11546",
+        "dgv-dgv_490002281617",
+        "dgv-dgv_490002518530",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002751940",
+        "dgv-dgv_490002813294"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:leonard laborde|",
+          "egr:leonard laborde|DE",
+          "dgv:dgv-dgv490001343370",
+          "dob:2011-03-07"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x23ae3adbf8",
+      "canonicalName": "Felix Baatz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "felix baatz|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "felix baatz|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001360737"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11068",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr9596",
+        "egr-egr9595",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002813294"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:felix baatz|",
+          "egr:felix baatz|DE",
+          "dgv:dgv-dgv490001360737"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xb431ee7578",
+      "canonicalName": "Lennart Döhrer",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Idstein",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lennart dohrer|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "lennart dohrer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001422444"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr9600",
+        "egr-egr9599",
+        "egr-egr11566",
+        "egr-egr11560",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002154955",
+        "dgv-dgv_490002401237",
+        "dgv-dgv_490002401278"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:lennart dohrer|",
+          "egr:lennart dohrer|DE",
+          "dgv:dgv-dgv490001422444"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xc5867afc72",
+      "canonicalName": "Mattis Bürkle",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "mattis burkle|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "mattis burkle|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001495373"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "egr-egr11068",
+        "egr-egr11063",
+        "egr-egr10968",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002871317",
+        "dgv-dgv_490002871329",
+        "dgv-dgv_490003047173"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 4.1,
+          "source": "entry-list",
+          "label": "DMM AK 14 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:mattis burkle|",
+          "egr:mattis burkle|DE",
+          "dgv:dgv-dgv490001495373"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x9f49b592be",
+      "canonicalName": "Max Marburger",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "max marburger|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "max marburger|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr11299",
+        "egr-egr11428",
+        "egr-egr12855"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:max marburger|",
+          "egr:max marburger|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x7d51fa25c9",
+      "canonicalName": "Ilyas Pekbas",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hanau",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "ilyas pekbas|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ilyas pekbas|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "egr-egr11068",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr10968"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:ilyas pekbas|",
+          "egr:ilyas pekbas|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xb7dfd19626",
+      "canonicalName": "Ben Krebs",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Aschaffenburg",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "ben krebs|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ben krebs|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001388841"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "dgv-dgv_490002871317"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:ben krebs|",
+          "egr:ben krebs|DE",
+          "dgv:dgv-dgv490001388841"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xb6ce7602f7",
+      "canonicalName": "Matteo Elias Dey",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Altenstadt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "matteo elias dey|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12726"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:matteo elias dey|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x90d8fc74fa",
+      "canonicalName": "Henry Ruge",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kassel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "henry ruge|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "henry ruge|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:henry ruge|",
+          "egr:henry ruge|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x4550e88c3f",
+      "canonicalName": "Konstantin Kühl",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kronberg",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "konstantin kuhl|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "konstantin kuhl|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12761"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:konstantin kuhl|",
+          "egr:konstantin kuhl|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x113b94283f",
+      "canonicalName": "Laurens Schäfer",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "laurens schafer|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "laurens schafer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001274567"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11068",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr10968",
+        "egr-egr9603",
+        "egr-egr9596",
+        "egr-egr9595",
+        "dgv-dgv_490002813294",
+        "dgv-dgv_490003047174"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 5.5,
+          "source": "entry-list",
+          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:laurens schafer|",
+          "egr:laurens schafer|DE",
+          "dgv:dgv-dgv490001274567"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xd34ce7bd3f",
+      "canonicalName": "Paul Zahradnik",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Lich",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "paul zahradnik|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "paul zahradnik|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11094"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:paul zahradnik|",
+          "egr:paul zahradnik|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x07e1c3e237",
+      "canonicalName": "Hugo Wegener",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "hugo wegener|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:hugo wegener|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x03a5764012",
+      "canonicalName": "Ole Jaron Kühn",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "ole jaron kuhn|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ole jaron kuhn|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001496363"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "egr-egr11068",
+        "dgv-dgv_490002871317"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:ole jaron kuhn|",
+          "egr:ole jaron kuhn|DE",
+          "dgv:dgv-dgv490001496363"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x7658cabf88",
+      "canonicalName": "Fiete Hogrebe",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "fiete hogrebe|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "fiete hogrebe|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11068",
+        "egr-egr11063"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:fiete hogrebe|",
+          "egr:fiete hogrebe|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x5c47e880a0",
+      "canonicalName": "Thomas Ronge",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Lich",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "thomas ronge|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "thomas ronge|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11094",
+        "egr-egr9603"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:thomas ronge|",
+          "egr:thomas ronge|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x45c634f3b4",
+      "canonicalName": "Louis Baldino",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "louis baldino|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "louis baldino|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001507628"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "egr-egr11068",
+        "egr-egr11093",
+        "egr-egr11063",
+        "egr-egr10968",
+        "egr-egr9596",
+        "egr-egr9595",
+        "dgv-dgv_490002715692",
+        "dgv-dgv_490002871317",
+        "dgv-dgv_490002871329"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:louis baldino|",
+          "egr:louis baldino|DE",
+          "dgv:dgv-dgv490001507628"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xef0a0de5b1",
+      "canonicalName": "Carlo Ruge-Bloem",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Kassel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "carlo ruge-bloem|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:carlo ruge-bloem|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xedc02d989c",
+      "canonicalName": "Maximilian Vitus Kleist",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "maximilian vitus kleist|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "maximilian vitus kleist|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001574361"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12781",
+        "egr-egr12761",
+        "egr-egr11068",
+        "egr-egr11063",
+        "egr-egr10968",
+        "dgv-dgv_490003047174"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:maximilian vitus kleist|",
+          "egr:maximilian vitus kleist|DE",
+          "dgv:dgv-dgv490001574361"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x34b43ade2b",
+      "canonicalName": "Leonard-Bruno Lange",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Bad Vilbel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "leonard-bruno lange|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "leonard-bruno lange|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr9595"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:leonard-bruno lange|",
+          "egr:leonard-bruno lange|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xabb0fa3036",
+      "canonicalName": "André Sorge",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Seligenstadt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "andre sorge|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "andre sorge|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12761"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:andre sorge|",
+          "egr:andre sorge|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x73eae4def4",
+      "canonicalName": "Philipp Schmelz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Bensheim",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "philipp schmelz|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11418"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:philipp schmelz|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xf1e3d32b67",
+      "canonicalName": "Maximilian Liakopoulos",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "maximilian liakopoulos|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "maximilian liakopoulos|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12761",
+        "egr-egr11063"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:maximilian liakopoulos|",
+          "egr:maximilian liakopoulos|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x2b8a6c991c",
+      "canonicalName": "David Nejedl",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "david nejedl|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "david nejedl|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001323137"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr11094",
+        "egr-egr9603",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr11560",
+        "egr-egr11538",
+        "egr-egr10112",
+        "egr-egr11554",
+        "dgv-dgv_490002518530",
+        "dgv-dgv_490003047174"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 8.4,
+          "source": "entry-list",
+          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:david nejedl|",
+          "egr:david nejedl|DE",
+          "dgv:dgv-dgv490001323137"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xd4d7f5033c",
+      "canonicalName": "Paul Quante",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kiawah",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "paul quante|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "paul quante|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11065",
+        "egr-egr11094",
+        "egr-egr10958",
+        "egr-egr9603",
+        "egr-egr9596",
+        "egr-egr9595",
+        "egr-egr12856"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:paul quante|",
+          "egr:paul quante|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xfc8c945129",
+      "canonicalName": "Ben-Lewis Pieper",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Main-Taunus",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "ben-lewis pieper|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "ben-lewis pieper|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12761"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:ben-lewis pieper|",
+          "egr:ben-lewis pieper|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x7025dbf923",
+      "canonicalName": "Leon Nathanael Dietz",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Winnerod",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "leon nathanael dietz|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "leon nathanael dietz|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11068",
+        "egr-egr11063",
+        "egr-egr10968"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:leon nathanael dietz|",
+          "egr:leon nathanael dietz|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x7aa5efba4d",
+      "canonicalName": "Erik Gieseke",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "erik gieseke|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "erik gieseke|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12798",
+        "egr-egr12761",
+        "egr-egr11068",
+        "egr-egr11063",
+        "egr-egr10968"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:erik gieseke|",
+          "egr:erik gieseke|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x880f441374",
+      "canonicalName": "Max (AB) Fischer",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Aschaffenburg",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "max (ab) fischer|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:max (ab) fischer|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x1805e9ffed",
+      "canonicalName": "Oscar Gasser",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Altenstadt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "oscar gasser|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "oscar gasser|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr11094"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:oscar gasser|",
+          "egr:oscar gasser|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x8535cfeadc",
+      "canonicalName": "Ben-Luca Sajas",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Oberaula",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "ben-luca sajas|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:ben-luca sajas|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xcff6bfc547",
+      "canonicalName": "Henry Hennessy",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Bad Vilbel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "henry hennessy|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:henry hennessy|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xe5108e7ab0",
+      "canonicalName": "Seung Yu Kim",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "seung yu kim|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "seung yu kim|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11068",
+        "egr-egr11063",
+        "egr-egr10968"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:seung yu kim|",
+          "egr:seung yu kim|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xbfda79bbce",
+      "canonicalName": "Maximilian Konstantin Krill",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hanau",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "maximilian konstantin krill|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "maximilian konstantin krill|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr12780",
+        "egr-egr12760",
+        "egr-egr11538"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:maximilian konstantin krill|",
+          "egr:maximilian konstantin krill|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xa5bb165a33",
+      "canonicalName": "Xiao Chuan Fan",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": null,
+      "country": null,
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "xiao chuan fan|"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:xiao chuan fan|"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xee0951ed72",
+      "canonicalName": "Tom Benesch",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Rosenhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "tom benesch|"
+          },
+          {
+            "sourceId": "egr",
+            "key": "tom benesch|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12938",
+        "egr-egr10958"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:tom benesch|",
+          "egr:tom benesch|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xa6194cd191",
+      "canonicalName": "Mila Frenz",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "mila frenz|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001729072"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9604",
+        "egr-egr9594",
+        "egr-egr9590",
+        "egr-egr12886",
+        "egr-egr11547",
+        "egr-egr12821",
+        "egr-egr11539",
+        "egr-egr11423",
+        "dgv-dgv_490002154942",
+        "dgv-dgv_490002154950",
+        "dgv-dgv_490002401231",
+        "dgv-dgv_490002401281",
+        "dgv-dgv_490002715693",
+        "dgv-dgv_490002751941",
+        "dgv-dgv_490002871319",
+        "dgv-dgv_490002871325",
+        "dgv-dgv_490003047172"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 0,
+          "source": "entry-list",
+          "label": "DMM AK 18 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:mila frenz|DE",
+          "dgv:dgv-dgv490001729072"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x790b49fb20",
+      "canonicalName": "Marie Rose Bethel",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "marie rose bethel|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001530754"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9604",
+        "dgv-dgv_490001895109",
+        "dgv-dgv_490002019343",
+        "dgv-dgv_490002154942",
+        "dgv-dgv_490002154950",
+        "dgv-dgv_490002281741",
+        "dgv-dgv_490002518533",
+        "dgv-dgv_490002813292"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:marie rose bethel|DE",
+          "dgv:dgv-dgv490001530754"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x1e38a53147",
+      "canonicalName": "Lilly May Wölflick",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lilly may wolflick|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001376685"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11334",
+        "egr-egr11067",
+        "egr-egr11096",
+        "egr-egr11064",
+        "egr-egr10967",
+        "egr-egr9604",
+        "egr-egr9593",
+        "egr-egr9592",
+        "egr-egr9591",
+        "egr-egr5946",
+        "egr-egr12821",
+        "egr-egr12534",
+        "egr-egr11539",
+        "egr-egr12675",
+        "dgv-dgv_490002019343",
+        "dgv-dgv_490002401232",
+        "dgv-dgv_490002401282",
+        "dgv-dgv_490002715591",
+        "dgv-dgv_490002751943",
+        "dgv-dgv_490002813088",
+        "dgv-dgv_490002871318",
+        "dgv-dgv_490002871326",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 2.9,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:lilly may wolflick|DE",
+          "dgv:dgv-dgv490001376685"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x3b3a09405f",
+      "canonicalName": "Sophia Leininger",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "sophia leininger|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001297363"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799",
+        "egr-egr12782",
+        "egr-egr12762",
+        "egr-egr11067",
+        "egr-egr11096",
+        "egr-egr11064",
+        "egr-egr10967",
+        "egr-egr9593",
+        "egr-egr9592",
+        "egr-egr9591",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002715591",
+        "dgv-dgv_490002751943",
+        "dgv-dgv_490002813088",
+        "dgv-dgv_490002871316",
+        "dgv-dgv_490002871327",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 2.5,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:sophia leininger|DE",
+          "dgv:dgv-dgv490001297363"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xc3cad1a352",
+      "canonicalName": "Leila Bechtold",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "leila bechtold|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001480745"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9604",
+        "egr-egr9592",
+        "egr-egr9591",
+        "egr-egr12821",
+        "dgv-dgv_490002154942",
+        "dgv-dgv_490002281741",
+        "dgv-dgv_490002401232",
+        "dgv-dgv_490002401282",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002715693",
+        "dgv-dgv_490002751941",
+        "dgv-dgv_490002813292",
+        "dgv-dgv_490002871318",
+        "dgv-dgv_490002871326",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 2.6,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:leila bechtold|DE",
+          "dgv:dgv-dgv490001480745"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x6d03d033a7",
+      "canonicalName": "Viktoria Hüllenkremer",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "viktoria hullenkremer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001265730"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9604",
+        "egr-egr9594",
+        "egr-egr8271",
+        "egr-egr8121",
+        "egr-egr5443",
+        "egr-egr12821",
+        "dgv-dgv_490002281745",
+        "dgv-dgv_490002518533",
+        "dgv-dgv_490002813293",
+        "dgv-dgv_490003047172"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 2.7,
+          "source": "entry-list",
+          "label": "DMM AK 18 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:viktoria hullenkremer|DE",
+          "dgv:dgv-dgv490001265730"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x856437b0de",
+      "canonicalName": "Seohee Yun",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "seohee yun|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001725038"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799",
+        "egr-egr12782",
+        "egr-egr12762",
+        "egr-egr11067",
+        "egr-egr11096",
+        "egr-egr11064",
+        "egr-egr10967",
+        "dgv-dgv_490002813088",
+        "dgv-dgv_490003047170"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 5.7,
+          "source": "entry-list",
+          "label": "DMM AK 14 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:seohee yun|DE",
+          "dgv:dgv-dgv490001725038"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xa4d4fc324b",
+      "canonicalName": "Lin Hammelehle",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hanau",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lin hammelehle|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:lin hammelehle|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x49533928ce",
+      "canonicalName": "Marie Koch",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "marie koch|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001752997"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12782",
+        "egr-egr12762",
+        "egr-egr10967",
+        "dgv-dgv_490002871316"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:marie koch|DE",
+          "dgv:dgv-dgv490001752997"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x534135bfdf",
+      "canonicalName": "Johanna Wörtche",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "johanna wortche|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001457209"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr10959",
+        "egr-egr9604",
+        "egr-egr12821"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:johanna wortche|DE",
+          "dgv:dgv-dgv490001457209"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xdac6d09b5e",
+      "canonicalName": "Franziska Wörtche",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "franziska wortche|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001457217"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11064",
+        "egr-egr10967",
+        "egr-egr9604",
+        "dgv-dgv_490002813088"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:franziska wortche|DE",
+          "dgv:dgv-dgv490001457217"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xdc4ccdacd7",
+      "canonicalName": "Jana Gieseke",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "jana gieseke|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001494995"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799",
+        "egr-egr12762",
+        "egr-egr11067",
+        "egr-egr11064",
+        "egr-egr9593",
+        "egr-egr9592",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002715591",
+        "dgv-dgv_490002871316",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 8.2,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:jana gieseke|DE",
+          "dgv:dgv-dgv490001494995"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x45561b509b",
+      "canonicalName": "Tomma Frederike Meyer",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hanau",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "tomma frederike meyer|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001526783"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12759",
+        "egr-egr11095",
+        "egr-egr9593",
+        "egr-egr9592",
+        "egr-egr9591",
+        "dgv-dgv_490002401232"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:tomma frederike meyer|DE",
+          "dgv:dgv-dgv490001526783"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xd7ab51fb00",
+      "canonicalName": "Julia Ehret",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "julia ehret|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12511",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9604",
+        "egr-egr9594",
+        "egr-egr9590",
+        "egr-egr11539",
+        "egr-egr11561"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:julia ehret|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xc82e2e26d4",
+      "canonicalName": "Franziska Jacob",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "franziska jacob|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001436176"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr12759",
+        "egr-egr11095",
+        "egr-egr9604",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002813292"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:franziska jacob|DE",
+          "dgv:dgv-dgv490001436176"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xe7790ae280",
+      "canonicalName": "Lotte Gramberg",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kronberg",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lotte gramberg|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12759",
+        "egr-egr11096",
+        "egr-egr11064"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:lotte gramberg|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x47d3a857ce",
+      "canonicalName": "Lily-Rose Afram",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lily-rose afram|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001807454"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799",
+        "egr-egr12782",
+        "egr-egr12762",
+        "dgv-dgv_490002813292",
+        "dgv-dgv_490002871316"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:lily-rose afram|DE",
+          "dgv:dgv-dgv490001807454"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xb5b1cd9307",
+      "canonicalName": "Carina Sonia Kocherscheidt",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "carina sonia kocherscheidt|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001424582"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12759",
+        "egr-egr11066",
+        "egr-egr11095",
+        "egr-egr10959",
+        "egr-egr9592",
+        "egr-egr9591",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490003047171"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:carina sonia kocherscheidt|DE",
+          "dgv:dgv-dgv490001424582"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xf43a17e947",
+      "canonicalName": "Seoah Im",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "seoah im|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001854261"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 13.9,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:seoah im|DE",
+          "dgv:dgv-dgv490001854261"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xdd0c88c804",
+      "canonicalName": "Stella Malmström",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Hof Hausen",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "stella malmstrom|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001491113"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr11066",
+        "egr-egr10959",
+        "dgv-dgv_490002518534",
+        "dgv-dgv_490002813292",
+        "dgv-dgv_490003047171"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 17.9,
+          "source": "entry-list",
+          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:stella malmstrom|DE",
+          "dgv:dgv-dgv490001491113"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x54cae0ce49",
+      "canonicalName": "Emma Sophie Schneider",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Darmstadt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "emma sophie schneider|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:emma sophie schneider|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x1705b1caa7",
+      "canonicalName": "Allisa Knobel",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Kassel",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "allisa knobel|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:allisa knobel|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x3cee6d7deb",
+      "canonicalName": "Alexandra Tigan",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Main-Taunus",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "alexandra tigan|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001771659"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799",
+        "egr-egr12782",
+        "egr-egr12762",
+        "dgv-dgv_490003047170"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": 11.7,
+          "source": "entry-list",
+          "label": "DMM AK 14 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:alexandra tigan|DE",
+          "dgv:dgv-dgv490001771659"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x6dd0c35acf",
+      "canonicalName": "Lotti Mei Wölflick",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lotti mei wolflick|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12799"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:lotti mei wolflick|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x5a41d79ab1",
+      "canonicalName": "Matilda Riediger",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Idstein",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "matilda riediger|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:matilda riediger|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x11c54406e9",
+      "canonicalName": "Lea Fuhrmann",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Wiesbaden",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "lea fuhrmann|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:lea fuhrmann|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xdc8eb0b855",
+      "canonicalName": "Emilia Hoch",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Rosenhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "emilia hoch|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:emilia hoch|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x1b3b3d222c",
+      "canonicalName": "Victoria Klug",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "victoria klug|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr11434"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:victoria klug|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xb5cec7ff0e",
+      "canonicalName": "Frizzi Marie Lang",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Neuhof",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "frizzi marie lang|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:frizzi marie lang|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x8724410384",
+      "canonicalName": "Florentine Rogenhofer",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "florentine rogenhofer|DE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12759",
+        "egr-egr11095",
+        "egr-egr9594",
+        "egr-egr9590"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "egr:florentine rogenhofer|DE"
+        ],
+        "mergedFromSources": [
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x36ed621430",
+      "canonicalName": "Vida Dias Lourenco",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Frankfurt",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "egr",
+            "key": "vida dias lourenco|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001429986"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "egr-egr12937",
+        "egr-egr12783",
+        "egr-egr11079",
+        "egr-egr11067",
+        "egr-egr11064",
+        "egr-egr10967",
+        "dgv-dgv_490002715591"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "egr:vida dias lourenco|DE",
+          "dgv:dgv-dgv490001429986"
+        ],
+        "mergedFromSources": [
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
       "id": "x79e6c625e1",
       "canonicalName": "Iwo Czerkawski",
       "aliases": [],
@@ -1715646,93 +1719288,6 @@
       }
     },
     {
-      "id": "x338ab86d96",
-      "canonicalName": "Moritz Küls",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "moritz kuls|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001160884"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11843",
-        "egr-egr11030",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr10613",
-        "egr-egr9603",
-        "egr-egr9599",
-        "egr-egr8346",
-        "egr-egr8270",
-        "egr-egr8106",
-        "egr-egr6395",
-        "egr-egr5954",
-        "egr-egr5442",
-        "egr-egr5290",
-        "egr-egr4793",
-        "egr-egr11660",
-        "egr-egr12820",
-        "egr-egr11672",
-        "egr-egr12887",
-        "egr-egr11654",
-        "egr-egr11566",
-        "egr-egr11538",
-        "egr-egr12874",
-        "dgv-dgv_490001895105",
-        "dgv-dgv_490001896699",
-        "dgv-dgv_490002019338",
-        "dgv-dgv_490002154941",
-        "dgv-dgv_490002154952",
-        "dgv-dgv_490002281734",
-        "dgv-dgv_490002394196",
-        "dgv-dgv_490002401237",
-        "dgv-dgv_490002401278",
-        "dgv-dgv_490002518528",
-        "dgv-dgv_490002617046",
-        "dgv-dgv_490002715695",
-        "dgv-dgv_490002813297",
-        "dgv-dgv_490002871305",
-        "dgv-dgv_490002871321",
-        "dgv-dgv_490002871324",
-        "dgv-dgv_490003047175"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": -3.5,
-          "source": "entry-list",
-          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:moritz kuls|DE",
-          "dgv:dgv-dgv490001160884"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x91a4f040e4",
       "canonicalName": "Luis Gudden",
       "aliases": [],
@@ -1716034,77 +1719589,6 @@
         "evidence": [
           "egr:jingchen feng|DE",
           "dgv:dgv-dgv490001207010"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xaf8e71bf92",
-      "canonicalName": "Nikola Durdov",
-      "aliases": [],
-      "dob": "2009-01-22",
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "nikola durdov|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001650391"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12876",
-        "egr-egr12760",
-        "egr-egr11030",
-        "egr-egr11026",
-        "egr-egr11022",
-        "egr-egr9682",
-        "egr-egr9678",
-        "egr-egr8187",
-        "egr-egr11660",
-        "egr-egr12820",
-        "egr-egr11672",
-        "egr-egr12887",
-        "egr-egr12439",
-        "egr-egr11671",
-        "egr-egr11747",
-        "egr-egr12713",
-        "dgv-dgv_490002154940",
-        "dgv-dgv_490002154955",
-        "dgv-dgv_490002401237",
-        "dgv-dgv_490002518528",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002751938",
-        "dgv-dgv_490002871305",
-        "dgv-dgv_490002871324",
-        "dgv-dgv_490003047175",
-        "wagr-271631"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": -2.8,
-          "source": "entry-list",
-          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:nikola durdov|DE",
-          "dgv:dgv-dgv490001650391",
-          "dob:2009-01-22"
         ],
         "mergedFromSources": [
           "egr",
@@ -1717973,72 +1721457,6 @@
       }
     },
     {
-      "id": "xa6194cd191",
-      "canonicalName": "Mila Frenz",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "mila frenz|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001729072"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9604",
-        "egr-egr9594",
-        "egr-egr9590",
-        "egr-egr12886",
-        "egr-egr11547",
-        "egr-egr12821",
-        "egr-egr11539",
-        "egr-egr11423",
-        "dgv-dgv_490002154942",
-        "dgv-dgv_490002154950",
-        "dgv-dgv_490002401231",
-        "dgv-dgv_490002401281",
-        "dgv-dgv_490002715693",
-        "dgv-dgv_490002751941",
-        "dgv-dgv_490002871319",
-        "dgv-dgv_490002871325",
-        "dgv-dgv_490003047172"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 0,
-          "source": "entry-list",
-          "label": "DMM AK 18 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:mila frenz|DE",
-          "dgv:dgv-dgv490001729072"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xb8355203c8",
       "canonicalName": "Elena Fricke",
       "aliases": [],
@@ -1718602,61 +1722020,6 @@
       }
     },
     {
-      "id": "xeed9225986",
-      "canonicalName": "Lasse Döhrer",
-      "aliases": [],
-      "dob": "2010-12-09",
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Idstein",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lasse dohrer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001459198"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr8810",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr12820",
-        "egr-egr11566",
-        "egr-egr11560",
-        "dgv-dgv_490002154940",
-        "dgv-dgv_490002401234",
-        "dgv-dgv_490002401280",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490002871328"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:lasse dohrer|DE",
-          "dgv:dgv-dgv490001459198",
-          "dob:2010-12-09"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xbff7a944a8",
       "canonicalName": "Marcus Kronast",
       "aliases": [],
@@ -1718891,62 +1722254,6 @@
       }
     },
     {
-      "id": "xf5ef4af014",
-      "canonicalName": "Luis Kuhfuss",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "luis kuhfuss|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001741731"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr9596",
-        "egr-egr9595",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490002871328",
-        "dgv-dgv_490003047174"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 0.6,
-          "source": "entry-list",
-          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:luis kuhfuss|DE",
-          "dgv:dgv-dgv490001741731"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x3b515c4fdd",
       "canonicalName": "Felix Hupp",
       "aliases": [],
@@ -1718988,55 +1722295,6 @@
         "evidence": [
           "egr:felix hupp|DE",
           "dgv:dgv-dgv490001305786"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x8f491b50f9",
-      "canonicalName": "Noah Bayer",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hanau",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "noah bayer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001870683"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr12820",
-        "egr-egr11566",
-        "egr-egr11560",
-        "egr-egr11538",
-        "egr-egr11546",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490002871328"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:noah bayer|DE",
-          "dgv:dgv-dgv490001870683"
         ],
         "mergedFromSources": [
           "egr",
@@ -1719868,60 +1723126,6 @@
       }
     },
     {
-      "id": "xc5867afc72",
-      "canonicalName": "Mattis Bürkle",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "mattis burkle|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001495373"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "egr-egr11068",
-        "egr-egr11063",
-        "egr-egr10968",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002871317",
-        "dgv-dgv_490002871329",
-        "dgv-dgv_490003047173"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 4.1,
-          "source": "entry-list",
-          "label": "DMM AK 14 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:mattis burkle|DE",
-          "dgv:dgv-dgv490001495373"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x26fa236efc",
       "canonicalName": "Qianbin Zhu",
       "aliases": [],
@@ -1720227,54 +1723431,6 @@
           "egr:louis-ferdinand schultz|DE",
           "egr:louis ferdinand schultz|DE",
           "dgv:dgv-dgv490001540257"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x45c634f3b4",
-      "canonicalName": "Louis Baldino",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "louis baldino|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001507628"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "egr-egr11068",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr10968",
-        "egr-egr9596",
-        "egr-egr9595",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002871317",
-        "dgv-dgv_490002871329"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:louis baldino|DE",
-          "dgv:dgv-dgv490001507628"
         ],
         "mergedFromSources": [
           "egr",
@@ -1721225,139 +1724381,6 @@
       }
     },
     {
-      "id": "x1e38a53147",
-      "canonicalName": "Lilly May Wölflick",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lilly may wolflick|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001376685"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11334",
-        "egr-egr11067",
-        "egr-egr11096",
-        "egr-egr11064",
-        "egr-egr10967",
-        "egr-egr9604",
-        "egr-egr9593",
-        "egr-egr9592",
-        "egr-egr9591",
-        "egr-egr5946",
-        "egr-egr12821",
-        "egr-egr12534",
-        "egr-egr11539",
-        "egr-egr12675",
-        "dgv-dgv_490002019343",
-        "dgv-dgv_490002401232",
-        "dgv-dgv_490002401282",
-        "dgv-dgv_490002715591",
-        "dgv-dgv_490002751943",
-        "dgv-dgv_490002813088",
-        "dgv-dgv_490002871318",
-        "dgv-dgv_490002871326",
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 2.9,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:lilly may wolflick|DE",
-          "dgv:dgv-dgv490001376685"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xc3cad1a352",
-      "canonicalName": "Leila Bechtold",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "leila bechtold|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001480745"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9604",
-        "egr-egr9592",
-        "egr-egr9591",
-        "egr-egr12821",
-        "dgv-dgv_490002154942",
-        "dgv-dgv_490002281741",
-        "dgv-dgv_490002401232",
-        "dgv-dgv_490002401282",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490002715693",
-        "dgv-dgv_490002751941",
-        "dgv-dgv_490002813292",
-        "dgv-dgv_490002871318",
-        "dgv-dgv_490002871326",
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 2.6,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:leila bechtold|DE",
-          "dgv:dgv-dgv490001480745"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x5e1e11e44d",
       "canonicalName": "Sophie Günther",
       "aliases": [],
@@ -1721836,67 +1724859,6 @@
         "evidence": [
           "egr:philippa el husseini|DE",
           "dgv:dgv-dgv490001092658"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x3b3a09405f",
-      "canonicalName": "Sophia Leininger",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "sophia leininger|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001297363"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799",
-        "egr-egr12782",
-        "egr-egr12762",
-        "egr-egr11067",
-        "egr-egr11096",
-        "egr-egr11064",
-        "egr-egr10967",
-        "egr-egr9593",
-        "egr-egr9592",
-        "egr-egr9591",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490002715591",
-        "dgv-dgv_490002751943",
-        "dgv-dgv_490002813088",
-        "dgv-dgv_490002871316",
-        "dgv-dgv_490002871327",
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 2.5,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:sophia leininger|DE",
-          "dgv:dgv-dgv490001297363"
         ],
         "mergedFromSources": [
           "egr",
@@ -1732661,41 +1735623,6 @@
       }
     },
     {
-      "id": "x0678f8e655",
-      "canonicalName": "Henri Fittkau",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Rosenhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "henri fittkau|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12858",
-        "egr-egr12760",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:henri fittkau|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x85f57d5c30",
       "canonicalName": "Felix Körner",
       "aliases": [],
@@ -1737005,46 +1739932,6 @@
       }
     },
     {
-      "id": "xb7dfd19626",
-      "canonicalName": "Ben Krebs",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Aschaffenburg",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "ben krebs|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001388841"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "dgv-dgv_490002871317"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:ben krebs|DE",
-          "dgv:dgv-dgv490001388841"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xc07b0315bb",
       "canonicalName": "Ambros Armsen",
       "aliases": [
@@ -1738189,47 +1741076,6 @@
       }
     },
     {
-      "id": "x03a5764012",
-      "canonicalName": "Ole Jaron Kühn",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "ole jaron kuhn|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001496363"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "egr-egr11068",
-        "dgv-dgv_490002871317"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:ole jaron kuhn|DE",
-          "dgv:dgv-dgv490001496363"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x114175f39c",
       "canonicalName": "Ludwig Koch",
       "aliases": [],
@@ -1738493,70 +1741339,6 @@
         "evidence": [
           "egr:georg nordheider|DE",
           "dgv:dgv-dgv490001527068"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x2a2b948b23",
-      "canonicalName": "Levi Schmidt",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "levi schmidt|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001420375"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr10422",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr10968",
-        "egr-egr9603",
-        "egr-egr8670",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr12820",
-        "egr-egr11560",
-        "egr-egr12784",
-        "dgv-dgv_490002019340",
-        "dgv-dgv_490002518530",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002751940",
-        "dgv-dgv_490002813294",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490003047174"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": -1.6,
-          "source": "entry-list",
-          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:levi schmidt|DE",
-          "dgv:dgv-dgv490001420375"
         ],
         "mergedFromSources": [
           "egr",
@@ -1739236,65 +1742018,6 @@
           "egr:levi berthold brecht|DE",
           "dgv:dgv-dgv490001270872",
           "dob:2010-09-24"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xee66f72417",
-      "canonicalName": "Luca Leitz",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "luca leitz|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001371024"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr10958",
-        "egr-egr9994",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr11546",
-        "dgv-dgv_490002401234",
-        "dgv-dgv_490002401280",
-        "dgv-dgv_490002518530",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002751938",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490003047174"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": -0.1,
-          "source": "entry-list",
-          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:luca leitz|DE",
-          "dgv:dgv-dgv490001371024"
         ],
         "mergedFromSources": [
           "egr",
@@ -1740607,61 +1743330,6 @@
       }
     },
     {
-      "id": "x02b636561a",
-      "canonicalName": "Elias Rehling",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "elias rehling|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001115993"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr9600",
-        "egr-egr9599",
-        "egr-egr12820",
-        "egr-egr11566",
-        "egr-egr12856",
-        "egr-egr11538",
-        "egr-egr12717",
-        "egr-egr12784",
-        "dgv-dgv_490002518529",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002751938",
-        "dgv-dgv_490002813297",
-        "dgv-dgv_490002871321"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:elias rehling|DE",
-          "dgv:dgv-dgv490001115993"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xe7f218a439",
       "canonicalName": "William Pearman",
       "aliases": [],
@@ -1741773,60 +1744441,6 @@
       }
     },
     {
-      "id": "xdc4ccdacd7",
-      "canonicalName": "Jana Gieseke",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "jana gieseke|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001494995"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799",
-        "egr-egr12762",
-        "egr-egr11067",
-        "egr-egr11064",
-        "egr-egr9593",
-        "egr-egr9592",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490002715591",
-        "dgv-dgv_490002871316",
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 8.2,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:jana gieseke|DE",
-          "dgv:dgv-dgv490001494995"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x41bb3f447f",
       "canonicalName": "Frida Herrmann",
       "aliases": [],
@@ -1741948,47 +1744562,6 @@
       }
     },
     {
-      "id": "x47d3a857ce",
-      "canonicalName": "Lily-Rose Afram",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lily-rose afram|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001807454"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799",
-        "egr-egr12782",
-        "egr-egr12762",
-        "dgv-dgv_490002813292",
-        "dgv-dgv_490002871316"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:lily-rose afram|DE",
-          "dgv:dgv-dgv490001807454"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x8439e26896",
       "canonicalName": "Melissa Paulina Ohm",
       "aliases": [],
@@ -1742029,46 +1744602,6 @@
         "evidence": [
           "egr:melissa paulina ohm|DE",
           "dgv:dgv-dgv490001808062"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x49533928ce",
-      "canonicalName": "Marie Koch",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "marie koch|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001752997"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12782",
-        "egr-egr12762",
-        "egr-egr10967",
-        "dgv-dgv_490002871316"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:marie koch|DE",
-          "dgv:dgv-dgv490001752997"
         ],
         "mergedFromSources": [
           "egr",
@@ -1748342,47 +1750875,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:ino oberascher|AT"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xd7ab51fb00",
-      "canonicalName": "Julia Ehret",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "julia ehret|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12511",
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9604",
-        "egr-egr9594",
-        "egr-egr9590",
-        "egr-egr11539",
-        "egr-egr11561"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:julia ehret|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1806816,121 +1809308,6 @@
       }
     },
     {
-      "id": "xedc02d989c",
-      "canonicalName": "Maximilian Vitus Kleist",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "maximilian vitus kleist|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001574361"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "egr-egr11068",
-        "egr-egr11063",
-        "egr-egr10968",
-        "dgv-dgv_490003047174"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:maximilian vitus kleist|DE",
-          "dgv:dgv-dgv490001574361"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x7d51fa25c9",
-      "canonicalName": "Ilyas Pekbas",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hanau",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "ilyas pekbas|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12781",
-        "egr-egr12761",
-        "egr-egr11068",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr10968"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:ilyas pekbas|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x7aa5efba4d",
-      "canonicalName": "Erik Gieseke",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "erik gieseke|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12798",
-        "egr-egr12761",
-        "egr-egr11068",
-        "egr-egr11063",
-        "egr-egr10968"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:erik gieseke|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x2286b5e95c",
       "canonicalName": "Selim Pekbas",
       "aliases": [],
@@ -1807217,59 +1809594,6 @@
       }
     },
     {
-      "id": "x856437b0de",
-      "canonicalName": "Seohee Yun",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "seohee yun|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001725038"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799",
-        "egr-egr12782",
-        "egr-egr12762",
-        "egr-egr11067",
-        "egr-egr11096",
-        "egr-egr11064",
-        "egr-egr10967",
-        "dgv-dgv_490002813088",
-        "dgv-dgv_490003047170"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 5.7,
-          "source": "entry-list",
-          "label": "DMM AK 14 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:seohee yun|DE",
-          "dgv:dgv-dgv490001725038"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x206f856d71",
       "canonicalName": "Elisabeth Wörtche",
       "aliases": [],
@@ -1807298,54 +1809622,6 @@
         ],
         "mergedFromSources": [
           "egr"
-        ]
-      }
-    },
-    {
-      "id": "x3cee6d7deb",
-      "canonicalName": "Alexandra Tigan",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Main-Taunus",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "alexandra tigan|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001771659"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799",
-        "egr-egr12782",
-        "egr-egr12762",
-        "dgv-dgv_490003047170"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 11.7,
-          "source": "entry-list",
-          "label": "DMM AK 14 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:alexandra tigan|DE",
-          "dgv:dgv-dgv490001771659"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
         ]
       }
     },
@@ -1807407,37 +1809683,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:luisa krug|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x6dd0c35acf",
-      "canonicalName": "Lotti Mei Wölflick",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lotti mei wolflick|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12799"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:lotti mei wolflick|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1815034,56 +1817279,6 @@
       }
     },
     {
-      "id": "xb431ee7578",
-      "canonicalName": "Lennart Döhrer",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Idstein",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lennart dohrer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001422444"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr9600",
-        "egr-egr9599",
-        "egr-egr11566",
-        "egr-egr11560",
-        "dgv-dgv_490002154940",
-        "dgv-dgv_490002154955",
-        "dgv-dgv_490002401237",
-        "dgv-dgv_490002401278"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:lennart dohrer|DE",
-          "dgv:dgv-dgv490001422444"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xa9cdaf22ad",
       "canonicalName": "Ricardo Lillo",
       "aliases": [],
@@ -1815117,155 +1817312,6 @@
         ],
         "mergedFromSources": [
           "egr"
-        ]
-      }
-    },
-    {
-      "id": "xcaceeb1c12",
-      "canonicalName": "Leonard Laborde",
-      "aliases": [],
-      "dob": "2011-03-07",
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "leonard laborde|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001343370"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11068",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr10968",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr11546",
-        "dgv-dgv_490002281617",
-        "dgv-dgv_490002518530",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002751940",
-        "dgv-dgv_490002813294"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:leonard laborde|DE",
-          "dgv:dgv-dgv490001343370",
-          "dob:2011-03-07"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x75c0f5053f",
-      "canonicalName": "Sangsoo Kim",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "sangsoo kim|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001450679"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-golfing-knights-junior-open-2026-germany",
-        "gjgl-magix-moments-junior-international-2025-germany",
-        "gjgl-mid-summer-juniors-international-2026-germany",
-        "gjgl-rhein-main-junior-golf-open-2025-germany",
-        "gjgl-rhein-main-junior-golf-open-2026-germany",
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr9600",
-        "egr-egr11566",
-        "egr-egr11560",
-        "egr-egr11538",
-        "dgv-dgv_490002518529",
-        "dgv-dgv_490002813297"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:sangsoo kim|DE",
-          "dgv:dgv-dgv490001450679"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x23ae3adbf8",
-      "canonicalName": "Felix Baatz",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "felix baatz|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001360737"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11068",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr9596",
-        "egr-egr9595",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002813294"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:felix baatz|DE",
-          "dgv:dgv-dgv490001360737"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
         ]
       }
     },
@@ -1815347,95 +1817393,6 @@
         "evidence": [
           "egr:david notheis|DE",
           "dgv:dgv-dgv490001491313"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x7658cabf88",
-      "canonicalName": "Fiete Hogrebe",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "fiete hogrebe|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11068",
-        "egr-egr11063"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:fiete hogrebe|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x2b8a6c991c",
-      "canonicalName": "David Nejedl",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "david nejedl|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001323137"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr11094",
-        "egr-egr9603",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr11560",
-        "egr-egr11538",
-        "egr-egr10112",
-        "egr-egr11554",
-        "dgv-dgv_490002518530",
-        "dgv-dgv_490003047174"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 8.4,
-          "source": "entry-list",
-          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:david nejedl|DE",
-          "dgv:dgv-dgv490001323137"
         ],
         "mergedFromSources": [
           "egr",
@@ -1815570,40 +1817527,6 @@
       }
     },
     {
-      "id": "x9f49b592be",
-      "canonicalName": "Max Marburger",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "max marburger|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr11299",
-        "egr-egr11428",
-        "egr-egr12855"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:max marburger|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x48f341ca5d",
       "canonicalName": "Manuel Krames",
       "aliases": [],
@@ -1815643,111 +1817566,6 @@
         "mergedFromSources": [
           "egr",
           "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xe5108e7ab0",
-      "canonicalName": "Seung Yu Kim",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "seung yu kim|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11068",
-        "egr-egr11063",
-        "egr-egr10968"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:seung yu kim|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x90d8fc74fa",
-      "canonicalName": "Henry Ruge",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Kassel",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "henry ruge|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:henry ruge|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xd4d7f5033c",
-      "canonicalName": "Paul Quante",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Kiawah",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "paul quante|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11065",
-        "egr-egr11094",
-        "egr-egr10958",
-        "egr-egr9603",
-        "egr-egr9596",
-        "egr-egr9595",
-        "egr-egr12856"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:paul quante|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
         ]
       }
     },
@@ -1815829,61 +1817647,6 @@
       }
     },
     {
-      "id": "x113b94283f",
-      "canonicalName": "Laurens Schäfer",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "laurens schafer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001274567"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11068",
-        "egr-egr11093",
-        "egr-egr11063",
-        "egr-egr10968",
-        "egr-egr9603",
-        "egr-egr9596",
-        "egr-egr9595",
-        "dgv-dgv_490002813294",
-        "dgv-dgv_490003047174"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 5.5,
-          "source": "entry-list",
-          "label": "DMM AK 16 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:laurens schafer|DE",
-          "dgv:dgv-dgv490001274567"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "xe4ae9641d8",
       "canonicalName": "Jan Engler",
       "aliases": [],
@@ -1815912,39 +1817675,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:jan engler|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xbfda79bbce",
-      "canonicalName": "Maximilian Konstantin Krill",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hanau",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "maximilian konstantin krill|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12780",
-        "egr-egr12760",
-        "egr-egr11538"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:maximilian konstantin krill|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1816024,113 +1817754,6 @@
         "evidence": [
           "egr:samuel wilhelm|DE",
           "dgv:dgv-dgv490001671238"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x6d03d033a7",
-      "canonicalName": "Viktoria Hüllenkremer",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "viktoria hullenkremer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001265730"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9604",
-        "egr-egr9594",
-        "egr-egr8271",
-        "egr-egr8121",
-        "egr-egr5443",
-        "egr-egr12821",
-        "dgv-dgv_490002281745",
-        "dgv-dgv_490002518533",
-        "dgv-dgv_490002813293",
-        "dgv-dgv_490003047172"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 2.7,
-          "source": "entry-list",
-          "label": "DMM AK 18 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:viktoria hullenkremer|DE",
-          "dgv:dgv-dgv490001265730"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x790b49fb20",
-      "canonicalName": "Marie Rose Bethel",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "marie rose bethel|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001530754"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9604",
-        "dgv-dgv_490001895109",
-        "dgv-dgv_490002019343",
-        "dgv-dgv_490002154942",
-        "dgv-dgv_490002154950",
-        "dgv-dgv_490002281741",
-        "dgv-dgv_490002518533",
-        "dgv-dgv_490002813292"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:marie rose bethel|DE",
-          "dgv:dgv-dgv490001530754"
         ],
         "mergedFromSources": [
           "egr",
@@ -1816287,48 +1817910,6 @@
       }
     },
     {
-      "id": "x36ed621430",
-      "canonicalName": "Vida Dias Lourenco",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "vida dias lourenco|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001429986"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr11079",
-        "egr-egr11067",
-        "egr-egr11064",
-        "egr-egr10967",
-        "dgv-dgv_490002715591"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:vida dias lourenco|DE",
-          "dgv:dgv-dgv490001429986"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x41a4285f79",
       "canonicalName": "Helena Kudlich",
       "aliases": [],
@@ -1816369,90 +1817950,6 @@
       }
     },
     {
-      "id": "x534135bfdf",
-      "canonicalName": "Johanna Wörtche",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "johanna wortche|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001457209"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr10959",
-        "egr-egr9604",
-        "egr-egr12821"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:johanna wortche|DE",
-          "dgv:dgv-dgv490001457209"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xdac6d09b5e",
-      "canonicalName": "Franziska Wörtche",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "franziska wortche|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001457217"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11064",
-        "egr-egr10967",
-        "egr-egr9604",
-        "dgv-dgv_490002813088"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:franziska wortche|DE",
-          "dgv:dgv-dgv490001457217"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x3982d410fc",
       "canonicalName": "Maria Rodionova",
       "aliases": [],
@@ -1816483,48 +1817980,6 @@
         ],
         "mergedFromSources": [
           "egr"
-        ]
-      }
-    },
-    {
-      "id": "xc82e2e26d4",
-      "canonicalName": "Franziska Jacob",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Neuhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "franziska jacob|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001436176"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783",
-        "egr-egr12759",
-        "egr-egr11095",
-        "egr-egr9604",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490002813292"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:franziska jacob|DE",
-          "dgv:dgv-dgv490001436176"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
         ]
       }
     },
@@ -1816606,37 +1818061,6 @@
         "mergedFromSources": [
           "egr",
           "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x54cae0ce49",
-      "canonicalName": "Emma Sophie Schneider",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Darmstadt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "emma sophie schneider|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12783"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:emma sophie schneider|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
         ]
       }
     },
@@ -1830460,48 +1831884,6 @@
       }
     },
     {
-      "id": "x45561b509b",
-      "canonicalName": "Tomma Frederike Meyer",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hanau",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "tomma frederike meyer|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001526783"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12759",
-        "egr-egr11095",
-        "egr-egr9593",
-        "egr-egr9592",
-        "egr-egr9591",
-        "dgv-dgv_490002401232"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:tomma frederike meyer|DE",
-          "dgv:dgv-dgv490001526783"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x0c7b32dc10",
       "canonicalName": "Xin Yuan Gao",
       "aliases": [],
@@ -1830578,117 +1831960,6 @@
         "evidence": [
           "egr:liya kim|DE",
           "dgv:dgv-dgv490001459798"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x8724410384",
-      "canonicalName": "Florentine Rogenhofer",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "florentine rogenhofer|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12759",
-        "egr-egr11095",
-        "egr-egr9594",
-        "egr-egr9590"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:florentine rogenhofer|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xe7790ae280",
-      "canonicalName": "Lotte Gramberg",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Kronberg",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "lotte gramberg|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12759",
-        "egr-egr11096",
-        "egr-egr11064"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:lotte gramberg|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xb5b1cd9307",
-      "canonicalName": "Carina Sonia Kocherscheidt",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "carina sonia kocherscheidt|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001424582"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12759",
-        "egr-egr11066",
-        "egr-egr11095",
-        "egr-egr10959",
-        "egr-egr9592",
-        "egr-egr9591",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490003047171"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:carina sonia kocherscheidt|DE",
-          "dgv:dgv-dgv490001424582"
         ],
         "mergedFromSources": [
           "egr",
@@ -1830794,131 +1832065,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:moritz lachnit|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xabb0fa3036",
-      "canonicalName": "André Sorge",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Seligenstadt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "andre sorge|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12761"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:andre sorge|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xfc8c945129",
-      "canonicalName": "Ben-Lewis Pieper",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Main-Taunus",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "ben-lewis pieper|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12761"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:ben-lewis pieper|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x4550e88c3f",
-      "canonicalName": "Konstantin Kühl",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Kronberg",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "konstantin kuhl|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12761"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:konstantin kuhl|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xf1e3d32b67",
-      "canonicalName": "Maximilian Liakopoulos",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "maximilian liakopoulos|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12761",
-        "egr-egr11063"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:maximilian liakopoulos|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1892496,55 +1893642,6 @@
       }
     },
     {
-      "id": "xdd0c88c804",
-      "canonicalName": "Stella Malmström",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "stella malmstrom|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001491113"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11066",
-        "egr-egr10959",
-        "dgv-dgv_490002518534",
-        "dgv-dgv_490002813292",
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 17.9,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:stella malmstrom|DE",
-          "dgv:dgv-dgv490001491113"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x1f611395e2",
       "canonicalName": "Georg Schmidt",
       "aliases": [],
@@ -1892608,39 +1893705,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:ole fontius|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x7025dbf923",
-      "canonicalName": "Leon Nathanael Dietz",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Winnerod",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "leon nathanael dietz|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11068",
-        "egr-egr11063",
-        "egr-egr10968"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:leon nathanael dietz|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1895430,37 +1896494,6 @@
       }
     },
     {
-      "id": "xd34ce7bd3f",
-      "canonicalName": "Paul Zahradnik",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Lich",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "paul zahradnik|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11094"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:paul zahradnik|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x439ec26d59",
       "canonicalName": "Peer Schulte",
       "aliases": [],
@@ -1895495,38 +1896528,6 @@
       }
     },
     {
-      "id": "x5c47e880a0",
-      "canonicalName": "Thomas Ronge",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Lich",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "thomas ronge|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11094",
-        "egr-egr9603"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:thomas ronge|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x5f62f0cd4d",
       "canonicalName": "Anil Hertel",
       "aliases": [],
@@ -1895552,37 +1896553,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:anil hertel|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x1805e9ffed",
-      "canonicalName": "Oscar Gasser",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Altenstadt",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "oscar gasser|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11094"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:oscar gasser|DE"
         ],
         "mergedFromSources": [
           "egr"
@@ -1899932,37 +1900902,6 @@
       }
     },
     {
-      "id": "x40a8a8dba2",
-      "canonicalName": "Bobby Blankenburg",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Kassel",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "bobby blankenburg|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11063"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:bobby blankenburg|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x5437b15053",
       "canonicalName": "Danielle Daniy",
       "aliases": [],
@@ -1901718,37 +1902657,6 @@
         "mergedFromSources": [
           "egr",
           "dgv"
-        ]
-      }
-    },
-    {
-      "id": "xee0951ed72",
-      "canonicalName": "Tom Benesch",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Rosenhof",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "tom benesch|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr10958"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:tom benesch|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
         ]
       }
     },
@@ -1946494,37 +1947402,6 @@
         "mergedFromSources": [
           "egr",
           "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x34b43ade2b",
-      "canonicalName": "Leonard-Bruno Lange",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Bad Vilbel",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "leonard-bruno lange|DE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr9595"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:leonard-bruno lange|DE"
-        ],
-        "mergedFromSources": [
-          "egr"
         ]
       }
     },
@@ -2213063,40 +2213940,6 @@
       }
     },
     {
-      "id": "xfdcfd92693",
-      "canonicalName": "Ricardo E Lillo",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Frankfurter GC",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001535368"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "coc-coc_2025",
-        "dgv-dgv_490002518530",
-        "dgv-dgv_490002715692",
-        "dgv-dgv_490002813294"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "dgv:dgv-dgv490001535368"
-        ],
-        "mergedFromSources": [
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x336e1e5026",
       "canonicalName": "Nicolas Merklinghaus",
       "aliases": [],
@@ -2215310,45 +2216153,6 @@
       }
     },
     {
-      "id": "xf43a17e947",
-      "canonicalName": "Seoah Im",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Hof Hausen, GC",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001854261"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "dgv-dgv_490003047171"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": 13.9,
-          "source": "entry-list",
-          "label": "DMM AK 16 Mädchen — Raparigas (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "dgv:dgv-dgv490001854261"
-        ],
-        "mergedFromSources": [
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x8c87528d0c",
       "canonicalName": "Lea Charlotta Lange",
       "aliases": [],
@@ -2216682,13 +2217486,13 @@
     }
   ],
   "stats": {
-    "total": 38603,
+    "total": 38616,
     "droppedNoTourn": 32324,
-    "strong": 34978,
-    "probable": 3625,
+    "strong": 34988,
+    "probable": 3628,
     "manual": 0,
-    "strongMerges": 8951,
-    "probableMerges": 16706,
+    "strongMerges": 8962,
+    "probableMerges": 16758,
     "manualMerges": 856
   }
 }
