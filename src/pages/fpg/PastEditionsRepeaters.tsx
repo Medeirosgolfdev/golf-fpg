@@ -38,46 +38,33 @@ const n1 = (v: number | null | undefined) => (v == null ? "—" : v.toFixed(1));
  * esquerda — em golfe, menos é melhor, e a barra respeita isso.
  */
 function FormaCell({ f }: { f: PlayerForm | null }) {
-  if (!f || f.avgSD5 == null) return <span className="p p-sm p-muted">sem dados</span>;
+  // Uma linha só (modelo das tabelas de torneio, 13/10/2026): «3.3 ▼ 6.5».
+  if (!f || f.avgSD5 == null) return <span className="muted">—</span>;
   const recente = f.avgSD5;
   const normal = f.avgSD20 ?? f.avgSD5;
   const delta = recente - normal;
   const quente = delta <= -1, frio = delta >= 1;
-  const escala = Math.max(6, normal + 4);           // eixo comum às duas barras
-  const larg = (v: number) => `${Math.max(2, Math.min(100, (v / escala) * 100))}%`;
-  const cor = quente ? "var(--accent-dark)" : frio ? "var(--score-birdie)" : "var(--text-muted)";
+  const cor = quente ? "var(--accent-dark)" : frio ? "var(--score-birdie)" : "var(--text)";
   return (
     <span
       title={`últimas 5 voltas: ${n1(f.avgSD5)} · 8 melhores de 20: ${n1(f.avgSD8)} · média de 20: ${n1(f.avgSD20)}\n`
         + `${f.roundsLast3m} voltas nos últimos 3 meses · última a ${f.lastRoundDate ?? "?"}`}
-      style={{ display: "inline-block", minWidth: 96 }}
+      style={{ whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
     >
-      <span style={{ display: "flex", alignItems: "center", gap: 4, justifyContent: "center" }}>
-        <b style={{ color: cor, fontVariantNumeric: "tabular-nums" }}>{n1(recente)}</b>
-        <span style={{ color: "var(--text-muted)", fontSize: 10 }}>
-          {quente ? "▼" : frio ? "▲" : "="} {n1(normal)}
-        </span>
-      </span>
-      <span style={{ display: "block", height: 3, background: "var(--bg-subtle)", borderRadius: 2, marginTop: 2 }}>
-        <span style={{ display: "block", height: 3, width: larg(recente), background: cor, borderRadius: 2 }} />
-      </span>
-      <span style={{ display: "block", fontSize: 10, color: "var(--text-muted)" }}>
-        {f.roundsLast3m} voltas / 3m
-      </span>
+      <span style={{ color: cor, fontWeight: 600 }}>{n1(recente)}</span>
+      <span className="muted fs-10"> {quente ? "▼" : frio ? "▲" : "="} {n1(normal)}</span>
     </span>
   );
 }
 
-/** Barra do intervalo da previsão: onde cai o valor esperado entre bom e mau dia. */
+/** Previsão numa linha: «77 +5 · 73–81» (intervalo plausível em pequeno). */
 function PrevCell({ r }: { r: Repeater }) {
   const f = r.forecast;
-  if (!f) return <span className="p p-sm p-muted">—</span>;
-  const span = Math.max(1, f.high - f.low);
-  const pos = ((f.total - f.low) / span) * 100;
+  if (!f) return <span className="muted">—</span>;
   const incerto = f.basis === "indice" || !f.teeKnown;
   return (
     <span
-      style={{ display: "inline-block", minWidth: 104 }}
+      style={{ whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
       title={[
         {
           forma: "as voltas das últimas semanas, no tee que vai jogar hoje",
@@ -87,17 +74,10 @@ function PrevCell({ r }: { r: Repeater }) {
         f.teeKnown ? null : `sem CR/Slope do tee de hoje (${r.teeNow ?? "?"}) — usado o do tee anterior`,
       ].filter(Boolean).join(" · ")}
     >
-      <span style={{ fontVariantNumeric: "tabular-nums" }}>
-        <b>{f.total}</b>
-        {f.toPar != null ? <span style={{ color: tpColorDark(f.toPar) }}> {fmtToPar(f.toPar)}</span> : null}
-        {incerto ? <span className="p p-sm p-muted" style={{ marginLeft: 3 }}>≈</span> : null}
-      </span>
-      <span style={{ display: "block", position: "relative", height: 3, background: "var(--bg-subtle)", borderRadius: 2, margin: "3px 0 1px" }}>
-        <span style={{ position: "absolute", left: `${Math.max(0, Math.min(100, pos))}%`, top: -2, width: 3, height: 7, background: "var(--accent-dark)", borderRadius: 1 }} />
-      </span>
-      <span style={{ display: "block", fontSize: 10, color: "var(--text-muted)", fontVariantNumeric: "tabular-nums" }}>
-        {f.low}–{f.high}
-      </span>
+      <b>{f.total}</b>
+      {f.toPar != null ? <span style={{ color: tpColorDark(f.toPar) }}> {fmtToPar(f.toPar)}</span> : null}
+      {incerto ? <span className="muted"> ≈</span> : null}
+      <span className="muted fs-10"> · {f.low}–{f.high}</span>
     </span>
   );
 }
@@ -179,7 +159,7 @@ export default function PastEditionsRepeaters({
     .filter((r) => r.form?.avgSD5 != null && r.form?.avgSD20 != null && r.form.avgSD5 - r.form.avgSD20 <= -1)
     .sort((a, b) => (a.form!.avgSD5! - a.form!.avgSD20!) - (b.form!.avgSD5! - b.form!.avgSD20!))[0];
   const hdr = (k: SortKey, label: string, title?: string) => (
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={k === "nome" ? { textAlign: "left" } : undefined}>
       <span title={title}>{label}</span>
     </SortableHdr>
   );
@@ -196,7 +176,8 @@ export default function PastEditionsRepeaters({
       </div>
 
       <div style={{ overflowX: "auto" }}>
-        <table className="player-list-table">
+        {/* Modelo das tabelas de torneio (.sc-lb): compacta, uma linha por jogador. */}
+        <table className="sc-lb">
           <thead>
             <tr>
               {hdr("hora", "Saída", "Hora e tee do draw")}
@@ -220,9 +201,9 @@ export default function PastEditionsRepeaters({
                     {r.teeTime || "—"}
                     {r.teeNow ? <> <TeeDot teeName={r.teeNow} /></> : null}
                   </td>
-                  <td>
+                  <td style={{ textAlign: "left", whiteSpace: "nowrap" }}>
                     {r.sex ? <SexBadge sex={r.sex as "M" | "F"} /> : null} {r.name}
-                    {r.club ? <span style={{ color: "var(--text-muted)", fontSize: 11 }}> · {r.club}</span> : null}
+                    {r.club ? <span className="muted fs-10"> · {r.club}</span> : null}
                   </td>
                   <td>{r.escalao || "—"}</td>
                   <td style={{ textAlign: "center", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
@@ -236,11 +217,11 @@ export default function PastEditionsRepeaters({
                   </td>
                   <td style={{ textAlign: "center" }}><FormaCell f={f} /></td>
                   <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-                    <b style={{ color: r.bestToPar != null ? tpColorDark(r.bestToPar) : undefined }}>
+                    <span style={{ fontWeight: 600, color: r.bestToPar != null ? tpColorDark(r.bestToPar) : undefined }}>
                       {r.bestToPar != null ? fmtToPar(r.bestToPar) : "—"}
-                    </b>
-                    <span style={{ display: "block", fontSize: 10, color: "var(--text-muted)" }}>
-                      {r.editions.map((e) => `${e.year}${e.pos ? ` ${e.pos}º` : ""}`).join(" · ")}
+                    </span>
+                    <span className="muted fs-10">
+                      {" · "}{r.editions.map((e) => `${e.year}${e.pos ? ` ${e.pos}º` : ""}`).join(" · ")}
                     </span>
                   </td>
                   <td style={{ textAlign: "center", fontVariantNumeric: "tabular-nums" }}

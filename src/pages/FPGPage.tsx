@@ -19,7 +19,7 @@ import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "
 import { useAppContext } from "../context/AppContext";
 import { loadPlayers } from "../data/loader";
 import { buildEscLookup, type EscLookup, normalizePlayer } from "../utils/playerUtils";
-import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge";
+import { SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge";
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
@@ -2330,14 +2330,16 @@ function Content() {
           </>)}
           {!loading && (<>
             <ToolbarSep />
+            {/* Vistas: interruptor segmentado (o mesmo de Campos/Jogadores/Drive). */}
+            <div className="segmented-toggle" role="tablist" aria-label="Vista">
             {([
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-pja",   label: "📊 Ranking PJA" },
               { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
-              { key: "classificacoes", label: "🏆 CLASSIFICAÇÕES" },
+              { key: "classificacoes", label: "🏆 Classificações" },
             ] as const).map(({ key, label }) => (
-              <button key={key}
-                className={"tourn-tab tourn-tab-sm" + (navMode === key ? " active" : " tourn-tab-muted")}
+              <button key={key} role="tab" aria-selected={navMode === key}
+                className={"seg-btn" + (navMode === key ? " active" : "")}
                 onClick={() => {
                   setNavMode(key);
                   setSeriesFilter("");
@@ -2345,35 +2347,31 @@ function Content() {
                   const seg = NAV_TO_URL[key];
                   const target = seg ? `/FPG/${seg}` : "/FPG";
                   if (location.pathname !== target) navigate(target);
-                }}
-                style={{ flexShrink: 0 }}>
-                {label}
+                }}>
+                <span className="seg-label">{label}</span>
               </button>
             ))}
+            </div>
             {/* Tabs de série (Todos/JOVENS/CLUBES/STO/PJA) — na MESMA barra, a
                 seguir ao mode-switcher (antes ficavam numa 2ª linha). Só em modo
                 Torneios. */}
             {navMode === "torneios" && (<>
               <ToolbarSep />
+              {/* Séries: o mesmo interruptor segmentado (activo = estilo-padrão). */}
+              <div className="segmented-toggle" role="tablist" aria-label="Série">
               {([
                 { key: "",        label: "Todos" },
-                { key: "jovens",  label: "🏆 JOVENS" },
-                { key: "clubes",  label: "🏅 CLUBES" },
+                { key: "jovens",  label: "🏆 Jovens" },
+                { key: "clubes",  label: "🏅 Clubes" },
                 { key: "santo",   label: "⛳ STO" },
                 { key: "circuit", label: "🏆 PJA" },
               ] as const).map(({ key, label }) => {
                 const active = seriesFilter === key;
-                const st = active
-                  ? key === "santo"  ? { flexShrink: 0, ...PILL_SSERRA, borderColor: PILL_SSERRA.background as string }
-                  : key === "clubes" ? { flexShrink: 0, background: "var(--accent)", borderColor: "var(--accent)", color: "#fff" }
-                  : key === "jovens"    ? { flexShrink: 0, background: SIDEBAR_ACCENT.tour, borderColor: SIDEBAR_ACCENT.tour, color: "#fff" }
-                  : { flexShrink: 0 }
-                  : { flexShrink: 0 };
                 const urlSeg = FILTER_TO_URL[key];
                 const href = urlSeg ? `/FPG/${urlSeg}` : "/FPG";
                 return (
-                  <a key={key} href={href}
-                    className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+                  <a key={key} href={href} role="tab" aria-selected={active}
+                    className={"seg-btn" + (active ? " active" : "")}
                     onClick={e => {
                       if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                         e.preventDefault();
@@ -2386,11 +2384,12 @@ function Content() {
                         navigate((urlSeg ? `/FPG/${urlSeg}` : "/FPG") + (_s ? `?${_s}` : ""));
                       }
                     }}
-                    style={st}>
-                    {label}
+                    style={{ textDecoration: "none" }}>
+                    <span className="seg-label">{label}</span>
                   </a>
                 );
               })}
+              </div>
             </>)}
             {/* Pills de ano + ★Manuel exteriores: nas vistas do shell (Torneios)
                 o CircuitShell já os tem, por isso escondem-se aqui para um
