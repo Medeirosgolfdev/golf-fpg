@@ -755,10 +755,12 @@ function Seg<T extends string>({ value, onChange, opts }: { value: T; onChange: 
  *  + TOP-3 de cada escalão (à data da volta) com data (ano) + SD. Ordenado por
  *  distância (dificuldade). Separa ♂/♀ e 18 / Front 9 / Back 9. Inclui sempre um
  *  cartão do Manuel (recorde por tee). */
-function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
+function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = null }: { course: Course; onSelectPlayer?: (fed: string) => void; sexFilter?: SexFilter; teeLabel?: string | null }) {
   const meta = useCoursePlayerMeta();
   const { players } = useAppContext();
-  const [sex, setSex] = useState<"M" | "F">("M");
+  // Sexo da barra de filtros manda; o toggle Rapazes/Raparigas fica para "Sexo: todos".
+  const [sex, setSex] = useState<"M" | "F">(sexFilter === "F" ? "F" : "M");
+  useEffect(() => { if (sexFilter === "M" || sexFilter === "F") setSex(sexFilter); }, [sexFilter]);
   const [volta, setVolta] = useState<VoltaKind>("18");
 
   // Info do tee físico: distância + CR/Slope por sexo (18/F9/B9) + cor.
@@ -811,11 +813,11 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
     }
     const tees = [...byTee.entries()]
       .map(([label, t]) => ({ label, players: t.players, nRounds: t.nRounds, esc: t.esc, dist: teeInfo.get(label)?.dist ?? -1 }))
-      .filter((t) => t.nRounds > 0)
+      .filter((t) => t.nRounds > 0 && (!teeLabel || t.label === teeLabel))
       .sort((a, b) => (b.dist - a.dist) || (b.players.size - a.players.size) || a.label.localeCompare(b.label, "pt"));
-    const manuel = [...manuelByTee.values()].sort((a, b) => b.dist - a.dist);
+    const manuel = [...manuelByTee.values()].filter((m) => !teeLabel || m.label === teeLabel).sort((a, b) => b.dist - a.dist);
     return { tees, manuel, lastDate };
-  }, [course, players, meta, sex, volta, teeInfo]);
+  }, [course, players, meta, sex, volta, teeInfo, teeLabel]);
 
   if (tees.length === 0 && manuel.length === 0) return null;
 
@@ -858,10 +860,13 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
     <div style={{ margin: "4px 0 14px" }}>
       {/* Toolbar: sexo · tipo de volta · fonte */}
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-        <Seg value={sex} onChange={setSex} opts={[
-          { v: "M", label: <><SexBadge sex="M" /> Rapazes</> },
-          { v: "F", label: <><SexBadge sex="F" /> Raparigas</> },
-        ]} />
+        {/* Com Sexo escolhido na barra, o toggle sairia do filtro → só aparece em "Sexo: todos". */}
+        {sexFilter === "ALL" && (
+          <Seg value={sex} onChange={setSex} opts={[
+            { v: "M", label: <><SexBadge sex="M" /> Rapazes</> },
+            { v: "F", label: <><SexBadge sex="F" /> Raparigas</> },
+          ]} />
+        )}
         <Seg value={volta} onChange={setVolta} opts={[
           { v: "18", label: "18 buracos" }, { v: "f9", label: "Front 9" }, { v: "b9", label: "Back 9" },
         ]} />
@@ -966,7 +971,7 @@ function CourseTeeKpis({ course, onSelectPlayer }: { course: Course; onSelectPla
 
 /** Vista "por tee" (no tab Como jogou): uma tabela por tee (Brancas, Amarelas,
  *  …) com os nossos jogadores e as pontuações que fizeram NESSE tee. */
-function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSelectPlayer?: (fed: string) => void }) {
+function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { course: Course; onSelectPlayer?: (fed: string) => void; teeLabel?: string | null }) {
   const { players } = useAppContext();
   const nameMap = useCoursePlayerNames();
   const teeInfo = useTeeInfoMap(course);
@@ -981,6 +986,7 @@ function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSele
       if (Array.isArray(val)) for (const r of val) labels.add(labelOf(r.tee));
     }
     return [...labels]
+      .filter((label) => !teeLabel || label === teeLabel)
       .map((label) => ({
         label,
         entries: buildSummaries(raw, players, nameMap, (tee) => labelOf(tee) === label),
@@ -993,7 +999,7 @@ function CoursePlayersByTee({ course, onSelectPlayer }: { course: Course; onSele
           || (b.entries.length - a.entries.length)
           || a.label.localeCompare(b.label, "pt");
       });
-  }, [course, players, nameMap]);
+  }, [course, players, nameMap, teeLabel]);
 
   if (groups.length === 0) return null;
   return (
@@ -1328,12 +1334,25 @@ export default function CamposPage() {
   /* Campo selecionado */
   const selected = useMemo(() => {
     if (!selectedKey) return filtered[0] ?? null;
-    return courses.find((c) => c.courseKey === selectedKey) ?? filtered[0] ?? null;
-  }, [courses, filtered, selectedKey]);
+    // O seleccionado mantém-se enquanto passar os filtros (mudar Sexo/Tee já não
+    // salta para o 1.º da lista). Sem filtros, aceita também campos fora da lista
+    // (torneios escondidos no "Todos", abertos por URL).
+    const noFilters = !q && !playerQ && originFilter === "ALL" && countryFilter === "ALL" && teeFilter === "ALL";
+    return filtered.find((c) => c.courseKey === selectedKey)
+      ?? (noFilters ? courses.find((c) => c.courseKey === selectedKey) : undefined)
+      ?? filtered[0] ?? null;
+  }, [courses, filtered, selectedKey, q, playerQ, originFilter, countryFilter, teeFilter]);
+
+  /* Rótulo canónico do tee do filtro (para as vistas "Como jogou", que agrupam por rótulo) */
+  const teeFilterLabel = useMemo(
+    () => (teeFilter === "ALL" ? null : uniqueTees.find((t) => t.hex === teeFilter)?.label ?? null),
+    [teeFilter, uniqueTees],
+  );
 
   const selectedTees = useMemo(() => {
     if (!selected) return [];
-    const tees = sortTees(filterTees(selected.master.tees, sexFilter));
+    const tees = sortTees(filterTees(selected.master.tees, sexFilter))
+      .filter((t) => teeFilter === "ALL" || teeGroupHex(t.teeName, t.scorecardMeta?.teeColor) === teeFilter);
     // Ignorar tees sem qualquer dado útil (sem buracos e sem distância)
     return tees.filter(t => {
       const holes = t.distances?.holesCount ?? 0;
@@ -1342,7 +1361,7 @@ export default function CamposPage() {
       // Manter se tem buracos, ou distância, ou pelo menos CR válido
       return holes > 0 || dist > 0 || (cr != null && cr > 0);
     });
-  }, [selected, sexFilter]);
+  }, [selected, sexFilter, teeFilter]);
 
   const scorecardLink = selected?.master.links?.scorecards;
   const selectedFlag = selected ? resolveFlag(selected) : "";
@@ -1378,13 +1397,13 @@ export default function CamposPage() {
         <input
           className="input"
           value={q}
-          onChange={(e) => { setQ(e.target.value); setPlayerQ(""); selectCourse(null); }}
+          onChange={(e) => { setQ(e.target.value); selectCourse(null); }}
           placeholder="Nome do campo…"
         />
         <input
           className="input"
           value={playerQ}
-          onChange={(e) => { setPlayerQ(e.target.value); setQ(""); selectCourse(null); }}
+          onChange={(e) => { setPlayerQ(e.target.value); selectCourse(null); }}
           placeholder="Jogador…"
           title="Mostra os campos onde este jogador já jogou"
         />
@@ -1418,7 +1437,7 @@ export default function CamposPage() {
         <select
           className="select"
           value={teeFilter}
-          onChange={(e) => { setTeeFilter(e.target.value); selectCourse(null); }}
+          onChange={(e) => setTeeFilter(e.target.value)}
         >
           <option value="ALL">Todos os tees</option>
           {uniqueTees.map((t) => (
@@ -1436,7 +1455,9 @@ export default function CamposPage() {
         <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
-            const nTees = new Set(filterTees(c.master.tees, sexFilter).map(physicalTeeKey)).size;
+            const nTees = new Set(filterTees(c.master.tees, sexFilter)
+              .filter((t) => teeFilter === "ALL" || teeGroupHex(t.teeName, t.scorecardMeta?.teeColor) === teeFilter)
+              .map(physicalTeeKey)).size;
             const flag = resolveFlag(c);
             return (
               <a
@@ -1552,11 +1573,14 @@ export default function CamposPage() {
                   {/* KPIs por cor de tee: nº jogadores + melhor Sub-12/14/16… */}
                   <CourseTeeKpis
                     course={selected}
+                    sexFilter={sexFilter}
+                    teeLabel={teeFilterLabel}
                     onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
                   />
                   {/* Quem jogou + scores, partido por tee (Brancas, Amarelas, …) */}
                   <CoursePlayersByTee
                     course={selected}
+                    teeLabel={teeFilterLabel}
                     onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
                   />
                   {/* Média por buraco do Manuel — em baixo, secundário */}
