@@ -356,8 +356,11 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
   const ptByName = new Set<string>();
   // HCP do jogador (o tee sheet da Evian Juniors Cup publica-o) → coluna HCP do draw.
   const hcpByName = new Map<string, number>();
+  // Nascimento (dob ISO ou só o ano) → coluna Nasc. do draw (Faldo Madeira).
+  const birthByName = new Map<string, { dob: string | null; birthYear: number | null }>();
   for (const p of players) {
     if (p.name && typeof p.hcp === "number") hcpByName.set(norm(p.name), p.hcp);
+    if (p.name && (p.dob || p.birthYear)) birthByName.set(norm(p.name), { dob: p.dob ?? null, birthYear: p.birthYear ?? null });
     if (!p.name || !p.country) continue;
     countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
     // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
@@ -372,6 +375,7 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
         nome: p.name,
         clube: countryByName.get(norm(p.name)) ?? null,
         hcp: hcpByName.get(norm(p.name)) ?? null,
+        ...(birthByName.get(norm(p.name)) ?? {}),
         tee: p.tee ?? null,
         ...(ptByName.has(norm(p.name)) ? { isPortuguese: true } : {}),
       })),
@@ -509,7 +513,11 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
             accShowCols={{ esc: false, fed: false, tee: false, hcp: !!opts.showRatings }}
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
-            drawHideCols={dv.players.some((p) => typeof p.hcp === "number") ? { ...FM_DRAW_HIDE_COLS, hcp: false } : FM_DRAW_HIDE_COLS}
+            drawHideCols={{
+              ...FM_DRAW_HIDE_COLS,
+              ...(dv.players.some((p) => typeof p.hcp === "number") ? { hcp: false } : {}),
+              ...(dv.players.some((p) => p.dob || p.birthYear) ? { nasc: false } : {}),
+            }}
             hideHeader
             extraTabs={[...mpBase, ...(extras?.pastEditionsTab ? [extras.pastEditionsTab] : [])]}
           />
@@ -699,7 +707,7 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: 
   // do GG; em 2022-24 os cartões WHS dos portugueses) → colunas HCP e SD.
   evianjc: { file: (y) => `/data/evianjc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "evianjc", series: "Evian JC", showRatings: true }) },
   // Faldo Junior Tour Madeira (Santo da Serra) — HCP só dos portugueses (federados FPG).
-  faldomadeira: { file: (y) => `/data/faldomadeira_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "faldomadeira", series: "Faldo Madeira" }) },
+  faldomadeira: { file: (y) => `/data/faldomadeira_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "faldomadeira", series: "Faldo Madeira", showAges: true }) },
   icopa: { file: (y) => `/data/icopa_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "icopa", series: "Bobby Díaz" }) },
   interzonas: { file: (y) => `/data/interzonas_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "interzonas", series: "Interzonas" }) },
   avtrophy: { file: (y) => `/data/avtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }) },

@@ -802,6 +802,31 @@ function applyFpgFederados(out, { overrides = {}, minBirthYear = 2005, file = pa
   return n;
 }
 
+/**
+ * Dados curados por jogador (scope `players`: { "Nome": { country, hcp,
+ * hcpDate, hcpSource, dob, birthYear, club } }) — para campos GG sem HCP nem
+ * afiliação (Faldo Madeira: os estrangeiros). Cada valor tem de vir de uma
+ * fonte lida (lista de saídas, EGR, GolfBox…), anotada em `hcpSource`; nunca
+ * estimado. Só preenche o que o scope traz; não apaga nada.
+ */
+function applyPlayerOverrides(out, players) {
+  const byKey = new Map(Object.entries(players || {}).map(([n, v]) => [nameKey(n), v]));
+  if (!byKey.size) return 0;
+  let n = 0;
+  for (const dv of out.divisions) for (const p of dv.players) {
+    const o = byKey.get(nameKey(p.name));
+    if (!o) continue;
+    if (o.country) { p.country = o.country; if (!p.location) p.location = o.countryName || o.country; }
+    if (typeof o.hcp === 'number') { p.hcp = o.hcp; p.hcpSource = [o.hcpSource, o.hcpDate].filter(Boolean).join(' · ') || null; }
+    if (o.dob) p.dob = o.dob;
+    if (Number.isInteger(o.birthYear) && !p.dob) p.birthYear = o.birthYear;
+    if (o.club && !p.club) p.club = o.club;
+    n++;
+  }
+  console.log(`   📝 scope players: ${n} jogador(es) com dados curados`);
+  return n;
+}
+
 async function runOne(opts) {
   const {
     pageUrl = null, v2Arg = null, leagueOverride = null, nameOverride = null,
@@ -1044,6 +1069,7 @@ async function runOne(opts) {
 
   // HCP/dob/clube dos portugueses pelos federados FPG (scope `fpgFederados`).
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
+  if (opts.players) applyPlayerOverrides(out, opts.players);
 
   const yearKey = out.year || 'x';
   const file = path.join(OUT, `${slug}_${yearKey}.json`);
@@ -1107,6 +1133,7 @@ async function main() {
         si: Array.isArray(e.si) ? e.si : null, siSource: e.siSource || null,
         teeDivisions: e.teeDivisions || null,
         fpgFederados: !!e.fpgFederados, fpgFed: e.fpgFed || null,
+        players: e.players || null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -1144,4 +1171,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { applyFpgFederados, discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, applyPlayerOverrides, discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

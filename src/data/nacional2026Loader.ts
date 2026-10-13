@@ -57,6 +57,11 @@ export interface FpgDrawFlight {
     /** Nacionalidade ISO-2 do jogador (draws internacionais, sem fed nosso) →
      *  bandeira ao lado do nome. */
     country?: string | null;
+    /** Data de nascimento ISO dada pela fonte (draws internacionais, sem fed
+     *  nosso) → coluna Nasc. com a data completa e a idade. */
+    dob?: string | null;
+    /** Só o ano de nascimento (fonte sem data completa) → idade aproximada. */
+    birthYear?: number | null;
   }>;
 }
 

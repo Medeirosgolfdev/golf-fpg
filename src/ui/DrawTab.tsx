@@ -235,6 +235,7 @@ export default function DrawTab({
       hcpCurrent: boolean;
       dob?: string;
       dobYear: number | null;
+      dobShown?: string | null;
       escHist: string | null;
       gross: number;
       toPar: number | null;
@@ -397,9 +398,14 @@ export default function DrawTab({
         // A RFEG entra por ultimo mas e a UNICA fonte para quem nao tem
         // federado portugues: sem ela os internacionais ficavam sem escalao,
         // apesar de a data de nascimento estar gravada em _rfeg.
+        // Draws internacionais (MAJOR) trazem a dob — ou só o ano — da própria fonte.
+        const srcDob = ((p as { dob?: string | null }).dob) || undefined;
+        const srcBirthYear = (p as { birthYear?: number | null }).birthYear ?? null;
         const dob: string | undefined =
-          bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
-        const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
+          srcDob || bd?.dob || (fed ? fedBirthdates.get(fed) : undefined) || ((p as any)._rfeg?.dob as string | undefined);
+        const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : srcBirthYear;
+        // Data completa visível na coluna (só quando vem da fonte do draw).
+        const dobShown = srcDob ? srcDob.slice(0, 10).split("-").reverse().join("/") : null;
         // Escalão: calculado da dob (fonte autoritativa). NÃO caímos em
         // `tournamentEscalao` porque torneios combinados (Regional Sub 14-24,
         // Sub 10+12) têm múltiplos escalões em disputa — o genérico engana.
@@ -431,6 +437,7 @@ export default function DrawTab({
           hcpCurrent,
           dob,
           dobYear,
+          dobShown,
           escHist,
           gross: res?.gross ?? 0,
           toPar: res?.toPar ?? null,
@@ -516,7 +523,9 @@ export default function DrawTab({
       // Por fed (FPG) OU por nome: nos draws MAJOR (fmDrawsToFpg) não há fed
       // nenhum (playersDB vazio) e o Manuel ficava sem .row-manuel/estrela.
       const manuel = p.fed === MANUEL_FED || isManuelByName(p.nome);
-      const age = ageAtDate(p.dob, effDate || undefined);
+      // Sem dob mas com o ano (fonte internacional) → idade aproximada (~) no ano da prova.
+      const age = ageAtDate(p.dob, effDate || undefined)
+        ?? (p.dobYear != null && !p.dob && effDate ? Number(String(effDate).slice(0, 4)) - p.dobYear : null);
       const isFirstOfGroup = groupingActive && i > 0 && visibleSorted[i - 1].groupIdx !== p.groupIdx;
       const borderTop = isFirstOfGroup ? GROUP_BORDER : undefined;
       const bStyle = borderTop ? { borderTop } : undefined;
@@ -583,8 +592,8 @@ export default function DrawTab({
               <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
                 {p.dobYear != null ? (
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                    <YearPill year={p.dobYear} />
-                    {age != null && <span className="muted fs-10">({age})</span>}
+                    {p.dobShown ? <span className="fs-11 mono">{p.dobShown}</span> : <YearPill year={p.dobYear} />}
+                    {age != null && <span className="muted fs-10">({!p.dob ? "~" : ""}{age})</span>}
                   </span>
                 ) : <span className="muted">–</span>}
               </td>
