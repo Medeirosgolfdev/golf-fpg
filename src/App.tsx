@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import RankingsTabs from "./ui/RankingsTabs";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
 import { initCourseColorCache, teeGroupHex } from "./utils/teeColors";
@@ -447,12 +448,14 @@ export default function App() {
                 <Route path="/england/*" element={<EnglandRedirect />} />
                 {/* /faldo arquivada (2026-10-13, scripts/_archive/faldo) — o Faldo Madeira vive na /major */}
                 <Route path="/faldo/*" element={<Navigate to="/major/faldomadeira/2026" replace />} />
-                <Route path="/egr" element={<EGRPage />} />
-                <Route path="/egr/:source/:id" element={<EGRPage />} />
-                <Route path="/wagr" element={<WAGRPage />} />
-                <Route path="/wagr/:source/:id" element={<WAGRPage />} />
-                <Route path="/global-junior" element={<GlobalJuniorPage />} />
-                <Route path="/global-junior/:slug" element={<GlobalJuniorPage />} />
+                {/* Rankings: EGR · WAGR · GJGL com separadores comuns (RankingsTabs) */}
+                <Route path="/rankings/*" element={<Navigate to="/egr" replace />} />
+                <Route path="/egr" element={<RankingsTabs><EGRPage /></RankingsTabs>} />
+                <Route path="/egr/:source/:id" element={<RankingsTabs><EGRPage /></RankingsTabs>} />
+                <Route path="/wagr" element={<RankingsTabs><WAGRPage /></RankingsTabs>} />
+                <Route path="/wagr/:source/:id" element={<RankingsTabs><WAGRPage /></RankingsTabs>} />
+                <Route path="/global-junior" element={<RankingsTabs><GlobalJuniorPage /></RankingsTabs>} />
+                <Route path="/global-junior/:slug" element={<RankingsTabs><GlobalJuniorPage /></RankingsTabs>} />
                 <Route path="/rfeg" element={<RFEGPage />} />
                 <Route path="/rfeg/:compId" element={<RFEGPage />} />
                 <Route path="/rfeg/:source/:id" element={<RFEGPage />} />

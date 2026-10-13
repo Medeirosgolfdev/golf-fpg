@@ -19,7 +19,7 @@ type Tab =
 // ── Lista de itens de navegação — editar aqui para adicionar/reordenar ──
 // `external: true` → abre em nova aba sem SPA navigation (ficheiros estáticos
 // em public/, dashboards externos, etc.)
-const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; title?: string }[] = [
+const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; title?: string; group?: Tab[] }[] = [
   { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
   { tab: "campos",     label: "Campos",       path: "/campos", title: "Campos · Scorecard, Como jogou e Simulador" },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
@@ -28,11 +28,10 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "major",      label: "🎖️ MAJOR",   path: "/major", title: "Doral + BJGT" },
-  { tab: "global-junior", label: "🏌️ GJGL",  path: "/global-junior" },
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
-  { tab: "egr",        label: "🇪🇺 EGR",     path: "/egr", title: "European Golf Rankings" },
-  { tab: "wagr",       label: "🌍 WAGR",     path: "/wagr", title: "World Amateur Golf Ranking" },
+  // EGR · WAGR · GJGL numa só entrada (13/10/2026) — os separadores estão no topo de cada uma (RankingsTabs).
+  { tab: "egr",        label: "🏅 Rankings",  path: "/egr", title: "Rankings — EGR · WAGR · GJGL", group: ["egr", "wagr", "global-junior"] },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
   { tab: "galeria",    label: "📁",           path: "/Logos/galeria.html", external: true, title: "Galeria de Logos" },
@@ -169,14 +168,14 @@ export default function NavBar() {
           + navigate SPA (sem reload). Itens com `external: true` abrem em nova
           aba sem SPA — ficheiros estáticos servidos a partir de public/. */}
       <nav ref={navRef} className="nav nav-scroll">
-        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path, external, title }) => (
+        {calUnlocked && NAV_ITEMS.map(({ tab: t, label, path, external, title, group }) => (
           <a
             key={t}
             href={path}
             target={external ? "_blank" : undefined}
             rel={external ? "noopener" : undefined}
             title={title}
-            className={`nav-btn${tab === t ? " active" : ""}`}
+            className={`nav-btn${tab === t || group?.includes(tab) ? " active" : ""}`}
             onClick={(e) => {
               if (external) return; // deixa o browser abrir o link em nova aba
               if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return;
