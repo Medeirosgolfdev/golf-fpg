@@ -4529,3 +4529,5 @@ table td.lb-col-divider {
   padding: 3px 6px; border-bottom: 1px solid var(--border-light);
 }
 :is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
+/* Tabelas de muitas colunas numéricas («Quem repete»): mais folga lateral. */
+.sc-lb.sc-lb-airy th, .sc-lb.sc-lb-airy td { padding-left: 10px; padding-right: 10px; }

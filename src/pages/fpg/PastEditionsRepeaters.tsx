@@ -153,7 +153,7 @@ export default function PastEditionsRepeaters({
 
       <div style={{ overflowX: "auto" }}>
         {/* Modelo das tabelas de torneio (.sc-lb): compacta, uma linha por jogador. */}
-        <table className="sc-lb">
+        <table className="sc-lb sc-lb-airy">
           <thead>
             <tr>
               {hdr("hora", "Saída", "Hora do draw")}
