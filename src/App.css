@@ -73,6 +73,20 @@ html, body, #root {
 .dtable-sm td { padding: 4px 6px; border-bottom: 1px solid var(--border-light); vertical-align: middle; }
 .dtable-sm tbody tr:hover { background: var(--bg-hover); }
 
+/* Moldura única das tabelas simples (13/10/2026 — «às vezes redondos, às
+   vezes bicos»): borda + canto --radius-lg, igual aos cartões e ao .sc-wrap.
+   border-collapse: separate é o que deixa o canto ser redondo; as linhas
+   internas continuam a ser só o border-bottom das células. Dentro de um
+   contentor que já tem moldura (sc-wrap, cartões, details) a tabela fica sem
+   a sua, para não haver moldura dupla. */
+:is(.dtable, .dtable-sm, .dtable-lg) { border: 1px solid var(--border); border-radius: var(--radius-lg); border-collapse: separate; border-spacing: 0; background: var(--bg-card); }
+:is(.dtable, .dtable-sm, .dtable-lg) > thead > tr:first-child > th:first-child { border-top-left-radius: var(--radius-lg); }
+:is(.dtable, .dtable-sm, .dtable-lg) > thead > tr:first-child > th:last-child { border-top-right-radius: var(--radius-lg); }
+:is(.dtable, .dtable-sm, .dtable-lg) > tbody > tr:last-child > td { border-bottom: none; }
+:is(.dtable, .dtable-sm, .dtable-lg) > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--radius-lg); }
+:is(.dtable, .dtable-sm, .dtable-lg) > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--radius-lg); }
+:is(.sc-wrap, .card, [class*="-card"], [class*="card-"], .kpi-row, details) :is(.dtable, .dtable-sm, .dtable-lg) { border: none; border-radius: 0; background: transparent; }
+
 /* ═══════════════ Simulador de Rondas (RoundSimulator) ═══════════════ */
 /* Cabeçalho de secção: rótulo + régua até ao fim */
 .rsim-sec { display: flex; align-items: center; gap: 10px; margin: 20px 0 8px; font-size: var(--fs-11); font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-3); }
@@ -2545,7 +2559,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .flex-1   { flex: 1; }
 .shrink-0 { flex-shrink: 0; }
 .min-w-0 { min-width: 0; }
-.flex-col { flex-direction: column; }
+.flex-col { display: flex; flex-direction: column; }
 .flex-wrap { flex-wrap: wrap; }
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
@@ -2755,6 +2769,16 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
    Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
    ═══════════════════════════════════════════════════════════════ */
 .sc-lb { border-collapse: collapse; font-size: var(--fs-13); }
+/* Moldura redonda (13/10/2026) — a mesma das tabelas simples e dos cartões.
+   separate + spacing 0 para o canto poder ser redondo; as linhas internas são
+   só border-bottom/border-left das células, por isso não duplicam. */
+.sc-lb { border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-card); }
+.sc-lb > thead > tr:first-child > th:first-child { border-top-left-radius: var(--radius-lg); }
+.sc-lb > thead > tr:first-child > th:last-child { border-top-right-radius: var(--radius-lg); }
+.sc-lb > tbody > tr:last-child > td { border-bottom: none; }
+.sc-lb > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--radius-lg); }
+.sc-lb > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--radius-lg); }
+:is(.sc-wrap, .card, [class*="-card"], [class*="card-"]) .sc-lb { border: none; border-radius: 0; background: transparent; }
 /* Regra base: sem bordas laterais; separador horizontal apenas */
 .sc-lb th,
 .sc-lb td { padding: 6px 5px; text-align: center; border: none; white-space: nowrap; }

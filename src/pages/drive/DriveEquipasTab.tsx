@@ -58,6 +58,7 @@ export default function DriveEquipasTab({ data }: { data: DriveEquipasData }) {
     <div className="flex-col gap-12">
       <div className="muted fs-12">{data.regra} Fonte: <a href={data.fonte} target="_blank" rel="noreferrer">PDF «Resultados» da FPG</a>.</div>
 
+      <div className="sc-wrap">
       <table className="dtable tbl-compact" style={{ width: "auto", minWidth: 320 }}>
         <thead>
           <tr>
@@ -80,11 +81,13 @@ export default function DriveEquipasTab({ data }: { data: DriveEquipasData }) {
           ))}
         </tbody>
       </table>
+      </div>
 
       <div className="muted fs-12">
         {regiao ? <>Jogadores de <strong>{regiao}</strong> · <a href="#" onClick={(ev) => { ev.preventDefault(); setRegiao(null); }}>ver todas as regiões</a></> : "Jogadores de todas as regiões (clique numa região para filtrar)"}
         {" · "}✓ = resultado que conta para a equipa
       </div>
+      <div className="sc-wrap">
       <table className="dtable tbl-compact" style={{ width: "auto", minWidth: 420 }}>
         <thead>
           <tr>
@@ -109,6 +112,7 @@ export default function DriveEquipasTab({ data }: { data: DriveEquipasData }) {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
