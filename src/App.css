@@ -2529,6 +2529,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .fw-900 { font-weight: var(--fw-900); }
 /* NOTE: fs-8 and fs-9 are intentionally clamped to 10px as the minimum readable size.
    Use .fs-10 directly for clarity in new code. */
+.fs-9 { font-size: var(--fs-9); }
 .fs-10 { font-size: var(--fs-10); }
 .fs-11 { font-size: var(--fs-11); }
 .fs-12 { font-size: var(--fs-12); }
