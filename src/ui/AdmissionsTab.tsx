@@ -14,18 +14,21 @@
 
 import { useMemo, useState } from "react";
 import type { FpgAdmissions } from "../data/nacional2026Loader";
-import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
-import { EscPill, YearPill } from "./PillBadge";
+import { EscPill } from "./PillBadge";
+import BirthPill from "./BirthPill";
 import { useFedCountries, useFedBirthdates, useFedGenders } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { displayFed } from "../utils/fedKeys";
+import { PlayerFilterBar, filterRows } from "./MultiRoundLeaderboard";
+import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 
 interface Props {
   admissions: FpgAdmissions;
@@ -50,7 +53,8 @@ export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
   tournamentEscalao, tournamentSex, hidePostCols, teeRule,
 }: Props) {
-  const [q, setQ] = useState("");
+  // A MESMA barra de filtros do scorecard e do draw (13/10/2026 — «tudo igual»).
+  const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
   const fedGenders = useFedGenders();
@@ -62,7 +66,6 @@ export default function AdmissionsTab({
   const confirmedCount = admissions.totalInscritos ?? players.filter(p => p.status === "confirmed").length;
   const reservasCount = admissions.reservas ?? players.filter(p => p.status === "reserva").length;
   const desistentesCount = players.filter(p => p.status === "desistente").length;
-  const term = norm(q);
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
 
   // Enriquecer clube a partir de playersDB (scraper nem sempre captura)
@@ -105,14 +108,21 @@ export default function AdmissionsTab({
     };
   }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex]);
 
+  // Cada inscrito na forma das linhas do scorecard, para a barra de filtros comum.
+  const asRow = (p: (typeof enriched)[number], i: number): MultiRoundRow => ({
+    key: String(i), name: p._nomeFormatted, fed: p.fed ?? undefined, club: p._clube || undefined,
+    esc: p._escHist ?? undefined, teeName: p._ruleTee ?? undefined, dob: p._dob ?? null,
+    toPar: null, gross: null, pos: p.pos ?? 0, rounds: [],
+  });
+  const filterRowsAll = useMemo(() => enriched.map(asRow), [enriched]);
   const filtered = useMemo(() => {
-    if (!term) return enriched;
-    return enriched.filter(p =>
-      norm(p._nomeFormatted).includes(term) ||
-      (p.fed || "").includes(term) ||
-      norm(p._clube).includes(term)
-    );
-  }, [enriched, term]);
+    // Nº de federado escrito na pesquisa → procura pelo fed (a barra só vê nome/clube).
+    const q = pFilter.name.trim();
+    const byFed = /^\d+$/.test(q);
+    const f = byFed ? { ...pFilter, name: "" } : pFilter;
+    const keep = new Set(filterRows(filterRowsAll, f, playersDB).map(r => r.key));
+    return enriched.filter((p, i) => keep.has(String(i)) && (!byFed || (p.fed || "").includes(q)));
+  }, [enriched, filterRowsAll, pFilter, playersDB]);
 
   // Ordenar: confirmed e reservas misturam-se conforme a sortKey escolhida.
   // Só `pos` e `status` fazem separação explícita (faz sentido para a ordem natural
@@ -199,6 +209,13 @@ export default function AdmissionsTab({
             <td className="lb-esc">
               {p._escHist ? <EscPill esc={p._escHist} /> : <span className="muted">–</span>}
             </td>
+            {/* Nasc. + Idade como no Resumo (pílulas neutras, colunas próprias). */}
+            <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
+              {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : <span className="muted">–</span>}
+            </td>
+            <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
+              {age != null ? <BirthPill>{age}a</BirthPill> : <span className="muted">–</span>}
+            </td>
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
                 nome — mostrar "–", que e a informacao verdadeira: sem federado.
                 O `fed` cru continua a ir para o TournPName, que precisa dele
@@ -214,21 +231,14 @@ export default function AdmissionsTab({
                 : p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span>
                 : <TeeDot teeName={teeName} />
             }</td>
-            <td title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
-              {p._dobYear != null ? (
-                <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                  <YearPill year={p._dobYear} />
-                  {age != null && <span className="muted fs-10">({age})</span>}
-                </span>
-              ) : <span className="muted">–</span>}
-            </td>
             {hasPts && (
-              <td title={p.ptsInfo || ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
+              <td title={p.ptsInfo || ""} style={{ textAlign: "center", whiteSpace: "nowrap" }}>
+                {/* Uma linha só (como o scorecard): «674 · 1º Madeira». */}
                 {p.pts != null ? (
-                  <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", lineHeight: 1.15 }}>
+                  <>
                     <b>{p.pts}</b>
-                    {p.ptsRank && <span className="muted fs-10">{p.ptsRank}</span>}
-                  </span>
+                    {p.ptsRank && <span className="muted fs-10"> · {p.ptsRank}</span>}
+                  </>
                 ) : <span className="muted">–</span>}
               </td>
             )}
@@ -237,10 +247,10 @@ export default function AdmissionsTab({
         postScorecardCells: hidePostCols ? undefined : (
           <>
             <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>
-            <td className="fs-11 muted" style={{ whiteSpace: "nowrap", padding: "6px 8px" }}>
+            <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
               {p.dataInscricao || "–"}
             </td>
-            <td style={{ padding: "6px 8px", textAlign: "center" }}>
+            <td style={{ textAlign: "center" }}>
               {isDesist
                 ? <span
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
@@ -270,44 +280,44 @@ export default function AdmissionsTab({
 
   const prefixHeaderCells = (
     <>
+      {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
       <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>
+      <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>
+      <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>
       <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
-      <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
+      <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>
       <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
       <th className="lb-tee">TEE</th>
-      <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>
       {hasPts && (
         <SortableHdr k="pts" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
-          style={{ padding: "7px 8px", textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
+          style={{ textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
       )}
     </>
   );
   const postScorecardHeaderCells = (
     <>
       <SortableHdr k="vac"     sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">VAC</SortableHdr>
-      <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }}>Registo</SortableHdr>
-      <SortableHdr k="status"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }}>Status</SortableHdr>
+      <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Registo</SortableHdr>
+      <SortableHdr k="status"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Status</SortableHdr>
     </>
   );
 
+  // Linha de resumo + barra de filtros: o MESMO formato e ordem do scorecard e do draw.
   const filterBar = (
-    <div className="detail-toolbar">
-      <input className="input" value={q} onChange={e => setQ(e.target.value)}
-        placeholder="Nome, clube, nº fed..." style={{ maxWidth: 240 }} />
-      <span className="muted fs-12">
-        {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}
-      </span>
-      {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
-      <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-        {effDate && <span className="muted fs-12">Início: {effDate}</span>}
+    <>
+      <div className="lb-info-line flex-wrap">
+        <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
+        {effDate && <span>· início {effDate.split("-").reverse().join("/")}</span>}
+        {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-            className="fs-11" style={{ color: "var(--chart-2)" }}>
+            className="fs-11" style={{ color: "var(--chart-2)", marginLeft: "auto" }}>
             scoring.fpg.pt ↗
           </a>
         )}
       </div>
-    </div>
+      <PlayerFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={players.length} playersDB={playersDB} />
+    </>
   );
 
   return (
@@ -318,6 +328,8 @@ export default function AdmissionsTab({
       postScorecardHeaderCells={hidePostCols ? undefined : postScorecardHeaderCells}
       postScorecardColCount={hidePostCols ? 0 : 3}
       showScorecard={false}
+      // Inscrições não têm resultados: as colunas ± e Tot estariam sempre vazias.
+      hideTotals
       filterBar={filterBar}
       // Sorting da pos e nome: delegamos a useSort externo
       onSortPos={() => toggleSort("pos")}

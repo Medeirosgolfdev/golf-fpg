@@ -16,7 +16,8 @@ import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED, isManuelByName } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
-import { EscPill, YearPill } from "./PillBadge";
+import { EscPill } from "./PillBadge";
+import BirthPill from "./BirthPill";
 import { useFedBirthdates, useFedHcp } from "./InscricoesComponents";
 import { norm, fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
 import { teeNameFor } from "../utils/teeRegulation";
@@ -28,6 +29,8 @@ import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
 import { escalaoAgeCap, fitsEscalaoAgeCap } from "../data/fpgUtils";
 import { displayFed } from "../utils/fedKeys";
+import { PlayerFilterBar, filterRows } from "./MultiRoundLeaderboard";
+import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 
 interface Props {
   draw: FpgDraw;
@@ -130,16 +133,6 @@ export function buildDrawResults(
   return m.size ? m : undefined;
 }
 
-// Paleta de fundo para distinguir horas de saída (grupos de flight).
-// Cores pastel translúcidas — funcionam em tema claro e escuro.
-const TEE_TIME_PALETTE = [
-  "rgba(59, 130, 246, 0.14)",   // azul
-  "rgba(34, 197, 94, 0.14)",    // verde
-  "rgba(245, 158, 11, 0.14)",   // âmbar
-  "rgba(236, 72, 153, 0.14)",   // rosa
-  "rgba(168, 85, 247, 0.14)",   // roxo
-  "rgba(20, 184, 166, 0.14)",   // teal
-];
 
 
 export default function DrawTab({
@@ -150,6 +143,8 @@ export default function DrawTab({
   const hc = hideCols || {};
   const showOm = !!(omLookup && omLookup.size);
   const [omFilter, setOmFilter] = useState<string | null>(null); // categoria OM a filtrar (null = todas)
+  // Filtros do scorecard (pesquisa · escalões · tees · clube · M/F · Nasc.) — a MESMA barra.
+  const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   const effDate = tournamentDate || draw.date || null;
   const fedBirthdates = useFedBirthdates();
   const fedHcp = useFedHcp();
@@ -500,27 +495,22 @@ export default function DrawTab({
   }, [flat, sortKey, sortDir, omLookup]);
 
   // Filtro por categoria da Ordem de Mérito (mostra só os jogadores de uma OM).
+  // Cada linha do draw na forma das linhas do scorecard, para a barra de filtros comum.
+  const asRow = (p: (typeof sorted)[number]): MultiRoundRow => ({
+    key: `${p.pos}-${p.fed ?? p.nome}`, name: p.nome, fed: p.fed ?? undefined, club: p.clube || undefined,
+    esc: p.escHist ?? undefined, teeName: p.tee ?? undefined, dob: p.dob ?? null,
+    toPar: null, gross: null, pos: p.pos, rounds: [],
+  });
+  const filterRowsAll = useMemo(() => sorted.map(asRow), [sorted]);
   const visibleSorted = useMemo(() => {
-    if (!omFilter) return sorted;
-    return sorted.filter(p => {
+    let list = sorted;
+    if (omFilter) list = list.filter(p => {
       const hit = lookupOm(omLookup, p.fed, p.nome);
       return omFilter === "none" ? !hit : hit?.catKey === omFilter;
     });
-  }, [sorted, omFilter, omLookup]);
-
-  // Mapa de cor de fundo por GRUPO (cicla uma paleta pastel pela ordem dos
-  // flights em `draw.groups`). Identifica visualmente cada grupo mesmo quando
-  // (a) é um shotgun — todos os grupos à mesma hora, distintos só pelo buraco —
-  // ou (b) a tabela é reordenada por outra coluna. Antes era keyed por teeTime,
-  // o que colapsava todos os grupos de um shotgun numa cor só.
-  const groupBg = useMemo(() => {
-    const m = new Map<number, string>();
-    const unique = [...new Set(flat.map(p => p.groupIdx))];
-    for (let i = 0; i < unique.length; i++) {
-      m.set(unique[i], TEE_TIME_PALETTE[i % TEE_TIME_PALETTE.length]);
-    }
-    return m;
-  }, [flat]);
+    const keep = new Set(filterRows(list.map(asRow), pFilter, playersDB).map(r => r.key));
+    return list.filter(p => keep.has(`${p.pos}-${p.fed ?? p.nome}`));
+  }, [sorted, omFilter, omLookup, pFilter, playersDB]);
 
   const rows: ScorecardRow[] = useMemo(() => {
     // Separador de grupos: linha mais grossa entre flights quando a ordenação
@@ -531,12 +521,13 @@ export default function DrawTab({
     // `draw.groups`), NÃO por `teeTime` — senão num shotgun (todos à mesma hora)
     // nunca havia mudança de grupo e não se desenhava nenhuma linha.
     //
-    // 3px + `var(--text-3)` (#7a8a6e) dá uma linha claramente visível. A
+    // Linha fina (1px, um tom acima das linhas normais) — o mesmo aspecto do
+    // scorecard, que não tem traços grossos (13/10/2026). A
     // `ScorecardLeaderboard` aplica o `borderTop` nos <td> que controla
     // (pos/nome/±Tot/buracos); aqui propagamos-o também aos <td> custom em
     // `prefixCells`/`postScorecardCells` para o traço atravessar a linha toda.
     const groupingActive = sortKey === "pos" || sortKey === "hora" || sortKey === "buraco";
-    const GROUP_BORDER = "3px solid var(--text-3)";
+    const GROUP_BORDER = "2px solid var(--border)";
     return visibleSorted.map((p, i) => {
       // Por fed (FPG) OU por nome: nos draws MAJOR (fmDrawsToFpg) não há fed
       // nenhum (playersDB vazio) e o Manuel ficava sem .row-manuel/estrela.
@@ -597,6 +588,26 @@ export default function DrawTab({
                 {p.escHist ? <EscPill esc={p.escHist} /> : <span className="muted">–</span>}
               </td>
             )}
+            {!hc.nasc && (() => {
+              // Nasc. + Idade como no Resumo (pílulas neutras); estimativas a vermelho.
+              const y = Number(String(effDate || "").slice(0, 4)) || null;
+              const lo = p.birthYearEst;
+              const hi = p.birthYearEstMax;
+              const est = p.dobYear == null && lo != null;
+              const estYear = !est ? null : hi === null ? `≥${lo}` : hi != null && hi > lo! ? `${lo}–${String(hi).slice(2)}` : `${lo}`;
+              const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
+              const tip = p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${p.estNote || "ano deduzido, não lido"}` : "";
+              return <>
+                <td className="lb-esc" title={tip} style={bStyle}>
+                  {p.dobYear != null ? <BirthPill>{p.dobShown ?? p.dobYear}</BirthPill>
+                    : est ? <span className="est-value">{estYear}</span> : <span className="muted">–</span>}
+                </td>
+                <td className="lb-esc" title={tip} style={bStyle}>
+                  {age != null ? <BirthPill>{!p.dob ? "~" : ""}{age}a</BirthPill>
+                    : estAge ? <span className="est-value">{estAge}a</span> : <span className="muted">–</span>}
+                </td>
+              </>;
+            })()}
             {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}
             {!hc.clube && <td className="lb-club" title={p.countryEstimated ? `Estimativa — ${p.estNote || "país deduzido"}` : p.clube} style={bStyle}>{p.clube ? (p.countryEstimated ? <span className="est-value">{p.clube}</span> : p.clube) : "–"}</td>}
             {!hc.hcp && (
@@ -606,47 +617,21 @@ export default function DrawTab({
               </td>
             )}
             {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
-            {!hc.nasc && (
-              <td title={p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : ""} style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap", ...bStyle }}>
-                {p.dobYear != null ? (
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                    {p.dobShown ? <span className="fs-11 mono">{p.dobShown}</span> : <YearPill year={p.dobYear} />}
-                    {age != null && <span className="muted fs-10">({!p.dob ? "~" : ""}{age})</span>}
-                  </span>
-                ) : p.birthYearEst != null ? (
-                  <span className="est-value" title={`Estimativa — ${p.estNote || "ano deduzido, não lido"}`}>
-                    {(() => {
-                      // Ano único "2011 (~15)" · intervalo "2010–11 (~15–16)" · aberto "≥2012 (≤14)"
-                      const y = Number(String(effDate || "").slice(0, 4)) || null;
-                      const lo = p.birthYearEst!;
-                      if (p.birthYearEstMax === null) return `≥${lo}${y ? ` (≤${y - lo})` : ""}`;
-                      const hi = p.birthYearEstMax;
-                      if (hi != null && hi > lo) return `${lo}–${String(hi).slice(2)}${y ? ` (~${y - hi}–${y - lo})` : ""}`;
-                      return `${lo}${y ? ` (~${y - lo})` : ""}`;
-                    })()}
-                  </span>
-                ) : <span className="muted">–</span>}
-              </td>
-            )}
           </>
         ),
         postScorecardCells: (
           <>
-            <td className="fs-12 fw-700 mono" style={{
-              padding: "6px 8px", whiteSpace: "nowrap", textAlign: "center",
-              background: groupBg.get(p.groupIdx),
-              ...bStyle,
-            }}>
+            <td className="mono" style={{ whiteSpace: "nowrap", textAlign: "center", ...bStyle }}>
               {p.teeTime}
             </td>
-            <td className="fs-12 fw-600" style={{ padding: "6px 8px", textAlign: "center", ...bStyle }}>
+            <td style={{ textAlign: "center", ...bStyle }}>
               T{p.startHole ?? "?"}
             </td>
           </>
         ),
       };
     });
-  }, [visibleSorted, playersDB, teeName, effDate, groupBg, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
+  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -674,12 +659,14 @@ export default function DrawTab({
   const prefixHeaderCells = (
     <>
       {showOm && <SortableHdr k="om" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px" }} title="Categoria na Ordem de Mérito CGSS">OM</SortableHdr>}
+      {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
       {!hc.esc && <SortableHdr k="esc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
+      {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>}
+      {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
-      {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>}
+      {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>}
       {!hc.hcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
       {!hc.tee && <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>}
-      {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>}
     </>
   );
   const postScorecardHeaderCells = (
@@ -697,17 +684,18 @@ export default function DrawTab({
   const isEstimated = !!draw.note && (draw.groups?.length ?? 0) > 0;
   const filterBar = (
     <>
-      <div className="detail-toolbar">
-        <span className="fw-700 fs-14">Draw{roundNum ? ` — Ronda ${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
-        <span className="muted fs-12">{(draw.groups || []).length} flights · {omFilter ? `${visibleSorted.length}/${total}` : total} jogadores</span>
-        {draw.date && <span className="muted fs-12">· {draw.date}</span>}
+      {/* Linha de resumo no formato do scorecard: «N jog · N grupos · data». */}
+      <div className="lb-info-line flex-wrap">
+        <span>{visibleSorted.length !== total ? `${visibleSorted.length}/${total}` : total} jog · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
+        {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
-            className="ml-auto fs-11" style={{ color: "var(--chart-2)" }}>
+            className="ml-auto fs-11" style={{ color: "var(--chart-2)", marginLeft: "auto" }}>
             scoring.fpg.pt ↗
           </a>
         )}
       </div>
+      <PlayerFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={total} playersDB={playersDB} />
       {showOm && (
         <div className="detail-toolbar" style={{ gap: 6, flexWrap: "wrap" }}>
           <span className="muted fs-11">Ordem de Mérito:</span>
@@ -750,6 +738,8 @@ export default function DrawTab({
       postScorecardHeaderCells={postScorecardHeaderCells}
       postScorecardColCount={2}
       showScorecard={false}
+      // Ronda por jogar: ± e Tot estariam todos vazios — escondem-se (como nas Inscrições).
+      hideTotals={!rows.some(r => r.toPar != null || (r.gross ?? 0) > 0)}
       filterBar={filterBar}
       // Sorting da pos e nome: delegamos a useSort externo
       onSortPos={() => toggleSort("pos")}

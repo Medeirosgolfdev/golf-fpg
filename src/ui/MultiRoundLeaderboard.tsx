@@ -100,7 +100,7 @@ function rowBirthYear(row: MultiRoundRow, playersDB?: PlayersDB): number | null 
   return birthYearOf(dob);
 }
 
-function filterRows<T extends MultiRoundRow>(rows: T[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): T[] {
+export function filterRows<T extends MultiRoundRow>(rows: T[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): T[] {
   let ps = rows;
   if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
   if (f.escs.length) ps = ps.filter(r => r.esc != null && f.escs.includes(r.esc));
@@ -111,7 +111,9 @@ function filterRows<T extends MultiRoundRow>(rows: T[], f: PlayerFilter, players
   return ps;
 }
 
-function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
+/** Barra de filtros do scorecard (pesquisa · escalões · tees · clube · M/F · Nasc.) —
+ *  exportada para o Draw usar a MESMA (13/10/2026, «o mesmo look»). */
+export function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
   rows: MultiRoundRow[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void; total: number; playersDB?: PlayersDB;
 }) {
   const availEsc   = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.esc) s.add(r.esc); return [...s].sort((a,b) => a.localeCompare(b)); }, [rows]);
