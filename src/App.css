@@ -2769,16 +2769,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
    Usado em: ScorecardLeaderboard, TotalLeaderboard, AccumulatedLB
    ═══════════════════════════════════════════════════════════════ */
 .sc-lb { border-collapse: collapse; font-size: var(--fs-13); }
-/* Moldura redonda (13/10/2026) — a mesma das tabelas simples e dos cartões.
-   separate + spacing 0 para o canto poder ser redondo; as linhas internas são
-   só border-bottom/border-left das células, por isso não duplicam. */
-.sc-lb { border-collapse: separate; border-spacing: 0; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--bg-card); }
-.sc-lb > thead > tr:first-child > th:first-child { border-top-left-radius: var(--radius-lg); }
-.sc-lb > thead > tr:first-child > th:last-child { border-top-right-radius: var(--radius-lg); }
-.sc-lb > tbody > tr:last-child > td { border-bottom: none; }
-.sc-lb > tbody > tr:last-child > td:first-child { border-bottom-left-radius: var(--radius-lg); }
-.sc-lb > tbody > tr:last-child > td:last-child { border-bottom-right-radius: var(--radius-lg); }
-:is(.sc-wrap, .card, [class*="-card"], [class*="card-"]) .sc-lb { border: none; border-radius: 0; background: transparent; }
+
 /* Regra base: sem bordas laterais; separador horizontal apenas */
 .sc-lb th,
 .sc-lb td { padding: 6px 5px; text-align: center; border: none; white-space: nowrap; }
