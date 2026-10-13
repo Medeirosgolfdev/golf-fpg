@@ -621,10 +621,10 @@ export default function DrawTab({
         ),
         postScorecardCells: (
           <>
-            <td className="mono" style={{ whiteSpace: "nowrap", textAlign: "center", ...bStyle }}>
+            <td className="mono fs-11" style={{ whiteSpace: "nowrap", textAlign: "center", ...bStyle }}>
               {p.teeTime}
             </td>
-            <td style={{ textAlign: "center", ...bStyle }}>
+            <td className="fs-11" style={{ textAlign: "center", ...bStyle }}>
               T{p.startHole ?? "?"}
             </td>
           </>
