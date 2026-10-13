@@ -58,7 +58,6 @@ const FPGPage = lazy(() => import("./pages/FPGPage"));
 const MajorPage = lazy(() => import("./pages/MajorPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
 const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
-const FaldoPage = lazy(() => import("./pages/FaldoPage"));
 const EGRPage = lazy(() => import("./pages/EGRPage"));
 const WAGRPage = lazy(() => import("./pages/WAGRPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
@@ -441,8 +440,8 @@ export default function App() {
                 <Route path="/ffg/:source/:key" element={<FFGPage />} />
                 <Route path="/england" element={<EnglandGolfPage />} />
                 <Route path="/england/:source/:key" element={<EnglandGolfPage />} />
-                <Route path="/faldo" element={<FaldoPage />} />
-                <Route path="/faldo/:source/:key" element={<FaldoPage />} />
+                {/* /faldo arquivada (2026-10-13, scripts/_archive/faldo) — o Faldo Madeira vive na /major */}
+                <Route path="/faldo/*" element={<Navigate to="/major/faldomadeira/2026" replace />} />
                 <Route path="/egr" element={<EGRPage />} />
                 <Route path="/egr/:source/:id" element={<EGRPage />} />
                 <Route path="/wagr" element={<WAGRPage />} />

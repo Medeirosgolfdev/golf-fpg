@@ -33,7 +33,6 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
   { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
-  { tab: "faldo",      label: "🏆 Faldo",    path: "/faldo", title: "Faldo Series" },
   { tab: "egr",        label: "🇪🇺 EGR",     path: "/egr", title: "European Golf Rankings" },
   { tab: "wagr",       label: "🌍 WAGR",     path: "/wagr", title: "World Amateur Golf Ranking" },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },

@@ -129,7 +129,7 @@ Rotas principais (tabela completa em [paginas.md](docs/claude/paginas.md)):
 `/jogadores` e `/jogadores/:fed` · `/FPG` · `/drive` · `/uskids` · `/kids2`
 (tracker de rivais; `/kids` redirecciona) · `/major` (BJGT, Doral, GolfGenius,
 GolfBox) · `/england` · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
-`/faldo` · `/campos` · `/comparar` · `/simulador` · `/calendario` · `/draws` ·
+`/campos` · `/comparar` · `/simulador` · `/calendario` · `/draws` ·
 `/titulos` · `/torneios-recentes` · `/bjgt-analysis`.
 
 - `BJGTPage.tsx` e `DORALPage.tsx` são módulos de dados usados pela `/major`
