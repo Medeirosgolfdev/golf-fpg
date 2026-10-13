@@ -68,10 +68,12 @@ import { CLUBES_GRUPOS_BY_YEAR } from "../data/clubesGruposData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
+import { fpgMatchplayTabs, useFpgMatchplay, type FpgMatchplayData } from "./fpg/fpgMatchplay";
 
-/** Junta o tab da Ordem de Mérito (CGSS) aos tabs de "Edições anteriores". */
-function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0], playersDB?: Parameters<typeof fpgPastEditionsTabs>[2]) {
-  const tabs = [...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
+/** Junta o tab do Match Play (Taça da Federação) e o da Ordem de Mérito (CGSS)
+ *  aos tabs de "Edições anteriores". */
+function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0], playersDB?: Parameters<typeof fpgPastEditionsTabs>[2], matchplay?: FpgMatchplayData | null) {
+  const tabs = [...(fpgMatchplayTabs(matchplay ?? null, t) ?? []), ...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
   return tabs.length ? tabs : undefined;
 }
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -1928,6 +1930,8 @@ function Content() {
     () => buildFpgEditionsIndex([...tournaments, ...jovensTournaments]),
     [tournaments, jovensTournaments],
   );
+  /** Quadros de match play (Taça da Federação) — tab "Match Play" na qualificação. */
+  const matchplayData = useFpgMatchplay();
 
   /** Lista de torneios indexados pelo seu ficheiro de origem — alimenta o
    *  popover do clique-direito no FileBadge. Inclui clubes e jovens (que têm
@@ -2066,11 +2070,11 @@ function Content() {
       const t = d.results!;
       d.renderFull = () => (
         <TournamentDetail tournament={t} escLookup={escLookup} playersDB={playersDB}
-          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB)} />
+          extraTabs={fpgExtraTabs(editionsIndex, t, playersDB, matchplayData)} />
       );
     }
     return ents;
-  }, [shellGroups, escLookup, playersDB, editionsIndex]);
+  }, [shellGroups, escLookup, playersDB, editionsIndex, matchplayData]);
 
   // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão). Um membro pode ter
   // tcode sintético "A+B" (multi-dia); o URL canónico usa só o 1º tcode, por isso
@@ -2646,7 +2650,7 @@ function Content() {
                         ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any, playersDB)} />;
+                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any, playersDB, matchplayData)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2920,7 +2924,7 @@ function Content() {
                   </div>
                 )}
                 {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens, playersDB)} />
+                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens, playersDB, matchplayData)} />
                   : <div className="center-msg muted">Selecciona um torneio</div>
                 }
               </>

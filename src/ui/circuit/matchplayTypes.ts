@@ -18,6 +18,7 @@ export interface MatchplaySide {
   country: string | null;      // "Portugal"
   points: number | null;       // 5.5
   isLead: boolean;
+  seed?: number | null;        // cabeça de série (quadros individuais da FPG)
 }
 
 export interface MatchplayGameHole {

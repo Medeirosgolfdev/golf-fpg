@@ -282,6 +282,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
       // nome e desequilibrava a folga face à seta do lado Fora.
       <span style={{ fontWeight: won ? 700 : 400, color: !settled || won ? undefined : "var(--text-3)" }}>
         {fl ? `${fl} ` : ""}{s?.name ?? "?"}
+        {s?.seed ? <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> ({s.seed})</span> : null}
       </span>
     );
     return (
@@ -385,12 +386,13 @@ export default function MatchplayView({ data }: { data: MatchplayFile }) {
     // página toda afastava os nomes do resultado e perdia-se a leitura.
     <div style={{ maxWidth: 880 }}>
       {data.flights.map(fl => <FlightSection key={fl.competitionId} fl={fl} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
-      <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+      {/* Só faz sentido com confrontos de equipas (quadros individuais não têm jogos). */}
+      {data.flights.some(fl => fl.rounds.some(r => r.matches.some(m => m.games.length))) && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
         Clica num confronto para ver os jogos (foursomes e singles), e num jogo para o
         buraco-a-buraco · estado corrido na perspectiva da equipa da coluna ESQUERDA
         (<span style={{ color: "var(--accent)", fontWeight: 700 }}>UP</span> à frente,{" "}
         <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>DN</span> atrás).
-      </div>
+      </div>}
     </div>
   );
 }

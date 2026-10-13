@@ -1,0 +1,51 @@
+diff --git a/scripts/fetch-uskids-draws.js b/scripts/fetch-uskids-draws.js
+index 280998814d..0dd921dee3 100644
+--- a/scripts/fetch-uskids-draws.js
++++ b/scripts/fetch-uskids-draws.js
+@@ -215,6 +215,12 @@ function extrairGrupos(flightPlayers, ronda) {
+   });
+ }
+ 
++/** True se o torneio tem pelo menos um grupo de draw capturado. */
++function temGrupos(t) {
++  return (t.escaloes || []).some(e =>
++    (e.rondas || []).some(r => (r.grupos || []).length > 0));
++}
++
+ // ── Descarregar todas as páginas de um flight num round ──────────────────
+ async function fetchFlightRound(page, fid, ronda, totalEstim) {
+   const players = {};
+@@ -370,18 +376,28 @@ async function main() {
+     await browser.close();
+   }
+ 
+-  // Merge com output anterior — preserva torneios fora da janela actual
++  // Merge com output anterior — ADITIVO: preserva TODOS os torneios já
++  // capturados. Draws de torneios já jogados não mudam (mesmo princípio do
++  // drawsAreFrozen em scrape-fpg-admissions-draws-node.js) e alimentam as
++  // rondas históricas USKids do manuel-pairings.json (página /draws) —
++  // nunca os apagar por idade.
+   let outputAnterior = { torneios: [] };
+   if (fs.existsSync(OUTPUT)) {
+     try { outputAnterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+   }
+   const mapa = new Map((outputAnterior.torneios || []).map(r => [r.t, r]));
+-  for (const r of novos) mapa.set(r.t, r);
++  for (const r of novos) {
++    const antigo = mapa.get(r.t);
++    // Nunca substituir um draw já capturado por um fetch SEM grupos (draw
++    // despublicado temporariamente ou falha parcial do endpoint).
++    if (antigo && temGrupos(antigo) && !temGrupos(r)) {
++      console.log(`   ↷ t=${r.t} ${r.name} — fetch sem grupos, preservada a versão anterior`);
++      continue;
++    }
++    mapa.set(r.t, r);
++  }
+ 
+-  // Limpar torneios já terminados há muito (> 14 dias) — não fazem falta no draw
+-  const HOJE_LIMITE = -14;
+   const todos = [...mapa.values()]
+-    .filter(t => diasAte(t.date_fim || t.date_inicio) >= HOJE_LIMITE)
+     .sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
+ 
+   fs.mkdirSync(DIR, { recursive: true });

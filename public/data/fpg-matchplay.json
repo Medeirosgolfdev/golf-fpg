@@ -1,0 +1,2518 @@
+{
+  "tournaments": {
+    "000-10798": {
+      "tournament": "38 Taça da Federação Portuguesa de Golfe H",
+      "slug": "fpg-matchplay-000-00018",
+      "year": 2024,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2024-10-07",
+      "endDate": "2024-10-09",
+      "champion": "Diogo Silva Pinto Rocha",
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": true,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00018",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "1/16 Avos",
+              "date": "2024-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "08:30 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Martim Pinto Johansen",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 32
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "08:38 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Gaspard Maes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 16
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "António Mendes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 17
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "08:46 · Tee 1",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "André Nunes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 25
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "08:54 · Tee 1",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Alexandre Castelo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 9
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Dinis Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 24
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "09:02 · Tee 1",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pedro Ferreira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 29
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "09:10 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Maria Ivo de Carvalho",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 13
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 20
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "09:18 · Tee 1",
+                  "result": "6 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Miguel Azevedo Cardoso",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Lucas Lopes Azinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 28
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 8,
+                  "startTime": "09:26 · Tee 1",
+                  "result": "21 buracos",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Konstantin Mikirtumov",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 12
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "André Neto Lopes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 21
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 9,
+                  "startTime": "08:30 · Tee 10",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Diogo Silva Pinto Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pedro Ataíde e Sá",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 31
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 10,
+                  "startTime": "08:38 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Rodrigo Marques Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 15
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisco Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 18
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 11,
+                  "startTime": "08:46 · Tee 10",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pedro Afonso de Correia Mendes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 26
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 12,
+                  "startTime": "08:54 · Tee 10",
+                  "result": "19 buracos",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "António Teixeira e Costa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 10
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Filipe Salazar L.t. Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 23
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 13,
+                  "startTime": "09:02 · Tee 10",
+                  "result": "5 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luis António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "André Gonçalves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 30
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 14,
+                  "startTime": "09:10 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Santiago Dias",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 14
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Tiago Abrantes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 19
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 15,
+                  "startTime": "09:18 · Tee 10",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pedro Santos Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Tomás Afonso Araujo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 27
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 16,
+                  "startTime": "09:26 · Tee 10",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Guilherme Grabner Moreira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 11
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Diogo Salgueiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 22
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Oitavos Final",
+              "date": "2024-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 17,
+                  "startTime": "13:30 · Tee 1",
+                  "result": "6 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Gaspard Maes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 18,
+                  "startTime": "13:38 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Alexandre Castelo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 19,
+                  "startTime": "13:46 · Tee 1",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 20,
+                  "startTime": "14:45 · Tee 1",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Miguel Azevedo Cardoso",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Konstantin Mikirtumov",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 21,
+                  "startTime": "14:02 · Tee 1",
+                  "result": "8 & 7",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Diogo Silva Pinto Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisco Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 22,
+                  "startTime": "14:10 · Tee 1",
+                  "result": "4 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "António Teixeira e Costa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 23,
+                  "startTime": "14:18 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luis António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Tiago Abrantes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 24,
+                  "startTime": "14:26 · Tee 1",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Tomás Afonso Araujo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Diogo Salgueiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Quartos-Final",
+              "date": "2024-10-08",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 25,
+                  "startTime": "08:30 · Tee 1",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 26,
+                  "startTime": "08:38 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Miguel Azevedo Cardoso",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 27,
+                  "startTime": "08:46 · Tee 1",
+                  "result": "6 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Diogo Silva Pinto Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "António Teixeira e Costa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 28,
+                  "startTime": "08:54 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Tiago Abrantes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Tomás Afonso Araujo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 4,
+              "name": "Meias-Finais",
+              "date": "2024-10-08",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 29,
+                  "startTime": "13:35 · Tee 1",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 30,
+                  "startTime": "13:45 · Tee 1",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Diogo Silva Pinto Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Tiago Abrantes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 5,
+              "name": "Final",
+              "date": "2024-10-09",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 31,
+                  "startTime": "09:00 · Tee 1",
+                  "result": "37 buracos",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Diogo Silva Pinto Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:31.229Z"
+    },
+    "000-10799": {
+      "tournament": "38 Taça da Federação Portuguesa de Golfe BPI S",
+      "slug": "fpg-matchplay-000-00019",
+      "year": 2024,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2024-10-07",
+      "endDate": "2024-10-09",
+      "champion": "Inês Belchior",
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": true,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00019",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "Quartos-Final",
+              "date": "2024-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "09:36 · Tee 1",
+                  "result": "8 & 6",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Inês Belchior",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Teresa Ferreira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "09:44 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Rafaela Pinto",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "09:36 · Tee 10",
+                  "result": "6 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luciana Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Eva Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "09:44 · Tee 10",
+                  "result": "4 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Amélia Gabin",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Maria Francisca Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Meias-Finais",
+              "date": "2024-10-08",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "09:04 · Tee 1",
+                  "result": "5 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Inês Belchior",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "09:12 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luciana Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Amélia Gabin",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Final",
+              "date": "2024-10-09",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "09:10 · Tee 1",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Inês Belchior",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Amélia Gabin",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:32.347Z"
+    },
+    "000-10851": {
+      "tournament": "39º Taça da Federação Portuguesa de Golfe BPI Homens",
+      "slug": "fpg-matchplay-000-00020",
+      "year": 2025,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2025-10-06",
+      "endDate": "2025-10-07",
+      "champion": "Gabriel Sardo",
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": true,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00020",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "Oitavos Final",
+              "date": "2025-10-06",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "08:36 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "André Neto Lopes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Martim Pinto Johansen",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 16
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "08:44 · Tee 1",
+                  "result": "6 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Miguel Cardoso",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisco Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 9
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "08:52 · Tee 1",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 13
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "09:00 · Tee 1",
+                  "result": "4 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pedro Afonso de Correia Mendes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Alexander Amey",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 12
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "08:36 · Tee 10",
+                  "result": "6 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 15
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "08:44 · Tee 10",
+                  "result": "3 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Rodrigo Marques Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 10
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "08:52 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Konstantin Mikirtumov",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 14
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 8,
+                  "startTime": "09:00 · Tee 10",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luís António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Ivo de Carvalho",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 11
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Quartos-Final",
+              "date": "2025-10-06",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 9,
+                  "startTime": "13:38 · Tee 1",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Martim Pinto Johansen",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Miguel Cardoso",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 10,
+                  "startTime": "13:46 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Alexander Amey",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 11,
+                  "startTime": "13:38 · Tee 10",
+                  "result": "3 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 12,
+                  "startTime": "14:00 · Tee 10",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Luís António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Meias-Finais",
+              "date": "2025-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 13,
+                  "startTime": "08:30 · Tee 10",
+                  "result": "3 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Martim Pinto Johansen",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 14,
+                  "startTime": "08:38 · Tee 10",
+                  "result": "7 & 5",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Luís António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 4,
+              "name": "Final",
+              "date": "2025-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 15,
+                  "startTime": "13:00 · Tee 10",
+                  "result": "6 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Luís António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:33.095Z"
+    },
+    "000-10852": {
+      "tournament": "39º Taça da Federação Portuguesa de Golfe BPI Senhoras",
+      "slug": "fpg-matchplay-000-00021",
+      "year": 2025,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2025-10-06",
+      "endDate": "2025-10-07",
+      "champion": "Francisca Rocha",
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": true,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00021",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "Quartos-Final",
+              "date": "2025-10-06",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "08:20 · Tee 1",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Amélia Gabin",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Matilde Leal Gouveia",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "08:28 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Eva Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "08:20 · Tee 10",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luciana Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Laura Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "08:28 · Tee 10",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Maria Francisca Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Meias-Finais",
+              "date": "2025-10-06",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "13:30 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Matilde Leal Gouveia",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "13:30 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luciana Reis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Final",
+              "date": "2025-10-07",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "11:00 · Tee 1",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Rocha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:33.654Z"
+    },
+    "000-10918": {
+      "tournament": "40 Taça da Federação Portuguesa de Golfe BPI Homens",
+      "slug": "fpg-matchplay-000-00022",
+      "year": 2026,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2026-10-12",
+      "endDate": "2026-10-13",
+      "champion": null,
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": false,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00022",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "Oitavos Final",
+              "date": "2026-10-12",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "08:38 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luis António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Martim Pinto Johansen",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 16
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "08:46 · Tee 1",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Marcelo Guedes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 9
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "08:54 · Tee 1",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Guilherme Grabner Moreira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 13
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "09:02 · Tee 1",
+                  "result": "21 buracos",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Crasi Alves",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Rodrigo Faria Constantino",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 12
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "08:38 · Tee 10",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Rodrigo Marques Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 15
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "08:46 · Tee 10",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pedro Afonso de Correia Mendes",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 10
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "08:54 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ashton Everest",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 14
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 8,
+                  "startTime": "09:02 · Tee 10",
+                  "result": "4 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Setúbal",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisco Anahory Assis",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 11
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Quartos-Final",
+              "date": "2026-10-12",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 9,
+                  "startTime": "13:38 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Luis António Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 10,
+                  "startTime": "13:46 · Tee 1",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Gabriel Sardo",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Rodrigo Faria Constantino",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 11,
+                  "startTime": "13:38 · Tee 10",
+                  "result": "2 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Bernardo Costa Pinheiro",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 12,
+                  "startTime": "13:46 · Tee 10",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Setúbal",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Meias-Finais",
+              "date": "2026-10-13",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 13,
+                  "startTime": "08:30 · Tee 10",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Afonso Rui Oliveira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Rodrigo Faria Constantino",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 14,
+                  "startTime": "08:38 · Tee 10",
+                  "result": "5 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "José Miguel Franco de Sousa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "away",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 4,
+              "name": "Final",
+              "date": "2026-10-13",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 15,
+                  "startTime": "13:00 · Tee 10",
+                  "result": "2 (8)",
+                  "isSettled": false,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Rodrigo Faria Constantino",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "João Miguel Pereira",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": null,
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:33.897Z"
+    },
+    "000-10919": {
+      "tournament": "40 Taça da Federação Portuguesa de Golfe BPI Senhoras",
+      "slug": "fpg-matchplay-000-00023",
+      "year": 2026,
+      "format": "KnockOut",
+      "parentCompetitionId": null,
+      "startDate": "2026-10-12",
+      "endDate": "2026-10-13",
+      "champion": "Laura Santos",
+      "flights": [
+        {
+          "competitionId": 1,
+          "name": "Match Play",
+          "format": "KnockOut",
+          "parentId": null,
+          "isCompleted": true,
+          "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00023",
+          "rounds": [
+            {
+              "number": 1,
+              "name": "Quartos-Final",
+              "date": "2026-10-12",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 1,
+                  "startTime": "08:20 · Tee 1",
+                  "result": "2 & 1",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Laura Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 1
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Maria Francisca Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 8
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 2,
+                  "startTime": "08:28 · Tee 1",
+                  "result": "1 UP",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Eva Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 4
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Camila Pazos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 5
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 3,
+                  "startTime": "08:20 · Tee 10",
+                  "result": "3 & 2",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 2
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Maria Cunha",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 7
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 4,
+                  "startTime": "08:28 · Tee 10",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Ferreira da Costa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 3
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Grace Gordon",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false,
+                    "seed": 6
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 2,
+              "name": "Meias-Finais",
+              "date": "2026-10-12",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 5,
+                  "startTime": "13:20 · Tee 1",
+                  "result": "5 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Laura Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Eva Silva",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                },
+                {
+                  "teamMatchId": null,
+                  "matchNo": 6,
+                  "startTime": "13:20 · Tee 10",
+                  "result": "5 & 4",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Ferreira da Costa",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            },
+            {
+              "number": 3,
+              "name": "Final",
+              "date": "2026-10-13",
+              "matches": [
+                {
+                  "teamMatchId": null,
+                  "matchNo": 7,
+                  "startTime": "11:00 · Tee 10",
+                  "result": "5 & 3",
+                  "isSettled": true,
+                  "isStarted": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Laura Santos",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Francisca Salgado",
+                    "iso": null,
+                    "country": null,
+                    "points": null,
+                    "isLead": false
+                  },
+                  "winner": "home",
+                  "games": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "scrapedAt": "2026-10-13T13:39:33.938Z"
+    }
+  },
+  "lastUpdated": "2026-10-13T13:39:33.939Z",
+  "source": "scoring-pt.datagolf.pt/scripts/matchplay.asp"
+}
