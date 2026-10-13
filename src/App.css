@@ -4493,3 +4493,7 @@ table td.lb-col-divider {
 
 /* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
 .est-value { font-style: italic; color: var(--color-danger); }
+
+/* Vista "Simulador" dentro dos Campos — os controlos que antes viviam na toolbar */
+.sim-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 12px; }
+.sim-controls .btn.active { background: var(--accent); color: #fff; border-color: transparent; } /* = .seg-btn.active */

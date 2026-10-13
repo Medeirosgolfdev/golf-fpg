@@ -1,16 +1,12 @@
-﻿import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
+﻿import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Navigate, useSearchParams } from "react-router-dom";
 import DetailHeader from "../ui/DetailHeader";
-import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
-import { useMasterDetail } from "../hooks/useMasterDetail";
-import type { Hole, SexFilter } from "../data/types";
+import type { Course, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { sortTees, filterTees } from "../utils/teeUtils";
 import { SDTable, MultiTeeSDTable, type HolesMode } from "../ui/ScoreTable";
-import { fmtCR, fmtToPar, norm, titleCase } from "../utils/format";
+import { fmtCR, fmtToPar, titleCase } from "../utils/format";
 import {
   calcSD, calcScore, calcCourseHcp, calcPlayingHcp, expectedSD9, calcStrokesPerHole, get9hRatings,
   scoreDifferential, scoreForDifferential,
@@ -19,7 +15,6 @@ import { SC } from "../utils/scoreDisplay";
 import OverlayExport from "../ui/OverlayExport";
 import type { OverlayData } from "../ui/OverlayExport";
 import { getNextCalendarEvent } from "../utils/calendarData";
-import { isTournamentCourse } from "../constants/tournamentCourses";
 import ExtLink from "../ui/ExternalLink";
 import { RoundSimulator, type IncomingRound } from "../ui/RoundSimulator";
 import {
@@ -909,7 +904,7 @@ function RoundImpactCard({ name, hi, score, isAgs, r, onSend }: {
 const SIM_LS_KEY = "simulador_state_v1";
 
 type SimPersistState = {
-  course: string;   // courseKey ou MANUAL_KEY
+  course: string;   // courseKey ou MANUAL_KEY (só para o redireccionamento do /simulador antigo)
   tee: string;      // índice do tee (string) ou ""
   holes: HolesMode;
   sex: SexFilter;
@@ -956,18 +951,45 @@ function readInitialSimState(): SimPersistState {
   };
 }
 
-export default function SimuladorPage() {
+/** O /simulador antigo passou a ser a vista "Simulador" dos Campos
+ *  (/campos/<campo>?view=sim). Links antigos (com ?course=…) continuam a abrir
+ *  o mesmo campo, com os restantes parâmetros (tee, jogador, HI, PCC…). */
+export default function SimuladorRedirect() {
+  const init = readInitialSimState();
+  const sp = new URLSearchParams(typeof window !== "undefined" ? window.location.search : "");
+  sp.delete("course");
+  sp.delete("sex");
+  if (init.course === MANUAL_KEY) sp.set("manual", "1");
+  sp.set("view", "sim");
+  const path = init.course && init.course !== MANUAL_KEY ? `/campos/${init.course}` : "/campos";
+  return <Navigate to={`${path}?${sp.toString()}`} replace />;
+}
+
+/** Vista "Simulador" dentro dos Campos: o campo vem da lista dos Campos e o
+ *  sexo do filtro da barra; o resto (tee, buracos, jogador, HI, PCC, allowance,
+ *  modo manual) vive aqui, espelhado no URL e no localStorage. */
+export function SimuladorView({ course, sexFilter, setSexFilter }: {
+  course: Course | null;
+  sexFilter: SexFilter;
+  setSexFilter: (s: SexFilter) => void;
+}) {
   const { simCourses: courses, players } = useAppContext();
   const [, setSearchParams] = useSearchParams();
   const init = useMemo(readInitialSimState, []);
-  const [q, setQ] = useState("");
-  const [sexFilter, setSexFilter] = useState<SexFilter>(init.sex);
   const [holesMode, setHolesMode] = useState<HolesMode>(init.holes);
-  const [selectedKey, setSelectedKey] = useState<string | null>(init.course || null);
+  const [manualMode, setManualMode] = useState<boolean>(
+    () => init.course === MANUAL_KEY || (typeof window !== "undefined" && new URLSearchParams(window.location.search).get("manual") === "1"),
+  );
   const [selectedTeeIdx, setSelectedTeeIdx] = useState<number | null>(
     init.tee !== "" && !isNaN(parseInt(init.tee, 10)) ? parseInt(init.tee, 10) : null
   );
-  const md = useMasterDetail();
+  /* Mudar de campo na lista dos Campos → o índice do tee deixa de valer (o
+   * primeiro render mantém o tee do URL). */
+  const lastCourseKey = useRef(course?.courseKey ?? null);
+  useEffect(() => {
+    const k = course?.courseKey ?? null;
+    if (k !== lastCourseKey.current) { lastCourseKey.current = k; setSelectedTeeIdx(null); }
+  }, [course?.courseKey]);
   const [pcc, setPcc] = useState(() => { const v = parseInt(init.pcc, 10); return isNaN(v) ? 0 : v; });
   const [hiInput, setHiInput] = useState(init.hi);
   const [allowance, setAllowance] = useState(() => { const v = parseInt(init.allow, 10); return isNaN(v) ? 100 : v; });
@@ -1098,7 +1120,7 @@ export default function SimuladorPage() {
     setOverlayHoleData(data);
   }, []);
 
-  const isManual = selectedKey === MANUAL_KEY;
+  const isManual = manualMode;
 
   /* HI usado nos cálculos: o do jogador escolhido, ou o escrito à mão em modo manual */
   const hi = useMemo(() => {
@@ -1113,7 +1135,7 @@ export default function SimuladorPage() {
    * localStorage. Só escreve os campos não-default para manter o URL limpo. */
   useEffect(() => {
     const state: SimPersistState = {
-      course: selectedKey ?? "",
+      course: manualMode ? MANUAL_KEY : (course?.courseKey ?? ""),
       tee: selectedTeeIdx != null ? String(selectedTeeIdx) : "",
       holes: holesMode,
       sex: sexFilter,
@@ -1123,11 +1145,13 @@ export default function SimuladorPage() {
       player: playerFed,
     };
     try { localStorage.setItem(SIM_LS_KEY, JSON.stringify(state)); } catch { /* ignore */ }
-    const next = new URLSearchParams();
-    if (state.course) next.set("course", state.course);
+    // O campo vive no caminho (/campos/<campo>) e o sexo na barra dos Campos;
+    // aqui só os parâmetros do simulador, sem apagar os dos Campos (view…).
+    const next = new URLSearchParams(window.location.search);
+    for (const k of ["course", "tee", "holes", "sex", "player", "hi", "pcc", "allow", "manual"]) next.delete(k);
+    if (manualMode) next.set("manual", "1");
     if (state.tee) next.set("tee", state.tee);
     if (state.holes !== "18") next.set("holes", state.holes);
-    if (state.sex !== "ALL") next.set("sex", state.sex);
     // Com jogador o HI é o dele — só vai para o URL em modo manual.
     if (!state.player) {
       next.set("player", "manual");
@@ -1139,44 +1163,10 @@ export default function SimuladorPage() {
     if (state.allow !== "100") next.set("allow", state.allow);
     setSearchParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedKey, selectedTeeIdx, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
+  }, [course?.courseKey, manualMode, selectedTeeIdx, holesMode, sexFilter, hiInput, pcc, allowance, playerFed]);
 
-  /* Voltas do jogador escolhido em cada campo — os que ele joga vão para o topo */
-  const playedRounds = useMemo(() => {
-    const m = new Map<string, number>();
-    playerData?.DATA.forEach((c) => {
-      const k = courseMatchKey(c.course);
-      m.set(k, (m.get(k) ?? 0) + c.rounds.length);
-    });
-    return m;
-  }, [playerData]);
-  const roundsAt = useCallback(
-    (c: { master: { name: string } }) => playedRounds.get(courseMatchKey(c.master.name)) ?? 0,
-    [playedRounds],
-  );
-
-  /* Filtrar campos — excluir entradas que são torneios/organizações (não campos).
-   * Ordem: os mais jogados pelo jogador escolhido primeiro, depois alfabética. */
-  const filtered = useMemo(() => {
-    const qq = norm(q);
-    let list = courses.filter((c) => !isTournamentCourse(c.courseKey));
-    if (qq) {
-      list = list.filter((c) => {
-        const name = norm(c.master.name);
-        const key = norm(c.courseKey);
-        return name.includes(qq) || key.includes(qq);
-      });
-    }
-    return [...list].sort((a, b) =>
-      roundsAt(b) - roundsAt(a) || a.master.name.localeCompare(b.master.name, "pt"));
-  }, [courses, q, roundsAt]);
-
-  /* Campo selecionado */
-  const selected = useMemo(() => {
-    if (isManual) return null;
-    if (!selectedKey) return filtered[0] ?? null;
-    return courses.find((c) => c.courseKey === selectedKey) ?? filtered[0] ?? null;
-  }, [courses, filtered, selectedKey, isManual]);
+  /* Campo seleccionado — vem da lista dos Campos */
+  const selected = isManual ? null : course;
 
   /* Tees do campo (filtrados por ter ratings para o modo actual) */
   const availableTees = useMemo(() => {
@@ -1385,26 +1375,13 @@ export default function SimuladorPage() {
   }, [overlayHoleData, teeData, selected, selectedTee, isManual, hi, courseHcp, pcc, is9h]);
 
   return (
-    <div className="campos-page">
-      {/* Toolbar */}
-      <Toolbar>
-                <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Simulador" />
-        <ToolbarTitle>🎯 Simulador</ToolbarTitle>
-        <input
-          className="input"
-          value={q}
-          onChange={(e) => { setQ(e.target.value); setSelectedKey(null); }}
-          placeholder="Nome do campo…"
-        />
+    <div className="sim-view">
+      {/* Controlos do simulador (o campo e o sexo vêm da barra dos Campos) */}
+      <div className="sim-controls">
         <select className="select" value={holesMode} onChange={(e) => { setHolesMode(e.target.value as HolesMode); setSelectedTeeIdx(null); }}>
           <option value="18">18 buracos</option>
           <option value="front9">Front 9</option>
           <option value="back9">Back 9</option>
-        </select>
-        <select className="select" value={sexFilter} onChange={(e) => setSexFilter(e.target.value as SexFilter)}>
-          <option value="ALL">Sexo</option>
-          <option value="M">Masculino</option>
-          <option value="F">Feminino</option>
         </select>
         <select
           className="select"
@@ -1447,16 +1424,23 @@ export default function SimuladorPage() {
           <option value={75}>75%</option>
           <option value={50}>50%</option>
         </select>
-        <Counter ml="auto">{filtered.length} campos</Counter>
-        {is9h && <Counter>{holesLabel}</Counter>}
-      </Toolbar>
+        <button
+          type="button"
+          className={`btn${manualMode ? " active" : ""}`}
+          onClick={() => { setManualMode((m) => !m); setSelectedTeeIdx(null); }}
+          title="Calcular sem campo: escrever o CR e o Slope à mão"
+        >
+          ✎ {manualMode ? "Modo manual (ligado)" : "Sem campo (manual)"}
+        </button>
+        {is9h && <Counter ml="auto">{holesLabel}</Counter>}
+      </div>
 
       {/* Banner: preencher HI */}
       {hi === null && (
         <div className="notice notice-warn notice-row">
           <span className="notice-icon">⚠</span>
           <span>
-            Preenche o <strong>Handicap Index (HI)</strong> na toolbar para calcular o
+            Preenche o <strong>Handicap Index (HI)</strong> em cima para calcular o
             {" "}<strong>Course Handicap</strong>, <strong>Playing Handicap</strong>,
             e as linhas de <strong>Adjusted Gross Score</strong> (Panc., Máx, Ajust.).
             {" "}<a href="https://www.usga.org/content/usga/home-page/handicapping/world-handicap-system/topics/net-double-bogey.html"
@@ -1468,48 +1452,7 @@ export default function SimuladorPage() {
         </div>
       )}
 
-      {/* Master-detail */}
-      <div className="master-detail">
-        {/* Sidebar: lista de campos */}
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
-          {/* Opção manual — sempre visível */}
-          <button
-            className={`course-item ${isManual ? "active" : ""}`}
-            onClick={() => { setSelectedKey(MANUAL_KEY); setSelectedTeeIdx(null); md.onSelect(); }}
-          >
-            <div className="course-item-name">✎ Sem campo (manual)</div>
-            <div className="course-item-meta">Introduzir CR/Slope</div>
-          </button>
-          <div className="bb-border" />
-
-          {filtered.map((c) => {
-            const active = selected?.courseKey === c.courseKey;
-            const tees = filterTees(c.master.tees, sexFilter).filter((t) => {
-              if (is9h) return get9hRatings(t, holesMode as "front9" | "back9") !== null;
-              return t.ratings?.holes18?.courseRating && t.ratings?.holes18?.slopeRating;
-            });
-            const nTees = new Set(tees.map(physicalTeeKey)).size;
-            return (
-              <button
-                key={c.courseKey}
-                className={`course-item ${active ? "active" : ""}`}
-                onClick={() => { setSelectedKey(c.courseKey); setSelectedTeeIdx(null); md.onSelect(); }}
-              >
-                <div className="course-item-name">{c.master.name}</div>
-                <div className="course-item-meta">
-                  {nTees} tee{nTees !== 1 ? "s" : ""} c/ ratings
-                  {roundsAt(c) > 0 && <> · ★ {roundsAt(c)} volta{roundsAt(c) !== 1 ? "s" : ""}</>}
-                </div>
-              </button>
-            );
-          })}
-          {filtered.length === 0 && (
-            <EmptyState size="sm" message="Nenhum campo encontrado" />
-          )}
-        </div>
-
-        {/* Detalhe */}
-        <div className="course-detail" ref={md.detailRef}>
+      <div>
           {isManual ? (
             <>
               <DetailHeader title="✎ Modo Manual" sub={<span className="muted">Introduz CR e Slope para calcular. Par é opcional.</span>} />
@@ -1540,7 +1483,7 @@ export default function SimuladorPage() {
                       o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
                       Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
                       {hi === null && (
-                        <span className="notice-warn-text"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
+                        <span className="notice-warn-text"> ⚠ Preenche o HI em cima para ver o SD 18h.</span>
                       )}
                     </div>
                   )}
@@ -1582,11 +1525,6 @@ export default function SimuladorPage() {
             </>
           ) : selected && teeData ? (
             <>
-              <DetailHeader
-                title={selected.master.name}
-                sub={<><span className="muted">{selected.courseKey}</span>{is9h && <span className="muted"> · {holesLabel}</span>}</>}
-              />
-
               {/* Seletor de Tee — barras partilhadas (M/F por tee, clicável) */}
               <TeeBars
                 tees={availableTees}
@@ -1612,7 +1550,7 @@ export default function SimuladorPage() {
                   o SD dos 9 buracos jogados com o Expected SD baseado no HI do jogador.
                   Fórmula: <code>SD_18h = SD_9h + Expected_9h(HI)</code>
                   {hi === null && (
-                    <span className="notice-warn-text"> ⚠ Preenche o HI na toolbar para ver o SD 18h.</span>
+                    <span className="notice-warn-text"> ⚠ Preenche o HI em cima para ver o SD 18h.</span>
                   )}
                 </div>
               )}
@@ -1711,7 +1649,6 @@ export default function SimuladorPage() {
               Score Differential suficientes para o simulador de impacto no handicap.
             </div>
           )}
-        </div>
       </div>
     </div>
   );

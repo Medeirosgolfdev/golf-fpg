@@ -1,4 +1,5 @@
 ﻿import { useMemo, useState, useEffect, Fragment, type ReactNode, type CSSProperties } from "react";
+import { SimuladorView } from "./SimuladorPage";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
@@ -1210,7 +1211,19 @@ export default function CamposPage() {
   const [originFilter, setOriginFilter] = useState<OriginFilter>("ALL");
   const [countryFilter, setCountryFilter] = useState<string>("ALL");
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
-  const [detailView, setDetailView] = useState<"scorecard" | "manuel">("scorecard");
+  // Vista do detalhe: Scorecard · Como jogou · Simulador (o antigo /simulador).
+  // Fica no URL (?view=manuel|sim) para os links abrirem na vista certa.
+  const [detailView, setDetailViewState] = useState<"scorecard" | "manuel" | "sim">(() => {
+    const v = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("view") : null;
+    return v === "sim" || v === "manuel" ? v : "scorecard";
+  });
+  const setDetailView = (v: "scorecard" | "manuel" | "sim") => {
+    setDetailViewState(v);
+    const sp = new URLSearchParams(window.location.search);
+    if (v === "scorecard") sp.delete("view"); else sp.set("view", v);
+    const qs = sp.toString();
+    navigate(`${window.location.pathname}${qs ? `?${qs}` : ""}`, { replace: true });
+  };
   /* Tee seleccionado para comparação de distâncias na tabela (Campos) */
   const [selTeeKey, setSelTeeKey] = useState<string | null>(null);
     const isMobileInit = typeof window !== "undefined" && window.innerWidth <= MOBILE_BREAKPOINT;
@@ -1225,11 +1238,9 @@ export default function CamposPage() {
   /* Helper: select course and update URL */
   const selectCourse = (key: string | null) => {
     setSelectedKey(key);
-    if (key) {
-      navigate(`/campos/${key}`, { replace: true });
-    } else {
-      navigate("/campos", { replace: true });
-    }
+    // Manter os parâmetros (vista, e os do simulador) ao mudar de campo.
+    const qs = window.location.search;
+    navigate(`${key ? `/campos/${key}` : "/campos"}${qs}`, { replace: true });
   };
 
   /* Lista de países únicos dos campos INTL */
@@ -1540,6 +1551,15 @@ export default function CamposPage() {
                     >
                       <span className="seg-label">Como jogou</span>
                     </button>
+                    <button
+                      role="tab"
+                      aria-selected={detailView === "sim"}
+                      className={`seg-btn${detailView === "sim" ? " active" : ""}`}
+                      onClick={() => setDetailView("sim")}
+                      title="Course/Playing Handicap, Score Differential e impacto de uma volta no HI"
+                    >
+                      <span className="seg-label">Simulador</span>
+                    </button>
                   </div>
                 }
               />
@@ -1557,7 +1577,9 @@ export default function CamposPage() {
               )}
 
               {/* Vista */}
-              {detailView === "scorecard" ? (
+              {detailView === "sim" ? (
+                <SimuladorView course={selected} sexFilter={sexFilter} setSexFilter={setSexFilter} />
+              ) : detailView === "scorecard" ? (
                 <>
                   <TeeBars
                     tees={selectedTees}

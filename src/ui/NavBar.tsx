@@ -22,7 +22,7 @@ type Tab =
 const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; title?: string }[] = [
   { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
   { tab: "draws",      label: "Draws",        path: "/draws", title: "Companheiros de jogo do Manuel"  },
-  { tab: "simulador",  label: "Simulador",    path: "/simulador"  },
+  { tab: "campos",     label: "Campos",       path: "/campos", title: "Campos · Scorecard, Como jogou e Simulador" },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },
   { tab: "nacionais",  label: "🏆",           path: "/titulos", title: "Títulos" },
@@ -36,7 +36,6 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "faldo",      label: "🏆 Faldo",    path: "/faldo", title: "Faldo Series" },
   { tab: "egr",        label: "🇪🇺 EGR",     path: "/egr", title: "European Golf Rankings" },
   { tab: "wagr",       label: "🌍 WAGR",     path: "/wagr", title: "World Amateur Golf Ranking" },
-  { tab: "campos",     label: "Campos",       path: "/campos"     },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
   { tab: "galeria",    label: "📁",           path: "/Logos/galeria.html", external: true, title: "Galeria de Logos" },

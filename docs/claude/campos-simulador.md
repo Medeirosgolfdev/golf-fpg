@@ -3,6 +3,17 @@
 > Detalhe tirado do CLAUDE.md a 2026-09-15 (o CLAUDE.md fica só com o essencial e
 > aponta para aqui). Datas entre parênteses = quando a regra ou a medição foi feita.
 
+## Simulador dentro dos Campos (2026-10-13)
+
+O `/simulador` passou a ser a **3.ª vista do `/campos`** (Scorecard · Como jogou ·
+Simulador), pedido da Mariana. `SimuladorView` (em `SimuladorPage.tsx`) recebe o
+campo da lista dos Campos e o sexo da barra; tee, buracos, jogador, HI, PCC,
+allowance e o modo manual (botão «Sem campo») ficam na própria vista. URL:
+`/campos/<campo>?view=sim&tee=…&player=…` (`view=manuel` = Como jogou). O
+`/simulador` antigo redirecciona (`SimuladorRedirect`: `?course=X` → caminho).
+Na barra, «Campos» passou para 3.º lugar e «Simulador» saiu. O Comparar ficou
+de fora de propósito (é jogador contra jogador, não depende de campo).
+
 ## Redesign /campos + /simulador (2026-06-13)
 
 Sessão grande de melhorias visuais e funcionais às páginas `/campos` e
