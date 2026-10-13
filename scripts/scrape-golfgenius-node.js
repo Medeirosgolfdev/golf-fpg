@@ -826,7 +826,11 @@ function applyPlayerOverrides(out, players) {
     // campos à parte para nunca entrarem no matching do agregador; o draw da
     // /major mostra-as em itálico vermelho com a nota no tooltip.
     if (typeof o.hcpEst === 'number' && p.hcp == null) { p.hcp = o.hcpEst; p.hcpEstimated = true; }
-    if (Number.isInteger(o.birthYearEst) && !p.dob && !p.birthYear) p.birthYearEst = o.birthYearEst;
+    if (Number.isInteger(o.birthYearEst) && !p.dob && !p.birthYear) {
+      p.birthYearEst = o.birthYearEst;
+      // Intervalo do escalão (EGR U16 em 2026 = 2010–2011); null = "ou depois" (U14).
+      if ('birthYearEstMax' in o) p.birthYearEstMax = o.birthYearEstMax;
+    }
     if (o.estNote) p.estNote = o.estNote;
     n++;
   }

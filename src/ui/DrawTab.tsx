@@ -239,6 +239,7 @@ export default function DrawTab({
       /** Valores estimados pela fonte do draw (MAJOR) → itálico vermelho. */
       hcpEstimated?: boolean;
       birthYearEst?: number | null;
+      birthYearEstMax?: number | null;
       estNote?: string | null;
       escHist: string | null;
       gross: number;
@@ -444,6 +445,7 @@ export default function DrawTab({
           dobShown,
           hcpEstimated: !!(p as { hcpEstimated?: boolean }).hcpEstimated,
           birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst ?? null,
+          ...("birthYearEstMax" in (p as object) ? { birthYearEstMax: (p as { birthYearEstMax?: number | null }).birthYearEstMax ?? null } : {}),
           estNote: (p as { estNote?: string | null }).estNote ?? null,
           escHist,
           gross: res?.gross ?? 0,
@@ -611,7 +613,15 @@ export default function DrawTab({
                   </span>
                 ) : p.birthYearEst != null ? (
                   <span className="est-value" title={`Estimativa — ${p.estNote || "ano deduzido, não lido"}`}>
-                    {p.birthYearEst}{effDate ? ` (~${Number(String(effDate).slice(0, 4)) - p.birthYearEst})` : ""}
+                    {(() => {
+                      // Ano único "2011 (~15)" · intervalo "2010–11 (~15–16)" · aberto "≥2012 (≤14)"
+                      const y = Number(String(effDate || "").slice(0, 4)) || null;
+                      const lo = p.birthYearEst!;
+                      if (p.birthYearEstMax === null) return `≥${lo}${y ? ` (≤${y - lo})` : ""}`;
+                      const hi = p.birthYearEstMax;
+                      if (hi != null && hi > lo) return `${lo}–${String(hi).slice(2)}${y ? ` (~${y - hi}–${y - lo})` : ""}`;
+                      return `${lo}${y ? ` (~${y - lo})` : ""}`;
+                    })()}
                   </span>
                 ) : <span className="muted">–</span>}
               </td>

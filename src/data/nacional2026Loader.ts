@@ -65,6 +65,8 @@ export interface FpgDrawFlight {
     /** HCP / ano de nascimento ESTIMADOS (sem fonte que os dê) → itálico vermelho. */
     hcpEstimated?: boolean;
     birthYearEst?: number | null;
+    /** Fim do intervalo estimado (ano); null = sem limite ("2012 ou depois"); ausente = ano único. */
+    birthYearEstMax?: number | null;
     estNote?: string | null;
   }>;
 }
