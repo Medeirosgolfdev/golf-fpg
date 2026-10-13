@@ -88,6 +88,8 @@ interface Constraint {
   date: Date;
   ageMin: number;
   ageMax: number;
+  /** false = o escalão só tem limite de cima ("Sub-18", "U16") — não diz idade mínima. */
+  hasMin: boolean;
   tid: string;
 }
 
@@ -106,12 +108,17 @@ function collectConstraints(junior: Junior, tournamentById: Map<string, Tourname
       const ageMin = typeof f.ageMin === "number" ? f.ageMin : null;
       const ageMax = typeof f.ageMax === "number" ? f.ageMax : null;
       if (ageMin == null && ageMax == null) continue;
-      // Se só tem um, copia para o outro (ex: Boys 11 → ageMin=11, ageMax=11)
-      const lo = ageMin ?? ageMax!;
+      // Só ageMin (escalão de idade exacta, ex: Boys 11) → copia para o ageMax.
+      // Só ageMax ("Sub-18", "U16", European Girls' Team U18…) é um TECTO: o
+      // jogador pode ter qualquer idade abaixo. Copiá-lo para o ageMin dava a
+      // toda a gente a idade máxima do escalão (Hockenhull, 12 anos, aparecia
+      // "Jul 2008 · ~18" por ter jogado o Carris Trophy, que é Sub-18).
+      const hasMin = ageMin != null;
+      const lo = ageMin ?? 5;
       const hi = ageMax ?? ageMin!;
       // Sanity: ranges absurdos saltam-se
       if (lo < 5 || hi > 25 || lo > hi) continue;
-      out.push({ date, ageMin: lo, ageMax: hi, tid });
+      out.push({ date, ageMin: lo, ageMax: hi, hasMin, tid });
     }
   }
   return out;
@@ -226,6 +233,23 @@ export function computeDobInfo(junior: Junior, tournamentById: Map<string, Tourn
       const tMax: Date = transLate < rangeMax! ? transLate : rangeMax!;
       if (tMin <= tMax) { rangeMin = tMin; rangeMax = tMax; }
     }
+  }
+
+  // Só tectos de idade → sabe-se apenas "nasceu em … ou depois". Não se inventa
+  // um ponto médio (seria uma idade falsa, e o "mais velho que o Manuel" também).
+  if (!constraints.some((c) => c.hasMin)) {
+    const today = new Date();
+    const maxAge = ageAt(rangeMin!, today);
+    return {
+      state: "inferred",
+      dobIso: null,
+      rangeMin: toIso(rangeMin!),
+      rangeMax: null,
+      age: null,
+      ageLabel: `≤${maxAge} anos`,
+      dobLabel: `${MONTHS_PT[rangeMin!.getMonth()]} ${rangeMin!.getFullYear()} ou depois`,
+      nextBdayDays: null, nextAge: null,
+    };
   }
 
   const midMs = (rangeMin!.getTime() + rangeMax!.getTime()) / 2;
