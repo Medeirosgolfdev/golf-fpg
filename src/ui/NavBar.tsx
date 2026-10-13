@@ -21,7 +21,6 @@ type Tab =
 // em public/, dashboards externos, etc.)
 const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; title?: string }[] = [
   { tab: "jogadores",  label: "Jogadores",    path: "/jogadores"  },
-  { tab: "draws",      label: "Draws",        path: "/draws", title: "Companheiros de jogo do Manuel"  },
   { tab: "campos",     label: "Campos",       path: "/campos", title: "Campos · Scorecard, Como jogou e Simulador" },
   { tab: "calendario", label: "Calendário",   path: "/calendario" },
   { tab: "drive",      label: "🇵🇹 DRIVE",   path: "/drive"      },

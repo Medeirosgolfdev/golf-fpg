@@ -8,7 +8,7 @@
  * ?view=federado e ?view=pp. Deep-links legados (?view=by_tournament /
  * by_course_analysis) continuam válidos — mapeiam para o bucket respectivo.
  */
-import { useEffect, useMemo, useState } from "react";
+import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Player } from "../../data/types";
 import { useAppContext } from "../../context/AppContext";
@@ -33,6 +33,9 @@ import { LoopEclecticSection } from "../../ui/LoopEclecticSection";
 import { eclecticos9 } from "../../data/sserraLoops";
 import { useCamposDe9 } from "../../hooks/useCamposDe9";
 import type { ViewKey, CourseSort } from "./shared";
+import { MANUEL_FED } from "../../constants/manuel";
+// Draws (companheiros de jogo) — só na ficha do Manuel; saiu da barra (13/10/2026).
+const DrawsPage = lazy(() => import("../DrawsPage"));
 
 export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const { data: rawData, loading, error } = usePlayerData(fedId);
@@ -131,7 +134,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
     return () => { cancelled = true; };
   }, [fedId]);
 
-  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis", "eclectic_sds"];
+  const VALID_VIEWS: ViewKey[] = ["by_course", "by_course_analysis", "by_date", "by_tournament", "analysis", "eclectic_sds", ...(fedId === MANUEL_FED ? ["draws" as const] : [])];
   const paramView = searchParams.get("view") as ViewKey | null;
 
   const [view, setViewState] = useState<ViewKey>(
@@ -189,7 +192,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
 
   /* Bucket do dropdown consolidado (3 opções): as vistas legadas mapeiam para
      o seu bucket — by_tournament → Rondas, by_course_analysis → Campos. */
-  const viewBucket: "by_date" | "by_course" | "analysis" | "eclectic_sds" =
+  const viewBucket: "by_date" | "by_course" | "analysis" | "eclectic_sds" | "draws" =
     view === "by_tournament" ? "by_date"
     : view === "by_course_analysis" ? "by_course"
     : view;
@@ -330,6 +333,7 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
                   <option value="by_course">⛳ Campos</option>
                   <option value="analysis">📊 Análises</option>
                   {(temEclecticoSds || view === "eclectic_sds") && <option value="eclectic_sds">🏌️ Ecléticos</option>}
+                  {fedId === MANUEL_FED && <option value="draws">🤝 Draws (companheiros)</option>}
                 </select>
                 {viewBucket === "by_date" && (
                   <div className="segmented-toggle" role="tablist" aria-label="Agrupamento das rondas">
@@ -383,6 +387,11 @@ export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId:
             )}
             {view === "analysis" && (
               <AnalysisView data={data} />
+            )}
+            {view === "draws" && fedId === MANUEL_FED && (
+              <Suspense fallback={<LoadingState size="sm" message="A carregar draws…" />}>
+                <DrawsPage />
+              </Suspense>
             )}
           </div>
         </>

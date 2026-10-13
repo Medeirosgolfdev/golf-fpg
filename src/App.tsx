@@ -65,7 +65,6 @@ const TitulosPage = lazy(() => import("./pages/TitulosPage"));
 const JogadoresListPage = lazy(() => import("./pages/JogadoresListPage"));
 const JogadoresPorAnoPage = lazy(() => import("./pages/JogadoresPorAnoPage"));
 const RecentTournamentsPage = lazy(() => import("./pages/RecentTournamentsPage"));
-const DrawsPage = lazy(() => import("./pages/DrawsPage"));
 const OmCgssPage = lazy(() => import("./pages/OmCgssPage"));
 
 type Status =
@@ -460,7 +459,8 @@ export default function App() {
                 {/* Página Títulos — tabs Nacional/Regional/Atleta */}
                 <Route path="/titulos" element={<TitulosPage />} />
                 <Route path="/titulos/:tab" element={<TitulosPage />} />
-                <Route path="/draws" element={<DrawsPage />} />
+                {/* Draws saiu da barra (13/10/2026): vive na ficha do Manuel */}
+                <Route path="/draws" element={<Navigate to="/jogadores/52884?view=draws" replace />} />
                 <Route path="/om-cgss" element={<OmCgssPage />} />
                 {/* Landing — sem rota explícita, o catch-all entrava em loop com /* → / */}
                 <Route path="/" element={<Navigate to="/jogadores" replace />} />

@@ -22,9 +22,9 @@
 | `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
 | — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO de dados (DATA_FILES, normalizeFile, doralMajorDivision) consumido pela MajorPage — UI standalone removida 2026-07-02 | ftm_doral_*.json |
 | `/comparar` | ComparePage (4 tabs: Campos, Vantagem de Tee, Jogadores, Simulador; a tab Jogadores delega em CompararPage e a Simulador embute a SimuladorPage) | master-courses, players.json, {MANUEL}/analysis/data.json |
-| `/simulador` | SimuladorPage | simCourses (master), players.json, {fed}/analysis/data.json (selector de jogador + "E se?") |
+| `/simulador` | SimuladorRedirect | **vista dos Campos desde 2026-10-13** → `/campos/<campo>?view=sim` |
 | `/calendario` | CalendarioPage (dados em `src/data/calendarEvents.ts`) | players.json (aniversários) |
-| `/draws` | DrawsPage | manuel-pairings.json (jogadores com quem o Manuel já foi parelhado, FPG + USKids) |
+| `/draws` | — | **saiu da barra 2026-10-13** → `/jogadores/52884?view=draws` (vista «🤝 Draws» só na ficha do Manuel; DrawsPage embebida no PlayerDetail) |
 | `/kids2/listas` | kids2/ListasPage | listas de inscritos (Entry Lists) com link para as fichas · hcp-listas-ligacoes.json (gerado pelo agregador) |
 | `/om-cgss` | OmCgssPage | Ordem de Mérito Júnior CGSS de hoje (a tab `OmRankingTab` de `fpg/fpgOmRanking.tsx` sem prova aberta) · om-cgss-junior.json |
 | `/titulos` (+ `/:tab`) | TitulosPage | vista histórica de campeonatos de jovens FPG (3 tabs) |
