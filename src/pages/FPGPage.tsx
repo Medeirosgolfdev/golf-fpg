@@ -23,6 +23,7 @@ import { PILL_SSERRA, SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import ExtLink from "../ui/ExternalLink";
 import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
@@ -2251,15 +2252,8 @@ function Content() {
     );
   }
 
-  return (
-    <DataSourcesProvider tournaments={providerTournaments}>
-    <div className="tourn-layout">
-
-      {/* ── Toolbar mobile-first: scroll horizontal em vez de grid ── */}
-      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
-
-        {/* Linha 1: toda numa linha scrollável */}
-        <Toolbar>
+  // Controlos da barra — na barra do CircuitShell (Torneios) ou na própria (outros modos).
+  const fpgLead = (<>
           {/* Toggle exterior escondido nas vistas do shell (o shell tem o seu). */}
           {!shellTorneios && <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />}
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
@@ -2400,7 +2394,10 @@ function Content() {
                 ★ Manuel
               </button>
             </>)}
-            <div className="flex-1" style={{ minWidth: 8 }} />
+            </>)}
+  </>);
+  const fpgTrail = (<>
+            {!loading && (<>
             {/* Contadores à direita */}
             <ExtLink href="https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T"
               className="fs-11 fw-600"
@@ -2435,8 +2432,24 @@ function Content() {
             {!loading && <ToolbarSep />}
             <div id="pja-toolbar-slot" style={{ display: "contents" }} />
           </>}
+  </>);
+
+  return (
+    <DataSourcesProvider tournaments={providerTournaments}>
+    <div className="tourn-layout">
+
+      {/* ── Toolbar mobile-first: scroll horizontal em vez de grid ── */}
+      {/* Uma só barra (13/10/2026): nas vistas do shell (Torneios) os controlos
+          da página entram na barra do CircuitShell (CircuitToolbarSlotCtx). */}
+      {!shellTorneios && (
+      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+        <Toolbar>
+          {fpgLead}
+          <div className="flex-1" style={{ minWidth: 8 }} />
+          {fpgTrail}
         </Toolbar>
       </div>
+      )}
 
       {error && (
         <div className="fw-600 fs-13 c-danger" style={{ padding: "16px 20px" }}>
@@ -2445,7 +2458,11 @@ function Content() {
       )}
 
       {/* Torneios (Todos / Santo da Serra / PJA) — vista via CircuitShell */}
-      {shellTorneios && shellView}
+      {shellTorneios && (
+        <CircuitToolbarSlotCtx.Provider value={{ lead: fpgLead, trail: fpgTrail, hideTitle: true }}>
+          {shellView}
+        </CircuitToolbarSlotCtx.Provider>
+      )}
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
       {navMode === "torneios" && seriesFilter === "clubes" && (

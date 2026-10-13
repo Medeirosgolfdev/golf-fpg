@@ -16,13 +16,14 @@
  * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
  */
 
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CircuitPastEditionsTab } from "./pastEditions";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../Toolbar";
+import { CircuitToolbarSlotCtx } from "./toolbarSlot";
 import DetailHeader from "../DetailHeader";
 import TournamentWeather from "../TournamentWeather";
 import LoadingState from "../LoadingState";
@@ -498,6 +499,7 @@ export interface CircuitShellProps {
 }
 
 export default function CircuitShell({ entries, config, loading, pastEditionsPool, selectedId, onSelectEntry, selectedInfo, onSelectInfo, selectedDivKey, onSelectDivision, renderSidebarItem }: CircuitShellProps) {
+  const slot = useContext(CircuitToolbarSlotCtx);
   const md = useMasterDetail();
   const { kidsMap } = useKidsLinkMap();
 
@@ -840,7 +842,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
         {/* Toolbar */}
         <Toolbar>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          <ToolbarTitle>{config.title}</ToolbarTitle>
+          {slot.lead}
+          {!slot.hideTitle && <ToolbarTitle>{config.title}</ToolbarTitle>}
           {cur?.course && <ToolbarMeta>📍 {cur.course}</ToolbarMeta>}
 
           {flt.search && (
@@ -951,7 +954,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           <Counter ml="auto">
             {hasActiveFilters ? `${visible.length} de ${entries.length}` : `${entries.length} torneios`}
           </Counter>
+          {slot.trail}
         </Toolbar>
+        {slot.below}
 
         <div className="master-detail">
 

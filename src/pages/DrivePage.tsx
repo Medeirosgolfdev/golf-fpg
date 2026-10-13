@@ -24,6 +24,7 @@ import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebar
 import { PILL_TCODE, EscPill, SIDEBAR_ACCENT, RoundPill, NineHPill } from "../ui/PillBadge";
 import SidebarToggle from "../ui/SidebarToggle";
 import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import EmptyState from "../ui/EmptyState";
@@ -1888,16 +1889,9 @@ function DriveContent() {
     tcode: t.tcode,
     ccode: t.ccode,
   }));
-  return (
-    <DataSourcesProvider tournaments={providerTournaments}>
-    <div className="jogadores-page">
-
-      {/* ── Toolbar mobile-first: scroll horizontal ── */}
-      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
-
-        {/* Linha 1: tudo numa linha scrollável */}
-        <Toolbar>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+  // Controlos da barra — partilhados entre a barra do CircuitShell (Torneios)
+  // e a barra própria (Rankings Sub-12).
+  const driveLead = (<>
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
           <a href="https://competicoes.fpg.pt/ranking/" target="_blank" rel="noopener noreferrer"
@@ -1949,7 +1943,9 @@ function DriveContent() {
               </button>
             </>)}
           </>)}
-          <div className="flex-1" style={{ minWidth: 8 }} />
+  </>);
+  const driveTrail = (<>
+
           {/* Contadores à direita */}
           {navMode === "torneios" && data.totalScorecards > 0 && (
             <span className="chip" style={{ flexShrink: 0, background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
@@ -1957,8 +1953,8 @@ function DriveContent() {
             </span>
           )}
           {data.lastUpdated && <span className="muted fs-10 shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
-        </Toolbar>
-
+  </>);
+  const driveBelow = (<>
         {/* Linha 2: regiões + escalões — wrap em mobile, scroll horizontal em desktop */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
           <div style={{
@@ -2008,8 +2004,25 @@ function DriveContent() {
             />
           </div>
         )}
-      </div>
+  </>);
 
+  return (
+    <DataSourcesProvider tournaments={providerTournaments}>
+    <div className="jogadores-page">
+
+      {/* Uma só barra (13/10/2026): em «Torneios» os controlos da página entram
+          na barra do CircuitShell (CircuitToolbarSlotCtx); nos Rankings Sub-12
+          a página mantém a sua barra. */}
+      {navMode !== "torneios" && (
+      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+        <Toolbar>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
+          {driveLead}
+          <div className="flex-1" style={{ minWidth: 8 }} />
+          {driveTrail}
+        </Toolbar>
+      </div>
+      )}
 
       {/* ══════════════════════════════════════════
           MODO SUB-12
@@ -2126,9 +2139,11 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
+        <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, trail: driveTrail, below: driveBelow, hideTitle: true }}>
         <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
           selectedId={selectedDriveId ?? undefined}
           onSelectEntry={(e) => setSelectedDriveId(e.id)} />
+        </CircuitToolbarSlotCtx.Provider>
       )}
 
       {false && navMode === "torneios" && (
