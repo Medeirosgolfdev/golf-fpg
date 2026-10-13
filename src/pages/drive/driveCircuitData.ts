@@ -413,3 +413,59 @@ export const DRIVE_CONFIG: CircuitConfig = {
   seasonTabLabel: "Época",
   loadingMessage: "A carregar torneios do Drive…",
 };
+
+/** Nome-base de um torneio Drive para casar duplicados: sem acentos, minúsculas,
+ *  cortado no primeiro " – "/" - " (o sufixo é o campo: "Final Drive Tour – Oeiras…"). */
+function driveBaseName(name: string | undefined | null): string {
+  return String(name || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase()
+    .split(/\s+[–-]\s+/)[0].replace(/\s+/g, " ").trim();
+}
+
+/**
+ * Junta o torneio PROVISÓRIO (entrada manual com tcode inventado, ex. 988/90800,
+ * criada a partir da lista de apurados antes de a FPG abrir o torneio) com o
+ * torneio REAL da FPG do mesmo dia (ex. 985/10246) — 13/10/2026: apareciam duas
+ * entradas «Final Drive Tour» e a Mariana quer UMA com a informação das duas,
+ * não esconder uma.
+ *
+ * Regra (nunca só pelo tcode — a FPG reutiliza-os): um dos lados tem de ser
+ * provisório (`_admissions._placeholder` ou `_manual`), mesma data e série,
+ * nome-base igual e campo compatível; com mais de um candidato não se junta.
+ * Fica a identidade/draws/resultados do real; a lista de apurados (e o campo) do
+ * provisório entram quando o real ainda não tem inscritos; rondas e nº de
+ * jogadores = o máximo dos dois.
+ */
+export function mergeDrivePlaceholders<T extends Record<string, any>>(src: T[]): T[] {
+  const isPlaceholder = (t: T) => !!(t._admissions?._placeholder || t._admissions?._manual || t._manual);
+  const out = [...src];
+  const removed = new Set<T>();
+  for (const ph of src.filter(isPlaceholder)) {
+    const base = driveBaseName(ph.name);
+    const campo = driveBaseName(ph.campo || ph._admissions?.campo || "");
+    const cands = src.filter(t => t !== ph && !isPlaceholder(t) && !removed.has(t)
+      && t.date === ph.date && (t.series || "tour") === (ph.series || "tour")
+      && driveBaseName(t.name) === base
+      && (() => {
+        const suffix = driveBaseName(String(t.name || "").split(/\s+[–-]\s+/).slice(1).join(" "));
+        return !suffix || !campo || campo.includes(suffix) || suffix.includes(campo);
+      })());
+    if (cands.length !== 1) continue;
+    const real = cands[0];
+    const realPlayers = (real._admissions?.players?.length ?? 0) + (real.players?.length ?? 0);
+    const merged = {
+      ...real,
+      name: String(real.name || "").length >= String(ph.name || "").length ? real.name : ph.name,
+      campo: real.campo || ph.campo || ph._admissions?.campo || null,
+      _admissions: realPlayers === 0 && ph._admissions ? ph._admissions : real._admissions,
+      _draws: real._draws && Object.keys(real._draws).length ? real._draws : ph._draws,
+      rounds: Math.max(Number(real.rounds) || 0, Number(ph.rounds) || 0) || real.rounds,
+      playerCount: Math.max(Number(real.playerCount) || 0, Number(ph.playerCount) || 0),
+      extraLinks: [...(real.extraLinks || []), ...(ph.extraLinks || [])],
+      _mergedFrom: `${ph.ccode}-${ph.tcode}`,
+    } as T;
+    out[out.indexOf(real)] = merged;
+    out.splice(out.indexOf(ph), 1);
+    removed.add(ph);
+  }
+  return out;
+}

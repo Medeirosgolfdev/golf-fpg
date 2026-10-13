@@ -7,6 +7,7 @@ import { describe, it, expect } from "vitest";
 import type { Tournament as FPGTournament } from "../../../data/fpgTypes";
 import {
   buildDriveGroups,
+  mergeDrivePlaceholders,
   buildDriveDivisions,
   buildDriveEntries,
   admissionsToInscritos,
@@ -236,5 +237,29 @@ describe("DRIVE_CONFIG", () => {
     expect(DRIVE_CONFIG.grouping).toBe("series-year");
     expect(DRIVE_CONFIG.seriesOrder).toEqual(["Drive Tour", "Drive Challenge", "AQUAPOR"]);
     expect(DRIVE_CONFIG.filters?.toggles).toContain("manuel");
+  });
+});
+
+describe("mergeDrivePlaceholders", () => {
+  const ph = { name: "Final Drive Tour", ccode: "988", tcode: "90800", date: "2026-11-07", series: "tour", rounds: 2, playerCount: 67,
+    _admissions: { _placeholder: "tcode provisório", campo: "Oeiras Green Valley / Academia", players: [{ nome: "A" }] }, players: [] };
+  const real = { name: "Final Drive Tour – Oeiras Green Valley", ccode: "985", tcode: "10246", date: "2026-11-07", series: "tour", rounds: 1, playerCount: 0,
+    _admissions: { players: [] }, _draws: {}, players: [] };
+  it("junta o provisório com o real do mesmo dia — uma entrada com a informação das duas", () => {
+    const out = mergeDrivePlaceholders<Record<string, any>>([ph, real]);
+    expect(out).toHaveLength(1);
+    expect(out[0].tcode).toBe("10246");
+    expect(out[0].name).toBe("Final Drive Tour – Oeiras Green Valley");
+    expect(out[0]._admissions.players).toHaveLength(1);
+    expect(out[0].rounds).toBe(2);
+    expect(out[0].playerCount).toBe(67);
+    expect(out[0]._mergedFrom).toBe("988-90800");
+  });
+  it("não junta com datas diferentes nem com nomes diferentes", () => {
+    expect(mergeDrivePlaceholders([ph, { ...real, date: "2026-11-08" }])).toHaveLength(2);
+    expect(mergeDrivePlaceholders([ph, { ...real, name: "Final Drive Challenge – Oeiras" }])).toHaveLength(2);
+  });
+  it("não junta quando há dois candidatos (ambíguo)", () => {
+    expect(mergeDrivePlaceholders([ph, real, { ...real, tcode: "10247" }])).toHaveLength(3);
   });
 });

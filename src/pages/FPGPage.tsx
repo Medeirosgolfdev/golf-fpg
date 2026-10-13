@@ -1162,8 +1162,13 @@ function Content() {
             const admFile = await loadFpgAdmissionsDraws().catch(() => null);
             const admIdx = admFile ? indexFpgAdmissionsDraws(admFile) : new Map<string, FpgTournamentData>();
             const hasKeys = (o: any) => o && typeof o === "object" && Object.keys(o).length > 0;
+            // A FPG reutiliza tcodes: o registo de inscrições/draws só serve se o
+            // NOME bater com o do torneio (13/10/2026 — um «Troféu João Sousa» com
+            // o ccode:tcode da Final do Drive Challenge recebia os inscritos, o
+            // draw e o ★Manuel do Jamor).
             const enrich = (t: Tournament): Tournament => {
-              const ad = admIdx.get(`${t.ccode}-${t.tcode}`);
+              const adRaw = admIdx.get(`${t.ccode}-${t.tcode}`);
+              const ad = adRaw && sameTournamentName(t.name, adRaw.name) ? adRaw : undefined;
               // DRAWS: preferir os embebidos no CLUBES{ano}.json (scrapados por
               // scripts/scrape-clube-draws.js, completos), senão os do
               // fpg-admissions-draws.json. ⚠ Este ficheiro pode ter o torneio com
@@ -1757,7 +1762,24 @@ function Content() {
     // pjaExtraTournaments só é usado internamente pelo Ranking PJA.
     // Esconder drives sem Manuel: chegam aqui via admissions (fpg-admissions-draws)
     // mesmo depois de limpos do pull. Vivem na página /drive; os do Manuel ficam.
-    const values = [...dedupMap.values()].filter(t => !isHiddenNonManuelDrive(t));
+    // Mesmo torneio com ccode/tcode diferentes (nome + data + campo iguais) →
+    // UMA entrada com a informação das duas: jogadores da versão mais completa,
+    // inscrições/draws de quem os tiver (13/10/2026 — Troféu João Sousa em duplicado).
+    const byIdentity = new Map<string, Tournament>();
+    for (const t of dedupMap.values()) {
+      const id = `${normTournamentName(t.name)}|${t.date || ""}|${normTournamentName((t as any).campo || "")}`;
+      const ex = byIdentity.get(id);
+      if (!ex) { byIdentity.set(id, t); continue; }
+      const [main, other] = roundCount(t) > roundCount(ex) || (t.players?.length ?? 0) > (ex.players?.length ?? 0) ? [t, ex] : [ex, t];
+      byIdentity.set(id, {
+        ...main,
+        _admissions: (main as any)._admissions ?? (other as any)._admissions,
+        _draws: hasDraws((main as any)._draws) ? (main as any)._draws : (other as any)._draws,
+        extraLinks: (main as any).extraLinks?.length ? (main as any).extraLinks : (other as any).extraLinks,
+        _mergedFrom: `${other.ccode}-${other.tcode}`,
+      } as Tournament);
+    }
+    const values = [...byIdentity.values()].filter(t => !isHiddenNonManuelDrive(t));
     return buildDisplayList(values);
   }, [tournaments, jovensTournaments]);
   const cur = displayList[selected];
@@ -3000,6 +3022,20 @@ function Content() {
     </DataSourcesProvider>
   );
 }
+
+/** Nome de torneio normalizado para comparar registos (sem acentos/pontuação). */
+function normTournamentName(s: string | undefined | null): string {
+  return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ").trim();
+}
+/** Dois nomes do MESMO torneio? Igual normalizado, ou um contém o outro (a FPG
+ *  abrevia: «Drive Chall Tejo-…»). Sem nome de um dos lados → aceitar. */
+function sameTournamentName(a: string | undefined | null, b: string | undefined | null): boolean {
+  const x = normTournamentName(a), y = normTournamentName(b);
+  if (!x || !y) return true;
+  return x === y || x.includes(y) || y.includes(x);
+}
+const hasDraws = (d: unknown) => !!d && typeof d === "object" && Object.keys(d as object).length > 0;
 
 export default function TorneiosAnalisePage() {
   return <Content />;

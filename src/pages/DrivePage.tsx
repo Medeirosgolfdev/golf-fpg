@@ -60,7 +60,7 @@ import DrawTab, { buildDrawResults } from "../ui/DrawTab";
 import TournamentGrid from "../ui/TournamentGrid";
 import { expandMultiRound, isDNS } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import { buildDriveEntries, DRIVE_CONFIG } from "./drive/driveCircuitData";
+import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 
 import type {
@@ -1456,6 +1456,9 @@ function DriveContent() {
         have.add(key);
       }
     }
+    // Torneio provisório (lista de apurados, tcode inventado) + o real da FPG do
+    // mesmo dia → UMA entrada com a informação das duas (Final Drive Tour 2026).
+    src = mergeDrivePlaceholders(src as any[]) as typeof src;
     // Filtros tournament-level (partilhados por TODOS os escalões do mesmo dia →
     // não destroem o agrupamento por evento): série / ano / região.
     if (series !== "all") src = src.filter(t => (t.series || "tour") === series);

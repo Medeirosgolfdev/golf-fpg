@@ -445,8 +445,9 @@ export default function DrawTab({
           estNote: (p as { estNote?: string | null }).estNote ?? null,
           countryEstimated: !!(p as { countryEstimated?: boolean }).countryEstimated,
           escHist,
-          gross: res?.gross ?? 0,
-          toPar: res?.toPar ?? null,
+          // Gross ≥ 900 (998/999) é «sem cartão» — regra da casa: mostra «–», sem ±.
+          gross: res && res.gross < 900 ? res.gross : 0,
+          toPar: res && res.gross < 900 ? res.toPar ?? null : null,
           // Draws internacionais (MAJOR): conterrâneos vêm marcados na fonte
           // (`fmDrawsToFpg`) → `.row-portuguese`. Nos draws FPG o campo não
           // existe (todos são PT — destacar todos não distinguiria nada).
