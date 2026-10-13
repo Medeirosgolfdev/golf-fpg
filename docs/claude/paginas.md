@@ -31,7 +31,7 @@
 | `/titulos/nacional` | TitulosPage (tab Nacional) | fpg-nacionais-historico.json (Campeões Nacionais Sub-10→18, 2005-2026; reusa JovensAnaliseView) |
 | `/ffg` (+ `/info/:key` — `joueurs` = lista de jogadores FR estilo /rfeg/info/jugadores, `categorias`) | FFGPage | ffgolf-catalog.json + ffgolf/{year}_{slug}.json (torneios juvenis franceses); france-players.json (roster c/ contagens, `src/pages/ffg/PlayersView.tsx`) |
 | `/rfeg` (+ `/:compId`, `/:source/:id`) | RFEGPage | rfegolf-* + livegolfscoring + nextcaddy + fcg (torneios juvenis espanhóis) |
-| `/england` (+ `/:source/:key`) | EnglandGolfPage | england-golf-catalog.json + england_{slug}.json (England Golf / GolfGenius) |
+| `/england` (+ `/:source/:key`) | — | **arquivada 2026-10-13** → `/major/reidtrophy/<ano>` (dados england_* continuam no kids2; ver `scripts/_archive/england/LEIA-ME.md`) |
 | `/global-junior` (+ `/:slug`) | GlobalJuniorPage | gjgl-catalog.json + gjgl/gjgl_{slug}.json (Global Junior Golf Live) |
 | `/egr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | EGRPage | egr-ranking.json + egr/egr-events-list.json + egr/events/egr_{id}.json (European Golf Rankings) |
 | `/wagr` (+ `/evt/:id`, `/info/jogadores`, `/jogador/:id`) | WAGRPage | wagr-ranking.json + wagr/wagr-events-list.json + wagr/events/wagr_{id}.json (World Amateur Golf Ranking) |

@@ -31,7 +31,6 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "major",      label: "🎖️ MAJOR",   path: "/major", title: "Doral + BJGT" },
   { tab: "global-junior", label: "🏌️ GJGL",  path: "/global-junior" },
   { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
-  { tab: "england",    label: "🏴󠁧󠁢󠁥󠁮󠁧󠁿 England",  path: "/england"    },
   { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
   { tab: "egr",        label: "🇪🇺 EGR",     path: "/egr", title: "European Golf Rankings" },
   { tab: "wagr",       label: "🌍 WAGR",     path: "/wagr", title: "World Amateur Golf Ranking" },

@@ -57,7 +57,6 @@ const USKIDSPage = lazy(() => import("./pages/USKIDSPage"));
 const FPGPage = lazy(() => import("./pages/FPGPage"));
 const MajorPage = lazy(() => import("./pages/MajorPage"));
 const FFGPage = lazy(() => import("./pages/FFGPage"));
-const EnglandGolfPage = lazy(() => import("./pages/EnglandGolfPage"));
 const EGRPage = lazy(() => import("./pages/EGRPage"));
 const WAGRPage = lazy(() => import("./pages/WAGRPage"));
 const GlobalJuniorPage = lazy(() => import("./pages/GlobalJuniorPage"));
@@ -82,6 +81,13 @@ const _earlyData = Promise.all([
   import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
   fetch("/data/course-players.json").then(r => r.ok ? r.json() : null).then(j => (j?.players ?? {}) as CoursePlayersMap).catch(() => ({} as CoursePlayersMap)),
 ]);
+
+/** /england/t/2025_reid-trophy-2025 → /major/reidtrophy/2025; o resto → Reid Trophy 2026. */
+function EnglandRedirect() {
+  const { pathname } = useLocation();
+  const y = /reid-trophy-(\d{4})/.exec(pathname)?.[1] ?? "2026";
+  return <Navigate to={`/major/reidtrophy/${y}`} replace />;
+}
 
 export default function App() {
   const [status, setStatus] = useState<Status>({ kind: "loading" });
@@ -438,8 +444,8 @@ export default function App() {
                 <Route path="/doral-legacy" element={<Navigate to="/major" replace />} />
                 <Route path="/ffg" element={<FFGPage />} />
                 <Route path="/ffg/:source/:key" element={<FFGPage />} />
-                <Route path="/england" element={<EnglandGolfPage />} />
-                <Route path="/england/:source/:key" element={<EnglandGolfPage />} />
+                {/* /england arquivada (2026-10-13, scripts/_archive/england) — o Reid Trophy vive na /major */}
+                <Route path="/england/*" element={<EnglandRedirect />} />
                 {/* /faldo arquivada (2026-10-13, scripts/_archive/faldo) — o Faldo Madeira vive na /major */}
                 <Route path="/faldo/*" element={<Navigate to="/major/faldomadeira/2026" replace />} />
                 <Route path="/egr" element={<EGRPage />} />
