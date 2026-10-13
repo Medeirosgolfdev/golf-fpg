@@ -107,7 +107,8 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
   );
   if (!cols.length || !maxRows) return <EmptyState size="md" message="Sem edições anteriores com resultados." />;
 
-  const bl = (i: number) => (i === 0 ? "1px solid var(--border)" : "2px solid var(--border)");
+  // Separador entre edições — a mesma linha fina das colunas do scorecard.
+  const bl = (_i: number) => "1px solid var(--border)";
 
   return (
     <div>
@@ -117,19 +118,21 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
         </div>
       )}
       <div style={{ overflowX: "auto" }}>
-        <table className="bc-collapse" style={{ fontSize: "var(--fs-11)", fontVariantNumeric: "tabular-nums", width: "max-content" }}>
+        {/* Mesmo aspecto do scorecard (.sc-lb): cabeçalho, letra, espaçamento e
+            linhas finas — pedido da Mariana (13/10/2026: «tudo homogéneo»). */}
+        <table className="sc-lb sc-lb-dense" style={{ fontVariantNumeric: "tabular-nums", width: "max-content" }}>
           <thead>
-            <tr style={{ background: "var(--bg-muted)", color: "var(--text-2)", borderBottom: "1px solid var(--border)" }}>
+            <tr>
               <th rowSpan={2} onClick={() => onSort("pos")}
-                  style={{ padding: "6px 8px", textAlign: "center", fontWeight: 700, position: "sticky", left: 0, background: "var(--bg-muted)", zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
+                  style={{ position: "sticky", left: 0, zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
                 Pos{arrow("pos")}
               </th>
               {cols.map((e, ei) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
-                    style={{ padding: "10px 10px 8px", textAlign: "center", fontWeight: 700, borderLeft: bl(ei) }}>
+                    style={{ borderLeft: bl(ei) }}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 8, color: "var(--text)" }}>
-                      <span style={{ fontSize: "var(--fs-16)", fontWeight: 700 }}>{e.year}</span>
+                      <span style={{ fontSize: "var(--fs-13)", fontWeight: 700 }}>{e.year}</span>
                       {e.url && (
                         <a href={e.url} target="_blank" rel="noreferrer" title="Leaderboard oficial"
                            style={{ fontSize: "var(--fs-11)", color: "var(--color-info)", textDecoration: "none", fontWeight: 700 }}>↗</a>
@@ -146,30 +149,30 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       <div className="fs-10" style={{ color: "var(--text-3)", fontWeight: 600 }}>{e.division}</div>
                     )}
                     {e.course && (
-                      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic" }}>{e.course}</div>
+                      <div style={{ color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2 }}>{e.course}</div>
                     )}
                   </div>
                 </th>
               ))}
             </tr>
-            <tr style={{ background: "var(--bg-muted)", color: "var(--text-3)", borderBottom: "1px solid var(--border)" }}>
+            <tr>
               {cols.flatMap((e, ei) => {
                 const cells = [
-                  <th key={`${e.id}_n`} style={{ padding: "3px 6px", textAlign: "left", fontWeight: 600, fontSize: "var(--fs-10)", borderLeft: bl(ei), width: 150, minWidth: 150 }}>Nome</th>,
+                  <th key={`${e.id}_n`} style={{ textAlign: "left", borderLeft: bl(ei), width: 150, minWidth: 150 }}>Jogador</th>,
                   <th key={`${e.id}_T`} onClick={() => onSort(`${e.id}_T`)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 700, fontSize: "var(--fs-10)", background: "var(--bg-card, var(--bg))", cursor: "pointer", userSelect: "none", width: 46, minWidth: 46 }}>
-                    T{arrow(`${e.id}_T`)}
+                      style={{ cursor: "pointer", userSelect: "none", width: 46, minWidth: 46 }}>
+                    Tot{arrow(`${e.id}_T`)}
                   </th>,
                 ];
                 if (e.parPerRound) cells.push(
                   <th key={`${e.id}_TP`} onClick={() => onSort(`${e.id}_TP`)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none", width: 42, minWidth: 42 }}>
+                      style={{ cursor: "pointer", userSelect: "none", width: 42, minWidth: 42 }}>
                     ±{arrow(`${e.id}_TP`)}
                   </th>,
                 );
                 for (let r = 1; r <= e.nRounds; r++) cells.push(
                   <th key={`${e.id}_R${r}`} onClick={() => onSort(`${e.id}_R${r}`)}
-                      style={{ padding: "3px 6px", textAlign: "center", fontWeight: 600, fontSize: "var(--fs-10)", cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
+                      style={{ cursor: "pointer", userSelect: "none", width: 38, minWidth: 38 }}>
                     R{r}{arrow(`${e.id}_R${r}`)}
                   </th>,
                 );
@@ -179,11 +182,12 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
           </thead>
           <tbody>
             {Array.from({ length: maxRows }, (_, ri) => {
-              const medal = ri === 0 ? "var(--medal-gold-bg, #fde68a)" : ri === 1 ? "var(--medal-silver-bg, #e5e7eb)" : ri === 2 ? "var(--medal-bronze-bg, #f5d0a9)" : null;
+              // Pódio como no scorecard: medalha na coluna da posição, sem fundo de cor.
+              const medal = ri === 0 ? "🥇" : ri === 1 ? "🥈" : ri === 2 ? "🥉" : null;
               return (
-                <tr key={ri} style={{ borderBottom: "1px solid var(--border-subtle, var(--border))" }}>
-                  <td style={{ padding: "4px 8px", fontWeight: 700, textAlign: "center", position: "sticky", left: 0, background: medal || "var(--bg)", zIndex: "var(--z-base)", whiteSpace: "nowrap" }}>
-                    {ri + 1}
+                <tr key={ri}>
+                  <td className="lb-pos" style={{ position: "sticky", left: 0, background: "var(--bg-card)", zIndex: "var(--z-base)", whiteSpace: "nowrap" }}>
+                    {medal ?? ri + 1}
                   </td>
                   {cols.flatMap((e, ei) => {
                     const p = e.players[ri];
@@ -193,7 +197,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       // não dá para usar .row-manuel/.row-portuguese na linha.
                       <td key={`${e.id}_n`}
                           className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
-                          style={{ padding: "4px 6px", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
+                          style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
                           title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}º oficial` : ""}` : undefined}>
                         {p ? <>{flagOf(p.club) }{p.name}</> : <span className="c-muted">–</span>}
                       </td>,
@@ -202,21 +206,21 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       // baixo aí não é um bom resultado.
                       <td key={`${e.id}_T`}
                           title={p && p.fullRounds < (maxFull.get(e.id) ?? 0) ? "Não completou o torneio" : undefined}
-                          style={{ padding: "4px 6px", textAlign: "center", fontWeight: 700, background: "var(--bg-card, var(--bg))",
+                          style={{ fontWeight: 700,
                                    fontStyle: p && p.fullRounds < (maxFull.get(e.id) ?? 0) ? "italic" : undefined,
                                    color: p?.total == null || (p && p.fullRounds < (maxFull.get(e.id) ?? 0)) ? "var(--text-3)" : "var(--text)" }}>
                         {p?.total ?? "–"}
                       </td>,
                     ];
                     if (e.parPerRound) cells.push(
-                      <td key={`${e.id}_TP`} style={{ padding: "4px 6px", textAlign: "center", fontWeight: 600, color: p?.toPar != null ? (tpColorDark(p.toPar) ?? "var(--text-3)") : "var(--text-3)" }}>
+                      <td key={`${e.id}_TP`} style={{ fontWeight: 600, color: p?.toPar != null ? (tpColorDark(p.toPar) ?? "var(--text-3)") : "var(--text-3)" }}>
                         {p?.toPar != null ? fmtToPar(p.toPar) : "–"}
                       </td>,
                     );
                     for (let r = 0; r < e.nRounds; r++) {
                       const v = p?.rounds[r] ?? null;
                       cells.push(
-                        <td key={`${e.id}_R${r + 1}`} style={{ padding: "4px 6px", textAlign: "center", color: v ? "var(--text)" : "var(--text-3)" }}>
+                        <td key={`${e.id}_R${r + 1}`} style={{ color: v ? "var(--text)" : "var(--text-3)" }}>
                           {v || "–"}
                         </td>,
                       );
