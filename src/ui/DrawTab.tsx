@@ -731,6 +731,7 @@ export default function DrawTab({
   );
 
   return (
+    <div className="draw-tab">
     <ScorecardLeaderboard
       par={[]}
       rows={rows}
@@ -749,5 +750,6 @@ export default function DrawTab({
       activeSortKey={sortKey}
       activeSortDir={sortDir}
     />
+    </div>
   );
 }

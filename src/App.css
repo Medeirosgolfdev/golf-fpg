@@ -78,9 +78,12 @@ html, body, #root {
    maiúsculas forçadas), linha de 1px por baixo, sem moldura. */
 :is(.dtable, .dtable-sm, .dtable-lg) th { font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text-2); border-bottom: 1px solid var(--border); }
 /* Época / Edições anteriores: aspecto do scorecard mas com as linhas compactas que já tinha. */
-.sc-lb.sc-lb-dense { font-size: var(--fs-12); }
+/* Tamanhos de ANTES (letra 11, linha 4px/6px, sub-cabeçalho 3px/6px a 10) com as cores novas — pedido dela. */
+.sc-lb.sc-lb-dense { font-size: var(--fs-11); }
 .sc-lb.sc-lb-dense td { padding: 4px 6px; }
-.sc-lb.sc-lb-dense th { padding: 5px 6px; }
+.sc-lb.sc-lb-dense th { padding: 3px 6px; font-size: var(--fs-10); }
+/* Draw e Inscrições: nomes sem negrito e do tamanho da Época / Edições anteriores. */
+:is(.draw-tab, .adm-tab) .sc-lb .lb-name .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
 
 /* ═══════════════ Simulador de Rondas (RoundSimulator) ═══════════════ */
 /* Cabeçalho de secção: rótulo + régua até ao fim */

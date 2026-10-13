@@ -124,15 +124,15 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
           <thead>
             <tr>
               <th rowSpan={2} onClick={() => onSort("pos")}
-                  style={{ position: "sticky", left: 0, zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
+                  style={{ padding: "6px 8px", fontSize: "var(--fs-11)", position: "sticky", left: 0, zIndex: "var(--z-raised)", cursor: "pointer", userSelect: "none", width: 50, minWidth: 50 }}>
                 Pos{arrow("pos")}
               </th>
               {cols.map((e, ei) => (
                 <th key={e.id} colSpan={2 + (e.parPerRound ? 1 : 0) + e.nRounds}
-                    style={{ borderLeft: bl(ei) }}>
+                    style={{ padding: "10px 10px 8px", fontSize: "var(--fs-11)", borderLeft: bl(ei) }}>
                   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
                     <div style={{ display: "flex", alignItems: "baseline", gap: 8, color: "var(--text)" }}>
-                      <span style={{ fontSize: "var(--fs-13)", fontWeight: 700 }}>{e.year}</span>
+                      <span style={{ fontSize: "var(--fs-16)", fontWeight: 700 }}>{e.year}</span>
                       {e.url && (
                         <a href={e.url} target="_blank" rel="noreferrer" title="Leaderboard oficial"
                            style={{ fontSize: "var(--fs-11)", color: "var(--color-info)", textDecoration: "none", fontWeight: 700 }}>↗</a>
@@ -149,7 +149,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       <div className="fs-10" style={{ color: "var(--text-3)", fontWeight: 600 }}>{e.division}</div>
                     )}
                     {e.course && (
-                      <div style={{ color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2 }}>{e.course}</div>
+                      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic" }}>{e.course}</div>
                     )}
                   </div>
                 </th>

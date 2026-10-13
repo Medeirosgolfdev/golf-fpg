@@ -321,6 +321,7 @@ export default function AdmissionsTab({
   );
 
   return (
+    <div className="adm-tab">
     <ScorecardLeaderboard
       par={[]}
       rows={rows}
@@ -337,5 +338,6 @@ export default function AdmissionsTab({
       activeSortKey={sortKey}
       activeSortDir={sortDir}
     />
+    </div>
   );
 }
