@@ -1,50 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22272,
-      "name": "Santa Maria Country Club & Club de Golf de Panama",
-      "date_inicio": "9/12/2026",
-      "date_fim": "9/12/2026",
-      "rondas": 1,
-      "campo": "Santa Maria Country Club, Club de Golf de Panama ",
-      "fee_18": "57.00",
-      "tour": "Panama City (PA) Tour",
-      "type": 5
-    },
-    {
-      "t": 22448,
-      "name": "2026 Texas - Fall State Invitational",
-      "date_inicio": "9/12/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 2,
-      "campo": "Hyatt Hill Country - Lakes, Hyatt Hill Country - Creek",
-      "fee_18": "265.00",
-      "tour": "State Invitationals Tour",
-      "type": 7
-    },
-    {
-      "t": 22767,
-      "name": "Azata Golf",
-      "date_inicio": "9/12/2026",
-      "date_fim": "9/12/2026",
-      "rondas": 1,
-      "campo": "Azata Golf",
-      "fee_18": "61.00",
-      "tour": "Andalusia (ES) Tour",
-      "type": 5
-    },
-    {
-      "t": 23334,
-      "name": "Teen Series at Port Ludlow (WA)",
-      "date_inicio": "9/12/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 2,
-      "campo": "Port Ludlow Golf Course",
-      "fee_18": "225.00",
-      "tour": "Teen Series Tour",
-      "type": 2
-    },
-    {
       "t": 22273,
       "name": "Santa Maria Country Club & Club de Golf de Panama (Tour Championship)",
       "date_inicio": "9/13/2026",
@@ -2091,6 +2047,17 @@
       "type": 6
     },
     {
+      "t": 23817,
+      "name": "Sandestin Championship 2027",
+      "date_inicio": "1/16/2027",
+      "date_fim": "1/17/2027",
+      "rondas": 2,
+      "campo": "Sandestin (Raven), Sandestin (Baytowne)",
+      "fee_18": "435.00",
+      "tour": "Domestic Championships Tour",
+      "type": 1
+    },
+    {
       "t": 23803,
       "name": "Pinehurst No. 8 (Tour Championship)",
       "date_inicio": "1/17/2027",
@@ -2223,19 +2190,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-12T16:40:52.428Z",
-  "varredura_max_t": 23816,
+  "gerado_em": "2026-10-13T14:57:15.114Z",
+  "varredura_max_t": 23817,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 47,
+    "pedidos": 41,
     "novos": 1,
     "buracos_revistos": 0,
-    "catalogo": 1511,
+    "catalogo": 1512,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23816,
-  "fronteira_avancou_em": "2026-10-12",
+  "fronteira_max_t_visto": 23817,
+  "fronteira_avancou_em": "2026-10-13",
   "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-10-12"
+  "ultima_descoberta": "2026-10-13"
 }
