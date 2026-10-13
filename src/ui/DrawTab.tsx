@@ -474,7 +474,14 @@ export default function DrawTab({
         case "clube":  v = a.clube.localeCompare(b.clube, "pt"); break;
         case "hcp":    v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
         case "tee":    v = (a.tee || "").localeCompare(b.tee || "", "pt"); break;
-        case "nasc":   v = (a.dobYear ?? INF) - (b.dobYear ?? INF); break;
+        case "nasc": {
+          // Data completa quando há; senão o ano (lido ou estimado) a meio do ano —
+          // as estimativas ordenam-se junto das datas reais, não no fim.
+          const k = (p: typeof a) => p.dob ? Date.parse(p.dob)
+            : (p.dobYear ?? p.birthYearEst) != null ? Date.UTC((p.dobYear ?? p.birthYearEst)!, 6, 1) : INF;
+          v = k(a) - k(b);
+          break;
+        }
         case "hora":   v = a.teeTime.localeCompare(b.teeTime); break;
         case "buraco": v = (a.startHole ?? INF) - (b.startHole ?? INF); break;
         case "toPar":  v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
