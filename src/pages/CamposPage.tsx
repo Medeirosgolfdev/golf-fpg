@@ -1251,10 +1251,14 @@ export default function CamposPage() {
   const playerNfeds = useMemo<Set<string> | null>(() => {
     const pq = playerQ.trim();
     if (!pq) return null;
-    const pqn = norm(pq);
+    // Palavra a palavra: cada palavra escrita tem de começar uma palavra do nome
+    // ("manuel medei" → "Manuel Goulartt Medeiros"). Com a frase seguida só
+    // aparecia quem tem exactamente "Manuel Medei…" (o pai), e o Manuel não.
+    const qTok = norm(pq).split(/\s+/).filter(Boolean);
     const matched = new Set<string>();
     for (const [nfed, p] of Object.entries(players)) {
-      if (norm(p.name ?? "").includes(pqn)) matched.add(nfed);
+      const nTok = norm(p.name ?? "").split(/\s+/).filter(Boolean);
+      if (qTok.every((q) => nTok.some((t) => t.startsWith(q)))) matched.add(nfed);
     }
     return matched;
   }, [playerQ, players]);
