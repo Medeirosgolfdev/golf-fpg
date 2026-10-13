@@ -19,130 +19,173 @@
       "name": "Faldo Junior Tour Madeira",
       "year": 2026,
       "country": "none",
-      "teeDivisions": { "White": "Boys", "Yellow": "Girls" },
-      "fpgFederados": true,
-      "fpgFed": { "André Gonçalves": "41121" },
-      "players": {
-              "Calum Dalby": {
-                      "country": "GB-ENG",
-                      "club": "Denham"
-              },
-              "Harrison Barnett": {
-                      "country": "GB-ENG",
-                      "hcp": 0.6,
-                      "hcpDate": "02/07/2026",
-                      "hcpSource": "GolfBox 5388972 (Belgian Intl U14)",
-                      "dob": "2013-04-21",
-                      "club": "Thorpe Hall"
-              },
-              "Joshua Hockenhull": {
-                      "country": "GB-ENG",
-                      "club": "Prestbury"
-              },
-              "Leon Brooks": {
-                      "country": "GB-ENG",
-                      "dob": "2008-04-14",
-                      "club": "Perranporth"
-              },
-              "Alain Messmer": {
-                      "country": "CH",
-                      "hcp": -1.8,
-                      "hcpDate": "28/08/2026",
-                      "hcpSource": "GolfBox 5597512 (Zürcher Meisterschaften)",
-                      "dob": "2010-05-03",
-                      "club": "GC Breitenloo"
-              },
-              "Ralph Barnett": {
-                      "country": "GB-ENG",
-                      "hcp": 4.0,
-                      "hcpDate": "17/02/2026",
-                      "hcpSource": "GJG entry list 361",
-                      "club": "Thorpe Hall"
-              },
-              "Daniel Hobbs": {
-                      "country": "GB-ENG",
-                      "hcp": 4.3,
-                      "hcpDate": "22/06/2026",
-                      "hcpSource": "GJG entry list 370 (Loretto Juniors)",
-                      "club": "Brookmans Park"
-              },
-              "Joseph Thorne": {
-                      "country": "GB-ENG",
-                      "club": "Hayling"
-              },
-              "Jake Servan-Smalley": {
-                      "country": "GB-ENG"
-              },
-              "Ethan Kwan": {
-                      "country": "GB-ENG",
-                      "club": "Hindhead"
-              },
-              "Alfie Kitteridge": {
-                      "country": "GB-ENG",
-                      "club": "Bishop's Stortford"
-              },
-              "Richard Groß": {
-                      "country": "DE",
-                      "hcp": 9.7,
-                      "hcpDate": "23/08/2026",
-                      "hcpSource": "GVST Jugend-EM 2026 (resultados)",
-                      "club": "GC Chemnitz"
-              },
-              "Leonardo Könemund": {
-                      "country": "DE",
-                      "hcp": 1.9,
-                      "hcpDate": "10/10/2026",
-                      "hcpSource": "DGV DMM AK16 (Startliste)",
-                      "club": "Berlin-Wannsee"
-              },
-              "Sophie Willschke": {
-                      "country": "AT",
-                      "hcp": -3.0,
-                      "hcpDate": "01/09/2026",
-                      "hcpSource": "golf.at 17003028 (Austrian Intl Amateur)",
-                      "dob": "2009-02-19",
-                      "club": "Colony Club Gutenhof"
-              },
-              "Jessica Sutton": {
-                      "country": "IE",
-                      "hcp": 4.1,
-                      "hcpDate": "12/06/2026",
-                      "hcpSource": "Scottish Golf 57808 (Scottish Girls U16 Open)",
-                      "club": "Ballyneety"
-              },
-              "Ashling Poynton": {
-                      "country": "BE",
-                      "hcp": -0.5,
-                      "hcpDate": "Out/2026",
-                      "hcpSource": "GolfBox 5646864 (inscrição Triple A European Ch.)",
-                      "dob": "2011-09-14",
-                      "club": "Rinkven"
-              },
-              "Emily Tuck": {
-                      "country": "GB-ENG",
-                      "hcp": 9.1,
-                      "hcpDate": "lido 13/10/2026 (data do valor não indicada)",
-                      "hcpSource": "GJG entry list 423 (Portuguese Junior Classics 2026)",
-                      "club": "St George's Hill"
-              },
-              "Scarlett Reeves": {
-                      "country": "GB-ENG",
-                      "club": "Studley Wood"
-              },
-              "Ava Niland": {
-                      "country": "IE",
-                      "club": "Strandhill"
-              },
-              "Daisy Lee": {
-                      "country": "GB-ENG",
-                      "hcp": -1.8,
-                      "hcpDate": "07/07/2026",
-                      "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.)",
-                      "dob": "2009-10-28",
-                      "club": "Lancaster"
-              }
+      "teeDivisions": {
+        "White": "Boys",
+        "Yellow": "Girls"
       },
-      "playersNote": "Estrangeiros (13/10, sessão 3788ffbe): HCP/dob/clube lidos em listas de inscritos/saídas com data (hcpSource). Sem HCP publicado: Dalby, Hockenhull, Brooks (999 na GolfBox), Thorne, Servan-Smalley, Kwan, Kitteridge, Reeves, Niland, Gorman (este nem país). Thorne (9, 2024) e Kwan (10, 2025) só têm handicap de JOGO em opens de clube (intelligentgolf) — não é HI, não usar. Könemund: a GJG mostra 2.4 parado desde 2024; fica o 1.9 da DGV (10/10). Não pôr valores estimados.",
+      "fpgFederados": true,
+      "fpgFed": {
+        "André Gonçalves": "41121"
+      },
+      "players": {
+        "Calum Dalby": {
+          "country": "GB-ENG",
+          "club": "Denham",
+          "hcpEst": -1.1,
+          "birthYearEst": 2007,
+          "estNote": "média EGR (Avg. to CR 75,2, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: escalão EGR U21; jogou o English U18 Amateur 2024"
+        },
+        "Harrison Barnett": {
+          "country": "GB-ENG",
+          "hcp": 0.6,
+          "hcpDate": "02/07/2026",
+          "hcpSource": "GolfBox 5388972 (Belgian Intl U14)",
+          "dob": "2013-04-21",
+          "club": "Thorpe Hall"
+        },
+        "Joshua Hockenhull": {
+          "country": "GB-ENG",
+          "club": "Prestbury",
+          "hcpEst": -0.7,
+          "birthYearEst": 2014,
+          "estNote": "média EGR (Avg. to CR 75,84, 8 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: tinha 9 anos em Ago/2023 (Sandiway)"
+        },
+        "Leon Brooks": {
+          "country": "GB-ENG",
+          "dob": "2008-04-14",
+          "club": "Perranporth",
+          "hcpEst": 3.7,
+          "estNote": "média EGR (Avg. to CR 82,8, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · médias de 2024; a GolfBox dá 999 (sem HCP)"
+        },
+        "Alain Messmer": {
+          "country": "CH",
+          "hcp": -1.8,
+          "hcpDate": "28/08/2026",
+          "hcpSource": "GolfBox 5597512 (Zürcher Meisterschaften)",
+          "dob": "2010-05-03",
+          "club": "GC Breitenloo"
+        },
+        "Ralph Barnett": {
+          "country": "GB-ENG",
+          "hcp": 4.0,
+          "hcpDate": "17/02/2026",
+          "hcpSource": "GJG entry list 361",
+          "club": "Thorpe Hall",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2029, escalão 14"
+        },
+        "Daniel Hobbs": {
+          "country": "GB-ENG",
+          "hcp": 4.3,
+          "hcpDate": "22/06/2026",
+          "hcpSource": "GJG entry list 370 (Loretto Juniors)",
+          "club": "Brookmans Park",
+          "birthYearEst": 2008,
+          "estNote": "ano: Global Junior Golf: graduação 2026, escalão 18"
+        },
+        "Joseph Thorne": {
+          "country": "GB-ENG",
+          "club": "Hayling",
+          "hcpEst": 1.9,
+          "birthYearEst": 2009,
+          "estNote": "média EGR (Avg. to CR 79,9, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2024 tinha handicap de jogo 9 (open Hayling) · ano: escalão EGR U18"
+        },
+        "Jake Servan-Smalley": {
+          "country": "GB-ENG",
+          "hcpEst": -0.8,
+          "birthYearEst": 2009,
+          "estNote": "média EGR (Avg. to CR 75,61, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: escalão EGR U18"
+        },
+        "Ethan Kwan": {
+          "country": "GB-ENG",
+          "club": "Hindhead",
+          "hcpEst": 1.0,
+          "birthYearEst": 2012,
+          "estNote": "média EGR (Avg. to CR 78,54, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2025 tinha handicap de jogo 10 (Hindhead) · ano: escalão EGR U14"
+        },
+        "Alfie Kitteridge": {
+          "country": "GB-ENG",
+          "club": "Bishop's Stortford",
+          "hcpEst": -1.0,
+          "birthYearEst": 2011,
+          "estNote": "média EGR (Avg. to CR 75,33, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: escalão EGR U16"
+        },
+        "Richard Groß": {
+          "country": "DE",
+          "hcp": 9.7,
+          "hcpDate": "23/08/2026",
+          "hcpSource": "GVST Jugend-EM 2026 (resultados)",
+          "club": "GC Chemnitz",
+          "birthYearEst": 2012,
+          "estNote": "ano: AK14 na DGV em 2026, EGR U14"
+        },
+        "Leonardo Könemund": {
+          "country": "DE",
+          "hcp": 1.9,
+          "hcpDate": "10/10/2026",
+          "hcpSource": "DGV DMM AK16 (Startliste)",
+          "club": "Berlin-Wannsee",
+          "birthYearEst": 2012,
+          "estNote": "ano: Global Junior Golf: graduação 2030 (AK14 em 2025)"
+        },
+        "Sophie Willschke": {
+          "country": "AT",
+          "hcp": -3.0,
+          "hcpDate": "01/09/2026",
+          "hcpSource": "golf.at 17003028 (Austrian Intl Amateur)",
+          "dob": "2009-02-19",
+          "club": "Colony Club Gutenhof"
+        },
+        "Jessica Sutton": {
+          "country": "IE",
+          "hcp": 4.1,
+          "hcpDate": "12/06/2026",
+          "hcpSource": "Scottish Golf 57808 (Scottish Girls U16 Open)",
+          "club": "Ballyneety",
+          "birthYearEst": 2010,
+          "estNote": "ano: 15 anos em Ago/2025 e 16 em Jul/2026 (Limerick Post) → Ago/2009–Jul/2010"
+        },
+        "Ashling Poynton": {
+          "country": "BE",
+          "hcp": -0.5,
+          "hcpDate": "Out/2026",
+          "hcpSource": "GolfBox 5646864 (inscrição Triple A European Ch.)",
+          "dob": "2011-09-14",
+          "club": "Rinkven"
+        },
+        "Emily Tuck": {
+          "country": "GB-ENG",
+          "hcp": 9.1,
+          "hcpDate": "lido 13/10/2026 (data do valor não indicada)",
+          "hcpSource": "GJG entry list 423 (Portuguese Junior Classics 2026)",
+          "club": "St George's Hill",
+          "birthYearEst": 2013,
+          "estNote": "ano: Global Junior Golf: graduação 2031, escalão 14"
+        },
+        "Scarlett Reeves": {
+          "country": "GB-ENG",
+          "club": "Studley Wood",
+          "hcpEst": 1.8,
+          "birthYearEst": 2009,
+          "estNote": "média EGR (Avg. to CR 79,77, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: escalão EGR U18"
+        },
+        "Ava Niland": {
+          "country": "IE",
+          "club": "Strandhill",
+          "hcpEst": 7.5,
+          "birthYearEst": 2012,
+          "estNote": "média EGR (Avg. to CR 88,89, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: escalão EGR U14"
+        },
+        "Daisy Lee": {
+          "country": "GB-ENG",
+          "hcp": -1.8,
+          "hcpDate": "07/07/2026",
+          "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.)",
+          "dob": "2009-10-28",
+          "club": "Lancaster"
+        }
+      },
+      "playersNote": "Estrangeiros (13/10, sessão 3788ffbe): HCP/dob/clube lidos em listas de inscritos/saídas com data (hcpSource). Sem HCP publicado: Dalby, Hockenhull, Brooks (999 na GolfBox), Thorne, Servan-Smalley, Kwan, Kitteridge, Reeves, Niland, Gorman (este nem país). Thorne (9, 2024) e Kwan (10, 2025) só têm handicap de JOGO em opens de clube (intelligentgolf) — não é HI, não usar. Könemund: a GJG mostra 2.4 parado desde 2024; fica o 1.9 da DGV (10/10). Não pôr valores estimados. ESTIMATIVAS (pedido dela a 13/10, só neste torneio — «melhor estimativa que nada»): hcpEst pela média EGR e birthYearEst pelo escalão/graduação, em campos à parte (fora do matching do kids2) e em itálico vermelho no draw, com a explicação no tooltip (estNote).",
       "note": "Faldo Junior Tour: Madeira — Clube de Golf Santo da Serra (campo 'Machico Serras'), 16-18 Out 2026, 54 buracos gross; Boys/Girls 16&U e 21&U (vencedor vai a Al Ain; WAGR). League 12568227982616858257; Results = pages/12568228117405011890, Tee Sheets = pages/12568228116431933361 (auto-descoberta). Antes da R1 o leaderboard está fechado → modo pré-torneio. O GG não diz sexo nem escalão nem HCP: sexo pelo tee (White = rapazes, Yellow = raparigas — R1 de 13/10); HCP/dob/clube dos portugueses pelos federados FPG (fpgFederados; André Gonçalves tem 3 homónimos → o do Palheiro, 41121). Estrangeiros ficam sem HCP. ⚠ O tee sheet de 13/10 tem 33 nomes contra 29 da lista 'Confirmed Players' (inclui Willschke, Sutton, Niland e Pinto Johansen, que tinham saído). Pôr disabled:true depois de 18 Out."
     },
     {
@@ -151,9 +194,31 @@
       "name": "The Amundi Evian Juniors Cup",
       "year": 2026,
       "country": "none",
-      "teeDivisions": { "White": "Boys", "Blue": "Girls" },
+      "teeDivisions": {
+        "White": "Boys",
+        "Blue": "Girls"
+      },
       "note": "The Amundi Evian Juniors Cup 2026 — Evian Resort (França), 22-24 Set 2026, Sub-14 M+F por seleções. Microsite francês: a página de tee sheets chama-se 'Départs' (pages/13066045313830138878, auto-descoberta) e os nomes vêm 'APELIDO Nome (+HCP)' (cleanTeeName). Antes da R1 o leaderboard está fechado → modo pré-torneio (campo + draw R1 dos tee sheets). PT 2026: Santiago Dias, Nuno Palmares, Laura Santos, Margarida Silva Pinto. 2025 = microsite GG pages/11993002524782146538 (scrape ad-hoc, não precisa de scope); 2022-2024 importadas do portal de resultados FFG (import-ffgolf-jobfile.js). O GG não diz o sexo: sai do tee de saída da tabela 'por jogador' (White = rapazes, Blue = raparigas — confirmado com os 4 PT) → teeDivisions parte em Boys / Girls (os MESMOS labels que o leaderboard usa quando abre — em 2025 vinha Boys/Girls/Nations Cup — para a tab 'Edições anteriores' casar os anos). Pôr disabled:true depois de 24 Set.",
-      "si": [3, 17, 13, 7, 11, 1, 5, 15, 9, 6, 10, 2, 18, 14, 8, 16, 4, 12],
+      "si": [
+        3,
+        17,
+        13,
+        7,
+        11,
+        1,
+        5,
+        15,
+        9,
+        6,
+        10,
+        2,
+        18,
+        14,
+        8,
+        16,
+        4,
+        12
+      ],
       "siSource": "Cartão oficial Evian Resort Golf Club (edição 2024) — golf-club.evianresort.com/en/content/download/516/score_file/2024_Scorecard.pdf"
     },
     {
@@ -162,7 +227,26 @@
       "name": "The Amundi Evian Juniors Cup",
       "year": 2025,
       "country": "none",
-      "si": [3, 17, 13, 7, 11, 1, 5, 15, 9, 6, 10, 2, 18, 14, 8, 16, 4, 12],
+      "si": [
+        3,
+        17,
+        13,
+        7,
+        11,
+        1,
+        5,
+        15,
+        9,
+        6,
+        10,
+        2,
+        18,
+        14,
+        8,
+        16,
+        4,
+        12
+      ],
       "siSource": "Cartão oficial Evian Resort Golf Club (edição 2024) — golf-club.evianresort.com/en/content/download/516/score_file/2024_Scorecard.pdf",
       "disabled": true,
       "note": "Evian Juniors Cup 2025 (encerrada) — microsite GG ffg-theamundievianjuniorscup. Leaderboard já partido em Boys/Girls/Nations Cup (sem teeDivisions)."

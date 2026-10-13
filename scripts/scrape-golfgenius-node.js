@@ -806,8 +806,9 @@ function applyFpgFederados(out, { overrides = {}, minBirthYear = 2005, file = pa
  * Dados curados por jogador (scope `players`: { "Nome": { country, hcp,
  * hcpDate, hcpSource, dob, birthYear, club } }) — para campos GG sem HCP nem
  * afiliação (Faldo Madeira: os estrangeiros). Cada valor tem de vir de uma
- * fonte lida (lista de saídas, EGR, GolfBox…), anotada em `hcpSource`; nunca
- * estimado. Só preenche o que o scope traz; não apaga nada.
+ * fonte lida (lista de saídas, EGR, GolfBox…), anotada em `hcpSource`.
+ * Estimativas só em `hcpEst`/`birthYearEst` (+ `estNote` a dizer como), que
+ * ficam marcadas e fora do matching. Só preenche o que o scope traz.
  */
 function applyPlayerOverrides(out, players) {
   const byKey = new Map(Object.entries(players || {}).map(([n, v]) => [nameKey(n), v]));
@@ -821,6 +822,12 @@ function applyPlayerOverrides(out, players) {
     if (o.dob) p.dob = o.dob;
     if (Number.isInteger(o.birthYear) && !p.dob) p.birthYear = o.birthYear;
     if (o.club && !p.club) p.club = o.club;
+    // Estimativas (pedido da Mariana, SÓ no Faldo Madeira: melhor que nada) —
+    // campos à parte para nunca entrarem no matching do agregador; o draw da
+    // /major mostra-as em itálico vermelho com a nota no tooltip.
+    if (typeof o.hcpEst === 'number' && p.hcp == null) { p.hcp = o.hcpEst; p.hcpEstimated = true; }
+    if (Number.isInteger(o.birthYearEst) && !p.dob && !p.birthYear) p.birthYearEst = o.birthYearEst;
+    if (o.estNote) p.estNote = o.estNote;
     n++;
   }
   console.log(`   📝 scope players: ${n} jogador(es) com dados curados`);

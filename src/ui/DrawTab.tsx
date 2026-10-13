@@ -236,6 +236,10 @@ export default function DrawTab({
       dob?: string;
       dobYear: number | null;
       dobShown?: string | null;
+      /** Valores estimados pela fonte do draw (MAJOR) → itálico vermelho. */
+      hcpEstimated?: boolean;
+      birthYearEst?: number | null;
+      estNote?: string | null;
       escHist: string | null;
       gross: number;
       toPar: number | null;
@@ -438,6 +442,9 @@ export default function DrawTab({
           dob,
           dobYear,
           dobShown,
+          hcpEstimated: !!(p as { hcpEstimated?: boolean }).hcpEstimated,
+          birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst ?? null,
+          estNote: (p as { estNote?: string | null }).estNote ?? null,
           escHist,
           gross: res?.gross ?? 0,
           toPar: res?.toPar ?? null,
@@ -583,8 +590,8 @@ export default function DrawTab({
             {!hc.clube && <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>}
             {!hc.hcp && (
               <td className="lb-hcp" style={bStyle}
-                title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : undefined}>
-                {p.hcpCurrent ? <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>*</span> : null}{p.hcp != null ? fmtHcp(p.hcp) : "–"}
+                title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>
+                {p.hcpCurrent ? <span style={{ color: "var(--color-danger)", fontWeight: 700 }}>*</span> : null}{p.hcp != null ? (p.hcpEstimated ? <span className="est-value">{fmtHcp(p.hcp)}</span> : fmtHcp(p.hcp)) : "–"}
               </td>
             )}
             {!hc.tee && <td className="lb-tee" style={bStyle}><TeeDot teeName={p.tee || teeName} /></td>}
@@ -594,6 +601,10 @@ export default function DrawTab({
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
                     {p.dobShown ? <span className="fs-11 mono">{p.dobShown}</span> : <YearPill year={p.dobYear} />}
                     {age != null && <span className="muted fs-10">({!p.dob ? "~" : ""}{age})</span>}
+                  </span>
+                ) : p.birthYearEst != null ? (
+                  <span className="est-value" title={`Estimativa — ${p.estNote || "ano deduzido, não lido"}`}>
+                    {p.birthYearEst}{effDate ? ` (~${Number(String(effDate).slice(0, 4)) - p.birthYearEst})` : ""}
                   </span>
                 ) : <span className="muted">–</span>}
               </td>

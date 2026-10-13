@@ -4490,3 +4490,6 @@ table td.lb-col-divider {
 .mp-hole-chip.mp-up { background: var(--accent-alpha-10); color: var(--accent); }
 .mp-hole-chip.mp-dn { background: var(--medal-bronze-bg); color: var(--medal-bronze-strong); }
 .mp-hole-chip.mp-as { color: var(--text-3); }
+
+/* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
+.est-value { font-style: italic; color: var(--color-danger); }

@@ -62,6 +62,10 @@ export interface FpgDrawFlight {
     dob?: string | null;
     /** Só o ano de nascimento (fonte sem data completa) → idade aproximada. */
     birthYear?: number | null;
+    /** HCP / ano de nascimento ESTIMADOS (sem fonte que os dê) → itálico vermelho. */
+    hcpEstimated?: boolean;
+    birthYearEst?: number | null;
+    estNote?: string | null;
   }>;
 }
 
