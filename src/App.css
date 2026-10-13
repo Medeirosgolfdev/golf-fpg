@@ -4511,3 +4511,21 @@ table td.lb-col-divider {
 .sim-controls { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 12px; }
 .sim-controls .btn.active { background: var(--accent); color: #fff; border-color: transparent; } /* = .seg-btn.active */
 
+
+/* ═══════════════ MODELO ÚNICO DAS TABELAS (13/10/2026) ═══════════════
+   Pedido da Mariana: «em todas as páginas usar sempre este modelo» — o das
+   abas do torneio (Draw / Inscrições): cabeçalho do scorecard (fundo
+   --bg-header, 11px/600, texto normal sem maiúsculas forçadas, linha de 1px),
+   linhas baixas (3px/6px), letra 12, nomes sem negrito a 11. Fica no FIM do
+   ficheiro de propósito, para ganhar às regras antigas de cada família.
+   Os cartões de buracos (.sc-table-modern / .sc-table-ec) e as tabelas de
+   torneio (.sc-lb) não entram — têm regras próprias. */
+:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) { font-size: var(--fs-12); }
+:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) :is(thead th, tbody th, tr > th) {
+  background: var(--bg-header); font-size: var(--fs-11); font-weight: 600; color: var(--text-2);
+  text-transform: none; letter-spacing: 0; padding: 7px 6px; border-bottom: 1px solid var(--border);
+}
+:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) :is(tbody td, tr > td) {
+  padding: 3px 6px; border-bottom: 1px solid var(--border-light);
+}
+:is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
