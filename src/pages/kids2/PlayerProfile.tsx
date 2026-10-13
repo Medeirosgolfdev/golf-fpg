@@ -30,7 +30,7 @@ function PlayerProfileInner({ data, junior }: Props) {
   }, [circuit, circuits]);
 
   return (
-    <div className="kids2-profile" style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 860 }}>
+    <div className="kids2-profile" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       <HeroIdentity data={data} junior={junior} />
       {!isManuel && data.manuel && (
         <MatchupVsManuel data={data} junior={junior} manuel={data.manuel} />
