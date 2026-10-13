@@ -32,7 +32,6 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "rfeg",       label: "🇪🇸",          path: "/rfeg", title: "España — RFEGolf" },
   // EGR · WAGR · GJGL numa só entrada (13/10/2026) — os separadores estão no topo de cada uma (RankingsTabs).
   { tab: "egr",        label: "🏅 Rankings",  path: "/egr", title: "Rankings — EGR · WAGR · GJGL", group: ["egr", "wagr", "global-junior"] },
-  { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
   { tab: "kids",       label: "🌍 Kids",      path: "/kids2"      },
   { tab: "galeria",    label: "📁",           path: "/Logos/galeria.html", external: true, title: "Galeria de Logos" },
 ];

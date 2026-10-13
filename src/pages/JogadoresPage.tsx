@@ -13,7 +13,7 @@
  *   - Cadastro/live: jogadores/FederadoOnlyDetail.tsx
  *   - Painéis stats: jogadores/FederadosStatsPanel.tsx + FilteredStatsCard.tsx
  */
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -26,6 +26,7 @@ import { clubShort } from "../utils/playerUtils";
 import { buildCourseKeyMap, setCourseKeyMap } from "../ui/jogadoresHelpers";
 import SexBadge from "../ui/SexBadge";
 import EmptyState from "../ui/EmptyState";
+import LoadingState from "../ui/LoadingState";
 import type { DataSource } from "../ui/DataSources";
 import { useJogadoresFilters } from "./jogadores/useJogadoresFilters";
 import {
@@ -41,6 +42,8 @@ import FederadosStatsPanel, { computeGlobalStats } from "./jogadores/FederadosSt
 import FilteredStatsCard, { type FilteredPlayer } from "./jogadores/FilteredStatsCard";
 import { syntheticFederadoFromFedCode } from "./jogadores/syntheticFederado";
 import type { PlayerPageData } from "../data/playerDataLoader";
+// Comparar jogadores lado a lado (vista «⚔️ Comparar» da toolbar).
+const CompararPlayersView = lazy(() => import("./CompararPage"));
 
 export default function JogadoresPage() {
   const { players, simCourses: courses } = useAppContext();
@@ -105,6 +108,8 @@ export default function JogadoresPage() {
   // Pitch & Putt: mapa fed → registo P&P (federados-pp.json) + filtro "só P&P".
   const [ppMap, setPpMap] = useState<Map<string, FederadoPP>>(new Map());
   const [showStats, setShowStats] = useState(initialState.showStats);
+  // Comparar jogadores (veio do /comparar, 13/10/2026) — ?comparar=1 no URL.
+  const [showCompare, setShowCompare] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).get("comparar") === "1");
   const [drillDown, setDrillDown] = useState<{ type: "club" | "age"; key: string } | null>(null);
   const [hcpBinDrill, setHcpBinDrill] = useState<string | null>(null);
   // Escalões jovens (Sub-*) — filtro rápido 🧒 + KPI por escalão na sidebar
@@ -133,12 +138,14 @@ export default function JogadoresPage() {
     writeFiltersToParams(filters, viewMode, sp);
     if (showStats && viewMode === "todos") sp.set("stats", "1");
     else sp.delete("stats");
+    if (showCompare) sp.set("comparar", "1");
+    else sp.delete("comparar");
     if (sp.toString() !== searchParams.toString()) setSearchParams(sp, { replace: true });
     savePrefs({ viewMode, includeSeniors: filters.includeSeniors, prioritizeJuniors: filters.prioritizeJuniors });
     // deps SEM searchParams: o guard de comparação evita loops e cada render
     // fecha sobre a versão fresca (padrão FPGPage/Simulador).
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters, viewMode, showStats]);
+  }, [filters, viewMode, showStats, showCompare]);
 
   useEffect(() => {
     // Carrega federados em ambos os modos (nossos + todos) para enriquecimento
@@ -406,6 +413,8 @@ export default function JogadoresPage() {
           setShowStats(v);
           if (!v) { setDrillDown(null); setHcpBinDrill(null); }
         }}
+        showCompare={showCompare}
+        onSetShowCompare={setShowCompare}
         counts={toolbarCounts}
         dataSources={dataSources}
         loadingFeds={loadingFeds}
@@ -516,7 +525,11 @@ export default function JogadoresPage() {
         </div>
 
         <div className="course-detail jog-detail" ref={md.detailRef}>
-          {showStats && viewMode === "todos" && globalStats ? (
+          {showCompare ? (
+            <Suspense fallback={<LoadingState size="sm" message="A carregar…" />}>
+              <CompararPlayersView players={players} />
+            </Suspense>
+          ) : showStats && viewMode === "todos" && globalStats ? (
             <FederadosStatsPanel
               stats={globalStats}
               drillDown={drillDown}

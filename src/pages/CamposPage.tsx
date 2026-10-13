@@ -1,5 +1,6 @@
 ﻿import { useMemo, useState, useEffect, Fragment, type ReactNode, type CSSProperties } from "react";
 import { SimuladorView } from "./SimuladorPage";
+import { CamposCompareView } from "./ComparePage";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
@@ -1213,11 +1214,11 @@ export default function CamposPage() {
   const [selectedKey, setSelectedKey] = useState<string | null>(urlCourseKey ?? null);
   // Vista do detalhe: Scorecard · Como jogou · Simulador (o antigo /simulador).
   // Fica no URL (?view=manuel|sim) para os links abrirem na vista certa.
-  const [detailView, setDetailViewState] = useState<"scorecard" | "manuel" | "sim">(() => {
+  const [detailView, setDetailViewState] = useState<"scorecard" | "manuel" | "sim" | "comparar">(() => {
     const v = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("view") : null;
-    return v === "sim" || v === "manuel" ? v : "scorecard";
+    return v === "sim" || v === "manuel" || v === "comparar" ? v : "scorecard";
   });
-  const setDetailView = (v: "scorecard" | "manuel" | "sim") => {
+  const setDetailView = (v: "scorecard" | "manuel" | "sim" | "comparar") => {
     setDetailViewState(v);
     const sp = new URLSearchParams(window.location.search);
     if (v === "scorecard") sp.delete("view"); else sp.set("view", v);
@@ -1560,6 +1561,15 @@ export default function CamposPage() {
                     >
                       <span className="seg-label">Simulador</span>
                     </button>
+                    <button
+                      role="tab"
+                      aria-selected={detailView === "comparar"}
+                      className={`seg-btn${detailView === "comparar" ? " active" : ""}`}
+                      onClick={() => setDetailView("comparar")}
+                      title="Comparar este campo com outro · Vantagem de Tee"
+                    >
+                      <span className="seg-label">Comparar</span>
+                    </button>
                   </div>
                 }
               />
@@ -1577,7 +1587,9 @@ export default function CamposPage() {
               )}
 
               {/* Vista */}
-              {detailView === "sim" ? (
+              {detailView === "comparar" ? (
+                <CamposCompareView courseKey={selected.courseKey} />
+              ) : detailView === "sim" ? (
                 <SimuladorView course={selected} sexFilter={sexFilter} setSexFilter={setSexFilter} />
               ) : detailView === "scorecard" ? (
                 <>

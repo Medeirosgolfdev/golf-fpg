@@ -39,7 +39,7 @@ export interface ToolbarCounts {
 
 export default function JogadoresToolbar({
   api, viewMode, onSetViewMode,
-  showStats, onSetShowStats,
+  showStats, onSetShowStats, showCompare = false, onSetShowCompare,
   counts, dataSources,
   loadingFeds, federadosError,
   escaloes, escalaoCountMap, regions, clubOptions,
@@ -51,6 +51,9 @@ export default function JogadoresToolbar({
   onSetViewMode: (m: ViewMode) => void;
   showStats: boolean;
   onSetShowStats: (v: boolean) => void;
+  /** Vista «⚔️ Comparar» (comparar jogadores — veio do /comparar, 13/10/2026). */
+  showCompare?: boolean;
+  onSetShowCompare?: (v: boolean) => void;
   counts: ToolbarCounts;
   dataSources: DataSource[];
   loadingFeds: boolean;
@@ -124,21 +127,29 @@ export default function JogadoresToolbar({
         </div>
         {/* Vista Lista | 📊 Stats — era um botão de "filtro" 📊; é uma troca de
             vista, por isso ganha a forma segmented (padrão CamposPage). */}
-        {viewMode === "todos" && (
-          <div className="segmented-toggle" role="tablist" aria-label="Vista">
-            <button role="tab" aria-selected={!showStats}
-              className={`seg-btn ${!showStats ? "active" : ""}`}
-              onClick={() => onSetShowStats(false)}>
-              <span className="seg-label">Lista</span>
-            </button>
-            <button role="tab" aria-selected={showStats}
-              className={`seg-btn ${showStats ? "active" : ""}`}
-              onClick={() => onSetShowStats(true)}
+        <div className="segmented-toggle" role="tablist" aria-label="Vista">
+          <button role="tab" aria-selected={!showStats && !showCompare}
+            className={`seg-btn ${!showStats && !showCompare ? "active" : ""}`}
+            onClick={() => { onSetShowStats(false); onSetShowCompare?.(false); }}>
+            <span className="seg-label">Lista</span>
+          </button>
+          {viewMode === "todos" && (
+            <button role="tab" aria-selected={showStats && !showCompare}
+              className={`seg-btn ${showStats && !showCompare ? "active" : ""}`}
+              onClick={() => { onSetShowCompare?.(false); onSetShowStats(true); }}
               title="Estatísticas globais dos federados FPG">
               <span className="seg-label">📊 Stats</span>
             </button>
-          </div>
-        )}
+          )}
+          {onSetShowCompare && (
+            <button role="tab" aria-selected={showCompare}
+              className={`seg-btn ${showCompare ? "active" : ""}`}
+              onClick={() => { onSetShowStats(false); onSetShowCompare(true); }}
+              title="Comparar até 4 jogadores lado a lado">
+              <span className="seg-label">⚔️ Comparar</span>
+            </button>
+          )}
+        </div>
         {viewMode === "todos" && federadosError && (
           <div className="muted fs-10 fw-600" style={{ color: "var(--color-warn-vivid)" }}>
             ⚠ Erro a carregar federados.json: {federadosError}

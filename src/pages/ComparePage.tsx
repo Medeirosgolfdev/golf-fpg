@@ -15,6 +15,7 @@
  * Tabela ordenável por clique no cabeçalho (useState local + SortableHdr).
  */
 import { useState, useMemo, lazy, Suspense } from "react";
+import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
@@ -31,9 +32,7 @@ import { teeHexFromTee as teeHex } from "../utils/teeUtils";
 import { textOnColor } from "../utils/teeColors";
 import { MANUEL_FED } from "../constants/manuel";
 
-const CompararPlayersView = lazy(() => import("./CompararPage"));
 const TeeAdvisorView = lazy(() => import("./comparar/TeeAdvisorView"));
-const SimuladorPageEmbedded = lazy(() => import("./SimuladorPage"));
 
 // ═══════════════════ Helpers ═══════════════════
 
@@ -796,7 +795,7 @@ function CourseSideBySide({
   );
 }// ═══════════════════ Vista principal: comparação de campos ═══════════════════
 
-function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
+export function CourseComparisonView({ simCourses, initialCourseKey }: { simCourses: Course[]; initialCourseKey?: string }) {
   const { players } = useAppContext();
   const sortedCourses = useMemo(
     () => [...simCourses].sort((a, b) =>
@@ -806,9 +805,11 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
   );
 
   const defaultCourseKey = useMemo(() => {
+    // Dentro dos Campos: o Campo A é o campo seleccionado na lista.
+    if (initialCourseKey && sortedCourses.some(c => c.courseKey === initialCourseKey)) return initialCourseKey;
     const sds = sortedCourses.find(c => /santo\s+d[ao]\s+serra/i.test(c.master.name));
     return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
-  }, [sortedCourses]);
+  }, [sortedCourses, initialCourseKey]);
 
   // ── Campo A ──
   const [selectedCourseKey, setSelectedCourseKey] = useState<string>(defaultCourseKey);
@@ -1042,56 +1043,39 @@ function CourseComparisonView({ simCourses }: { simCourses: Course[] }) {
 }
 
 // ═══════════════════ Página principal ═══════════════════
+// O /comparar saiu da barra (13/10/2026): comparar campos e a Vantagem de Tee
+// são a vista «Comparar» dos Campos (CamposCompareView, abaixo); comparar
+// jogadores vive nos Jogadores (Lista | Stats | Comparar). O Simulador já era
+// uma vista dos Campos.
 
-type Tab = "campos" | "tees" | "jogadores" | "simulador";
-
-export default function ComparePage() {
+/** Vista «⚔️ Comparar» dentro dos Campos — Campo A vs B · Vantagem de Tee. */
+export function CamposCompareView({ courseKey }: { courseKey?: string }) {
   const ctx = useAppContext();
-  const [activeTab, setActiveTab] = useState<Tab>("campos");
-
+  const [activeTab, setActiveTab] = useState<"campos" | "tees">("campos");
   return (
-    <div className="page-full page-full--wide">
-      <Toolbar>
-        <ToolbarTitle>⚔️ Comparar</ToolbarTitle>
-        <ToolbarMeta>
-          {ctx.simCourses.length} campos · {Object.keys(ctx.players).length} jogadores
-        </ToolbarMeta>
-      </Toolbar>
-
+    <div>
       <div className="tabbar-under" role="tablist" aria-label="Modo de comparação">
         <button type="button" role="tab" aria-selected={activeTab === "campos"}
           className={"tab-under" + (activeTab === "campos" ? " active" : "")}
           onClick={() => setActiveTab("campos")}>
-          ⛳ Campos
+          ⛳ Campo A vs B
         </button>
         <button type="button" role="tab" aria-selected={activeTab === "tees"}
           className={"tab-under" + (activeTab === "tees" ? " active" : "")}
           onClick={() => setActiveTab("tees")}>
           🟡 Vantagem de Tee
         </button>
-        <button type="button" role="tab" aria-selected={activeTab === "jogadores"}
-          className={"tab-under" + (activeTab === "jogadores" ? " active" : "")}
-          onClick={() => setActiveTab("jogadores")}>
-          🏌️ Jogadores
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "simulador"}
-          className={"tab-under" + (activeTab === "simulador" ? " active" : "")}
-          onClick={() => setActiveTab("simulador")}>
-          🎯 Simulador
-        </button>
       </div>
-
       <Suspense fallback={<LoadingState message="A carregar…" />}>
-        {activeTab === "campos" ? (
-          <CourseComparisonView simCourses={ctx.simCourses} />
-        ) : activeTab === "tees" ? (
-          <TeeAdvisorView simCourses={ctx.simCourses} />
-        ) : activeTab === "simulador" ? (
-          <SimuladorPageEmbedded />
-        ) : (
-          <CompararPlayersView players={ctx.players} />
-        )}
+        {activeTab === "campos"
+          ? <CourseComparisonView key={courseKey} simCourses={ctx.simCourses} initialCourseKey={courseKey} />
+          : <TeeAdvisorView simCourses={ctx.simCourses} />}
       </Suspense>
     </div>
   );
+}
+
+/** /comparar antigo → Campos na vista «Comparar». */
+export default function ComparePage() {
+  return <Navigate to="/campos?view=comparar" replace />;
 }
