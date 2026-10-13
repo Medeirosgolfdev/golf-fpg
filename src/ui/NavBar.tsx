@@ -28,8 +28,8 @@ const NAV_ITEMS: { tab: Tab; label: string; path: string; external?: boolean; ti
   { tab: "diversos",   label: "🇵🇹 FPG",     path: "/FPG"        },
   { tab: "uskids",     label: "🇺🇸 USKids",  path: "/uskids"     },
   { tab: "major",      label: "🎖️ MAJOR",   path: "/major", title: "Doral + BJGT" },
-  { tab: "ffg",        label: "🇫🇷 France",  path: "/ffg"        },
-  { tab: "rfeg",       label: "🇪🇸 España",  path: "/rfeg"       },
+  { tab: "ffg",        label: "🇫🇷",          path: "/ffg", title: "France — FFGolf" },
+  { tab: "rfeg",       label: "🇪🇸",          path: "/rfeg", title: "España — RFEGolf" },
   // EGR · WAGR · GJGL numa só entrada (13/10/2026) — os separadores estão no topo de cada uma (RankingsTabs).
   { tab: "egr",        label: "🏅 Rankings",  path: "/egr", title: "Rankings — EGR · WAGR · GJGL", group: ["egr", "wagr", "global-junior"] },
   { tab: "comparar",   label: "Comparar",     path: "/comparar"   },
