@@ -1922,16 +1922,16 @@ function DriveContent() {
             />
             {availYears.length > 1 && (<>
               <ToolbarSep />
-              {availYears.map(y => (
-                <button key={y}
-                  className={"tourn-tab tourn-tab-sm" + (activeYear === y ? " active" : " tourn-tab-muted")}
-                  onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}
-                  style={activeYear === y
-                    ? { flexShrink: 0 }
-                    : { flexShrink: 0 }}>
-                  {y}
-                </button>
-              ))}
+              {/* Anos: o mesmo interruptor segmentado das vistas. */}
+              <div className="segmented-toggle" role="tablist" aria-label="Ano">
+                {availYears.map(y => (
+                  <button key={y} role="tab" aria-selected={activeYear === y}
+                    className={"seg-btn" + (activeYear === y ? " active" : "")}
+                    onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}>
+                    <span className="seg-label">{y}</span>
+                  </button>
+                ))}
+              </div>
               <ToolbarSep />
               <button
                 className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : " tourn-tab-muted")}

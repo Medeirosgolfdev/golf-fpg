@@ -858,29 +858,34 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           {flt.year && years.length > 1 && (
             <>
               <ToolbarSep />
-              {recentYears.map(y => (
-                <button
-                  key={y}
-                  type="button"
-                  className={"tourn-tab tourn-tab-sm" + (fYear === String(y) ? " active" : " tourn-tab-muted")}
-                  onClick={() => setFYear(fYear === String(y) ? "all" : String(y))}
-                  style={{ flexShrink: 0 }}
-                >
-                  {y}
-                </button>
-              ))}
-              {oldCutoff != null && (
-                <button
-                  key="__old__"
-                  type="button"
-                  title={`Anteriores a ${oldCutoff}`}
-                  className={"tourn-tab tourn-tab-sm" + (fYear === "__old__" ? " active" : " tourn-tab-muted")}
-                  onClick={() => setFYear(fYear === "__old__" ? "all" : "__old__")}
-                  style={{ flexShrink: 0 }}
-                >
-                  {`<${oldCutoff}`}
-                </button>
-              )}
+              {/* Anos: o mesmo interruptor segmentado das vistas (clicar no activo = todos). */}
+              <div className="segmented-toggle" role="tablist" aria-label="Ano">
+                {recentYears.map(y => (
+                  <button
+                    key={y}
+                    type="button"
+                    role="tab"
+                    aria-selected={fYear === String(y)}
+                    className={"seg-btn" + (fYear === String(y) ? " active" : "")}
+                    onClick={() => setFYear(fYear === String(y) ? "all" : String(y))}
+                  >
+                    <span className="seg-label">{y}</span>
+                  </button>
+                ))}
+                {oldCutoff != null && (
+                  <button
+                    key="__old__"
+                    type="button"
+                    role="tab"
+                    aria-selected={fYear === "__old__"}
+                    title={`Anteriores a ${oldCutoff}`}
+                    className={"seg-btn" + (fYear === "__old__" ? " active" : "")}
+                    onClick={() => setFYear(fYear === "__old__" ? "all" : "__old__")}
+                  >
+                    <span className="seg-label">{`<${oldCutoff}`}</span>
+                  </button>
+                )}
+              </div>
               <ToolbarSep />
             </>
           )}

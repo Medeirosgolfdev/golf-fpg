@@ -1,7 +1,7 @@
 /**
  * src/ui/TabRow.tsx
  *
- * Linha de tabs (`tourn-tab tourn-tab-sm`) com estado activo.
+ * Linha de tabs com estado activo — interruptor segmentado (`.segmented-toggle`/`.seg-btn`).
  * Substitui o padrão `<div className="escalao-pills">` repetido em
  * BJGTAnalysisPage, FPGPage, USKIDSPage, NacionaisPage, etc.
  *
@@ -42,33 +42,30 @@ interface TabRowProps<K> {
   style?: React.CSSProperties;
 }
 
+// Interruptor segmentado (o mesmo de Campos/Jogadores) — 13/10/2026: vistas e
+// filtros de escolha única com UM só aspecto em todo o site. A API mantém-se.
 function TabRow<K>({ tabs, active, onChange, children, className, style }: TabRowProps<K>) {
   return (
     <div
-      className={`escalao-pills mb-8${className ? " " + className : ""}`}
-      style={{ gap: 4, ...style }}
+      className={`segmented-toggle${className ? " " + className : ""}`}
+      role="tablist"
+      style={style}
     >
       {tabs?.map(({ key, label, count, disabled, title }) => {
         const isActive = active === key;
         return (
           <button
             key={String(key)}
-            className={`tourn-tab tourn-tab-sm${isActive ? " active" : ""}`}
+            role="tab"
+            aria-selected={isActive}
+            className={`seg-btn${isActive ? " active" : ""}`}
             onClick={() => !disabled && onChange(key)}
             disabled={disabled}
             title={title}
-            style={isActive
-              ? { flexShrink: 0 }
-              : { flexShrink: 0, background: "var(--bg-muted)", color: disabled ? "var(--text-3)" : "var(--text-2)", borderColor: "var(--border)", cursor: disabled ? "not-allowed" : "pointer", opacity: disabled ? 0.5 : 1 }}
+            style={disabled ? { cursor: "not-allowed", opacity: 0.5 } : undefined}
           >
-            {label}
-            {count != null && count > 0 && (
-              <span className="fs-10 fw-700" style={{
-                marginLeft: 4, padding: "0 5px", borderRadius: 8,
-                background: isActive ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
-                color: isActive ? "#fff" : "var(--text-3)",
-              }}>{count}</span>
-            )}
+            <span className="seg-label">{label}</span>
+            {count != null && count > 0 && <span className="seg-count">{count}</span>}
           </button>
         );
       })}
@@ -90,14 +87,13 @@ function Tab<K>({ value, active, onChange, children, disabled }: TabProps<K>) {
   const isActive = active === value;
   return (
     <button
-      className={`tourn-tab tourn-tab-sm${isActive ? " active" : ""}`}
+      role="tab"
+      aria-selected={isActive}
+      className={`seg-btn${isActive ? " active" : ""}`}
       onClick={() => !disabled && onChange?.(value)}
       disabled={disabled}
-      style={isActive
-        ? { flexShrink: 0 }
-        : { flexShrink: 0, background: "var(--bg-muted)", color: "var(--text-2)", borderColor: "var(--border)" }}
     >
-      {children}
+      <span className="seg-label">{children}</span>
     </button>
   );
 }
