@@ -139,7 +139,7 @@ function buildMajorEntries(bjgtDefs: TDef[], doralEntries: Entry[], doralNames: 
 }
 
 /* ─── Junior Orange Bowl — ficheiros orangebowl_<ano>.json (scrape-junior-orange-bowl.js) ─── */
-export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
+export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
   // ronda) — ganha ao da divisão quando existe.
   date?: string; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; courseRating?: number | null; slope?: number | null }[]; }
@@ -359,11 +359,11 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
   // Nascimento (dob ISO ou só o ano) → coluna Nasc. do draw (Faldo Madeira).
   const birthByName = new Map<string, { dob: string | null; birthYear: number | null }>();
   // Valores ESTIMADOS (Faldo Madeira: estrangeiros sem fonte) → itálico vermelho no draw.
-  const estByName = new Map<string, { hcpEstimated?: boolean; birthYearEst?: number | null; birthYearEstMax?: number | null; estNote?: string | null }>();
+  const estByName = new Map<string, { hcpEstimated?: boolean; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null }>();
   for (const p of players) {
     if (p.name && typeof p.hcp === "number") hcpByName.set(norm(p.name), p.hcp);
     if (p.name && (p.dob || p.birthYear)) birthByName.set(norm(p.name), { dob: p.dob ?? null, birthYear: p.birthYear ?? null });
-    if (p.name && (p.hcpEstimated || p.birthYearEst)) estByName.set(norm(p.name), { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote ?? null });
+    if (p.name && (p.hcpEstimated || p.birthYearEst || p.countryEstimated)) estByName.set(norm(p.name), { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null });
     if (!p.name || !p.country) continue;
     countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
     // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.

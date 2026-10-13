@@ -67,6 +67,7 @@ export interface FpgDrawFlight {
     birthYearEst?: number | null;
     /** Fim do intervalo estimado (ano); null = sem limite ("2012 ou depois"); ausente = ano único. */
     birthYearEstMax?: number | null;
+    countryEstimated?: boolean;
     estNote?: string | null;
   }>;
 }

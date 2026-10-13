@@ -240,6 +240,7 @@ export default function DrawTab({
       hcpEstimated?: boolean;
       birthYearEst?: number | null;
       birthYearEstMax?: number | null;
+      countryEstimated?: boolean;
       estNote?: string | null;
       escHist: string | null;
       gross: number;
@@ -447,6 +448,7 @@ export default function DrawTab({
           birthYearEst: (p as { birthYearEst?: number | null }).birthYearEst ?? null,
           ...("birthYearEstMax" in (p as object) ? { birthYearEstMax: (p as { birthYearEstMax?: number | null }).birthYearEstMax ?? null } : {}),
           estNote: (p as { estNote?: string | null }).estNote ?? null,
+          countryEstimated: !!(p as { countryEstimated?: boolean }).countryEstimated,
           escHist,
           gross: res?.gross ?? 0,
           toPar: res?.toPar ?? null,
@@ -596,7 +598,7 @@ export default function DrawTab({
               </td>
             )}
             {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}
-            {!hc.clube && <td className="lb-club" title={p.clube} style={bStyle}>{p.clube || "–"}</td>}
+            {!hc.clube && <td className="lb-club" title={p.countryEstimated ? `Estimativa — ${p.estNote || "país deduzido"}` : p.clube} style={bStyle}>{p.clube ? (p.countryEstimated ? <span className="est-value">{p.clube}</span> : p.clube) : "–"}</td>}
             {!hc.hcp && (
               <td className="lb-hcp" style={bStyle}
                 title={p.hcpCurrent ? "HCP actual (federado) — snapshot do evento indisponível" : p.hcpEstimated ? `Estimativa — ${p.estNote || "sem fonte com o HCP"}` : undefined}>

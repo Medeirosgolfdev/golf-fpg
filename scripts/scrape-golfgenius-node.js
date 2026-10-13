@@ -831,6 +831,7 @@ function applyPlayerOverrides(out, players) {
       // Intervalo do escalão (EGR U16 em 2026 = 2010–2011); null = "ou depois" (U14).
       if ('birthYearEstMax' in o) p.birthYearEstMax = o.birthYearEstMax;
     }
+    if (o.countryEst && !p.country) { p.country = o.countryEst; p.countryEstimated = true; if (!p.location) p.location = o.countryEst; }
     if (o.estNote) p.estNote = o.estNote;
     n++;
   }
