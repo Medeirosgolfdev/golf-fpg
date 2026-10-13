@@ -574,16 +574,18 @@ function TeeTable({ rows, habitual }: { rows: TeeMetrics[]; habitual: number | n
 
 /* ═══════════════════ Vista principal ═══════════════════ */
 
-export default function TeeAdvisorView({ simCourses }: { simCourses: Course[] }) {
+export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCourses: Course[]; initialCourseKey?: string }) {
   const sortedCourses = useMemo(
     () => [...simCourses].sort((a, b) => a.master.name.localeCompare(b.master.name, "pt", { sensitivity: "base" })),
     [simCourses]
   );
 
   const defaultCourseKey = useMemo(() => {
+    // Dentro dos Campos: abre no campo seleccionado na lista.
+    if (initialCourseKey && sortedCourses.some(c => c.courseKey === initialCourseKey)) return initialCourseKey;
     const sds = sortedCourses.find(c => /santo\s+d[ao]\s+serra/i.test(c.master.name));
     return sds?.courseKey ?? sortedCourses[0]?.courseKey ?? "";
-  }, [sortedCourses]);
+  }, [sortedCourses, initialCourseKey]);
 
   const [courseKey, setCourseKey] = useState(defaultCourseKey);
   const [sexFilter, setSexFilter] = useState<"M" | "F">("M");

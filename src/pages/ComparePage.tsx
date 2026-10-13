@@ -1069,7 +1069,7 @@ export function CamposCompareView({ courseKey }: { courseKey?: string }) {
       <Suspense fallback={<LoadingState message="A carregar…" />}>
         {activeTab === "campos"
           ? <CourseComparisonView key={courseKey} simCourses={ctx.simCourses} initialCourseKey={courseKey} />
-          : <TeeAdvisorView simCourses={ctx.simCourses} />}
+          : <TeeAdvisorView key={courseKey} simCourses={ctx.simCourses} initialCourseKey={courseKey} />}
       </Suspense>
     </div>
   );
