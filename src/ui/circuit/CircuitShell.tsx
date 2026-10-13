@@ -18,7 +18,7 @@
 
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
-import { CircuitPastEditionsTab } from "./pastEditions";
+import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
@@ -777,11 +777,12 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     const sib = editionsSource.filter((e) => editionKey(e) === k);
     return sib.length >= 2 ? sib : null;
   }, [cur, editionsSource, editionKey]);
+  const curField = useMemo(() => divisionField(curDiv), [curDiv]);
   const pastEditionsTabNode = (() => {
     if (!curDiv || !cur) return null;
     if (pastEditionsSiblings) {
       return { key: "past-editions", label: "Edições anteriores",
-        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} /> };
+        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} /> };
     }
     // Fallback: hook de baixo nível `pastEditionsTab` (legado; só usado quando
     // uma página não fornece `editionKey`).

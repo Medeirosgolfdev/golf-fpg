@@ -14,7 +14,7 @@
  *     torneio noutros anos), carrega cada uma (lazy, via `entry.loadDivisions`),
  *     casa a divisão e desenha a tabela. É isto que o CircuitShell injecta.
  */
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { CircuitEntry, CircuitDivision } from "./types";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import { isManuelByName as isM } from "../../constants/manuel";
@@ -22,6 +22,21 @@ import { isRoundInProgress } from "../../data/fpgUtils";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
+import PastEditionsRepeatersTable from "./PastEditionsRepeatersTable";
+import TabRow from "../TabRow";
+import { buildRepeaters, type FieldPlayer } from "./repeaters";
+
+/** Field de hoje de uma divisão: resultados → inscritos → draw (o 1º que houver). */
+export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
+  if (!d) return [];
+  const res = d.results?.players?.filter((p) => p.name);
+  if (res?.length) return res.map((p) => ({ name: p.name, club: p.club || null }));
+  const ins = d.inscritos?.lists?.[0]?.players;
+  if (ins?.length) return ins.map((p) => ({ name: p.name, club: p.club || p.country || null }));
+  const r1 = d.draw ? Object.values(d.draw.rounds)[0] : null;
+  if (r1?.length) return r1.flatMap((g) => g.players.map((p) => ({ name: p.name, club: p.club || null })));
+  return [];
+}
 
 /**
  * Chave de IDENTIDADE de um torneio entre anos, a partir do nome, para páginas
@@ -153,7 +168,11 @@ async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
  * shell, e o escalão aberto. Carrega cada edição (lazy + cacheado pelo próprio
  * `loadDivisions`), casa a divisão e desenha a tabela.
  */
-export function CircuitPastEditionsTab({ editions, division }: { editions: CircuitEntry[]; division: string }) {
+export function CircuitPastEditionsTab({ editions, division, field, currentId }: {
+  editions: CircuitEntry[]; division: string;
+  /** Field de hoje (ver `divisionField`) — com ele aparece a vista «Quem repete». */
+  field?: FieldPlayer[]; currentId?: string | null;
+}) {
   const [state, setState] = useState<{ loading: boolean; rows: PastEdition[]; err?: string }>({ loading: true, rows: [] });
 
   useEffect(() => {
@@ -191,10 +210,28 @@ export function CircuitPastEditionsTab({ editions, division }: { editions: Circu
     return () => { alive = false; };
   }, [editions, division]);
 
+  const rep = useMemo(
+    () => (field?.length ? buildRepeaters(field, state.rows, currentId) : null),
+    [field, state.rows, currentId],
+  );
+  // Torneio por jogar (sem resultados hoje) → abre em «Quem repete».
+  const [view, setView] = useState<"ed" | "rep">(() =>
+    field?.length && !editions.find((e) => e.id === currentId)?.hasResults ? "rep" : "ed");
+
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
   // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
   // não faz sentido como título da tabela.
-  return <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
+  const table = <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
+  if (!rep || !rep.editions.length) return table;
+  return (
+    <div className="flex-col gap-10">
+      <TabRow active={view} onChange={setView} style={{ alignSelf: "flex-start" }} tabs={[
+        { key: "ed", label: "Por edição" },
+        { key: "rep", label: "Quem repete", count: rep.rows.length },
+      ]} />
+      {view === "rep" ? <PastEditionsRepeatersTable data={rep} /> : table}
+    </div>
+  );
 }
