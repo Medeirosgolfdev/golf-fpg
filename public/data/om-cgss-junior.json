@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-10T15:36:32.883Z",
+  "generated": "2026-10-13T18:35:33.560Z",
   "season": 2026,
   "title": "Ordem de Mérito Júnior — CG Santo da Serra",
   "subtitle": "by NOS Madeira · categoria Júnior (0-18, sem distinção de género)",
@@ -229,22 +229,16 @@
         "pts": 9
       },
       {
-        "name": "António Mendonça Alves",
-        "fed": "22226",
-        "pos": 27,
-        "pts": 8
-      },
-      {
         "name": "Elia Campus",
         "fed": "36676",
         "pos": 27,
         "pts": 8
       },
       {
-        "name": "Vitor Nóbrega",
-        "fed": "39589",
-        "pos": 29,
-        "pts": 7
+        "name": "António Mendonça Alves",
+        "fed": "22226",
+        "pos": 27,
+        "pts": 8
       },
       {
         "name": "Luís Fraga Silveira",
@@ -253,8 +247,14 @@
         "pts": 7
       },
       {
-        "name": "Hélder Câmara",
-        "fed": "52644",
+        "name": "Vitor Nóbrega",
+        "fed": "39589",
+        "pos": 29,
+        "pts": 7
+      },
+      {
+        "name": "Christopher Leitão",
+        "fed": "54280",
         "pos": 31,
         "pts": 5
       },
@@ -265,8 +265,8 @@
         "pts": 5
       },
       {
-        "name": "Christopher Leitão",
-        "fed": "54280",
+        "name": "Hélder Câmara",
+        "fed": "52644",
         "pos": 31,
         "pts": 5
       },
@@ -277,14 +277,14 @@
         "pts": 4
       },
       {
-        "name": "Lionel Melim",
-        "fed": "60890",
+        "name": "João Pedro Ferreira",
+        "fed": "60889",
         "pos": 35,
         "pts": 2
       },
       {
-        "name": "João Pedro Ferreira",
-        "fed": "60889",
+        "name": "Lionel Melim",
+        "fed": "60890",
         "pos": 35,
         "pts": 2
       },
@@ -2248,8 +2248,12 @@
       "course": "Santo da Serra - Machico-Desertas",
       "scoring": "Stableford Net",
       "juniorScoring": "Stableford Net",
-      "juniorBasis": "sem-termos",
-      "termos": null,
+      "juniorBasis": "prova",
+      "termos": {
+        "ficheiro": "2026-10-10_CGSS_Termos_Competicao_Trofeu_Joao_Sousa.pdf",
+        "texto": "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A).",
+        "desempate": "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio."
+      },
       "oficialJr": {
         "nome": "OM JUNIORES",
         "scoring": "Stableford Net"
