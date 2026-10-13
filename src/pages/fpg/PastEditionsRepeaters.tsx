@@ -165,7 +165,8 @@ export default function PastEditionsRepeaters({
               {temForma && hdr("forma", "Forma", "Differential médio das últimas 5 voltas")}
               {temForma && <th title="Differential médio das últimas 20 voltas">Média</th>}
               {hdr("aqui", "Melhor", "Melhor ±par que fez nesta prova")}
-              <th title="Edições anteriores desta prova e o lugar em cada uma">Ed.</th>
+              {/* Uma coluna por edição anterior: ano no cabeçalho, lugar na célula. */}
+              {anos.map((y) => <th key={y} title={`Lugar na edição de ${y}`}>{y}</th>)}
               {hdr("fit", "vs Campo", "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio")}
               {hdr("prev", "Previsão", "Gross esperado no torneio")}
               <th>±</th>
@@ -197,9 +198,10 @@ export default function PastEditionsRepeaters({
                   <td className="mono" style={{ fontWeight: 600, color: r.bestToPar != null ? tpColorDark(r.bestToPar) : undefined }}>
                     {r.bestToPar != null ? fmtToPar(r.bestToPar) : "–"}
                   </td>
-                  <td style={{ whiteSpace: "nowrap" }}>
-                    {r.editions.map((e) => `${e.year}${e.pos ? ` ${e.pos}º` : ""}`).join(" · ")}
-                  </td>
+                  {anos.map((y) => {
+                    const e = r.editions.find((x) => x.year === y);
+                    return <td key={y} className="mono">{e ? (e.pos ? `${e.pos}º` : "jogou") : "–"}</td>;
+                  })}
                   <td className="mono"
                     title={r.courseFit == null ? undefined
                       : `${Math.abs(r.courseFit)} ${r.courseFit < 0 ? "melhor" : "pior"} que a mediana do field nesta prova`}
@@ -214,7 +216,7 @@ export default function PastEditionsRepeaters({
                 </tr>,
                 isOpen ? (
                   <tr key={id + "-d"} className="row-expanded">
-                    <td colSpan={9 + (temEsc ? 1 : 0) + (temHcp ? 2 : 0) + (temForma ? 2 : 0)}>
+                    <td colSpan={8 + anos.length + (temEsc ? 1 : 0) + (temHcp ? 2 : 0) + (temForma ? 2 : 0)}>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 18, fontSize: 12 }}>
                         <div>
                           <div className="fw-700">Nesta prova</div>
