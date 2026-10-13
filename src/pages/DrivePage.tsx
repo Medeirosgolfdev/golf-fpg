@@ -1480,7 +1480,7 @@ function DriveContent() {
         const eqData = equipasIdx[`${t?.ccode}-${t?.tcode}`];
         const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <DriveEquipasTab data={eqData} /> } : null;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any}
-          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
+          extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
     // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.

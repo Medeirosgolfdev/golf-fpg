@@ -449,7 +449,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
             hideHeader
-            extraTabs={extras?.pastEditionsTab ? [extras.pastEditionsTab] : []}
+            extraTabs={[extras?.pastEditionsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)}
           />
         ),
       };
@@ -523,7 +523,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
               ...(dv.players.some((p) => p.dob || p.birthYear || p.birthYearEst) ? { nasc: false } : {}),
             }}
             hideHeader
-            extraTabs={[...mpBase, ...(extras?.pastEditionsTab ? [extras.pastEditionsTab] : [])]}
+            extraTabs={[...mpBase, ...[extras?.pastEditionsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)]}
           />
         ),
       };

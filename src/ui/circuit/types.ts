@@ -25,6 +25,7 @@ export type CircuitSex = "M" | "F" | "Mixed";
 export interface CircuitRenderFullExtras {
   pastEditionsTab?: { key: string; label: string; content: React.ReactNode };
   seasonTab?: { key: string; label: string; content: React.ReactNode };
+  repeatersTab?: { key: string; label: string; content: React.ReactNode };
 }
 
 /** Secções possíveis no detalhe (cada uma só aparece se tiver dados). */

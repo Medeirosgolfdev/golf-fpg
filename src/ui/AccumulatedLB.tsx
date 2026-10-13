@@ -38,6 +38,16 @@ export function AccumulatedLB({
   const complete = rawPlayers.filter((p) => !p._incomplete);
   const incomplete = rawPlayers.filter((p) => p._incomplete);
   const parPerRound = complete[0]?.parTotal ?? incomplete[0]?.parTotal ?? 72;
+  // Par do torneio = soma do par de CADA volta (13/10/2026 — PGA Golf Club
+  // Invitational: R1 de 18 e R2 encurtada a 9; «Par × nRondas» dava 72 em vez
+  // de 108). Sem pares por volta, fica o Par × nRondas de sempre.
+  const sumRoundPars = (p: (typeof rawPlayers)[number] | undefined): number | null => {
+    const rss = p?.roundScores || [];
+    if (!rss.length || rss.some((rs) => !rs.pars?.length)) return null;
+    return rss.reduce((s, rs) => s + rs.pars.reduce((a: number, b) => a + (b || 0), 0), 0);
+  };
+  const parRef = complete.find((p) => (p.roundScores?.length ?? 0) >= nRounds);
+  const parTorneio = sumRoundPars(parRef) ?? parPerRound * nRounds;
 
   // useMemo ANTES do early return — regra dos hooks React
   const rows: MRRow[] = useMemo(() => {
@@ -104,7 +114,7 @@ export function AccumulatedLB({
         age: (p as { _age?: number | null })._age ?? null,
         teeName: p.teeName,
         gross: numGross(p),
-        parTotal: parPerRound * (p._roundsPlayed ?? nRounds),
+        parTotal: sumRoundPars(p) ?? parPerRound * (p._roundsPlayed ?? nRounds),
         toPar: p.toPar ?? null,
         isIncomplete: !!p._incomplete,
         isWD: !!p._wd,
@@ -143,9 +153,9 @@ export function AccumulatedLB({
     incomplete.length > 0 ? `${incomplete.length} inc.` : null,
     nEmCurso > 0 ? `${nEmCurso} a decorrer` : null,
     nRounds > 1 ? `__ROUND_PILL__` : null,
-    `Par ${parPerRound * nRounds}`,
+    `Par ${parTorneio}`,
     avgGross != null
-      ? `Média ${avgGross.toFixed(1)} (${avgGross - parPerRound * nRounds >= 0 ? "+" : ""}${(avgGross - parPerRound * nRounds).toFixed(1)})`
+      ? `Média ${avgGross.toFixed(1)} (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})`
       : null,
     campo ? `📍 ${campo}` : null,
     cr ? `CR ${cr}` : null,

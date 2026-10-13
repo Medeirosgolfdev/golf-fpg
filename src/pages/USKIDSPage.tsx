@@ -12,6 +12,7 @@ import EmptyState from "../ui/EmptyState";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabResultados from "../ui/TabResultados";
+import TabRow from "../ui/TabRow";
 import TabCampoDetalhe, { KidsLink } from "../ui/TabCampoDetalhe";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
@@ -102,6 +103,43 @@ interface ResultsData { gerado_em: string; resultados: TorneioResult[]; }
 // ─────────────────────────────────────────────
 
 // ── Overrides para jogadores IE/WD excluídos pelo scraper ──
+// Voltas encurtadas (13/10/2026 — PGA Golf Club Invitational, Boys 12: a R2
+// ficou nos 9 buracos). A USKids manda -1 nos buracos por jogar e o ±par vinha
+// contra o par dos 18 (−38). Muta in-place: buracos por jogar passam a 0 (a
+// convenção do site) e o score/±par/buracos contam só os jogados.
+function fixShortenedRounds(resultados: TorneioResult[]): void {
+  for (const t of resultados) for (const e of t.escaloes || []) for (const r of e.rondas || []) {
+    const lb = r.leaderboard || r.jogadores || [];
+    for (const j of lb) {
+      const st = j.strokes;
+      if (!Array.isArray(st) || !st.some((s) => s < 0)) continue;
+      j.strokes = st.map((s) => (s > 0 ? s : 0));
+      const played = j.strokes.map((s, i) => (s > 0 ? i : -1)).filter((i) => i >= 0);
+      if (!played.length) continue;
+      j.score = played.reduce((s, i) => s + j.strokes[i], 0);
+      j.buracos = played.length;
+      const par = played.reduce((s, i) => s + (r.par?.[i] ?? 0), 0);
+      j.to_par = par > 0 ? j.score - par : null;
+    }
+    // Se TODO o escalão jogou os mesmos buracos (volta encurtada pela
+    // organização), a volta passa a ser só desses buracos — senão todos ficavam
+    // «incompletos» e sem lugar no Resumo.
+    const parLen = r.par?.length ?? 0;
+    const sets = lb.filter((j) => Array.isArray(j.strokes) && j.strokes.some((s) => s > 0))
+      .map((j) => j.strokes.map((s, i) => (s > 0 ? i : -1)).filter((i) => i >= 0).join(","));
+    if (!sets.length || new Set(sets).size !== 1) continue;
+    const keep = sets[0].split(",").map(Number);
+    if (!parLen || keep.length >= parLen) continue;
+    const pick = <T,>(a: T[] | undefined) => (Array.isArray(a) && a.length === parLen ? keep.map((i) => a[i]) : a);
+    r.par = pick(r.par) ?? r.par;
+    r.si = pick(r.si) ?? r.si;
+    r.metros = pick(r.metros);
+    r.buracos = keep.length;
+    r.total_par = r.par.reduce((s, p) => s + p, 0);
+    for (const j of lb) if (Array.isArray(j.strokes) && j.strokes.length === parLen) j.strokes = keep.map((i) => j.strokes[i]);
+  }
+}
+
 // Muta o array de resultados in-place, injectando jogadores em falta.
 function applyResultOverrides(resultados: TorneioResult[]): void {
   const OVERRIDES: Array<{
@@ -361,6 +399,21 @@ function lerCatVisiveis(): Set<number> {
   } catch { /* sem storage: fica o default */ }
   return new Set(CAT_VISIVEIS_DEFAULT);
 }
+/** Categoria pelo NOME, só nos padrões sem ambiguidade (validados a 13/10/2026
+ *  contra os 45 torneios com tipo conhecido — zero desacordos). Os resultados
+ *  já jogados não trazem o `type` da inscrição; sem padrão fica null e o
+ *  torneio nunca é escondido pelas categorias. */
+function tipoPeloNome(name: string): number | null {
+  const n = name.toLowerCase();
+  if (/\(tour champ/.test(n)) return 6;
+  if (/state invitational/.test(n)) return 7;
+  if (/parent\s*\/\s*child/.test(n)) return 9;
+  if (/international teen series/.test(n)) return 13;
+  if (/teen series/.test(n)) return 2;
+  if (/^world teen championship/.test(n)) return 3;
+  if (/^world championship/.test(n)) return 4;
+  return null;
+}
 const labelCategoria = (tipo: number) => CATEGORIAS.find(c => c.tipo === tipo)?.label ?? `Tipo ${tipo}`;
 
 // Tipo explícito para entradas do mapa allTorneios — elimina os (as any) casts
@@ -573,6 +626,7 @@ export default function USKidsFieldPage() {
       // 3. Injectar overrides para jogadores excluídos pelo scraper (IE/WD)
       const merged = [...historicosResultados, ...autoExtras];
       applyResultOverrides(merged);
+      fixShortenedRounds(merged);
 
       setResultsData({
         gerado_em: auto.gerado_em,
@@ -670,6 +724,7 @@ export default function USKidsFieldPage() {
         if (ended) entry.terminado = true;
         if (!entry.rondas) entry.rondas = rondasTotal;
         if (!entry.campo && t.campo) entry.campo = t.campo;
+        if (entry.tipo == null) entry.tipo = tipoPeloNome(t.name);
         if (totalJogadores > 0) entry.totalInscritos = totalJogadores;
         entry.nPaises = paises.size;
       } else {
@@ -682,6 +737,7 @@ export default function USKidsFieldPage() {
           manuelPos: manuelJogou ? manuelPos : undefined,
           manuelScore: manuelJogou ? manuelScore : undefined,
           nPaises: paises.size,
+          tipo: tipoPeloNome(t.name),
         });
       }
     }
@@ -765,29 +821,33 @@ export default function USKidsFieldPage() {
   const qSearch = normNameAuto(search);
   const searchFilter = (t: TorneioEntry) =>
     !qSearch || normNameAuto(t.name).includes(qSearch) || normNameAuto(t.campo ?? "").includes(qSearch);
+  // Resultados: só o que já se jogou (ou está a decorrer) — os torneios por
+  // disputar obrigavam a um scroll enorme até ao dia de hoje (13/10/2026).
+  const hojeIso = new Date().toISOString().slice(0, 10);
+  const jaJogado = (t: TorneioEntry) => t.temResultados || (!!t.date && isoDate(t.date) <= hojeIso);
   const listaSemCategoria = (tab === "campo"
     ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-    : allTorneios.filter(t => manuelFilter(t) && fieldFilter(t))
+    : allTorneios.filter(t => jaJogado(t) && manuelFilter(t) && fieldFilter(t))
   ).filter(searchFilter);
-  // Só na tab Torneios (em Resultados quase nenhum torneio traz tipo) e só com o
-  // ★ Manuel DESLIGADO: ligado, a lista é "os torneios do Manuel" e nenhuma
+  // Torneios e Resultados (os mesmos filtros nas duas — 13/10/2026; sem tipo
+  // conhecido nunca se esconde) e só com o ★ Manuel DESLIGADO: ligado, a lista é "os torneios do Manuel" e nenhuma
   // categoria os pode esconder (uma escolha antiga de chips escondia o Spanish
   // Open). Sem tipo conhecido, ou pedido por link, nunca se esconde.
   const catFilter = (t: TorneioEntry) =>
-    tab !== "campo" || filterManuel || t.tipo == null || t.t === tLigado || catVisiveis.has(t.tipo);
+    tab === "rivais" || filterManuel || t.tipo == null || t.t === tLigado || catVisiveis.has(t.tipo);
   // Os chips saem dos DADOS, não da lista fixa: um tipo que a USKids venha a
   // usar e que não está em CATEGORIAS aparece sozinho, como "Tipo N".
   const ordemCat = (tipo: number) => { const i = CATEGORIAS.findIndex(c => c.tipo === tipo); return i < 0 ? 99 : i; };
   const contagemCat = [...new Set(listaSemCategoria.map(t => t.tipo).filter((x): x is number => x != null))]
     .sort((a, b) => ordemCat(a) - ordemCat(b) || a - b)
     .map(tipo => ({ tipo, label: labelCategoria(tipo), n: listaSemCategoria.filter(t => t.tipo === tipo).length }));
-  const mostrarChips = tab === "campo" && !filterManuel
+  const mostrarChips = tab !== "rivais" && !filterManuel
     && (contagemCat.length > 1 || contagemCat.some(c => !catVisiveis.has(c.tipo)));
 
   // O detalhe é sempre um torneio que está na lista. Se o seleccionado deixou de
   // estar — mudou um filtro, ou o ?t= guardado é de um torneio que já acabou —
   // abre-se o primeiro visível: os do Manuel primeiro, depois o mais próximo.
-  const chaveVisiveis = tab === "campo" ? listaSemCategoria.filter(catFilter).map(t => t.t).join(",") : "";
+  const chaveVisiveis = tab !== "rivais" ? listaSemCategoria.filter(catFilter).map(t => t.t).join(",") : "";
   useEffect(() => {
     if (!chaveVisiveis) return;
     const ids = new Set(chaveVisiveis.split(",").map(Number));
@@ -795,9 +855,12 @@ export default function USKidsFieldPage() {
     const hoje = new Date().toISOString().slice(0, 10);
     const vis = allTorneios.filter(t => ids.has(t.t))
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
-    const alvo = vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
+    // Resultados: o mais recente jogado; Torneios: os do Manuel, depois o mais próximo.
+    const alvo = tab === "resultados"
+      ? vis[vis.length - 1]
+      : vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
     if (alvo) setSelectedT(alvo.t);
-  }, [chaveVisiveis, selectedT]);
+  }, [chaveVisiveis, selectedT, tab]);
 
   if (erro) return (
     <div style={{ padding: 32 }}>
@@ -1089,20 +1152,9 @@ export default function USKidsFieldPage() {
         <ToolbarTitle>🏌️ USKids</ToolbarTitle>
         <DataSourcesChip sources={fileMeta} />
         <ToolbarSep />
-        {TABS.map(tb => (
-          <button key={tb.id}
-            onClick={() => handleTabChange(tb.id)}
-            className={`tourn-tab tourn-tab-sm${tab === tb.id ? " active" : ""}`}
-            style={tab === tb.id ? { flexShrink:0 } : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-            {tb.label}
-            {(tb.badge ?? 0) > 0 && (
-              <span className="fs-10 fw-700" style={{ marginLeft:4, padding:"0 5px", borderRadius:8,
-                background: tab === tb.id ? "rgba(255,255,255,0.25)" : "var(--bg-hover)",
-                color: tab === tb.id ? "#fff" : "var(--text-3)",
-              }}>{tb.badge}</span>
-            )}
-          </button>
-        ))}
+        {/* Vistas: o mesmo interruptor segmentado do resto do site. */}
+        <TabRow active={tab} onChange={handleTabChange} style={{ flexShrink:0 }}
+          tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
         {tab !== "rivais" && (<>
           <ToolbarSep />
           <button

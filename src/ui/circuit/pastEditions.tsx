@@ -23,7 +23,6 @@ import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
 import PastEditionsRepeatersTable from "./PastEditionsRepeatersTable";
-import TabRow from "../TabRow";
 import { buildRepeaters, type FieldPlayer } from "./repeaters";
 
 /** Field de hoje de uma divisão: resultados → inscritos → draw (o 1º que houver). */
@@ -168,10 +167,12 @@ async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
  * shell, e o escalão aberto. Carrega cada edição (lazy + cacheado pelo próprio
  * `loadDivisions`), casa a divisão e desenha a tabela.
  */
-export function CircuitPastEditionsTab({ editions, division, field, currentId }: {
+export function CircuitPastEditionsTab({ editions, division, field, currentId, mode = "editions" }: {
   editions: CircuitEntry[]; division: string;
-  /** Field de hoje (ver `divisionField`) — com ele aparece a vista «Quem repete». */
+  /** Só para `mode="repeaters"`: field de hoje (ver `divisionField`) e a edição de hoje. */
   field?: FieldPlayer[]; currentId?: string | null;
+  /** "editions" = uma coluna por edição; "repeaters" = aba «Quem repete». */
+  mode?: "editions" | "repeaters";
 }) {
   const [state, setState] = useState<{ loading: boolean; rows: PastEdition[]; err?: string }>({ loading: true, rows: [] });
 
@@ -211,27 +212,15 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId }:
   }, [editions, division]);
 
   const rep = useMemo(
-    () => (field?.length ? buildRepeaters(field, state.rows, currentId) : null),
-    [field, state.rows, currentId],
+    () => (mode === "repeaters" ? buildRepeaters(field ?? [], state.rows, currentId) : null),
+    [mode, field, state.rows, currentId],
   );
-  // Torneio por jogar (sem resultados hoje) → abre em «Quem repete».
-  const [view, setView] = useState<"ed" | "rep">(() =>
-    field?.length && !editions.find((e) => e.id === currentId)?.hasResults ? "rep" : "ed");
 
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
   // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
   // não faz sentido como título da tabela.
-  const table = <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
-  if (!rep || !rep.editions.length) return table;
-  return (
-    <div className="flex-col gap-10">
-      <TabRow active={view} onChange={setView} style={{ alignSelf: "flex-start" }} tabs={[
-        { key: "ed", label: "Por edição" },
-        { key: "rep", label: "Quem repete", count: rep.rows.length },
-      ]} />
-      {view === "rep" ? <PastEditionsRepeatersTable data={rep} /> : table}
-    </div>
-  );
+  if (rep) return <PastEditionsRepeatersTable data={rep} />;
+  return <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
 }

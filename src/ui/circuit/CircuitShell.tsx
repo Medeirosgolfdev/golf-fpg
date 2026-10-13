@@ -782,7 +782,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     if (!curDiv || !cur) return null;
     if (pastEditionsSiblings) {
       return { key: "past-editions", label: "Edições anteriores",
-        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} /> };
+        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} /> };
     }
     // Fallback: hook de baixo nível `pastEditionsTab` (legado; só usado quando
     // uma página não fornece `editionKey`).
@@ -811,6 +811,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
   if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
   if (pastEditionsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastEditionsTabNode);
+  // ── Tab «Quem repete» (13/10/2026, aba própria a pedido da Mariana): o field
+  // de hoje cruzado com as edições anteriores. Precisa de field e de irmãs.
+  const repeatersTabNode = pastEditionsSiblings && curField.length && cur && curDiv ? {
+    key: "repeaters", label: "Quem repete",
+    content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters" />,
+  } : null;
+  if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -1095,7 +1102,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       barra do IntlTournView (Inscritos → Draw → R1 → … → Resumo).
                     • Sem rondas (customResults / só inscritos) → barra de secção
                       simples (já era plana, sem aninhamento). */}
-                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined })}
+                {curDiv.renderFull && curDiv.renderFull({ pastEditionsTab: pastEditionsTabNode ?? undefined, seasonTab: seasonTabNode ?? undefined, repeatersTab: repeatersTabNode ?? undefined })}
                 {!curDiv.renderFull && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}

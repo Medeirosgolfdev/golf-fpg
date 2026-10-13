@@ -300,15 +300,24 @@ async function buscarJogadores(page, fid, ronda, total_inscritos) {
   return todos.filter(j => { if (vistos.has(j.nome)) return false; vistos.add(j.nome); return true; });
 }
 
-// Calcular to_par e ordenar leaderboard
+// Calcular to_par e ordenar leaderboard.
+// Volta encurtada (PGA Golf Club Invitational 2026, Boys 12: R2 só com 9
+// buracos) — a USKids manda -1 nos buracos por jogar: passam a 0 e o ±par
+// conta só o par dos buracos jogados (antes dava −38 contra o par de 18).
 function calcularLeaderboard(jogadores, par) {
   const totalPar = par.reduce((s, p) => s + p, 0) || 72;
   return jogadores
     .filter(j => j.score > 0)
-    .map(j => ({
-      ...j,
-      to_par: j.score > 0 ? j.score - totalPar : null,
-    }))
+    .map(j => {
+      const strokes = Array.isArray(j.strokes) ? j.strokes.map(s => (s > 0 ? s : 0)) : j.strokes;
+      const jogados = Array.isArray(strokes) ? strokes.map((s, i) => (s > 0 ? i : -1)).filter(i => i >= 0) : [];
+      if (jogados.length && jogados.length < par.length && Array.isArray(j.strokes) && j.strokes.some(s => s < 0)) {
+        const score = jogados.reduce((s, i) => s + strokes[i], 0);
+        const parJogado = jogados.reduce((s, i) => s + (par[i] || 0), 0);
+        return { ...j, strokes, score, buracos: jogados.length, to_par: score - parJogado };
+      }
+      return { ...j, strokes, to_par: j.score > 0 ? j.score - totalPar : null };
+    })
     .sort((a, b) => (a.score || 999) - (b.score || 999));
 }
 
