@@ -19,6 +19,7 @@ import { TeeDot } from "../../ui/tournamentPrimitives";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import SexBadge from "../../ui/SexBadge";
+import { EscPill } from "../../ui/PillBadge";
 import { fmtToPar } from "../../utils/format";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import { loadMasterData } from "../../data/loader";
@@ -38,46 +39,16 @@ const n1 = (v: number | null | undefined) => (v == null ? "—" : v.toFixed(1));
  * esquerda — em golfe, menos é melhor, e a barra respeita isso.
  */
 function FormaCell({ f }: { f: PlayerForm | null }) {
-  // Uma linha só (modelo das tabelas de torneio, 13/10/2026): «3.3 ▼ 6.5».
-  if (!f || f.avgSD5 == null) return <span className="muted">—</span>;
-  const recente = f.avgSD5;
-  const normal = f.avgSD20 ?? f.avgSD5;
-  const delta = recente - normal;
-  const quente = delta <= -1, frio = delta >= 1;
-  const cor = quente ? "var(--accent-dark)" : frio ? "var(--score-birdie)" : "var(--text)";
+  // Differential das últimas 5 voltas; a cor diz se está acima (verde) ou abaixo
+  // (vermelho) do seu normal — a média das 20 está na coluna ao lado.
+  if (!f || f.avgSD5 == null) return <>–</>;
+  const delta = f.avgSD5 - (f.avgSD20 ?? f.avgSD5);
+  const cor = delta <= -1 ? "var(--accent-dark)" : delta >= 1 ? "var(--score-birdie)" : undefined;
   return (
-    <span
+    <span style={{ color: cor, fontWeight: 600 }}
       title={`últimas 5 voltas: ${n1(f.avgSD5)} · 8 melhores de 20: ${n1(f.avgSD8)} · média de 20: ${n1(f.avgSD20)}\n`
-        + `${f.roundsLast3m} voltas nos últimos 3 meses · última a ${f.lastRoundDate ?? "?"}`}
-      style={{ whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
-    >
-      <span style={{ color: cor, fontWeight: 600 }}>{n1(recente)}</span>
-      <span className="muted fs-10"> {quente ? "▼" : frio ? "▲" : "="} {n1(normal)}</span>
-    </span>
-  );
-}
-
-/** Previsão numa linha: «77 +5 · 73–81» (intervalo plausível em pequeno). */
-function PrevCell({ r }: { r: Repeater }) {
-  const f = r.forecast;
-  if (!f) return <span className="muted">—</span>;
-  const incerto = f.basis === "indice" || !f.teeKnown;
-  return (
-    <span
-      style={{ whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}
-      title={[
-        {
-          forma: "as voltas das últimas semanas, no tee que vai jogar hoje",
-          historico: "o que fez nesta prova, corrigido pela evolução do índice",
-          indice: "só o índice de hoje — sem forma nem voltas utilizáveis aqui",
-        }[f.basis],
-        f.teeKnown ? null : `sem CR/Slope do tee de hoje (${r.teeNow ?? "?"}) — usado o do tee anterior`,
-      ].filter(Boolean).join(" · ")}
-    >
-      <b>{f.total}</b>
-      {f.toPar != null ? <span style={{ color: tpColorDark(f.toPar) }}> {fmtToPar(f.toPar)}</span> : null}
-      {incerto ? <span className="muted"> ≈</span> : null}
-      <span className="muted fs-10"> · {f.low}–{f.high}</span>
+        + `${f.roundsLast3m} voltas nos últimos 3 meses · última a ${f.lastRoundDate ?? "?"}`}>
+      {n1(f.avgSD5)}
     </span>
   );
 }
@@ -151,6 +122,11 @@ export default function PastEditionsRepeaters({
   }, [rows, sortKey, sortDir]);
 
   const fieldSize = useMemo(() => currentField(current).length, [current]);
+  // Colunas que só aparecem se houver dados para alguém (a maioria do field de
+  // um torneio de clube não está na nossa base — evita colunas de traços).
+  const temEsc = rows.some((r) => r.escalao);
+  const temHcp = rows.some((r) => r.hcpNow != null);
+  const temForma = rows.some((r) => r.form?.avgSD5 != null);
   if (!rows.length) return null;
 
   const anos = [...new Set(previous.map((p) => p.year))].sort((a, b) => b - a);
@@ -180,14 +156,20 @@ export default function PastEditionsRepeaters({
         <table className="sc-lb">
           <thead>
             <tr>
-              {hdr("hora", "Saída", "Hora e tee do draw")}
+              {hdr("hora", "Saída", "Hora do draw")}
+              <th>Tee</th>
               {hdr("nome", "Jogador")}
-              {hdr("esc", "Esc.")}
-              {hdr("hcp", "HCP", "Índice de hoje e variação nos últimos 3 meses")}
-              {hdr("forma", "Forma", "Differential médio das últimas 5 voltas vs. as últimas 20")}
-              {hdr("aqui", "Aqui", "Melhor ±par que fez nesta prova")}
-              {hdr("fit", "Campo", "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio")}
-              {hdr("prev", "Previsão", "Gross esperado no torneio e intervalo plausível")}
+              {temEsc && hdr("esc", "Esc.")}
+              {temHcp && hdr("hcp", "HCP", "Índice de hoje")}
+              {temHcp && <th title="Variação do índice nos últimos 3 meses">Δ 3m</th>}
+              {temForma && hdr("forma", "Forma", "Differential médio das últimas 5 voltas")}
+              {temForma && <th title="Differential médio das últimas 20 voltas">Média</th>}
+              {hdr("aqui", "Melhor", "Melhor ±par que fez nesta prova")}
+              <th title="Edições anteriores desta prova e o lugar em cada uma">Ed.</th>
+              {hdr("fit", "vs Campo", "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio")}
+              {hdr("prev", "Previsão", "Gross esperado no torneio")}
+              <th>±</th>
+              <th title="Intervalo plausível (bom e mau dia)">Intervalo</th>
             </tr>
           </thead>
           <tbody>
@@ -197,46 +179,42 @@ export default function PastEditionsRepeaters({
               const f = r.form;
               return [
                 <tr key={id} onClick={() => setAberto(isOpen ? null : id)} style={{ cursor: "pointer" }}>
-                  <td style={{ whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
-                    {r.teeTime || "—"}
-                    {r.teeNow ? <> <TeeDot teeName={r.teeNow} /></> : null}
-                  </td>
+                  {/* Um valor por coluna, todos com a mesma letra (modelo do Resumo). */}
+                  <td className="mono">{r.teeTime || "–"}</td>
+                  <td>{r.teeNow ? <TeeDot teeName={r.teeNow} /> : "–"}</td>
                   <td style={{ textAlign: "left", whiteSpace: "nowrap" }}>
                     {r.sex ? <SexBadge sex={r.sex as "M" | "F"} /> : null} {r.name}
-                    {r.club ? <span className="muted fs-10"> · {r.club}</span> : null}
                   </td>
-                  <td>{r.escalao || "—"}</td>
-                  <td style={{ textAlign: "center", whiteSpace: "nowrap", fontVariantNumeric: "tabular-nums" }}>
-                    {r.hcpNow ?? "—"}
-                    {f?.hcpDelta3m ? (
-                      <span style={{ fontSize: 10, color: f.hcpDelta3m < 0 ? "var(--accent-dark)" : "var(--text-muted)" }}
-                        title="variação do índice nos últimos 3 meses">
-                        {" "}{f.hcpDelta3m > 0 ? "+" : ""}{f.hcpDelta3m}
-                      </span>
-                    ) : null}
+                  {temEsc && <td>{r.escalao ? <EscPill esc={r.escalao} /> : "–"}</td>}
+                  {temHcp && <td className="mono">{r.hcpNow ?? "–"}</td>}
+                  {temHcp && (
+                    <td className="mono" style={{ color: f?.hcpDelta3m ? (f.hcpDelta3m < 0 ? "var(--accent-dark)" : "var(--text-3)") : undefined }}>
+                      {f?.hcpDelta3m ? `${f.hcpDelta3m > 0 ? "+" : ""}${f.hcpDelta3m}` : "–"}
+                    </td>
+                  )}
+                  {temForma && <td className="mono"><FormaCell f={f} /></td>}
+                  {temForma && <td className="mono">{n1(f?.avgSD20)}</td>}
+                  <td className="mono" style={{ fontWeight: 600, color: r.bestToPar != null ? tpColorDark(r.bestToPar) : undefined }}>
+                    {r.bestToPar != null ? fmtToPar(r.bestToPar) : "–"}
                   </td>
-                  <td style={{ textAlign: "center" }}><FormaCell f={f} /></td>
-                  <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>
-                    <span style={{ fontWeight: 600, color: r.bestToPar != null ? tpColorDark(r.bestToPar) : undefined }}>
-                      {r.bestToPar != null ? fmtToPar(r.bestToPar) : "—"}
-                    </span>
-                    <span className="muted fs-10">
-                      {" · "}{r.editions.map((e) => `${e.year}${e.pos ? ` ${e.pos}º` : ""}`).join(" · ")}
-                    </span>
+                  <td style={{ whiteSpace: "nowrap" }}>
+                    {r.editions.map((e) => `${e.year}${e.pos ? ` ${e.pos}º` : ""}`).join(" · ")}
                   </td>
-                  <td style={{ textAlign: "center", fontVariantNumeric: "tabular-nums" }}
+                  <td className="mono"
                     title={r.courseFit == null ? undefined
-                      : `${Math.abs(r.courseFit)} ${r.courseFit < 0 ? "melhor" : "pior"} que a mediana do field nesta prova`}>
-                    {r.courseFit == null ? "—"
-                      : <span style={{ color: r.courseFit < 0 ? "var(--accent-dark)" : "var(--text-muted)" }}>
-                        {r.courseFit > 0 ? "+" : ""}{r.courseFit}
-                      </span>}
+                      : `${Math.abs(r.courseFit)} ${r.courseFit < 0 ? "melhor" : "pior"} que a mediana do field nesta prova`}
+                    style={{ color: r.courseFit != null && r.courseFit < 0 ? "var(--accent-dark)" : undefined }}>
+                    {r.courseFit == null ? "–" : `${r.courseFit > 0 ? "+" : ""}${r.courseFit}`}
                   </td>
-                  <td style={{ textAlign: "center" }}><PrevCell r={r} /></td>
+                  <td className="mono" style={{ fontWeight: 700 }}>{r.forecast ? r.forecast.total : "–"}</td>
+                  <td className="mono" style={{ color: r.forecast?.toPar != null ? tpColorDark(r.forecast.toPar) : undefined }}>
+                    {r.forecast?.toPar != null ? fmtToPar(r.forecast.toPar) : "–"}
+                  </td>
+                  <td className="mono" style={{ color: "var(--text-3)" }}>{r.forecast ? `${r.forecast.low}–${r.forecast.high}` : "–"}</td>
                 </tr>,
                 isOpen ? (
                   <tr key={id + "-d"} className="row-expanded">
-                    <td colSpan={8}>
+                    <td colSpan={9 + (temEsc ? 1 : 0) + (temHcp ? 2 : 0) + (temForma ? 2 : 0)}>
                       <div style={{ display: "flex", flexWrap: "wrap", gap: 18, fontSize: 12 }}>
                         <div>
                           <div className="fw-700">Nesta prova</div>
