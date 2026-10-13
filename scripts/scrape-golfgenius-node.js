@@ -762,6 +762,46 @@ function sameAsDisk(file, out) {
 }
 
 /** Scrape de UM evento. Devolve {file, changed}. */
+/**
+ * Federados FPG (`public/data/federados.json`) → HCP, data de nascimento e
+ * clube dos portugueses de um campo GG que não traz handicap nenhum (Faldo
+ * Junior Tour Madeira: o tee sheet só tem nomes). Casa por nome: 1.º e último
+ * nome iguais e todas as palavras do nome GG presentes no nome FPG ("Manuel
+ * Medeiros" ↔ "Manuel Goulartt Medeiros"), só nascidos de `minBirthYear` em
+ * diante. Homónimos (mais de um candidato) NÃO se adivinham: ficam de fora, a
+ * não ser que o scope diga qual é (`fpgFed: { "Nome": "41121" }`).
+ * A dob ISO dá ao agregador matching FORTE (nome + DOB) para o kids2.
+ */
+function applyFpgFederados(out, { overrides = {}, minBirthYear = 2005, file = path.join(OUT, 'federados.json') } = {}) {
+  if (!fs.existsSync(file)) { console.log('   ⚠ federados.json não existe — HCP FPG por aplicar'); return 0; }
+  const fed = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const asOf = String(fed.generated || '').slice(0, 10) || null;
+  const toks = (s) => nameKey(String(s || '').replace(/\t/g, ' ')).split(' ').filter(Boolean);
+  const pool = (fed.players || []).filter((x) => x.name && String(x.birthdate || '').slice(0, 4) >= String(minBirthYear));
+  const byCode = new Map((fed.players || []).map((x) => [String(x.federation_code), x]));
+  const ovr = new Map(Object.entries(overrides).map(([n, c]) => [nameKey(n), String(c)]));
+  let n = 0;
+  for (const dv of out.divisions) for (const p of dv.players) {
+    const a = toks(p.name);
+    if (!a.length) continue;
+    let x = ovr.has(nameKey(p.name)) ? byCode.get(ovr.get(nameKey(p.name))) : null;
+    if (!x) {
+      const c = pool.filter((f) => { const b = toks(f.name); return b[0] === a[0] && b[b.length - 1] === a[a.length - 1] && a.every((t) => b.includes(t)); });
+      if (c.length !== 1) { if (c.length > 1) console.log(`   ⚠ FPG: ${p.name} tem ${c.length} homónimos — sem HCP (pôr em fpgFed no scope)`); continue; }
+      x = c[0];
+    }
+    if (p.hcp == null && typeof x.hcp_exact === 'number') { p.hcp = x.hcp_exact; p.hcpSource = `FPG federados ${asOf}`; }
+    p.fed = String(x.federation_code);
+    if (!p.dob && x.birthdate) p.dob = String(x.birthdate).slice(0, 10);
+    if (!p.club && x.club_name) p.club = x.club_name;
+    p.country = 'PT';
+    if (!p.location) p.location = x.acronym || x.club_name || 'Portugal';
+    n++;
+  }
+  console.log(`   🇵🇹 federados FPG (${asOf}): ${n} jogador(es) com HCP/dob/clube`);
+  return n;
+}
+
 async function runOne(opts) {
   const {
     pageUrl = null, v2Arg = null, leagueOverride = null, nameOverride = null,
@@ -1002,6 +1042,9 @@ async function runOne(opts) {
     console.log(`   🔢 SI do campo (${opts.siSource || 'scope'}) aplicado a ${out.divisions.length} divisão(ões)`);
   }
 
+  // HCP/dob/clube dos portugueses pelos federados FPG (scope `fpgFederados`).
+  if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
+
   const yearKey = out.year || 'x';
   const file = path.join(OUT, `${slug}_${yearKey}.json`);
   if (!noMerge) {
@@ -1063,6 +1106,7 @@ async function main() {
         stop: e.stop != null ? e.stop : null,
         si: Array.isArray(e.si) ? e.si : null, siSource: e.siSource || null,
         teeDivisions: e.teeDivisions || null,
+        fpgFederados: !!e.fpgFederados, fpgFed: e.fpgFed || null,
       }));
     if (!jobs.length) { console.error(`Scope sem eventos a correr: ${scopeFile}`); process.exit(1); }
   } else if (pageUrl || v2Arg) {
@@ -1100,4 +1144,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error('FATAL:', e.message); process.exit(1); });
-module.exports = { discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };
+module.exports = { applyFpgFederados, discoverDivisions, runOne, fetchTeeSheets, parseTeeSheet, parseRoster, parsePlayerTees, splitByTee, cleanTeeName, applyTeeCards };

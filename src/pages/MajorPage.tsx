@@ -579,8 +579,8 @@ const MAJOR_CONFIG: CircuitConfig = {
   color: "#b8860b",
   textColor: "#fff",
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f", optimist: "#d4a017", evianjc: "#0b3d91" },
-  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC" },
+  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f", optimist: "#d4a017", evianjc: "#0b3d91", faldomadeira: "#1b5e20" },
+  sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
   // O shell constrói a tab "Edições anteriores" das entradas irmãs e entrega-a
@@ -698,6 +698,8 @@ const GG_JOB_LOADERS: Record<string, { file: (y: number) => string; files?: (y: 
   // showRatings: todas as edições têm HCP + CR/slope por escalão (cartão de tee
   // do GG; em 2022-24 os cartões WHS dos portugueses) → colunas HCP e SD.
   evianjc: { file: (y) => `/data/evianjc_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "evianjc", series: "Evian JC", showRatings: true }) },
+  // Faldo Junior Tour Madeira (Santo da Serra) — HCP só dos portugueses (federados FPG).
+  faldomadeira: { file: (y) => `/data/faldomadeira_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "faldomadeira", series: "Faldo Madeira" }) },
   icopa: { file: (y) => `/data/icopa_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "icopa", series: "Bobby Díaz" }) },
   interzonas: { file: (y) => `/data/interzonas_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "interzonas", series: "Interzonas" }) },
   avtrophy: { file: (y) => `/data/avtrophy_${y}.json`, build: (f) => buildGgJobEntries(f, { source: "avtrophy", series: "BEL U14", linkLabel: "Livescoring GolfBox", showRatings: true }) },

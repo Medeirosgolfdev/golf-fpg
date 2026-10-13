@@ -23,7 +23,7 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 
-export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv";
+export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv";
 
 const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "uskids", label: "USKids" },
@@ -44,6 +44,7 @@ const SOURCE_PILLS: { key: Kids2SourceKey; label: string }[] = [
   { key: "coc", label: "Champion of Champions" },
   { key: "reidtrophy", label: "Reid Trophy" },
   { key: "evianjc", label: "Evian JC" },
+  { key: "faldomadeira", label: "Faldo Madeira" },
   { key: "optimist", label: "Optimist" },
   { key: "dgv", label: "DGV" },
   { key: "icopa", label: "Bobby Díaz" },
