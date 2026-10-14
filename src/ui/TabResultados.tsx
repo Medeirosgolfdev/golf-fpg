@@ -284,7 +284,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
         </div>
       )}
       {notas.map(j => (
-        <div key={j.nome + j._nota} className="notice" style={{ marginBottom: 8 }}>
+        <div key={j.nome + j._nota} className="notice" style={{ margin: "2px 0 6px", padding: "5px 10px" }}>
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
         </div>
       ))}
@@ -506,25 +506,27 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
         </div>
         <div className="detail-sub">
           <span className="muted">📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
-          <span className="muted fs-11 ml-8">actualizado {fmtTs(t.ultima_atualizacao)}</span>
+          {fmtTs(t.ultima_atualizacao) && <span className="muted fs-11 ml-8">actualizado {fmtTs(t.ultima_atualizacao)}</span>}
         </div>
         {/* Resultados do Manuel em destaque */}
         {manuelRows.length > 0 && (
-          <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>
+          <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:6 }}>
             {manuelRows.map((m, i) => {
               const toPar = m.to_par != null ? fmtToPar(m.to_par) : null;
               const liderStr = m.diffLider === 0 ? "líder"
                 : m.diffLider != null ? `+${m.diffLider} do líder`
                 : null;
               return (
-                <span key={i} className="fs-13 fw-700" style={{
-                  background:"var(--accent)", color:"#fff",
-                  padding:"5px 14px", borderRadius:8,
-                  display:"inline-flex", alignItems:"center", gap:6,
+                // Cor do Manuel (a mesma da pílula «★ Manuel» e da linha dele
+                // nas tabelas), pequena — 14/10/2026: «estes botões estão
+                // grandes e … deveriam ser da cor do manuel».
+                <span key={i} className="p p-sm fw-700" style={{
+                  background:"var(--bg-success-strong)", color:"var(--color-good-dark)",
+                  borderColor:"var(--color-good)", display:"inline-flex", alignItems:"center", gap:4,
                 }}>
-                  <span style={{ opacity:.8 }}>★</span>
+                  <span>★</span>
                   <span>{m.escalao} · R{m.ronda} · {m.score}{toPar ? ` (${toPar})` : ""}</span>
-                  {liderStr && <span className="fs-11" style={{ opacity:.8 }}>{liderStr}</span>}
+                  {liderStr && <span className="fw-400" style={{ opacity:.8 }}>· {liderStr}</span>}
                 </span>
               );
             })}
