@@ -7,7 +7,7 @@
 import React, { useMemo } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
-import { numGross, resolveEsc, playerDob, computeSD, playedParTotal } from "../data/fpgUtils";
+import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInProgress } from "../data/fpgUtils";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import EmptyState from "./EmptyState";
@@ -138,8 +138,11 @@ export function AccumulatedLB({
   // A média só junta quem tem TODAS as voltas terminadas — com uma ronda a
   // decorrer (metade do campo com 9 buracos) o total médio não é comparável
   // com `Par × nRondas` e saía um "(−3.2)" enganador.
-  const roundDone = (rs: { scores?: number[]; pars?: number[] }) =>
-    !!rs.pars?.length && (rs.scores || []).filter(Boolean).length === rs.pars.length;
+  // Buracos riscados (sem pancadas, mas com o gross oficial) NÃO são volta a
+  // decorrer — o Torneio 50 Anos de Autonomia dizia «95 a decorrer» depois de
+  // acabado (14/10/2026). A regra é a do isRoundInProgress (fpgUtils).
+  const roundDone = (rs: { gross?: number | null; scores?: number[]; pars?: number[] }) =>
+    !!rs.pars?.length && (rs.gross ?? 0) > 0 && !isRoundInProgress(rs);
   const fully = complete.filter((p) => {
     const rss = p.roundScores || [];
     return rss.length >= nRounds && rss.every(roundDone);

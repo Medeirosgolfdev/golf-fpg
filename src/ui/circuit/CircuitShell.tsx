@@ -16,6 +16,7 @@
  * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
  */
 
+import ManuelResultPills from "../ManuelResultPills";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
@@ -1087,6 +1088,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     </>
                   }
                 >
+                  {/* Resultado do Manuel (pílulas pequenas, cor dele) — no escalão
+                      em que jogou, mesmo quando se está a ver outro. */}
+                  {(() => {
+                    const md = curDivisions.find(d => d.results?.players.some(p => isManuelByName(p.name)));
+                    return md ? <ManuelResultPills tournament={md.results}
+                      label={curDivisions.length > 1 ? (md.tabLabel || md.escalao) : null} /> : null;
+                  })()}
                   <TournamentWeather
                     course={cur.course}
                     startDate={cur.dateStart}
@@ -1106,7 +1114,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 {!curDiv.renderFull && (resultsTourn ? (
                   <IntlTournView
                     tournament={resultsTourn}
-                    scOptions={curDiv.scOptions ?? {}}
+                    // Campo próprio do escalão (≠ do torneio) → na linha de
+                    // informação, junto do CR/Slope (14/10/2026).
+                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!resultsTourn.campo && resultsTourn.campo.trim() !== String(cur.course || "").trim() }}
                     roundLabels={curDiv.roundLabels}
                     siLabel={curDiv.siLabel}
                     evoCols={curDiv.evoCols}

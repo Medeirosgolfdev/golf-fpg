@@ -9,6 +9,7 @@
  * Antes vivia inline em FPGPage.tsx (linhas 542-872) — extraído para reduzir
  * o ficheiro principal e permitir reuso.
  */
+import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import type { Tournament, ScorecardOptions } from "../../data/fpgTypes";
@@ -419,6 +420,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
           </span>
 
         </div>
+        {/* Resultado do Manuel — as mesmas pílulas de todas as secções. */}
+        <ManuelResultPills tournament={tournament} />
         <LinksBar links={tournament.links} escalao={tournament.escalao} />
       </div>
       )}

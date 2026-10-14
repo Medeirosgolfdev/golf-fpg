@@ -4548,3 +4548,10 @@ table td.lb-col-divider {
 /* Scorecard dos Campos (.sc-wrap): sem moldura de cantos redondos nem sombra,
    como as tabelas dos torneios (decisão da Mariana — 14/10/2026). */
 .sc-wrap { border-radius: 0; box-shadow: none; }
+
+/* Coluna # alinhada à esquerda (14/10/2026): nos empates a posição fica em
+   branco e, centrada, a caixa de comparação saltava para o meio da célula —
+   «isto fica desorganizado… é preciso estar alinhado». Caixa sempre no mesmo
+   sítio, número logo a seguir, em todas as tabelas de torneio. */
+.sc-lb td.lb-pos, .sc-lb th.lb-pos { text-align: left; padding-left: 6px; }
+.sc-lb td.lb-pos input[type="checkbox"] { margin: 0 6px 0 0; vertical-align: middle; }

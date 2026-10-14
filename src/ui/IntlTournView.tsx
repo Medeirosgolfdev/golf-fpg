@@ -319,6 +319,7 @@ export function IntlTournView({
           showCols={accShowCols ?? { esc: false, fed: false, tee: false }}
           extraColumns={evoCols}
           renderName={renderNameFn}
+          showCourse={scOptions.showCourse}
         />
       );
       return renderAccSection ? renderAccSection(accLB) : <>{accHeader}{accLB}{accExtra}</>;
