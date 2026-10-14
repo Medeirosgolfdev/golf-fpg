@@ -214,7 +214,9 @@ function buildBluegolf() {
       series: seriesLabel,
       year,
       name: rawName || `${seriesLabel} ${year}`,
-      course: series === "eowagr" ? "França" : series === "jwgc" || series === "fcg" ? (rawCourse || "USA") : "Espanha",
+      // Campo do ficheiro quando o há (Villa Padierna…); o país só como
+      // recurso — o cabeçalho dizia «📍 Espanha» (14/10/2026).
+      course: rawCourse || (series === "eowagr" ? "França" : series === "jwgc" || series === "fcg" ? "USA" : "Espanha"),
       dateStart: dr ? ptDateToIso(dr.start, year) : rd ? ptDateToIso(rd[0], year) : undefined,
       dateEnd: dr ? ptDateToIso(dr.end, year) : rd && rd.length > 1 ? ptDateToIso(rd[rd.length - 1], year) : undefined,
       roundsCount: (rd && rd.length) || maxRounds(allValid) || undefined,
