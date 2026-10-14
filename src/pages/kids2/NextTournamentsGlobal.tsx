@@ -6,6 +6,7 @@
  * Ordenável por clique no cabeçalho; filtros por circuito + pesquisa.
  */
 
+import TabRow from "../../ui/TabRow";
 import { useMemo, useState } from "react";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
@@ -86,19 +87,9 @@ function Content() {
       ) : (
         <>
           <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap", alignItems: "center" }}>
-            {(["all", "uskids", "fpg"] as const).map(c => (
-              <span key={c}
-                onClick={() => setCircuit(c)}
-                className="p p-sm"
-                style={{
-                  cursor: "pointer",
-                  background: circuit === c ? "var(--accent)" : "var(--bg-muted)",
-                  color: circuit === c ? "#fff" : "var(--text-2)",
-                  borderColor: circuit === c ? "var(--accent)" : "var(--border-light)",
-                }}>
-                {c === "all" ? "Todos" : c === "uskids" ? "🇺🇸 USKids" : "🇵🇹 FPG"}
-              </span>
-            ))}
+            {/* Circuito: o interruptor segmentado do resto do site (14/10/2026). */}
+            <TabRow active={circuit} onChange={setCircuit}
+              tabs={(["all", "uskids", "fpg"] as const).map(c => ({ key: c, label: c === "all" ? "Todos" : c === "uskids" ? "🇺🇸 USKids" : "🇵🇹 FPG" }))} />
             <input
               type="text" value={q} onChange={e => setQ(e.target.value)}
               placeholder="🔍 Jogador ou torneio…"

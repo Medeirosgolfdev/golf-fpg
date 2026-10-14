@@ -4,6 +4,7 @@
  * /kids2/ranking/:year — ranking da coorte por ano de nascimento.
  */
 
+import TabRow from "../../ui/TabRow";
 import React, { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
@@ -179,7 +180,7 @@ function PlayerRow({
     <tr style={{ background: isManuel ? "var(--bg-success-subtle, #f0fdf4)" : undefined }}>
       {/* rank */}
       <td style={{ fontWeight: 800, fontSize: rank <= 3 ? "var(--fs-18)" : "var(--fs-14)", textAlign: "right", paddingRight: 6, whiteSpace: "nowrap" }}>
-        {rank <= 3 ? MEDALS[rank - 1] : `#${rank}`}
+        {rank <= 3 ? MEDALS[rank - 1] : rank}
       </td>
 
       {/* bandeira */}
@@ -339,42 +340,11 @@ export default function RankingPage() {
 
         {/* filtros */}
         <div style={{ display: "flex", gap: 8, marginBottom: 12, flexWrap: "wrap", alignItems: "center" }}>
-          {/* sexo */}
-          {(["M", "F"] as SexFilter[]).map((s) => (
-            <span
-              key={s}
-              onClick={() => setSex(s)}
-              className="p p-sm"
-              style={{
-                cursor: "pointer",
-                background: sex === s ? "var(--accent)" : "var(--bg-muted)",
-                color: sex === s ? "#fff" : "var(--text-2)",
-                borderColor: sex === s ? "var(--accent)" : "var(--border-light)",
-              }}
-            >
-              {s === "M" ? "Rapazes" : "Raparigas"}
-            </span>
-          ))}
-
-          {/* separador */}
-          <span style={{ width: 1, height: 20, background: "var(--border-light)", margin: "0 2px" }} />
-
-          {/* anos */}
-          {YEARS.map((y) => (
-            <span
-              key={y}
-              onClick={() => navigate(`/kids2/ranking/${y}`)}
-              className="p p-sm"
-              style={{
-                cursor: "pointer",
-                background: y === year ? "var(--accent)" : "var(--bg-muted)",
-                color: y === year ? "#fff" : "var(--text-2)",
-                borderColor: y === year ? "var(--accent)" : "var(--border-light)",
-              }}
-            >
-              {y}
-            </span>
-          ))}
+          {/* Sexo e ano: o interruptor segmentado do resto do site (14/10/2026). */}
+          <TabRow active={sex} onChange={setSex}
+            tabs={(["M", "F"] as SexFilter[]).map((s) => ({ key: s, label: s === "M" ? "Rapazes" : "Raparigas" }))} />
+          <TabRow active={year} onChange={(y) => navigate(`/kids2/ranking/${y}`)}
+            tabs={YEARS.map((y) => ({ key: y, label: String(y) }))} />
 
           {/* search */}
           <input
