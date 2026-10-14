@@ -268,6 +268,15 @@ async function main() {
       sub(`hcp-listas-ligacoes.json: ${out.listas.length} lista(s)`);
     }
 
+    // Forma recente + confrontos com o Manuel (aba «Quem repete» dos circuitos):
+    // resumo de ~1 MB para a página não carregar os shards.
+    {
+      const { buildForm } = require("./util/form");
+      const form = buildForm(matchResult.tournaments, generatedAt);
+      require("fs").writeFileSync(path.join(DATA_DIR, "juniors-form.json"), JSON.stringify(form));
+      sub(`juniors-form.json: ${Object.keys(form.players).length} juniores`);
+    }
+
     // Split juniors-tournaments em N partes para não bater no limite de 100MB
     // do GitHub. Shards escrevem-se compactos (sem indent) — são lidos só por
     // máquinas. Target conservador 75MB para deixar margem.
