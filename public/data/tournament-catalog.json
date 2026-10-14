@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-14T12:16:38.912Z",
+  "generatedAt": "2026-10-14T12:57:14.757Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -28192,18 +28192,363 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-byron-nelson-junior-championship",
+      "label": "Byron Nelson Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269928",
+        "wagr-257865",
+        "wagr-74659",
+        "wagr-233553",
+        "wagr-223699"
+      ],
+      "firstDate": "2022-06-07",
+      "lastDate": "2026-06-02",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-team-taylormade-invitational",
+      "label": "Team TaylorMade Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269762",
+        "wagr-233276",
+        "wagr-223611",
+        "wagr-257673",
+        "wagr-74638"
+      ],
+      "firstDate": "2022-05-28",
+      "lastDate": "2026-05-21",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-sergio-garcia-junior-championship",
+      "label": "Sergio Garcia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260728",
+        "wagr-272128",
+        "wagr-236252",
+        "wagr-226134",
+        "wagr-219532"
+      ],
+      "firstDate": "2022-09-30",
+      "lastDate": "2026-10-02",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-florida-junior-tour-labor-day-major",
+      "label": "Florida Junior Tour Labor Day Major",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271800",
+        "wagr-235730",
+        "wagr-225770",
+        "wagr-260280",
+        "wagr-220168"
+      ],
+      "firstDate": "2022-09-03",
+      "lastDate": "2026-09-05",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-junior-orange-bowl-international",
+      "label": "Junior Orange Bowl International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255516",
+        "wagr-231367",
+        "wagr-268254",
+        "wagr-221808",
+        "wagr-73333"
+      ],
+      "firstDate": "2022-01-02",
+      "lastDate": "2026-01-03",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-campeonato-juvenil-de-chile",
+      "label": "Campeonato Juvenil de Chile",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235362",
+        "wagr-271577",
+        "wagr-259966",
+        "wagr-225424",
+        "wagr-76217"
+      ],
+      "firstDate": "2022-08-19",
+      "lastDate": "2026-08-21",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-abierto-internacional-de-menores",
+      "label": "Abierto Internacional de Menores",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-232402",
+        "wagr-269163",
+        "wagr-256809",
+        "wagr-222428",
+        "wagr-78118"
+      ],
+      "firstDate": "2022-03-17",
+      "lastDate": "2026-03-13",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-campeonato-sudamericano-juvenil",
+      "label": "Campeonato Sudamericano Juvenil",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-232134",
+        "wagr-268832",
+        "wagr-256346",
+        "wagr-219746",
+        "wagr-222533"
+      ],
+      "firstDate": "2022-03-23",
+      "lastDate": "2026-03-26",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-bohemia-cup-junior-golf-championship",
+      "label": "Bohemia Cup - Junior Golf Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272279",
+        "wagr-260938",
+        "wagr-234885",
+        "wagr-226498",
+        "wagr-220777"
+      ],
+      "firstDate": "2022-10-21",
+      "lastDate": "2026-10-09",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-toyota-junior-world-cup",
       "label": "Toyota Junior World Cup",
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-270196",
+        "wagr-258216",
         "wagr-233914",
         "wagr-224095",
-        "wagr-258216",
         "wagr-78340"
       ],
       "firstDate": "2022-06-22",
       "lastDate": "2026-06-23",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-u18-teams-championship",
+      "label": "U18 Teams Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272066",
+        "wagr-260655",
+        "wagr-236019",
+        "wagr-226003",
+        "wagr-76830"
+      ],
+      "firstDate": "2022-09-23",
+      "lastDate": "2026-09-18",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-youth-region-tour",
+      "label": "Youth Region Tour",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270784",
+        "wagr-269176",
+        "wagr-256827",
+        "wagr-232522",
+        "wagr-228893"
+      ],
+      "firstDate": "2023-04-14",
+      "lastDate": "2026-07-07",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-czech-national-youth-u16-championship",
+      "label": "Czech National Youth U16 Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270567",
+        "wagr-224281",
+        "wagr-258673",
+        "wagr-234350",
+        "wagr-218944"
+      ],
+      "firstDate": "2022-06-28",
+      "lastDate": "2026-06-19",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-boy-s-junior-pga-championship",
+      "label": "Boy's Junior PGA Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271182",
+        "wagr-259431",
+        "wagr-234993",
+        "wagr-225046",
+        "wagr-75454"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-07-28",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-u-s-junior-amateur-championship",
+      "label": "U.S. Junior Amateur Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259238",
+        "wagr-224887",
+        "wagr-271029",
+        "wagr-234798",
+        "wagr-75608"
+      ],
+      "firstDate": "2022-07-25",
+      "lastDate": "2026-07-20",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-serbian-international-junior-open",
+      "label": "Serbian International Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271338",
+        "wagr-259634",
+        "wagr-225040",
+        "wagr-75036",
+        "wagr-235149"
+      ],
+      "firstDate": "2022-08-05",
+      "lastDate": "2026-08-07",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-first-capital-bank-zimbabwe-junior-open",
+      "label": "First Capital Bank Zimbabwe Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269127",
+        "wagr-256744",
+        "wagr-235299",
+        "wagr-223533",
+        "wagr-219846"
+      ],
+      "firstDate": "2022-05-26",
+      "lastDate": "2026-04-24",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-jack-newton-international-junior-classic",
+      "label": "Jack Newton International Junior Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272193",
+        "wagr-260816",
+        "wagr-77890",
+        "wagr-236154",
+        "wagr-226121"
+      ],
+      "firstDate": "2022-09-27",
+      "lastDate": "2026-10-06",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-victorian-junior-open",
+      "label": "Victorian Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272067",
+        "wagr-236022",
+        "wagr-260656",
+        "wagr-226014",
+        "wagr-78066"
+      ],
+      "firstDate": "2022-09-19",
+      "lastDate": "2026-09-22",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-the-jacques-leglise-trophy",
+      "label": "The Jacques Leglise Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271612",
+        "wagr-260008",
+        "wagr-235495",
+        "wagr-76330",
+        "wagr-225544"
+      ],
+      "firstDate": "2022-08-26",
+      "lastDate": "2026-08-21",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-bernard-darwin-salver",
+      "label": "Bernard Darwin Salver",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268766",
+        "wagr-232042",
+        "wagr-77474",
+        "wagr-222426",
+        "wagr-256256"
+      ],
+      "firstDate": "2022-03-15",
+      "lastDate": "2026-03-17",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-malta-junior-open",
+      "label": "Malta Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-232343",
+        "wagr-256468",
+        "wagr-268929",
+        "wagr-222830",
+        "wagr-77512"
+      ],
+      "firstDate": "2022-04-11",
+      "lastDate": "2026-03-30",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hessische-jugendmeisterschaften",
+      "label": "Hessische Jugendmeisterschaften",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271631",
+        "wagr-260031",
+        "wagr-235727",
+        "wagr-225762",
+        "wagr-219464"
+      ],
+      "firstDate": "2022-09-10",
+      "lastDate": "2026-09-19",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-german-national-boys-championship",
+      "label": "German National Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271814",
+        "wagr-235984",
+        "wagr-260297",
+        "wagr-225932",
+        "wagr-76307"
+      ],
+      "firstDate": "2022-09-23",
+      "lastDate": "2026-09-04",
       "editionsCount": 5
     },
     {
@@ -28312,21 +28657,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-u-s-junior-amateur-championship",
-      "label": "U.S. Junior Amateur Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259238",
-        "wagr-224887",
-        "wagr-271029",
-        "wagr-234798",
-        "wagr-75608"
-      ],
-      "firstDate": "2022-07-25",
-      "lastDate": "2026-07-20",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-scott-robertson-memorial",
       "label": "Scott Robertson Memorial",
       "sourceId": "wagr",
@@ -28342,36 +28672,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-junior-orange-bowl-international",
-      "label": "Junior Orange Bowl International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-255516",
-        "wagr-231367",
-        "wagr-268254",
-        "wagr-221808",
-        "wagr-73333"
-      ],
-      "firstDate": "2022-01-02",
-      "lastDate": "2026-01-03",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-florida-junior-tour-labor-day-major",
-      "label": "Florida Junior Tour Labor Day Major",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235730",
-        "wagr-225770",
-        "wagr-271800",
-        "wagr-260280",
-        "wagr-220168"
-      ],
-      "firstDate": "2022-09-03",
-      "lastDate": "2026-09-05",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-florida-junior-amateur-championship",
       "label": "Florida Junior Amateur Championship",
       "sourceId": "wagr",
@@ -28384,21 +28684,6 @@
       ],
       "firstDate": "2022-07-06",
       "lastDate": "2026-06-30",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-team-taylormade-invitational",
-      "label": "Team TaylorMade Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233276",
-        "wagr-269762",
-        "wagr-223611",
-        "wagr-257673",
-        "wagr-74638"
-      ],
-      "firstDate": "2022-05-28",
-      "lastDate": "2026-05-21",
       "editionsCount": 5
     },
     {
@@ -28432,36 +28717,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-first-capital-bank-zimbabwe-junior-open",
-      "label": "First Capital Bank Zimbabwe Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269127",
-        "wagr-256744",
-        "wagr-235299",
-        "wagr-223533",
-        "wagr-219846"
-      ],
-      "firstDate": "2022-05-26",
-      "lastDate": "2026-04-24",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-the-jacques-leglise-trophy",
-      "label": "The Jacques Leglise Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260008",
-        "wagr-271612",
-        "wagr-235495",
-        "wagr-76330",
-        "wagr-225544"
-      ],
-      "firstDate": "2022-08-26",
-      "lastDate": "2026-08-21",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-delsjo-junior-open",
       "label": "Delsjo Junior Open",
       "sourceId": "wagr",
@@ -28474,21 +28729,6 @@
       ],
       "firstDate": "2022-08-02",
       "lastDate": "2026-08-06",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-sergio-garcia-junior-championship",
-      "label": "Sergio Garcia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272128",
-        "wagr-260728",
-        "wagr-236252",
-        "wagr-226134",
-        "wagr-219532"
-      ],
-      "firstDate": "2022-09-30",
-      "lastDate": "2026-10-02",
       "editionsCount": 5
     },
     {
@@ -28534,21 +28774,6 @@
       ],
       "firstDate": "2022-09-09",
       "lastDate": "2026-09-13",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-boy-s-junior-pga-championship",
-      "label": "Boy's Junior PGA Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234993",
-        "wagr-271182",
-        "wagr-259431",
-        "wagr-225046",
-        "wagr-75454"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-07-28",
       "editionsCount": 5
     },
     {
@@ -28612,21 +28837,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-campeonato-sudamericano-juvenil",
-      "label": "Campeonato Sudamericano Juvenil",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268832",
-        "wagr-232134",
-        "wagr-256346",
-        "wagr-219746",
-        "wagr-222533"
-      ],
-      "firstDate": "2022-03-23",
-      "lastDate": "2026-03-26",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-torneo-internacional-infantil-y-juvenil-cartagena",
       "label": "Torneo Internacional Infantil y Juvenil Cartagena",
       "sourceId": "wagr",
@@ -28669,36 +28879,6 @@
       ],
       "firstDate": "2022-08-04",
       "lastDate": "2026-08-06",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-malta-junior-open",
-      "label": "Malta Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-232343",
-        "wagr-256468",
-        "wagr-268929",
-        "wagr-222830",
-        "wagr-77512"
-      ],
-      "firstDate": "2022-04-11",
-      "lastDate": "2026-03-30",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-victorian-junior-open",
-      "label": "Victorian Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272067",
-        "wagr-236022",
-        "wagr-260656",
-        "wagr-226014",
-        "wagr-78066"
-      ],
-      "firstDate": "2022-09-19",
-      "lastDate": "2026-09-22",
       "editionsCount": 5
     },
     {
@@ -28837,21 +29017,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-serbian-international-junior-open",
-      "label": "Serbian International Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259634",
-        "wagr-271338",
-        "wagr-225040",
-        "wagr-75036",
-        "wagr-235149"
-      ],
-      "firstDate": "2022-08-05",
-      "lastDate": "2026-08-07",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-slovenian-international-junior-championship",
       "label": "Slovenian International Junior Championship",
       "sourceId": "wagr",
@@ -28927,36 +29092,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-campeonato-juvenil-de-chile",
-      "label": "Campeonato Juvenil de Chile",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235362",
-        "wagr-271577",
-        "wagr-259966",
-        "wagr-225424",
-        "wagr-76217"
-      ],
-      "firstDate": "2022-08-19",
-      "lastDate": "2026-08-21",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-abierto-internacional-de-menores",
-      "label": "Abierto Internacional de Menores",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-232402",
-        "wagr-269163",
-        "wagr-256809",
-        "wagr-222428",
-        "wagr-78118"
-      ],
-      "firstDate": "2022-03-17",
-      "lastDate": "2026-03-13",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-coca-cola-junior-championship-at-the-highlands",
       "label": "Coca Cola Junior Championship at The Highlands",
       "sourceId": "wagr",
@@ -28969,36 +29104,6 @@
       ],
       "firstDate": "2022-07-04",
       "lastDate": "2026-06-29",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-u18-teams-championship",
-      "label": "U18 Teams Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260655",
-        "wagr-236019",
-        "wagr-226003",
-        "wagr-272066",
-        "wagr-76830"
-      ],
-      "firstDate": "2022-09-23",
-      "lastDate": "2026-09-18",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-czech-national-youth-u16-championship",
-      "label": "Czech National Youth U16 Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-224281",
-        "wagr-270567",
-        "wagr-258673",
-        "wagr-234350",
-        "wagr-218944"
-      ],
-      "firstDate": "2022-06-28",
-      "lastDate": "2026-06-19",
       "editionsCount": 5
     },
     {
@@ -29092,36 +29197,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hessische-jugendmeisterschaften",
-      "label": "Hessische Jugendmeisterschaften",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271631",
-        "wagr-260031",
-        "wagr-235727",
-        "wagr-225762",
-        "wagr-219464"
-      ],
-      "firstDate": "2022-09-10",
-      "lastDate": "2026-09-19",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-german-national-boys-championship",
-      "label": "German National Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271814",
-        "wagr-235984",
-        "wagr-260297",
-        "wagr-225932",
-        "wagr-76307"
-      ],
-      "firstDate": "2022-09-23",
-      "lastDate": "2026-09-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-fairhaven-trophy",
       "label": "Fairhaven Trophy",
       "sourceId": "wagr",
@@ -29134,21 +29209,6 @@
       ],
       "firstDate": "2022-04-29",
       "lastDate": "2026-05-01",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-youth-region-tour",
-      "label": "Youth Region Tour",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269176",
-        "wagr-270784",
-        "wagr-256827",
-        "wagr-232522",
-        "wagr-228893"
-      ],
-      "firstDate": "2023-04-14",
-      "lastDate": "2026-07-07",
       "editionsCount": 5
     },
     {
@@ -29212,21 +29272,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-bernard-darwin-salver",
-      "label": "Bernard Darwin Salver",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268766",
-        "wagr-232042",
-        "wagr-77474",
-        "wagr-222426",
-        "wagr-256256"
-      ],
-      "firstDate": "2022-03-15",
-      "lastDate": "2026-03-17",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-english-boys-county-finals",
       "label": "English Boys' County Finals",
       "sourceId": "wagr",
@@ -29284,21 +29329,6 @@
       ],
       "firstDate": "2022-07-19",
       "lastDate": "2026-06-30",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-byron-nelson-junior-championship",
-      "label": "Byron Nelson Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269928",
-        "wagr-257865",
-        "wagr-74659",
-        "wagr-233553",
-        "wagr-223699"
-      ],
-      "firstDate": "2022-06-07",
-      "lastDate": "2026-06-02",
       "editionsCount": 5
     },
     {
@@ -35346,17 +35376,297 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-bohemia-cup-junior-golf-championship",
-      "label": "Bohemia Cup - Junior Golf Championship",
+      "id": "wagr-the-junior-players-championship-presented-by-rolex",
+      "label": "The Junior PLAYERS Championship presented by Rolex",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-260938",
-        "wagr-234885",
-        "wagr-226498",
-        "wagr-220777"
+        "wagr-271703",
+        "wagr-235601",
+        "wagr-260138",
+        "wagr-225609"
       ],
-      "firstDate": "2022-10-21",
-      "lastDate": "2025-10-10",
+      "firstDate": "2023-08-31",
+      "lastDate": "2026-09-04",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-nico-open",
+      "label": "Nico Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269119",
+        "wagr-256735",
+        "wagr-233314",
+        "wagr-229146"
+      ],
+      "firstDate": "2023-05-25",
+      "lastDate": "2026-09-11",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-joaquin-niemann-invitational",
+      "label": "Joaquin Niemann Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236490",
+        "wagr-226184",
+        "wagr-261096",
+        "wagr-76760"
+      ],
+      "firstDate": "2022-10-06",
+      "lastDate": "2025-10-16",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-campeonato-brasileiro-pre-juvenil-e-juvenil",
+      "label": "Campeonato Brasileiro Pre Juvenil e Juvenil",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234186",
+        "wagr-270517",
+        "wagr-258620",
+        "wagr-224254"
+      ],
+      "firstDate": "2023-07-04",
+      "lastDate": "2026-01-28",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-final",
+      "label": "Svenska Juniortouren Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260683",
+        "wagr-236122",
+        "wagr-226051",
+        "wagr-272091"
+      ],
+      "firstDate": "2023-09-29",
+      "lastDate": "2026-09-25",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-2",
+      "label": "Svenska Juniortouren Elit #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257674",
+        "wagr-269763",
+        "wagr-233277",
+        "wagr-223644"
+      ],
+      "firstDate": "2023-05-26",
+      "lastDate": "2026-05-30",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-grand-opening",
+      "label": "Grand Opening",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256997",
+        "wagr-232640",
+        "wagr-223123",
+        "wagr-269291"
+      ],
+      "firstDate": "2023-04-21",
+      "lastDate": "2026-04-18",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-european-spring-junior",
+      "label": "European Spring Junior",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256602",
+        "wagr-232501",
+        "wagr-227864",
+        "wagr-269031"
+      ],
+      "firstDate": "2023-04-11",
+      "lastDate": "2026-03-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-all-africa-junior-team-championship",
+      "label": "All Africa Junior Team Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256973",
+        "wagr-232552",
+        "wagr-219417",
+        "wagr-222627"
+      ],
+      "firstDate": "2022-03-28",
+      "lastDate": "2025-04-24",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-canadian-junior-boys-championship-presented-by-bdo",
+      "label": "Canadian Junior Boys Championship, presented by BDO",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271473",
+        "wagr-259818",
+        "wagr-235320",
+        "wagr-225272"
+      ],
+      "firstDate": "2023-08-14",
+      "lastDate": "2026-08-11",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-am-technical-solutions-junior-at-southpointe",
+      "label": "AM Technical Solutions Junior at Southpointe",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271239",
+        "wagr-259493",
+        "wagr-235169",
+        "wagr-225226"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2026-07-27",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-triple-a-european-open",
+      "label": "Triple A European Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256366",
+        "wagr-222561",
+        "wagr-232209",
+        "wagr-73802"
+      ],
+      "firstDate": "2022-03-29",
+      "lastDate": "2025-02-19",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-portuguese-intercollegiate-open",
+      "label": "Portuguese Intercollegiate Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255794",
+        "wagr-231623",
+        "wagr-222044",
+        "wagr-268449"
+      ],
+      "firstDate": "2023-02-05",
+      "lastDate": "2026-02-02",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-uae-world-amateur-junior-golf-championship",
+      "label": "UAE World Amateur Junior Golf Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-221421",
+        "wagr-221336",
+        "wagr-230892",
+        "wagr-73007"
+      ],
+      "firstDate": "2022-12-09",
+      "lastDate": "2024-12-06",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-european-juniors-international",
+      "label": "European  Juniors International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269847",
+        "wagr-219146",
+        "wagr-233589",
+        "wagr-223789"
+      ],
+      "firstDate": "2022-06-07",
+      "lastDate": "2026-10-04",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-dm-vorausscheid",
+      "label": "DM Vorausscheid",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270968",
+        "wagr-259174",
+        "wagr-234453",
+        "wagr-224698"
+      ],
+      "firstDate": "2023-07-14",
+      "lastDate": "2026-07-24",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-german-boys-open",
+      "label": "German Boys Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257717",
+        "wagr-233388",
+        "wagr-223592",
+        "wagr-74604"
+      ],
+      "firstDate": "2022-06-02",
+      "lastDate": "2025-05-15",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-golfing-knights-junior-open",
+      "label": "Golfing Knights Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-256737",
+        "wagr-233448",
+        "wagr-225286",
+        "wagr-76117"
+      ],
+      "firstDate": "2022-08-09",
+      "lastDate": "2025-04-09",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-dm-vorausscheid-ak16",
+      "label": "DM Vorausscheid AK16",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234460",
+        "wagr-224837",
+        "wagr-259176",
+        "wagr-270970"
+      ],
+      "firstDate": "2023-07-14",
+      "lastDate": "2026-07-24",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-rb-german-junior",
+      "label": "RB German Junior",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-225421",
+        "wagr-235360",
+        "wagr-259503",
+        "wagr-76207"
+      ],
+      "firstDate": "2022-08-17",
+      "lastDate": "2025-09-09",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-framas-open",
+      "label": "Framas Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-227796",
+        "wagr-259618",
+        "wagr-235095",
+        "wagr-75577"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2025-08-05",
       "editionsCount": 4
     },
     {
@@ -35472,62 +35782,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-the-junior-players-championship-presented-by-rolex",
-      "label": "The Junior PLAYERS Championship presented by Rolex",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271703",
-        "wagr-260138",
-        "wagr-235601",
-        "wagr-225609"
-      ],
-      "firstDate": "2023-08-31",
-      "lastDate": "2026-09-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-svenska-juniortouren-final",
-      "label": "Svenska Juniortouren Final",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260683",
-        "wagr-236122",
-        "wagr-226051",
-        "wagr-272091"
-      ],
-      "firstDate": "2023-09-29",
-      "lastDate": "2026-09-25",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-svenska-juniortouren-elit-2",
-      "label": "Svenska Juniortouren Elit #2",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257674",
-        "wagr-269763",
-        "wagr-233277",
-        "wagr-223644"
-      ],
-      "firstDate": "2023-05-26",
-      "lastDate": "2026-05-30",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-grand-opening",
-      "label": "Grand Opening",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256997",
-        "wagr-232640",
-        "wagr-223123",
-        "wagr-269291"
-      ],
-      "firstDate": "2023-04-21",
-      "lastDate": "2026-04-18",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-junior-masters-invitational-final",
       "label": "Junior Masters Invitational - Final",
       "sourceId": "wagr",
@@ -35581,20 +35835,6 @@
       ],
       "firstDate": "2023-08-25",
       "lastDate": "2026-08-14",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-european-spring-junior",
-      "label": "European Spring Junior",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256602",
-        "wagr-232501",
-        "wagr-227864",
-        "wagr-269031"
-      ],
-      "firstDate": "2023-04-11",
-      "lastDate": "2026-03-02",
       "editionsCount": 4
     },
     {
@@ -35654,20 +35894,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-canadian-junior-boys-championship-presented-by-bdo",
-      "label": "Canadian Junior Boys Championship, presented by BDO",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259818",
-        "wagr-235320",
-        "wagr-225272",
-        "wagr-271473"
-      ],
-      "firstDate": "2023-08-14",
-      "lastDate": "2026-08-11",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-under-armour-jordan-spieth-championship",
       "label": "Under Armour ®  / Jordan Spieth Championship",
       "sourceId": "wagr",
@@ -35721,62 +35947,6 @@
       ],
       "firstDate": "2023-08-08",
       "lastDate": "2026-08-05",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-nico-open",
-      "label": "Nico Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256735",
-        "wagr-269119",
-        "wagr-233314",
-        "wagr-229146"
-      ],
-      "firstDate": "2023-05-25",
-      "lastDate": "2026-09-11",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-triple-a-european-open",
-      "label": "Triple A European Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256366",
-        "wagr-222561",
-        "wagr-232209",
-        "wagr-73802"
-      ],
-      "firstDate": "2022-03-29",
-      "lastDate": "2025-02-19",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-portuguese-intercollegiate-open",
-      "label": "Portuguese Intercollegiate Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-255794",
-        "wagr-231623",
-        "wagr-222044",
-        "wagr-268449"
-      ],
-      "firstDate": "2023-02-05",
-      "lastDate": "2026-02-02",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-uae-world-amateur-junior-golf-championship",
-      "label": "UAE World Amateur Junior Golf Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-221421",
-        "wagr-221336",
-        "wagr-230892",
-        "wagr-73007"
-      ],
-      "firstDate": "2022-12-09",
-      "lastDate": "2024-12-06",
       "editionsCount": 4
     },
     {
@@ -35847,20 +36017,6 @@
       ],
       "firstDate": "2023-07-09",
       "lastDate": "2026-08-04",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-rb-german-junior",
-      "label": "RB German Junior",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235360",
-        "wagr-225421",
-        "wagr-259503",
-        "wagr-76207"
-      ],
-      "firstDate": "2022-08-17",
-      "lastDate": "2025-09-09",
       "editionsCount": 4
     },
     {
@@ -35976,34 +36132,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-joaquin-niemann-invitational",
-      "label": "Joaquin Niemann Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236490",
-        "wagr-226184",
-        "wagr-261096",
-        "wagr-76760"
-      ],
-      "firstDate": "2022-10-06",
-      "lastDate": "2025-10-16",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-campeonato-brasileiro-pre-juvenil-e-juvenil",
-      "label": "Campeonato Brasileiro Pre Juvenil e Juvenil",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234186",
-        "wagr-270517",
-        "wagr-258620",
-        "wagr-224254"
-      ],
-      "firstDate": "2023-07-04",
-      "lastDate": "2026-01-28",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-finnish-stroke-play-championship-u21-u18",
       "label": "Finnish Stroke Play Championship U21 & U18",
       "sourceId": "wagr",
@@ -36046,20 +36174,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-jack-newton-international-junior-classic",
-      "label": "Jack Newton International Junior Classic",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260816",
-        "wagr-77890",
-        "wagr-236154",
-        "wagr-226121"
-      ],
-      "firstDate": "2022-09-27",
-      "lastDate": "2025-09-30",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-new-jersey-junior-championship",
       "label": "New Jersey Junior Championship",
       "sourceId": "wagr",
@@ -36099,76 +36213,6 @@
       ],
       "firstDate": "2023-07-18",
       "lastDate": "2026-07-27",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-dm-vorausscheid",
-      "label": "DM Vorausscheid",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270968",
-        "wagr-259174",
-        "wagr-234453",
-        "wagr-224698"
-      ],
-      "firstDate": "2023-07-14",
-      "lastDate": "2026-07-24",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-german-boys-open",
-      "label": "German Boys Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257717",
-        "wagr-233388",
-        "wagr-223592",
-        "wagr-74604"
-      ],
-      "firstDate": "2022-06-02",
-      "lastDate": "2025-05-15",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-golfing-knights-junior-open",
-      "label": "Golfing Knights Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256737",
-        "wagr-233448",
-        "wagr-225286",
-        "wagr-76117"
-      ],
-      "firstDate": "2022-08-09",
-      "lastDate": "2025-04-09",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-dm-vorausscheid-ak16",
-      "label": "DM Vorausscheid AK16",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234460",
-        "wagr-224837",
-        "wagr-259176",
-        "wagr-270970"
-      ],
-      "firstDate": "2023-07-14",
-      "lastDate": "2026-07-24",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-framas-open",
-      "label": "Framas Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-227796",
-        "wagr-259618",
-        "wagr-235095",
-        "wagr-75577"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2025-08-05",
       "editionsCount": 4
     },
     {
@@ -36253,20 +36297,6 @@
       ],
       "firstDate": "2023-07-18",
       "lastDate": "2026-07-06",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-am-technical-solutions-junior-at-southpointe",
-      "label": "AM Technical Solutions Junior at Southpointe",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259493",
-        "wagr-235169",
-        "wagr-271239",
-        "wagr-225226"
-      ],
-      "firstDate": "2023-08-08",
-      "lastDate": "2026-07-27",
       "editionsCount": 4
     },
     {
@@ -36911,20 +36941,6 @@
       ],
       "firstDate": "2022-06-29",
       "lastDate": "2025-07-02",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-all-africa-junior-team-championship",
-      "label": "All Africa Junior Team Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256973",
-        "wagr-232552",
-        "wagr-219417",
-        "wagr-222627"
-      ],
-      "firstDate": "2022-03-28",
-      "lastDate": "2025-04-24",
       "editionsCount": 4
     },
     {
@@ -45801,6 +45817,19 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-junior-americas-cup",
+      "label": "Junior Americas Cup",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274831",
+        "wagr-259432",
+        "wagr-234994"
+      ],
+      "firstDate": "2024-07-30",
+      "lastDate": "2026-07-28",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-uax-golf-tour-kaskada",
       "label": "UAX Golf Tour Kaskada",
       "sourceId": "wagr",
@@ -45811,6 +45840,240 @@
       ],
       "firstDate": "2024-04-10",
       "lastDate": "2026-04-10",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-svenska-juniortouren-elit-6",
+      "label": "Svenska Juniortouren Elit #6",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260428",
+        "wagr-225821",
+        "wagr-271920"
+      ],
+      "firstDate": "2023-09-16",
+      "lastDate": "2026-09-04",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-stenson-sunesson-junior-challenge",
+      "label": "Stenson Sunesson Junior Challenge",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258614",
+        "wagr-234176",
+        "wagr-224214"
+      ],
+      "firstDate": "2023-07-03",
+      "lastDate": "2025-07-02",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-jsm-match-svenska-juniortouren-elit-3",
+      "label": "JSM Match, Svenska Juniortouren Elit #3",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258384",
+        "wagr-233879",
+        "wagr-224029"
+      ],
+      "firstDate": "2023-06-17",
+      "lastDate": "2025-06-24",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-5-halland",
+      "label": "Svenska Juniortouren Div 1 #5 Halland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259877",
+        "wagr-235543",
+        "wagr-271528"
+      ],
+      "firstDate": "2024-08-17",
+      "lastDate": "2026-08-15",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-apgc-junior-championship",
+      "label": "APGC Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275647",
+        "wagr-263428",
+        "wagr-233173"
+      ],
+      "firstDate": "2024-09-04",
+      "lastDate": "2026-06-17",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-54-hole-fort-myers-junior-open",
+      "label": "54 Hole Fort Myers Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268579",
+        "wagr-256002",
+        "wagr-252425"
+      ],
+      "firstDate": "2024-02-17",
+      "lastDate": "2026-02-14",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-italian-u18-team-championship-emilio-pallavicino-trophy",
+      "label": "Italian U18 Team Championship - Emilio Pallavicino Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235498",
+        "wagr-225547",
+        "wagr-76333"
+      ],
+      "firstDate": "2022-08-24",
+      "lastDate": "2024-08-23",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-golf-ontario-junior-boy-s-match-play-championship",
+      "label": "Golf Ontario Junior Boy's Match Play Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271244",
+        "wagr-259498",
+        "wagr-235224"
+      ],
+      "firstDate": "2024-07-29",
+      "lastDate": "2026-07-22",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-drummond-golf-54-hole-junior-classic",
+      "label": "Drummond Golf 54 Hole Junior Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272116",
+        "wagr-260712",
+        "wagr-236169"
+      ],
+      "firstDate": "2024-09-25",
+      "lastDate": "2026-09-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ssgt-u18-strokeplay-championship-26",
+      "label": "SSGT U18 Strokeplay Championship -26",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268858",
+        "wagr-268624",
+        "wagr-260778"
+      ],
+      "firstDate": "2025-09-14",
+      "lastDate": "2026-03-23",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-sgf-fairmont-boys-open",
+      "label": "SGF Fairmont Boys Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272212",
+        "wagr-226167",
+        "wagr-220979"
+      ],
+      "firstDate": "2022-09-28",
+      "lastDate": "2026-09-30",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-atlantic-youth-trophy",
+      "label": "Atlantic Youth Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255786",
+        "wagr-231608",
+        "wagr-222010"
+      ],
+      "firstDate": "2023-02-10",
+      "lastDate": "2025-02-07",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-bogogno-international-junior-open",
+      "label": "Bogogno International Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-236734",
+        "wagr-261360",
+        "wagr-227873"
+      ],
+      "firstDate": "2023-10-30",
+      "lastDate": "2025-10-27",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-migros-golfcard-gjg-international",
+      "label": "Migros GolfCard GJG International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-252582",
+        "wagr-259902",
+        "wagr-271540"
+      ],
+      "firstDate": "2024-08-14",
+      "lastDate": "2026-07-08",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-gjg-portuguese-juniors-internationals",
+      "label": "GJG Portuguese Juniors Internationals",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-251741",
+        "wagr-268572",
+        "wagr-255984"
+      ],
+      "firstDate": "2024-02-16",
+      "lastDate": "2026-02-14",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-german-national-championship-u16",
+      "label": "German National Championship U16",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235986",
+        "wagr-260299",
+        "wagr-225934"
+      ],
+      "firstDate": "2023-09-22",
+      "lastDate": "2025-09-12",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-gjg-juniors-international",
+      "label": "GJG Juniors International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-251743",
+        "wagr-256497",
+        "wagr-268951"
+      ],
+      "firstDate": "2024-03-24",
+      "lastDate": "2026-04-03",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-gjg-french-junior-classics",
+      "label": "GJG French Junior Classics",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-230411",
+        "wagr-236352",
+        "wagr-220468"
+      ],
+      "firstDate": "2022-10-02",
+      "lastDate": "2024-10-04",
       "editionsCount": 3
     },
     {
@@ -45996,19 +46259,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-jsm-match-svenska-juniortouren-elit-3",
-      "label": "JSM Match, Svenska Juniortouren Elit #3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258384",
-        "wagr-233879",
-        "wagr-224029"
-      ],
-      "firstDate": "2023-06-17",
-      "lastDate": "2025-06-24",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-junior-golf-bastad",
       "label": "Junior Golf @ Bastad",
       "sourceId": "wagr",
@@ -46035,32 +46285,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-stenson-sunesson-junior-challenge",
-      "label": "Stenson Sunesson Junior Challenge",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234176",
-        "wagr-224214",
-        "wagr-258614"
-      ],
-      "firstDate": "2023-07-03",
-      "lastDate": "2025-07-02",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-svenska-juniortouren-elit-6",
-      "label": "Svenska Juniortouren Elit #6",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-225821",
-        "wagr-260428",
-        "wagr-271920"
-      ],
-      "firstDate": "2023-09-16",
-      "lastDate": "2026-09-04",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-r-a-boys-amateur-championship",
       "label": "R&A Boys Amateur Championship",
       "sourceId": "wagr",
@@ -46071,19 +46295,6 @@
       ],
       "firstDate": "2022-08-08",
       "lastDate": "2024-08-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-5-halland",
-      "label": "Svenska Juniortouren Div 1 #5 Halland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259877",
-        "wagr-235543",
-        "wagr-271528"
-      ],
-      "firstDate": "2024-08-17",
-      "lastDate": "2026-08-15",
       "editionsCount": 3
     },
     {
@@ -46344,84 +46555,6 @@
       ],
       "firstDate": "2023-05-05",
       "lastDate": "2025-04-18",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-sgf-fairmont-boys-open",
-      "label": "SGF Fairmont Boys Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272212",
-        "wagr-226167",
-        "wagr-220979"
-      ],
-      "firstDate": "2022-09-28",
-      "lastDate": "2026-09-30",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-atlantic-youth-trophy",
-      "label": "Atlantic Youth Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-255786",
-        "wagr-231608",
-        "wagr-222010"
-      ],
-      "firstDate": "2023-02-10",
-      "lastDate": "2025-02-07",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-bogogno-international-junior-open",
-      "label": "Bogogno International Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236734",
-        "wagr-261360",
-        "wagr-227873"
-      ],
-      "firstDate": "2023-10-30",
-      "lastDate": "2025-10-27",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-migros-golfcard-gjg-international",
-      "label": "Migros GolfCard GJG International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-252582",
-        "wagr-259902",
-        "wagr-271540"
-      ],
-      "firstDate": "2024-08-14",
-      "lastDate": "2026-07-08",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-gjg-portuguese-juniors-internationals",
-      "label": "GJG Portuguese Juniors Internationals",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-251741",
-        "wagr-268572",
-        "wagr-255984"
-      ],
-      "firstDate": "2024-02-16",
-      "lastDate": "2026-02-14",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-drummond-golf-54-hole-junior-classic",
-      "label": "Drummond Golf 54 Hole Junior Classic",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272116",
-        "wagr-260712",
-        "wagr-236169"
-      ],
-      "firstDate": "2024-09-25",
-      "lastDate": "2026-09-30",
       "editionsCount": 3
     },
     {
@@ -46893,19 +47026,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-apgc-junior-championship",
-      "label": "APGC Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275647",
-        "wagr-263428",
-        "wagr-233173"
-      ],
-      "firstDate": "2024-09-04",
-      "lastDate": "2026-06-17",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-ksc-junior-open-faldo-series-hong-kong-championship",
       "label": "KSC Junior Open - Faldo Series Hong Kong Championship",
       "sourceId": "wagr",
@@ -46942,45 +47062,6 @@
       ],
       "firstDate": "2023-08-12",
       "lastDate": "2026-09-19",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-german-national-championship-u16",
-      "label": "German National Championship U16",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235986",
-        "wagr-260299",
-        "wagr-225934"
-      ],
-      "firstDate": "2023-09-22",
-      "lastDate": "2025-09-12",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-gjg-juniors-international",
-      "label": "GJG Juniors International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-251743",
-        "wagr-256497",
-        "wagr-268951"
-      ],
-      "firstDate": "2024-03-24",
-      "lastDate": "2026-04-03",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-gjg-french-junior-classics",
-      "label": "GJG French Junior Classics",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-230411",
-        "wagr-236352",
-        "wagr-220468"
-      ],
-      "firstDate": "2022-10-02",
-      "lastDate": "2024-10-04",
       "editionsCount": 3
     },
     {
@@ -47127,19 +47208,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-junior-americas-cup",
-      "label": "Junior Americas Cup",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274831",
-        "wagr-259432",
-        "wagr-234994"
-      ],
-      "firstDate": "2024-07-30",
-      "lastDate": "2026-07-28",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-ajga-dominican-junior-open-presented-by-puntacana-resort-club",
       "label": "AJGA Dominican Junior Open presented by Puntacana Resort & Club",
       "sourceId": "wagr",
@@ -47231,19 +47299,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-golf-ontario-junior-boy-s-match-play-championship",
-      "label": "Golf Ontario Junior Boy's Match Play Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259498",
-        "wagr-235224",
-        "wagr-271244"
-      ],
-      "firstDate": "2024-07-29",
-      "lastDate": "2026-07-22",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-nextgen-quebec-championship",
       "label": "NextGen Quebec Championship",
       "sourceId": "wagr",
@@ -47254,19 +47309,6 @@
       ],
       "firstDate": "2024-07-03",
       "lastDate": "2026-06-29",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-54-hole-fort-myers-junior-open",
-      "label": "54 Hole Fort Myers Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256002",
-        "wagr-268579",
-        "wagr-252425"
-      ],
-      "firstDate": "2024-02-17",
-      "lastDate": "2026-02-14",
       "editionsCount": 3
     },
     {
@@ -47306,19 +47348,6 @@
       ],
       "firstDate": "2023-12-07",
       "lastDate": "2026-02-23",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-ssgt-u18-strokeplay-championship-26",
-      "label": "SSGT U18 Strokeplay Championship -26",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268858",
-        "wagr-268624",
-        "wagr-260778"
-      ],
-      "firstDate": "2025-09-14",
-      "lastDate": "2026-03-23",
       "editionsCount": 3
     },
     {
@@ -47618,19 +47647,6 @@
       ],
       "firstDate": "2023-08-05",
       "lastDate": "2025-07-24",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-italian-u18-team-championship-emilio-pallavicino-trophy",
-      "label": "Italian U18 Team Championship - Emilio Pallavicino Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235498",
-        "wagr-225547",
-        "wagr-76333"
-      ],
-      "firstDate": "2022-08-24",
-      "lastDate": "2024-08-23",
       "editionsCount": 3
     },
     {
@@ -48138,19 +48154,6 @@
       ],
       "firstDate": "2024-07-16",
       "lastDate": "2026-07-14",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-european-juniors-international",
-      "label": "European  Juniors International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-219146",
-        "wagr-233589",
-        "wagr-223789"
-      ],
-      "firstDate": "2022-06-07",
-      "lastDate": "2024-05-31",
       "editionsCount": 3
     },
     {
@@ -66499,6 +66502,426 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-tga-singha-international-junior-golf-club",
+      "label": "TGA -Singha International Junior Golf Club",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272409",
+        "wagr-257495"
+      ],
+      "firstDate": "2025-05-30",
+      "lastDate": "2026-10-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-sportexcel-milo-nsc-malaysian-junior-premier-elite-golf-circuit-3rd-leg",
+      "label": "SportExcel-Milo-NSC Malaysian Junior Premier Elite Golf Circuit  - 3rd Leg",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270623",
+        "wagr-223674"
+      ],
+      "firstDate": "2023-07-15",
+      "lastDate": "2026-07-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-gaby-lopez-open",
+      "label": "Gaby Lopez Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-262023",
+        "wagr-272652"
+      ],
+      "firstDate": "2025-09-03",
+      "lastDate": "2026-08-04",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-ajga-albany-junior-presented-by-uhy",
+      "label": "AJGA Albany Junior presented by UHY",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271685",
+        "wagr-260116"
+      ],
+      "firstDate": "2025-08-19",
+      "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
+      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272877",
+        "wagr-262838"
+      ],
+      "firstDate": "2025-03-27",
+      "lastDate": "2026-03-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-cjga-mizuno-national-junior-championship",
+      "label": "CJGA Mizuno National Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260109",
+        "wagr-271678"
+      ],
+      "firstDate": "2025-08-25",
+      "lastDate": "2026-08-18",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-jr-islands-championship",
+      "label": "JR Islands Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-266557",
+        "wagr-256505"
+      ],
+      "firstDate": "2025-04-13",
+      "lastDate": "2026-03-29",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-quito-junior-open",
+      "label": "Quito Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260468",
+        "wagr-253941"
+      ],
+      "firstDate": "2024-09-12",
+      "lastDate": "2025-10-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-golfaction-final",
+      "label": "GOLFACTION Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-231028",
+        "wagr-228857"
+      ],
+      "firstDate": "2023-12-18",
+      "lastDate": "2024-12-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-mayakoba-invitational",
+      "label": "Mayakoba Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-232665",
+        "wagr-227885"
+      ],
+      "firstDate": "2023-04-20",
+      "lastDate": "2024-05-10",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-golfaction",
+      "label": "GOLFACTION",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-229663",
+        "wagr-269555"
+      ],
+      "firstDate": "2023-09-08",
+      "lastDate": "2026-05-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-5",
+      "label": "54 Junior Tour by Visit Trelleborg #5",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273397",
+        "wagr-263846"
+      ],
+      "firstDate": "2025-09-13",
+      "lastDate": "2026-10-09",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-swedish-golf-team-invitational",
+      "label": "Swedish Golf Team Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268087",
+        "wagr-260843"
+      ],
+      "firstDate": "2025-10-04",
+      "lastDate": "2026-10-03",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-2",
+      "label": "54 Junior Tour by Visit Trelleborg #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273393",
+        "wagr-263842"
+      ],
+      "firstDate": "2025-05-03",
+      "lastDate": "2026-05-16",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-4",
+      "label": "54 Junior Tour by Visit Trelleborg #4",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263845",
+        "wagr-273396"
+      ],
+      "firstDate": "2025-08-23",
+      "lastDate": "2026-09-12",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-jsm-slag-svenska-juniortouren-elit-4",
+      "label": "JSM Slag, Svenska Juniortouren Elit #4",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-259293",
+        "wagr-224909"
+      ],
+      "firstDate": "2023-08-03",
+      "lastDate": "2025-07-22",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-2-g-teborg",
+      "label": "Svenska Juniortouren Div 1 #2 Göteborg",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257678",
+        "wagr-228545"
+      ],
+      "firstDate": "2023-05-27",
+      "lastDate": "2025-06-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-3",
+      "label": "54 Junior Tour by Visit Trelleborg #3",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273395",
+        "wagr-263844"
+      ],
+      "firstDate": "2025-05-24",
+      "lastDate": "2026-06-13",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-1-v-sterg-tland",
+      "label": "Svenska Juniortouren Div 1 #1 Västergötland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257415",
+        "wagr-228542"
+      ],
+      "firstDate": "2023-05-13",
+      "lastDate": "2025-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-gjg-spanish-juniors-international",
+      "label": "GJG Spanish Juniors International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-262671",
+        "wagr-272802"
+      ],
+      "firstDate": "2025-03-06",
+      "lastDate": "2026-03-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-2-4-sm-land",
+      "label": "Svenska Juniortouren Div 2 #4 Småland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234957",
+        "wagr-224907"
+      ],
+      "firstDate": "2023-08-05",
+      "lastDate": "2024-07-25",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-pan-arab-junior",
+      "label": "Pan Arab Junior",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272157",
+        "wagr-254299"
+      ],
+      "firstDate": "2024-09-23",
+      "lastDate": "2026-10-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-italian-national-u18-team-championship-emilio-pallavicino-trophy",
+      "label": "Italian National U18 Team Championship - Emilio Pallavicino Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271614",
+        "wagr-260010"
+      ],
+      "firstDate": "2025-08-22",
+      "lastDate": "2026-08-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
+      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234100",
+        "wagr-270494"
+      ],
+      "firstDate": "2024-07-02",
+      "lastDate": "2026-06-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-cape-town-junior-championship",
+      "label": "Cape Town Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272239",
+        "wagr-260870"
+      ],
+      "firstDate": "2025-10-11",
+      "lastDate": "2026-10-03",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-nedbank-junior-challenge-championship",
+      "label": "Nedbank Junior Challenge Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269350",
+        "wagr-257075"
+      ],
+      "firstDate": "2025-07-21",
+      "lastDate": "2026-07-20",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-nomads-coastal-noom2-championship",
+      "label": "NOMADS Coastal NoOM2 Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270413",
+        "wagr-258482"
+      ],
+      "firstDate": "2025-06-30",
+      "lastDate": "2026-06-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-ontario-super-camp-invitational",
+      "label": "Ontario Super Camp Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272117",
+        "wagr-260713"
+      ],
+      "firstDate": "2025-10-06",
+      "lastDate": "2026-10-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-limuru-junior-open",
+      "label": "Limuru Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271277",
+        "wagr-259562"
+      ],
+      "firstDate": "2025-08-04",
+      "lastDate": "2026-08-03",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-faldo-series-kenya-championship",
+      "label": "Faldo Series - Kenya Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275708",
+        "wagr-259933"
+      ],
+      "firstDate": "2025-05-31",
+      "lastDate": "2026-05-30",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-kenya-junior-stroke-play",
+      "label": "Kenya Junior Stroke Play",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269129",
+        "wagr-256746"
+      ],
+      "firstDate": "2025-04-07",
+      "lastDate": "2026-04-13",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-sigona-junior-open",
+      "label": "Sigona Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255104",
+        "wagr-231008"
+      ],
+      "firstDate": "2024-12-16",
+      "lastDate": "2025-12-15",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-central-rift-junior-open",
+      "label": "Central Rift Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255049",
+        "wagr-237601"
+      ],
+      "firstDate": "2024-12-06",
+      "lastDate": "2025-11-28",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-hes-rps-ranglistenturnier-jungen-1",
+      "label": "HES/RPS-Ranglistenturnier Jungen 1",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257099",
+        "wagr-236939"
+      ],
+      "firstDate": "2024-04-27",
+      "lastDate": "2025-04-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-mid-summer-juniors-international",
+      "label": "Mid Summer Juniors International",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235251",
+        "wagr-227869"
+      ],
+      "firstDate": "2023-08-08",
+      "lastDate": "2024-08-21",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-callaway-junior-at-canebrake-club",
       "label": "Callaway Junior at Canebrake Club",
       "sourceId": "wagr",
@@ -66535,18 +66958,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-mayakoba-invitational",
-      "label": "Mayakoba Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-232665",
-        "wagr-227885"
-      ],
-      "firstDate": "2023-04-20",
-      "lastDate": "2024-05-10",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-billy-horschel-atlanta-classic-presented-by-zurich",
       "label": "Billy Horschel Atlanta Classic Presented by Zurich",
       "sourceId": "wagr",
@@ -66580,42 +66991,6 @@
       ],
       "firstDate": "2025-07-10",
       "lastDate": "2026-07-10",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-cape-town-junior-championship",
-      "label": "Cape Town Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272239",
-        "wagr-260870"
-      ],
-      "firstDate": "2025-10-11",
-      "lastDate": "2026-10-03",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-nomads-coastal-noom2-championship",
-      "label": "NOMADS Coastal NoOM2 Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270413",
-        "wagr-258482"
-      ],
-      "firstDate": "2025-06-30",
-      "lastDate": "2026-06-30",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-nedbank-junior-challenge-championship",
-      "label": "Nedbank Junior Challenge Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257075",
-        "wagr-269350"
-      ],
-      "firstDate": "2025-07-21",
-      "lastDate": "2026-07-20",
       "editionsCount": 2
     },
     {
@@ -66667,18 +67042,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-swedish-golf-team-invitational",
-      "label": "Swedish Golf Team Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268087",
-        "wagr-260843"
-      ],
-      "firstDate": "2025-10-04",
-      "lastDate": "2026-10-03",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-swedish-golf-team-invitation",
       "label": "Swedish Golf Team Invitation",
       "sourceId": "wagr",
@@ -66688,42 +67051,6 @@
       ],
       "firstDate": "2022-10-08",
       "lastDate": "2023-10-07",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-jsm-slag-svenska-juniortouren-elit-4",
-      "label": "JSM Slag, Svenska Juniortouren Elit #4",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-224909",
-        "wagr-259293"
-      ],
-      "firstDate": "2023-08-03",
-      "lastDate": "2025-07-22",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-4",
-      "label": "54 Junior Tour by Visit Trelleborg #4",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263845",
-        "wagr-273396"
-      ],
-      "firstDate": "2025-08-23",
-      "lastDate": "2026-09-12",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-2-g-teborg",
-      "label": "Svenska Juniortouren Div 1 #2 Göteborg",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257678",
-        "wagr-228545"
-      ],
-      "firstDate": "2023-05-27",
-      "lastDate": "2025-06-06",
       "editionsCount": 2
     },
     {
@@ -66763,18 +67090,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-3",
-      "label": "54 Junior Tour by Visit Trelleborg #3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263844",
-        "wagr-273395"
-      ],
-      "firstDate": "2025-05-24",
-      "lastDate": "2026-06-13",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-ringenas-junior-open",
       "label": "Ringenas Junior Open",
       "sourceId": "wagr",
@@ -66784,54 +67099,6 @@
       ],
       "firstDate": "2022-07-05",
       "lastDate": "2023-06-27",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-2",
-      "label": "54 Junior Tour by Visit Trelleborg #2",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273393",
-        "wagr-263842"
-      ],
-      "firstDate": "2025-05-03",
-      "lastDate": "2026-05-16",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-1-v-sterg-tland",
-      "label": "Svenska Juniortouren Div 1 #1 Västergötland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257415",
-        "wagr-228542"
-      ],
-      "firstDate": "2023-05-13",
-      "lastDate": "2025-05-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-gjg-spanish-juniors-international",
-      "label": "GJG Spanish Juniors International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262671",
-        "wagr-272802"
-      ],
-      "firstDate": "2025-03-06",
-      "lastDate": "2026-03-06",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-2-4-sm-land",
-      "label": "Svenska Juniortouren Div 2 #4 Småland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234957",
-        "wagr-224907"
-      ],
-      "firstDate": "2023-08-05",
-      "lastDate": "2024-07-25",
       "editionsCount": 2
     },
     {
@@ -66928,18 +67195,6 @@
       ],
       "firstDate": "2022-03-17",
       "lastDate": "2023-03-15",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-cjga-mizuno-national-junior-championship",
-      "label": "CJGA Mizuno National Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271678",
-        "wagr-260109"
-      ],
-      "firstDate": "2025-08-25",
-      "lastDate": "2026-08-18",
       "editionsCount": 2
     },
     {
@@ -67471,18 +67726,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-gaby-lopez-open",
-      "label": "Gaby Lopez Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262023",
-        "wagr-272652"
-      ],
-      "firstDate": "2025-09-03",
-      "lastDate": "2026-08-04",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-ijgt-wagr-bishopsgate-invitational",
       "label": "IJGT WAGR Bishopsgate Invitational",
       "sourceId": "wagr",
@@ -67492,42 +67735,6 @@
       ],
       "firstDate": "2025-02-01",
       "lastDate": "2025-12-06",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-quito-junior-open",
-      "label": "Quito Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260468",
-        "wagr-253941"
-      ],
-      "firstDate": "2024-09-12",
-      "lastDate": "2025-10-09",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-golfaction-final",
-      "label": "GOLFACTION Final",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-231028",
-        "wagr-228857"
-      ],
-      "firstDate": "2023-12-18",
-      "lastDate": "2024-12-17",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-golfaction",
-      "label": "GOLFACTION",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-229663",
-        "wagr-269555"
-      ],
-      "firstDate": "2023-09-08",
-      "lastDate": "2026-05-08",
       "editionsCount": 2
     },
     {
@@ -67699,18 +67906,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
-      "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-262838",
-        "wagr-272877"
-      ],
-      "firstDate": "2025-03-27",
-      "lastDate": "2026-03-26",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-jimmy-anderson-junior-boys",
       "label": "Jimmy Anderson Junior Boys",
       "sourceId": "wagr",
@@ -67792,30 +67987,6 @@
       ],
       "firstDate": "2024-10-24",
       "lastDate": "2025-10-23",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-hes-rps-ranglistenturnier-jungen-1",
-      "label": "HES/RPS-Ranglistenturnier Jungen 1",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257099",
-        "wagr-236939"
-      ],
-      "firstDate": "2024-04-27",
-      "lastDate": "2025-04-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-mid-summer-juniors-international",
-      "label": "Mid Summer Juniors International",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235251",
-        "wagr-227869"
-      ],
-      "firstDate": "2023-08-08",
-      "lastDate": "2024-08-21",
       "editionsCount": 2
     },
     {
@@ -67936,18 +68107,6 @@
       ],
       "firstDate": "2024-01-04",
       "lastDate": "2025-01-04",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-jr-islands-championship",
-      "label": "JR Islands Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-266557",
-        "wagr-256505"
-      ],
-      "firstDate": "2025-04-13",
-      "lastDate": "2026-03-29",
       "editionsCount": 2
     },
     {
@@ -68227,18 +68386,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-ajga-albany-junior-presented-by-uhy",
-      "label": "AJGA Albany Junior presented by UHY",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271685",
-        "wagr-260116"
-      ],
-      "firstDate": "2025-08-19",
-      "lastDate": "2026-08-18",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-ajga-junior-at-toftrees",
       "label": "AJGA Junior at Toftrees",
       "sourceId": "wagr",
@@ -68428,18 +68575,6 @@
       ],
       "firstDate": "2025-06-03",
       "lastDate": "2026-06-02",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-sportexcel-milo-nsc-malaysian-junior-premier-elite-golf-circuit-3rd-leg",
-      "label": "SportExcel-Milo-NSC Malaysian Junior Premier Elite Golf Circuit  - 3rd Leg",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270623",
-        "wagr-223674"
-      ],
-      "firstDate": "2023-07-15",
-      "lastDate": "2026-07-18",
       "editionsCount": 2
     },
     {
@@ -68932,30 +69067,6 @@
       ],
       "firstDate": "2025-07-31",
       "lastDate": "2026-07-30",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-italian-national-u18-team-championship-emilio-pallavicino-trophy",
-      "label": "Italian National U18 Team Championship - Emilio Pallavicino Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271614",
-        "wagr-260010"
-      ],
-      "firstDate": "2025-08-22",
-      "lastDate": "2026-08-26",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
-      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270494",
-        "wagr-234100"
-      ],
-      "firstDate": "2024-07-02",
-      "lastDate": "2026-06-30",
       "editionsCount": 2
     },
     {
@@ -69475,18 +69586,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-faldo-series-kenya-championship",
-      "label": "Faldo Series - Kenya Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275708",
-        "wagr-259933"
-      ],
-      "firstDate": "2025-05-31",
-      "lastDate": "2026-05-30",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-us-kids-ncba-kenya-invitational",
       "label": "US Kids - NCBA Kenya Invitational",
       "sourceId": "wagr",
@@ -69496,42 +69595,6 @@
       ],
       "firstDate": "2025-01-04",
       "lastDate": "2025-12-20",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-sigona-junior-open",
-      "label": "Sigona Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-255104",
-        "wagr-231008"
-      ],
-      "firstDate": "2024-12-16",
-      "lastDate": "2025-12-15",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-kenya-junior-stroke-play",
-      "label": "Kenya Junior Stroke Play",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-256746",
-        "wagr-269129"
-      ],
-      "firstDate": "2025-04-07",
-      "lastDate": "2026-04-13",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-central-rift-junior-open",
-      "label": "Central Rift Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-237601",
-        "wagr-255049"
-      ],
-      "firstDate": "2024-12-06",
-      "lastDate": "2025-11-28",
       "editionsCount": 2
     },
     {
@@ -69592,18 +69655,6 @@
       ],
       "firstDate": "2024-07-02",
       "lastDate": "2025-07-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-limuru-junior-open",
-      "label": "Limuru Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271277",
-        "wagr-259562"
-      ],
-      "firstDate": "2025-08-04",
-      "lastDate": "2026-08-03",
       "editionsCount": 2
     },
     {
@@ -106897,6 +106948,336 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-faldo-junior-tour-malaysia-the-els-club-desaru-coast-presented-by-sports-journey",
+      "label": "Faldo Junior Tour: Malaysia | The Els Club Desaru Coast presented by Sports Journey",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273446"
+      ],
+      "firstDate": "2026-09-08",
+      "lastDate": "2026-09-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-hoiana-junior-golf-invitational",
+      "label": "Hoiana Junior Golf Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271443"
+      ],
+      "firstDate": "2026-08-14",
+      "lastDate": "2026-08-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-23rd-sarawak-premier-cup-sarawak-international-junior-open-golf-championship",
+      "label": "23rd SARAWAK PREMIER CUP SARAWAK INTERNATIONAL JUNIOR OPEN GOLF CHAMPIONSHIP",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276184"
+      ],
+      "firstDate": "2026-07-14",
+      "lastDate": "2026-07-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-thailand-step-up-kids-golf-tournament-2",
+      "label": "Thailand Step-up Kids Golf Tournament #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275520"
+      ],
+      "firstDate": "2026-06-27",
+      "lastDate": "2026-06-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-1a-etapa-gira-infantil-juvenil-agvm-26-27",
+      "label": "1a Etapa Gira Infantil Juvenil AGVM 26-27",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276629"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-xvi-copa-centro",
+      "label": "XVI Copa Centro",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272064"
+      ],
+      "firstDate": "2026-09-25",
+      "lastDate": "2026-09-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-pacificlinks-korea-junior-championship",
+      "label": "PacificLinks Korea Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276473"
+      ],
+      "firstDate": "2026-08-25",
+      "lastDate": "2026-08-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-kevin-harvick-foundation-junior-championship-presented-by-uswing-sunglasses",
+      "label": "Kevin Harvick Foundation Junior Championship presented by Uswing Sunglasses",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271324"
+      ],
+      "firstDate": "2026-08-04",
+      "lastDate": "2026-08-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-the-spin-sports-education-foundation-junior-championship",
+      "label": "The Spin Sports Education Foundation Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268232"
+      ],
+      "firstDate": "2026-07-27",
+      "lastDate": "2026-07-27",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-copa-jose-de-jesus-rodriguez",
+      "label": "Copa Jose de Jesus Rodriguez",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275745"
+      ],
+      "firstDate": "2026-05-15",
+      "lastDate": "2026-05-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-vi-copa-norte",
+      "label": "VI Copa Norte",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263698"
+      ],
+      "firstDate": "2026-05-01",
+      "lastDate": "2026-05-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-lxv-campeonato-nacional-interzonas-lorena-ochoa",
+      "label": "LXV Campeonato Nacional Interzonas Lorena Ochoa",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-268939"
+      ],
+      "firstDate": "2026-03-30",
+      "lastDate": "2026-03-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-xviii-copa-yucatan-isabella-fierro",
+      "label": "XVIII Copa Yucatan Isabella Fierro",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273070"
+      ],
+      "firstDate": "2026-01-31",
+      "lastDate": "2026-01-31",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-copa-bobby-diaz",
+      "label": "Copa Bobby Diaz",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-265257"
+      ],
+      "firstDate": "2025-11-21",
+      "lastDate": "2025-11-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-abraham-ancer-junior-open",
+      "label": "Abraham Ancer Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-265699"
+      ],
+      "firstDate": "2025-11-07",
+      "lastDate": "2025-11-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-xv-copa-zona-centro",
+      "label": "XV Copa Zona Centro",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260653"
+      ],
+      "firstDate": "2025-09-26",
+      "lastDate": "2025-09-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071"
+      ],
+      "firstDate": "2026-06-15",
+      "lastDate": "2026-06-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ajga-junior-at-the-mission-club",
+      "label": "AJGA Junior at The Mission Club",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274370"
+      ],
+      "firstDate": "2026-04-23",
+      "lastDate": "2026-04-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-etapa-2-sur-campestre-cocoyoc",
+      "label": "Etapa 2 Sur Campestre Cocoyoc",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261284"
+      ],
+      "firstDate": "2025-10-24",
+      "lastDate": "2025-10-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-torque-gc-championship",
+      "label": "Torque GC Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273472"
+      ],
+      "firstDate": "2026-06-08",
+      "lastDate": "2026-06-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-jim-ferree-junior-championship",
+      "label": "Jim Ferree Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270826"
+      ],
+      "firstDate": "2026-07-06",
+      "lastDate": "2026-07-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-9zero-foundation-invitational",
+      "label": "9Zero Foundation Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274904"
+      ],
+      "firstDate": "2026-03-07",
+      "lastDate": "2026-03-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-felipe-aguilar-open-ajga",
+      "label": "Felipe Aguilar Open (AJGA)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-264112"
+      ],
+      "firstDate": "2025-10-30",
+      "lastDate": "2025-10-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-juegos-panamericanos-junior",
+      "label": "Juegos Panamericanos Junior",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-265400"
+      ],
+      "firstDate": "2025-08-21",
+      "lastDate": "2025-08-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-18th-annual-mid-season-invitational-at-reunion",
+      "label": "18th Annual Mid Season Invitational at Reunion",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258836"
+      ],
+      "firstDate": "2025-07-11",
+      "lastDate": "2025-07-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-cristobal-del-solar-open",
+      "label": "Cristobal del Solar Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253947"
+      ],
+      "firstDate": "2024-12-05",
+      "lastDate": "2024-12-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-golfaction-la-serena",
+      "label": "GOLFACTION La Serena",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235760"
+      ],
+      "firstDate": "2024-10-11",
+      "lastDate": "2024-10-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-i-torneo-yacht-golf-club-junior-invitational",
+      "label": "I TORNEO YACHT & GOLF CLUB JUNIOR INVITATIONAL",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253598"
+      ],
+      "firstDate": "2024-08-01",
+      "lastDate": "2024-08-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-golfaction-los-lirios",
+      "label": "GOLFACTION Los Lirios",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-228849"
+      ],
+      "firstDate": "2023-10-06",
+      "lastDate": "2023-10-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-gado-etapa-2",
+      "label": "GADO Etapa 2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-266450"
+      ],
+      "firstDate": "2026-10-09",
+      "lastDate": "2026-10-09",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gjg-czech-juniors-international",
       "label": "GJG Czech Juniors International",
       "sourceId": "wagr",
@@ -106916,6 +107297,446 @@
       ],
       "firstDate": "2023-10-07",
       "lastDate": "2023-10-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-pga-junior-championship",
+      "label": "PGA Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263850"
+      ],
+      "firstDate": "2025-08-04",
+      "lastDate": "2025-08-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-4-goteborg",
+      "label": "Svenska Juniortouren Div 1 #4 Goteborg",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271089"
+      ],
+      "firstDate": "2026-07-30",
+      "lastDate": "2026-07-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-3-goteborg",
+      "label": "Svenska Juniortouren Div 1 #3 Goteborg",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270309"
+      ],
+      "firstDate": "2026-06-24",
+      "lastDate": "2026-06-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-2-orebro",
+      "label": "Svenska Juniortouren Div 1 #2 Orebro",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269767"
+      ],
+      "firstDate": "2026-05-30",
+      "lastDate": "2026-05-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-1-vastergotland",
+      "label": "Svenska Juniortouren Div 1 #1 Vastergotland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269580"
+      ],
+      "firstDate": "2026-05-09",
+      "lastDate": "2026-05-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-54-junior-tour-by-visit-trelleborg-6",
+      "label": "54 Junior Tour by Visit Trelleborg #6",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-263847"
+      ],
+      "firstDate": "2025-10-11",
+      "lastDate": "2025-10-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-6-skane",
+      "label": "Svenska Juniortouren Div 1 #6 Skane",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260413"
+      ],
+      "firstDate": "2025-09-06",
+      "lastDate": "2025-09-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-3-v-rmland",
+      "label": "Svenska Juniortouren Div 1 #3 Värmland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258367"
+      ],
+      "firstDate": "2025-06-25",
+      "lastDate": "2025-06-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-6-sm-land",
+      "label": "Svenska Juniortouren Div 1 #6 Småland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235895"
+      ],
+      "firstDate": "2024-09-14",
+      "lastDate": "2024-09-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-5-norr-v-sterbotten",
+      "label": "Svenska Juniortouren Div 1 #5 Norr- Västerbotten",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235544"
+      ],
+      "firstDate": "2024-08-17",
+      "lastDate": "2024-08-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-svenska-juniortouren-div-1-6-ostergotland",
+      "label": "Svenska Juniortouren Div 1 #6 Ostergotland",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271908"
+      ],
+      "firstDate": "2026-09-05",
+      "lastDate": "2026-09-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-st-arild-junior-open",
+      "label": "St Arild Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-273391"
+      ],
+      "firstDate": "2026-04-10",
+      "lastDate": "2026-04-10",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-jordan-junior-open",
+      "label": "Jordan Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-251761"
+      ],
+      "firstDate": "2024-05-09",
+      "lastDate": "2024-05-09",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ips-ajga-presented-by-rmgf",
+      "label": "IPS, AJGA PRESENTED BY RMGF",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274434"
+      ],
+      "firstDate": "2026-06-26",
+      "lastDate": "2026-06-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-all-africa-junior-golf-team-championship-aajgtc",
+      "label": "All Africa Junior Golf Team Championship (AAJGTC)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275097"
+      ],
+      "firstDate": "2026-03-24",
+      "lastDate": "2026-03-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-the-6th-iservice-open-championship",
+      "label": "The 6th Iservice Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275197"
+      ],
+      "firstDate": "2026-10-08",
+      "lastDate": "2026-10-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-trofeo-trudi",
+      "label": "TROFEO TRUDI",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276226"
+      ],
+      "firstDate": "2026-08-05",
+      "lastDate": "2026-08-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-youth-final-zone-3",
+      "label": "Youth Final Zone 3",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261416"
+      ],
+      "firstDate": "2025-11-08",
+      "lastDate": "2025-11-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ntt-data-unior-u19-championship",
+      "label": "NTT Data Unior U19 Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272126"
+      ],
+      "firstDate": "2026-09-28",
+      "lastDate": "2026-09-28",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-uswing-sunglasses-junior-championship",
+      "label": "Uswing Sunglasses Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271108"
+      ],
+      "firstDate": "2026-07-26",
+      "lastDate": "2026-07-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-queensland-junior-boys-amateur",
+      "label": "Queensland Junior Boys Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270381"
+      ],
+      "firstDate": "2026-06-30",
+      "lastDate": "2026-06-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-australian-junior-age-division-golf-championship",
+      "label": "Australian Junior Age Division Golf Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-274148"
+      ],
+      "firstDate": "2026-04-15",
+      "lastDate": "2026-04-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-junior-ovga-cup-u19",
+      "label": "Junior OVGA Cup (U19)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271741"
+      ],
+      "firstDate": "2026-09-05",
+      "lastDate": "2026-09-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ontario-u17-boys-championship",
+      "label": "Ontario U17 Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271626"
+      ],
+      "firstDate": "2026-08-31",
+      "lastDate": "2026-08-31",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-discover-austin-minnesota-junior-championship",
+      "label": "Discover Austin Minnesota Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270236"
+      ],
+      "firstDate": "2026-08-17",
+      "lastDate": "2026-08-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-junior-tour-of-wa-araluen",
+      "label": "Junior Tour of WA - Araluen",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-267869"
+      ],
+      "firstDate": "2026-10-05",
+      "lastDate": "2026-10-05",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ssgt-strokeplay-championship",
+      "label": "SSGT Strokeplay Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272274"
+      ],
+      "firstDate": "2026-10-04",
+      "lastDate": "2026-10-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ssgt-u18-strokeplay-championship",
+      "label": "SSGT U18 Strokeplay Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272159"
+      ],
+      "firstDate": "2026-09-07",
+      "lastDate": "2026-09-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ssgt-strokeplay-championship-26",
+      "label": "SSGT Strokeplay Championship /26",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261454"
+      ],
+      "firstDate": "2025-11-04",
+      "lastDate": "2025-11-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-13th-golf-mad-junior-open",
+      "label": "13th Golf Mad Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-252196"
+      ],
+      "firstDate": "2024-11-17",
+      "lastDate": "2024-11-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-r-a-junior-open",
+      "label": "R&A Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-237138"
+      ],
+      "firstDate": "2024-07-15",
+      "lastDate": "2024-07-15",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-kabete-junior-open",
+      "label": "Kabete Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269151"
+      ],
+      "firstDate": "2026-04-07",
+      "lastDate": "2026-04-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-north-rift-junior-open",
+      "label": "North Rift Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-254638"
+      ],
+      "firstDate": "2025-11-14",
+      "lastDate": "2025-11-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-coast-junior-open",
+      "label": "Coast Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-255266"
+      ],
+      "firstDate": "2025-04-25",
+      "lastDate": "2025-04-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-german-international-amateur-boys-open",
+      "label": "German International Amateur Boys Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269804"
+      ],
+      "firstDate": "2026-06-04",
+      "lastDate": "2026-06-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-2-ak-region-4",
+      "label": "2. AK Region 4",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-275190"
+      ],
+      "firstDate": "2026-05-23",
+      "lastDate": "2026-05-23",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-15th-international-matchplay-trophy",
+      "label": "15th International Matchplay Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258693"
+      ],
+      "firstDate": "2025-07-26",
+      "lastDate": "2025-07-26",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-hes-rps-ranglistenturnier-jungen-2",
+      "label": "HES RPS-Ranglistenturnier Jungen 2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258514"
+      ],
+      "firstDate": "2025-06-14",
+      "lastDate": "2025-06-14",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-13th-international-matchplay-trophy",
+      "label": "13th International Matchplay Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-228107"
+      ],
+      "firstDate": "2023-07-25",
+      "lastDate": "2023-07-25",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-brittannika-junior-open",
+      "label": "Brittannika Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276777"
+      ],
+      "firstDate": "2026-10-04",
+      "lastDate": "2026-10-04",
       "editionsCount": 1
     },
     {
@@ -107073,17 +107894,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-ntt-data-unior-u19-championship",
-      "label": "NTT Data Unior U19 Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272126"
-      ],
-      "firstDate": "2026-09-28",
-      "lastDate": "2026-09-28",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-dimension-data-unior-u19-championship",
       "label": "Dimension Data Unior U19 Championship",
       "sourceId": "wagr",
@@ -107092,17 +107902,6 @@
       ],
       "firstDate": "2025-10-06",
       "lastDate": "2025-10-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-r-a-junior-open",
-      "label": "R&A Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-237138"
-      ],
-      "firstDate": "2024-07-15",
-      "lastDate": "2024-07-15",
       "editionsCount": 1
     },
     {
@@ -107150,17 +107949,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-svenska-juniortouren-div-1-4-goteborg",
-      "label": "Svenska Juniortouren Div 1 #4 Goteborg",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271089"
-      ],
-      "firstDate": "2026-07-30",
-      "lastDate": "2026-07-30",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-svenska-juniortouren-div-1-5-stockholm",
       "label": "Svenska Juniortouren Div 1 #5 Stockholm",
       "sourceId": "wagr",
@@ -107169,39 +107957,6 @@
       ],
       "firstDate": "2026-08-15",
       "lastDate": "2026-08-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-st-arild-junior-open",
-      "label": "St Arild Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273391"
-      ],
-      "firstDate": "2026-04-10",
-      "lastDate": "2026-04-10",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-pga-junior-championship",
-      "label": "PGA Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263850"
-      ],
-      "firstDate": "2025-08-04",
-      "lastDate": "2025-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-6-sm-land",
-      "label": "Svenska Juniortouren Div 1 #6 Småland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235895"
-      ],
-      "firstDate": "2024-09-14",
-      "lastDate": "2024-09-14",
       "editionsCount": 1
     },
     {
@@ -107260,83 +108015,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-svenska-juniortouren-div-1-3-goteborg",
-      "label": "Svenska Juniortouren Div 1 #3 Goteborg",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270309"
-      ],
-      "firstDate": "2026-06-24",
-      "lastDate": "2026-06-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-2-orebro",
-      "label": "Svenska Juniortouren Div 1 #2 Orebro",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269767"
-      ],
-      "firstDate": "2026-05-30",
-      "lastDate": "2026-05-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-1-vastergotland",
-      "label": "Svenska Juniortouren Div 1 #1 Vastergotland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269580"
-      ],
-      "firstDate": "2026-05-09",
-      "lastDate": "2026-05-09",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-6",
-      "label": "54 Junior Tour by Visit Trelleborg #6",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263847"
-      ],
-      "firstDate": "2025-10-11",
-      "lastDate": "2025-10-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-6-skane",
-      "label": "Svenska Juniortouren Div 1 #6 Skane",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260413"
-      ],
-      "firstDate": "2025-09-06",
-      "lastDate": "2025-09-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-3-v-rmland",
-      "label": "Svenska Juniortouren Div 1 #3 Värmland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258367"
-      ],
-      "firstDate": "2025-06-25",
-      "lastDate": "2025-06-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-5-norr-v-sterbotten",
-      "label": "Svenska Juniortouren Div 1 #5 Norr- Västerbotten",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235544"
-      ],
-      "firstDate": "2024-08-17",
-      "lastDate": "2024-08-17",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-slaget-om-skane-elit-4-bokskogen-matchplay",
       "label": "Slaget om Skane Elit #4 - Bokskogen matchplay",
       "sourceId": "wagr",
@@ -107345,17 +108023,6 @@
       ],
       "firstDate": "2026-07-07",
       "lastDate": "2026-07-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-54-junior-tour-by-visit-trelleborg-5",
-      "label": "54 Junior Tour by Visit Trelleborg #5",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263846"
-      ],
-      "firstDate": "2025-09-13",
-      "lastDate": "2025-09-13",
       "editionsCount": 1
     },
     {
@@ -107444,17 +108111,6 @@
       ],
       "firstDate": "2025-10-27",
       "lastDate": "2025-10-27",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-svenska-juniortouren-div-1-6-ostergotland",
-      "label": "Svenska Juniortouren Div 1 #6 Ostergotland",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271908"
-      ],
-      "firstDate": "2026-09-05",
-      "lastDate": "2026-09-05",
       "editionsCount": 1
     },
     {
@@ -107766,17 +108422,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-hoiana-junior-golf-invitational",
-      "label": "Hoiana Junior Golf Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271443"
-      ],
-      "firstDate": "2026-08-14",
-      "lastDate": "2026-08-14",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-singha-krungthai-junior-golf-champion-qualify-to-junior-world-golf-championship",
       "label": "SINGHA-KRUNGTHAI Junior Golf Champion (Qualify to Junior World Golf Championship)",
       "sourceId": "wagr",
@@ -107840,17 +108485,6 @@
       ],
       "firstDate": "2025-04-05",
       "lastDate": "2025-04-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-13th-golf-mad-junior-open",
-      "label": "13th Golf Mad Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-252196"
-      ],
-      "firstDate": "2024-11-17",
-      "lastDate": "2024-11-17",
       "editionsCount": 1
     },
     {
@@ -107950,17 +108584,6 @@
       ],
       "firstDate": "2025-11-18",
       "lastDate": "2025-11-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-all-africa-junior-golf-team-championship-aajgtc",
-      "label": "All Africa Junior Golf Team Championship (AAJGTC)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275097"
-      ],
-      "firstDate": "2026-03-24",
-      "lastDate": "2026-03-24",
       "editionsCount": 1
     },
     {
@@ -108525,215 +109148,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-xvi-copa-centro",
-      "label": "XVI Copa Centro",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272064"
-      ],
-      "firstDate": "2026-09-25",
-      "lastDate": "2026-09-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-pacificlinks-korea-junior-championship",
-      "label": "PacificLinks Korea Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-276473"
-      ],
-      "firstDate": "2026-08-25",
-      "lastDate": "2026-08-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-kevin-harvick-foundation-junior-championship-presented-by-uswing-sunglasses",
-      "label": "Kevin Harvick Foundation Junior Championship presented by Uswing Sunglasses",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271324"
-      ],
-      "firstDate": "2026-08-04",
-      "lastDate": "2026-08-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-the-spin-sports-education-foundation-junior-championship",
-      "label": "The Spin Sports Education Foundation Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268232"
-      ],
-      "firstDate": "2026-07-27",
-      "lastDate": "2026-07-27",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-copa-jose-de-jesus-rodriguez",
-      "label": "Copa Jose de Jesus Rodriguez",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275745"
-      ],
-      "firstDate": "2026-05-15",
-      "lastDate": "2026-05-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vi-copa-norte",
-      "label": "VI Copa Norte",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-263698"
-      ],
-      "firstDate": "2026-05-01",
-      "lastDate": "2026-05-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-lxv-campeonato-nacional-interzonas-lorena-ochoa",
-      "label": "LXV Campeonato Nacional Interzonas Lorena Ochoa",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-268939"
-      ],
-      "firstDate": "2026-03-30",
-      "lastDate": "2026-03-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-xviii-copa-yucatan-isabella-fierro",
-      "label": "XVIII Copa Yucatan Isabella Fierro",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273070"
-      ],
-      "firstDate": "2026-01-31",
-      "lastDate": "2026-01-31",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-copa-bobby-diaz",
-      "label": "Copa Bobby Diaz",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-265257"
-      ],
-      "firstDate": "2025-11-21",
-      "lastDate": "2025-11-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-abraham-ancer-junior-open",
-      "label": "Abraham Ancer Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-265699"
-      ],
-      "firstDate": "2025-11-07",
-      "lastDate": "2025-11-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-xv-copa-zona-centro",
-      "label": "XV Copa Zona Centro",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260653"
-      ],
-      "firstDate": "2025-09-26",
-      "lastDate": "2025-09-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-etapa-2-sur-campestre-cocoyoc",
-      "label": "Etapa 2 Sur Campestre Cocoyoc",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261284"
-      ],
-      "firstDate": "2025-10-24",
-      "lastDate": "2025-10-24",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-felipe-aguilar-open-ajga",
-      "label": "Felipe Aguilar Open (AJGA)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-264112"
-      ],
-      "firstDate": "2025-10-30",
-      "lastDate": "2025-10-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-juegos-panamericanos-junior",
-      "label": "Juegos Panamericanos Junior",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-265400"
-      ],
-      "firstDate": "2025-08-21",
-      "lastDate": "2025-08-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-18th-annual-mid-season-invitational-at-reunion",
-      "label": "18th Annual Mid Season Invitational at Reunion",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258836"
-      ],
-      "firstDate": "2025-07-11",
-      "lastDate": "2025-07-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-cristobal-del-solar-open",
-      "label": "Cristobal del Solar Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-253947"
-      ],
-      "firstDate": "2024-12-05",
-      "lastDate": "2024-12-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-golfaction-la-serena",
-      "label": "GOLFACTION La Serena",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235760"
-      ],
-      "firstDate": "2024-10-11",
-      "lastDate": "2024-10-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-i-torneo-yacht-golf-club-junior-invitational",
-      "label": "I TORNEO YACHT & GOLF CLUB JUNIOR INVITATIONAL",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-253598"
-      ],
-      "firstDate": "2024-08-01",
-      "lastDate": "2024-08-01",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-golfaction-los-lirios",
-      "label": "GOLFACTION Los Lirios",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-228849"
-      ],
-      "firstDate": "2023-10-06",
-      "lastDate": "2023-10-06",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-gira-zona-norte-etapa-7-monterrey",
       "label": "Gira Zona Norte Etapa 7 Monterrey",
       "sourceId": "wagr",
@@ -109097,17 +109511,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-queensland-junior-boys-amateur",
-      "label": "Queensland Junior Boys Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270381"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-a-c-t-week-of-golf",
       "label": "A.C.T Week of Golf",
       "sourceId": "wagr",
@@ -109292,61 +109695,6 @@
       ],
       "firstDate": "2026-09-11",
       "lastDate": "2026-09-11",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-german-international-amateur-boys-open",
-      "label": "German International Amateur Boys Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269804"
-      ],
-      "firstDate": "2026-06-04",
-      "lastDate": "2026-06-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-2-ak-region-4",
-      "label": "2. AK Region 4",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275190"
-      ],
-      "firstDate": "2026-05-23",
-      "lastDate": "2026-05-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-15th-international-matchplay-trophy",
-      "label": "15th International Matchplay Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258693"
-      ],
-      "firstDate": "2025-07-26",
-      "lastDate": "2025-07-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-hes-rps-ranglistenturnier-jungen-2",
-      "label": "HES RPS-Ranglistenturnier Jungen 2",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-258514"
-      ],
-      "firstDate": "2025-06-14",
-      "lastDate": "2025-06-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-13th-international-matchplay-trophy",
-      "label": "13th International Matchplay Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-228107"
-      ],
-      "firstDate": "2023-07-25",
-      "lastDate": "2023-07-25",
       "editionsCount": 1
     },
     {
@@ -109721,17 +110069,6 @@
       ],
       "firstDate": "2024-11-22",
       "lastDate": "2024-11-22",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-torque-gc-championship",
-      "label": "Torque GC Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273472"
-      ],
-      "firstDate": "2026-06-08",
-      "lastDate": "2026-06-08",
       "editionsCount": 1
     },
     {
@@ -111132,17 +111469,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-jim-ferree-junior-championship",
-      "label": "Jim Ferree Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270826"
-      ],
-      "firstDate": "2026-07-06",
-      "lastDate": "2026-07-06",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-mjt-national-tour-challenge",
       "label": "MJT National Tour Challenge",
       "sourceId": "wagr",
@@ -111184,17 +111510,6 @@
       ],
       "firstDate": "2026-07-25",
       "lastDate": "2026-07-25",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-faldo-junior-tour-malaysia-the-els-club-desaru-coast-presented-by-sports-journey",
-      "label": "Faldo Junior Tour: Malaysia | The Els Club Desaru Coast presented by Sports Journey",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-273446"
-      ],
-      "firstDate": "2026-09-08",
-      "lastDate": "2026-09-08",
       "editionsCount": 1
     },
     {
@@ -111330,28 +111645,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-23rd-sarawak-premier-cup-sarawak-international-junior-open-golf-championship",
-      "label": "23rd SARAWAK PREMIER CUP SARAWAK INTERNATIONAL JUNIOR OPEN GOLF CHAMPIONSHIP",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-276184"
-      ],
-      "firstDate": "2026-07-14",
-      "lastDate": "2026-07-14",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-thailand-step-up-kids-golf-tournament-2",
-      "label": "Thailand Step-up Kids Golf Tournament #2",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-275520"
-      ],
-      "firstDate": "2026-06-27",
-      "lastDate": "2026-06-27",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-100plus-mga-njdp-junior-series-3rd-series",
       "label": "100Plus MGA NJDP  Junior Series  - 3rd Series",
       "sourceId": "wagr",
@@ -111382,28 +111675,6 @@
       ],
       "firstDate": "2026-06-03",
       "lastDate": "2026-06-03",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-ssgt-u18-strokeplay-championship",
-      "label": "SSGT U18 Strokeplay Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272159"
-      ],
-      "firstDate": "2026-09-07",
-      "lastDate": "2026-09-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-ssgt-strokeplay-championship-26",
-      "label": "SSGT Strokeplay Championship /26",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261454"
-      ],
-      "firstDate": "2025-11-04",
-      "lastDate": "2025-11-04",
       "editionsCount": 1
     },
     {
@@ -111583,17 +111854,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-ajga-junior-at-the-mission-club",
-      "label": "AJGA Junior at The Mission Club",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274370"
-      ],
-      "firstDate": "2026-04-23",
-      "lastDate": "2026-04-23",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-oregon-junior-stroke-play",
       "label": "Oregon Junior Stroke Play",
       "sourceId": "wagr",
@@ -111610,17 +111870,6 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-267797"
-      ],
-      "firstDate": "2026-09-05",
-      "lastDate": "2026-09-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-junior-ovga-cup-u19",
-      "label": "Junior OVGA Cup (U19)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271741"
       ],
       "firstDate": "2026-09-05",
       "lastDate": "2026-09-05",
@@ -111987,28 +112236,6 @@
       ],
       "firstDate": "2025-07-21",
       "lastDate": "2025-07-21",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-discover-austin-minnesota-junior-championship",
-      "label": "Discover Austin Minnesota Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270236"
-      ],
-      "firstDate": "2026-08-17",
-      "lastDate": "2026-08-17",
       "editionsCount": 1
     },
     {
@@ -112463,28 +112690,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-trofeo-trudi",
-      "label": "TROFEO TRUDI",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-276226"
-      ],
-      "firstDate": "2026-08-05",
-      "lastDate": "2026-08-05",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-youth-final-zone-3",
-      "label": "Youth Final Zone 3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-261416"
-      ],
-      "firstDate": "2025-11-08",
-      "lastDate": "2025-11-08",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-het-rijk-junior-masters",
       "label": "Het Rijk Junior Masters",
       "sourceId": "wagr",
@@ -112537,17 +112742,6 @@
       ],
       "firstDate": "2026-07-26",
       "lastDate": "2026-07-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-ontario-u17-boys-championship",
-      "label": "Ontario U17 Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271626"
-      ],
-      "firstDate": "2026-08-31",
-      "lastDate": "2026-08-31",
       "editionsCount": 1
     },
     {
@@ -113530,17 +113724,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-jordan-junior-open",
-      "label": "Jordan Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-251761"
-      ],
-      "firstDate": "2024-05-09",
-      "lastDate": "2024-05-09",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-english-boys-under-16-open-amateur-stroke-play-championship-mcgregor-trophy",
       "label": "English Boys' Under 16 Open Amateur Stroke Play Championship (McGregor Trophy)",
       "sourceId": "wagr",
@@ -113838,17 +114021,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-coast-junior-open",
-      "label": "Coast Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-255266"
-      ],
-      "firstDate": "2025-04-25",
-      "lastDate": "2025-04-25",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-western-junior-open",
       "label": "Western Junior Open",
       "sourceId": "wagr",
@@ -113937,17 +114109,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-9zero-foundation-invitational",
-      "label": "9Zero Foundation Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274904"
-      ],
-      "firstDate": "2026-03-07",
-      "lastDate": "2026-03-07",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-i-copa-gado",
       "label": "I Copa GADO",
       "sourceId": "wagr",
@@ -113989,28 +114150,6 @@
       ],
       "firstDate": "2026-06-23",
       "lastDate": "2026-06-23",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-kabete-junior-open",
-      "label": "Kabete Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269151"
-      ],
-      "firstDate": "2026-04-07",
-      "lastDate": "2026-04-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-north-rift-junior-open",
-      "label": "North Rift Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-254638"
-      ],
-      "firstDate": "2025-11-14",
-      "lastDate": "2025-11-14",
       "editionsCount": 1
     },
     {
@@ -114187,17 +114326,6 @@
       ],
       "firstDate": "2026-07-29",
       "lastDate": "2026-07-29",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-ips-ajga-presented-by-rmgf",
-      "label": "IPS, AJGA PRESENTED BY RMGF",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274434"
-      ],
-      "firstDate": "2026-06-26",
-      "lastDate": "2026-06-26",
       "editionsCount": 1
     },
     {
@@ -114473,28 +114601,6 @@
       ],
       "firstDate": "2024-04-18",
       "lastDate": "2024-04-18",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-uswing-sunglasses-junior-championship",
-      "label": "Uswing Sunglasses Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271108"
-      ],
-      "firstDate": "2026-07-26",
-      "lastDate": "2026-07-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-australian-junior-age-division-golf-championship",
-      "label": "Australian Junior Age Division Golf Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274148"
-      ],
-      "firstDate": "2026-04-15",
-      "lastDate": "2026-04-15",
       "editionsCount": 1
     },
     {
@@ -114795,17 +114901,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-ontario-super-camp-invitational",
-      "label": "Ontario Super Camp Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-260713"
-      ],
-      "firstDate": "2025-10-06",
-      "lastDate": "2025-10-06",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-mjt-national-championship",
       "label": "MJT National Championship",
       "sourceId": "wagr",
@@ -114979,17 +115074,6 @@
       ],
       "firstDate": "2024-01-26",
       "lastDate": "2024-01-26",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-tga-singha-international-junior-golf-club",
-      "label": "TGA -Singha International Junior Golf Club",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-257495"
-      ],
-      "firstDate": "2025-05-30",
-      "lastDate": "2025-05-30",
       "editionsCount": 1
     },
     {
@@ -116123,17 +116207,6 @@
       ],
       "firstDate": "2026-01-06",
       "lastDate": "2026-01-06",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-pan-arab-junior",
-      "label": "Pan Arab Junior",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-254299"
-      ],
-      "firstDate": "2024-09-23",
-      "lastDate": "2024-09-23",
       "editionsCount": 1
     },
     {
