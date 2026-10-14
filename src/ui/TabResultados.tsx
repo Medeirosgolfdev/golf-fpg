@@ -278,7 +278,9 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
 
   return (
     <div>
-      {campo && (
+      {/* Campo do escalão só quando é diferente do do torneio (já está no
+          cabeçalho) — 14/10/2026: aparecia duas vezes. */}
+      {campo && campo.trim() !== (t.campo || "").trim() && (
         <div className="fs-11 c-text-3" style={{ marginBottom: 6 }}>
           📍 {campo}
         </div>
