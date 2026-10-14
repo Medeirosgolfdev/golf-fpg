@@ -865,6 +865,11 @@ export default function USKidsFieldPage() {
       const lig = allTorneios.find(t => t.t === selectedT);
       if (lig?.temResultados) { setTab("resultados"); return; }
     }
+    // Link para um torneio em que o Manuel não jogou: desliga o ★ Manuel em vez
+    // de abrir outro torneio (o filtro escondia-o da lista).
+    if (selectedT != null && selectedT === tLigado && filterManuel && allTorneios.some(t => t.t === selectedT)) {
+      setFilterManuel(false); return;
+    }
     const hoje = new Date().toISOString().slice(0, 10);
     const vis = allTorneios.filter(t => ids.has(t.t))
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
@@ -873,7 +878,7 @@ export default function USKidsFieldPage() {
       ? vis[vis.length - 1]
       : vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
     if (alvo) setSelectedT(alvo.t);
-  }, [chaveVisiveis, selectedT, tab, resultsData]);
+  }, [chaveVisiveis, selectedT, tab, resultsData, filterManuel]);
 
   if (erro) return (
     <div style={{ padding: 32 }}>

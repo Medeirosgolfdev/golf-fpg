@@ -263,7 +263,9 @@ export function ScorecardLeaderboard({
              *  Quando siLabel === "m" a linha transporta METROS (USKids sem
              *  TEES_LOOKUP → sem teeName → sem linha teeMeters). Metros SÃO
              *  somáveis, ao contrário do S.I. real → preencher OUT/IN/TOT. */}
-            {showScorecard && hasSI && (() => {
+            {/* Metros nesta linha só quando NÃO há linha de metros por tee — senão
+                as distâncias apareciam duas vezes (14/10/2026). */}
+            {showScorecard && hasSI && !(siLabel === "m" && validTeeMeters.length > 0) && (() => {
               const siIsMeters = siLabel === "m";
               const siF9  = siIsMeters ? siArr.slice(0, 9).reduce((a, b) => a + b, 0) : 0;
               const siB9  = siIsMeters && !is9 ? siArr.slice(9, 18).reduce((a, b) => a + b, 0) : 0;

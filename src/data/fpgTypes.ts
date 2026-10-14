@@ -89,6 +89,8 @@ export interface GrupoEntry   { grupo: string; clube: string; jogadores: GrupoJo
 
 /** Opções opcionais para adaptar o scorecard a contextos não-FPG (ex: Doral) */
 export interface ScorecardOptions {
+  /** Mostrar o campo na linha de informação (torneios com um campo por escalão/volta). */
+  showCourse?: boolean;
   hideHCP?: boolean;      // ocultar coluna HCP
   hideSD?: boolean;       // ocultar coluna SD
   hideEsc?: boolean;      // ocultar coluna ESC (escalão)

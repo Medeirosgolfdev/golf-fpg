@@ -243,6 +243,10 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
     : (expandedT[expandedT.length - 1] ?? tournament);
 
   const campo = (curT as any).campo || tournament.campo || "";
+  // Escalão num campo diferente do do torneio (ex.: European Championship, um
+  // campo por escalão): o campo vai para a linha de informação, junto do CR e
+  // do Slope, em vez de uma linha solta por cima das abas (14/10/2026).
+  const campoProprio = !!campo && campo.trim() !== (t.campo || "").trim();
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {
@@ -280,11 +284,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
     <div>
       {/* Campo do escalão só quando é diferente do do torneio (já está no
           cabeçalho) — 14/10/2026: aparecia duas vezes. */}
-      {campo && campo.trim() !== (t.campo || "").trim() && (
-        <div className="fs-11 c-text-3" style={{ marginBottom: 6 }}>
-          📍 {campo}
-        </div>
-      )}
+
       {notas.map(j => (
         <div key={j.nome + j._nota} className="notice" style={{ margin: "2px 0 6px", padding: "5px 10px" }}>
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
@@ -332,13 +332,21 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
           return <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={kidsDB} />;
         }
         if (isAccTab) {
-          return <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} />;
+          return <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} showCourse={campoProprio} />;
         }
-        return <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ noInferBlanks: true }} />;
+        return <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ noInferBlanks: true, showCourse: campoProprio }} />;
       })()}
 
     </div>
   );
+}
+
+/** O Manuel jogou este escalão? Primeiro pelo NOME nas classificações (o mais
+ *  fiável — o Paris 2026 abria no Boys 7 porque o escalão «esperado» pela idade
+ *  não batia, 14/10/2026); sem ele, a marcação da fonte como antes. */
+function escalaoTemManuel(e: EscalaoResult, t: TorneioResult, escalaoEsperado: number | null | undefined): boolean {
+  if (e.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).some(j => isManuel(j.nome)))) return true;
+  return t.escalao_manuel ? e.age_group === t.escalao_manuel : (e.is_manuel === true && e.age_group === escalaoEsperado);
 }
 
 function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
@@ -359,9 +367,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
           (CircuitShell/FPG), 14/10/2026. A distância vai para o tooltip. */}
       <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
         {escaloes.map((es, i) => {
-          const isME = t.escalao_manuel
-            ? es.age_group === t.escalao_manuel
-            : (es.is_manuel === true && es.age_group === escalaoEsperado);
+          const isME = escalaoTemManuel(es, t, escalaoEsperado);
           const tInfo = TEES_LOOKUP[t.t]?.[es.age_group];
           const dist = tInfo?.metros?.length === 18
             ? tInfo.metros.reduce((a: number, b: number) => a + b, 0) : null;
@@ -543,10 +549,7 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
         );
         if (!escaloes.length) return null;
         const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
-        const manuelIdx = escaloes.findIndex(e =>
-          t.escalao_manuel ? e.age_group === t.escalao_manuel
-            : (e.is_manuel === true && e.age_group === escalaoEsperado)
-        );
+        const manuelIdx = escaloes.findIndex(e => escalaoTemManuel(e, t, escalaoEsperado));
         return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} arMap={arMap} drawsData={drawsData} />;
       })()}
 

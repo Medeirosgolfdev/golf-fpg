@@ -279,7 +279,8 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
 function bjgtScorecardOptions(showClass = false): ScorecardOptions {
   return {
     hideHCP: true,
-    hideSD: true,
+    // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
+    hideSD: false,
     hideEsc: true,
     hideFed: true,
     hideTee: true,

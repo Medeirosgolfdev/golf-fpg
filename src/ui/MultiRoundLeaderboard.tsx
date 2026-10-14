@@ -521,7 +521,7 @@ export function MultiRoundLeaderboard({
                       </SHdr>
                       {showRoundToPar && <SHdr k={`rtp:${r}` as MRSortKey} className="lb-rnd-tp">±</SHdr>}
                       {showRoundStats && <>
-                        <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>
+                        {hasAnySD && <SHdr k={`sd:${r}` as MRSortKey} className="lb-rnd-sd">SD</SHdr>}
                         <SHdr k={`eag:${r}` as MRSortKey} className="lb-rnd-eag">🦅</SHdr>
                         <SHdr k={`bird:${r}` as MRSortKey} className="lb-rnd-bird">🐦</SHdr>
                         <SHdr k={`par:${r}`  as MRSortKey} className="lb-rnd-par">=</SHdr>
@@ -531,7 +531,7 @@ export function MultiRoundLeaderboard({
                   ))
                 : <>
                     {showRoundStats && <>
-                      <SHdr k="sd" className="lb-sd">SD</SHdr>
+                      {hasAnySD && <SHdr k="sd" className="lb-sd">SD</SHdr>}
                       <SHdr k="eag"      className="lb-eag">🦅</SHdr>
                       <SHdr k="bird"     className="lb-bird">🐦</SHdr>
                       <SHdr k="par-stat" className="lb-par-stat">Par</SHdr>
@@ -684,7 +684,7 @@ export function MultiRoundLeaderboard({
                   {isMulti
                     ? Array.from({ length: nRounds }, (_, r) => {
                         const rd = row.rounds[r];
-                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? 5 : 0);
+                        const emptyCols = (showRoundToPar ? 1 : 0) + (showRoundStats ? (hasAnySD ? 5 : 4) : 0);
                         if (!rd) return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd c-muted">–</td>
@@ -699,11 +699,11 @@ export function MultiRoundLeaderboard({
                             <td className="lb-rnd">{rd.gross}</td>
                             {showRoundToPar && <td className="lb-rnd-tp" style={{ color: tpColor(rtp) }}>{fmtTP(rtp)}</td>}
                             {showRoundStats && <>
-                              <td className="lb-rnd-sd">
+                              {hasAnySD && <td className="lb-rnd-sd">
                                 {rd.sd != null
                                   ? <SDPill sd={rd.sd} hcp={row.hcp} />
                                   : <span className="muted">–</span>}
-                              </td>
+                              </td>}
                               <td className="lb-rnd-eag">{rd.eagles || ""}</td>
                               <td className="lb-rnd-bird">{rd.birdies || ""}</td>
                               <td className="lb-rnd-par">{rd.pars || ""}</td>
@@ -716,11 +716,11 @@ export function MultiRoundLeaderboard({
                         const rd = row.rounds[0];
                         return (
                           <>
-                            <td className="lb-sd">
+                            {hasAnySD && <td className="lb-sd">
                               {rd?.sd != null
                                 ? <SDPill sd={rd.sd} hcp={row.hcp} />
                                 : <span className="muted">–</span>}
-                            </td>
+                            </td>}
                             <td className="lb-eag">{rd?.eagles || ""}</td>
                             <td className="lb-bird">{rd?.birdies || ""}</td>
                             <td className="lb-par-stat">{rd?.pars || ""}</td>

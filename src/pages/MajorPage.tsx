@@ -156,7 +156,8 @@ const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 // dob+startDate; fallback ano − birthYear) — ligar só em fontes com birthYear.
 export function jobScorecardOptions(opts?: { showRatings?: boolean; showAges?: boolean }): ScorecardOptions {
   const hide = !opts?.showRatings;
-  return { hideHCP: hide, hideSD: hide, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País", showAge: !!opts?.showAges };
+  // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
+  return { hideHCP: hide, hideSD: false, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País", showAge: !!opts?.showAges };
 }
 
 export function jobDivisionToTournament(div: JobDivision, name: string, year?: number, date?: string | null): FPGTournament {

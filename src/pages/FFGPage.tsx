@@ -774,7 +774,8 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
 function ffgScorecardOptions(): ScorecardOptions {
   return {
     hideHCP: false,
-    hideSD: true,
+    // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
+    hideSD: false,
     hideEsc: true,
     hideFed: true,
     hideTee: true,

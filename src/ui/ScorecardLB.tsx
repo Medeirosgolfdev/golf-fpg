@@ -83,7 +83,13 @@ export function ScorecardLB({
   options?: ScorecardOptions;
 }) {
   const hideHCP_ = options?.hideHCP ?? false;
-  const hideSD_ = options?.hideSD ?? false;
+  // SD: a coluna só aparece se houver CR/Slope (ou SD oficial) para alguém —
+  // a mesma regra em todas as secções (14/10/2026; antes umas escondiam-na
+  // sempre e outras mostravam-na vazia).
+  const anyRating = tournament.players.some((p) => (p as any).sd != null
+    || (p.roundScores || []).some((rs) => rs.sd != null || ((rs.courseRating ?? 0) > 0 && (rs.slope ?? 0) > 0))
+    || (((p as any).courseRating ?? 0) > 0 && ((p as any).slope ?? 0) > 0));
+  const hideSD_ = (options?.hideSD ?? false) || !anyRating;
   const hideEsc = options?.hideEsc ?? false;
   const hideFed = options?.hideFed ?? false;
   const hideTee = options?.hideTee ?? false;
@@ -675,7 +681,7 @@ export function ScorecardLB({
           {nIncompletos > 0 && <span className="muted">· {nIncompletos} a decorrer</span>}
           {/* Campo só se a volta foi noutro campo que não o do torneio (esse já
               está no cabeçalho) — 14/10/2026: aparecia repetido. */}
-          {refP.course && refP.course.trim() !== String(tournament.campo || "").trim() && <span>· 📍 {refP.course}</span>}
+          {refP.course && (options?.showCourse || refP.course.trim() !== String(tournament.campo || "").trim()) && <span>· 📍 {refP.course}</span>}
           {teeCrSlopes.length === 1 && (
             <span>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}</span>
           )}

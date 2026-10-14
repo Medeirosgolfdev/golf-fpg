@@ -23,7 +23,10 @@ export function AccumulatedLB({
   showCols: showColsProp,
   extraColumns,
   renderName,
+  showCourse,
 }: {
+  /** Campo na linha de informação (torneios com um campo por escalão). */
+  showCourse?: boolean;
   tournament: Tournament;
   nRounds: number;
   escLookup: EscLookup;
@@ -156,7 +159,9 @@ export function AccumulatedLB({
     avgGross != null
       ? `Média ${avgGross.toFixed(1)} (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})`
       : null,
-    // O campo já está no cabeçalho do torneio — não se repete aqui (14/10/2026).
+    // O campo só aqui quando cada escalão joga num campo diferente (o do
+    // torneio já está no cabeçalho) — 14/10/2026.
+    showCourse && tournament.campo ? `📍 ${tournament.campo}` : null,
     cr ? `CR ${cr}` : null,
     slope ? `Slope ${slope}` : null,
   ];
