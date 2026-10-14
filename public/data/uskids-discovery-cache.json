@@ -1,61 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22273,
-      "name": "Santa Maria Country Club & Club de Golf de Panama (Tour Championship)",
-      "date_inicio": "9/13/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 1,
-      "campo": "Santa Maria Country Club, Club de Golf de Panama ",
-      "fee_18": "57.00",
-      "tour": "Panama City (PA) Tour",
-      "type": 6
-    },
-    {
-      "t": 22768,
-      "name": "Azata Golf",
-      "date_inicio": "9/13/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 1,
-      "campo": "Azata Golf",
-      "fee_18": "61.00",
-      "tour": "Andalusia (ES) Tour",
-      "type": 5
-    },
-    {
-      "t": 22734,
-      "name": "Macarthur Grange Country Club (Tour Championship)",
-      "date_inicio": "9/13/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 1,
-      "campo": "Macarthur Grange Country Club",
-      "fee_18": "59.00",
-      "tour": "Sydney (AU) Tour",
-      "type": 6
-    },
-    {
-      "t": 22956,
-      "name": "Lakeview Golf Club (Tour Championship)",
-      "date_inicio": "9/13/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 1,
-      "campo": "Lakeview Golf Club",
-      "fee_18": "55.00",
-      "tour": "Boise Tour",
-      "type": 6
-    },
-    {
-      "t": 22665,
-      "name": "Continental Country Club (Tour Championship)",
-      "date_inicio": "9/13/2026",
-      "date_fim": "9/13/2026",
-      "rondas": 1,
-      "campo": "Continental Country Club",
-      "fee_18": "87.00",
-      "tour": "Ocala Tour",
-      "type": 6
-    },
-    {
       "t": 22642,
       "name": "Palm Springs Open 2026",
       "date_inicio": "9/19/2026",
@@ -2190,19 +2135,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-13T14:57:15.114Z",
+  "gerado_em": "2026-10-14T12:48:23.995Z",
   "varredura_max_t": 23817,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 41,
-    "novos": 1,
+    "pedidos": 40,
+    "novos": 0,
     "buracos_revistos": 0,
     "catalogo": 1512,
     "backfill_falta": 0
   },
   "fronteira_max_t_visto": 23817,
   "fronteira_avancou_em": "2026-10-13",
-  "dias_sem_descoberta": 0,
-  "dias_sem_avanco": 0,
+  "dias_sem_descoberta": 1,
+  "dias_sem_avanco": 1,
   "ultima_descoberta": "2026-10-13"
 }
