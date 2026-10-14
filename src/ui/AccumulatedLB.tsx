@@ -132,7 +132,6 @@ export function AccumulatedLB({
   const refRS = refP0?.roundScores?.find((rs) => rs.round === 1);
   const cr = refRS?.courseRating ?? refP0?.courseRating;
   const slope = refRS?.slope ?? refP0?.slope;
-  const campo = tournament.campo || "";
   // A média só junta quem tem TODAS as voltas terminadas — com uma ronda a
   // decorrer (metade do campo com 9 buracos) o total médio não é comparável
   // com `Par × nRondas` e saía um "(−3.2)" enganador.
@@ -157,7 +156,7 @@ export function AccumulatedLB({
     avgGross != null
       ? `Média ${avgGross.toFixed(1)} (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})`
       : null,
-    campo ? `📍 ${campo}` : null,
+    // O campo já está no cabeçalho do torneio — não se repete aqui (14/10/2026).
     cr ? `CR ${cr}` : null,
     slope ? `Slope ${slope}` : null,
   ];

@@ -673,7 +673,9 @@ export function ScorecardLB({
             </span>
           )}
           {nIncompletos > 0 && <span className="muted">· {nIncompletos} a decorrer</span>}
-          {refP.course && <span>· 📍 {refP.course}</span>}
+          {/* Campo só se a volta foi noutro campo que não o do torneio (esse já
+              está no cabeçalho) — 14/10/2026: aparecia repetido. */}
+          {refP.course && refP.course.trim() !== String(tournament.campo || "").trim() && <span>· 📍 {refP.course}</span>}
           {teeCrSlopes.length === 1 && (
             <span>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}</span>
           )}
