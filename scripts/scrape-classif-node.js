@@ -149,8 +149,15 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
    problema — porque um browser aceita o Set-Cookie e nós não.
    Ver scripts/lib/fpg-session.js. */
 const { Sessao, parseMetaClassif, criarSessaoLista } = require("./lib/fpg-session");
-let SESSAO = null;        // != null → estamos no caminho sem cookies
-let SESSAO_META = null;   // nome/campo/data lidos da própria página
+// Sessão e metadata POR TORNEIO (14/10/2026). Eram globais e o pool corre 2
+// torneios em paralelo: um gravava com o nome/campo/data do outro (o «TROFÉU
+// JOÃO SOUSA CGSS 2026» em 988/10307, o código da Final do Drive Challenge) e
+// podia ler classificações pela sessão aberta para o outro torneio.
+const { AsyncLocalStorage } = require("async_hooks");
+const CTX = new AsyncLocalStorage();
+const ctx = () => CTX.getStore() || CTX_FORA;
+const CTX_FORA = { sessao: null, meta: null };
+// ctx().sessao != null → caminho sem cookies · ctx().meta = nome/campo/data lidos da própria página
 let SESSAO_LISTA;         // undefined = por tentar · null = indisponível
 
 async function warmupLinkpage(tclub, tcode) {
@@ -167,8 +174,8 @@ async function warmupLinkpage(tclub, tcode) {
       const sess = new Sessao();
       const abriu = await sess.abrir("classif", tclub, tcode);
       if (abriu.ok) {
-        SESSAO = sess;
-        SESSAO_META = parseMetaClassif(abriu.html);
+        ctx().sessao = sess;
+        ctx().meta = parseMetaClassif(abriu.html);
         return true;
       }
     } catch { /* nada a fazer */ }
@@ -193,7 +200,7 @@ async function warmupLinkpage(tclub, tcode) {
       // ⚠ HTTP 200 NÃO é prova de sessão útil. Sem cookies válidas este linkpage
       // devolve 200 na mesma (medido 2026-08-30) e só o PageMethod a seguir é
       // que rebenta. O teste é o CONTEÚDO: a página real traz Torneio/Campo/Data.
-      if (res.ok && parseMetaClassif(html).name) { SESSAO = null; SESSAO_META = null; return true; }
+      if (res.ok && parseMetaClassif(html).name) { ctx().sessao = null; ctx().meta = null; return true; }
     } catch { /* cai no outro caminho */ }
     return false;
   };
@@ -201,7 +208,7 @@ async function warmupLinkpage(tclub, tcode) {
   const [primeiro, segundo] = publicoPrimeiro ? [viaPublica, viaCookies] : [viaCookies, viaPublica];
   if (await primeiro()) { anunciarCaminho(); return true; }
   if (await segundo()) { anunciarCaminho(); return true; }
-  SESSAO = null;
+  ctx().sessao = null;
   return false;
 }
 
@@ -209,16 +216,16 @@ let ANUNCIOU_CAMINHO = false;
 function anunciarCaminho() {
   if (ANUNCIOU_CAMINHO) return;
   ANUNCIOU_CAMINHO = true;
-  console.log(SESSAO
+  console.log(ctx().sessao
     ? "[classif] sessão pública (ack, sem credenciais)"
     : "[classif] sessão autenticada por cookies");
 }
 
 async function postPageMethod(pathname, qs, body) {
-  if (SESSAO) {
+  if (ctx().sessao) {
     // ⚠ os params extra vão na query string E no body — o servidor rejeita
     // (500) se só forem num dos sítios.
-    const r = await SESSAO.postPageMethod(pathname, body, { queryString: qs });
+    const r = await ctx().sessao.postPageMethod(pathname, body, { queryString: qs });
     return { ok: r.ok, status: r.status, result: r.result, records: r.records, total: r.total ?? 0 };
   }
   const url = `${BASE}/${pathname}${qs ? "?" + qs : ""}`;
@@ -257,7 +264,7 @@ async function resolveTournament(tclub, tcode) {
   // uma sessão SEPARADA da do classif, porque o DG_Lists_URL guarda o contexto
   // da página e as duas pisavam-se.
   let r;
-  if (SESSAO) {
+  if (ctx().sessao) {
     if (SESSAO_LISTA === undefined) {
       SESSAO_LISTA = await criarSessaoLista().catch(() => null);
       if (SESSAO_LISTA) console.log("[classif] sem cookies: lista de torneios também");
@@ -419,7 +426,10 @@ function mapPlayer(r) {
 }
 
 /* ── Process um torneio (resolve → classif → scorecards) ────────────────── */
-async function processOne(spec, idx, total) {
+function processOne(spec, idx, total) {
+  return CTX.run({ sessao: null, meta: null }, () => processOneIsolado(spec, idx, total));
+}
+async function processOneIsolado(spec, idx, total) {
   const { tclub, tcode } = spec;
   const label = `[${idx+1}/${total}] ${tclub}/${tcode}`;
 
@@ -443,13 +453,13 @@ async function processOne(spec, idx, total) {
     // funciona directamente via tclub/tcode — não depende de resolve.
     // No caminho sem cookies o TournamentsLST nunca responde (medido com os 3
     // acks): a metadata vem da própria página de classificações.
-    if (!SESSAO_META) console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
+    if (!ctx().meta) console.warn(`${label} não no TournamentsLST — tentar classif com fallback de metadata`);
     t = {
-      name: (SESSAO_META && SESSAO_META.name) || spec.name || `${tclub}/${tcode}`,
+      name: (ctx().meta && ctx().meta.name) || spec.name || `${tclub}/${tcode}`,
       ccode: String(tclub).padStart(3, "0"),
       tcode: String(tcode),
-      date: (SESSAO_META && SESSAO_META.date) || spec.date || "",
-      campo: (SESSAO_META && SESSAO_META.campo) || "",
+      date: (ctx().meta && ctx().meta.date) || spec.date || "",
+      campo: (ctx().meta && ctx().meta.campo) || "",
       clube: String(tclub).padStart(3, "0"),
       circuit: spec.circuit || "tour",
       series: "tour",
