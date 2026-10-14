@@ -51,6 +51,7 @@ const getArg = (name, def = null) => { const i = args.indexOf("--" + name); retu
 const category = getArg("category", "87988"); // GP Jeunes
 const startMonth = getArg("start-month", `${new Date().getFullYear()}-01`);
 const maxArg = parseInt(getArg("max", "0"), 10) || Infinity;
+const { skipExistingFile, wouldShrink } = require("./lib/ffgolf-refresh");
 const skipExisting = args.includes("--skip-existing");
 
 // ── Mapa região→código de liga (derivado do disco) + tabela www ──
@@ -199,13 +200,15 @@ function upsertCatalogGG(cat, { year, section, slug, title, ggKind, ggId }) {
 
       // portal
       const existing = existingFileForTrn(sink.trnId);
-      if (existing && skipExisting) { skipped++; continue; }
+      // Recentes (≤7 dias) recolhem-se sempre — podem ter voltas novas.
+      if (existing && skipExistingFile(existing, d.start_date, skipExisting)) { skipped++; continue; }
       const ligue = existing ? path.basename(existing).match(/^\d{1,2}-(\d{1,2})-/)[1] : ligueCodeFor(d.league?.name, regionMap);
       const outPath = existing || path.join(OUT_DIR, `${TYPE_GP_JEUNES}-${ligue}-${sink.trnId}.json`);
       const details = await fetchPortalDetails(sink);
       await sleep(250);
       const nPlayers = details ? details.series.reduce((s, x) => s + (x.players?.length || 0), 0) : 0;
       if (!nPlayers) { noResults++; continue; }
+      if (wouldShrink(outPath, details)) { skipped++; continue; }
       const record = main.enrichWithLinks({
         trnId: sink.trnId, partKey: sink.partKey, name: (d.name || "").trim(),
         formule: d.play_formula?.name || null,

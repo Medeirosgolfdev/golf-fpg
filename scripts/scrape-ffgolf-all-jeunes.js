@@ -85,6 +85,7 @@ const since = parseInt(getArg("since", "2023"), 10);
 const liguesArg = getArg("ligues", null);
 const typesArg = getArg("types", "03");
 const maxArg = parseInt(getArg("max", "0"), 10) || Infinity;
+const { skipExistingFile, wouldShrink } = require("./lib/ffgolf-refresh");
 const skipExisting = args.includes("--skip-existing");
 
 // Normalizar para 2 dígitos com leading zero — endpoints FFG esperam "01", "03", etc.
@@ -160,13 +161,19 @@ console.log(`   Max: ${maxArg === Infinity ? "∞" : maxArg}`);
               continue;
             }
             const outPath = path.join(OUT_DIR, `${typeCompetition}-${ligue}-${t.trnId}.json`);
-            if (skipExisting && fs.existsSync(outPath)) {
+            // Recentes (≤7 dias) recolhem-se sempre — podem ter voltas novas.
+            if (skipExistingFile(outPath, t.date, skipExisting)) {
               summary.totalSkipped++;
               continue;
             }
             try {
               const details = await main.getTournamentDetails(ctx, { trnId: t.trnId, partKey: t.partKey, typeCompetition, ligue });
               const enriched = main.enrichWithLinks ? main.enrichWithLinks({ ...t, details, typeCompetition, ligue }) : { ...t, details };
+              if (wouldShrink(outPath, details)) {
+                console.log(`   ⏭️  [${tag}] ${t.name.slice(0, 45)}: versão nova com menos jogadores/voltas — fica a que está`);
+                summary.totalSkipped++;
+                continue;
+              }
               fs.writeFileSync(outPath, JSON.stringify(enriched, null, 2), "utf-8");
               const totalPlayers = details.series.reduce((s, x) => s + x.players.length, 0);
               const trnDate = t.date || "—";
