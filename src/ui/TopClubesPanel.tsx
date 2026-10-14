@@ -17,7 +17,7 @@
  * comuns (Vilamoura, C. G. ≡ Vilamoura, C. G ≡ Vilamoura).
  */
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, Fragment } from "react";
 import { fmtToPar, fpgScoringUrl } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
@@ -289,9 +289,8 @@ export default function TopClubesPanel({
               const isOpen = expanded.has(c.key);
               const ys = [...c.years].sort((a, b) => a - b);
               return (
-                <>
+                <Fragment key={c.key}>
                   <tr
-                    key={c.key}
                     style={{
                       cursor: "pointer",
                       background: isOpen ? "var(--bg-info-subtle, rgba(59,130,246,0.04))" : undefined,
@@ -468,7 +467,7 @@ export default function TopClubesPanel({
                       </td>
                     </tr>
                   )}
-                </>
+                </Fragment>
               );
             })}
           </tbody>

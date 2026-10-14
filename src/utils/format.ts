@@ -50,7 +50,8 @@ export function sumRange(from: number, to: number, getVal: (i: number) => number
 
 /** Data abreviada: "25-03-2024" → "25-03" */
 export function shortDate(d: string): string {
-  return (d || "").replace(/^(\d{2})-(\d{2})-\d{4}$/, "$1-$2");
+  // «DD/MM», com barra como no resto da app (era «DD-MM» — 14/10/2026).
+  return (d || "").replace(/^(\d{2})-(\d{2})-\d{4}$/, "$1/$2");
 }
 
 /**

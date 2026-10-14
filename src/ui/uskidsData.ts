@@ -219,17 +219,25 @@ export const TEES_LOOKUP: Record<number, Record<number, TeeInfo>> = {
   },
   // ── Marco Simone 2025 ────────────────────────────────
   18438: {
+    // CR/Slope OFICIAIS do PDF «US Kids 2025 Boys 9-11 & Girls 10-14»
+    // (ReportTabellaEgaWHS_us_kids.pdf, já na base de campos — extraCourses.ts):
+    // Gialli 65.5/114 = tee Boys 11/10 · Verdi 63.1/108 = Boys 9. Distâncias
+    // iguais em 2025 e 2026. Boys 12 sem rating publicado (SD fica «—»).
     2105: { campo: "Marco Simone Golf & Country Club", tee: "Boys 12", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,349,302,113,266,258,152,375,382, 307,247,381,103,310,292,255,151,442] },
-    2104: { campo: "Marco Simone Golf & Country Club", tee: "Boys 11", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404] },
-    2103: { campo: "Marco Simone Golf & Country Club", tee: "Boys 10", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404] },
-    2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354] },
+    2104: { campo: "Marco Simone Golf & Country Club", tee: "Boys 11", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404], cr: 65.5, slope: 114 },
+    2103: { campo: "Marco Simone Golf & Country Club", tee: "Boys 10", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404], cr: 65.5, slope: 114 },
+    2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354], cr: 63.1, slope: 108 },
   },
   // ── Marco Simone 2026 ────────────────────────────────
   21080: {
+    // CR/Slope OFICIAIS do PDF «US Kids 2025 Boys 9-11 & Girls 10-14»
+    // (ReportTabellaEgaWHS_us_kids.pdf, já na base de campos — extraCourses.ts):
+    // Gialli 65.5/114 = tee Boys 11/10 · Verdi 63.1/108 = Boys 9. Distâncias
+    // iguais em 2025 e 2026. Boys 12 sem rating publicado (SD fica «—»).
     2105: { campo: "Marco Simone Golf & Country Club", tee: "Boys 12", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,349,302,113,266,258,152,375,382, 307,247,381,103,310,292,255,151,442] },
-    2104: { campo: "Marco Simone Golf & Country Club", tee: "Boys 11", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404] },
-    2103: { campo: "Marco Simone Golf & Country Club", tee: "Boys 10", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404] },
-    2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354] },
+    2104: { campo: "Marco Simone Golf & Country Club", tee: "Boys 11", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404], cr: 65.5, slope: 114 },
+    2103: { campo: "Marco Simone Golf & Country Club", tee: "Boys 10", par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [274,299,272,103,227,231,132,338,352, 267,219,356,91,270,237,225,133,404], cr: 65.5, slope: 114 },
+    2102: { campo: "Marco Simone Golf & Country Club", tee: "Boys 9",  par: [4,4,4,3,4,4,3,5,5, 4,4,5,3,4,4,4,3,5], metros: [240,262,238,103,200,201,127,298,308, 234,219,291,91,236,225,190,133,354], cr: 63.1, slope: 108 },
   },
   // ── European Championship 2026 — Multi-campo (East Lothian, Escócia) ─
   // CR/Slope OFICIAIS do PDF USKids EUC (course_rating_and_slope_-_euc_2025.pdf

@@ -46,6 +46,16 @@ interface Props {
   teeRule?: TeeRule;
 }
 
+/** «2026/09/15 16:05» (FPG) → «15/09 16:05», o formato de datas do resto da
+ *  app (14/10/2026). O ano só aparece se não for o corrente. Outros formatos
+ *  ficam como vêm. */
+function fmtRegisto(s: string | null | undefined): string {
+  const m = String(s || "").match(/^(\d{4})[/-](\d{2})[/-](\d{2})(?:[ T](\d{2}:\d{2}))?/);
+  if (!m) return s || "–";
+  const ano = m[1] !== String(new Date().getFullYear()) ? `/${m[1]}` : "";
+  return `${m[3]}/${m[2]}${ano}${m[4] ? ` ${m[4]}` : ""}`;
+}
+
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status";
 
 
@@ -248,7 +258,7 @@ export default function AdmissionsTab({
           <>
             <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>
             <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
-              {p.dataInscricao || "–"}
+              {fmtRegisto(p.dataInscricao)}
             </td>
             <td style={{ textAlign: "center" }}>
               {isDesist
