@@ -1,10 +1,11 @@
-import React, { useContext, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { isoDate, fmtDate, displayName, medal as medalOf } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { normName as normNameAuto } from "../data/KIDSdataLoader";
 import { kidsUrl, KidsLinkCtx } from "./KidsLink";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import type { Torneio } from "./uskidsTypes";
+import { RoundPill } from "./PillBadge";
 import { sortEscaloes, ESCALOES_DESTAQUE_USKIDS } from "./uskidsTypes";
 import {
   LINKS_EXTRA, REGIONAL_CHAMPIONSHIPS, ArMapCtx,
@@ -75,28 +76,28 @@ export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: st
   const uskidsUrl = urlUskids
     ?? extras.find(l => l.label === "USKids ↗")?.url
     ?? REGIONAL_CHAMPIONSHIPS[t]?.urlUSKids;
-  const linkStyle: React.CSSProperties = { padding:"3px 10px", borderRadius:6,
-    background:"var(--bg-muted)", color:"var(--accent-text)", border:"1px solid var(--border)", textDecoration:"none" };
+  // Mesmo botão dos links oficiais das outras secções (.tourn-ext-link), à
+  // direita do título (14/10/2026).
   return (
-    <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginTop:10 }}>
+    <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
       {[
         { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t}`, label:"📋 Inscritos" },
         { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`, label:"🏆 Resultados ↗" },
       ].map(l => (
         <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-          className="fs-12 fw-600" style={linkStyle}>
+          className="tourn-ext-link">
           {l.label}
         </a>
       ))}
       {uskidsUrl && (
         <a href={uskidsUrl} target="_blank" rel="noopener noreferrer"
-          className="fs-12 fw-600" style={linkStyle}>
+          className="tourn-ext-link">
           USKids ↗
         </a>
       )}
       {extras.filter(l => l.label !== "USKids ↗").map((l, i) => (
         <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
-          className="fs-12 fw-600" style={linkStyle}>
+          className="tourn-ext-link">
           {l.label}
         </a>
       ))}
@@ -171,6 +172,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                 ▶ em curso
               </span>
             )}
+            <TournExternalLinks t={t.t} urlUskids={t.url_uskids} />
           </div>
         </div>
 
@@ -180,7 +182,7 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
             📅 {fmtDate(t.date_inicio)}{t.date_fim && t.date_fim !== t.date_inicio ? ` → ${fmtDate(t.date_fim)}` : ""}
           </span>
           {t.campo && <span className="muted">📍 {t.campo}</span>}
-          {t.rondas && <span className="chip">{t.rondas} rondas</span>}
+          {(t.rondas ?? 0) > 1 && <RoundPill nR={t.rondas!} />}
           {t.fee_18 && <span className="chip">💵 {t.fee_18}</span>}
           <span className="muted fs-11" style={{ userSelect:"all", cursor:"text", opacity:.6 }}>t={t.t}</span>
         </div>
@@ -233,8 +235,6 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
           </div>
         )}
 
-        {/* Links */}
-        <TournExternalLinks t={t.t} urlUskids={t.url_uskids} />
       </div>
 
       {bloqueado ? null : (

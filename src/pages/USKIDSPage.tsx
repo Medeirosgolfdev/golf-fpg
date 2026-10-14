@@ -64,6 +64,7 @@ interface FieldData { gerado_em: string; torneios: Torneio[]; }
 // TIPOS — RESULTADOS
 // ─────────────────────────────────────────────
 interface RondaJogador {
+  _nota?: string;
   nome: string; pais: string; cidade: string;
   pontos: number; score: number; tee: string;
   to_par: number | null;
@@ -181,6 +182,7 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
             tee: "Tee 4", pontos: 0, score: 91, buracos: 18,
             start_time: "", grupo: 0,
             to_par: 19,
+            _nota: "R1: score oficial com penalização (91). Jogou 86 — bogey real no buraco 5, mas não confirmou o cartão na altura; avisou a organização depois e a penalização ficou no buraco 5 (5 → 10). A R2 (79) não muda.",
             strokes: [5,5,4,3,10,4,4,9,5, 6,4,5,3,4,4,5,6,5],
           } as RondaJogador,
         },
@@ -220,10 +222,12 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
       if (!rd) continue;
       const lb = rd.leaderboard ?? rd.jogadores ?? [];
       // Não duplicar se já existir
-      const exists = lb.some(j =>
+      const existing = lb.find(j =>
         j.nome.toLowerCase().includes("medeiros") && j.nome.toLowerCase().includes("manuel")
       );
-      if (!exists) {
+      // Já vem nos dados (a USKids passou a publicá-lo): só se junta a nota.
+      if (existing && ovRd.jogador._nota) existing._nota = ovRd.jogador._nota;
+      if (!existing) {
         lb.push(ovRd.jogador);
         if (rd.leaderboard) rd.leaderboard = lb;
         else if (rd.jogadores) rd.jogadores = lb;
@@ -849,9 +853,18 @@ export default function USKidsFieldPage() {
   // abre-se o primeiro visível: os do Manuel primeiro, depois o mais próximo.
   const chaveVisiveis = tab !== "rivais" ? listaSemCategoria.filter(catFilter).map(t => t.t).join(",") : "";
   useEffect(() => {
-    if (!chaveVisiveis) return;
+    // Só depois de os resultados chegarem — antes disso um torneio já jogado
+    // ainda não «tem resultados» e a selecção saltava para outro.
+    if (!chaveVisiveis || !resultsData) return;
     const ids = new Set(chaveVisiveis.split(",").map(Number));
     if (selectedT != null && ids.has(selectedT)) return;
+    // Link ?t= para um torneio que já acabou e tem resultados: abre em
+    // Resultados em vez de saltar para outro torneio (14/10/2026 — o link do
+    // Marco Simone 2026, t=21080, abria o Spanish Open).
+    if (tab === "campo" && selectedT != null && selectedT === tLigado) {
+      const lig = allTorneios.find(t => t.t === selectedT);
+      if (lig?.temResultados) { setTab("resultados"); return; }
+    }
     const hoje = new Date().toISOString().slice(0, 10);
     const vis = allTorneios.filter(t => ids.has(t.t))
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
@@ -860,7 +873,7 @@ export default function USKidsFieldPage() {
       ? vis[vis.length - 1]
       : vis.find(t => t.manuelJogou) ?? vis.find(t => isoDate(t.date) >= hoje) ?? vis[0];
     if (alvo) setSelectedT(alvo.t);
-  }, [chaveVisiveis, selectedT, tab]);
+  }, [chaveVisiveis, selectedT, tab, resultsData]);
 
   if (erro) return (
     <div style={{ padding: 32 }}>

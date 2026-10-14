@@ -1958,15 +1958,15 @@ function DriveContent() {
           {data.lastUpdated && <span className="muted fs-10 shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
   </>);
   const driveBelow = (<>
-        {/* Linha 2: regiões + escalões — wrap em mobile, scroll horizontal em desktop */}
+        {/* Linha 2: regiões + escalões. Quebra para a linha seguinte (todos os
+            botões ao mesmo nível, alinhados à esquerda) — antes, em desktop,
+            a linha não quebrava e os escalões embrulhavam-se sozinhos no meio
+            do ecrã ao estreitar a janela (14/10/2026). */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
           <div style={{
             display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
             padding: "4px 12px 6px",
-            overflowX: md.isMobile ? "visible" : "auto",
-            flexWrap: md.isMobile ? "wrap" : "nowrap",
-            rowGap: md.isMobile ? 4 : undefined,
-            scrollbarWidth: "none", WebkitOverflowScrolling: "touch",
+            flexWrap: "wrap", rowGap: 4,
             borderTop: "1px solid var(--border-light)",
           }}>
             {availRegions.length > 1 && (<>
@@ -1991,6 +1991,9 @@ function DriveContent() {
               })}
               <ToolbarSep />
             </>)}
+            {/* Não é o mesmo que o filtro da tabela: este refaz a classificação
+                só com o(s) escalão(ões) escolhido(s). */}
+            <span className="fs-11 muted shrink-0" title="Classificação só com estes escalões (as posições são recalculadas)">Classificação:</span>
             <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : " tourn-tab-muted")}
               onClick={() => setEscFilter([])}>
               {md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
@@ -2003,7 +2006,7 @@ function DriveContent() {
               }))}
               active={escFilter}
               onToggle={(e) => setEscFilter(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e])}
-              style={md.isMobile ? { display: "contents" } : undefined}
+              style={{ display: "contents" }}
             />
           </div>
         )}

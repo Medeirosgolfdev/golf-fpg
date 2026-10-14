@@ -13,6 +13,7 @@
  * Drive Challenge/Tour Madeira: entradas do CGSS ocultadas
  * quando duplicam a mesma prova no calendário FPG.
  */
+import TabRow from "../ui/TabRow";
 import { useState, useRef, useEffect, useMemo } from "react";
 import { C } from "../utils/colors";
 import type { PlayersDb } from "../data/types";
@@ -745,14 +746,9 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                 </div>
               )}
             </div>
-            <div className="escalao-pills ml-auto shrink-0" >
-              {(["month", "list"] as ViewMode[]).map(v => (
-                <button key={v} onClick={() => setViewMode(v)}
-                  className={`p p-filter${viewMode === v ? " active" : ""}`}>
-                  {v === "month" ? "Mês" : "Lista"}
-                </button>
-              ))}
-            </div>
+            {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
+            <TabRow className="ml-auto shrink-0" active={viewMode} onChange={setViewMode}
+              tabs={[{ key: "month" as ViewMode, label: "Mês" }, { key: "list" as ViewMode, label: "Lista" }]} />
           </div>
           <div className="gap-8" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "4px 12px 8px" }}>
             <button onClick={() => setCurrentMonth(m => Math.max(0, m-1))} title="Mês anterior" disabled={currentMonth <= 0}

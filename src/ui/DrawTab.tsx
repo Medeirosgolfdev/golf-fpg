@@ -64,6 +64,20 @@ interface Props {
   omLookup?: Map<string, OmHit>;
 }
 
+/** Hora do draw sempre em 24 h («8:30 AM» do GolfGenius → «08:30»), como a
+ *  FPG — 14/10/2026. Outros formatos ficam como vêm. */
+function hora24(t: string | null | undefined): string {
+  const s = String(t ?? "").trim();
+  const m = s.match(/^(\d{1,2}):(\d{2})\s*([AaPp])\.?\s*[Mm]\.?$/);
+  if (m) {
+    let h = parseInt(m[1], 10) % 12;
+    if (/p/i.test(m[3])) h += 12;
+    return `${String(h).padStart(2, "0")}:${m[2]}`;
+  }
+  const m2 = s.match(/^(\d):(\d{2})$/);
+  return m2 ? `0${m2[1]}:${m2[2]}` : s;
+}
+
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "tee" | "nasc" | "hora" | "buraco" | "toPar" | "gross" | "om";
 
 /** Registo de resultado de uma ronda usado para cruzar com o draw. */
@@ -422,7 +436,7 @@ export default function DrawTab({
         out.push({
           pos: idx,
           groupIdx,
-          teeTime: g.teeTime,
+          teeTime: hora24(g.teeTime),
           startHole: g.startHole,
           // Tee por jogador (flights com tees mistos M/F) tem prioridade sobre o tee do grupo.
           tee: ((p as any).tee as string | null | undefined) ?? g.tee,
@@ -626,7 +640,7 @@ export default function DrawTab({
               {p.teeTime}
             </td>
             <td className="fs-11" style={{ textAlign: "center", ...bStyle }}>
-              T{p.startHole ?? "?"}
+              {p.startHole != null ? `T${p.startHole}` : "–"}
             </td>
           </>
         ),

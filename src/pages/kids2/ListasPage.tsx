@@ -5,6 +5,7 @@
  * lista, e o link para a ficha do kids2 de quem já tem ficha. Os dados saem do
  * agregador (scripts/aggregator/util/hcp-listas.js → hcp-listas-ligacoes.json).
  */
+import TabRow from "../../ui/TabRow";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { cachedFetchJson } from "../../data/fetchCache";
@@ -237,7 +238,27 @@ export default function ListasPage() {
   // Rapazes primeiro, depois raparigas; listas sem sexo pela data (mais recente primeiro).
   const listas = useMemo(() => [...(data?.listas ?? [])].sort((a, b) =>
     (a.sexo === "M" ? 0 : a.sexo === "F" ? 1 : 2) - (b.sexo === "M" ? 0 : b.sexo === "F" ? 1 : 2) || b.data.localeCompare(a.data)), [data]);
-  const atual = listas.find(l => l.id === sel) ?? listas[0];
+  // Torneio + escalão (14/10/2026): os botões diziam só «Rapazes/Raparigas»
+  // e não se sabia de que torneio era cada lista. Agrupa-se pelo torneio (o
+  // texto antes de « — ») e o escalão é o resto.
+  const partes = (l: Lista) => {
+    const t = l.torneio ?? l.label;
+    const i = t.lastIndexOf(" — ");
+    return i > 0 ? { torneio: t.slice(0, i), div: t.slice(i + 3) } : { torneio: t, div: nomeLista(l) };
+  };
+  const grupos = useMemo(() => {
+    const m = new Map<string, { torneio: string; data: string; listas: Lista[] }>();
+    for (const l of listas) {
+      const { torneio } = partes(l);
+      const g = m.get(torneio) ?? { torneio, data: l.data, listas: [] };
+      g.listas.push(l);
+      if (l.data > g.data) g.data = l.data;
+      m.set(torneio, g);
+    }
+    return [...m.values()].sort((a, b) => b.data.localeCompare(a.data) || a.torneio.localeCompare(b.torneio));
+  }, [listas]);
+  const atual = listas.find(l => l.id === sel) ?? grupos[0]?.listas[0];
+  const grupoAtual = atual ? grupos.find(g => g.listas.includes(atual)) : undefined;
 
   return (
     <>
@@ -245,23 +266,16 @@ export default function ListasPage() {
       <div style={{ padding: "16px 20px" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", marginBottom: 12 }}>
           <h1 style={{ margin: 0, fontSize: "var(--fs-18)", fontWeight: 600, color: "var(--text)" }}>📝 Listas de inscritos</h1>
-          {listas.length > 1 && (
-            <div style={{ display: "flex", gap: 6 }}>
-              {listas.map(l => {
-                const on = atual?.id === l.id;
-                return (
-                  <button key={l.id} type="button" onClick={() => setSel(l.id)} className="p"
-                    style={{
-                      cursor: "pointer", fontWeight: 700, padding: "5px 14px",
-                      background: on ? "var(--accent)" : "var(--bg-muted)",
-                      color: on ? "var(--bg-card)" : "var(--text-2)",
-                      borderColor: on ? "var(--accent)" : "var(--border-light)",
-                    }}>
-                    {nomeLista(l)}
-                  </button>
-                );
-              })}
-            </div>
+          {grupos.length > 1 && (
+            <select className="select" value={grupoAtual?.torneio ?? ""} aria-label="Torneio"
+              onChange={(e) => setSel(grupos.find(g => g.torneio === e.target.value)?.listas[0]?.id ?? null)}
+              style={{ maxWidth: 520 }}>
+              {grupos.map(g => <option key={g.torneio} value={g.torneio}>{g.torneio}</option>)}
+            </select>
+          )}
+          {grupoAtual && grupoAtual.listas.length > 1 && (
+            <TabRow active={atual?.id ?? ""} onChange={(k) => setSel(k)}
+              tabs={grupoAtual.listas.map(l => ({ key: l.id, label: partes(l).div }))} />
           )}
         </div>
         {err ? <EmptyState size="md" message={"Falhou: " + err} />

@@ -90,6 +90,9 @@ export function ScorecardLB({
   const hideClub_ = options?.hideClub ?? false;
   const showAge_ = options?.showAge ?? false;
   const showClass_ = options?.showClass ?? false;
+  // Nasc. (ano, da data de nascimento) ao lado da Idade, como no Resumo —
+  // só quando a fonte traz a data (14/10/2026).
+  const showBirth_ = showAge_ && !showClass_ && tournament.players.some((p) => !!(p as any).dob);
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;
@@ -99,7 +102,7 @@ export function ScorecardLB({
   const parLabelColSpan =
     parLabelColSpanProp ??
     (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
-       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0));
+       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0) + (showBirth_ ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -515,37 +518,6 @@ export function ScorecardLB({
       })(),
       prefixCells: (
         <>
-          {showAge_ && (
-            // Coluna IDADE (separada de ESC, sortable por número). Tooltip com a
-            // DOB completa quando a fonte a traz (ex: GolfBox via GetPlayers).
-            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
-              {(() => {
-                const age = (p as any)._age as (number | null | undefined);
-                if (age == null || age < 0) return <span className="muted">–</span>;
-                const dob = fmtDobPt((p as any).dob);
-                return (
-                  <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}
-                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
-                );
-              })()}
-            </td>
-          )}
-          {showClass_ && (
-            // Coluna NASC. — ano de nascimento ESTIMADO a partir do class year
-            // (US: gradua-se ~aos 18 → nascido ≈ classYear − 18; Manuel 2014 → 2032).
-            // Sortable. Guarda-se o class year cru em _classYear; aqui mostra-se o nascimento.
-            <td className="lb-age" style={{ width: 52, minWidth: 52, textAlign: "center" }}>
-              {(() => {
-                const cy = (p as any)._classYear as (number | null | undefined);
-                if (cy == null) return <span className="muted">–</span>;
-                const birth = cy - 18;
-                return (
-                  <span className="p p-sm" title={`Class of ${cy} · ≈ nascido ${birth}`}
-                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>~{birth}</span>
-                );
-              })()}
-            </td>
-          )}
           {!hideEsc && (
             <td className="lb-esc" style={{ width: 70, minWidth: 70, whiteSpace: "nowrap" }}>
               {(() => {
@@ -587,6 +559,45 @@ export function ScorecardLB({
                   );
                 }
                 return <span className="muted">–</span>;
+              })()}
+            </td>
+          )}
+          {showClass_ && (
+            // Coluna NASC. — ano de nascimento ESTIMADO a partir do class year
+            // (US: gradua-se ~aos 18 → nascido ≈ classYear − 18; Manuel 2014 → 2032).
+            // Sortable. Guarda-se o class year cru em _classYear; aqui mostra-se o nascimento.
+            <td className="lb-age" style={{ width: 52, minWidth: 52, textAlign: "center" }}>
+              {(() => {
+                const cy = (p as any)._classYear as (number | null | undefined);
+                if (cy == null) return <span className="muted">–</span>;
+                const birth = cy - 18;
+                return (
+                  <span className="p p-sm" title={`Class of ${cy} · ≈ nascido ${birth}`}
+                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent" }}>~{birth}</span>
+                );
+              })()}
+            </td>
+          )}
+          {showBirth_ && (
+            <td className="lb-age" style={{ width: 48, minWidth: 48, textAlign: "center" }}>
+              {(() => {
+                const y = String((p as any).dob || "").match(/(19|20)\d{2}/)?.[0];
+                return y ? y : <span className="muted">–</span>;
+              })()}
+            </td>
+          )}
+          {showAge_ && (
+            // Coluna IDADE (separada de ESC, sortable por número). Tooltip com a
+            // DOB completa quando a fonte a traz (ex: GolfBox via GetPlayers).
+            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
+              {(() => {
+                const age = (p as any)._age as (number | null | undefined);
+                if (age == null || age < 0) return <span className="muted">–</span>;
+                const dob = fmtDobPt((p as any).dob);
+                return (
+                  <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}
+                    style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-2)", borderColor: "transparent", cursor: dob ? "help" : undefined }}>{age}a</span>
+                );
               })()}
             </td>
           )}
@@ -696,16 +707,16 @@ export function ScorecardLB({
       }
       prefixHeaderCells={
         <>
-          {showAge_ && (
+          {!hideEsc && (
             <SortableHdr
-              k="age"
+              k="esc"
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
-              className="lb-age"
-              style={{ width: 44, minWidth: 44 }}
+              className="lb-esc"
+              style={{ width: 70, minWidth: 70 }}
             >
-              IDADE
+              ESC.
             </SortableHdr>
           )}
           {showClass_ && (
@@ -718,19 +729,20 @@ export function ScorecardLB({
               style={{ width: 52, minWidth: 52 }}
               title="Ano de nascimento estimado (≈ class year − 18)"
             >
-              NASC.
+              Nasc.
             </SortableHdr>
           )}
-          {!hideEsc && (
+          {showBirth_ && <th className="lb-age" style={{ width: 48, minWidth: 48 }}>Nasc.</th>}
+          {showAge_ && (
             <SortableHdr
-              k="esc"
+              k="age"
               sortKey={sortKey}
               sortDir={sortDir}
               onSort={handleSort}
-              className="lb-esc"
-              style={{ width: 70, minWidth: 70 }}
+              className="lb-age"
+              style={{ width: 44, minWidth: 44 }}
             >
-              ESC.
+              Idade
             </SortableHdr>
           )}
           {!hideFed && <th className="lb-fed">FED</th>}

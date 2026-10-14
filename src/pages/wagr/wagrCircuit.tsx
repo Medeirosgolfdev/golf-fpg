@@ -13,15 +13,8 @@
  *   Nacional de Jovens com 60 inscritos pode dar 4 linhas — daí o aviso no
  *   `metaLine`, para não se ler a tabela como o campo todo.
  */
-import { useMemo } from "react";
-import { ScorecardLeaderboard, type ScorecardRow } from "../../ui/ScorecardLeaderboard";
-import { useSort } from "../../hooks/useSort";
-import SortableHdr from "../../ui/SortableHdr";
-import { gf } from "../../utils/flagUtils";
-import { norm } from "../../utils/format";
-import { isManuelByName } from "../../constants/manuel";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { KidsLink } from "../../ui/KidsLink";
+import TotalsResumo from "../../ui/circuit/TotalsResumo";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 
 /* ── Tipos dos dados WAGR ───────────────────────────────────────── */
@@ -73,102 +66,6 @@ export const wagrPlayerUrl = (link: string) => `${WAGR_SITE}/playerprofile/${lin
 export const isPtCountry = (c: string | null | undefined) =>
   /portugal/i.test(String(c || "")) || /^(pt|prt|por)$/i.test(String(c || "").trim());
 
-/* ── Leaderboard de TOTAIS (ScorecardLeaderboard partilhado, sem scorecard) ── */
-type LbKey = "pos" | "name" | "country" | "r1" | "r2" | "r3" | "r4" | "total" | "points";
-
-function WagrResultsLeaderboard({ players, partial }: { players: WagrEventPlayer[]; partial: boolean }) {
-  const { sortKey, sortDir, toggleSort } = useSort<LbKey>("pos");
-  const nR = useMemo(
-    () => Math.max(0, ...players.map((p) => [p.r1, p.r2, p.r3, p.r4].filter((x) => x != null).length)),
-    [players]
-  );
-
-  const sorted = useMemo(() => {
-    const INF = 1e9, dir = sortDir === "asc" ? 1 : -1;
-    const val = (p: WagrEventPlayer): number | string => {
-      switch (sortKey) {
-        case "pos": return p.posNum ?? INF;
-        case "name": return norm(p.name);
-        case "country": return norm(p.country || "");
-        case "r1": return p.r1 ?? INF;
-        case "r2": return p.r2 ?? INF;
-        case "r3": return p.r3 ?? INF;
-        case "r4": return p.r4 ?? INF;
-        case "total": return p.total ?? INF;
-        case "points": return p.points ?? -1;
-      }
-    };
-    return [...players].sort((a, b) => {
-      const va = val(a), vb = val(b);
-      if (typeof va === "string" || typeof vb === "string") return String(va).localeCompare(String(vb)) * dir;
-      return (va - vb) * dir;
-    });
-  }, [players, sortKey, sortDir]);
-
-  const rows: ScorecardRow[] = sorted.map((p, i) => ({
-    key: `${p.id || "-"}-${i}`,
-    pos: p.pos ?? i + 1,
-    gross: p.total ?? 0,
-    toPar: null,
-    isManuel: isManuelByName(p.name),
-    isPortuguese: isPtCountry(p.country),
-    sortPos: p.posNum ?? null,
-    sortName: p.name,
-    nameContent: (
-      <span className="tourn-pname" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-        {p.name || "—"}
-        {p.name && <KidsLink nome={p.name} />}
-      </span>
-    ),
-    prefixCells: (
-      <>
-        <td className="lb-club" title={p.country || ""} style={{ whiteSpace: "nowrap" }}>{gf(p.country || "")} {p.country || "—"}</td>
-        {nR >= 1 && <td className="lb-hcp num">{p.r1 ?? ""}</td>}
-        {nR >= 2 && <td className="lb-hcp num">{p.r2 ?? ""}</td>}
-        {nR >= 3 && <td className="lb-hcp num">{p.r3 ?? ""}</td>}
-        {nR >= 4 && <td className="lb-hcp num">{p.r4 ?? ""}</td>}
-        <td className="lb-hcp num" style={{ fontWeight: 600 }}>{p.total ?? ""}</td>
-        <td className="lb-hcp num" style={{ color: "var(--text-muted)" }}>{p.points != null ? p.points.toFixed(2) : ""}</td>
-      </>
-    ),
-  }));
-
-  const hdr = (k: LbKey, label: string, title?: string) => (
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={(x) => toggleSort(x as LbKey)} className="lb-hcp" title={title}>{label}</SortableHdr>
-  );
-
-  return (
-    <ScorecardLeaderboard
-      par={[]}
-      rows={rows}
-      showScorecard={false}
-      hideTotals
-      metaLine={
-        partial ? (
-          <span title="O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.">
-            ⚠ Só os classificados que pontuaram no WAGR ({players.length}) — não é o campo completo.
-          </span>
-        ) : undefined
-      }
-      prefixHeaderCells={
-        <>
-          <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={(x) => toggleSort(x as LbKey)} className="lb-club">PAÍS</SortableHdr>
-          {nR >= 1 && hdr("r1", "R1")}
-          {nR >= 2 && hdr("r2", "R2")}
-          {nR >= 3 && hdr("r3", "R3")}
-          {nR >= 4 && hdr("r4", "R4")}
-          {hdr("total", "TOT", "Total (o WAGR não publica o par do campo — daí não haver ±Par)")}
-          {hdr("points", "PTS", "Pontos WAGR ganhos no evento")}
-        </>
-      }
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("name")}
-      activeSortKey={sortKey === "name" ? "name" : sortKey}
-      activeSortDir={sortDir}
-    />
-  );
-}
-
 /* ── Adapter: evento → divisão (lazy) ───────────────────────────── */
 async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[]> {
   const ev = await cachedFetchJson<WagrEventFull>(`/data/wagr/events/wagr_${e.id}.json`);
@@ -178,7 +75,14 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
     escalao: e.eventType || "—",
     tabLabel: e.eventType ? `${e.eventType}${e.sex === "F" ? " ♀" : e.sex === "M" ? " ♂" : ""}` : undefined,
     sex: (e.sex || undefined) as CircuitSex | undefined,
-    customResults: <WagrResultsLeaderboard players={players} partial />,
+    // Resumo comum das fontes só com totais (14/10/2026). O WAGR não publica o
+    // par do campo (sem ±par) e só traz quem pontuou.
+    customResults: <TotalsResumo parPerRound={null} tournamentDate={e.startDate || undefined}
+      notice={<div className="notice" style={{ marginBottom: 8 }} title="O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.">
+        ⚠ Só os classificados que pontuaram no WAGR ({players.length}) — não é o campo completo.</div>}
+      extra={[{ header: "PTS", title: "Pontos WAGR ganhos no evento", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–") }]}
+      players={players.map((p) => ({ name: p.name, country: p.country, pos: p.posNum,
+        rounds: [p.r1, p.r2, p.r3, p.r4], total: p.total, points: p.points }))} />,
   }];
 }
 

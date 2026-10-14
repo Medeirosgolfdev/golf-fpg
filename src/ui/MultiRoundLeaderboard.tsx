@@ -236,6 +236,8 @@ interface MultiRoundLBProps {
     roundStats?: boolean;
     /** Mostrar colunas de ±par por ronda. Default: true */
     roundToPar?: boolean;
+    /** Mostrar a coluna ±Par do total. Default: true (false quando a fonte não tem par — WAGR). */
+    toPar?: boolean;
   };
   sortable?: boolean;
   filterable?: boolean;
@@ -269,6 +271,7 @@ export function MultiRoundLeaderboard({
     age: wantAge = true,
     roundStats: wantRoundStats = true,
     roundToPar: wantRoundToPar = true,
+    toPar: showToPar = true,
   } = showCols;
 
   // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados.
@@ -497,7 +500,7 @@ export function MultiRoundLeaderboard({
               {showTee && <SHdr k="tee" className="lb-tee">TEE</SHdr>}
 
               {/* ±Par ANTES de Total */}
-              <SHdr k="toPar" className="lb-topar">±Par</SHdr>
+              {showToPar && <SHdr k="toPar" className="lb-topar">±Par</SHdr>}
               <SHdr k="gross" className="lb-gross">{isMulti ? "Total" : "Tot"}</SHdr>
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
@@ -662,7 +665,7 @@ export function MultiRoundLeaderboard({
                   {showTee && <td className="lb-tee"><TeeDot teeName={row.teeName} /></td>}
 
                   {/* ±Par ANTES de Total */}
-                  <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>
+                  {showToPar && <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>}
                   <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
 
                   {/* Acumulados multi-ronda */}

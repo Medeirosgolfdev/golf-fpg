@@ -12,6 +12,7 @@
  *
  * O GJGL só expõe escalões U14, U18, U23. Manuel (12y) compete em U14.
  */
+import TotalsResumo from "../ui/circuit/TotalsResumo";
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -527,6 +528,20 @@ function SimpleLeaderboard({ div }: { div: GjglDivision }) {
   );
 }
 
+/** Divisão GJGL sem buraco a buraco → o Resumo comum (TotalsResumo). O par de
+ *  uma volta tira-se de quem tem total e ±par numéricos. */
+function GjglTotals({ div }: { div: GjglDivision }) {
+  const ref = div.players.find((p) => typeof p.toPar === "number" && p.total != null && (p.rounds || []).some((r) => r?.gross));
+  const nR = ref ? (ref.rounds || []).filter((r) => r?.gross).length : 0;
+  const parPerRound = ref && nR ? Math.round((ref.total! - (ref.toPar as number)) / nR) : null;
+  return (
+    <TotalsResumo parPerRound={parPerRound}
+      players={div.players.map((p) => ({ name: p.name, country: p.country, club: p.club ?? null,
+        hcp: p.hcp ?? null, birthYear: p.birthYearEst ?? null, pos: p.pos,
+        rounds: (p.rounds || []).map((r) => r?.gross ?? null), total: p.total }))} />
+  );
+}
+
 /* ═══════════════════════════════════════════════════════════════
    GlobalJuniorPage (NOVO) — assente no CircuitShell partilhado.
    Carregamento LAZY por torneio (catálogo só tem metadados; o detalhe
@@ -560,7 +575,8 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
           escalao: `U${div.ak}`,
           tabLabel: `U${div.ak} (${div.players.length})`,
           hasManuel,
-          customResults: <SimpleLeaderboard div={div} />,
+          // Resumo comum das fontes só com totais (14/10/2026).
+          customResults: <GjglTotals div={div} />,
         };
       });
     })
@@ -616,7 +632,10 @@ export default function GlobalJuniorPage() {
   const { slug } = useParams<{ slug?: string }>();
   const navigate = useNavigate();
   const [catalog, setCatalog] = useState<Catalog | null>(null);
-  const [index, setIndex] = useState<GjglIndex | null>(null);
+  // undefined = a carregar · null = falhou. O shell só arranca depois: as DATAS
+  // vêm do índice e, sem elas, o torneio por omissão (o mais recente) saía
+  // errado e ficava no URL (abria o UAE de Fevereiro — 14/10/2026).
+  const [index, setIndex] = useState<GjglIndex | null | undefined>(undefined);
   const [ovr, setOvr] = useState<GjglOverrides | null>(null);
   const [catalogError, setCatalogError] = useState<string | null>(null);
 
@@ -627,14 +646,14 @@ export default function GlobalJuniorPage() {
       .catch((err) => { if (!cancelled) setCatalogError(String((err as Error).message || err)); });
     // Índice slim — enriquece a sidebar/header; falha silenciosa (opcional).
     cachedFetchJson<GjglIndex>("/data/gjgl-index.json")
-      .then((d) => { if (!cancelled && d) setIndex(d); })
-      .catch(() => {});
+      .then((d) => { if (!cancelled) setIndex(d ?? null); })
+      .catch(() => { if (!cancelled) setIndex(null); });
     // Overrides de campo/distâncias (eventos PT) — falha silenciosa (opcional).
     loadGjglOverrides().then((o) => { if (!cancelled) setOvr(o); });
     return () => { cancelled = true; };
   }, []);
 
-  const entries = useMemo(() => (catalog ? buildGjglEntries(catalog, index, ovr) : []), [catalog, index, ovr]);
+  const entries = useMemo(() => (catalog && index !== undefined ? buildGjglEntries(catalog, index, ovr) : []), [catalog, index, ovr]);
   const selectedId = useMemo<string | undefined>(
     () => (slug && entries.some((e) => e.id === slug) ? slug : undefined),
     [slug, entries],
@@ -643,7 +662,7 @@ export default function GlobalJuniorPage() {
   if (catalogError) {
     return <div className="center-msg" style={{ padding: 24 }}>Erro a carregar catálogo: {catalogError}</div>;
   }
-  if (!catalog) {
+  if (!catalog || index === undefined) {
     return <LoadingState message="A carregar catálogo GJGL…" />;
   }
 

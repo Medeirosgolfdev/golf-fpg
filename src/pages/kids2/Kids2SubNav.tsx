@@ -39,19 +39,18 @@ export default function Kids2SubNav({ leading, children }: Props) {
       {leading}
       <Link to="/kids2" className="toolbar-title" style={{ textDecoration: "none" }}>🌍 Kids 2</Link>
       <ToolbarSep />
-      {TABS.map((t) => {
-        const active = t.match(pathname);
-        return (
-          <Link
-            key={t.to}
-            to={t.to}
-            className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
-            style={{ flexShrink: 0, textDecoration: "none" }}
-          >
-            {t.label}
-          </Link>
-        );
-      })}
+      {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
+      <div className="segmented-toggle" role="tablist" aria-label="Vista" style={{ flexShrink: 0 }}>
+        {TABS.map((t) => {
+          const active = t.match(pathname);
+          return (
+            <Link key={t.to} to={t.to} role="tab" aria-selected={active}
+              className={"seg-btn" + (active ? " active" : "")} style={{ textDecoration: "none" }}>
+              <span className="seg-label">{t.label}</span>
+            </Link>
+          );
+        })}
+      </div>
       {children && (
         <>
           <ToolbarSep />

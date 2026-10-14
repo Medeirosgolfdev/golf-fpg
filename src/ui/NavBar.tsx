@@ -54,6 +54,8 @@ function tabFromPath(pathname: string): Tab {
     diversos: "diversos",
     FPG: "diversos",
     "om-cgss": "diversos",   // Ordem de Mérito Júnior CGSS — vive com as provas FPG
+    "torneios-recentes": "diversos", // torneios FPG em que os nossos jogaram (acendia «Jogadores»)
+    "bjgt-analysis": "major",
     doral: "major",
     ffg: "ffg",
     rfeg: "rfeg",

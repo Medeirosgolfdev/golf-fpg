@@ -313,6 +313,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
                 {tournament.tcode}
               </span>
             )}
+          </div>
+          {/* Links oficiais À DIREITA do título, como nas outras secções
+              (CircuitShell: «Leaderboard oficial ↗») — 14/10/2026. */}
+          <div className="gap-4" style={{ display: "flex", alignItems: "center", flexWrap: "wrap", marginLeft: "auto" }}>
             {/* Botões INSCRIÇÕES + DRAW + SCORING — todos mesmo tamanho/estilo.
                 Uniformizados para consistência em todas as páginas de torneio. */}
             {tournament._isSynthetic

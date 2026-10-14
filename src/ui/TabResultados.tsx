@@ -271,6 +271,11 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
   const drawExternalUrl = t.url_resultados ||
     `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`;
 
+  // Notas sobre resultados (ex.: penalização do Manuel no Marco Simone 2026),
+  // visíveis por cima das tabelas do escalão — 14/10/2026.
+  const notas = [...new Map(e.rondas.flatMap(r => (r.leaderboard ?? r.jogadores ?? []))
+    .filter(j => j._nota).map(j => [`${j.nome}|${j._nota}`, j] as const)).values()];
+
   return (
     <div>
       {campo && (
@@ -278,6 +283,11 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
           📍 {campo}
         </div>
       )}
+      {notas.map(j => (
+        <div key={j.nome + j._nota} className="notice" style={{ marginBottom: 8 }}>
+          ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
+        </div>
+      ))}
       {/* Sub-tabs Draw R1 / R1 / Draw R2 / R2 / Resumo / 📋 Scorecards */}
       {tabsEntries.length > 1 && (
         <div style={{ display: "flex", flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
@@ -343,8 +353,9 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
 
   return (
     <div>
-      {/* Barra de escalões */}
-      <div className="tabbar-under">
+      {/* Barra de escalões — as mesmas pílulas «(N jog)» das outras secções
+          (CircuitShell/FPG), 14/10/2026. A distância vai para o tooltip. */}
+      <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
         {escaloes.map((es, i) => {
           const isME = t.escalao_manuel
             ? es.age_group === t.escalao_manuel
@@ -352,10 +363,14 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
           const tInfo = TEES_LOOKUP[t.t]?.[es.age_group];
           const dist = tInfo?.metros?.length === 18
             ? tInfo.metros.reduce((a: number, b: number) => a + b, 0) : null;
+          const ult = es.rondas[es.rondas.length - 1];
+          const nJog = (ult?.leaderboard ?? ult?.jogadores ?? []).length;
           return (
-            <button key={es.age_group} className={"tab-under" + (esc === i ? " active" : "")} onClick={() => setEsc(i)}>
-              {isME ? "★ " : ""}{es.nome}
-              {dist ? <span className="ml-4 fs-10 fw-400" style={{ opacity: 0.7 }}>{dist}m</span> : null}
+            <button key={es.age_group} className={`tourn-tab tourn-tab-sm${esc === i ? " active" : ""}`} onClick={() => setEsc(i)}
+              title={dist ? `${dist} m` : undefined}>
+              {es.nome}
+              {nJog > 0 && <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>({nJog} jog)</span>}
+              {isME && <span style={{ color: "var(--color-good)" }}> ★</span>}
             </button>
           );
         })}
@@ -486,14 +501,13 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
       <div className="detail-header">
         <div className="detail-header-top">
           <h2 className="detail-title">{t.name}</h2>
+          {/* Links oficiais à direita, como nas outras secções. */}
+          <TournExternalLinks t={t.t} />
         </div>
         <div className="detail-sub">
           <span className="muted">📅 {fmtDate(t.date_inicio)}{t.campo ? ` · ${t.campo}` : ""}</span>
-          <span className="muted fs-11">actualizado {fmtTs(t.ultima_atualizacao)}</span>
+          <span className="muted fs-11 ml-8">actualizado {fmtTs(t.ultima_atualizacao)}</span>
         </div>
-        {/* Links externos — mesma fila que a tab Torneios (Inscritos, Resultados,
-            USKids, Distâncias, Info jogadores…). */}
-        <TournExternalLinks t={t.t} />
         {/* Resultados do Manuel em destaque */}
         {manuelRows.length > 0 && (
           <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginTop:10 }}>

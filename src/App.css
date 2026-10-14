@@ -4531,3 +4531,20 @@ table td.lb-col-divider {
 :is(.dtable, .dtable-sm, .dtable-lg, .dt-compact, .player-list-table, .cs-table) .tourn-pname { font-weight: 400; font-size: var(--fs-11); }
 /* Tabelas de muitas colunas numéricas («Quem repete»): mais folga lateral. */
 .sc-lb.sc-lb-airy th, .sc-lb.sc-lb-airy td { padding-left: 10px; padding-right: 10px; }
+
+/* ─── Barra de scroll horizontal SEMPRE por baixo do conteúdo (14/10/2026) ───
+   Pedido da Mariana: «tu colocas a barra do scroll em cima do texto, ela deve
+   estar por baixo». Com as scrollbars sobrepostas do Chrome/Windows 11 a barra
+   desenhava-se POR CIMA da última linha da tabela. Todos os contentores que
+   rolam na horizontal reservam espaço em baixo para a barra (era só o
+   .bjgt-chart-scroll, desde o caso do Ranking PJA). As toolbars e o nav ficam
+   de fora: escondem a barra de propósito. */
+.scroll-x, .tourn-scroll, .sc-modern, .sc-wrap, .hoc-tablewrap, .scorecard-table-wrapper,
+[style*="overflow-x: auto"], [style*="overflow-x:auto"],
+[style*="overflow-x: scroll"] {
+  padding-bottom: 12px;
+}
+
+/* Scorecard dos Campos (.sc-wrap): sem moldura de cantos redondos nem sombra,
+   como as tabelas dos torneios (decisão da Mariana — 14/10/2026). */
+.sc-wrap { border-radius: 0; box-shadow: none; }

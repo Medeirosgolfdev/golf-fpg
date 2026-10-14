@@ -122,6 +122,8 @@ export interface RondaJogador {
   start_time: string;
   grupo: number;
   strokes: number[];
+  /** Nota visível no resultado (ex.: penalização aplicada) — vem dos overrides da USKIDSPage. */
+  _nota?: string;
   // legacy (estrutura antiga — manter compatibilidade)
   rondas?: Record<
     string,

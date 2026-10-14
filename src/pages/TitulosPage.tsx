@@ -24,6 +24,8 @@ import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
 import { cachedFetchJson } from "../data/fetchCache";
 import { JovensAnaliseView } from "../ui/JovensAnaliseView";
 import LoadingState from "../ui/LoadingState";
+import TabRow from "../ui/TabRow";
+import { fmtDate } from "../utils/format";
 import EmptyState from "../ui/EmptyState";
 import { useAppContext } from "../context/AppContext";
 import type { Tournament } from "../data/fpgTypes";
@@ -226,23 +228,15 @@ export default function TitulosPage() {
         <ToolbarSep />
         <span className="chip">{nacTournaments.length} Nacionais</span>
         {regLoaded && <span className="chip">{regionais.length} Regionais</span>}
-        <span className="chip ml-auto" title="Ultima atualizacao">
-          {historico.lastUpdated}
+        <span className="chip ml-auto" title={`Última actualização dos dados: ${historico.lastUpdated}`}>
+          actualizado {fmtDate(String(historico.lastUpdated || "").slice(0, 10))}
         </span>
       </Toolbar>
 
       {/* Tabs */}
-      <div className="tabbar-under">
-        {(Object.keys(TAB_LABELS) as TabKey[]).map((k) => (
-          <button
-            key={k}
-            className={"tab-under" + (activeTab === k ? " active" : "")}
-            onClick={() => navigate(`/titulos/${k}`)}
-          >
-            {TAB_LABELS[k]}
-          </button>
-        ))}
-      </div>
+      {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
+      <TabRow active={activeTab} onChange={(k) => navigate(`/titulos/${k}`)} style={{ margin: "10px 16px 0" }}
+        tabs={(Object.keys(TAB_LABELS) as TabKey[]).map((k) => ({ key: k, label: TAB_LABELS[k] }))} />
 
       {activeTab === "nacional" && (
         <>
