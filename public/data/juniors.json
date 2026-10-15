@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-14T14:36:51.977Z",
+  "generatedAt": "2026-10-15T00:42:56.205Z",
   "juniors": [
     {
       "id": "u391389",
@@ -479500,7 +479500,13 @@
             "simulador"
           ],
           "primary": true
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "faldomadeira",
+            "key": "maria câmara|PT"
+          }
+        ]
       },
       "tournamentIds": [
         "fpg-000-10936-20260430-sub_18"
@@ -479767,10 +479773,12 @@
         "confidence": "strong",
         "evidence": [
           "fpg:40990",
+          "faldomadeira:maria câmara|PT",
           "dob:2009-12-17"
         ],
         "mergedFromSources": [
-          "fpg"
+          "fpg",
+          "faldomadeira"
         ]
       }
     },
@@ -2218535,7 +2218543,7 @@
     "strong": 34988,
     "probable": 3631,
     "manual": 0,
-    "strongMerges": 8977,
+    "strongMerges": 8978,
     "probableMerges": 16770,
     "manualMerges": 856
   }
