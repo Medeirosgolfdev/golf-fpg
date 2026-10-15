@@ -1260,9 +1260,28 @@ export default function CamposPage() {
   }, [courses]);
 
   /* Pesquisa por jogador — calcular nfeds que correspondem */
+  // Jogadores que coincidem com a pesquisa (para o selector quando há vários —
+  // «manuel medeiros» = o Manuel e o pai; 15/10/2026).
+  const playerMatches = useMemo<{ nfed: string; name: string }[]>(() => {
+    const qTok = norm(playerQ.trim()).split(/\s+/).filter(Boolean);
+    if (!qTok.length) return [];
+    const out: { nfed: string; name: string; exact: boolean }[] = [];
+    for (const [nfed, p] of Object.entries(players)) {
+      const nTok = norm(p.name ?? "").split(/\s+/).filter(Boolean);
+      if (qTok.every((q) => nTok.some((t) => t.startsWith(q)))) out.push({ nfed, name: p.name ?? nfed, exact: nTok.length === qTok.length });
+    }
+    // Manuel primeiro (é o foco do site), depois o nome mais completo-coincidente, depois A→Z.
+    return out.sort((a, b) => Number(b.nfed === MANUEL_FED) - Number(a.nfed === MANUEL_FED)
+      || Number(b.exact) - Number(a.exact) || a.name.localeCompare(b.name, "pt"));
+  }, [playerQ, players]);
+  const [playerPick, setPlayerPick] = useState<string>("");   // "" = o primeiro; "ALL" = todos
+  useEffect(() => { setPlayerPick(""); }, [playerQ]);
   const playerNfeds = useMemo<Set<string> | null>(() => {
     const pq = playerQ.trim();
     if (!pq) return null;
+    if (playerMatches.length > 1 && playerPick !== "ALL") {
+      return new Set([playerPick || playerMatches[0].nfed]);
+    }
     // Palavra a palavra: cada palavra escrita tem de começar uma palavra do nome
     // ("manuel medei" → "Manuel Goulartt Medeiros"). Com a frase seguida só
     // aparecia quem tem exactamente "Manuel Medei…" (o pai), e o Manuel não.
@@ -1273,7 +1292,7 @@ export default function CamposPage() {
       if (qTok.every((q) => nTok.some((t) => t.startsWith(q)))) matched.add(nfed);
     }
     return matched;
-  }, [playerQ, players]);
+  }, [playerQ, players, playerMatches, playerPick]);
 
   /* Unique tee color groups across all courses (for filter dropdown) */
   const uniqueTees = useMemo(() => {
@@ -1298,10 +1317,17 @@ export default function CamposPage() {
     const qq = norm(q);
     let list = courses;
     if (qq) {
+      // Palavras em qualquer ordem e com «-», «+» ou «/» como separadores —
+      // «machico serras» / «Machico+Serras» encontram o «Serras-Machico» (a FPG
+      // junta as duas ordens da volta num só campo). 15/10/2026.
+      const toks = (s: string) => norm(s).split(/[\s\-+/,]+/).filter(Boolean);
+      const qTok = toks(q);
       list = list.filter((c) => {
         const name = norm(c.master.name);
         const key = norm(c.courseKey);
-        return name.includes(qq) || key.includes(qq);
+        if (name.includes(qq) || key.includes(qq)) return true;
+        const nTok = [...toks(c.master.name), ...toks(c.courseKey)];
+        return qTok.every((w) => nTok.some((t) => t.startsWith(w)));
       });
     }
     if (originFilter === "PT") {
@@ -1423,6 +1449,14 @@ export default function CamposPage() {
           placeholder="Jogador…"
           title="Mostra os campos onde este jogador já jogou"
         />
+        {playerMatches.length > 1 && (
+          <select className="select" value={playerPick || playerMatches[0].nfed} aria-label="Qual jogador"
+            title={`${playerMatches.length} jogadores com este nome`}
+            onChange={(e) => { setPlayerPick(e.target.value); selectCourse(null); }}>
+            {playerMatches.slice(0, 40).map((m) => <option key={m.nfed} value={m.nfed}>{m.name} ({m.nfed})</option>)}
+            <option value="ALL">Todos ({playerMatches.length})</option>
+          </select>
+        )}
         <select
           className="select"
           value={originFilter}
