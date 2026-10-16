@@ -87,7 +87,8 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const isDark = tc === "#ffffff" || tc === "white";
   const hcl = hiChStr(d, v, s);
-  const accent = s.vpT < 0 ? "#dc2626" : "#1e40af";
+  // Azul-escuro só em fundo claro — no escuro o 85 desaparecia.
+  const accent = s.vpT < 0 ? "#dc2626" : isDark ? "#60a5fa" : "#1e40af";
   const bgF = bg || (isDark ? "rgba(20,20,30,.88)" : "rgba(255,255,255,.88)");
   const tx = isDark ? "#eee" : "#222";
   return (

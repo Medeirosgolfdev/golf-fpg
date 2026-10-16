@@ -30,7 +30,9 @@ export type Vis = Record<string, boolean>;
 /** Contagens por tipo de score. */
 export type StT = {
   hio: number; eagles: number; birdies: number; pars: number;
-  bogeys: number; doubles: number; triples: number;
+  bogeys: number; doubles: number;
+  /** triples = exactamente +3; quads = +4 ou pior (9 num par 5 = quádruplo). */
+  triples: number; quads: number;
 };
 
 /** Estatísticas calculadas: par/strokes totais, vs par por nine, SD, breakdown. */

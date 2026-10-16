@@ -89,7 +89,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
       pF:0, pB:0, pT:manualPar, sF:0, sB:0, sT,
       vpT: sT - manualPar, vpF: 0, vpB: 0,
       sd: manualSD ?? 0,
-      st: { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 } as StT,
+      st: { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0, quads:0 } as StT,
     };
   }, [dd, noHoleData, manualTotal, manualPar, manualSD]);
 

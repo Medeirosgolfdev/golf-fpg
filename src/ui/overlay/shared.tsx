@@ -120,6 +120,24 @@ export function hiChStr(d: DD, v: Vis, _s: Stats): string {
   return p.join(" · ");
 }
 
+/** Contagem por tipo de resultado (HIO, eagle, birdie, par, bogey, duplo,
+ *  triplo e quádruplo ou pior) dos buracos `from`..`to` (excl.). */
+export function countHoles(scores: number[], par: number[], from = 0, to = scores.length): StT {
+  const st: StT = { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0, quads:0 };
+  for (let i = from; i < to; i++) {
+    const sc = scores[i]; const x = sc - par[i];
+    if (sc === 1) st.hio++;
+    else if (x <= -2) st.eagles++;
+    else if (x === -1) st.birdies++;
+    else if (x === 0) st.pars++;
+    else if (x === 1) st.bogeys++;
+    else if (x === 2) st.doubles++;
+    else if (x === 3) st.triples++;
+    else st.quads++;
+  }
+  return st;
+}
+
 /** Calcula stats agregados (front/back/total, vs par, breakdown de scores). */
 export function calcStats(d: DD): Stats {
   const n = d.scores.length;
@@ -130,17 +148,7 @@ export function calcStats(d: DD): Stats {
   const sF = d.scores.slice(0, Math.min(9,n)).reduce((a,b)=>a+b,0);
   const sB = is18 ? d.scores.slice(9).reduce((a,b)=>a+b,0) : 0;
   const sT = is18 ? sF+sB : d.scores.reduce((a,b)=>a+b,0);
-  const st: StT = { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 };
-  d.scores.forEach((sc,i) => {
-    const x = sc - d.par[i];
-    if (sc === 1) st.hio++;
-    else if (x <= -2) st.eagles++;
-    else if (x === -1) st.birdies++;
-    else if (x === 0) st.pars++;
-    else if (x === 1) st.bogeys++;
-    else if (x === 2) st.doubles++;
-    else st.triples++;
-  });
+  const st = countHoles(d.scores, d.par);
   // SD pela biblioteca (utils/whsCalc) — em 9 buracos soma o Expected SD do HI
   const sd = scoreDifferential({ score: sT, cr: d.cr, slope: d.slope, is9: !is18, hi: d.hi })?.sd ?? 0;
   return { pF, pB, pT, sF, sB, sT, vpT: sT-pT, vpF: sF-pF, vpB: is18 ? sB-pB : 0, sd, st };

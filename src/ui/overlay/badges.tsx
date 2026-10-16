@@ -3,7 +3,7 @@
  * - SC, SCL, SCQ, SCO, SCA: variantes de score circle/square por hole
  * - TpBadge: pill colorida de to-par (+4 / -1 / E)
  * - Grid2: layout 2×9 dos hole scores
- * - StatsRow: pills de breakdown (HIO, Eagles, Bir, Par, Bog, Dbl, Tri+)
+ * - StatsRow: pills de breakdown (HIO, Eagles, Bir, Par, Bog, Dbl, Tri, Quad+)
  */
 import React from "react";
 import { II } from "./shared";
@@ -119,7 +119,7 @@ export function Grid2({ d, sz = 24, gap = 2, nc = "#555" }: { d: DD; sz?: number
   );
 }
 
-/* ═══════ StatsRow: pills de breakdown (HIO/Eagle/Bir/Par/Bog/Dbl/Tri+) ═══════ */
+/* ═══════ StatsRow: pills de breakdown (HIO/Eagle/Bir/Par/Bog/Dbl/Tri/Quad+) ═══════ */
 export function StatsRow({ st, tc3, gap = 8, fs = 11 }: { st: StT; tc3?: string; gap?: number; fs?: number }) {
   const items = [
     { n: st.hio,     l: "HIO", c: HIO_GREEN  },
@@ -127,16 +127,20 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11 }: { st: StT; tc3?: string;
     { n: st.birdies, l: "Bir", c: "#dc2626"  },
     { n: st.pars,    l: "Par", c: tc3        },
     { n: st.bogeys,  l: "Bog", c: "#5BADE6"  },
-    { n: st.doubles, l: "Dbl", c: "#2B6EA0"  },
-    { n: st.triples, l: "Tri+",c: "#1B4570"  },
+    // Azuis-escuros (as cores do cartão): o texto vai na cor secundária do
+    // desenho e a bolinha leva contorno — em fundo escuro não se liam.
+    { n: st.doubles, l: "Dbl", c: "#2B6EA0", dark: true },
+    { n: st.triples, l: "Tri", c: "#1B4570", dark: true },
+    { n: st.quads,   l: "Quad+", c: "#1B4570", dark: true },
   ].filter(x => x.n > 0);
   if (!items.length) return null;
   return (
     <div style={{ display: "flex", alignItems: "center", gap, flexWrap: "wrap" }}>
       {items.map(x => (
         <div key={x.l} style={{ display: "inline-flex", alignItems: "center", gap: 3, fontSize: fs, fontWeight: 700 }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0 }} />
-          <span style={{ color: x.c }}>{x.n} {x.l}</span>
+          <span style={{ width: 7, height: 7, borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0,
+            boxShadow: "dark" in x ? `0 0 0 1px ${tc3 ?? "currentColor"}` : undefined }} />
+          <span style={{ color: "dark" in x ? (tc3 ?? "inherit") : x.c }}>{x.n} {x.l}</span>
         </div>
       ))}
     </div>

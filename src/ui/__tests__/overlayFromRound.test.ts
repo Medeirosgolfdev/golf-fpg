@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { overlayFromRound, roundNumberOf } from "../overlay/fromRound";
+import { countHoles } from "../overlay/shared";
 import type { Player, Tournament } from "../../data/fpgTypes";
 
 // Faldo Junior Tour Madeira 2026, R1 do Manuel (85, Brancas, Machico + Serras)
@@ -39,5 +40,15 @@ describe("overlayFromRound", () => {
 
   it("volta por omissão = 1", () => {
     expect(roundNumberOf({ ...tourn, _roundLabel: "Resumo" } as Tournament)).toBe(1);
+  });
+});
+
+describe("countHoles", () => {
+  it("separa triplo (+3) de quádruplo ou pior (+4…)", () => {
+    // R1 do Manuel no Faldo: 9 no par 5 (buraco 3) = quádruplo
+    expect(countHoles(scores, par)).toEqual({ hio: 0, eagles: 0, birdies: 0, pars: 9, bogeys: 7, doubles: 1, triples: 0, quads: 1 });
+    expect(countHoles([7, 4], [4, 4]).triples).toBe(1);
+    expect(countHoles(scores, par, 0, 9).quads).toBe(1);
+    expect(countHoles(scores, par, 9, 18).quads).toBe(0);
   });
 });

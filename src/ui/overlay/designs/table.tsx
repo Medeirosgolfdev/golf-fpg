@@ -46,11 +46,13 @@ export function V14({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 }
 
 /* V15 · B&W CARD */
-export function V15({ d, v, s, bg }: P) {
+/* Cartão CLARO: o texto é escuro, por isso o fundo é sempre o dele (o fundo
+   escolhido no painel deixava o texto invisível — 16/10/2026). */
+export function V15({ d, v, s }: P) {
   const is18 = d.scores.length >= 18; const W = 24;
   const bdr = "1px solid #e5e7eb";
   return (
-    <div style={{ fontFamily:II, display:"inline-block", background:bg||"rgba(255,255,255,0.95)", color:"#111", overflow:"hidden", borderRadius:8 }}>
+    <div style={{ fontFamily:II, display:"inline-block", background:"rgba(255,255,255,0.95)", color:"#111", overflow:"hidden", borderRadius:8 }}>
       <div style={{ background:"rgba(26,39,68,0.95)", padding:"4px 8px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:6 }}>
         <div>
           {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700, color:"#fff" }}>{d.player.toUpperCase()}</div>}
@@ -91,10 +93,11 @@ export function V15({ d, v, s, bg }: P) {
 }
 
 /* V16 · LIGHT CARD */
-export function V16({ d, v, s, bg }: P) {
+/* Cartão CLARO — fundo sempre o dele (ver V15). */
+export function V16({ d, v, s }: P) {
   const is18 = d.scores.length >= 18; const W = 26;
   return (
-    <div style={{ fontFamily:II, display:"inline-block", background:bg||"rgba(255,255,255,0.92)", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
+    <div style={{ fontFamily:II, display:"inline-block", background:"rgba(255,255,255,0.92)", borderRadius:8, padding:"3px 5px", color:"#222", border:"1px solid rgba(0,0,0,.08)" }}>
       {(v.course||v.date||v.tee||v.teeDist||v.round) && (
         <div style={{ borderBottom:"1px solid #e5e7eb", paddingBottom:3, marginBottom:3 }}>
           {v.course&&d.course && <div style={{ fontSize:13, fontWeight:900, color:"#111" }}>{d.course}</div>}
@@ -451,7 +454,7 @@ export function V35({ d, v, s, bg, tc="white", tc3 }: P) {
         </div>
       ))}
       {(v.course||v.date) && (
-        <div style={{ padding:"4px 10px", borderTop:bdr, fontSize:9, fontWeight:600, color:tc3||tx3, display:"flex", justifyContent:"space-between" }}>
+        <div style={{ padding:"4px 10px", borderTop:bdr, fontSize:9, fontWeight:600, color:tc3||tx3, display:"flex", justifyContent:"space-between", gap:10 }}>
           <span>{[v.course&&d.course,v.date&&d.date].filter(Boolean).join(" · ")}</span>
           {v.position&&d.position && <span style={{ fontWeight:800, color:tx }}>{d.position}</span>}
         </div>

@@ -3,7 +3,7 @@
  * V11 Giant Score, V22 Magazine, V10 Score Hero, V12 Tournament,
  * V6 Grint Row, V9 18Birdies, V13 Dashboard, V5 Ticket, V26 Signature.
  */
-import { II, OS, LO, BN, SG, TS, TS_SCORE, vpC, metaStr, hiChStr } from "../shared";
+import { II, OS, LO, BN, SG, TS, TS_SCORE, vpC, metaStr, hiChStr, countHoles } from "../shared";
 import { SC, SCQ, TpBadge, Grid2, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
@@ -12,7 +12,7 @@ import type { P } from "../types";
 export function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const hcl = hiChStr(d,v,s);
   return (
-    <div style={{ fontFamily:LO, width:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:"1px solid rgba(255,255,255,0.15)", textShadow:TS }}>
+    <div style={{ fontFamily:LO, display:"inline-block", minWidth:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:"1px solid rgba(255,255,255,0.15)", textShadow:TS }}>
       {(v.player&&d.player || v.course&&d.course) && (
         <div style={{ textAlign:"center", borderBottom:"1px dashed rgba(255,255,255,0.2)", paddingBottom:6, marginBottom:4 }}>
           {v.player&&d.player && <div style={{ fontSize:20, fontWeight:700, fontStyle:"italic" }}>{d.player}</div>}
@@ -23,7 +23,7 @@ export function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         <div style={{ fontFamily:II, fontSize:48, fontWeight:900, lineHeight:1, letterSpacing:-2, color:tc }}>{s.sT}</div>
         <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
       </div>
-      {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc="#666" />}
+      {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc={tc4} />}
       <div style={{ borderTop:"1px dashed rgba(255,255,255,0.2)", paddingTop:6, marginTop:3, fontFamily:II }}>
         {v.stats && <div className="u-flex-jc"><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
         {(v.date||v.tee||v.teeDist||v.round||hcl||(v.position&&d.position)) && <div style={{ textAlign:"center", fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{[v.date&&d.date, v.tee&&d.tee, (v.teeDist&&d.teeDist)?`${d.teeDist}m`:null, v.round&&`R${d.round}`, v.position&&d.position&&`POS ${d.position}`, hcl].filter(Boolean).join(" · ")}</div>}
@@ -70,7 +70,7 @@ export function V9({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg||"rgba(15,15,25,0.9)", borderRadius:10, padding:"4px 6px", textShadow:TS }}>
-      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:4 }}>
+      <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12, marginBottom:4 }}>
         <div>
           {v.course&&d.course && <div style={{ fontSize:14, fontWeight:700, letterSpacing:.3 }}>{d.course}</div>}
           <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>Par {s.pT}{v.tee&&d.tee?` · ${d.tee}`:""}{v.teeDist&&d.teeDist?` · ${d.teeDist}m`:""}{v.date&&d.date?` · ${d.date}`:""}</div>
@@ -287,21 +287,6 @@ export function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
-  /* Stats por nine: contagem de eagles/birdies/pars/bogeys/etc. */
-  const calcNine = (start: number) => {
-    const st = { hio:0, eagles:0, birdies:0, pars:0, bogeys:0, doubles:0, triples:0 };
-    for (let i = start; i < start + 9; i++) {
-      const sc = d.scores[i]; const x = sc - d.par[i];
-      if (sc === 1) st.hio++;
-      else if (x <= -2) st.eagles++;
-      else if (x === -1) st.birdies++;
-      else if (x === 0) st.pars++;
-      else if (x === 1) st.bogeys++;
-      else if (x === 2) st.doubles++;
-      else st.triples++;
-    }
-    return st;
-  };
   /* Fallback para 9H — não dá para comparar. */
   if (!is18) {
     return (
@@ -311,31 +296,8 @@ export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       </div>
     );
   }
-  const fNine = calcNine(0);
-  const bNine = calcNine(9);
-  /* Uma linha de stats inline. */
-  const StatsLine = ({ st }: { st: typeof fNine }) => {
-    const items = [
-      { n:st.hio, l:"HIO", c:"#10b981" },
-      { n:st.eagles, l:"Eagle", c:"#d4a017" },
-      { n:st.birdies, l:"Bir", c:"#dc2626" },
-      { n:st.pars, l:"Par", c:tc4 },
-      { n:st.bogeys, l:"Bog", c:"#5BADE6" },
-      { n:st.doubles, l:"Dbl", c:"#2B6EA0" },
-      { n:st.triples, l:"Tri+", c:"#1B4570" },
-    ].filter(x => x.n > 0);
-    if (!items.length) return null;
-    return (
-      <div style={{ display:"flex", gap:6, alignItems:"center", fontSize:9, fontWeight:700, flexWrap:"wrap" }}>
-        {items.map(x => (
-          <span key={x.l} style={{ display:"inline-flex", alignItems:"center", gap:3 }}>
-            <span style={{ width:6, height:6, borderRadius:"50%", background:x.c, display:"inline-block" }} />
-            <span style={{ color:x.c }}>{x.n} {x.l}</span>
-          </span>
-        ))}
-      </div>
-    );
-  };
+  const fNine = countHoles(d.scores, d.par, 0, 9);
+  const bNine = countHoles(d.scores, d.par, 9, 18);
   /* Uma linha (Front 9 ou Back 9): label · 9 circles · subtotal · vs par. */
   const NineRow = ({ label, sub, vpar, scores, pars }: { label: string; sub: number; vpar: number; scores: number[]; pars: number[] }) => (
     <div>
@@ -372,11 +334,11 @@ export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         <div style={{ marginTop:5, paddingTop:4, borderTop:"1px solid rgba(255,255,255,.08)", display:"flex", flexDirection:"column", gap:2 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <span style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, minWidth:30 }}>F9</span>
-            <StatsLine st={fNine} />
+            <StatsRow st={fNine} tc3={tc4} gap={6} fs={9} />
           </div>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <span style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, minWidth:30 }}>B9</span>
-            <StatsLine st={bNine} />
+            <StatsRow st={bNine} tc3={tc4} gap={6} fs={9} />
           </div>
         </div>
       )}

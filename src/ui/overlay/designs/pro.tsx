@@ -127,13 +127,13 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
             {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
               <div key={off}>
                 {ri === 0 && <div style={{ display:"flex", gap:2, marginBottom:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
+                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:28, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
                 </div>}
                 <div style={{ display:"flex", gap:2 }}>
                   {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={28} />)}
                 </div>
                 {is18 && ri === 1 && <div style={{ display:"flex", gap:2, marginTop:1 }}>
-                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:36, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
+                  {Array.from({length:len},(_,i) => <div key={i} style={{ width:28, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
                 </div>}
               </div>
             ))}
@@ -275,21 +275,17 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
               </div>
             ))}
           </div>
-          {/* Score com badge centrado em baixo (sticker semi-transparente) */}
-          <div style={{ flexShrink: 0, position:"relative", display:"inline-block" }}>
-            <div style={{ fontFamily: BN, fontSize: scoreFs, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1, paddingTop: 2 }}>{s.sT}</div>
-            <div style={{ position:"absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 2, opacity: 0.85 }}>
-              <TpBadge vp={s.vpT} sz={Math.round(scoreFs * 0.2)} />
-            </div>
+          {/* Score com o badge centrado POR BAIXO (por cima tapava o número) */}
+          <div style={{ flexShrink: 0, display:"flex", flexDirection:"column", alignItems:"center", gap: 4 }}>
+            <div style={{ fontFamily: BN, fontSize: scoreFs, lineHeight: 1, letterSpacing: -4, color: tc, paddingTop: 2 }}>{s.sT}</div>
+            <TpBadge vp={s.vpT} sz={Math.round(scoreFs * 0.2)} />
           </div>
         </div>
       )}
       {!v.holeScores && (
-        <div style={{ position:"relative", display:"inline-block" }}>
-          <div style={{ fontFamily: BN, fontSize: 110, lineHeight: 1, letterSpacing: -4, color: tc, position:"relative", zIndex: 1, paddingTop: 2 }}>{s.sT}</div>
-          <div style={{ position:"absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 2, opacity: 0.85 }}>
-            <TpBadge vp={s.vpT} sz={22} />
-          </div>
+        <div style={{ display:"inline-flex", flexDirection:"column", alignItems:"center", gap: 4 }}>
+          <div style={{ fontFamily: BN, fontSize: 110, lineHeight: 1, letterSpacing: -4, color: tc, paddingTop: 2 }}>{s.sT}</div>
+          <TpBadge vp={s.vpT} sz={22} />
         </div>
       )}
       {/* Footer com wrap em multi-linhas para evitar overflow horizontal. */}
@@ -351,12 +347,10 @@ export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {/* Score com badge em baixo (sticker semi-transparente) */}
-      <div style={{ position:"relative", display:"inline-block", marginTop: 2 }}>
-        <div style={{ fontFamily: BN, fontSize: 90, lineHeight: 1, letterSpacing: -3, color: tc, position:"relative", zIndex: 1 }}>{s.sT}</div>
-        <div style={{ position:"absolute", bottom: 0, left: "50%", transform: "translateX(-50%)", zIndex: 2, opacity: 0.85 }}>
-          <TpBadge vp={s.vpT} sz={26} />
-        </div>
+      {/* Score com o badge ao lado, alinhado pela base (por cima tapava o número) */}
+      <div style={{ display:"flex", alignItems:"flex-end", gap: 8, marginTop: 2 }}>
+        <div style={{ fontFamily: BN, fontSize: 90, lineHeight: 1, letterSpacing: -3, color: tc }}>{s.sT}</div>
+        <div style={{ marginBottom: 10 }}><TpBadge vp={s.vpT} sz={26} /></div>
       </div>
       {(v.date && d.date) || hcl || v.stats ? (
         <div style={{ fontSize: 9, fontWeight: 600, color: tc3, marginTop: 4, letterSpacing: 1, display: "flex", gap: 8, flexWrap:"wrap" }}>
