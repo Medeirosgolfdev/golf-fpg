@@ -9,7 +9,7 @@ import { isManuel } from "../../constants/manuel";
 import { overlayFromRound, roundNumberOf } from "./fromRound";
 import type { ShareOption } from "../ShareRoundPanel";
 
-type Ctx = { event?: string; course?: string };
+type Ctx = { event?: string; course?: string; date?: string };
 export type ShareOptions = { options: ShareOption[]; defaultKey?: string };
 
 /** Uma volta (o torneio já expandido para essa ronda). */

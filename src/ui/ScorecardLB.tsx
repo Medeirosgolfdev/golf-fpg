@@ -647,7 +647,7 @@ export function ScorecardLB({
   });
 
   // «📷 Partilhar volta»: os PNGs do simulador com a volta de quem a acabou.
-  const share = shareOptionsForRound(tournament, { event: options?.shareEvent, course: options?.shareCourse });
+  const share = shareOptionsForRound(tournament, { event: options?.shareEvent, course: options?.shareCourse, date: options?.shareDate });
 
   return (
     <>

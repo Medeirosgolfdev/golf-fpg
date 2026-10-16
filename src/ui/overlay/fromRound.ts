@@ -26,10 +26,10 @@ export function roundNumberOf(t: Tournament): number {
 /** Data da volta: a da própria ronda quando vem numa data reconhecível; senão a do
  *  torneio + (volta − 1) dias. Fica vazia quando não se sabe — o utilizador
  *  escreve-a no painel. */
-function roundDate(t: Tournament, p: Player, round: number): string {
+function roundDate(t: Tournament, p: Player, round: number, eventStart?: string): string {
   const own = parseDay((p.roundScores?.[0] as { date?: string } | undefined)?.date);
   if (own) return fmtDay(own);
-  const start = parseDay(t.date);
+  const start = parseDay(t.date) ?? parseDay(eventStart);
   if (!start) return "";
   start.setDate(start.getDate() + round - 1);
   return fmtDay(start);
@@ -37,7 +37,7 @@ function roundDate(t: Tournament, p: Player, round: number): string {
 
 export function overlayFromRound(
   t: Tournament, p: Player, sd: number | null,
-  ctx: { event?: string; course?: string } = {},
+  ctx: { event?: string; course?: string; date?: string } = {},
 ): OverlayData | null {
   const rs = p.roundScores?.[0];
   const par = (p.par?.length ? p.par : rs?.pars) || [];
@@ -75,7 +75,7 @@ export function overlayFromRound(
     player: p.name,
     event: ctx.event || t.name || "",
     round,
-    date: roundDate(t, p, round),
+    date: roundDate(t, p, round, ctx.date),
     position: pos && pos < 9999 ? `${pos}º` : "",
   };
 }

@@ -47,8 +47,8 @@ export type DesignDef = {
 export const DESIGNS: DesignDef[] = [
   /* 🏁 Resumo do torneio — todas as voltas (escolher «Torneio» no painel) */
   { id:"V50", label:"Resumo do Torneio", C:V50, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["stats","course","tee","teeDist","player","event","date","position"] },
-  { id:"V51", label:"Voltas lado a lado", C:V51, needsHoles:true, needsRounds:true, cat:CAT_RESUMO, has:["holeScores","player","event","position"] },
-  { id:"V52", label:"Evolução",          C:V52, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["player","event","date","position"] },
+  { id:"V51", label:"Voltas lado a lado", C:V51, needsHoles:true, needsRounds:true, cat:CAT_RESUMO, has:["holeScores","player","event","position","course","tee","teeDist","date"] },
+  { id:"V52", label:"Evolução",          C:V52, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["player","event","date","position","course","tee","teeDist"] },
   /* 🏌️ Hole-in-One — design celebratório para HIO */
   { id:"V48", label:"Ace Celebration", C:V48, needsHoles:true, needsHIO:true, cat:CAT_HIO, has:[] },
   /* ⭐ Pro Tour — estilo PGA Tour / PGA Tour U / College Golf */
@@ -149,7 +149,7 @@ export const VIS_PRESETS: { label:string; desc:string; vis:Vis }[] = [
 ];
 
 /* ═══════ COR DE DESTAQUE ═══════ */
-/** Segunda cor do texto (torneio, posição, SD): variante para texto claro e
+/** Segunda cor do texto (nome do torneio): variante para texto claro e
  *  para texto escuro. «Sem» = tudo na cor do texto. */
 export const ACCENTS: { id: string; label: string; light?: string; dark?: string }[] = [
   { id: "gold",  label: "Dourado", light: "#f2c14e", dark: "#8a5a00" },
@@ -174,4 +174,7 @@ export const BG_OPTIONS: { id:string; label:string; hex:string|null }[] = [
 
 /** Fundo «Variado»: cada desenho com a sua cor (escuras — o texto é claro),
  *  pela ordem do registo, para a galeria não sair toda da mesma cor. */
-export const MIX_BG = ["#0f1e35", "#006747", "#4a1020", "#111111", "#00205b", "#1f2937", "#3b1f7e", "#0d3320", "#7c2d12"];
+export const MIX_BG = ["#1c2a44", "#1f3d30", "#46212d", "#262626", "#1c3a46", "#3b2f22", "#33284a", "#2a3a2a", "#4a2c1f"];
+/** O mesmo «Variado» para texto ESCURO: tons claros e sóbrios (texto escuro em
+ *  fundo escuro parecia transparente). */
+export const MIX_BG_LIGHT = ["#eef1f6", "#e8f1ea", "#f6eaec", "#f1f0ee", "#e6f0f3", "#f4eee4", "#efeaf5", "#edf1e6", "#f6ece4"];

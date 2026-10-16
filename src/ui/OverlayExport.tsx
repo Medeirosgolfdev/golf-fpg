@@ -19,7 +19,7 @@ import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
 import { CellInfoCtx, AccentCtx, Info } from "./overlay/badges";
-import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, defaultVis, type DesignDef } from "./overlay/registry";
+import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, MIX_BG_LIGHT, defaultVis, type DesignDef } from "./overlay/registry";
 import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
@@ -92,6 +92,8 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [round,       setRound]       = useState(data.round || 1);
   const [date,        setDate]        = useState(() => {
     if (data.date) return data.date;
+    /* Volta de um torneio sem data conhecida: fica vazia (a de hoje enganava). */
+    if (inline) return "";
     const n = new Date();
     return `${n.getDate()} ${MONTHS_PT[n.getMonth()]} ${n.getFullYear()}`;
   });
@@ -149,7 +151,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     if (data.player) setPlayer(data.player);
     setEvent(data.event || nextEvent || "");
     setRound(data.round || 1);
-    if (data.date) setDate(data.date);
+    if (data.date || inline) setDate(data.date || "");
     setPosition(data.position || "");
   }, [dataKey, data, nextEvent]);
 
@@ -199,11 +201,32 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     [data.hasHoles, data.rounds, hasHIO],
   );
 
+  /* Só se mostram as opções que mudam alguma coisa nos desenhos disponíveis
+     (no Resumo, «Round», «HI/CH» ou «SD» não faziam nada). Uma opção conta se
+     há o dado e se algum desenho o trata ou a linha de info por baixo o mostra. */
+  const EXTRA_KEYS = ["player", "event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd", "stats"];
+  const toggleUseful = (k: string): boolean => {
+    const holes = available.some(x => x.needsHoles) && !noHoleData;
+    if (k === "holeScores") return holes && available.some(x => x.has.includes(k));
+    if (k === "holePar" || k === "holeSI") return holes && (k !== "holeSI" || dd.si.some(n => n > 0));
+    const hasData =
+      k === "round" ? !dd.rounds :
+      k === "hiCh" ? dd.hi != null :
+      k === "sd" ? dd.sd != null :
+      k === "course" ? !!dd.course :
+      k === "tee" ? !!dd.tee :
+      k === "teeDist" ? !!dd.teeDist :
+      true;
+    return hasData && (available.some(x => x.has.includes(k)) || EXTRA_KEYS.includes(k));
+  };
+
   const bgOpt   = BG_OPTIONS.find(b => b.id === bgId);
   const bgHex   = bgId === "custom" ? customBg : (bgOpt?.hex ?? null);
   const bgColor = bgHex ? hexToRgba(bgHex, bgAlpha/100) : "transparent";
-  /* Fundo de cada desenho: «Variado» = a cor própria dele (MIX_BG pela ordem). */
-  const bgFor = (x: DesignDef) => bgId === "mix" ? hexToRgba(MIX_BG[DESIGNS.indexOf(x) % MIX_BG.length], bgAlpha/100) : bgColor;
+  /* Fundo de cada desenho: «Variado» = a cor própria dele (pela ordem) — escura
+     com texto claro, clara com texto escuro. */
+  const mixBg = theme === "light" ? MIX_BG_LIGHT : MIX_BG;
+  const bgFor = (x: DesignDef) => bgId === "mix" ? hexToRgba(mixBg[DESIGNS.indexOf(x) % mixBg.length], bgAlpha/100) : bgColor;
 
   /* Texto claro (fundos escuros) ou escuro (fundos claros) — tons suaves, não
      branco/preto puros. tc = principal; tc2/tc3/tc4 = secundários. */
@@ -211,7 +234,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const tc2 = theme === "light" ? "#2a2e36" : "#ece8e0";
   const tc3 = theme === "light" ? "#4a505c" : "#d6d1c7";
   const tc4 = theme === "light" ? "#636a77" : "#bdb8ae";
-  /* Cor de destaque (torneio, posição, SD) — variante clara ou escura conforme o texto. */
+  /* Cor de destaque (nome do torneio) — variante clara ou escura conforme o texto. */
   const accOpt = ACCENTS.find((a) => a.id === accentId) ?? ACCENTS[0];
   const accent = { light: accOpt.light, dark: accOpt.dark };
 
@@ -383,7 +406,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                 <span style={{
                   display:"inline-block", width:16, height:16, borderRadius:4, flexShrink:0,
                   border:"1.5px solid rgba(128,128,128,0.3)",
-                  background: bg.id==="mix" ? `conic-gradient(${MIX_BG.slice(0,4).join(",")})`
+                  background: bg.id==="mix" ? `conic-gradient(${mixBg.slice(0,4).join(",")})`
                     : bg.hex===null ? "linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)" : bg.hex,
                   backgroundSize: bg.hex===null && bg.id!=="mix" ? "6px 6px" : undefined,
                 }} />
@@ -410,7 +433,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
               </button>
             ))}
             <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
-            {/* Segunda cor para dar destaque (torneio, posição, SD) */}
+            {/* Segunda cor para dar destaque (nome do torneio) */}
             <span style={{ fontSize:10, fontWeight:800, color:"#888", marginRight:2 }}>Destaque:</span>
             {ACCENTS.map(a => (
               <button key={a.id} className={`ov-opt-btn${accentId===a.id?" active":""}`} onClick={()=>setAccentId(a.id)}
@@ -458,7 +481,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
 
           <div className="ov-section-label">Mostrar</div>
           <div style={{ display:"flex", flexWrap:"wrap", gap:"4px 6px" }}>
-            {ALL_TOGGLES.map(t => (
+            {ALL_TOGGLES.filter(t => toggleUseful(t.key)).map(t => (
               <label key={t.key} className="ov-toggle">
                 <input type="checkbox" checked={!!vis[t.key]} onChange={()=>toggle(t.key)} />
                 <span>{t.label}</span>

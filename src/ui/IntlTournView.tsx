@@ -311,7 +311,7 @@ export function IntlTournView({
     const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
     // «📷 Partilhar volta» no Resumo / Scorecards: torneio completo + cada volta.
     const shareRounds = (isCombined || isAcc)
-      ? <ShareRoundsPanel key={tournament.tcode} rounds={expanded.filter((e: any) => !e._isTotal)} event={scOptions.shareEvent} course={scOptions.shareCourse} />
+      ? <ShareRoundsPanel key={tournament.tcode} rounds={expanded.filter((e: any) => !e._isTotal)} event={scOptions.shareEvent} course={scOptions.shareCourse} date={scOptions.shareDate} />
       : null;
     if (isCombined) {
       return <><AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />{shareRounds}</>;
@@ -358,7 +358,7 @@ export function IntlTournView({
         : active.kind === "trailing"
           ? trailingTabs![active.ti].content
           : active.kind === "draw"
-            ? <>{active.render()}<ShareRoundsPanel key={`${tournament.tcode}-d`} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={scOptions.shareEvent} course={scOptions.shareCourse} /></>
+            ? <>{active.render()}<ShareRoundsPanel key={`${tournament.tcode}-d`} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={scOptions.shareEvent} course={scOptions.shareCourse} date={scOptions.shareDate} /></>
             : renderRoundContent(active.rtab)}
     </div>
   );

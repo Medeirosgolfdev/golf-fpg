@@ -113,6 +113,8 @@ export interface ScorecardOptions {
    *  volta só traz o escalão (MAJOR/circuitos: `name` = divisão, `campo` vazio). */
   shareEvent?: string;
   shareCourse?: string;
+  /** Data de início do torneio (ISO) — para a data da volta quando a fonte não a traz. */
+  shareDate?: string;
 }
 
 export interface SDResult {

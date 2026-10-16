@@ -40,7 +40,7 @@ export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
             <span style={{ fontFamily: OS, fontSize: 13, fontWeight: 700, color: tc3, width: 22 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 26, lineHeight: 1, width: 34 }}>{r.gross}</span>
             <span style={{ fontSize: 13, fontWeight: 800, color: vpC(r.toPar, tc), width: 34 }}>{fmtToPar(r.toPar)}</span>
-            {v.date && r.date && <span style={{ fontSize: 10, color: tc3 }}>{r.date}</span>}
+            {v.date && r.date && <span style={{ fontSize: 10, color: tc3, whiteSpace: "nowrap" }}>{r.date}</span>}
             {r.gross === best && <span style={{ fontSize: 11 }}>★</span>}
           </div>
         ))}
@@ -103,6 +103,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
         {rs.map((r) => `R${r.round} ${r.gross}`).join(" · ")}
         {" · "}<span style={{ color: dCol(b.gross - a.gross) }}>R{b.round} vs R{a.round}: {fmtD(b.gross - a.gross)}</span>
       </div>
+      <Info d={d} v={v} keys={["course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit mt={3} />
     </div>
   );
 }
@@ -116,12 +117,13 @@ export function V52({ d, v, bg, tc = "white", tc3 }: P) {
   const msg = diff < 0 ? `${-diff} pancada${diff === -1 ? "" : "s"} melhor` : diff > 0 ? `${diff} pancada${diff === 1 ? "" : "s"} acima` : "igual";
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "8px 14px", textAlign: "center" }}>
-      {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>{d.player}</div>}
-      <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper align="center" />
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 6 }}>
+      {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase", whiteSpace: "nowrap" }}>{d.player}</div>}
+      <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper align="center" fit />
+      {/* Alinhados pela base: os «R1/R2» ficam na mesma linha */}
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "center", gap: 8, marginTop: 6 }}>
         {rs.map((r, i) => (
-          <span key={r.round} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
-            {i > 0 && <span style={{ fontSize: 22, color: tc3 }}>→</span>}
+          <span key={r.round} style={{ display: "inline-flex", alignItems: "flex-end", gap: 8 }}>
+            {i > 0 && <span style={{ fontSize: 22, color: tc3, paddingBottom: 22 }}>→</span>}
             <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center" }}>
               <span style={{ fontFamily: BN, fontSize: i === rs.length - 1 ? 64 : 44, lineHeight: .9, opacity: i === rs.length - 1 ? 1 : .75 }}>{r.gross}</span>
               <span style={{ fontFamily: OS, fontSize: 11, fontWeight: 700, color: tc3 }}>R{r.round}</span>
@@ -130,9 +132,10 @@ export function V52({ d, v, bg, tc = "white", tc3 }: P) {
         ))}
       </div>
       <div style={{ fontFamily: OS, fontSize: 16, fontWeight: 700, letterSpacing: 1, color: dCol(diff), marginTop: 4, textTransform: "uppercase" }}>{msg}</div>
-      <div style={{ fontSize: 11, fontWeight: 700, color: tc3, marginTop: 4 }}>
-        Total {tot(rs)} ({fmtToPar(totPar(rs))}){v.position && d.position ? ` · ${d.position}` : ""}{v.date && d.date ? ` · ${d.date}` : ""}
+      <div style={{ fontSize: 12, fontWeight: 800, marginTop: 4 }}>
+        Total {tot(rs)} <span style={{ color: tc3 }}>({fmtToPar(totPar(rs))})</span>
       </div>
+      <Info d={d} v={v} keys={["position", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} align="center" fit mt={2} />
     </div>
   );
 }

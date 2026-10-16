@@ -47,13 +47,13 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
 /** Painel do Resumo / Scorecards: o torneio completo (voltas comparadas) e
  *  cada volta de cada jogador. Por omissão o torneio do Manuel (ou a última
  *  volta dele, se ainda só jogou uma). */
-export function ShareRoundsPanel({ rounds, event, course }: { rounds: Tournament[]; event?: string; course?: string }) {
+export function ShareRoundsPanel({ rounds, event, course, date }: { rounds: Tournament[]; event?: string; course?: string; date?: string }) {
   const share = useMemo(() => {
-    const ctx = { event, course };
+    const ctx = { event, course, date };
     const t = shareOptionsForTournament(rounds, ctx);
     const r = shareOptionsForRounds(rounds, ctx);
     return { options: [...t.options, ...r.options], defaultKey: t.defaultKey ?? r.defaultKey };
-  }, [rounds, event, course]);
+  }, [rounds, event, course, date]);
   if (!share.options.length) return null;
   return <ShareRoundPanel options={share.options} defaultKey={share.defaultKey} />;
 }

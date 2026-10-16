@@ -256,7 +256,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   // «📷 Partilhar volta» no Resumo / Scorecards / Draw: torneio completo + cada
   // volta já jogada (no Draw da volta seguinte também — o Faldo abre aí).
   const shareRounds = isResumoTab || isCombinedTab || isDrawTab
-    ? <ShareRoundsPanel key={tournament.tcode} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={options?.shareEvent} course={options?.shareCourse} />
+    ? <ShareRoundsPanel key={tournament.tcode} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={options?.shareEvent} course={options?.shareCourse} date={options?.shareDate} />
     : null;
 
   // Info about tournament

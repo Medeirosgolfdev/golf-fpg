@@ -218,7 +218,8 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
     { n: st.eagles,  l: "🦅",  c: "#d4a017" },
     { n: st.birdies, l: "Bir", c: "#dc2626"  },
     { n: st.pars,    l: "Par", c: tc3        },
-    { n: st.bogeys,  l: "Bog", c: "#5BADE6"  },
+    // Texto na cor secundária (o azul-claro desaparecia sobre fotos); a bolinha diz que é bogey.
+    { n: st.bogeys,  l: "Bog", c: "#5BADE6", plain: true },
     // Azuis-escuros (as cores do cartão): o texto vai na cor secundária do
     // desenho e a bolinha leva contorno — em fundo escuro não se liam.
     { n: st.doubles, l: "Dbl", c: "#2B6EA0", dark: true },
@@ -232,7 +233,7 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
         <div key={x.l} style={{ display: "inline-flex", alignItems: "center", gap: 3, fontSize: fs, fontWeight: 700 }}>
           <span style={{ width: 7, height: 7, borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0,
             boxShadow: "dark" in x ? `0 0 0 1px ${tc3 ?? "currentColor"}` : undefined }} />
-          <span style={{ color: "dark" in x ? (tc3 ?? "inherit") : x.c }}>{x.n} {x.l}</span>
+          <span style={{ color: "dark" in x || "plain" in x ? (tc3 ?? "inherit") : x.c }}>{x.n} {x.l}</span>
         </div>
       ))}
     </div>
@@ -240,7 +241,7 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
 }
 
 /* ═══════ INFO — o bloco de informação comum a todos os desenhos ═══════ */
-/** Cor de destaque escolhida no painel (torneio, posição, SD). Vem por contexto
+/** Cor de destaque escolhida no painel (nome do torneio). Vem por contexto
  *  para não ter de passar por todos os desenhos; sem destaque = cor do texto. */
 export const AccentCtx = createContext<{ light?: string; dark?: string }>({});
 /**
@@ -265,15 +266,15 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
   const ev = on("event") && d.event ? d.event : "";
   const rd = on("round") && d.round && !d.rounds ? `R${d.round}` : "";
   const course = [on("course") && d.course, on("tee") && d.tee, on("teeDist") && d.teeDist ? `${d.teeDist}m` : ""].filter(Boolean).join(" · ");
-  const chips: { l?: string; val: string; hi?: boolean }[] = [];
+  const chips: { l?: string; val: string }[] = [];
   if (!ev && rd) chips.push({ val: rd });
   if (on("date") && d.date) chips.push({ val: d.date });
-  if (on("position") && d.position) chips.push({ l: "POS", val: d.position, hi: true });
+  if (on("position") && d.position) chips.push({ l: "POS", val: d.position });
   if (on("hiCh") && d.hi !== null) {
     chips.push({ l: "HI", val: d.hi.toFixed(1) });
     if (d.courseHcp !== null) chips.push({ l: "CH", val: String(d.courseHcp) });
   }
-  if (on("sd") && d.sd !== null) chips.push({ l: "SD", val: fmtSD(d.sd), hi: true });
+  if (on("sd") && d.sd !== null) chips.push({ l: "SD", val: fmtSD(d.sd) });
   if (!ev && !course && !chips.length && !st) return null;
   const jc = align === "center" ? "center" : align === "right" ? "flex-end" : "flex-start";
   const tt = upper ? { textTransform: "uppercase" as const, letterSpacing: 1 } : {};
@@ -290,7 +291,7 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
           {chips.map((c, i) => (
             <span key={i} style={{ whiteSpace: "nowrap" }}>
               {c.l && <span style={{ fontWeight: 600, color: tc3, opacity: .75, fontSize: fs * .85, marginRight: 3 }}>{c.l}</span>}
-              <span style={{ fontWeight: c.l ? 800 : 600, color: c.hi ? acc : c.l ? tc : tc3 }}>{c.val}</span>
+              <span style={{ fontWeight: c.l ? 800 : 600, color: c.l ? tc : tc3 }}>{c.val}</span>
             </span>
           ))}
         </div>
