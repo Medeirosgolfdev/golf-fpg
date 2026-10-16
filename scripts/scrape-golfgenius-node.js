@@ -839,6 +839,39 @@ function applyPlayerOverrides(out, players) {
   return n;
 }
 
+/** Aplica o CR/Slope do scope às divisões jogadas nesse tee. Numa divisão mista
+ *  (Overall Leaderboard, tee de outro escalão) quem jogou o tee corrigido leva
+ *  o cartão dele em cada volta — o SD da /major lê primeiro o da ronda. */
+function applyTeeRatings(out, teeRatings) {
+  const fixed = new Map();   // nameKey → divisão de tee corrigido
+  for (const dv of out.divisions) {
+    const tr = dv.teeName ? teeRatings[dv.teeName] : null;
+    if (!tr) continue;
+    dv.courseRating = tr.courseRating;
+    dv.slope = tr.slope;
+    dv.ratingSource = tr.ratingSource || null;
+    for (const p of dv.players) if (!fixed.has(nameKey(p.name))) fixed.set(nameKey(p.name), dv);
+    console.log(`   🎯 ${dv.division}: tee ${dv.teeName} → CR ${tr.courseRating} / ${tr.slope} (${tr.ratingSource || 'scope'})`);
+  }
+  let n = 0;
+  for (const dv of out.divisions) {
+    if (!dv.teeName || teeRatings[dv.teeName]) continue;
+    for (const p of dv.players) {
+      const src = fixed.get(nameKey(p.name));
+      if (!src) continue;
+      for (const r of p.rounds || []) {
+        r.teeName = src.teeName;
+        if (src.meters) r.meters = src.meters;
+        if (src.si) r.si = src.si;
+        r.courseRating = src.courseRating;
+        r.slope = src.slope;
+        n++;
+      }
+    }
+  }
+  if (n) console.log(`   🎯 ${n} volta(s) em divisões mistas com o cartão do tee corrigido`);
+}
+
 async function runOne(opts) {
   const {
     pageUrl = null, v2Arg = null, leagueOverride = null, nameOverride = null,
@@ -1079,6 +1112,11 @@ async function runOne(opts) {
     console.log(`   🔢 SI do campo (${opts.siSource || 'scope'}) aplicado a ${out.divisions.length} divisão(ões)`);
   }
 
+  // CR/Slope oficial por tee (scope `teeRatings`) — o GG às vezes dá ao tee o
+  // rating do sexo errado (Faldo Madeira 2026: Yellow das raparigas com o CR
+  // masculino). Vale para o sexo que joga esse tee no `teeDivisions`.
+  if (opts.teeRatings) applyTeeRatings(out, opts.teeRatings);
+
   // HCP/dob/clube dos portugueses pelos federados FPG (scope `fpgFederados`).
   if (opts.fpgFederados) applyFpgFederados(out, { overrides: opts.fpgFed || {} });
   if (opts.players) applyPlayerOverrides(out, opts.players);
@@ -1143,7 +1181,7 @@ async function main() {
         skipTeeSheets: skipTeeSheets || !!e.skipTeeSheets, rosterPage: e.rosterPage || null, force,
         stop: e.stop != null ? e.stop : null,
         si: Array.isArray(e.si) ? e.si : null, siSource: e.siSource || null,
-        teeDivisions: e.teeDivisions || null,
+        teeDivisions: e.teeDivisions || null, teeRatings: e.teeRatings || null,
         fpgFederados: !!e.fpgFederados, fpgFed: e.fpgFed || null,
         players: e.players || null,
       }));
