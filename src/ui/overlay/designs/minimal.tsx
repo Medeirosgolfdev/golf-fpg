@@ -153,7 +153,7 @@ export function V27({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {v.player&&d.player && <div style={{ fontSize:11, fontWeight:700, color:tc3, flexShrink:0 }}>{d.player}</div>}
+      {v.player&&d.player && <div style={{ fontSize:11, fontWeight:700, color:tc3, flexShrink:0, whiteSpace:"nowrap" }}>{d.player}</div>}
     </div>
   );
 }

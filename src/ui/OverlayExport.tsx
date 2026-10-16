@@ -18,7 +18,7 @@ import { MONTHS_PT } from "../utils/format";
 import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
-import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, defaultVis } from "./overlay/registry";
+import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, CAT_COLS, defaultVis } from "./overlay/registry";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
@@ -370,7 +370,12 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       </button>
                     </div>
                     <div className="ov-card-preview" style={checkerBg}>
-                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc }}>
+                      {/* Com o cartão dos buracos, a largura é a dele: o texto (campo,
+                          torneio, barras) quebra em linhas em vez de esticar o PNG —
+                          vai para o IG por cima de fotografias (16/10/2026). Os
+                          verticais ficam como estão (a coluna é estreita de mais). */}
+                      <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
+                        width: x.needsHoles && vis.holeScores && x.cat !== CAT_COLS ? "min-content" : undefined }}>
                         <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
                       </div>
                     </div>

@@ -21,9 +21,22 @@ export function ringsFor(d: number): number {
   if (d === -1) return 1;
   return 0;
 }
-function Rings({ n, from = 0, round, color, w = 1.5 }: { n: number; from?: number; round: boolean; color: string; w?: number }) {
-  const step = w + 2;
-  return (
+/** Anéis encostados ao bordo (1 px entre eles) e o espaço livre do meio
+ *  SEMPRE maior que o algarismo — por baixo do número cortavam o 9 (16/10/2026).
+ *  Se não couberem, a letra encolhe até ~80% e só depois sai um anel.
+ *  Devolve os anéis e o tamanho de letra a usar. */
+function ringed(o: { sz: number; fs: number; d: number; from?: number; w: number; round: boolean; color: string }) {
+  const { sz, w, round, color } = o;
+  const from = o.from ?? 0;
+  const step = w + 1;
+  let n = ringsFor(o.d);
+  let fs = o.fs;
+  const free = (k: number) => sz - 2 * ((k - 1) * step + w);
+  while (n > from && free(n) < fs * 0.8 + 3) {
+    if (fs > o.fs * 0.8) fs = Math.round(fs * 0.9);
+    else n--;
+  }
+  const node = (
     <>
       {Array.from({ length: Math.max(0, n - from) }, (_, k) => (
         <div key={k} style={{ position: "absolute", inset: (k + from) * step, border: `${w}px solid ${color}`,
@@ -31,6 +44,7 @@ function Rings({ n, from = 0, round, color, w = 1.5 }: { n: number; from?: numbe
       ))}
     </>
   );
+  return { node, fs };
 }
 
 /* ═══════ SC: score circle/square padrão ═══════ */
@@ -43,10 +57,10 @@ export function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number 
   };
   const bg = scBg(d, sc);
   if (!bg) return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
+  const r = sc !== 1 ? ringed({ sz, fs, d, from: 1, w: 1, round: d <= -1, color: "rgba(255,255,255,.75)" }) : null;
   return (
-    <div style={{ ...base, position: "relative", background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>
-      {sc !== 1 && <Rings n={ringsFor(d)} from={1} round={d <= -1} color="rgba(255,255,255,.75)" w={1} />}
-      {sc}
+    <div style={{ ...base, position: "relative", background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0, fontSize: r?.fs ?? fs }}>
+      {r?.node}{sc}
     </div>
   );
 }
@@ -62,10 +76,10 @@ export function SCL({ sc, par, sz = 28 }: { sc: number; par: number; sz?: number
   };
   const bg = scBg(d, sc);
   if (!bg) return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
+  const r = sc !== 1 ? ringed({ sz, fs, d, from: 1, w: 1, round: d <= -1, color: "rgba(255,255,255,.75)" }) : null;
   return (
-    <div style={{ ...base, position: "relative", background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0 }}>
-      {sc !== 1 && <Rings n={ringsFor(d)} from={1} round={d <= -1} color="rgba(255,255,255,.75)" w={1} />}
-      {sc}
+    <div style={{ ...base, position: "relative", background: bg, color: "#fff", borderRadius: d <= -1 ? "50%" : 0, fontSize: r?.fs ?? fs }}>
+      {r?.node}{sc}
     </div>
   );
 }
@@ -82,11 +96,8 @@ export function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number
   if (d <= -2) return <div style={{ ...base, background: "#d4a017", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === -1) return <div style={{ ...base, background: "#dc2626", color: "#fff", borderRadius: "50%" }}>{sc}</div>;
   if (d === 0)  return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
-  return (
-    <div style={{ ...base, position: "relative", color: "inherit" }}>
-      <Rings n={ringsFor(d)} round={false} color="rgba(255,255,255,0.55)" />{sc}
-    </div>
-  );
+  const r = ringed({ sz, fs, d, w: 1.5, round: false, color: "rgba(255,255,255,0.55)" });
+  return <div style={{ ...base, position: "relative", color: "inherit", fontSize: r.fs }}>{r.node}{sc}</div>;
 }
 
 /* ═══════ SCO: outline-only (todos brancos), para overlays transparentes ═══════ */
@@ -100,11 +111,8 @@ export function SCO({ sc, par, sz = 36 }: { sc: number; par: number; sz?: number
   };
   if (sc === 1) return <div style={{ ...base, background: HIO_GREEN, borderRadius: "50%" }}>{sc}</div>;
   if (d === 0)  return <div style={base}>{sc}</div>;
-  return (
-    <div style={{ ...base, position: "relative" }}>
-      <Rings n={ringsFor(d)} round={d < 0} color={d < 0 ? "#fff" : "rgba(255,255,255,.7)"} w={2} />{sc}
-    </div>
-  );
+  const r = ringed({ sz, fs, d, w: 2, round: d < 0, color: d < 0 ? "#fff" : "rgba(255,255,255,.7)" });
+  return <div style={{ ...base, position: "relative", fontSize: r.fs }}>{r.node}{sc}</div>;
 }
 
 /* ═══════ SCA: outline accent color (PGA Tour U) ═══════ */
@@ -117,11 +125,8 @@ export function SCA({ sc, par, sz = 36, accent = "#e87722" }: { sc: number; par:
     fontWeight: 900, fontSize: fs, lineHeight: 1, flexShrink: 0,
   };
   if (d === 0)  return <div style={{ ...base, color: "inherit" }}>{sc}</div>;
-  return (
-    <div style={{ ...base, position: "relative", color: "inherit", background: d > 0 ? "rgba(255,255,255,.12)" : undefined }}>
-      <Rings n={ringsFor(d)} round={d < 0} color={d < 0 ? accent : "rgba(255,255,255,.45)"} w={d < 0 ? 2 : 1.5} />{sc}
-    </div>
-  );
+  const r = ringed({ sz, fs, d, w: d < 0 ? 2 : 1.5, round: d < 0, color: d < 0 ? accent : "rgba(255,255,255,.45)" });
+  return <div style={{ ...base, position: "relative", color: "inherit", background: d > 0 ? "rgba(255,255,255,.12)" : undefined, fontSize: r.fs }}>{r.node}{sc}</div>;
 }
 
 /* ═══════ TpBadge: pill colorida de to-par ═══════ */

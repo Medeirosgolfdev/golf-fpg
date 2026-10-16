@@ -25,6 +25,11 @@ Regras dos desenhos (revistos todos a 2026-10-16, com uma volta real):
   círculo, eagle 2 (`Rings`/`ringsFor` em `overlay/badges.tsx`, por cima da
   célula, sem mudar o tamanho). Legenda: Tri (+3) e Quad+ (+4…), contados em
   `countHoles`.
+- **Largura = a do cartão dos buracos** (`width: min-content` no contentor,
+  no `OverlayExport`): campo, torneio e barras quebram em linhas em vez de
+  esticar o PNG — é para o IG, por cima de imagens. Os verticais ficam de fora.
+- Os anéis ficam encostados ao bordo e o meio fica sempre livre para o
+  algarismo (a letra encolhe um pouco se for preciso) — por baixo cortavam o 9.
 - **Nome completo** do jogador da volta (`data.player`); no painel dos torneios
   escolhe-se qualquer jogador que acabou a volta (o Manuel por omissão).
 - **Partilha só com o ficheiro** (`navigator.share({ files })`): com `title`, o

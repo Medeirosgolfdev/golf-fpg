@@ -21,7 +21,7 @@ const CAT_TRANS   = "📷 Para Fotos";
 const CAT_MINIMAL = "💬 Compactos";
 const CAT_GRID    = "🏆 Cards";
 const CAT_TABLE   = "📊 Tabelas";
-const CAT_COLS    = "📱 Verticais";
+export const CAT_COLS = "📱 Verticais";
 export const CAT_ORDER = [CAT_HIO, CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS] as const;
 
 /* ═══════ DESIGN DEFINITION ═══════ */
