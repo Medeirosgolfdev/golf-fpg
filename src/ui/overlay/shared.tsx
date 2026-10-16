@@ -98,6 +98,10 @@ export function hexToRgba(hex: string, a: number) {
   return `rgba(${r},${g},${b},${a})`;
 }
 
+/** Preenchimento com a opacidade escolhida no painel (`fa`) — cabeçalhos,
+ *  barras e cartões dos desenhos, para a fotografia se ver por trás. */
+export const fillA = (hex: string, fa = 0.88) => hexToRgba(hex, fa);
+
 /** Constrói linha de metadata (course/tee/teeDist/date/round) consoante toggles ligados. */
 export function metaStr(d: DD, flags: Partial<Record<string, boolean>>): string {
   return [

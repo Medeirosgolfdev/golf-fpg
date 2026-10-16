@@ -2,13 +2,13 @@
  * Designs COLS — verticais (story format) e colunares.
  * V24 Story, V19 PGA Columns, V21 DP World, V33 College Grid.
  */
-import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, hiChStr } from "../shared";
+import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, hiChStr, fillA } from "../shared";
 import { SC, TpBadge, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
 /* V19 · PGA COLUMNS — sem barra horizontal */
-export function V19({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const maxW = is18 ? 80 : 42;
   const teeLine = [v.tee && d.tee, v.teeDist && d.teeDist ? `${d.teeDist}m` : ""].filter(Boolean).join(" · ");
@@ -38,7 +38,7 @@ export function V19({ d, v, s, bg, tc="white", tc3 }: P) {
           )}
         </div>
       )}
-      <div style={{ background:"rgba(255,255,255,.95)", padding:"3px 7px", textAlign:"center", width:"100%" }}>
+      <div style={{ background:fillA("#ffffff", fa), padding:"3px 7px", textAlign:"center", width:"100%" }}>
         <div style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1, color:"#0d1e38" }}>{s.sT}</div>
         <div style={{ fontFamily:II, fontSize:14, fontWeight:900, color:vpCd(s.vpT), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
       </div>

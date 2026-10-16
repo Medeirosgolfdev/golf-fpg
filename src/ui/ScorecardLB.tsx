@@ -33,7 +33,7 @@ import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { displayFed } from "../utils/fedKeys";
-import ShareRoundPanel from "./ShareRoundPanel";
+import ShareRoundPanel, { type ShareOption } from "./ShareRoundPanel";
 import { overlayFromRound } from "./overlay/fromRound";
 
 /* PName — alias local */
@@ -660,10 +660,19 @@ export function ScorecardLB({
     };
   });
 
-  // «📷 Partilhar volta» do Manuel: os PNGs do simulador já com esta volta.
-  const shares = nonWD.filter((p) => isManuel(p) && holesOf(p) === nh)
-    .map((p) => ({ p, data: overlayFromRound(tournament, p, sdOf(p).sd, { event: options?.shareEvent, course: options?.shareCourse }) }))
-    .filter((x): x is { p: Player; data: NonNullable<typeof x.data> } => x.data != null);
+  // «📷 Partilhar volta»: os PNGs do simulador com a volta de quem a acabou —
+  // o Manuel por omissão, qualquer outro pela lista. Ordem = classificação.
+  const shares: ShareOption[] = [];
+  let shareDefault: string | undefined;
+  for (const p of byGross) {
+    if (holesOf(p) !== nh) continue;
+    const data = overlayFromRound(tournament, p, sdOf(p).sd, { event: options?.shareEvent, course: options?.shareCourse });
+    if (!data) continue;
+    const key = String(p.scoreId || p.name);
+    const pos = (p as { _pos?: number })._pos;
+    shares.push({ key, label: `${pos ? `${pos}º · ` : ""}${p.name} — ${numGross(p)}`, data });
+    if (!shareDefault && isManuel(p)) shareDefault = key;
+  }
 
   return (
     <>
@@ -864,9 +873,7 @@ export function ScorecardLB({
       onSortF9={() => handleSort("f9")}
       onSortB9={() => handleSort("b9")}
     />
-    {shares.map(({ p, data }) => (
-      <ShareRoundPanel key={p.scoreId || p.name} data={data} label={shares.length > 1 ? p.name : undefined} />
-    ))}
+    {shares.length > 0 && <ShareRoundPanel key={tournament.tcode} options={shares} defaultKey={shareDefault} />}
     </>
   );
 }

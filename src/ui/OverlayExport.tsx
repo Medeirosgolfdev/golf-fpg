@@ -25,7 +25,10 @@ export type { OverlayData } from "./overlay/types";
 
 /* ═══════ MAIN COMPONENT ═══════ */
 export default function OverlayExport({ data, inline, nextEvent }: { data: OverlayData; inline?: boolean; nextEvent?: string }) {
+  // Nome: o da volta quando vem de um torneio (nome completo); senão o último
+  // escrito no simulador.
   const [player, setPlayer] = useState(() => {
+    if (data.player) return data.player;
     try { return localStorage.getItem("ov_player") || "Manuel"; } catch { return "Manuel"; }
   });
   const [event,       setEvent]       = useState(data.event || nextEvent || "");
@@ -52,10 +55,24 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [manualScore, setManualScore] = useState("");
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
 
-  /* Persistir nome do jogador entre sessões */
+  /* Persistir nome do jogador entre sessões (só o escrito à mão no simulador) */
   React.useEffect(() => {
+    if (data.player) return;
     try { localStorage.setItem("ov_player", player); } catch { /* ignore */ }
-  }, [player]);
+  }, [player, data.player]);
+
+  /* Outra volta/jogador (torneios): os textos acompanham, o estilo fica. */
+  const dataKey = `${data.player}|${data.event}|${data.round}|${data.date}|${data.position}`;
+  const lastKey = useRef(dataKey);
+  React.useEffect(() => {
+    if (lastKey.current === dataKey) return;
+    lastKey.current = dataKey;
+    if (data.player) setPlayer(data.player);
+    setEvent(data.event || nextEvent || "");
+    setRound(data.round || 1);
+    if (data.date) setDate(data.date);
+    setPosition(data.position || "");
+  }, [dataKey, data, nextEvent]);
 
   const noHoleData   = !data.hasHoles || data.scores.length === 0;
   const allFilled    = !noHoleData && data.scores.every(s => s !== null);
@@ -145,7 +162,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     if (!navigator.share || !navigator.canShare) return false;
     try {
       if (!navigator.canShare({ files })) return false;
-      await navigator.share({ files, title: "Scorecards" });
+      // SÓ os ficheiros: com `title`/`text`, o «Copiar» do iPhone copia o texto
+      // e não a imagem («Guardar imagem» é que ficava com o PNG).
+      await navigator.share({ files });
       return true;
     } catch (e: unknown) {
       if (e instanceof DOMException && e.name === "AbortError") return true;
@@ -352,7 +371,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                     </div>
                     <div className="ov-card-preview" style={checkerBg}>
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc }}>
-                        <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} />
+                        <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
                       </div>
                     </div>
                   </div>

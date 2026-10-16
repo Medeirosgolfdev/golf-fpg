@@ -15,6 +15,21 @@ Quando o torneio da volta só traz o escalão (MAJOR: `name` = divisão, `campo`
 vazio), o nome e o campo vêm de `ScorecardOptions.shareEvent`/`shareCourse`.
 Fora por agora: Drive e USKids (leaderboards próprios).
 
+Regras dos desenhos (revistos todos a 2026-10-16, com uma volta real):
+- **Vão para cima de fotografias:** nenhum bloco é 100% opaco — cabeçalhos,
+  barras e cartões claros usam `fillA(cor, fa)` (`overlay/shared.tsx`), com a
+  opacidade do seletor «Opacidade do fundo» do painel (`P.fa`).
+- **Números dos buracos com a largura da célula** que está por baixo (o
+  «Tour + Nome» tinha 36 px sobre quadrados de 28 e desalinhava).
+- **Quadrados como no cartão:** bogey 1, duplo 2, triplo ou pior 3; birdie 1
+  círculo, eagle 2 (`Rings`/`ringsFor` em `overlay/badges.tsx`, por cima da
+  célula, sem mudar o tamanho). Legenda: Tri (+3) e Quad+ (+4…), contados em
+  `countHoles`.
+- **Nome completo** do jogador da volta (`data.player`); no painel dos torneios
+  escolhe-se qualquer jogador que acabou a volta (o Manuel por omissão).
+- **Partilha só com o ficheiro** (`navigator.share({ files })`): com `title`, o
+  «Copiar» do iPhone copiava o texto e não a imagem.
+
 ## Simulador dentro dos Campos (2026-10-13)
 
 O `/simulador` passou a ser a **3.ª vista do `/campos`** (Scorecard · Como jogou ·

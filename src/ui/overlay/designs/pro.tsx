@@ -3,7 +3,7 @@
  * V45 PGA Broadcast, V46 College Poster, V47 PGA Tour U,
  * V29 Tour Classic, V38 PGA Americas, V30 Korn Ferry.
  */
-import { II, OS, LO, BN, SG, TS, hiChStr } from "../shared";
+import { II, OS, LO, BN, SG, TS, hiChStr, fillA } from "../shared";
 import { SC, SCL, SCO, SCA, TpBadge, StatsRow } from "../badges";
 import type { P } from "../types";
 
@@ -63,7 +63,7 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V30 · KORN FERRY — Estilo Korn Ferry Tour.
    Barra de accent com nome do jogador, round + to-par, score grande à direita. */
-export function V30({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const accent = "#047857";
   const isDark = tc === "#ffffff" || tc === "white";
@@ -73,7 +73,7 @@ export function V30({ d, v, s, bg, tc="white", tc3 }: P) {
         <div style={{ flex:1, padding:"6px 10px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
           {v.player&&d.player && (
             <div style={{ display:"inline-block" }}>
-              <span style={{ fontFamily:BN, background:accent, padding:"2px 10px", fontSize:18, letterSpacing:1.5, color:"#fff" }}>{d.player.toUpperCase()}</span>
+              <span style={{ fontFamily:BN, background:fillA(accent, fa), padding:"2px 10px", fontSize:18, letterSpacing:1.5, color:"#fff" }}>{d.player.toUpperCase()}</span>
             </div>
           )}
           {v.round && (
@@ -110,7 +110,7 @@ export function V30({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V38 · PGA AMERICAS — Estilo PGA Tour Americas.
    Transparente. Nome GRANDE em cima, hole numbers + 2 filas de circles, score ENORME à direita. */
-export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   /* Score fontSize compacto: 18H 80px (~altura 2 filas circles 28+28+gap) vs 9H 56px */
   const scoreFs = is18 ? 80 : 56;
@@ -159,7 +159,7 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       {(v.round||v.event||v.course||v.date||v.tee||v.teeDist||(v.position&&d.position)||hiChStr(d,v,s)) && (
         <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", lineHeight:1.4, wordBreak:"break-word" }}>
-          {v.round && <span style={{ background:"#dc2626", padding:"2px 8px", fontSize:10, fontWeight:800, color:"#fff", marginRight:4 }}>R{d.round}</span>}
+          {v.round && <span style={{ background:fillA("#dc2626", fa), padding:"2px 8px", fontSize:10, fontWeight:800, color:"#fff", marginRight:4 }}>R{d.round}</span>}
           {v.position && d.position && <span style={{ background:"rgba(255,255,255,.15)", padding:"2px 8px", fontSize:10, fontWeight:800, color:tc, marginRight:4 }}>POS {d.position}</span>}
           {v.event&&d.event && <div style={{ fontSize:9, color:tc3, marginTop:2 }}>{d.event}</div>}
           {(v.course||v.date||v.tee||v.teeDist) && <div style={{ fontSize:9, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
@@ -173,7 +173,7 @@ export function V38({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V45 · PGA BROADCAST — Estilo @pgatour Min Woo Lee / Houston Open.
    Score ENORME a esquerda + metadata empilhada a direita, blocos buracos com fundo. */
-export function V45({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
   const hasMeta = (v.player&&d.player) || (v.event&&d.event) || (v.course&&d.course) || v.round || (v.date&&d.date) || (v.position&&d.position) || hcl;
@@ -193,7 +193,7 @@ export function V45({ d, v, s, bg, tc="white", tc3 }: P) {
               <div style={{ fontFamily: LO, fontSize: 18, fontWeight: 700, fontStyle: "italic", letterSpacing: .3 }}>{d.player}</div>
             )}
             {v.event && d.event && (
-              <div style={{ background: "#dc2626", padding: "3px 10px", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.event}</div>
+              <div style={{ background: fillA("#dc2626", fa), padding: "3px 10px", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.event}</div>
             )}
             {(v.course || v.tee || v.teeDist) && (v.course&&d.course || v.tee&&d.tee || v.teeDist&&d.teeDist) && (
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{[v.course&&d.course, v.tee&&d.tee, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
@@ -303,7 +303,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V47 · PGA TOUR U — Estilo @pgatouru David Ford / Phichaksn Maichon.
    Nome ENORME, barra accent, circles com accent color, score enorme em baixo. */
-export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const accent = "#e87722";
   const accentBar = "#3b1f7e";
@@ -324,7 +324,7 @@ export function V47({ d, v, s, bg, tc="white", tc3 }: P) {
       })()}
       {/* Info bar roxo — wordBreak garante que texto longo quebra para multi-linhas. */}
       {(v.event || v.round || v.course || v.tee || v.teeDist || (v.position && d.position)) && (
-        <div style={{ background: accentBar, padding: "3px 10px", marginBottom: 4 }}>
+        <div style={{ background: fillA(accentBar, fa), padding: "3px 10px", marginBottom: 4 }}>
           <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase", wordBreak: "break-word", lineHeight: 1.5 }}>
             {[v.event && d.event, v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join("  /  ")}
           </div>
