@@ -2,8 +2,8 @@
  * Designs RESUMO DO TORNEIO — todas as voltas de um jogador (d.rounds):
  * V50 Resumo do Torneio · V51 Voltas lado a lado (buraco a buraco, com a
  * diferença entre as duas últimas) · V52 Evolução (de volta para volta) ·
- * V53 Cartão do Torneio · V54 Posição · V55 Barras · V56 Melhor Volta ·
- * V57 Stats por Volta · V58 Faixa.
+ * V53 Cartão do Torneio · V54 Posição · V55 Barras · V57 Stats por Volta ·
+ * V58 Faixa.
  * Só aparecem quando o painel escolhe «Torneio» (d.rounds com 2+ voltas).
  */
 import type React from "react";
@@ -276,46 +276,6 @@ export function V55({ d, v, bg, tc = "white", tc3 }: P) {
         })}
       </div>
       <Info d={d} v={v} keys={["position", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? allStats(rs) : null} mt={6} />
-    </div>
-  );
-}
-
-/* V56 · MELHOR VOLTA — o cartão buraco a buraco da melhor volta; as outras
-   e o total numa linha. */
-export function V56({ d, v, bg, tc = "white", tc3, fa }: P) {
-  const rs = d.rounds ?? [];
-  if (rs.length < 2) return null;
-  const b = rs.reduce((x, y) => (y.gross < x.gross ? y : x));
-  const nh = b.scores.length;
-  const rows = nh >= 18 ? [[0, 9], [9, 9]] : [[0, nh]];
-  return (
-    <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "8px 10px" }}>
-      {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 17, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>{d.player}</div>}
-      <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper fit />
-      <div style={{ display: "flex", alignItems: "center", gap: 8, margin: "6px 0 4px" }}>
-        <span style={{ fontFamily: OS, fontSize: 11, fontWeight: 700, letterSpacing: 1.5, color: tc3, textTransform: "uppercase" }}>Melhor volta · R{b.round}</span>
-        <span style={{ fontFamily: BN, fontSize: 40, lineHeight: .9 }}>{b.gross}</span>
-        <TpBadge vp={b.toPar} sz={13} />
-      </div>
-      {v.holeScores && (
-        <div style={{ background: panel(tc, (fa ?? .88) * .25), borderRadius: 6, padding: "4px 5px" }}>
-          {rows.map(([off, len]) => (
-            <div key={off} style={{ display: "flex", gap: 2, marginTop: off ? 3 : 0 }}>
-              {b.scores.slice(off, off + len).map((sc, i) => (
-                <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-                  <span style={{ fontSize: 8, fontWeight: 700, color: tc3 }}>{off + i + 1}</span>
-                  <SC sc={sc} par={b.par[off + i]} h={off + i} sz={26} />
-                </div>
-              ))}
-            </div>
-          ))}
-        </div>
-      )}
-      <div style={{ fontSize: 11, fontWeight: 700, color: tc3, marginTop: 5 }}>
-        {rs.filter((r) => r !== b).map((r) => `R${r.round} ${r.gross}${v.evolution ? ` (${fmtD(r.gross - b.gross)})` : ""}`).join(" · ")}
-        <span style={{ color: tc, fontWeight: 800 }}>{" · Total "}{tot(rs)} ({fmtToPar(totPar(rs))})</span>
-      </div>
-      <Info d={d} v={v} keys={["position", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit mt={2} />
     </div>
   );
 }

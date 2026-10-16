@@ -13,7 +13,7 @@ import { V1, V2, V3, V4, V23, V25, V27 } from "./designs/minimal";
 import { V5, V6, V9, V10, V11, V12, V13, V22, V26, V36 } from "./designs/grid";
 import { V14, V15, V16, V17, V28, V31, V32, V34, V35 } from "./designs/table";
 import { V19, V21, V24, V33 } from "./designs/cols";
-import { V50, V51, V52, V53, V54, V55, V56, V57, V58 } from "./designs/resumo";
+import { V50, V51, V52, V53, V54, V55, V57, V58 } from "./designs/resumo";
 
 /* ═══════ CATEGORIES ═══════ */
 const CAT_HIO     = "🏌️ Hole-in-One";
@@ -52,7 +52,6 @@ export const DESIGNS: DesignDef[] = [
   { id:"V53", label:"Cartão do Torneio", C:V53, needsHoles:false, needsRounds:true, cat:CAT_RESUMO, has:["stats","course","tee","teeDist","player","event","division","date","position","evolution"] },
   { id:"V54", label:"Posição",           C:V54, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["course","tee","teeDist","player","event","division","date","position","evolution"] },
   { id:"V55", label:"Barras",            C:V55, needsHoles:false, needsRounds:true, cat:CAT_RESUMO, has:["stats","course","tee","teeDist","player","event","division","date","position","evolution"] },
-  { id:"V56", label:"Melhor Volta",      C:V56, needsHoles:true,  needsRounds:true, cat:CAT_RESUMO, has:["holeScores","course","tee","teeDist","player","event","division","date","position","evolution"] },
   { id:"V57", label:"Stats por Volta",   C:V57, needsHoles:false,  needsRounds:true, cat:CAT_RESUMO, has:["course","tee","teeDist","player","event","division","date","position","evolution"] },
   { id:"V58", label:"Faixa",             C:V58, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["course","tee","teeDist","player","event","division","date","position","evolution"] },
   /* 🏌️ Hole-in-One — design celebratório para HIO */
