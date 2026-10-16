@@ -109,6 +109,10 @@ export interface ScorecardOptions {
    *  em branco), não um buraco por terminar; o ±par sai só dos buracos jogados
    *  (ou null), nunca gross − par total. */
   noInferBlanks?: boolean;
+  /** «📷 Partilhar volta»: nome do torneio e campo quando o `tournament` da
+   *  volta só traz o escalão (MAJOR/circuitos: `name` = divisão, `campo` vazio). */
+  shareEvent?: string;
+  shareCourse?: string;
 }
 
 export interface SDResult {

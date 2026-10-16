@@ -3,6 +3,18 @@
 > Detalhe tirado do CLAUDE.md a 2026-09-15 (o CLAUDE.md fica só com o essencial e
 > aponta para aqui). Datas entre parênteses = quando a regra ou a medição foi feita.
 
+## PNGs da volta nos torneios (2026-10-16)
+
+Os PNGs do simulador (`OverlayExport`) também saem de qualquer volta do Manuel
+num torneio: por baixo do leaderboard de cada volta (`ScorecardLB` — FPG,
+MAJOR, FFG, RFEG, circuitos) aparece «📷 Partilhar volta», já preenchido com
+campo, tee, metros, SI, scores, HI/CH, SD, torneio, volta, data e posição.
+Os dados montam-se em `src/ui/overlay/fromRound.ts` (`overlayFromRound`); o
+painel é `src/ui/ShareRoundPanel.tsx` (carrega o `OverlayExport` só ao abrir).
+Quando o torneio da volta só traz o escalão (MAJOR: `name` = divisão, `campo`
+vazio), o nome e o campo vêm de `ScorecardOptions.shareEvent`/`shareCourse`.
+Fora por agora: Drive e USKids (leaderboards próprios).
+
 ## Simulador dentro dos Campos (2026-10-13)
 
 O `/simulador` passou a ser a **3.ª vista do `/campos`** (Scorecard · Como jogou ·
