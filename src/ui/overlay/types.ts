@@ -11,7 +11,13 @@ export type OverlayData = {
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
   player: string; event: string; round: number; date: string; position: string;
+  /** Torneio completo (Resumo): uma entrada por volta jogada. Só nos desenhos
+   *  «Resumo do torneio»; `scores`/`par` do topo são os da última volta. */
+  rounds?: RoundSum[];
 };
+
+/** Uma volta no resumo do torneio. */
+export type RoundSum = { round: number; scores: number[]; par: number[]; gross: number; toPar: number; date: string };
 
 /** "Design data" — versão normalizada da OverlayData consumida pelos templates V*. */
 export type DD = {
@@ -22,6 +28,7 @@ export type DD = {
   meters?: (number | null)[];
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
+  rounds?: RoundSum[];
 };
 
 /** Toggles ON/OFF por key (player, course, tee, stats, holeScores, ...). */

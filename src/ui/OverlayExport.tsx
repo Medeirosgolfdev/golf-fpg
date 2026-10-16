@@ -24,6 +24,12 @@ import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize } from "./ov
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
 
+const STYLE_KEY = "ov_style";
+type SavedStyle = {
+  vis: Vis; bgId: string; customBg: string; bgAlpha: number;
+  theme: "dark"|"light"; subTheme: "dark"|"light"; logoPos: "top"|"bottom"; logoSize: LogoSize;
+};
+
 /* ═══════ MAIN COMPONENT ═══════ */
 export default function OverlayExport({ data, inline, nextEvent }: { data: OverlayData; inline?: boolean; nextEvent?: string }) {
   // Nome: o da volta quando vem de um torneio (nome completo); senão o último
@@ -40,25 +46,38 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     return `${n.getDate()} ${MONTHS_PT[n.getMonth()]} ${n.getFullYear()}`;
   });
   const [position,    setPosition]    = useState(data.position || "");
-  const [vis,         setVis]         = useState<Vis>(defaultVis);
-  const [bgId,        setBgId]        = useState("navy");
-  const [customBg,    setCustomBg]    = useState("#1a4a2e");
-  const [bgAlpha,     setBgAlpha]     = useState(88);
+  /* Estilo guardado no browser (fundo, opacidade, texto, o que mostrar, logo)
+     — da próxima vez abre como ficou. Só conveniência: sem ele, os de origem. */
+  const saved = useMemo<Partial<SavedStyle>>(() => {
+    try { return JSON.parse(localStorage.getItem(STYLE_KEY) || "{}"); } catch { return {}; }
+  }, []);
+  const [vis,         setVis]         = useState<Vis>(() => ({ ...defaultVis(), ...(saved.vis ?? {}) }));
+  const [bgId,        setBgId]        = useState(saved.bgId ?? "navy");
+  const [customBg,    setCustomBg]    = useState(saved.customBg ?? "#1a4a2e");
+  const [bgAlpha,     setBgAlpha]     = useState(saved.bgAlpha ?? 88);
+  /* Foto só para pré-visualizar (como fica no IG) — nunca entra no PNG. */
+  const [photo,       setPhoto]       = useState<string | null>(null);
+  React.useEffect(() => () => { if (photo) URL.revokeObjectURL(photo); }, [photo]);
   /* Logos (clube/torneio) por cima ou por baixo do desenho — entram no PNG. */
   const [logoId,   setLogoId]   = useState(() => defaultLogoFor(data.event || ""));
-  const [logoPos,  setLogoPos]  = useState<"top"|"bottom">("bottom");
-  const [logoSize, setLogoSize] = useState<LogoSize>("M");
+  const [logoPos,  setLogoPos]  = useState<"top"|"bottom">(saved.logoPos ?? "bottom");
+  const [logoSize, setLogoSize] = useState<LogoSize>(saved.logoSize ?? "M");
   /* Dois seletores independentes:
      - theme:    cor do texto PRINCIPAL (jogador, score) — dark=branco / light=preto
      - subTheme: cor do texto SECUNDÁRIO (torneio, campo, data) — dark=branco / light=preto
      Permite, por ex., principal branco com secundário preto (ou vice-versa). */
-  const [theme,    setTheme]    = useState<"dark"|"light">("dark");
-  const [subTheme, setSubTheme] = useState<"dark"|"light">("dark");
+  const [theme,    setTheme]    = useState<"dark"|"light">(saved.theme ?? "dark");
+  const [subTheme, setSubTheme] = useState<"dark"|"light">(saved.subTheme ?? "dark");
   const [exporting,   setExporting]   = useState(false);
   const [exportingId, setExportingId] = useState<string|null>(null);
   const [collapsed,   setCollapsed]   = useState(true);
   const [manualScore, setManualScore] = useState("");
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
+
+  React.useEffect(() => {
+    const st: SavedStyle = { vis, bgId, customBg, bgAlpha, theme, subTheme, logoPos, logoSize };
+    try { localStorage.setItem(STYLE_KEY, JSON.stringify(st)); } catch { /* ignore */ }
+  }, [vis, bgId, customBg, bgAlpha, theme, subTheme, logoPos, logoSize]);
 
   /* Persistir nome do jogador entre sessões (só o escrito à mão no simulador) */
   React.useEffect(() => {
@@ -102,6 +121,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     hi: data.hi, courseHcp: data.courseHcp,
     sd: noHoleData ? (manualSD ?? null) : data.sd,
     is9h: data.is9h, hasHoles: data.hasHoles,
+    rounds: data.rounds,
   }), [data, player, event, round, date, position, filledScores, noHoleData, manualSD]);
 
   const stats = useMemo((): Stats => {
@@ -118,8 +138,10 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const toggle = useCallback((key: string) => setVis(prev => ({ ...prev, [key]: !prev[key] })), []);
   const hasHIO = useMemo(() => dd.scores.some(sc => sc === 1), [dd.scores]);
   const available = useMemo(
-    () => DESIGNS.filter(x => (!x.needsHoles || data.hasHoles) && (!x.needsHIO || hasHIO)),
-    [data.hasHoles, hasHIO],
+    // Torneio completo (rounds) → só os desenhos do resumo; uma volta → os outros.
+    () => DESIGNS.filter(x => (!x.needsHoles || data.hasHoles) && (!x.needsHIO || hasHIO)
+      && !!x.needsRounds === (data.rounds?.length ?? 0) >= 2),
+    [data.hasHoles, data.rounds, hasHIO],
   );
 
   const bgOpt   = BG_OPTIONS.find(b => b.id === bgId);
@@ -147,6 +169,10 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     backgroundPosition: "0 0,0 6px,6px -6px,-6px 0px",
     backgroundColor: "#fff",
   };
+  /* Pré-visualização: sobre a foto escolhida (como fica no IG) ou o xadrez. */
+  const previewBg: React.CSSProperties = photo
+    ? { backgroundImage: `url(${photo})`, backgroundSize: "cover", backgroundPosition: "center" }
+    : checkerBg;
 
   /* ── Helpers de export ── */
   const renderDesign = useCallback(async (designId: string): Promise<Blob|null> => {
@@ -282,6 +308,15 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
 
         {/* ── 2. PERSONALIZAÇÃO ── */}
         <div className="ov-section">
+          <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8, flexWrap:"wrap" }}>
+            <label className="ov-opt-btn" style={{ cursor:"pointer" }} title="Só para ver como fica — a foto não entra no PNG">
+              🖼 {photo ? "Outra foto" : "Ver sobre uma foto"}
+              <input type="file" accept="image/*" style={{ display:"none" }}
+                onChange={e => { const f = e.target.files?.[0]; if (f) setPhoto(URL.createObjectURL(f)); e.target.value = ""; }} />
+            </label>
+            {photo && <button className="ov-opt-btn" onClick={() => setPhoto(null)}>Tirar foto</button>}
+            {photo && <span style={{ fontSize:11, color:"#888" }}>só pré-visualização — não entra no PNG</span>}
+          </div>
           <div className="ov-section-label">Fundo</div>
           <div style={{ display:"flex", flexWrap:"wrap", gap:5, alignItems:"center", marginBottom:8 }}>
             {BG_OPTIONS.map(bg => (
@@ -402,13 +437,13 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                         {exportingId===x.id ? "⏳" : "📤"}
                       </button>
                     </div>
-                    <div className="ov-card-preview" style={checkerBg}>
+                    <div className="ov-card-preview" style={previewBg}>
                       {/* Com o cartão dos buracos, a largura é a dele: o texto (campo,
                           torneio, barras) quebra em linhas em vez de esticar o PNG —
                           vai para o IG por cima de fotografias (16/10/2026). Os
                           verticais ficam como estão (a coluna é estreita de mais). */}
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
-                        width: x.needsHoles && vis.holeScores && x.cat !== CAT_COLS ? "min-content" : undefined }}>
+                        width: (x.needsHoles && vis.holeScores && x.cat !== CAT_COLS) || x.fit ? "min-content" : undefined }}>
                         {logo && logoPos==="top" && logoImg}
                         <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
                         {logo && logoPos==="bottom" && logoImg}

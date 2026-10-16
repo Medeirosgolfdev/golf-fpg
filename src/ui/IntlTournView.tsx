@@ -11,6 +11,7 @@
  * are injected via props — either simple slots or full render-section callbacks.
  */
 
+import { ShareRoundsPanel } from "./ShareRoundPanel";
 import React, { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "./tournamentPrimitives";
 import { AccumulatedLB, ScorecardLB, AllRoundsScorecardLB } from "./LeaderboardComponents";
@@ -308,8 +309,12 @@ export function IntlTournView({
     // Na tab Pré-Cut o "torneio" só tem cutAfterRound rondas — o cabeçalho usa
     // cutAfterRound e não nR (senão mostra "Par 207 · 3R" numa vista de 2 rondas).
     const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
+    // «📷 Partilhar volta» no Resumo / Scorecards: torneio completo + cada volta.
+    const shareRounds = (isCombined || isAcc)
+      ? <ShareRoundsPanel key={tournament.tcode} rounds={expanded.filter((e: any) => !e._isTotal)} event={scOptions.shareEvent} course={scOptions.shareCourse} />
+      : null;
     if (isCombined) {
-      return <AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />;
+      return <><AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />{shareRounds}</>;
     }
     if (isAcc) {
       const accLB = (
@@ -322,7 +327,7 @@ export function IntlTournView({
           showCourse={scOptions.showCourse}
         />
       );
-      return renderAccSection ? renderAccSection(accLB) : <>{accHeader}{accLB}{accExtra}</>;
+      return renderAccSection ? <>{renderAccSection(accLB)}{shareRounds}</> : <>{accHeader}{accLB}{accExtra}{shareRounds}</>;
     }
     const roundLB = (
       <ScorecardLB
@@ -353,7 +358,7 @@ export function IntlTournView({
         : active.kind === "trailing"
           ? trailingTabs![active.ti].content
           : active.kind === "draw"
-            ? active.render()
+            ? <>{active.render()}<ShareRoundsPanel key={`${tournament.tcode}-d`} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={scOptions.shareEvent} course={scOptions.shareCourse} /></>
             : renderRoundContent(active.rtab)}
     </div>
   );

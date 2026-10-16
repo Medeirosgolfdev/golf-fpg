@@ -497,6 +497,26 @@ export function computeSD(p: SDPlayer, date?: string | null): SDResult {
   });
 }
 
+/** SD de UMA volta de um torneio: o CR/Slope/SI/PCC podem viver na ronda
+ *  (GolfBox — ebtc2/egtc/elg/avtrophy — e GolfGenius trazem-nos em
+ *  roundScores[]) e não no jogador. Usado pelo leaderboard da volta e pelo
+ *  «📷 Partilhar volta». */
+export function computeRoundSD(p: Player, date?: string | null): SDResult {
+  const rs0 = p.roundScores?.[0];
+  if (rs0 && (p.courseRating == null || p.slope == null || !p.si?.length)) {
+    return computeSD({
+      ...p,
+      par: p.par?.length ? p.par : rs0.pars,
+      si: p.si?.length ? p.si : rs0.si,
+      courseRating: p.courseRating ?? rs0.courseRating,
+      slope: p.slope ?? rs0.slope,
+      pcc: p.pcc ?? rs0.pcc,
+      nholes: p.nholes ?? rs0.pars?.length,
+    }, date);
+  }
+  return computeSD(p, date);
+}
+
 export function filterPlayers(
   players: Player[],
   f: PlayerFilter,

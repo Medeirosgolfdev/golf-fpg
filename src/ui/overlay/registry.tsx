@@ -13,6 +13,7 @@ import { V1, V2, V3, V4, V23, V25, V27 } from "./designs/minimal";
 import { V5, V6, V9, V10, V11, V12, V13, V22, V26, V36 } from "./designs/grid";
 import { V14, V15, V16, V17, V28, V31, V32, V34, V35 } from "./designs/table";
 import { V19, V21, V24, V33 } from "./designs/cols";
+import { V50, V51, V52 } from "./designs/resumo";
 
 /* ═══════ CATEGORIES ═══════ */
 const CAT_HIO     = "🏌️ Hole-in-One";
@@ -22,7 +23,8 @@ const CAT_MINIMAL = "💬 Compactos";
 const CAT_GRID    = "🏆 Cards";
 const CAT_TABLE   = "📊 Tabelas";
 export const CAT_COLS = "📱 Verticais";
-export const CAT_ORDER = [CAT_HIO, CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS] as const;
+const CAT_RESUMO  = "🏁 Resumo do torneio";
+export const CAT_ORDER = [CAT_RESUMO, CAT_HIO, CAT_PRO, CAT_TRANS, CAT_MINIMAL, CAT_GRID, CAT_TABLE, CAT_COLS] as const;
 
 /* ═══════ DESIGN DEFINITION ═══════ */
 export type DesignDef = {
@@ -31,10 +33,18 @@ export type DesignDef = {
   C: React.FC<P>;
   needsHoles: boolean;
   needsHIO?: boolean;
+  /** Largura = a do conteúdo principal (o texto quebra) mesmo sem buracos. */
+  fit?: boolean;
+  /** Só com o torneio completo (d.rounds, 2+ voltas) — e só esses aparecem aí. */
+  needsRounds?: boolean;
   cat: string;
 };
 
 export const DESIGNS: DesignDef[] = [
+  /* 🏁 Resumo do torneio — todas as voltas (escolher «Torneio» no painel) */
+  { id:"V50", label:"Resumo do Torneio", C:V50, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO },
+  { id:"V51", label:"Voltas lado a lado", C:V51, needsHoles:true, needsRounds:true, cat:CAT_RESUMO },
+  { id:"V52", label:"Evolução",          C:V52, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO },
   /* 🏌️ Hole-in-One — design celebratório para HIO */
   { id:"V48", label:"Ace Celebration", C:V48, needsHoles:true, needsHIO:true, cat:CAT_HIO },
   /* ⭐ Pro Tour — estilo PGA Tour / PGA Tour U / College Golf */

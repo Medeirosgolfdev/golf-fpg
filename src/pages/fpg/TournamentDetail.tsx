@@ -9,6 +9,7 @@
  * Antes vivia inline em FPGPage.tsx (linhas 542-872) — extraído para reduzir
  * o ficheiro principal e permitir reuso.
  */
+import { ShareRoundsPanel } from "../../ui/ShareRoundPanel";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -252,6 +253,11 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const curT = expandedIdxForCurT >= 0 && expanded[expandedIdxForCurT] ? expanded[expandedIdxForCurT] : tournament;
   const isAcc = isResumoTab;
   const isCombined = isCombinedTab;
+  // «📷 Partilhar volta» no Resumo / Scorecards / Draw: torneio completo + cada
+  // volta já jogada (no Draw da volta seguinte também — o Faldo abre aí).
+  const shareRounds = isResumoTab || isCombinedTab || isDrawTab
+    ? <ShareRoundsPanel key={tournament.tcode} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={options?.shareEvent} course={options?.shareCourse} />
+    : null;
 
   // Info about tournament
   const refPlayer = tournament.players[0];
@@ -520,7 +526,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             />
           </>;
         if (isDrawTab)
-          return <DrawTab
+          return <><DrawTab
             draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
             roundNum={drawRoundNum}
             playersDB={playersDB as any}
@@ -533,13 +539,13 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             clubLabel={options?.clubLabel}
             omLookup={omLookup}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
-          />;
+          />{shareRounds}</>;
         if (isCombined)
-          return <AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} options={options} />;
+          return <><AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} options={options} />{shareRounds}</>;
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
         if (isAcc)
-          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} /></>;
+          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} />{shareRounds}</>;
         if (isRoundTab || !isMulti)
           return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />;
         return null;

@@ -11,7 +11,7 @@ import React, { useState, useMemo } from "react";
 import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
-import { numGross, resolveEsc, playerDob, computeSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
+import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -33,8 +33,8 @@ import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
 import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { displayFed } from "../utils/fedKeys";
-import ShareRoundPanel, { type ShareOption } from "./ShareRoundPanel";
-import { overlayFromRound } from "./overlay/fromRound";
+import ShareRoundPanel from "./ShareRoundPanel";
+import { shareOptionsForRound } from "./overlay/shareOptions";
 
 /* PName — alias local */
 const PName = ({
@@ -194,21 +194,7 @@ export function ScorecardLB({
   // SD desta volta: o oficial da FPG ou, sem ele, o calculado com o HCP da
   // inscrição (ver computeSD). O CR/Slope/SI podem viver na ronda (GolfBox —
   // ebtc2/egtc/elg/avtrophy — trazem-nos em roundScores[]) e não no jogador.
-  const sdOf = (p: Player): SDResult => {
-    const rs0 = p.roundScores?.[0];
-    if (rs0 && (p.courseRating == null || p.slope == null || !p.si?.length)) {
-      return computeSD({
-        ...p,
-        par: p.par?.length ? p.par : rs0.pars,
-        si: p.si?.length ? p.si : rs0.si,
-        courseRating: p.courseRating ?? rs0.courseRating,
-        slope: p.slope ?? rs0.slope,
-        pcc: p.pcc ?? rs0.pcc,
-        nholes: p.nholes ?? rs0.pars?.length,
-      }, tournament.date);
-    }
-    return computeSD(p, tournament.date);
-  };
+  const sdOf = (p: Player): SDResult => computeRoundSD(p, tournament.date);
 
   const nonWD = rawPlayers.filter((p) => !p._wd);
   const wdOnly = rawPlayers.filter((p) => p._wd);
@@ -660,19 +646,8 @@ export function ScorecardLB({
     };
   });
 
-  // «📷 Partilhar volta»: os PNGs do simulador com a volta de quem a acabou —
-  // o Manuel por omissão, qualquer outro pela lista. Ordem = classificação.
-  const shares: ShareOption[] = [];
-  let shareDefault: string | undefined;
-  for (const p of byGross) {
-    if (holesOf(p) !== nh) continue;
-    const data = overlayFromRound(tournament, p, sdOf(p).sd, { event: options?.shareEvent, course: options?.shareCourse });
-    if (!data) continue;
-    const key = String(p.scoreId || p.name);
-    const pos = (p as { _pos?: number })._pos;
-    shares.push({ key, label: `${pos ? `${pos}º · ` : ""}${p.name} — ${numGross(p)}`, data });
-    if (!shareDefault && isManuel(p)) shareDefault = key;
-  }
+  // «📷 Partilhar volta»: os PNGs do simulador com a volta de quem a acabou.
+  const share = shareOptionsForRound(tournament, { event: options?.shareEvent, course: options?.shareCourse });
 
   return (
     <>
@@ -873,7 +848,7 @@ export function ScorecardLB({
       onSortF9={() => handleSort("f9")}
       onSortB9={() => handleSort("b9")}
     />
-    {shares.length > 0 && <ShareRoundPanel key={tournament.tcode} options={shares} defaultKey={shareDefault} />}
+    {share.options.length > 0 && <ShareRoundPanel key={tournament.tcode} options={share.options} defaultKey={share.defaultKey} />}
     </>
   );
 }

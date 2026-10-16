@@ -7,12 +7,15 @@
  * O OverlayExport só é carregado quando o painel abre (traz o html-to-image e
  * os ~40 desenhos).
  */
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import type { OverlayData } from "./overlay/types";
+import type { Tournament } from "../data/fpgTypes";
+import { shareOptionsForRounds, shareOptionsForTournament } from "./overlay/shareOptions";
 
 const OverlayExport = lazy(() => import("./OverlayExport"));
 
-export type ShareOption = { key: string; label: string; data: OverlayData };
+/** `pid` = o jogador entre voltas (fed ou nome — o scoreId da FPG muda de volta para volta). */
+export type ShareOption = { key: string; label: string; data: OverlayData; pid?: string };
 
 export default function ShareRoundPanel({ options, defaultKey }: { options: ShareOption[]; defaultKey?: string }) {
   const [open, setOpen] = useState(false);
@@ -39,4 +42,18 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
       )}
     </details>
   );
+}
+
+/** Painel do Resumo / Scorecards: o torneio completo (voltas comparadas) e
+ *  cada volta de cada jogador. Por omissão o torneio do Manuel (ou a última
+ *  volta dele, se ainda só jogou uma). */
+export function ShareRoundsPanel({ rounds, event, course }: { rounds: Tournament[]; event?: string; course?: string }) {
+  const share = useMemo(() => {
+    const ctx = { event, course };
+    const t = shareOptionsForTournament(rounds, ctx);
+    const r = shareOptionsForRounds(rounds, ctx);
+    return { options: [...t.options, ...r.options], defaultKey: t.defaultKey ?? r.defaultKey };
+  }, [rounds, event, course]);
+  if (!share.options.length) return null;
+  return <ShareRoundPanel options={share.options} defaultKey={share.defaultKey} />;
 }

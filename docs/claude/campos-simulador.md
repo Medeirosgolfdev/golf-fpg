@@ -20,6 +20,20 @@ Global Junior, circuitos, USKids (também pelo `ScorecardLB`) e o Drive (o
 (a USKids põe metros no `si` quando não tem SI); datas pelo `isoDate`
 («M/D/AAAA» da USKids é americano). Só ficam de fora as tabelas só com totais.
 
+**Resumo / Scorecards** (torneios de várias voltas, que ABREM no Resumo): o
+painel lista o **torneio completo** de cada jogador com 2+ voltas («Torneio ·
+1º · Nome — 78+72 = 150», junta as voltas pelo fed — o `scoreId` da FPG muda
+de volta para volta) e cada volta («R2 · 10º · …»); por omissão o torneio do
+Manuel. Com o torneio completo só aparecem os desenhos «🏁 Resumo do torneio»
+(`designs/resumo.tsx`: Resumo do Torneio, Voltas lado a lado com a linha Δ
+buraco a buraco, Evolução «78 → 72»); com uma volta, os outros. Opções em
+`overlay/shareOptions.ts`; o SD da volta é o `computeRoundSD` (fpgUtils).
+
+No painel: **«🖼 Ver sobre uma foto»** (pré-visualização sobre uma foto do
+telemóvel — não entra no PNG) e o **estilo fica guardado** no browser
+(`ov_style`: fundo, opacidade, texto, o que mostrar, posição/tamanho do logo).
+Sombras no texto NÃO (pedido antigo: «zero sombras», ver `TS` em shared.tsx).
+
 Regras dos desenhos (revistos todos a 2026-10-16, com uma volta real):
 - **Vão para cima de fotografias:** nenhum bloco é 100% opaco — cabeçalhos,
   barras e cartões claros usam `fillA(cor, fa)` (`overlay/shared.tsx`), com a
