@@ -156,7 +156,9 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       // ainda só draw publicado). Mostrar:
       //   - Draw R1 (se existir) → Scorecard (R1) → Draw R2..N (se houver)
       if (drawsByRound.has(1)) out.push({ key: "draw:1", label: "Draw R1" });
-      out.push({ key: "round:0", label: nRounds > 1 ? "R1" : "Scorecard" });
+      // «R1» também quando já há draw de uma volta seguinte (Faldo Madeira:
+      // só a R1 jogada, Draw R2 publicado) — dizia «Scorecard» (16/10/2026).
+      out.push({ key: "round:0", label: nRounds > 1 || [...drawsByRound.keys()].some(r => r >= 2) ? "R1" : "Scorecard" });
       // Draws de rondas futuras ainda não jogadas (R2, R3, ...)
       const futureDraws = [...drawsByRound.keys()].filter(r => r >= 2).sort((a, b) => a - b);
       for (const r of futureDraws) {
@@ -528,6 +530,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
             admissions={effAdmissions}
             results={drawResults}
             hideCols={drawHideCols}
+            clubLabel={options?.clubLabel}
             omLookup={omLookup}
             fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/linkpage.aspx?page=draw&club=${tournament.ccode}&tourn=${tournament.tcode}&round=${drawRoundNum}&ack=8428ACK987` : undefined}
           />;

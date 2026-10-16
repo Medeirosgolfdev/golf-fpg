@@ -6,6 +6,7 @@
  *
  * Columns: ESC · FED · CLUBE · HCP · TEE · Tot · ± · SD · 🐦 · Par · ■
  */
+import { birthCells } from "./BirthCells";
 import React, { useState, useMemo } from "react";
 import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
@@ -98,7 +99,10 @@ export function ScorecardLB({
   const showClass_ = options?.showClass ?? false;
   // Nasc. (ano, da data de nascimento) ao lado da Idade, como no Resumo —
   // só quando a fonte traz a data (14/10/2026).
-  const showBirth_ = showAge_ && !showClass_ && tournament.players.some((p) => !!(p as any).dob);
+  const showBirth_ = showAge_ && !showClass_ && tournament.players.some((p) => !!((p as any).dob || (p as any).birthYear || (p as any).birthYearEst));
+  // Nasc./Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
+  const birthOf = (p: any) => birthCells({ dob: p.dob, birthYear: p.birthYear, birthYearEst: p.birthYearEst,
+    ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, tournament.date);
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;
@@ -585,11 +589,8 @@ export function ScorecardLB({
             </td>
           )}
           {showBirth_ && (
-            <td className="lb-age" style={{ width: 48, minWidth: 48, textAlign: "center" }}>
-              {(() => {
-                const y = String((p as any).dob || "").match(/(19|20)\d{2}/)?.[0];
-                return y ? y : <span className="muted">–</span>;
-              })()}
+            <td className="lb-age" style={{ width: 70, minWidth: 70, textAlign: "center" }} title={birthOf(p).tip}>
+              {birthOf(p).nasc}
             </td>
           )}
           {showAge_ && (
@@ -598,7 +599,8 @@ export function ScorecardLB({
             <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
               {(() => {
                 const age = (p as any)._age as (number | null | undefined);
-                if (age == null || age < 0) return <span className="muted">–</span>;
+                // Sem idade lida: a estimativa (a vermelho), como no Draw.
+                if (age == null || age < 0) return birthOf(p).idade;
                 const dob = fmtDobPt((p as any).dob);
                 return (
                   <span className="p p-sm" title={dob ? `Nascido a ${dob}` : undefined}

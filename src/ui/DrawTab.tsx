@@ -11,6 +11,7 @@
  * Usa `useSort` + `SortableHdr` nas colunas custom.
  */
 
+import { birthCells } from "./BirthCells";
 import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
 import { MANUEL_FED, isManuelByName } from "../constants/manuel";
@@ -58,6 +59,8 @@ interface Props {
   /** Esconde colunas que não se aplicam à fonte (ex: GolfGenius/internacional
    *  não expõe FED/HCP/Nasc.). Default: mostra todas. */
   hideCols?: { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean };
+  /** Rótulo da coluna do clube (ex.: «País» nas provas internacionais) — o mesmo do scorecard. */
+  clubLabel?: string;
   /** Lookup fed/nome → categoria da Ordem de Mérito CGSS (buildOmLookup). Quando
    *  presente e não-vazio, o draw ganha uma coluna "OM" com a categoria+posição
    *  de cada inscrito. */
@@ -152,7 +155,7 @@ export function buildDrawResults(
 export default function DrawTab({
   draw, roundNum, playersDB,
   tournamentEscalao, tournamentSex, tournamentDate,
-  admissions, fpgUrl, results, hideCols, omLookup,
+  admissions, fpgUrl, results, hideCols, clubLabel, omLookup,
 }: Props) {
   const hc = hideCols || {};
   const showOm = !!(omLookup && omLookup.size);
@@ -604,23 +607,14 @@ export default function DrawTab({
               </td>
             )}
             {!hc.nasc && (() => {
-              // Nasc. + Idade como no Resumo (pílulas neutras); estimativas a vermelho.
-              const y = Number(String(effDate || "").slice(0, 4)) || null;
-              const lo = p.birthYearEst;
-              const hi = p.birthYearEstMax;
-              const est = p.dobYear == null && lo != null;
-              const estYear = !est ? null : hi === null ? `≥${lo}` : hi != null && hi > lo! ? `${lo}–${String(hi).slice(2)}` : `${lo}`;
-              const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
-              const tip = p.dob ? `${p.dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${p.estNote || "ano deduzido, não lido"}` : "";
+              // Nasc. + Idade: o mesmo componente do scorecard (BirthCells) —
+              // pílulas neutras; estimativas a vermelho.
+              const bc = birthCells({ dob: p.dob ?? (p.dobShown ? p.dobShown.split("/").reverse().join("-") : null),
+                birthYear: p.dobYear, birthYearEst: p.birthYearEst,
+                ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, effDate);
               return <>
-                <td className="lb-esc" title={tip} style={bStyle}>
-                  {p.dobYear != null ? <BirthPill>{p.dobShown ?? p.dobYear}</BirthPill>
-                    : est ? <span className="est-value">{estYear}</span> : <span className="muted">–</span>}
-                </td>
-                <td className="lb-esc" title={tip} style={bStyle}>
-                  {age != null ? <BirthPill>{!p.dob ? "~" : ""}{age}a</BirthPill>
-                    : estAge ? <span className="est-value">{estAge}a</span> : <span className="muted">–</span>}
-                </td>
+                <td className="lb-esc" title={bc.tip} style={bStyle}>{bc.nasc}</td>
+                <td className="lb-esc" title={bc.tip} style={bStyle}>{age != null && !p.dob && p.dobShown == null ? <BirthPill>~{age}a</BirthPill> : bc.idade}</td>
               </>;
             })()}
             {!hc.fed && <td className="lb-fed" style={bStyle}>{displayFed(p.fed) || "–"}</td>}
@@ -679,7 +673,7 @@ export default function DrawTab({
       {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>}
       {!hc.nasc && <SortableHdr k="nasc"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>}
       {!hc.fed && <SortableHdr k="fed"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
-      {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>}
+      {!hc.clube && <SortableHdr k="clube" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">{clubLabel ? clubLabel.charAt(0) + clubLabel.slice(1).toLowerCase() : "Clube"}</SortableHdr>}
       {!hc.hcp && <SortableHdr k="hcp"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
       {!hc.tee && <SortableHdr k="tee"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">TEE</SortableHdr>}
     </>

@@ -294,6 +294,12 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // alimenta o tooltip da coluna IDADE e as colunas Nasc./Idade do Resumo
       // (o AccumulatedLB lê `(p as any).dob`).
       dob: p.dob ?? undefined,
+      // Ano e estimativas (Faldo Madeira) — as mesmas colunas Nasc./Idade do
+      // Draw, com as estimativas a vermelho (16/10/2026).
+      birthYear: p.birthYear ?? undefined,
+      birthYearEst: p.birthYearEst ?? undefined,
+      ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}),
+      estNote: p.estNote ?? undefined,
       grossTotal,
       toPar,
       nholes: holes,
@@ -348,6 +354,10 @@ const FM_DRAW_HIDE_COLS = { esc: true, fed: true, hcp: true, tee: true, nasc: tr
 /** Converte os draws scraped (FM) para o formato FpgDraw que o TournamentDetail
  *  consome via `tournament._draws`. Preenche `clube` com o país do jogador
  *  (cruzando o nome com o leaderboard), já que o tee sheet só traz o nome. */
+/** `players`: TODOS os jogadores do torneio (os do escalão por último, para
+ *  ganharem) — o draw de um escalão traz jogadores inscritos noutros (Faldo
+ *  Madeira R2: Hobbs/Dalby do Boys 21 no draw do Boys 16) e ficavam sem
+ *  HCP/nascimento/estimativas (16/10/2026). */
 function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlayer[]): Record<string, FpgDraw> {
   // normName partilhado (tira diacríticos): tee sheet e leaderboard divergem na
   // grafia — com um lowercase simples os acentos falhavam o match exactamente
@@ -415,7 +425,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       // Anexar os draws ao torneio → o TournamentDetail monta as tabs flat
       // intercaladas (Draw R1 · R1 · Draw R2 · R2 · … · Resumo · Scorecards).
       if (dv.draws && Object.keys(dv.draws).length) {
-        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players]);
       }
       // Limpar o tcode placeholder (`job-…`) para o TournamentDetail não mostrar
       // o pill/link FPG (o FM não tem ccode/tcode).
@@ -496,7 +506,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       const results = jobDivisionToTournament(dv, label, f.year, f.startDate);
       tagEvo(results, evo);
       if (dv.draws && Object.keys(dv.draws).length) {
-        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, dv.players);
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players]);
       }
       (results as unknown as { ccode?: string; tcode?: string }).ccode = undefined;
       (results as unknown as { ccode?: string; tcode?: string }).tcode = undefined;
