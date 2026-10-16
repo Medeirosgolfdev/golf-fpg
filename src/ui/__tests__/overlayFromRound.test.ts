@@ -33,9 +33,22 @@ describe("overlayFromRound", () => {
     expect(d.position).toBe("10º");
   });
 
-  it("sem CR/Slope não há PNG", () => {
+  it("sem CR/Slope há PNG na mesma, sem SD nem CH (USKids)", () => {
     const p = { ...player, roundScores: [{ ...player.roundScores![0], courseRating: undefined, slope: undefined }] } as Player;
-    expect(overlayFromRound(tourn, p, null)).toBeNull();
+    const d = overlayFromRound(tourn, p, 12.3)!;
+    expect(d.scores).toEqual(scores);
+    expect(d.sd).toBeNull();
+    expect(d.courseHcp).toBeNull();
+  });
+
+  it("metros no lugar do SI (USKids) não passam por SI", () => {
+    const p = { ...player, roundScores: [{ ...player.roundScores![0], si: meters }] } as Player;
+    expect(overlayFromRound(tourn, p, null)!.si).toEqual([]);
+  });
+
+  it("data americana da USKids (M/D/AAAA)", () => {
+    const t = { ...tourn, date: "12/28/2026", _roundLabel: "R2" } as unknown as Tournament;
+    expect(overlayFromRound(t, player, null)!.date).toBe("29 Dez 2026");
   });
 
   it("volta por omissão = 1", () => {

@@ -13,7 +13,12 @@ Os dados montam-se em `src/ui/overlay/fromRound.ts` (`overlayFromRound`); o
 painel é `src/ui/ShareRoundPanel.tsx` (carrega o `OverlayExport` só ao abrir).
 Quando o torneio da volta só traz o escalão (MAJOR: `name` = divisão, `campo`
 vazio), o nome e o campo vêm de `ScorecardOptions.shareEvent`/`shareCourse`.
-Fora por agora: Drive e USKids (leaderboards próprios).
+Cobre todos os torneios com cartão buraco a buraco: FPG, MAJOR, FFG, RFEG,
+Global Junior, circuitos, USKids (também pelo `ScorecardLB`) e o Drive (o
+`TournamentDetail` e o `ScorecardLB` local da vista antiga). Sem CR/Slope
+(USKids) há PNG na mesma, só sem SD/CH; SI só entra se for 1..n sem repetidos
+(a USKids põe metros no `si` quando não tem SI); datas pelo `isoDate`
+(«M/D/AAAA» da USKids é americano). Só ficam de fora as tabelas só com totais.
 
 Regras dos desenhos (revistos todos a 2026-10-16, com uma volta real):
 - **Vão para cima de fotografias:** nenhum bloco é 100% opaco — cabeçalhos,
