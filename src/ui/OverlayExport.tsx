@@ -14,12 +14,12 @@
  *     em ficheiros desse tamanho — daí o split.
  */
 import React, { useState, useMemo, useRef, useCallback } from "react";
-import { MONTHS_PT, fmtSD } from "../utils/format";
+import { MONTHS_PT } from "../utils/format";
 import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
-import { CellInfoCtx, StatsRow } from "./overlay/badges";
-import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, CAT_COLS, MIX_BG, defaultVis, type DesignDef } from "./overlay/registry";
+import { CellInfoCtx, AccentCtx, Info } from "./overlay/badges";
+import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, defaultVis, type DesignDef } from "./overlay/registry";
 import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
@@ -28,7 +28,7 @@ export type { OverlayData } from "./overlay/types";
 const STYLE_KEY = "ov_style";
 type SavedStyle = {
   vis: Vis; bgId: string; customBg: string; bgAlpha: number;
-  theme: "dark"|"light"; subTheme: "dark"|"light"; logoPos: "top"|"bottom"; logoSize: LogoSize;
+  theme: "dark"|"light"; subTheme?: "dark"|"light"; accent?: string; logoPos: "top"|"bottom"; logoSize: LogoSize;
 };
 
 /** Logo com altura `h` (no máximo a largura do cartão — nunca o alarga); com
@@ -49,43 +49,34 @@ function LogoView({ logo, h, style }: { logo: OverlayLogo; h: number; style?: Re
 /** Linha de informação por baixo do desenho: as opções ligadas que o desenho
  *  não trata sozinho (`has` no registo). Mesmo fundo do desenho; a largura é a
  *  do desenho (width 0 + minWidth 100% — nunca o alarga, o texto quebra). */
-function ExtraInfo({ d, v, s, has, bg, tc3 }: { d: DD; v: Vis; s: Stats; has: string[]; bg: string; tc3: string }) {
-  const on = (k: string) => v[k] && !has.includes(k);
-  const parts = [
-    on("player") && d.player,
-    on("event") && d.event,
-    on("round") && !d.rounds && `R${d.round}`,
-    on("position") && d.position && `POS ${d.position}`,
-    on("course") && d.course,
-    on("tee") && d.tee,
-    on("teeDist") && d.teeDist && `${d.teeDist}m`,
-    on("date") && d.date,
-    on("hiCh") && d.hi != null && [`HI ${d.hi.toFixed(1)}`, d.courseHcp != null && `CH ${d.courseHcp}`].filter(Boolean).join(" · "),
-    on("sd") && d.sd != null && `SD ${fmtSD(d.sd)}`,
-  ].filter(Boolean) as string[];
+function ExtraInfo({ d, v, s, has, bg, tc, tc3 }: { d: DD; v: Vis; s: Stats; has: string[]; bg: string; tc: string; tc3: string }) {
+  const on = (k: string) => !!v[k] && !has.includes(k);
+  const keys = (["event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"] as const).filter(on);
+  const player = on("player") && d.player;
   const stats = on("stats") && !d.rounds;
-  if (!parts.length && !stats) return null;
+  const hasInfo = keys.some((k) => k === "round" ? !d.rounds && d.round : k === "hiCh" ? d.hi != null : k === "sd" ? d.sd != null : k === "teeDist" ? d.teeDist : (d as unknown as Record<string, unknown>)[k]);
+  if (!player && !hasInfo && !stats) return null;
   return (
-    <div style={{ width:0, minWidth:"100%", boxSizing:"border-box", marginTop:4, padding:"4px 8px", borderRadius:8, background:bg,
-      fontFamily:"'Inter',sans-serif", fontSize:10, fontWeight:700, letterSpacing:.4, lineHeight:1.45, color:tc3 }}>
-      {parts.length > 0 && <div>{parts.join(" · ")}</div>}
-      {stats && <div style={{ marginTop: parts.length ? 2 : 0 }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
+    <div style={{ width:0, minWidth:"100%", boxSizing:"border-box", marginTop:4, padding:"4px 8px 5px", borderRadius:8, background:bg, fontFamily:"'Inter',sans-serif", color:tc }}>
+      {player && <div style={{ fontSize:12, fontWeight:800 }}>{d.player}</div>}
+      <Info d={d} v={v} keys={[...keys]} tc={tc} tc3={tc3} fs={10} st={stats ? s.st : null} />
     </div>
   );
 }
 
 /** Um desenho como vai para o PNG: o desenho, a legenda Par/S.I. nas células
  *  e a linha de informação com as opções que ele não trata. */
-export function DesignCard({ x, d, v, s, bg, tc, tc2, tc3, tc4, fa }: {
-  x: DesignDef; d: DD; v: Vis; s: Stats; bg: string; tc: string; tc2: string; tc3: string; tc4: string; fa: number;
+export function DesignCard({ x, d, v, s, bg, tc, tc2, tc3, tc4, accent = {}, fa }: {
+  x: DesignDef; d: DD; v: Vis; s: Stats; bg: string; tc: string; tc2: string; tc3: string; tc4: string;
+  accent?: { light?: string; dark?: string }; fa: number;
 }) {
   return (
-    <>
+    <AccentCtx.Provider value={accent}>
       <CellInfoCtx.Provider value={{ d, par: !!v.holePar && !x.has.includes("holePar"), si: !!v.holeSI && !x.has.includes("holeSI") }}>
         <x.C d={d} v={v} s={s} bg={bg} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={fa} />
       </CellInfoCtx.Provider>
-      <ExtraInfo d={d} v={v} s={s} has={x.has} bg={bg} tc3={tc3} />
-    </>
+      <ExtraInfo d={d} v={v} s={s} has={x.has} bg={bg} tc={tc} tc3={tc3} />
+    </AccentCtx.Provider>
   );
 }
 
@@ -121,12 +112,17 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [logoId,   setLogoId]   = useState(() => defaultLogoFor(data.event || ""));
   const [logoPos,  setLogoPos]  = useState<"top"|"bottom">(saved.logoPos ?? "bottom");
   const [logoSize, setLogoSize] = useState<LogoSize>(saved.logoSize ?? "M");
-  /* Dois seletores independentes:
-     - theme:    cor do texto PRINCIPAL (jogador, score) — dark=branco / light=preto
-     - subTheme: cor do texto SECUNDÁRIO (torneio, campo, data) — dark=branco / light=preto
-     Permite, por ex., principal branco com secundário preto (ou vice-versa). */
+  /* Cor do texto — UM só seletor para todo o texto do cartão (antes havia
+     «Texto» e «Subtítulo» com nomes trocados, e metade do texto não mudava).
+     theme "dark" = texto BRANCO (para fundos escuros) · "light" = texto PRETO. */
   const [theme,    setTheme]    = useState<"dark"|"light">(saved.theme ?? "dark");
-  const [subTheme, setSubTheme] = useState<"dark"|"light">(saved.subTheme ?? "dark");
+  const [accentId, setAccentId] = useState<string>(saved.accent ?? "gold");
+  /* Fundo branco pede texto preto e vice-versa — o seletor de texto continua a mandar. */
+  const pickBg = (id: string) => {
+    setBgId(id);
+    if (id === "white") setTheme("light");
+    else if (bgId === "white") setTheme("dark");
+  };
   const [exporting,   setExporting]   = useState(false);
   const [exportingId, setExportingId] = useState<string|null>(null);
   const [collapsed,   setCollapsed]   = useState(true);
@@ -134,9 +130,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
 
   React.useEffect(() => {
-    const st: SavedStyle = { vis, bgId, customBg, bgAlpha, theme, subTheme, logoPos, logoSize };
+    const st: SavedStyle = { vis, bgId, customBg, bgAlpha, theme, accent: accentId, logoPos, logoSize };
     try { localStorage.setItem(STYLE_KEY, JSON.stringify(st)); } catch { /* ignore */ }
-  }, [vis, bgId, customBg, bgAlpha, theme, subTheme, logoPos, logoSize]);
+  }, [vis, bgId, customBg, bgAlpha, theme, accentId, logoPos, logoSize]);
 
   /* Persistir nome do jogador entre sessões (só o escrito à mão no simulador) */
   React.useEffect(() => {
@@ -209,13 +205,15 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   /* Fundo de cada desenho: «Variado» = a cor própria dele (MIX_BG pela ordem). */
   const bgFor = (x: DesignDef) => bgId === "mix" ? hexToRgba(MIX_BG[DESIGNS.indexOf(x) % MIX_BG.length], bgAlpha/100) : bgColor;
 
-  /* tc = principal (theme); tc2/tc3/tc4 = secundário (subTheme).
-     Tons intensificados (mais escuros no modo Claro, menos cinzento no modo Escuro)
-     para o subtítulo ficar mais visível sobre fundos transparentes/foto. */
-  const tc  = theme === "light" ? "#111111" : "#ffffff";
-  const tc2 = subTheme === "light" ? "#1a1a1a" : "#f0f0f0";
-  const tc3 = subTheme === "light" ? "#2a2a2a" : "#e0e0e0";
-  const tc4 = subTheme === "light" ? "#3a3a3a" : "#c8c8c8";
+  /* Texto claro (fundos escuros) ou escuro (fundos claros) — tons suaves, não
+     branco/preto puros. tc = principal; tc2/tc3/tc4 = secundários. */
+  const tc  = theme === "light" ? "#1c1f26" : "#f7f4ee";
+  const tc2 = theme === "light" ? "#2a2e36" : "#ece8e0";
+  const tc3 = theme === "light" ? "#4a505c" : "#d6d1c7";
+  const tc4 = theme === "light" ? "#636a77" : "#bdb8ae";
+  /* Cor de destaque (torneio, posição, SD) — variante clara ou escura conforme o texto. */
+  const accOpt = ACCENTS.find((a) => a.id === accentId) ?? ACCENTS[0];
+  const accent = { light: accOpt.light, dark: accOpt.dark };
 
   /* Logo escolhido: altura fixa, largura natural (nunca alarga o cartão). */
   const logo = OVERLAY_LOGOS.find(l => l.id === logoId);
@@ -380,7 +378,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
           <div className="ov-section-label">Fundo</div>
           <div style={{ display:"flex", flexWrap:"wrap", gap:5, alignItems:"center", marginBottom:8 }}>
             {BG_OPTIONS.map(bg => (
-              <button key={bg.id} className={`ov-opt-btn${bgId===bg.id?" active":""}`} onClick={()=>setBgId(bg.id)}
+              <button key={bg.id} className={`ov-opt-btn${bgId===bg.id?" active":""}`} onClick={()=>pickBg(bg.id)}
                 style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
                 <span style={{
                   display:"inline-block", width:16, height:16, borderRadius:4, flexShrink:0,
@@ -392,33 +390,33 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                 <span>{bg.label}</span>
               </button>
             ))}
-            <button className={`ov-opt-btn${bgId==="custom"?" active":""}`} onClick={()=>setBgId("custom")}
+            <button className={`ov-opt-btn${bgId==="custom"?" active":""}`} onClick={()=>pickBg("custom")}
               style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
               <input type="color" value={customBg} onClick={e=>e.stopPropagation()}
-                onChange={e=>{ setCustomBg(e.target.value); setBgId("custom"); }}
+                onChange={e=>{ setCustomBg(e.target.value); pickBg("custom"); }}
                 style={{ width:16, height:16, padding:0, border:"1.5px solid rgba(128,128,128,0.3)", borderRadius:4, cursor:"pointer" }} />
               <span>Outra</span>
             </button>
             <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
-            {/* Texto PRINCIPAL (nome, score) — branco / preto */}
+            {/* Cor de TODO o texto do cartão — a amostra mostra a cor real do texto */}
             <span style={{ fontSize:10, fontWeight:800, color:"#888", marginRight:2 }}>Texto:</span>
             {(["dark","light"] as const).map(t => (
               <button key={t} className={`ov-opt-btn${theme===t?" active":""}`} onClick={()=>setTheme(t)}
-                title={t==="dark" ? "Texto principal a branco" : "Texto principal a preto"}
+                title={t==="dark" ? "Texto claro (para fundos escuros)" : "Texto escuro (para fundos claros)"}
                 style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
-                <span style={{ display:"inline-block", width:16, height:16, borderRadius:4, background:t==="dark"?"#1a1a1a":"#fff", border:"1.5px solid rgba(128,128,128,0.3)" }} />
-                <span>{t==="dark"?"Escuro":"Claro"}</span>
+                <span style={{ display:"inline-flex", alignItems:"center", justifyContent:"center", width:16, height:16, borderRadius:4, fontSize:10, fontWeight:900,
+                  background:t==="dark"?"#2a2e36":"#ece8e0", color:t==="dark"?"#f7f4ee":"#1c1f26", border:"1.5px solid rgba(128,128,128,0.3)" }}>A</span>
+                <span>{t==="dark"?"Claro":"Escuro"}</span>
               </button>
             ))}
             <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
-            {/* Texto SECUNDÁRIO (torneio, campo, data) — branco / preto */}
-            <span style={{ fontSize:10, fontWeight:800, color:"#888", marginRight:2 }}>Subtítulo:</span>
-            {(["dark","light"] as const).map(t => (
-              <button key={"sub-"+t} className={`ov-opt-btn${subTheme===t?" active":""}`} onClick={()=>setSubTheme(t)}
-                title={t==="dark" ? "Texto secundário a branco" : "Texto secundário a preto"}
+            {/* Segunda cor para dar destaque (torneio, posição, SD) */}
+            <span style={{ fontSize:10, fontWeight:800, color:"#888", marginRight:2 }}>Destaque:</span>
+            {ACCENTS.map(a => (
+              <button key={a.id} className={`ov-opt-btn${accentId===a.id?" active":""}`} onClick={()=>setAccentId(a.id)}
                 style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
-                <span style={{ display:"inline-block", width:16, height:16, borderRadius:4, background:t==="dark"?"#1a1a1a":"#fff", border:"1.5px solid rgba(128,128,128,0.3)" }} />
-                <span>{t==="dark"?"Escuro":"Claro"}</span>
+                {a.light && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:theme==="light"?a.dark:a.light, border:"1.5px solid rgba(128,128,128,0.3)" }} />}
+                <span>{a.label}</span>
               </button>
             ))}
           </div>
@@ -506,7 +504,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
                         width: (x.needsHoles && vis.holeScores && x.cat !== CAT_COLS) || x.fit ? "min-content" : undefined }}>
                         {logo && logoPos==="top" && logoImg}
-                        <DesignCard x={x} d={dd} v={vis} s={stats} bg={bgFor(x)} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
+                        <DesignCard x={x} d={dd} v={vis} s={stats} bg={bgFor(x)} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} accent={accent} fa={bgAlpha/100} />
                         {logo && logoPos==="bottom" && logoImg}
                       </div>
                     </div>

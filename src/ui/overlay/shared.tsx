@@ -38,20 +38,35 @@ export function scBg(d: number, sc?: number): string | null {
   return null;
 }
 
-/** Cor de texto vs par (light bg). */
-export const vpC = (v: number) => {
+/** O texto do cartão é branco (fundos escuros)? */
+export const isLightText = (tc?: string) => {
+  if (!tc || tc === "white") return true;
+  const m = /^#([0-9a-f]{6})$/i.exec(tc);
+  if (!m) return true;
+  const n = parseInt(m[1], 16);
+  return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) > 140;
+};
+/** Tinta da cor do texto com transparência — linhas, divisórias, realces. */
+export const ink = (tc: string | undefined, a: number) => isLightText(tc) ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`;
+/** Painel interior por cima do fundo: escurece sob texto branco, clareia sob texto preto. */
+export const panel = (tc: string | undefined, a: number) => isLightText(tc) ? `rgba(0,0,0,${a})` : `rgba(255,255,255,${a})`;
+
+/** Cor do resultado vs par. Com `tc` preto (fundo claro) usa as cores escuras (vpCd). */
+export const vpC = (v: number, tc?: string) => {
+  if (tc && !isLightText(tc)) return vpCd(v);
   if (v <= -2) return "#d4a017";
   if (v === -1) return "#ef4444";
   if (v === 0) return "#d0d0d0";
-  if (v === 1) return "#7eb8e8";
-  return "#5b9bd5";
+  /* Acima do par: cinza-claro neutro — o azul competia com o azul dos bogeys */
+  return "#cbd5e1";
 };
 
 /** Cor de texto vs par (dark bg, para tabelas brancas). */
 export const vpCd = (v: number) => {
-  if (v < 0) return "#16a34a";
+  /* Abaixo do par vermelho (como os birdies); acima, cinza-escuro neutro */
+  if (v < 0) return "#dc2626";
   if (v === 0) return "#666";
-  return "#dc2626";
+  return "#334155";
 };
 
 /* ═══════ FONT EMBED (html-to-image) ═══════ */

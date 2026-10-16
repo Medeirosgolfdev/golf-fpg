@@ -2,7 +2,8 @@
  * Designs HIO — Hole-in-One celebration.
  * V48 · ACE CELEBRATION
  */
-import { II, OS, BN, HIO_GREEN, vpC } from "../shared";
+import { II, OS, BN, HIO_GREEN, vpC, ink } from "../shared";
+import { Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
@@ -35,13 +36,13 @@ export function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
             <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Buraco</div>
             <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: HIO_GREEN }}>{hio.hole}</div>
           </div>
-          <div style={{ width: 1, height: 50, background: "rgba(255,255,255,.15)" }} />
+          <div style={{ width: 1, height: 50, background: ink(tc, .15) }} />
           <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Par</div>
             <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: tc2 }}>{hio.par}</div>
           </div>
           {hio.meters != null && hio.meters > 0 && <>
-            <div style={{ width: 1, height: 50, background: "rgba(255,255,255,.15)" }} />
+            <div style={{ width: 1, height: 50, background: ink(tc, .15) }} />
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: tc3, letterSpacing: 1.5, textTransform: "uppercase" }}>Metros</div>
               <div style={{ fontFamily: BN, fontSize: 64, lineHeight: .85, color: tc2 }}>{hio.meters}</div>
@@ -53,16 +54,12 @@ export function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
           <div style={{ fontFamily: OS, fontSize: 22, fontWeight: 700, color: tc, letterSpacing: 1, marginTop: 4 }}>{d.player.toUpperCase()}</div>
         )}
         {/* Course + Event */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 2, marginTop: 2 }}>
-          {v.course && d.course && <div style={{ fontSize: 13, fontWeight: 600, color: tc2 }}>{d.course}</div>}
-          {v.event && d.event && <div style={{ fontSize: 12, fontWeight: 500, color: tc3 }}>{d.event}</div>}
-          {v.date && d.date && <div style={{ fontSize: 11, fontWeight: 500, color: tc3 }}>{d.date}</div>}
-        </div>
+        <div style={{ alignSelf: "stretch", marginTop: 2 }}><Info d={d} v={v} tc={tc} tc3={tc3} fs={12} align="center" fit /></div>
         {/* Score total discreto */}
-        <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6, padding: "4px 12px", background: "rgba(255,255,255,.06)", borderRadius: 6 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6, padding: "4px 12px", background: ink(tc, .06), borderRadius: 6 }}>
           <span style={{ fontSize: 11, fontWeight: 600, color: tc3 }}>Score Total</span>
           <span style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, color: tc }}>{s.sT}</span>
-          <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, color: vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, color: vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
     </div>

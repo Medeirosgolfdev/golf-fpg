@@ -4,8 +4,8 @@
  * diferença entre as duas últimas) · V52 Evolução (de volta para volta).
  * Só aparecem quando o painel escolhe «Torneio» (d.rounds com 2+ voltas).
  */
-import { II, OS, BN, fillA, countHoles } from "../shared";
-import { SC, TpBadge, StatsRow } from "../badges";
+import { II, OS, BN, countHoles, vpC, ink, panel } from "../shared";
+import { SC, TpBadge, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P, RoundSum } from "../types";
 
@@ -22,11 +22,10 @@ export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const best = Math.min(...rs.map((r) => r.gross));
-  const meta = [v.event && d.event, v.course && d.course].filter(Boolean).join(" · ");
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "8px 12px", minWidth: 220 }}>
       {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 22, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", lineHeight: 1.1 }}>{d.player}</div>}
-      {meta && <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.2, textTransform: "uppercase", color: tc3, marginTop: 2, lineHeight: 1.4 }}>{meta}</div>}
+      <Info d={d} v={v} keys={["event", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={10} upper fit mt={2} />
       <div style={{ display: "flex", alignItems: "flex-end", gap: 10, margin: "6px 0 4px" }}>
         <div style={{ fontFamily: BN, fontSize: 70, lineHeight: .9, letterSpacing: -2 }}>{tot(rs)}</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 4, paddingBottom: 4 }}>
@@ -37,10 +36,10 @@ export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
       <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
         {rs.map((r) => (
           <div key={r.round} style={{ display: "flex", alignItems: "baseline", gap: 10, padding: "3px 8px", borderRadius: 6,
-            background: r.gross === best ? fillA("#ffffff", (fa ?? .88) * .18) : undefined }}>
+            background: r.gross === best ? ink(tc, (fa ?? .88) * .18) : undefined }}>
             <span style={{ fontFamily: OS, fontSize: 13, fontWeight: 700, color: tc3, width: 22 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 26, lineHeight: 1, width: 34 }}>{r.gross}</span>
-            <span style={{ fontSize: 13, fontWeight: 800, color: r.toPar < 0 ? "#f87171" : r.toPar > 0 ? "#60a5fa" : "inherit", width: 34 }}>{fmtToPar(r.toPar)}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: vpC(r.toPar, tc), width: 34 }}>{fmtToPar(r.toPar)}</span>
             {v.date && r.date && <span style={{ fontSize: 10, color: tc3 }}>{r.date}</span>}
             {r.gross === best && <span style={{ fontSize: 11 }}>★</span>}
           </div>
@@ -66,7 +65,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 10, marginBottom: 6 }}>
         <div>
           {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", lineHeight: 1.1 }}>{d.player}</div>}
-          {v.event && d.event && <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase", color: tc3, marginTop: 1 }}>{d.event}</div>}
+          <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper />
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
           <span style={{ fontFamily: BN, fontSize: 40, lineHeight: .9 }}>{tot(rs)}</span>
@@ -75,7 +74,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
         </div>
       </div>
       {v.holeScores && nines.map(([off, len]) => (
-        <div key={off} style={{ marginBottom: 6, background: fillA("#000000", (fa ?? .88) * .25), borderRadius: 6, padding: "3px 4px" }}>
+        <div key={off} style={{ marginBottom: 6, background: panel(tc, (fa ?? .88) * .25), borderRadius: 6, padding: "3px 4px" }}>
           <div style={{ display: "flex", gap: 2, fontSize: 9, fontWeight: 700, color: tc3 }}>
             <span style={{ width: LW }} />
             {Array.from({ length: len }, (_, i) => <span key={i} style={{ width: W, textAlign: "center" }}>{off + i + 1}</span>)}
@@ -118,7 +117,7 @@ export function V52({ d, v, bg, tc = "white", tc3 }: P) {
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "8px 14px", textAlign: "center" }}>
       {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, letterSpacing: 1.5, textTransform: "uppercase" }}>{d.player}</div>}
-      {v.event && d.event && <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1.2, textTransform: "uppercase", color: tc3 }}>{d.event}</div>}
+      <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper align="center" />
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 6 }}>
         {rs.map((r, i) => (
           <span key={r.round} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>

@@ -46,7 +46,7 @@ export type DesignDef = {
 
 export const DESIGNS: DesignDef[] = [
   /* 🏁 Resumo do torneio — todas as voltas (escolher «Torneio» no painel) */
-  { id:"V50", label:"Resumo do Torneio", C:V50, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["stats","course","player","event","date","position"] },
+  { id:"V50", label:"Resumo do Torneio", C:V50, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["stats","course","tee","teeDist","player","event","date","position"] },
   { id:"V51", label:"Voltas lado a lado", C:V51, needsHoles:true, needsRounds:true, cat:CAT_RESUMO, has:["holeScores","player","event","position"] },
   { id:"V52", label:"Evolução",          C:V52, needsHoles:false, needsRounds:true, fit:true, cat:CAT_RESUMO, has:["player","event","date","position"] },
   /* 🏌️ Hole-in-One — design celebratório para HIO */
@@ -146,6 +146,17 @@ export const VIS_PRESETS: { label:string; desc:string; vis:Vis }[] = [
     desc: "Scores sem texto — limpo",
     vis: { holeScores:true, holePar:false, holeSI:false, stats:false, course:false, tee:false, teeDist:false, player:false, hiCh:false, sd:false, event:false, round:false, date:false, position:false },
   },
+];
+
+/* ═══════ COR DE DESTAQUE ═══════ */
+/** Segunda cor do texto (torneio, posição, SD): variante para texto claro e
+ *  para texto escuro. «Sem» = tudo na cor do texto. */
+export const ACCENTS: { id: string; label: string; light?: string; dark?: string }[] = [
+  { id: "gold",  label: "Dourado", light: "#f2c14e", dark: "#8a5a00" },
+  { id: "lime",  label: "Lima",    light: "#b8e26b", dark: "#3f6f12" },
+  { id: "coral", label: "Coral",   light: "#ff9f85", dark: "#b23a1a" },
+  { id: "cyan",  label: "Ciano",   light: "#7fd9e6", dark: "#0b6573" },
+  { id: "none",  label: "Sem" },
 ];
 
 /* ═══════ BACKGROUND PRESETS ═══════ */

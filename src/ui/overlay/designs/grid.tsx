@@ -3,47 +3,40 @@
  * V11 Giant Score, V22 Magazine, V10 Score Hero, V12 Tournament,
  * V6 Grint Row, V9 18Birdies, V13 Dashboard, V5 Ticket, V26 Signature.
  */
-import { II, OS, LO, BN, SG, TS, TS_SCORE, vpC, hiChStr, countHoles, infoParts } from "../shared";
-import { SC, SCQ, TpBadge, Grid2, StatsRow } from "../badges";
+import { II, OS, LO, BN, SG, TS, TS_SCORE, vpC, countHoles, ink } from "../shared";
+import { SC, SCQ, TpBadge, Grid2, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
 /* V5 · TICKET */
 export function V5({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const hcl = hiChStr(d,v,s);
-  const top = infoParts(d, v, ["event", "course"]);
   return (
-    <div style={{ fontFamily:LO, display:"inline-block", minWidth:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:"1px solid rgba(255,255,255,0.15)", textShadow:TS }}>
-      {(v.player&&d.player || top.length > 0) && (
-        <div style={{ textAlign:"center", borderBottom:"1px dashed rgba(255,255,255,0.2)", paddingBottom:6, marginBottom:4 }}>
-          {v.player&&d.player && <div style={{ fontSize:20, fontWeight:700, fontStyle:"italic" }}>{d.player}</div>}
-          {top.length > 0 && <div style={{ fontFamily:II, fontSize:11, color:tc3, marginTop:1, lineHeight:1.35 }}>{top.join(" · ")}</div>}
-        </div>
-      )}
-      <div style={{ textAlign:"center", marginBottom:4 }}>
+    <div style={{ fontFamily:LO, display:"inline-block", minWidth:230, color:tc, background:bg||"rgba(0,0,0,0.82)", borderRadius:6, padding:"3px 6px", border:`1px solid ${ink(tc, .15)}`, textShadow:TS }}>
+      <div style={{ textAlign:"center", borderBottom:`1px dashed ${ink(tc, .2)}`, paddingBottom:6, marginBottom:4 }}>
+        {v.player&&d.player && <div style={{ fontSize:20, fontWeight:700, fontStyle:"italic" }}>{d.player}</div>}
+        <div style={{ fontFamily:II }}><Info d={d} v={v} keys={["event", "course"]} tc={tc} tc3={tc3} fs={11} align="center" fit /></div>
+      </div>
+      <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:8, marginBottom:4 }}>
         <div style={{ fontFamily:II, fontSize:48, fontWeight:900, lineHeight:1, letterSpacing:-2, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && <Grid2 d={d} sz={28} gap={3} nc={tc4} />}
-      <div style={{ borderTop:"1px dashed rgba(255,255,255,0.2)", paddingTop:6, marginTop:3, fontFamily:II }}>
-        {v.stats && <div className="u-flex-jc"><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
-        {(v.date||v.tee||v.teeDist||v.round||hcl||(v.position&&d.position)) && <div style={{ textAlign:"center", fontSize:10, fontWeight:600, color:tc4, marginTop:2 }}>{[v.date&&d.date, v.tee&&d.tee, (v.teeDist&&d.teeDist)?`${d.teeDist}m`:null, v.round&&`R${d.round}`, v.position&&d.position&&`POS ${d.position}`, hcl].filter(Boolean).join(" · ")}</div>}
+      <div style={{ borderTop:`1px dashed ${ink(tc, .2)}`, paddingTop:5, marginTop:3, fontFamily:II }}>
+        <Info d={d} v={v} keys={["round", "tee", "teeDist", "date", "position", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit st={v.stats ? s.st : null} />
       </div>
     </div>
   );
 }
 
 /* V6 · GRINT ROW */
-export function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+export function V6({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
-  const g6 = infoParts(d, v, ["event", "round", "course", "tee", "teeDist", "date"]);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 6px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:5, gap:8 }}>
-        <div className="u-col-flex2">
-          {g6.length > 0 && <div style={{ fontSize:10, fontWeight:700, color:tc3, letterSpacing:.5, lineHeight:1.35 }}>{g6.join(" · ")}</div>}
+        <div style={{ flex:1, minWidth:0 }}>
           {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:26, letterSpacing:1.5, lineHeight:1.1 }}>{d.player.toUpperCase()}</div>}
+          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit />
         </div>
         <div style={{ textAlign:"right", flexShrink:0, display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
           <div style={{ fontFamily:BN, fontSize:56, lineHeight:.9, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
@@ -60,8 +53,7 @@ export function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           ))}
         </div>
       )}
-      {v.stats && <div style={{ marginTop:3 }}><StatsRow st={s.st} tc3={tc4} gap={5} fs={10} /></div>}
-      {hcl && <div style={{ marginTop:2, fontSize:9, fontWeight:700, color:tc4, letterSpacing:1, opacity:.85 }}>{hcl}</div>}
+      <Info d={d} v={v} keys={["hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} mt={3} />
     </div>
   );
 }
@@ -69,14 +61,12 @@ export function V6({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
 /* V9 · 18BIRDIES */
 export function V9({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg||"rgba(15,15,25,0.9)", borderRadius:10, padding:"4px 6px", textShadow:TS }}>
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", gap:12, marginBottom:4 }}>
-        <div>
-          {v.event&&d.event && <div style={{ fontSize:10, fontWeight:700, color:tc3, letterSpacing:.5, textTransform:"uppercase" }}>{d.event}</div>}
-          {v.course&&d.course && <div style={{ fontSize:14, fontWeight:700, letterSpacing:.3 }}>{d.course}</div>}
-          <div style={{ fontSize:10, fontWeight:600, color:tc3 }}>{[`Par ${s.pT}`, ...infoParts(d, v, ["round", "tee", "teeDist", "date"])].join(" · ")}</div>
+        <div style={{ flex:1, minWidth:0 }}>
+          {v.player&&d.player && <div style={{ fontSize:15, fontWeight:800, letterSpacing:.3 }}>{d.player}</div>}
+          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit />
         </div>
         <div style={{ textAlign:"right", display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
           <div style={{ fontFamily:BN, fontSize:54, lineHeight:.9, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
@@ -93,76 +83,55 @@ export function V9({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           ))}
         </div>
       ))}
-      {(v.player||(v.position&&d.position)) && (
-        <div style={{ display:"flex", justifyContent:"space-between", marginTop:3, fontSize:10, fontWeight:700, color:tc4, gap:4 }}>
-          {v.player&&d.player ? <span>{d.player}</span> : <span />}
-          {v.position&&d.position && <span>POS {d.position}</span>}
-        </div>
-      )}
-      {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3={tc4} gap={4} fs={10} /></div>}
-      {hcl && <div style={{ marginTop:2, fontSize:9, fontWeight:700, color:tc4, opacity:.85 }}>{hcl}</div>}
+      <Info d={d} v={v} keys={["position", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} mt={3} />
     </div>
   );
 }
 
 /* V10 · SCORE HERO — bg HARDCODED escuro, força secundário sempre claro
    (subTheme do utilizador é ignorado aqui para evitar texto invisível). */
-export function V10({ d, v, s, bg, tc="white", tc2 }: P) {
-  const hcl = hiChStr(d,v,s);
-  /* Secundário sempre claro porque o bg deste design é escuro fixo. */
-  const _tc3 = "rgba(255,255,255,.7)";
-  const _tc4 = "rgba(255,255,255,.55)";
-  /* Calcular metaStr a priori — se for vazio NÃO renderiza o div (evita "espaço vazio"). */
-  const metaLine = infoParts(d, v, ["event", "round", "course", "tee", "teeDist", "date", "position"]).join(" · ");
+export function V10({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.78)", borderRadius:10, padding:"3px 5px", textAlign:"center", textShadow:TS }}>
-      <div style={{ fontSize:9, fontWeight:700, letterSpacing:3, color:_tc3 }}>TO PAR</div>
-      <div style={{ fontFamily:OS, fontSize:56, fontWeight:900, lineHeight:.9, letterSpacing:-3, margin:"2px 0", color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
-      <div style={{ fontSize:11, fontWeight:700, color:tc2 }}>Gross <span style={{ fontWeight:900, color:tc, fontSize:28 }}>{s.sT}</span></div>
-      <div style={{ height:1, background:"rgba(255,255,255,.12)", margin:"6px 0" }} />
+      <div style={{ fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>TO PAR</div>
+      <div style={{ fontFamily:OS, fontSize:56, fontWeight:900, lineHeight:.9, letterSpacing:-3, margin:"2px 0", color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
+      <div style={{ fontSize:11, fontWeight:700, color:tc2, lineHeight:1 }}>Gross <span style={{ fontWeight:900, color:tc, fontSize:28 }}>{s.sT}</span></div>
+      <div style={{ height:1, background:ink(tc, .12), margin:"4px 0" }} />
       {v.player&&d.player && <div style={{ fontSize:15, fontWeight:900, marginBottom:2 }}>{d.player}</div>}
-      {metaLine && <div style={{ fontSize:10, color:_tc3, marginBottom:4, wordBreak:"break-word", lineHeight:1.4 }}>{metaLine}</div>}
-      {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={28} gap={3} nc={_tc4} /></div>}
-      {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:3 }}><StatsRow st={s.st} tc3={_tc3} gap={4} fs={11} /></div>}
-      {hcl && <div style={{ fontSize:10, fontWeight:700, color:_tc4, marginTop:3 }}>{hcl}</div>}
+      <div style={{ marginBottom:4 }}><Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "date", "position"]} tc={tc} tc3={tc3} fs={10} align="center" fit /></div>
+      {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={28} gap={3} nc={tc4} /></div>}
+      <Info d={d} v={v} keys={["hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit st={v.stats ? s.st : null} mt={3} />
     </div>
   );
 }
 
 /* V11 · GIANT SCORE */
 export function V11({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const hcl = hiChStr(d,v,s);
   return (
     <div style={{ fontFamily:OS, display:"inline-block", textAlign:"center", color:tc }}>
       <div style={{ background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"3px 5px", textShadow:TS }}>
-        {v.round && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, letterSpacing:3, color:tc3 }}>ROUND {d.round}</div>}
         {v.player&&d.player && <div style={{ fontSize:18, fontWeight:700, letterSpacing:.3, marginTop:1, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
-        {v.event&&d.event && <div style={{ fontFamily:II, fontSize:10, fontWeight:700, color:tc3 }}>{d.event}</div>}
-        {(v.course||v.tee||v.teeDist||(v.position&&d.position)) && <div style={{ fontFamily:II, fontSize:10, fontWeight:600, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee,(v.teeDist&&d.teeDist)?`${d.teeDist}m`:null,v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>}
-        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, margin:"6px 0 4px" }}>
-          <span style={{ fontFamily:BN, fontSize:72, lineHeight:1, letterSpacing:-2, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
+        <div style={{ fontFamily:II }}><Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={10} align="center" fit /></div>
+        <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, margin:"4px 0 3px" }}>
+          <span style={{ fontFamily:BN, fontSize:72, lineHeight:.85, letterSpacing:-2, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
           <TpBadge vp={s.vpT} sz={20} />
         </div>
-        <div style={{ fontFamily:II, fontSize:10, fontWeight:700, color:tc3, marginBottom:4 }}>Par {s.pT}{v.date&&d.date?` · ${d.date}`:""}</div>
+        <div style={{ fontFamily:II, marginBottom:4 }}><Info d={d} v={v} keys={["date", "position", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit /></div>
         {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={28} gap={3} nc={tc4} /></div>}
-        {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:3 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={11} /></div>}
-        {hcl && <div style={{ fontFamily:II, fontSize:10, fontWeight:700, color:tc4, marginTop:3 }}>{hcl}</div>}
+        {v.stats && <div style={{ fontFamily:II }}><Info d={d} v={v} keys={[]} tc={tc} tc3={tc3} fs={11} align="center" fit st={s.st} mt={3} /></div>}
       </div>
     </div>
   );
 }
 
 /* V12 · TOURNAMENT */
-export function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
-  const hcl = hiChStr(d,v,s);
+export function V12({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,35,60,.88)", borderRadius:8, overflow:"hidden", textShadow:TS }}>
       <div style={{ padding:"3px 6px 4px", display:"flex", alignItems:"center", gap:5 }}>
-        <div style={{ flex:1, display:"flex", flexDirection:"column", gap:2 }}>
+        <div style={{ flex:1, minWidth:0 }}>
           {v.player&&d.player && <div style={{ fontSize:20, fontWeight:900 }}>{d.player}</div>}
-          {(v.course||v.round||v.tee||v.teeDist) && <div style={{ fontSize:11, fontWeight:700, color:tc2 }}>{[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.round&&`R${d.round}`].filter(Boolean).join(" · ")}</div>}
-          {(v.event||v.date) && <div style={{ fontSize:10, fontWeight:500, color:tc3 }}>{[v.event&&d.event,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
-          {hcl && <div style={{ fontSize:10, fontWeight:600, color:tc4 }}>{hcl}</div>}
+          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit />
         </div>
         <div style={{ textAlign:"right", flexShrink:0, display:"flex", flexDirection:"column", alignItems:"flex-end", gap:2 }}>
           <div style={{ fontFamily:BN, fontSize:52, lineHeight:.9, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</div>
@@ -171,7 +140,7 @@ export function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
         </div>
       </div>
       {v.holeScores && <div style={{ padding:"0 8px 6px", display:"flex", justifyContent:"center" }}><Grid2 d={d} sz={28} gap={3} nc={tc4} /></div>}
-      {v.stats && <div style={{ padding:"3px 7px", background:"rgba(255,255,255,.05)", display:"flex" }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
+      {v.stats && <div style={{ padding:"3px 7px", background:ink(tc, .05), display:"flex" }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={11} /></div>}
     </div>
   );
 }
@@ -179,53 +148,54 @@ export function V12({ d, v, s, bg, tc="white", tc2, tc3, tc4 }: P) {
 /* V13 · DASHBOARD — Bx extraído para evitar recriação em cada render */
 function V13Bx({ val, label, c, big, tc, tc3 }: { val:string|number; label:string; c?:string; big?:boolean; tc:string; tc3:string }) {
   return (
-    <div style={{ flex:1, background:"rgba(255,255,255,.07)", borderRadius:6, padding:big?"8px 8px":"5px 8px", textAlign:"center" }}>
-      <div style={{ fontSize:big?30:20, fontWeight:900, color:c||tc }}>{val}</div>
-      <div style={{ fontSize:9, fontWeight:700, color:tc3, letterSpacing:1, marginTop:1 }}>{label}</div>
+    <div style={{ flex:1, background:ink(tc, .07), borderRadius:6, padding:big?"4px 6px":"3px 4px", textAlign:"center" }}>
+      <div style={{ fontSize:big?28:17, fontWeight:900, lineHeight:1.05, color:c||tc }}>{val}</div>
+      <div style={{ fontSize:big?9:8, fontWeight:700, color:tc3, letterSpacing:big?1:.5, marginTop:1 }}>{label}</div>
     </div>
   );
 }
 
 /* V13 · DASHBOARD */
 export function V13({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
-  const hcl = hiChStr(d,v,s);
-  const g13 = infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]);
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(15,25,45,.85)", borderRadius:8, padding:"3px 6px", textShadow:TS }}>
-      {((v.player&&d.player) || g13.length > 0) && (
-        <div style={{ textAlign:"center", marginBottom:4 }}>
-          {v.player&&d.player && <div style={{ fontSize:20, fontWeight:900 }}>{d.player}</div>}
-          {g13.length > 0 && <div style={{ fontSize:10, fontWeight:500, color:tc3, lineHeight:1.35 }}>{g13.join(" · ")}</div>}
-        </div>
-      )}
+      <div style={{ textAlign:"center", marginBottom:4 }}>
+        {v.player&&d.player && <div style={{ fontSize:20, fontWeight:900 }}>{d.player}</div>}
+        <Info d={d} v={v} keys={["event", "round", "position", "course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} align="center" fit />
+      </div>
       <div style={{ display:"flex", gap:5, marginBottom:3 }}>
         <V13Bx val={s.sT} label="SCORE" big tc={tc} tc3={tc3 || "#9ca3af"} />
-        <V13Bx val={fmtToPar(s.vpT)} label="VS PAR" c={vpC(s.vpT)} big tc={tc} tc3={tc3 || "#9ca3af"} />
+        <V13Bx val={fmtToPar(s.vpT)} label="VS PAR" c={vpC(s.vpT, tc)} big tc={tc} tc3={tc3 || "#9ca3af"} />
       </div>
       {v.stats && (
         <div style={{ display:"flex", gap:5, marginBottom:3 }}>
-          <V13Bx val={s.st.birdies} label="BIRDIE" c="#dc2626" tc={tc} tc3={tc3 || "#9ca3af"} />
-          <V13Bx val={s.st.pars} label="PAR" tc={tc} tc3={tc3 || "#9ca3af"} />
-          <V13Bx val={s.st.bogeys} label="BOGEY" c="#5BADE6" tc={tc} tc3={tc3 || "#9ca3af"} />
+          {/* Só as categorias que aconteceram (um «0 BIRDIE» ocupava espaço sem dizer nada) */}
+          {[
+            { n: s.st.hio, l: "HIO", c: "#10b981" },
+            { n: s.st.eagles, l: "EAGLE", c: "#d4a017" },
+            { n: s.st.birdies, l: "BIRDIE", c: "#ef4444" },
+            { n: s.st.pars, l: "PAR", c: undefined },
+            { n: s.st.bogeys, l: "BOGEY", c: "#5BADE6" },
+            { n: s.st.doubles + s.st.triples + s.st.quads, l: "DBL+", c: undefined },
+          ].filter((x) => x.n > 0).map((x) => <V13Bx key={x.l} val={x.n} label={x.l} c={x.c} tc={tc} tc3={tc3 || "#9ca3af"} />)}
         </div>
       )}
       {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={28} gap={3} nc={tc4} /></div>}
-      {hcl && <div style={{ textAlign:"center", fontSize:10, fontWeight:700, color:tc4, marginTop:3 }}>{hcl}</div>}
+      <Info d={d} v={v} keys={["hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit mt={3} />
     </div>
   );
 }
 
 /* V22 · MAGAZINE — score enorme dominante, grid 2×9 compacto abaixo. */
-export function V22({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+export function V22({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.72)", borderRadius:10, padding:"6px 12px 8px", minWidth:160, textShadow:TS }}>
-      {v.player&&d.player && <div style={{ fontFamily:II, fontSize:11, fontWeight:800, letterSpacing:2, color:tc3, textTransform:"uppercase", wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
-      {(v.course||v.event||v.tee||v.teeDist) && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc4, textAlign:"center", marginTop:1 }}>{[v.course&&d.course,v.event&&d.event,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" · ")}</div>}
+      {v.player&&d.player && <div style={{ fontFamily:II, fontSize:13, fontWeight:800, letterSpacing:2, textTransform:"uppercase", wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
+      <div style={{ fontFamily:II, alignSelf:"stretch" }}><Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={10} align="center" fit /></div>
       <div style={{ display:"flex", alignItems:"baseline", justifyContent:"center", gap:6, margin:"2px 0" }}>
         <span style={{ fontSize:72, fontWeight:700, lineHeight:.85, letterSpacing:-4 }}>{s.sT}</span>
-        <span style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT), paddingBottom:4 }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontFamily:II, fontSize:22, fontWeight:900, color:vpC(s.vpT, tc), paddingBottom:4 }}>{fmtToPar(s.vpT)}</span>
       </div>
       {v.holeScores && (
         <div style={{ display:"flex", flexDirection:"column", gap:2, marginTop:2 }}>
@@ -239,29 +209,23 @@ export function V22({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           ))}
         </div>
       )}
-      {(v.date||v.round||v.stats||(v.position&&d.position)) && (
-        <div style={{ fontFamily:II, display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:4 }}>
-          {(v.date||v.round||(v.position&&d.position)) && <span style={{ fontSize:9, fontWeight:700, color:tc4 }}>{[v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</span>}
-          {v.stats && <StatsRow st={s.st} tc3={tc4} gap={4} fs={9} />}
-        </div>
-      )}
-      {hcl && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, color:tc4, opacity:.85, textAlign:"center", marginTop:2 }}>{hcl}</div>}
+      <div style={{ fontFamily:II, alignSelf:"stretch" }}><Info d={d} v={v} keys={["date", "position", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit st={v.stats ? s.st : null} mt={4} /></div>
     </div>
   );
 }
 
 /* V26 · SIGNATURE — Elegante editorial, score dominante, grid compacto. */
-export function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
+export function V26({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily:LO, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg||"rgba(0,0,0,.75)", borderRadius:10, padding:"6px 14px 8px", minWidth:140, textShadow:TS }}>
       {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, fontStyle:"italic", letterSpacing:.5, marginBottom:2, wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
-      {v.event&&d.event && <div style={{ fontFamily:II, fontSize:9, fontWeight:700, color:tc3, textTransform:"uppercase", letterSpacing:2, textAlign:"center", lineHeight:1.4 }}>{d.event}</div>}
-      {(v.course||v.tee||v.teeDist) && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc4, textTransform:"uppercase", letterSpacing:1.5, textAlign:"center", lineHeight:1.4 }}>{[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`].filter(Boolean).join(" · ")}</div>}
-      <div style={{ fontFamily:OS, fontSize:64, fontWeight:700, lineHeight:.9, letterSpacing:-3, margin:"4px 0 2px", color:tc }}>{s.sT}</div>
-      <div style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</div>
-      {v.holeScores && <div style={{ width:40, height:1, background:"rgba(255,255,255,.25)", margin:"6px 0 4px" }} />}
+      <div style={{ fontFamily:II, alignSelf:"stretch" }}><Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={9} upper align="center" fit /></div>
+      <div style={{ display:"flex", alignItems:"baseline", gap:6, margin:"4px 0 2px" }}>
+        <span style={{ fontFamily:OS, fontSize:60, fontWeight:700, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</span>
+        <span style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+      </div>
+      {v.holeScores && <div style={{ width:40, height:1, background:ink(tc, .25), margin:"3px 0 4px" }} />}
       {v.holeScores && (
         <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
           {(is18 ? [[0,9,s.sF],[9,9,s.sB]] as [number,number,number][] : [[0,d.scores.length,s.sT] as [number,number,number]]).map(([off,len,sub]) => (
@@ -274,13 +238,7 @@ export function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           ))}
         </div>
       )}
-      {(v.round||v.date||v.stats||(v.position&&d.position)) && (
-        <div style={{ fontFamily:II, display:"flex", alignItems:"center", justifyContent:"center", gap:6, marginTop:4 }}>
-          {(v.round||v.date||(v.position&&d.position)) && <span style={{ fontSize:9, fontWeight:600, color:tc4 }}>{[v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</span>}
-          {v.stats && <StatsRow st={s.st} tc3={tc4} gap={4} fs={9} />}
-        </div>
-      )}
-      {hcl && <div style={{ fontFamily:II, fontSize:9, fontWeight:600, color:tc4, opacity:.85, textAlign:"center", marginTop:2 }}>{hcl}</div>}
+      <div style={{ fontFamily:II, alignSelf:"stretch" }}><Info d={d} v={v} keys={["date", "position", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" fit st={v.stats ? s.st : null} mt={4} /></div>
     </div>
   );
 }
@@ -290,7 +248,6 @@ export function V26({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
    Por baixo: breakdown stats por nine + linha de diferença. */
 export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
   /* Fallback para 9H — não dá para comparar. */
   if (!is18) {
     return (
@@ -313,7 +270,7 @@ export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           </div>
         )}
         <span style={{ fontFamily:OS, fontSize:20, fontWeight:900, color:tc, marginLeft:"auto", minWidth:24, textAlign:"right" }}>{sub}</span>
-        <span style={{ fontSize:11, fontWeight:900, color:vpC(vpar), minWidth:22, textAlign:"right" }}>{fmtToPar(vpar)}</span>
+        <span style={{ fontSize:11, fontWeight:900, color:vpC(vpar, tc), minWidth:22, textAlign:"right" }}>{fmtToPar(vpar)}</span>
       </div>
     </div>
   );
@@ -326,16 +283,16 @@ export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       <div style={{ display:"flex", justifyContent:"center", alignItems:"baseline", gap:6, marginBottom:5 }}>
         <span style={{ fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>TOTAL</span>
         <span style={{ fontFamily:OS, fontSize:24, fontWeight:900, color:tc }}>{s.sT}</span>
-        <span style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {/* 2 linhas: F9 + B9, cada uma com label · circles · sub · vs par */}
-      <div style={{ display:"flex", flexDirection:"column", gap:4, paddingTop:6, borderTop:"1px solid rgba(255,255,255,.12)" }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:4, paddingTop:6, borderTop:`1px solid ${ink(tc, .12)}` }}>
         <NineRow label="Front 9" sub={s.sF} vpar={s.vpF} scores={d.scores.slice(0,9)} pars={d.par.slice(0,9)} off={0} />
         <NineRow label="Back 9"  sub={s.sB} vpar={s.vpB} scores={d.scores.slice(9)}   pars={d.par.slice(9)}   off={9} />
       </div>
       {/* Stats por nine + diff */}
       {v.stats && (
-        <div style={{ marginTop:5, paddingTop:4, borderTop:"1px solid rgba(255,255,255,.08)", display:"flex", flexDirection:"column", gap:2 }}>
+        <div style={{ marginTop:5, paddingTop:4, borderTop:`1px solid ${ink(tc, .08)}`, display:"flex", flexDirection:"column", gap:2 }}>
           <div style={{ display:"flex", alignItems:"center", gap:6 }}>
             <span style={{ fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, minWidth:30 }}>F9</span>
             <StatsRow st={fNine} tc3={tc4} gap={6} fs={9} />
@@ -346,12 +303,7 @@ export function V36({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           </div>
         </div>
       )}
-      {(infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]).length > 0 || hcl) && (
-        <div style={{ marginTop:4, fontSize:9, fontWeight:600, color:tc4, textAlign:"center", lineHeight:1.4, wordBreak:"break-word" }}>
-          <div>{infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]).join(" · ")}</div>
-          {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
-        </div>
-      )}
+      <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} align="center" fit mt={5} />
     </div>
   );
 }

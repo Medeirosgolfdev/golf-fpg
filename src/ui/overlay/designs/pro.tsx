@@ -3,17 +3,14 @@
  * V45 PGA Broadcast, V46 College Poster, V47 PGA Tour U,
  * V29 Tour Classic, V38 PGA Americas, V30 Korn Ferry.
  */
-import { II, OS, LO, BN, SG, TS, hiChStr, fillA, infoParts } from "../shared";
-import { SC, SCL, SCO, SCA, TpBadge, StatsRow } from "../badges";
+import { II, OS, LO, BN, SG, TS, fillA, ink, panel, isLightText } from "../shared";
+import { SC, SCL, SCO, SCA, TpBadge, StatsRow, Info } from "../badges";
 import type { P } from "../types";
 
 /* V29 · TOUR CLASSIC — Estilo PGA Tour Americas / Auburn.
    Duas linhas de scores com hole numbers, score GRANDE à direita, nome + evento em baixo. */
 export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
-  const l1 = infoParts(d, v, ["event", "round", "position"]);
-  const l2 = infoParts(d, v, ["course", "tee", "teeDist", "date"]);
   return (
     /* O fundo envolve TUDO — o texto por baixo, sem fundo, não se lia sobre fotos claras. */
     <div style={{ display:"inline-block", background:bg ?? undefined, borderRadius:6, padding:"6px 10px 8px" }}>
@@ -27,33 +24,24 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
                 </div>
               ))}
             </div>
-            {/* Score com -1 sobreposto (absolute) — alinhamento vertical com buracos via alignItems:center */}
-            <div style={{ flexShrink:0, marginLeft:10, position:"relative", display:"inline-block" }}>
-              <div style={{ fontFamily:BN, fontSize:68, lineHeight:1, letterSpacing:-3, color:tc, display:"block" }}>{s.sT}</div>
-              <div style={{ position:"absolute", right:-6, bottom:-8 }}>
-                <TpBadge vp={s.vpT} sz={20} />
-              </div>
+            {/* Score e badge empilhados (o badge por cima do número tapava-o) */}
+            <div style={{ flexShrink:0, marginLeft:10, display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+              <div style={{ fontFamily:BN, fontSize:is18 ? 52 : 40, lineHeight:.9, letterSpacing:-2, color:tc }}>{s.sT}</div>
+              <TpBadge vp={s.vpT} sz={is18 ? 15 : 12} />
             </div>
           </div>
         )}
         {!v.holeScores && (
-          <div style={{ position:"relative", display:"inline-block" }}>
-            <div style={{ fontFamily:BN, fontSize:84, lineHeight:1, letterSpacing:-3, color:tc }}>{s.sT}</div>
-            <div style={{ position:"absolute", right:-6, bottom:-8 }}>
-              <TpBadge vp={s.vpT} sz={20} />
-            </div>
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ fontFamily:BN, fontSize:84, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
+            <TpBadge vp={s.vpT} sz={20} />
           </div>
         )}
       </div>
-      {((v.player&&d.player)||l1.length>0||l2.length>0||hcl||v.stats) && (
-        <div style={{ marginTop:6, fontFamily:II, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.3 }}>
-          {v.player&&d.player && <div style={{ fontSize:10 }}>{d.player}</div>}
-          {l1.length > 0 && <div style={{ fontSize:14 }}>{l1.join(" · ")}</div>}
-          {l2.length > 0 && <div style={{ fontSize:10, marginTop:1, opacity:0.85 }}>{l2.join(" · ")}</div>}
-          {hcl && <div style={{ fontSize:9, marginTop:1, opacity:0.75 }}>{hcl}</div>}
-          {v.stats && <div style={{ marginTop:3, display:"flex" }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={10} /></div>}
-        </div>
-      )}
+      <div style={{ fontFamily:II, marginTop:6 }}>
+        {v.player&&d.player && <div style={{ fontSize:13, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase", color:tc }}>{d.player}</div>}
+        <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={1} />
+      </div>
     </div>
   );
 }
@@ -63,7 +51,7 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
 export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const accent = "#047857";
-  const isDark = tc === "#ffffff" || tc === "white";
+  const isDark = isLightText(tc);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.85)", borderRadius:10, overflow:"hidden", textShadow:isDark?TS:"none" }}>
       <div style={{ display:"flex", alignItems:"stretch" }}>
@@ -79,28 +67,23 @@ export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
             </div>
           )}
         </div>
-        <div style={{ padding:"6px 14px", display:"flex", alignItems:"center", gap:8 }}>
-          <div style={{ fontFamily:BN, fontSize:60, lineHeight:1, letterSpacing:-2, color:tc }}>{s.sT}</div>
+        <div style={{ padding:"6px 12px 2px", display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-2, color:tc }}>{s.sT}</div>
           <TpBadge vp={s.vpT} sz={16} />
         </div>
       </div>
       {v.holeScores && (
-        <div style={{ padding:"6px 8px 8px" }}>
+        <div style={{ padding:"4px 8px 6px" }}>
           {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
-            <div key={off} style={{ display:"flex", gap:3, justifyContent:"center", marginTop:ri>0?4:0 }}>
+            <div key={off} style={{ display:"flex", gap:3, justifyContent:"center", marginTop:ri>0?3:0 }}>
               {d.scores.slice(off,off+len).map((sc,i) => isDark ? <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} /> : <SCL key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} />)}
             </div>
           ))}
         </div>
       )}
-      {(v.event||v.course||v.date||v.tee||v.teeDist||(v.position&&d.position)) && (
-        <div style={{ padding:"4px 10px 4px", borderTop:isDark?"1px solid rgba(255,255,255,.08)":"1px solid rgba(0,0,0,.08)", fontSize:9, fontWeight:600, color:tc3, lineHeight:1.4, wordBreak:"break-word" }}>
-          <div>{[v.event&&d.event,v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.position&&d.position&&`POS ${d.position}`].filter(Boolean).join(" · ")}</div>
-          {v.date&&d.date && <div>{d.date}</div>}
-        </div>
-      )}
-      {hiChStr(d,v,s) && <div style={{ padding:"2px 10px", fontSize:9, fontWeight:600, color:tc3, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
-      {v.stats && <div style={{ padding:"2px 10px 6px" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
+      <div style={{ padding:"4px 10px 6px", borderTop:`1px solid ${ink(tc, .08)}` }}>
+        <Info d={d} v={v} keys={["event", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} />
+      </div>
     </div>
   );
 }
@@ -138,32 +121,25 @@ export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           {/* Score sozinho na coluna para a altura bater com a dos buracos
              (alignItems:center centra-os correctamente); badge sai como
              pill absolute no canto inferior-direito. */}
-          <div style={{ flexShrink:0, position:"relative", display:"inline-block" }}>
-            <div style={{ fontFamily:BN, fontSize:scoreFs, lineHeight:1, letterSpacing:-4, color:tc, paddingTop:2 }}>{s.sT}</div>
-            <div style={{ position:"absolute", right:-6, bottom:-6 }}>
-              <TpBadge vp={s.vpT} sz={16} />
-            </div>
+          <div style={{ flexShrink:0, display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
+            <div style={{ fontFamily:BN, fontSize:scoreFs * .78, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
+            <TpBadge vp={s.vpT} sz={is18 ? 15 : 12} />
           </div>
         </div>
       )}
       {!v.holeScores && (
-        <div style={{ position:"relative", display:"inline-block" }}>
-          <div style={{ fontFamily:BN, fontSize:scoreFs, lineHeight:1, letterSpacing:-4, color:tc, paddingTop:2 }}>{s.sT}</div>
-          <div style={{ position:"absolute", right:-6, bottom:-6 }}>
-            <TpBadge vp={s.vpT} sz={18} />
-          </div>
+        <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+          <div style={{ fontFamily:BN, fontSize:scoreFs, lineHeight:.9, letterSpacing:-4, color:tc }}>{s.sT}</div>
+          <TpBadge vp={s.vpT} sz={18} />
         </div>
       )}
-      {(v.round||v.event||v.course||v.date||v.tee||v.teeDist||(v.position&&d.position)||hiChStr(d,v,s)) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", lineHeight:1.4, wordBreak:"break-word" }}>
-          {v.round && <span style={{ background:fillA("#dc2626", fa), padding:"2px 8px", fontSize:10, fontWeight:800, color:"#fff", marginRight:4 }}>R{d.round}</span>}
-          {v.position && d.position && <span style={{ background:"rgba(255,255,255,.15)", padding:"2px 8px", fontSize:10, fontWeight:800, color:tc, marginRight:4 }}>POS {d.position}</span>}
-          {v.event&&d.event && <div style={{ fontSize:9, color:tc3, marginTop:2 }}>{d.event}</div>}
-          {(v.course||v.date||v.tee||v.teeDist) && <div style={{ fontSize:9, color:tc3 }}>{[v.course&&d.course,v.tee&&d.tee,v.teeDist&&d.teeDist&&`${d.teeDist}m`,v.date&&d.date].filter(Boolean).join(" · ")}</div>}
-          {hiChStr(d,v,s) && <div style={{ fontSize:9, color:tc3, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
-          {v.stats && <div style={{ marginTop:3, display:"flex", justifyContent:"flex-start" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
+      {((v.round && d.round) || (v.position && d.position)) && (
+        <div style={{ marginTop:6, display:"flex", gap:4, fontSize:10, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase" }}>
+          {v.round && d.round > 0 && <span style={{ background:fillA("#dc2626", fa), padding:"2px 8px", color:"#fff" }}>R{d.round}</span>}
+          {v.position && d.position && <span style={{ background:ink(tc, .15), padding:"2px 8px", color:tc }}>POS {d.position}</span>}
         </div>
       )}
+      <Info d={d} v={v} keys={["event", "course", "tee", "teeDist", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={4} />
     </div>
   );
 }
@@ -172,8 +148,7 @@ export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
    Score ENORME a esquerda + metadata empilhada a direita, blocos buracos com fundo. */
 export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
-  const hasMeta = (v.player&&d.player) || (v.event&&d.event) || (v.course&&d.course) || v.round || (v.date&&d.date) || (v.position&&d.position) || hcl;
+  const hasMeta = (v.player&&d.player) || (v.event&&d.event) || (v.course&&d.course) || v.round || (v.date&&d.date) || (v.position&&d.position) || v.hiCh || v.sd;
   return (
     /* O fundo envolve tudo (o texto do topo, sem fundo, não se lia sobre fotos claras). */
     <div style={{ fontFamily: II, display: "inline-block", color: tc, padding: "6px 8px 8px", background: bg ?? undefined, borderRadius: 8 }}>
@@ -199,25 +174,23 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
             {(v.round || (v.date && d.date) || (v.position && d.position)) && (
               <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
                 {v.round && (
-                  <div style={{ background: "rgba(255,255,255,.15)", padding: "2px 8px", fontSize: 9, fontWeight: 800, letterSpacing: 1.2, color: tc, textTransform: "uppercase" }}>R{d.round}</div>
+                  <div style={{ background: ink(tc, .15), padding: "2px 8px", fontSize: 9, fontWeight: 800, letterSpacing: 1.2, color: tc, textTransform: "uppercase" }}>R{d.round}</div>
                 )}
                 {v.position && d.position && (
-                  <div style={{ background: "rgba(255,255,255,.10)", padding: "2px 8px", fontSize: 9, fontWeight: 800, letterSpacing: 1.2, color: tc, textTransform: "uppercase" }}>POS {d.position}</div>
+                  <div style={{ background: ink(tc, .10), padding: "2px 8px", fontSize: 9, fontWeight: 800, letterSpacing: 1.2, color: tc, textTransform: "uppercase" }}>POS {d.position}</div>
                 )}
                 {v.date && d.date && (
                   <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", display: "flex", alignItems: "center" }}>{d.date}</div>
                 )}
               </div>
             )}
-            {hcl && (
-              <div style={{ fontSize: 9, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase" }}>{hcl}</div>
-            )}
+            <Info d={d} v={v} keys={["hiCh", "sd"]} tc={tc} tc3={tc3} fs={9} upper />
           </div>
         )}
       </div>
       {/* Bloco azul só com os buracos */}
       {v.holeScores && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: fillA("#000000", (fa ?? .88) * .25), padding: "6px 8px", borderRadius: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: panel(tc, (fa ?? .88) * .25), padding: "6px 8px", borderRadius: 8 }}>
           {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
             <div key={off}>
               <div style={{ display: "flex", gap: 2 }}>
@@ -243,7 +216,6 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const scoreFs = is18 ? 100 : 78;
-  const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, padding: "6px 10px" }}>
       {v.holeScores && (
@@ -262,7 +234,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
                   {d.scores.slice(off, off + len).map((sc, i) => <SCO key={i} sc={sc} par={d.par[off + i]} h={off + i} sz={36} />)}
                 </div>
                 {ri === 0 && is18 && (
-                  <div style={{ height: 2, background: "rgba(255,255,255,.35)", margin: "4px 0" }} />
+                  <div style={{ height: 2, background: ink(tc, .35), margin: "4px 0" }} />
                 )}
                 {is18 && ri === 1 && (
                   <div style={{ display: "flex", gap: 3, marginTop: 1 }}>
@@ -276,8 +248,8 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
           {/* Score com o badge centrado POR BAIXO (por cima tapava o número) */}
           <div style={{ flexShrink: 0, display:"flex", flexDirection:"column", alignItems:"center", gap: 4 }}>
-            <div style={{ fontFamily: BN, fontSize: scoreFs, lineHeight: 1, letterSpacing: -4, color: tc, paddingTop: 2 }}>{s.sT}</div>
-            <TpBadge vp={s.vpT} sz={Math.round(scoreFs * 0.2)} />
+            <div style={{ fontFamily: BN, fontSize: scoreFs * .9, lineHeight: .85, letterSpacing: -4, color: tc }}>{s.sT}</div>
+            <TpBadge vp={s.vpT} sz={Math.round(scoreFs * 0.18)} />
           </div>
         </div>
       )}
@@ -288,15 +260,8 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
         </div>
       )}
       {/* Footer com wrap em multi-linhas para evitar overflow horizontal. */}
-      {((v.player&&d.player) || (v.event&&d.event) || v.round || (v.course&&d.course) || (v.tee&&d.tee) || (v.teeDist&&d.teeDist) || (v.date&&d.date) || (v.position && d.position) || hcl) && (
-        <div style={{ marginTop: 6, fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: tc3, lineHeight: 1.4, wordBreak: "break-word" }}>
-          {v.player && d.player && <div>{d.player}</div>}
-          {(v.event||v.course||v.tee||v.teeDist) && <div>{[v.event && d.event, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join(" · ")}</div>}
-          {(v.round||(v.position&&d.position)||v.date) && <div>{[v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.date && d.date].filter(Boolean).join(" · ")}</div>}
-          {hcl && <div style={{ fontSize: 8, letterSpacing: 1.5, opacity: .8 }}>{hcl}</div>}
-        </div>
-      )}
-      {v.stats && <div style={{ marginTop: 4 }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
+      {v.player && d.player && <div style={{ marginTop: 6, fontSize: 13, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase" }}>{d.player}</div>}
+      <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={v.player && d.player ? 1 : 6} />
     </div>
   );
 }
@@ -307,27 +272,32 @@ export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const accent = "#e87722";
   const accentBar = "#3b1f7e";
-  const hcl = hiChStr(d, v, s);
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, padding: "4px 6px" }}>
       {/* Nome — HUGE (last name dominante) */}
-      {v.player && d.player && (() => {
-        const parts = d.player.split(" ");
-        const first = parts.slice(0, -1).join(" ");
-        const last = parts[parts.length - 1] || "";
-        return (
-          <div style={{ fontFamily: OS, textTransform: "uppercase", lineHeight: .95, marginBottom: 2 }}>
-            {first && <div style={{ fontSize: 16, fontWeight: 500, letterSpacing: 1.5 }}>{first}</div>}
-            <div style={{ fontSize: 36, fontWeight: 700, letterSpacing: 1 }}>{last.toUpperCase()}</div>
-          </div>
-        );
-      })()}
+      {/* Cabeçalho: nome à esquerda, score + badge à direita (poupa a linha do score em baixo) */}
+      <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 10, marginBottom: 3 }}>
+        {v.player && d.player ? (() => {
+          const parts = d.player.split(" ");
+          const first = parts.slice(0, -1).join(" ");
+          const last = parts[parts.length - 1] || "";
+          return (
+            <div style={{ fontFamily: OS, textTransform: "uppercase", lineHeight: .95 }}>
+              {first && <div style={{ fontSize: 16, fontWeight: 500, letterSpacing: 1.5 }}>{first}</div>}
+              <div style={{ fontSize: 36, fontWeight: 700, letterSpacing: 1 }}>{last.toUpperCase()}</div>
+            </div>
+          );
+        })() : <span />}
+        <div style={{ display: "flex", alignItems: "center", gap: 6, flexShrink: 0 }}>
+          <div style={{ fontFamily: BN, fontSize: 62, lineHeight: .85, letterSpacing: -2, color: tc }}>{s.sT}</div>
+          <TpBadge vp={s.vpT} sz={18} />
+        </div>
+      </div>
       {/* Info bar roxo — wordBreak garante que texto longo quebra para multi-linhas. */}
-      {(v.event || v.round || v.course || v.tee || v.teeDist || (v.position && d.position)) && (
-        <div style={{ background: fillA(accentBar, fa), padding: "3px 10px", marginBottom: 4 }}>
-          <div style={{ fontSize: 8, fontWeight: 800, letterSpacing: 1.5, color: "rgba(255,255,255,.8)", textTransform: "uppercase", wordBreak: "break-word", lineHeight: 1.5 }}>
-            {[v.event && d.event, v.round && `ROUND ${d.round}`, v.position && d.position && `POS ${d.position}`, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join("  /  ")}
-          </div>
+      {((v.event && d.event) || v.round || (v.course && d.course) || (v.tee && d.tee) || (v.teeDist && d.teeDist) || (v.position && d.position)) && (
+        /* Barra roxa fixa: texto sempre branco */
+        <div style={{ background: fillA(accentBar, fa), padding: "3px 10px 4px", marginBottom: 4 }}>
+          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "position"]} tc="#ffffff" tc3="rgba(255,255,255,.8)" fs={9} upper fit />
         </div>
       )}
       {/* Score circles 2×9 com accent color */}
@@ -347,18 +317,7 @@ export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {/* Score com o badge ao lado, alinhado pela base (por cima tapava o número) */}
-      <div style={{ display:"flex", alignItems:"flex-end", gap: 8, marginTop: 2 }}>
-        <div style={{ fontFamily: BN, fontSize: 90, lineHeight: 1, letterSpacing: -3, color: tc }}>{s.sT}</div>
-        <div style={{ marginBottom: 10 }}><TpBadge vp={s.vpT} sz={26} /></div>
-      </div>
-      {(v.date && d.date) || hcl || v.stats ? (
-        <div style={{ fontSize: 9, fontWeight: 600, color: tc3, marginTop: 4, letterSpacing: 1, display: "flex", gap: 8, flexWrap:"wrap" }}>
-          {v.date && d.date && <span>{d.date}</span>}
-          {hcl && <span style={{ opacity: .85 }}>{hcl}</span>}
-          {v.stats && <span style={{ width:"100%" }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></span>}
-        </div>
-      ) : null}
+      <Info d={d} v={v} keys={["date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} mt={4} />
     </div>
   );
 }

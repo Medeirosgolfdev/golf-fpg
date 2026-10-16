@@ -2,18 +2,16 @@
  * Designs TRANS — overlays transparentes para fotos.
  * V39 Outline Branco, V41 Hero Score, V42 Glass Panel, V43 Accent Strip.
  */
-import { II, OS, LO, BN, SG, vpC, hiChStr, infoParts } from "../shared";
-import { SC, SCL, SCO, StatsRow } from "../badges";
+import { II, OS, LO, BN, SG, vpC, isLightText } from "../shared";
+import { SC, SCL, SCO, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
 /* V39 · OUTLINE BRANCO — SCO (contornos brancos), score ENORME à direita. */
 export function V39({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const hcl = hiChStr(d, v, s);
-  const info = infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 4px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 6px 6px" }}>
       {v.holeScores && (
         <div style={{ display:"flex", alignItems:"center" }}>
           <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
@@ -44,39 +42,24 @@ export function V39({ d, v, s, bg, tc="white", tc3 }: P) {
           <div style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:tc3, marginTop:2 }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
-      {((v.player&&d.player)||info.length>0||hcl||v.stats) && (
-        <div style={{ marginTop:6, fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.4, wordBreak:"break-word" }}>
-          {v.player&&d.player && <div>{d.player}</div>}
-          {info.length > 0 && <div style={{ fontSize:9 }}>{info.join(" · ")}</div>}
-          {hcl && <div style={{ fontSize:9, opacity:.85 }}>{hcl}</div>}
-          {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
-        </div>
-      )}
+      {v.player&&d.player && <div style={{ marginTop:6, fontSize:13, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase" }}>{d.player}</div>}
+      <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={v.player&&d.player ? 1 : 6} />
     </div>
   );
 }
 
 /* V41 · HERO SCORE — score + to-par + nome compactos sobre foto. */
 export function V41({ d, v, s, bg, tc="white", tc3 }: P) {
-  const hcl = hiChStr(d, v, s);
-  const info = infoParts(d, v, ["round", "event", "position", "course", "tee", "teeDist"]);
   return (
-    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 6px" }}>
+    <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 8px 6px", minWidth:200 }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
         <div style={{ fontFamily:BN, fontSize:96, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:SG, fontSize:18, fontWeight:800, color:vpC(s.vpT), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:SG, fontSize:18, fontWeight:800, color:vpC(s.vpT, tc), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.player&&d.player && (
         <div style={{ fontFamily:LO, fontSize:18, fontWeight:700, fontStyle:"italic", marginTop:1, letterSpacing:.3 }}>{d.player}</div>
       )}
-      {(info.length>0||(v.date&&d.date)||hcl||v.stats) && (
-        <div style={{ fontSize:10, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, marginTop:4, lineHeight:1.4, wordBreak:"break-word", maxWidth:280 }}>
-          {info.length > 0 && <div>{info.join(" · ")}</div>}
-          {v.date&&d.date && <div style={{ fontSize:9 }}>{d.date}</div>}
-          {hcl && <div style={{ fontSize:9, opacity:.85 }}>{hcl}</div>}
-          {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
-        </div>
-      )}
+      <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={4} />
     </div>
   );
 }
@@ -84,13 +67,11 @@ export function V41({ d, v, s, bg, tc="white", tc3 }: P) {
 /* V42 · GLASS PANEL — Painel semi-transparente, score em accent color. */
 export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const isDark = tc === "#ffffff" || tc === "white";
-  const hcl = hiChStr(d, v, s);
-  // Azul-escuro só em fundo claro — no escuro o 85 desaparecia.
-  const accent = s.vpT < 0 ? "#dc2626" : isDark ? "#60a5fa" : "#1e40af";
+  const isDark = isLightText(tc);
+  /* Abaixo do par em vermelho; senão na cor do texto (o azul competia com os bogeys). */
+  const accent = s.vpT < 0 ? "#dc2626" : tc;
   const bgF = bg || (isDark ? "rgba(20,20,30,.88)" : "rgba(255,255,255,.88)");
   const tx = isDark ? "#eee" : "#222";
-  const info = infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist"]);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:8, padding:"5px 8px" }}>
       {/* Topo: 2 colunas — score+nome à esquerda, metadata à direita
@@ -99,19 +80,13 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
         <div style={{ flexShrink:0 }}>
           <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
             <span style={{ fontFamily:BN, fontSize:62, lineHeight:.9, letterSpacing:-2, color:accent }}>{s.sT}</span>
-            <span style={{ fontSize:16, fontWeight:800, color:accent }}>{fmtToPar(s.vpT)}</span>
+            <span style={{ fontSize:16, fontWeight:800, color:s.vpT < 0 ? accent : vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
           </div>
           {v.player&&d.player && (
             <div style={{ fontFamily:OS, fontSize:14, fontWeight:800, letterSpacing:1, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>
           )}
         </div>
-        {(info.length>0||(v.date&&d.date)||hcl) && (
-          <div style={{ fontSize:9, fontWeight:600, color:tc3, letterSpacing:.5, lineHeight:1.4, wordBreak:"break-word", maxWidth:170, paddingTop:4 }}>
-            {info.length > 0 && <div>{info.join(" · ")}</div>}
-            {v.date&&d.date && <div style={{ marginTop:1 }}>{d.date}</div>}
-            {hcl && <div style={{ opacity:.85, marginTop:1 }}>{hcl}</div>}
-          </div>
-        )}
+        <div style={{ flex:1, minWidth:0, paddingTop:4 }}><Info d={d} v={v} tc={tx} tc3={tc3} fs={10} fit /></div>
       </div>
       {v.holeScores && (
         <div style={{ marginTop:6 }}>
@@ -127,34 +102,27 @@ export function V42({ d, v, s, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
-      {v.stats && <div style={{ marginTop:4 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
+      {v.stats && <Info d={d} v={v} keys={[]} tc={tx} tc3={tc3} fs={10} fit st={s.st} mt={2} />}
     </div>
   );
 }
 
 /* V43 · ACCENT STRIP — Barra vertical accent + score enorme. */
 export function V43({ d, v, s, bg, tc="white", tc3 }: P) {
-  const accent = s.vpT < 0 ? "#dc2626" : s.vpT === 0 ? (tc === "#ffffff" || tc === "white" ? "#fff" : "#222") : "#3b82f6";
-  const hcl = hiChStr(d, v, s);
-  const info = infoParts(d, v, ["round", "event", "position", "course", "tee", "teeDist", "date"]);
+  /* Barra vermelha abaixo do par; senão na cor do texto (o azul competia com os bogeys). */
+  const accent = s.vpT < 0 ? "#dc2626" : tc;
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"stretch", color:tc, background:bg ?? undefined, padding:"4px 4px" }}>
       <div style={{ width:3, background:accent, borderRadius:2, marginRight:6, flexShrink:0 }} />
-      <div>
+      <div style={{ minWidth:190 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
           <span style={{ fontFamily:BN, fontSize:78, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</span>
-          <span style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:vpC(s.vpT), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:vpC(s.vpT, tc), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</span>
         </div>
         {v.player&&d.player && (
           <div style={{ fontFamily:OS, fontSize:12, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>
         )}
-        {(info.length>0||hcl||v.stats) && (
-          <div style={{ fontSize:9, fontWeight:600, letterSpacing:1, color:tc3, marginTop:2, textTransform:"uppercase", lineHeight:1.4, wordBreak:"break-word", maxWidth:260 }}>
-            {info.length > 0 && <div>{info.join(" · ")}</div>}
-            {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
-            {v.stats && <div style={{ marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
-          </div>
-        )}
+        <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={2} />
       </div>
     </div>
   );
