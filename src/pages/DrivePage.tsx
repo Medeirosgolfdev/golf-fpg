@@ -62,6 +62,9 @@ import { expandMultiRound, isDNS } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
+import ShareRoundPanel, { type ShareOption } from "../ui/ShareRoundPanel";
+import { overlayFromRound } from "../ui/overlay/fromRound";
+import type { Player as FpgPlayer, Tournament as FpgTournament } from "../data/fpgTypes";
 
 import type {
   Tournament,
@@ -474,7 +477,20 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
     };
   });
 
+  // «📷 Partilhar volta» — o mesmo painel dos outros torneios (Manuel por omissão).
+  const shares: ShareOption[] = [];
+  let shareDefault: string | undefined;
+  for (const p of byGross) {
+    const data = overlayFromRound(tournament as unknown as FpgTournament,
+      { ...p, _pos: p._dp } as unknown as FpgPlayer, sdOf(p));
+    if (!data || data.scores.some((v) => v == null)) continue;
+    const key = String(p.scoreId || p.name);
+    shares.push({ key, label: `${p._dp ? `${p._dp}º · ` : ""}${p.name} — ${p.grossTotal}`, data });
+    if (!shareDefault && isManuel(p)) shareDefault = key;
+  }
+
   return (
+    <>
     <ScorecardLeaderboard
       par={par}
       si={si.length >= nh ? si : undefined}
@@ -506,6 +522,8 @@ function ScorecardLB(props: { tournament: Tournament; playersDB: PlayersDB; escL
       activeSortKey={sortKey === "pos" ? "pos" : ""}
       activeSortDir={sortDir}
     />
+    {shares.length > 0 && <ShareRoundPanel key={tournament.tcode} options={shares} defaultKey={shareDefault} />}
+    </>
   );
 }
 
