@@ -85,7 +85,10 @@ export function ScorecardLB({
   parLabelColSpan?: number;
   options?: ScorecardOptions;
 }) {
-  const hideHCP_ = options?.hideHCP ?? false;
+  /* hideHCP = «esconder se não houver HCP»: a coluna aparece sempre que os dados
+     o trazem (no Draw via-se o HCP e nos resultados da mesma prova não). */
+  const anyHcp = tournament.players.some((p) => p.hcpExact != null);
+  const hideHCP_ = (options?.hideHCP ?? false) && !anyHcp;
   // SD: a coluna só aparece se houver CR/Slope (ou SD oficial) para alguém —
   // a mesma regra em todas as secções (14/10/2026; antes umas escondiam-na
   // sempre e outras mostravam-na vazia).
@@ -99,10 +102,8 @@ export function ScorecardLB({
   const hideClub_ = options?.hideClub ?? false;
   const showAge_ = options?.showAge ?? false;
   const showClass_ = options?.showClass ?? false;
-  // Nasc. (ano, da data de nascimento) ao lado da Idade, como no Resumo —
-  // só quando a fonte traz a data (14/10/2026).
-  const showBirth_ = showAge_ && !showClass_ && tournament.players.some((p) => !!((p as any).dob || (p as any).birthYear || (p as any).birthYearEst));
-  // Nasc./Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
+  // Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
+  // Nas voltas não há coluna Nasc. (a idade chega — 16/10/2026); a data fica no tooltip.
   const birthOf = (p: any) => birthCells({ dob: p.dob, birthYear: p.birthYear, birthYearEst: p.birthYearEst,
     ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, tournament.date);
   const clubLabel_ = options?.clubLabel ?? "CLUBE";
@@ -114,7 +115,7 @@ export function ScorecardLB({
   const parLabelColSpan =
     parLabelColSpanProp ??
     (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
-       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0) + (showBirth_ ? 1 : 0));
+       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -576,15 +577,10 @@ export function ScorecardLB({
               })()}
             </td>
           )}
-          {showBirth_ && (
-            <td className="lb-age" style={{ width: 70, minWidth: 70, textAlign: "center" }} title={birthOf(p).tip}>
-              {birthOf(p).nasc}
-            </td>
-          )}
           {showAge_ && (
             // Coluna IDADE (separada de ESC, sortable por número). Tooltip com a
             // DOB completa quando a fonte a traz (ex: GolfBox via GetPlayers).
-            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }}>
+            <td className="lb-age" style={{ width: 44, minWidth: 44, textAlign: "center" }} title={birthOf(p).tip}>
               {(() => {
                 const age = (p as any)._age as (number | null | undefined);
                 // Sem idade lida: a estimativa (a vermelho), como no Draw.
@@ -618,7 +614,11 @@ export function ScorecardLB({
             }
             return <td className="lb-club">{club || "–"}</td>;
           })()}
-          {!hideHCP_ && <td className="lb-hcp">{fmtHcp(p.hcpExact)}</td>}
+          {!hideHCP_ && (
+            <td className="lb-hcp" title={p._hcpEst ? `Estimativa — ${p._hcpNote || "sem fonte com o HCP"}` : undefined}>
+              {p._hcpEst ? <span className="est-value">{fmtHcp(p.hcpExact)}</span> : fmtHcp(p.hcpExact)}
+            </td>
+          )}
           {!hideTee && (
             <td className="lb-tee">
               <TeeDot teeName={p.teeName} />
@@ -734,7 +734,6 @@ export function ScorecardLB({
               Nasc.
             </SortableHdr>
           )}
-          {showBirth_ && <th className="lb-age" style={{ width: 48, minWidth: 48 }}>Nasc.</th>}
           {showAge_ && (
             <SortableHdr
               k="age"

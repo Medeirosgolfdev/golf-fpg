@@ -285,6 +285,8 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
       hcpExact: p.hcp ?? undefined,
+      _hcpEst: p.hcp != null && p.hcpEstimated ? true : undefined,
+      _hcpNote: p.hcpEstimated ? p.estNote ?? null : undefined,
       // Idade À DATA DO TORNEIO quando há DOB completa + data (GolfBox traz as
       // duas) — um miúdo nascido a 22/10/2007 num torneio de Julho de 2026 tem
       // 18 anos, não 19. Fallback year-based (ano − birthYear) sem DOB/data.
@@ -358,7 +360,10 @@ const FM_DRAW_HIDE_COLS = { esc: true, fed: true, hcp: true, tee: true, nasc: tr
  *  ganharem) — o draw de um escalão traz jogadores inscritos noutros (Faldo
  *  Madeira R2: Hobbs/Dalby do Boys 21 no draw do Boys 16) e ficavam sem
  *  HCP/nascimento/estimativas (16/10/2026). */
-function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlayer[]): Record<string, FpgDraw> {
+/** `div`: o escalão deste draw e os outros do torneio — quem está nos grupos mas
+ *  jogou outro escalão (os flights misturam escalões) sai marcado com ele em
+ *  `otherDivision` e não conta no total do escalão (16/10/2026). */
+function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlayer[], div?: { self: JobDivision; all: JobDivision[] }): Record<string, FpgDraw> {
   // normName partilhado (tira diacríticos): tee sheet e leaderboard divergem na
   // grafia — com um lowercase simples os acentos falhavam o match exactamente
   // nos nomes PT ("João" no leaderboard vs "Joao" no tee sheet).
@@ -371,6 +376,11 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
   const birthByName = new Map<string, { dob: string | null; birthYear: number | null }>();
   // Valores ESTIMADOS (Faldo Madeira: estrangeiros sem fonte) → itálico vermelho no draw.
   const estByName = new Map<string, { hcpEstimated?: boolean; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null }>();
+  // Escalão real de cada jogador (os «Overall …» juntam todos — não contam).
+  const isAggregate = (d: JobDivision) => /overall|leaderboard|geral|absolut/i.test(d.division || "");
+  const own = div && !isAggregate(div.self) ? new Set(div.self.players.map((p) => norm(p.name))) : null;
+  const divOf = new Map<string, string>();
+  if (own) for (const d of div!.all) if (d !== div!.self && !isAggregate(d)) for (const p of d.players) if (!divOf.has(norm(p.name))) divOf.set(norm(p.name), d.division);
   for (const p of players) {
     if (p.name && typeof p.hcp === "number") hcpByName.set(norm(p.name), p.hcp);
     if (p.name && (p.dob || p.birthYear)) birthByName.set(norm(p.name), { dob: p.dob ?? null, birthYear: p.birthYear ?? null });
@@ -393,6 +403,7 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
         ...(estByName.get(norm(p.name)) ?? {}),
         tee: p.tee ?? null,
         ...(ptByName.has(norm(p.name)) ? { isPortuguese: true } : {}),
+        ...(own && !own.has(norm(p.name)) && divOf.has(norm(p.name)) ? { otherDivision: divOf.get(norm(p.name)) } : {}),
       })),
     })),
   } as FpgDraw]));
@@ -425,7 +436,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
       // Anexar os draws ao torneio → o TournamentDetail monta as tabs flat
       // intercaladas (Draw R1 · R1 · Draw R2 · R2 · … · Resumo · Scorecards).
       if (dv.draws && Object.keys(dv.draws).length) {
-        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players]);
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players], { self: dv, all: f.divisions });
       }
       // Limpar o tcode placeholder (`job-…`) para o TournamentDetail não mostrar
       // o pill/link FPG (o FM não tem ccode/tcode).
@@ -506,7 +517,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
       const results = jobDivisionToTournament(dv, label, f.year, f.startDate);
       tagEvo(results, evo);
       if (dv.draws && Object.keys(dv.draws).length) {
-        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players]);
+        (results as unknown as { _draws?: Record<string, FpgDraw> })._draws = fmDrawsToFpg(dv.draws, [...f.divisions.filter((x) => x !== dv).flatMap((x) => x.players), ...dv.players], { self: dv, all: f.divisions });
       }
       (results as unknown as { ccode?: string; tcode?: string }).ccode = undefined;
       (results as unknown as { ccode?: string; tcode?: string }).tcode = undefined;
