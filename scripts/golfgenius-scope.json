@@ -7,7 +7,7 @@
     "90 min com o scope todo activo: ~85 min de scrape, e o commit ficou por",
     "fazer). Para re-scrapar uma edição encerrada a pedido: workflow_dispatch com",
     "o slug — `--slug` explícito INCLUI as entradas disabled.",
-    "Campos: url | v2tids, slug, name, year, league, country, skipScorecards,",
+    "Campos: url | v2tids, slug, name, year, league, country, skipScorecards, si, siSource, teeRatings ({tee: {courseRating, slope, ratingSource}}),",
     "profiles, disabled, note. `slug` fixa o nome do ficheiro {slug}_{ano}.json.",
     "`country: none` = não assumir país nenhum quando a afiliação não o diz",
     "(default do motor é 'US', certo para FSGA/UA, errado num mundial)."
@@ -40,6 +40,13 @@
         18
       ],
       "siSource": "FPG (master-courses) — Santo da Serra não tem a combinação Machico-Serras: buracos 1-9 = Machico (1.ª volta de Machico-Desertas, ncourse 055-2), 10-18 = Serras (2.ª volta de Desertas-Serras, 055-1); o SI de cada volta é fixo (Machico ímpares, Serras pares — igual em Serras-Machico, 055-3). Pares e metros conferem com o GG (5594 m Brancas)",
+      "teeRatings": {
+        "Yellow": {
+          "courseRating": 74,
+          "slope": 136,
+          "ratingSource": "FPG (master-courses) — Amarelas Senhoras: Machico 1.ª volta 38,0/137 (Machico-Desertas) + Serras 2.ª volta 36,0/135 (Desertas-Serras) = 74,0/136, igual a Serras-Machico 18 buracos. O GG dava 68,7/132, que é o rating das Amarelas Homens"
+        }
+      },
       "teeDivisions": {
         "White": "Boys",
         "Yellow": "Girls"
