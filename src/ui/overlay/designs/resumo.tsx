@@ -74,7 +74,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
           {v.position && d.position && <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700 }}>{d.position}</span>}
         </div>
       </div>
-      {nines.map(([off, len]) => (
+      {v.holeScores && nines.map(([off, len]) => (
         <div key={off} style={{ marginBottom: 6, background: fillA("#000000", (fa ?? .88) * .25), borderRadius: 6, padding: "3px 4px" }}>
           <div style={{ display: "flex", gap: 2, fontSize: 9, fontWeight: 700, color: tc3 }}>
             <span style={{ width: LW }} />
@@ -85,7 +85,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
             <div key={r.round} style={{ display: "flex", gap: 2, alignItems: "center", marginTop: 2 }}>
               <span style={{ width: LW, fontFamily: OS, fontSize: 11, fontWeight: 700, color: tc3 }}>R{r.round}</span>
               {r.scores.slice(off, off + len).map((sc, i) => (
-                <span key={i} style={{ width: W, display: "flex", justifyContent: "center" }}><SC sc={sc} par={r.par[off + i]} sz={SZ} /></span>
+                <span key={i} style={{ width: W, display: "flex", justifyContent: "center" }}><SC sc={sc} par={r.par[off + i]} h={off + i} sz={SZ} /></span>
               ))}
               <span style={{ width: 30, textAlign: "center", fontFamily: BN, fontSize: 20 }}>{sub(r, off, len)}</span>
             </div>

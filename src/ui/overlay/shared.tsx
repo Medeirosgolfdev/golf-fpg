@@ -113,6 +113,29 @@ export function metaStr(d: DD, flags: Partial<Record<string, boolean>>): string 
   ].filter(Boolean).join(" · ");
 }
 
+/** Partes da informação da volta, na ordem pedida, só as ligadas e com
+ *  valor — o mesmo texto em todos os desenhos. Chaves: event, round,
+ *  position, course, tee, teeDist, date, hiCh, sd (e player). */
+export type InfoKey = "player" | "event" | "round" | "position" | "course" | "tee" | "teeDist" | "date" | "hiCh" | "sd";
+export const INFO_ALL: InfoKey[] = ["event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"];
+export function infoParts(d: DD, v: Vis, keys: InfoKey[] = INFO_ALL, o: { roundWord?: string; posWord?: string } = {}): string[] {
+  const out: string[] = [];
+  for (const k of keys) {
+    if (!v[k]) continue;
+    if (k === "player" && d.player) out.push(d.player);
+    else if (k === "event" && d.event) out.push(d.event);
+    else if (k === "round" && d.round && !d.rounds) out.push(`${o.roundWord ?? "R"}${d.round}`);
+    else if (k === "position" && d.position) out.push(`${o.posWord ?? "POS "}${d.position}`);
+    else if (k === "course" && d.course) out.push(d.course);
+    else if (k === "tee" && d.tee) out.push(d.tee);
+    else if (k === "teeDist" && d.teeDist) out.push(`${d.teeDist}m`);
+    else if (k === "date" && d.date) out.push(d.date);
+    else if (k === "hiCh" && d.hi !== null) out.push([`HI ${d.hi.toFixed(1)}`, d.courseHcp !== null ? `CH ${d.courseHcp}` : ""].filter(Boolean).join(" · "));
+    else if (k === "sd" && d.sd !== null) out.push(`SD ${fmtSD(d.sd)}`);
+  }
+  return out;
+}
+
 /** Constrói linha de HCP info (HI/CH/SD) consoante toggles ligados. */
 export function hiChStr(d: DD, v: Vis, _s: Stats): string {
   const p: string[] = [];

@@ -5,10 +5,37 @@
  * - Grid2: layout 2×9 dos hole scores
  * - StatsRow: pills de breakdown (HIO, Eagles, Bir, Par, Bog, Dbl, Tri, Quad+)
  */
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { II } from "./shared";
 import { HIO_GREEN, scBg } from "./shared";
 import type { DD, StT } from "./types";
+
+/* ═══════ Par / S.I. por buraco (opções «Par» e «S.I.» do painel) ═══════
+ * Dado pelo OverlayExport a cada desenho: as células com `h` (índice do
+ * buraco) mostram por baixo «P4» e/ou «SI 15». Nas tabelas que já têm a sua
+ * linha de Par, `par` vem a false (não repete). */
+export type CellInfo = { d: DD; par: boolean; si: boolean };
+export const CellInfoCtx = createContext<CellInfo | null>(null);
+
+/** Envolve a célula com a legenda do buraco, quando há opção ligada. */
+function useCaption(cell: React.ReactElement, h: number | undefined, sz: number): React.ReactElement {
+  const ci = useContext(CellInfoCtx);
+  if (!ci || h == null) return cell;
+  const lines: string[] = [];
+  if (ci.par && ci.d.par[h] != null) lines.push(`P${ci.d.par[h]}`);
+  if (ci.si && ci.d.si.length > h && ci.d.si[h]) lines.push(`SI ${ci.d.si[h]}`);
+  if (!lines.length) return cell;
+  // Discreta: não pode competir com o score (16/10/2026).
+  const fs = Math.max(7, Math.round(sz * 0.26));
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: sz, flexShrink: 0 }}>
+      {cell}
+      <div style={{ marginTop: 1 }}>
+        {lines.map((l) => <div key={l} style={{ fontSize: fs, fontWeight: 600, lineHeight: 1.1, opacity: .6, whiteSpace: "nowrap", textAlign: "center" }}>{l}</div>)}
+      </div>
+    </div>
+  );
+}
 
 /* ═══════ Rings: contornos concêntricos (cartão de golfe) ═══════
  * Bogey = 1 quadrado, duplo = 2, triplo ou pior = 3; birdie = 1 círculo,
@@ -48,7 +75,10 @@ function ringed(o: { sz: number; fs: number; d: number; from?: number; w: number
 }
 
 /* ═══════ SC: score circle/square padrão ═══════ */
-export function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number }) {
+export function SC({ sc, par, sz = 32, h }: { sc: number; par: number; sz?: number; h?: number }) {
+  return useCaption(<SCCell sc={sc} par={par} sz={sz} />, h, sz);
+}
+function SCCell({ sc, par, sz }: { sc: number; par: number; sz: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = {
@@ -67,7 +97,10 @@ export function SC({ sc, par, sz = 32 }: { sc: number; par: number; sz?: number 
 
 /* ═══════ SCL: light bg variant ═══════ */
 /** par usa `inherit` para ficar legível em qualquer tema (claro ou escuro) do container */
-export function SCL({ sc, par, sz = 28 }: { sc: number; par: number; sz?: number }) {
+export function SCL({ sc, par, sz = 28, h }: { sc: number; par: number; sz?: number; h?: number }) {
+  return useCaption(<SCLCell sc={sc} par={par} sz={sz} />, h, sz);
+}
+function SCLCell({ sc, par, sz }: { sc: number; par: number; sz: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = {
@@ -85,7 +118,10 @@ export function SCL({ sc, par, sz = 28 }: { sc: number; par: number; sz?: number
 }
 
 /* ═══════ SCQ: 18Birdies style — over-par = border only ═══════ */
-export function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number }) {
+export function SCQ({ sc, par, sz = 24, h }: { sc: number; par: number; sz?: number; h?: number }) {
+  return useCaption(<SCQCell sc={sc} par={par} sz={sz} />, h, sz);
+}
+function SCQCell({ sc, par, sz }: { sc: number; par: number; sz: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.5);
   const base: React.CSSProperties = {
@@ -102,7 +138,10 @@ export function SCQ({ sc, par, sz = 24 }: { sc: number; par: number; sz?: number
 
 /* ═══════ SCO: outline-only (todos brancos), para overlays transparentes ═══════ */
 /** HIO = green circle, Birdies/eagles = white circle outline, bogeys+ = white square outline, par = plain number */
-export function SCO({ sc, par, sz = 36 }: { sc: number; par: number; sz?: number }) {
+export function SCO({ sc, par, sz = 36, h }: { sc: number; par: number; sz?: number; h?: number }) {
+  return useCaption(<SCOCell sc={sc} par={par} sz={sz} />, h, sz);
+}
+function SCOCell({ sc, par, sz }: { sc: number; par: number; sz: number }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.52);
   const base: React.CSSProperties = {
@@ -117,7 +156,10 @@ export function SCO({ sc, par, sz = 36 }: { sc: number; par: number; sz?: number
 
 /* ═══════ SCA: outline accent color (PGA Tour U) ═══════ */
 /** Score circle com contorno accent — birdies com circle colorido, bogeys com square */
-export function SCA({ sc, par, sz = 36, accent = "#e87722" }: { sc: number; par: number; sz?: number; accent?: string }) {
+export function SCA({ sc, par, sz = 36, accent = "#e87722", h }: { sc: number; par: number; sz?: number; accent?: string; h?: number }) {
+  return useCaption(<SCACell sc={sc} par={par} sz={sz} accent={accent} />, h, sz);
+}
+function SCACell({ sc, par, sz, accent = "#e87722" }: { sc: number; par: number; sz: number; accent?: string }) {
   const d = sc - par;
   const fs = Math.round(sz * 0.5);
   const base: React.CSSProperties = {
@@ -132,12 +174,17 @@ export function SCA({ sc, par, sz = 36, accent = "#e87722" }: { sc: number; par:
 /* ═══════ TpBadge: pill colorida de to-par ═══════ */
 /** To-par badge — pill colorida como nos posts do PGA Tour. */
 export function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
-  const bg = vp < 0 ? "#dc2626" : vp > 0 ? "#2563eb" : "#666";
+  /* Pílula de vidro (16/10/2026): o bloco azul forte competia com o azul dos
+     bogeys e tapava a foto. Acima do par = cor do texto do desenho; abaixo =
+     vermelho suave (a cor dos birdies); fundo e contorno semi-transparentes. */
+  const under = vp < 0;
   const txt = vp < 0 ? String(vp) : vp > 0 ? `+${vp}` : "E";
   return (
     <div style={{
-      background: bg, color: "#fff", fontFamily: II, fontSize: sz, fontWeight: 900,
-      padding: `${Math.round(sz * 0.22)}px ${Math.round(sz * 0.55)}px`, borderRadius: 4,
+      background: under ? "rgba(220,38,38,.22)" : "rgba(128,128,128,.22)",
+      border: `1.5px solid ${under ? "rgba(248,113,113,.7)" : "rgba(128,128,128,.55)"}`,
+      color: under ? "#f87171" : "inherit", fontFamily: II, fontSize: sz, fontWeight: 900,
+      padding: `${Math.round(sz * 0.18)}px ${Math.round(sz * 0.45)}px`, borderRadius: Math.round(sz * 0.3),
       display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 1,
     }}>{txt}</div>
   );
@@ -154,7 +201,7 @@ export function Grid2({ d, sz = 24, gap = 2, nc = "#555" }: { d: DD; sz?: number
           {d.scores.slice(off, off + len).map((sc, i) => (
             <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
               <div style={{ fontSize: 9, fontWeight: 700, color: nc, width: sz, textAlign: "center" }}>{off + i + 1}</div>
-              <SC sc={sc} par={d.par[off + i]} sz={sz} />
+              <SC sc={sc} par={d.par[off + i]} sz={sz} h={off + i} />
             </div>
           ))}
         </div>

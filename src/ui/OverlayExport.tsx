@@ -14,12 +14,13 @@
  *     em ficheiros desse tamanho — daí o split.
  */
 import React, { useState, useMemo, useRef, useCallback } from "react";
-import { MONTHS_PT } from "../utils/format";
+import { MONTHS_PT, fmtSD } from "../utils/format";
 import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
-import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, CAT_COLS, defaultVis } from "./overlay/registry";
-import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize } from "./overlay/logos";
+import { CellInfoCtx, StatsRow } from "./overlay/badges";
+import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, CAT_COLS, MIX_BG, defaultVis, type DesignDef } from "./overlay/registry";
+import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
@@ -29,6 +30,64 @@ type SavedStyle = {
   vis: Vis; bgId: string; customBg: string; bgAlpha: number;
   theme: "dark"|"light"; subTheme: "dark"|"light"; logoPos: "top"|"bottom"; logoSize: LogoSize;
 };
+
+/** Logo com altura `h` (no máximo a largura do cartão — nunca o alarga); com
+ *  `crop`, só a zona do logo, sem a margem transparente do ficheiro: janela
+ *  com overflow escondido e a imagem posicionada em percentagem. */
+function LogoView({ logo, h, style }: { logo: OverlayLogo; h: number; style?: React.CSSProperties }) {
+  const c = logo.crop;
+  if (!c) return <img src={logo.src} alt={logo.label} style={{ display:"block", height:"auto", maxHeight:h, width:"auto", maxWidth:"100%", ...style }} />;
+  const cw = c.x1 - c.x0, ch = c.y1 - c.y0;
+  return (
+    <div style={{ position:"relative", overflow:"hidden", width:"100%", maxWidth:Math.round(h * cw / ch), aspectRatio:`${cw} / ${ch}`, ...style }}>
+      <img src={logo.src} alt={logo.label} style={{ position:"absolute", maxWidth:"none",
+        left:`${-c.x0 / cw * 100}%`, top:`${-c.y0 / ch * 100}%`, width:`${c.w / cw * 100}%`, height:`${c.h / ch * 100}%` }} />
+    </div>
+  );
+}
+
+/** Linha de informação por baixo do desenho: as opções ligadas que o desenho
+ *  não trata sozinho (`has` no registo). Mesmo fundo do desenho; a largura é a
+ *  do desenho (width 0 + minWidth 100% — nunca o alarga, o texto quebra). */
+function ExtraInfo({ d, v, s, has, bg, tc3 }: { d: DD; v: Vis; s: Stats; has: string[]; bg: string; tc3: string }) {
+  const on = (k: string) => v[k] && !has.includes(k);
+  const parts = [
+    on("player") && d.player,
+    on("event") && d.event,
+    on("round") && !d.rounds && `R${d.round}`,
+    on("position") && d.position && `POS ${d.position}`,
+    on("course") && d.course,
+    on("tee") && d.tee,
+    on("teeDist") && d.teeDist && `${d.teeDist}m`,
+    on("date") && d.date,
+    on("hiCh") && d.hi != null && [`HI ${d.hi.toFixed(1)}`, d.courseHcp != null && `CH ${d.courseHcp}`].filter(Boolean).join(" · "),
+    on("sd") && d.sd != null && `SD ${fmtSD(d.sd)}`,
+  ].filter(Boolean) as string[];
+  const stats = on("stats") && !d.rounds;
+  if (!parts.length && !stats) return null;
+  return (
+    <div style={{ width:0, minWidth:"100%", boxSizing:"border-box", marginTop:4, padding:"4px 8px", borderRadius:8, background:bg,
+      fontFamily:"'Inter',sans-serif", fontSize:10, fontWeight:700, letterSpacing:.4, lineHeight:1.45, color:tc3 }}>
+      {parts.length > 0 && <div>{parts.join(" · ")}</div>}
+      {stats && <div style={{ marginTop: parts.length ? 2 : 0 }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
+    </div>
+  );
+}
+
+/** Um desenho como vai para o PNG: o desenho, a legenda Par/S.I. nas células
+ *  e a linha de informação com as opções que ele não trata. */
+export function DesignCard({ x, d, v, s, bg, tc, tc2, tc3, tc4, fa }: {
+  x: DesignDef; d: DD; v: Vis; s: Stats; bg: string; tc: string; tc2: string; tc3: string; tc4: string; fa: number;
+}) {
+  return (
+    <>
+      <CellInfoCtx.Provider value={{ d, par: !!v.holePar && !x.has.includes("holePar"), si: !!v.holeSI && !x.has.includes("holeSI") }}>
+        <x.C d={d} v={v} s={s} bg={bg} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={fa} />
+      </CellInfoCtx.Provider>
+      <ExtraInfo d={d} v={v} s={s} has={x.has} bg={bg} tc3={tc3} />
+    </>
+  );
+}
 
 /* ═══════ MAIN COMPONENT ═══════ */
 export default function OverlayExport({ data, inline, nextEvent }: { data: OverlayData; inline?: boolean; nextEvent?: string }) {
@@ -52,7 +111,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     try { return JSON.parse(localStorage.getItem(STYLE_KEY) || "{}"); } catch { return {}; }
   }, []);
   const [vis,         setVis]         = useState<Vis>(() => ({ ...defaultVis(), ...(saved.vis ?? {}) }));
-  const [bgId,        setBgId]        = useState(saved.bgId ?? "navy");
+  const [bgId,        setBgId]        = useState(saved.bgId ?? "mix");
   const [customBg,    setCustomBg]    = useState(saved.customBg ?? "#1a4a2e");
   const [bgAlpha,     setBgAlpha]     = useState(saved.bgAlpha ?? 88);
   /* Foto só para pré-visualizar (como fica no IG) — nunca entra no PNG. */
@@ -147,6 +206,8 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const bgOpt   = BG_OPTIONS.find(b => b.id === bgId);
   const bgHex   = bgId === "custom" ? customBg : (bgOpt?.hex ?? null);
   const bgColor = bgHex ? hexToRgba(bgHex, bgAlpha/100) : "transparent";
+  /* Fundo de cada desenho: «Variado» = a cor própria dele (MIX_BG pela ordem). */
+  const bgFor = (x: DesignDef) => bgId === "mix" ? hexToRgba(MIX_BG[DESIGNS.indexOf(x) % MIX_BG.length], bgAlpha/100) : bgColor;
 
   /* tc = principal (theme); tc2/tc3/tc4 = secundário (subTheme).
      Tons intensificados (mais escuros no modo Claro, menos cinzento no modo Escuro)
@@ -159,8 +220,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   /* Logo escolhido: altura fixa, largura natural (nunca alarga o cartão). */
   const logo = OVERLAY_LOGOS.find(l => l.id === logoId);
   const logoImg = logo ? (
-    <img src={logo.src} alt="" style={{ display:"block", height:LOGO_HEIGHTS[logoSize], width:"auto", maxWidth:"100%",
-      objectFit:"contain", margin: logoPos==="top" ? "0 auto 6px" : "6px auto 0" }} />
+    <LogoView logo={logo} h={LOGO_HEIGHTS[logoSize]} style={{ margin: logoPos==="top" ? "0 auto 6px" : "6px auto 0" }} />
   ) : null;
 
   const checkerBg: React.CSSProperties = {
@@ -325,8 +385,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                 <span style={{
                   display:"inline-block", width:16, height:16, borderRadius:4, flexShrink:0,
                   border:"1.5px solid rgba(128,128,128,0.3)",
-                  background: bg.hex===null ? "linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)" : bg.hex,
-                  backgroundSize: bg.hex===null ? "6px 6px" : undefined,
+                  background: bg.id==="mix" ? `conic-gradient(${MIX_BG.slice(0,4).join(",")})`
+                    : bg.hex===null ? "linear-gradient(45deg,#ccc 25%,#fff 25%,#fff 50%,#ccc 50%,#ccc 75%,#fff 75%)" : bg.hex,
+                  backgroundSize: bg.hex===null && bg.id!=="mix" ? "6px 6px" : undefined,
                 }} />
                 <span>{bg.label}</span>
               </button>
@@ -361,7 +422,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
               </button>
             ))}
           </div>
-          {bgHex && (
+          {(bgHex || bgId === "mix") && (
             <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:8 }}>
               <span style={{ fontSize:11, fontWeight:800, color:"#888" }}>Opacidade do fundo</span>
               <input type="range" min={0} max={100} value={bgAlpha} onChange={e=>setBgAlpha(parseInt(e.target.value))} style={{ flex:1, maxWidth:160, accentColor:"#2e7d32" }} />
@@ -375,7 +436,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
             {OVERLAY_LOGOS.map(l => (
               <button key={l.id} className={`ov-opt-btn${logoId===l.id?" active":""}`} onClick={()=>setLogoId(l.id)} title={l.label}
                 style={{ background: l.dark ? "#1f2937" : "#e5e7eb", padding:"2px 6px" }}>
-                <img src={l.src} alt={l.label} style={{ height:26, width:"auto", display:"block" }} />
+                <span style={{ display:"block", width: l.crop ? 26 * (l.crop.x1 - l.crop.x0) / (l.crop.y1 - l.crop.y0) : undefined }}><LogoView logo={l} h={26} /></span>
               </button>
             ))}
             {logoId && <>
@@ -445,7 +506,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
                         width: (x.needsHoles && vis.holeScores && x.cat !== CAT_COLS) || x.fit ? "min-content" : undefined }}>
                         {logo && logoPos==="top" && logoImg}
-                        <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
+                        <DesignCard x={x} d={dd} v={vis} s={stats} bg={bgFor(x)} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
                         {logo && logoPos==="bottom" && logoImg}
                       </div>
                     </div>

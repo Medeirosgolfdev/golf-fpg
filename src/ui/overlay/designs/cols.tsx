@@ -2,7 +2,7 @@
  * Designs COLS — verticais (story format) e colunares.
  * V24 Story, V19 PGA Columns, V21 DP World, V33 College Grid.
  */
-import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, hiChStr, fillA } from "../shared";
+import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, hiChStr, fillA, infoParts } from "../shared";
 import { SC, TpBadge, StatsRow } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
@@ -17,8 +17,8 @@ export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
     <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg ?? undefined, overflow:"hidden", borderRadius:8, textShadow:TS, maxWidth: maxW + 40 }}>
       {(v.player||v.event||v.round) && (
         <div style={{ padding:"6px 8px 3px", textAlign:"center", maxWidth: maxW + 30, overflow:"hidden" }}>
-          {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, lineHeight:1.2, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.player.toUpperCase()}</div>}
-          {v.event&&d.event && <div style={{ fontFamily:II, fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, marginTop:1, whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.event.toUpperCase()}</div>}
+          {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, lineHeight:1.2, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
+          {v.event&&d.event && <div style={{ fontFamily:II, fontSize:8, fontWeight:700, letterSpacing:1, color:tc3, marginTop:1, wordBreak:"break-word" }}>{d.event.toUpperCase()}</div>}
           {v.round && <div style={{ fontFamily:II, fontSize:8, fontWeight:700, letterSpacing:1, color:tc3 }}>R{d.round}</div>}
         </div>
       )}
@@ -27,13 +27,13 @@ export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           {is18 ? (
             [{off:0,sc:s.sF},{off:9,sc:s.sB}].map(({off,sc:sub},ci) => (
               <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"2px solid rgba(220,38,38,.35)":"none", paddingRight:ci===0?6:0, paddingLeft:ci===1?6:0 }}>
-                {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={22} />)}
+                {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={22} />)}
                 <div style={{ fontFamily:II, fontSize:12, fontWeight:900, marginTop:1 }}>{sub}</div>
               </div>
             ))
           ) : (
             <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-              {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={22} />)}
+              {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} h={i} sz={22} />)}
             </div>
           )}
         </div>
@@ -42,13 +42,14 @@ export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
         <div style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1, color:"#0d1e38" }}>{s.sT}</div>
         <div style={{ fontFamily:II, fontSize:14, fontWeight:900, color:vpCd(s.vpT), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
       </div>
-      {(v.course||teeLine||v.date||(v.position&&d.position)||hcl) && (
+      {((v.course&&d.course)||teeLine||(v.date&&d.date)||(v.position&&d.position)||hcl||v.stats) && (
         <div style={{ fontFamily:II, padding:"3px 6px 5px", fontSize:9, fontWeight:600, color:tc3, textAlign:"center", lineHeight:1.6, maxWidth: maxW + 30, overflow:"hidden" }}>
-          {v.course&&d.course && <div style={{ whiteSpace:"nowrap", overflow:"hidden", textOverflow:"ellipsis" }}>{d.course}</div>}
+          {v.course&&d.course && <div style={{ wordBreak:"break-word" }}>{d.course}</div>}
           {teeLine && <div>{teeLine}</div>}
           {v.position&&d.position && <div>POS {d.position}</div>}
           {v.date&&d.date && <div>{d.date}</div>}
           {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
+          {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc3} gap={3} fs={8} /></div>}
         </div>
       )}
     </div>
@@ -56,10 +57,10 @@ export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 }
 
 /* V21 · DP WORLD COLUMNS — extraído para evitar recriação em cada render */
-function V21Col({ scores, pars, tc }: { scores:number[]; pars:number[]; tc:string }) {
+function V21Col({ scores, pars, tc, off = 0 }: { scores:number[]; pars:number[]; tc:string; off?: number }) {
   return (
     <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:3, color:tc }}>
-      {scores.map((sc,i) => <SC key={i} sc={sc} par={pars[i]} sz={24} />)}
+      {scores.map((sc,i) => <SC key={i} sc={sc} par={pars[i]} sz={24} h={off+i} />)}
     </div>
   );
 }
@@ -86,16 +87,17 @@ export function V21({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
           <V21Col scores={d.scores.slice(0,is18?9:d.scores.length)} pars={d.par.slice(0,is18?9:d.par.length)} tc={tc} />
           {is18 && <>
             <div style={{ width:1, background:"rgba(255,255,255,.2)", margin:"0 8px", alignSelf:"stretch" }} />
-            <V21Col scores={d.scores.slice(9)} pars={d.par.slice(9)} tc={tc} />
+            <V21Col scores={d.scores.slice(9)} pars={d.par.slice(9)} tc={tc} off={9} />
           </>}
         </div>
       )}
-      {(v.course||v.date||(v.position&&d.position)||hiChStr(d,v,s)) && (
+      {(infoParts(d, v, ["course", "tee", "teeDist", "position", "date"]).length > 0 || hiChStr(d,v,s) || v.stats) && (
         <div style={{ marginTop:4, textAlign:"center", wordBreak:"break-word", overflowWrap:"anywhere", maxWidth:"100%" }}>
-          {[v.course&&d.course,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).map((p,i) => (
+          {[infoParts(d, v, ["course"]).join(""), infoParts(d, v, ["tee", "teeDist"]).join(" · "), ...infoParts(d, v, ["position", "date"])].filter(Boolean).map((p,i) => (
             <div key={i} style={{ fontSize:10, fontWeight:600, color:tc4, lineHeight:1.4 }}>{p}</div>
           ))}
           {hiChStr(d,v,s) && <div style={{ fontSize:9, fontWeight:600, color:tc4, lineHeight:1.4, opacity:.85 }}>{hiChStr(d,v,s)}</div>}
+          {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:3 }}><StatsRow st={s.st} tc3={tc4} gap={4} fs={9} /></div>}
         </div>
       )}
     </div>
@@ -119,7 +121,7 @@ export function V24({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
         <div style={{ display:"flex", gap:6, marginTop:4, background:scoreBg, borderRadius:12, padding:"10px 12px" }}>
           {[{off:0,sub:s.sF},{off:9,sub:s.sB}].map(({off,sub},ci) => (
             <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?"1px solid rgba(255,255,255,.15)":"none", paddingRight:ci===0?6:0 }}>
-              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={26} />)}
+              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={26} />)}
               <div style={{ fontFamily:II, fontSize:12, fontWeight:900, color:tc3, marginTop:2 }}>{sub}</div>
             </div>
           ))}
@@ -127,12 +129,12 @@ export function V24({ d, v, s, bg, tc="white", tc3, tc4 }: P) {
       )}
       {v.holeScores && !is18 && (
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, marginTop:4, background:scoreBg, borderRadius:12, padding:"10px 12px" }}>
-          {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={26} />)}
+          {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} h={i} sz={26} />)}
         </div>
       )}
-      {(v.course||v.date||v.stats||hcl||(v.position&&d.position)) && (
+      {((v.course&&d.course)||(v.tee&&d.tee)||(v.teeDist&&d.teeDist)||(v.date&&d.date)||v.stats||hcl||(v.position&&d.position)) && (
         <div style={{ fontFamily:II, textAlign:"center", marginTop:6, maxWidth:180, wordBreak:"break-word" }}>
-          {v.course&&d.course && <div style={{ fontSize:10, fontWeight:600, color:tc3, lineHeight:1.4 }}>{d.course}</div>}
+          {infoParts(d, v, ["course", "tee", "teeDist"]).length > 0 && <div style={{ fontSize:10, fontWeight:600, color:tc3, lineHeight:1.4 }}>{infoParts(d, v, ["course", "tee", "teeDist"]).join(" · ")}</div>}
           {v.position&&d.position && <div style={{ fontSize:10, fontWeight:700, color:tc3 }}>POS {d.position}</div>}
           {v.date&&d.date && <div style={{ fontSize:9, fontWeight:600, color:tc4 }}>{d.date}</div>}
           {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:2 }}><StatsRow st={s.st} tc3={tc4} gap={4} fs={9} /></div>}
@@ -155,7 +157,7 @@ export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
         <div style={{ display:"flex", gap:4, justifyContent:"center" }}>
           {[{off:0,sub:s.sF,lbl:"FRONT"},{off:9,sub:s.sB,lbl:"BACK"}].map(({off,sub,lbl}) => (
             <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
+              {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} />)}
               <div style={{ borderTop:"2px solid rgba(255,255,255,.2)", width:"100%", textAlign:"center", paddingTop:3, marginTop:2 }}>
                 <div style={{ fontFamily:II, fontSize:8, fontWeight:700, letterSpacing:1, color:tc3 }}>{lbl}</div>
                 <div style={{ fontSize:20, fontWeight:900, lineHeight:1 }}>{sub}</div>
@@ -166,17 +168,18 @@ export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
       )}
       {v.holeScores && !is18 && (
         <div style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
-          {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} sz={30} />)}
+          {d.scores.map((sc,i) => <SC key={i} sc={sc} par={d.par[i]} h={i} sz={30} />)}
         </div>
       )}
       <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:8, marginTop:6, paddingTop:4, borderTop:"1px solid rgba(255,255,255,.12)" }}>
         <span style={{ fontFamily:BN, fontSize:56, lineHeight:1, letterSpacing:-1, color:tc, textShadow:TS_SCORE }}>{s.sT}</span>
         <TpBadge vp={s.vpT} sz={16} />
       </div>
-      {(v.event||v.course||v.date||v.round||(v.position&&d.position)||hcl) && (
+      {(infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]).length > 0 || hcl || v.stats) && (
         <div style={{ fontFamily:II, textAlign:"center", marginTop:3, fontSize:9, fontWeight:600, color:tc3, lineHeight:1.4, wordBreak:"break-word", overflowWrap:"anywhere" }}>
-          <div>{[v.event&&d.event,v.course&&d.course,v.round&&`R${d.round}`,v.position&&d.position&&`POS ${d.position}`,v.date&&d.date].filter(Boolean).join(" · ")}</div>
+          <div>{infoParts(d, v, ["event", "round", "position", "course", "tee", "teeDist", "date"]).join(" · ")}</div>
           {hcl && <div style={{ opacity:.85 }}>{hcl}</div>}
+          {v.stats && <div style={{ display:"flex", justifyContent:"center", marginTop:3 }}><StatsRow st={s.st} tc3={tc3} gap={4} fs={9} /></div>}
         </div>
       )}
     </div>

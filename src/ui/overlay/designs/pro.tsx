@@ -3,7 +3,7 @@
  * V45 PGA Broadcast, V46 College Poster, V47 PGA Tour U,
  * V29 Tour Classic, V38 PGA Americas, V30 Korn Ferry.
  */
-import { II, OS, LO, BN, SG, TS, hiChStr, fillA } from "../shared";
+import { II, OS, LO, BN, SG, TS, hiChStr, fillA, infoParts } from "../shared";
 import { SC, SCL, SCO, SCA, TpBadge, StatsRow } from "../badges";
 import type { P } from "../types";
 
@@ -12,16 +12,18 @@ import type { P } from "../types";
 export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const hcl = hiChStr(d, v, s);
+  const l1 = infoParts(d, v, ["event", "round", "position"]);
+  const l2 = infoParts(d, v, ["course", "tee", "teeDist", "date"]);
   return (
-    <div style={{ display:"inline-block" }}>
-      {/* Bloco azul: só envolve buracos + score */}
-      <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"6px 10px", borderRadius:6 }}>
+    /* O fundo envolve TUDO — o texto por baixo, sem fundo, não se lia sobre fotos claras. */
+    <div style={{ display:"inline-block", background:bg ?? undefined, borderRadius:6, padding:"6px 10px 8px" }}>
+      <div style={{ fontFamily:II, display:"inline-block", color:tc }}>
         {v.holeScores && (
           <div style={{ display:"flex", alignItems:"center" }}>
             <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
               {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len]) => (
                 <div key={off} style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
+                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} />)}
                 </div>
               ))}
             </div>
@@ -43,16 +45,11 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         )}
       </div>
-      {/* Tournament/course/teeDist/position/HI — FORA do bloco azul, sem fundo */}
-      {(v.player||v.event||v.round||v.course||v.teeDist||(v.position&&d.position)||hcl) && (
+      {((v.player&&d.player)||l1.length>0||l2.length>0||hcl||v.stats) && (
         <div style={{ marginTop:6, fontFamily:II, fontWeight:700, letterSpacing:1.5, textTransform:"uppercase", color:tc3, lineHeight:1.3 }}>
           {v.player&&d.player && <div style={{ fontSize:10 }}>{d.player}</div>}
-          {(v.event || v.round || (v.position && d.position)) && (
-            <div style={{ fontSize:14 }}>{[v.event&&d.event,v.round&&`R${d.round}`,v.position&&d.position].filter(Boolean).join(" · ")}</div>
-          )}
-          {(v.course || (v.teeDist && d.teeDist)) && (
-            <div style={{ fontSize:10, marginTop:1, opacity:0.85 }}>{[v.course&&d.course, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
-          )}
+          {l1.length > 0 && <div style={{ fontSize:14 }}>{l1.join(" · ")}</div>}
+          {l2.length > 0 && <div style={{ fontSize:10, marginTop:1, opacity:0.85 }}>{l2.join(" · ")}</div>}
           {hcl && <div style={{ fontSize:9, marginTop:1, opacity:0.75 }}>{hcl}</div>}
           {v.stats && <div style={{ marginTop:3, display:"flex" }}><StatsRow st={s.st} tc3={tc3} gap={5} fs={10} /></div>}
         </div>
@@ -91,7 +88,7 @@ export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
         <div style={{ padding:"6px 8px 8px" }}>
           {(is18 ? [[0,9],[9,9]] as [number,number][] : [[0,d.scores.length] as [number,number]]).map(([off,len],ri) => (
             <div key={off} style={{ display:"flex", gap:3, justifyContent:"center", marginTop:ri>0?4:0 }}>
-              {d.scores.slice(off,off+len).map((sc,i) => isDark ? <SC key={i} sc={sc} par={d.par[off+i]} sz={30} /> : <SCL key={i} sc={sc} par={d.par[off+i]} sz={30} />)}
+              {d.scores.slice(off,off+len).map((sc,i) => isDark ? <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} /> : <SCL key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} />)}
             </div>
           ))}
         </div>
@@ -130,7 +127,7 @@ export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
                   {Array.from({length:len},(_,i) => <div key={i} style={{ width:28, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
                 </div>}
                 <div style={{ display:"flex", gap:2 }}>
-                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} sz={28} />)}
+                  {d.scores.slice(off,off+len).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={28} />)}
                 </div>
                 {is18 && ri === 1 && <div style={{ display:"flex", gap:2, marginTop:1 }}>
                   {Array.from({length:len},(_,i) => <div key={i} style={{ width:28, textAlign:"center", fontSize:9, fontWeight:600, color:tc3 }}>{off+i+1}</div>)}
@@ -178,7 +175,8 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const hcl = hiChStr(d, v, s);
   const hasMeta = (v.player&&d.player) || (v.event&&d.event) || (v.course&&d.course) || v.round || (v.date&&d.date) || (v.position&&d.position) || hcl;
   return (
-    <div style={{ fontFamily: II, display: "inline-block", color: tc, padding: "4px 6px 0" }}>
+    /* O fundo envolve tudo (o texto do topo, sem fundo, não se lia sobre fotos claras). */
+    <div style={{ fontFamily: II, display: "inline-block", color: tc, padding: "6px 8px 8px", background: bg ?? undefined, borderRadius: 8 }}>
       {/* Topo: score gigante + metadata empilhada */}
       <div style={{ display: "flex", alignItems: "flex-end", gap: 14, marginBottom: 6 }}>
         <div style={{ display: "flex", alignItems: "flex-start", gap: 6, flexShrink: 0 }}>
@@ -219,14 +217,14 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
       </div>
       {/* Bloco azul só com os buracos */}
       {v.holeScores && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: bg ?? undefined, padding: "6px 8px", borderRadius: 8 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 1, background: fillA("#000000", (fa ?? .88) * .25), padding: "6px 8px", borderRadius: 8 }}>
           {(is18 ? [[0, 9], [9, 9]] as [number, number][] : [[0, d.scores.length] as [number, number]]).map(([off, len], ri) => (
             <div key={off}>
               <div style={{ display: "flex", gap: 2 }}>
                 {d.scores.slice(off, off + len).map((sc, i) => (
                   <div key={i} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
                     {ri === 0 && <div style={{ fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>}
-                    <SC sc={sc} par={d.par[off + i]} sz={36} />
+                    <SC sc={sc} par={d.par[off + i]} h={off + i} sz={36} />
                     {is18 && ri === 1 && <div style={{ fontSize: 9, fontWeight: 600, color: tc3 }}>{off + i + 1}</div>}
                   </div>
                 ))}
@@ -235,6 +233,7 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           ))}
         </div>
       )}
+      {v.stats && <div style={{ marginTop: 6 }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
     </div>
   );
 }
@@ -260,7 +259,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
                   </div>
                 )}
                 <div style={{ display: "flex", gap: 3 }}>
-                  {d.scores.slice(off, off + len).map((sc, i) => <SCO key={i} sc={sc} par={d.par[off + i]} sz={36} />)}
+                  {d.scores.slice(off, off + len).map((sc, i) => <SCO key={i} sc={sc} par={d.par[off + i]} h={off + i} sz={36} />)}
                 </div>
                 {ri === 0 && is18 && (
                   <div style={{ height: 2, background: "rgba(255,255,255,.35)", margin: "4px 0" }} />
@@ -289,7 +288,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
         </div>
       )}
       {/* Footer com wrap em multi-linhas para evitar overflow horizontal. */}
-      {(v.player || v.event || v.round || v.course || v.tee || v.teeDist || v.date || (v.position && d.position) || hcl) && (
+      {((v.player&&d.player) || (v.event&&d.event) || v.round || (v.course&&d.course) || (v.tee&&d.tee) || (v.teeDist&&d.teeDist) || (v.date&&d.date) || (v.position && d.position) || hcl) && (
         <div style={{ marginTop: 6, fontSize: 9, fontWeight: 800, letterSpacing: 2, textTransform: "uppercase", color: tc3, lineHeight: 1.4, wordBreak: "break-word" }}>
           {v.player && d.player && <div>{d.player}</div>}
           {(v.event||v.course||v.tee||v.teeDist) && <div>{[v.event && d.event, v.course && d.course, v.tee && d.tee, v.teeDist && d.teeDist && `${d.teeDist}m`].filter(Boolean).join(" · ")}</div>}
@@ -297,6 +296,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
           {hcl && <div style={{ fontSize: 8, letterSpacing: 1.5, opacity: .8 }}>{hcl}</div>}
         </div>
       )}
+      {v.stats && <div style={{ marginTop: 4 }}><StatsRow st={s.st} tc3={tc3} gap={6} fs={10} /></div>}
     </div>
   );
 }
@@ -341,7 +341,7 @@ export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
                 ))}
               </div>
               <div style={{ display: "flex", gap: 2 }}>
-                {d.scores.slice(off, off + len).map((sc, i) => <SCA key={i} sc={sc} par={d.par[off + i]} sz={36} accent={accent} />)}
+                {d.scores.slice(off, off + len).map((sc, i) => <SCA key={i} sc={sc} par={d.par[off + i]} h={off + i} sz={36} accent={accent} />)}
               </div>
             </div>
           ))}
