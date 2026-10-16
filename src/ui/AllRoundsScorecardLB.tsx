@@ -36,7 +36,8 @@ export function AllRoundsScorecardLB({
   playersDB: PlayersDB;
   options?: ScorecardOptions;
 }) {
-  const hideHCP = options?.hideHCP ?? false;
+  // Como no ScorecardLB: com HCP nos dados, a coluna aparece.
+  const hideHCP = (options?.hideHCP ?? false) && !tournament.players.some((p) => p.hcpExact != null);
   const hideSD = options?.hideSD ?? false;
   const showAge = options?.showAge ?? false;
   const startHole = options?.startHole ?? 1;
@@ -473,7 +474,7 @@ export function AllRoundsScorecardLB({
                             </td>
                             {!hideHCP && (
                               <td className="lb-hcp" style={{ borderTop: bTop, color: isFirstRd ? undefined : "var(--text-muted)" }}>
-                                {fmtHcp(row.hcp)}
+                                {row.hcpEst ? <span className="est-value">{fmtHcp(row.hcp)}</span> : fmtHcp(row.hcp)}
                               </td>
                             )}
                             <td className="lb-tee fw-600 fs-10 c-muted" style={{ borderTop: bTop }}>{`R${ri + 1}`}</td>
@@ -519,7 +520,7 @@ export function AllRoundsScorecardLB({
                       </td>
                       {showAge && <td className="lb-age" style={{ textAlign: "center" }}><AgePill age={row.age} dob={row.dob} /></td>}
                       <td className="lb-club"><TeeLabel tee={row.teeName} /></td>
-                      {!hideHCP && <td className="lb-hcp">{fmtHcp(row.hcp)}</td>}
+                      {!hideHCP && <td className="lb-hcp">{row.hcpEst ? <span className="est-value">{fmtHcp(row.hcp)}</span> : fmtHcp(row.hcp)}</td>}
                       <td className="lb-tee fw-600 fs-10 c-muted">{row.rdLabel}</td>
                       <td className="lb-topar" style={{ color: rd.toPar < 0 ? "var(--color-good)" : rd.toPar > 0 ? "var(--color-danger)" : "var(--text)" }}>
                         {fmtToPar(rd.toPar)}

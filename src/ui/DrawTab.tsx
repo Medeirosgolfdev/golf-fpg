@@ -259,6 +259,8 @@ export default function DrawTab({
       toPar: number | null;
       isPortuguese: boolean;
       country?: string;
+      /** Jogou outro escalão (flight misto) — marcado e fora do total. */
+      otherDivision?: string;
     }> = [];
     let idx = 0;
     // Heurística: o scraper do draw às vezes mete o fed no campo `clube` (só dígitos 4-6 chars).
@@ -471,6 +473,7 @@ export default function DrawTab({
           isPortuguese: !!(p as { isPortuguese?: boolean }).isPortuguese,
           // Nacionalidade da fonte (draws internacionais) → bandeira no nome.
           country: ((p as { country?: string | null }).country) || undefined,
+          otherDivision: (p as { otherDivision?: string }).otherDivision,
         });
       }
     }
@@ -584,6 +587,10 @@ export default function DrawTab({
               country={p.country}
               highlight={manuel}
             />
+            {p.otherDivision && (
+              <span className="p p-sm ml-4" title={`Joga noutro escalão (${p.otherDivision}) — está aqui por ser do mesmo grupo`}
+                style={{ background: "var(--bg-muted, #e5e7eb)", color: "var(--text-3)", borderColor: "transparent" }}>{p.otherDivision}</span>
+            )}
             {/* Seta ↗ kids2 via KidsLinkCtx (CircuitShell — MAJOR/England/…).
                 Sem duplicação com a seta do próprio TournPName (kidsHash):
                 quem tem kidsHash no playersDB (FPGPage) NÃO fornece o ctx, e
@@ -686,7 +693,10 @@ export default function DrawTab({
     </>
   );
 
-  const total = flat.length;
+  // Quem joga outro escalão (só está no grupo) não conta no total.
+  const total = flat.filter((p) => !p.otherDivision).length;
+  const nOther = flat.length - total;
+  const visibleOwn = visibleSorted.filter((p) => !p.otherDivision).length;
   // Draws sintetizados (gerados pelo TournamentDetail a partir do acumulado das
   // rondas anteriores quando a FPG ainda não publicou o oficial) trazem `note`
   // mesmo com groups populados. Mostra-se um banner de aviso antes da tabela e
@@ -696,7 +706,7 @@ export default function DrawTab({
     <>
       {/* Linha de resumo no formato do scorecard: «N jog · N grupos · data». */}
       <div className="lb-info-line flex-wrap" style={{ display: "flex", gap: 4, alignItems: "baseline" }}>
-        <span>{visibleSorted.length !== total ? `${visibleSorted.length}/${total}` : total} jog · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
+        <span>{visibleOwn !== total ? `${visibleOwn}/${total}` : total} jog{nOther ? ` (+${nOther} de outro escalão)` : ""} · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
         {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"

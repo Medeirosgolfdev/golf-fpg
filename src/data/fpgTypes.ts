@@ -37,6 +37,9 @@ export interface Player extends BasePlayer {
   _incomplete?: boolean;  // jogou menos rondas que o máximo disponível
   _roundsPlayed?: number; // rondas válidas jogadas
   _dp?: number;           // display position (atribuído pela ScorecardLB para ranking)
+  /** HCP estimado (sem fonte com o HCP do evento) — mostrado a vermelho, como no Draw. */
+  _hcpEst?: boolean;
+  _hcpNote?: string | null;
   /** Marca jogador português em páginas internacionais (FFG, etc.) — aplica
    *  highlight verde néon na linha. Atribuído pelo adaptador da página. */
   _isPortuguese?: boolean;

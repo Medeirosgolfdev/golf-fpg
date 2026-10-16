@@ -50,6 +50,8 @@ interface PRow {
   club: string;
   fed?: string;
   hcp: number | null;
+  /** HCP estimado (mostrado a vermelho, como no Draw). */
+  hcpEst?: boolean;
   esc: string;
   /** Idade no ano do torneio (player._age, ex: GolfBox) — coluna IDADE. */
   age: number | null;
@@ -72,6 +74,8 @@ interface FlatRow {
   club: string;
   fed?: string;
   hcp: number | null;
+  /** HCP estimado (mostrado a vermelho, como no Draw). */
+  hcpEst?: boolean;
   esc: string;
   age: number | null;
   dob: string | null;
@@ -303,6 +307,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         club: p.club || "",
         fed: (p as any).fed || p.fedCode,
         hcp: p.hcpExact ?? null,
+        hcpEst: p._hcpEst,
         esc: resolveEscFn ? resolveEscFn(p) : "",
         age: (p as any)._age ?? null,
         dob: (p as any).dob ?? null,
@@ -369,6 +374,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
           club: p.club || "",
           fed: (p as any).fed || p.fedCode,
           hcp: p.hcpExact ?? null,
+          hcpEst: p._hcpEst,
           esc: resolveEscFn ? resolveEscFn(p) : "",
           age: (p as any)._age ?? null,
           dob: (p as any).dob ?? null,
