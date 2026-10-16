@@ -454,7 +454,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
             playersDB={EMPTY_PLAYERS_DB}
-            options={withKidsLink(jobScorecardOptions())}
+            options={{ ...withKidsLink(jobScorecardOptions()), shareEvent: `Future Masters Golf ${f.year}`, shareCourse: f.course || "Dothan Country Club" }}
             accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
@@ -524,7 +524,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
             tournament={results}
             escLookup={EMPTY_ESC_LOOKUP}
             playersDB={EMPTY_PLAYERS_DB}
-            options={scOpts}
+            options={{ ...scOpts, shareEvent: f.tournament || `${opts.series} ${f.year}`, shareCourse: f.course || undefined }}
             accShowCols={{ esc: false, fed: false, tee: false, hcp: !!opts.showRatings }}
             accExtraColumns={evoCols}
             accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}

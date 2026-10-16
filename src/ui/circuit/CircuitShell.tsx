@@ -1116,7 +1116,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                     tournament={resultsTourn}
                     // Campo próprio do escalão (≠ do torneio) → na linha de
                     // informação, junto do CR/Slope (14/10/2026).
-                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!resultsTourn.campo && resultsTourn.campo.trim() !== String(cur.course || "").trim() }}
+                    scOptions={{ ...(curDiv.scOptions ?? {}), showCourse: !!resultsTourn.campo && resultsTourn.campo.trim() !== String(cur.course || "").trim(), shareEvent: cur.name, shareCourse: resultsTourn.campo || cur.course }}
                     roundLabels={curDiv.roundLabels}
                     siLabel={curDiv.siLabel}
                     evoCols={curDiv.evoCols}
