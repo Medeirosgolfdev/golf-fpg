@@ -374,7 +374,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
             <button className={`ov-opt-btn${!logoId?" active":""}`} onClick={()=>setLogoId("")}>Sem logo</button>
             {OVERLAY_LOGOS.map(l => (
               <button key={l.id} className={`ov-opt-btn${logoId===l.id?" active":""}`} onClick={()=>setLogoId(l.id)} title={l.label}
-                style={{ background:"#e5e7eb", padding:"2px 6px" }}>
+                style={{ background: l.dark ? "#1f2937" : "#e5e7eb", padding:"2px 6px" }}>
                 <img src={l.src} alt={l.label} style={{ height:26, width:"auto", display:"block" }} />
               </button>
             ))}
