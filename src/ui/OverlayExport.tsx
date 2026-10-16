@@ -19,6 +19,7 @@ import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
 import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
 import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, CAT_ORDER, CAT_COLS, defaultVis } from "./overlay/registry";
+import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize } from "./overlay/logos";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
 export type { OverlayData } from "./overlay/types";
@@ -43,6 +44,10 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const [bgId,        setBgId]        = useState("navy");
   const [customBg,    setCustomBg]    = useState("#1a4a2e");
   const [bgAlpha,     setBgAlpha]     = useState(88);
+  /* Logos (clube/torneio) por cima ou por baixo do desenho — entram no PNG. */
+  const [logoId,   setLogoId]   = useState(() => defaultLogoFor(data.event || ""));
+  const [logoPos,  setLogoPos]  = useState<"top"|"bottom">("bottom");
+  const [logoSize, setLogoSize] = useState<LogoSize>("M");
   /* Dois seletores independentes:
      - theme:    cor do texto PRINCIPAL (jogador, score) — dark=branco / light=preto
      - subTheme: cor do texto SECUNDÁRIO (torneio, campo, data) — dark=branco / light=preto
@@ -128,6 +133,13 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const tc2 = subTheme === "light" ? "#1a1a1a" : "#f0f0f0";
   const tc3 = subTheme === "light" ? "#2a2a2a" : "#e0e0e0";
   const tc4 = subTheme === "light" ? "#3a3a3a" : "#c8c8c8";
+
+  /* Logo escolhido: altura fixa, largura natural (nunca alarga o cartão). */
+  const logo = OVERLAY_LOGOS.find(l => l.id === logoId);
+  const logoImg = logo ? (
+    <img src={logo.src} alt="" style={{ display:"block", height:LOGO_HEIGHTS[logoSize], width:"auto", maxWidth:"100%",
+      objectFit:"contain", margin: logoPos==="top" ? "0 auto 6px" : "6px auto 0" }} />
+  ) : null;
 
   const checkerBg: React.CSSProperties = {
     backgroundImage: "linear-gradient(45deg,#ccc 25%,transparent 25%),linear-gradient(-45deg,#ccc 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ccc 75%),linear-gradient(-45deg,transparent 75%,#ccc 75%)",
@@ -322,6 +334,27 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
             </div>
           )}
 
+          <div className="ov-section-label" style={{ marginTop:4 }}>Logos</div>
+          <div style={{ display:"flex", flexWrap:"wrap", alignItems:"center", gap:5, marginBottom:8 }}>
+            <button className={`ov-opt-btn${!logoId?" active":""}`} onClick={()=>setLogoId("")}>Sem logo</button>
+            {OVERLAY_LOGOS.map(l => (
+              <button key={l.id} className={`ov-opt-btn${logoId===l.id?" active":""}`} onClick={()=>setLogoId(l.id)} title={l.label}
+                style={{ background:"#e5e7eb", padding:"2px 6px" }}>
+                <img src={l.src} alt={l.label} style={{ height:26, width:"auto", display:"block" }} />
+              </button>
+            ))}
+            {logoId && <>
+              <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
+              {(["top","bottom"] as const).map(p => (
+                <button key={p} className={`ov-opt-btn${logoPos===p?" active":""}`} onClick={()=>setLogoPos(p)}>{p==="top"?"Em cima":"Em baixo"}</button>
+              ))}
+              <span style={{ width:1, height:18, background:"rgba(128,128,128,.2)", margin:"0 2px" }} />
+              {(Object.keys(LOGO_HEIGHTS) as LogoSize[]).map(z => (
+                <button key={z} className={`ov-opt-btn${logoSize===z?" active":""}`} onClick={()=>setLogoSize(z)}>{z}</button>
+              ))}
+            </>}
+          </div>
+
           <div className="ov-section-label" style={{ marginTop:4 }}>Preset</div>
           <div style={{ display:"flex", flexWrap:"wrap", gap:5, marginBottom:8 }}>
             {VIS_PRESETS.map(p => (
@@ -376,7 +409,9 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                           verticais ficam como estão (a coluna é estreita de mais). */}
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
                         width: x.needsHoles && vis.holeScores && x.cat !== CAT_COLS ? "min-content" : undefined }}>
+                        {logo && logoPos==="top" && logoImg}
                         <x.C d={dd} v={vis} s={stats} bg={bgColor} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={bgAlpha/100} />
+                        {logo && logoPos==="bottom" && logoImg}
                       </div>
                     </div>
                   </div>
