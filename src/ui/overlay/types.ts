@@ -59,6 +59,8 @@ export type P = {
   d: DD; v: Vis; s: Stats;
   bg?: string | null;
   tc?: string; tc2?: string; tc3?: string; tc4?: string;
+  /** Cor de destaque (a do painel, na variante para a cor do texto). */
+  ta?: string;
   /** Opacidade dos preenchimentos (0–1), a mesma do fundo: os PNGs vão para
    *  cima de fotografias, por isso nenhum bloco é 100% opaco. */
   fa?: number;

@@ -17,9 +17,9 @@ import React, { useState, useMemo, useRef, useCallback } from "react";
 import { MONTHS_PT } from "../utils/format";
 import { scoreDifferential } from "../utils/whsCalc";
 import type { OverlayData, DD, Vis, StT, Stats } from "./overlay/types";
-import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats } from "./overlay/shared";
+import { FONT_LINK, getFontEmbedCSS, hexToRgba, calcStats, isLightText } from "./overlay/shared";
 import { CellInfoCtx, AccentCtx, Info } from "./overlay/badges";
-import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, MIX_BG_LIGHT, defaultVis, type DesignDef } from "./overlay/registry";
+import { DESIGNS, ALL_TOGGLES, VIS_PRESETS, BG_OPTIONS, ACCENTS, CAT_ORDER, CAT_COLS, MIX_BG, MIX_BG_LIGHT, MIX_ACC, BG_ACC, defaultVis, type DesignDef } from "./overlay/registry";
 import { OVERLAY_LOGOS, LOGO_HEIGHTS, defaultLogoFor, type LogoSize, type OverlayLogo } from "./overlay/logos";
 
 /* Re-export OverlayData para consumidores externos (SimuladorPage, etc). */
@@ -28,7 +28,7 @@ export type { OverlayData } from "./overlay/types";
 const STYLE_KEY = "ov_style";
 type SavedStyle = {
   vis: Vis; bgId: string; customBg: string; bgAlpha: number;
-  theme: "dark"|"light"; subTheme?: "dark"|"light"; accent?: string; logoPos: "top"|"bottom"; logoSize: LogoSize;
+  theme: "dark"|"light"; subTheme?: "dark"|"light"; accent?: string; accentV?: number; logoPos: "top"|"bottom"; logoSize: LogoSize;
 };
 
 /** Logo com altura `h` (no máximo a largura do cartão — nunca o alarga); com
@@ -73,7 +73,8 @@ export function DesignCard({ x, d, v, s, bg, tc, tc2, tc3, tc4, accent = {}, fa 
   return (
     <AccentCtx.Provider value={accent}>
       <CellInfoCtx.Provider value={{ d, par: !!v.holePar && !x.has.includes("holePar"), si: !!v.holeSI && !x.has.includes("holeSI") }}>
-        <x.C d={d} v={v} s={s} bg={bg} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={fa} />
+        <x.C d={d} v={v} s={s} bg={bg} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={fa}
+          ta={(isLightText(tc) ? accent.light : accent.dark) ?? tc} />
       </CellInfoCtx.Provider>
       <ExtraInfo d={d} v={v} s={s} has={x.has} bg={bg} tc={tc} tc3={tc3} />
     </AccentCtx.Provider>
@@ -118,7 +119,8 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
      «Texto» e «Subtítulo» com nomes trocados, e metade do texto não mudava).
      theme "dark" = texto BRANCO (para fundos escuros) · "light" = texto PRETO. */
   const [theme,    setTheme]    = useState<"dark"|"light">(saved.theme ?? "dark");
-  const [accentId, setAccentId] = useState<string>(saved.accent ?? "gold");
+  /* «Auto» por omissão (accentV 2: as escolhas guardadas antes do «Auto» não contam). */
+  const [accentId, setAccentId] = useState<string>(saved.accentV === 2 ? (saved.accent ?? "auto") : "auto");
   /* Fundo branco pede texto preto e vice-versa — o seletor de texto continua a mandar. */
   const pickBg = (id: string) => {
     setBgId(id);
@@ -132,7 +134,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const designRefs = useRef<Record<string, HTMLDivElement|null>>({});
 
   React.useEffect(() => {
-    const st: SavedStyle = { vis, bgId, customBg, bgAlpha, theme, accent: accentId, logoPos, logoSize };
+    const st: SavedStyle = { vis, bgId, customBg, bgAlpha, theme, accent: accentId, accentV: 2, logoPos, logoSize };
     try { localStorage.setItem(STYLE_KEY, JSON.stringify(st)); } catch { /* ignore */ }
   }, [vis, bgId, customBg, bgAlpha, theme, accentId, logoPos, logoSize]);
 
@@ -238,7 +240,13 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   const tc4 = theme === "light" ? "#636a77" : "#bdb8ae";
   /* Cor de destaque (nome do torneio) — variante clara ou escura conforme o texto. */
   const accOpt = ACCENTS.find((a) => a.id === accentId) ?? ACCENTS[0];
-  const accent = { light: accOpt.light, dark: accOpt.dark };
+  /* Destaque de cada cartão: «Auto» = o par do fundo dele (Variado pela ordem;
+     fundos lisos pelo BG_ACC; sem fundo/outra cor → dourado). */
+  const accentFor = (x: DesignDef): { light?: string; dark?: string } => {
+    if (accentId !== "auto") return { light: accOpt.light, dark: accOpt.dark };
+    if (bgId === "mix") return MIX_ACC[DESIGNS.indexOf(x) % MIX_ACC.length];
+    return BG_ACC[bgId] ?? { light: "#f2c14e", dark: "#8a5a00" };
+  };
 
   /* Logo escolhido: altura fixa, largura natural (nunca alarga o cartão). */
   const logo = OVERLAY_LOGOS.find(l => l.id === logoId);
@@ -441,6 +449,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
               <button key={a.id} className={`ov-opt-btn${accentId===a.id?" active":""}`} onClick={()=>setAccentId(a.id)}
                 style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
                 {a.light && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:theme==="light"?a.dark:a.light, border:"1.5px solid rgba(128,128,128,0.3)" }} />}
+                {a.id === "auto" && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:"conic-gradient(#f2c14e,#cfe3a0,#f4b8a8,#8fe0d8,#c7b3ff,#f2c14e)", border:"1.5px solid rgba(128,128,128,0.3)" }} />}
                 <span>{a.label}</span>
               </button>
             ))}
@@ -529,7 +538,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
                       <div ref={el=>{ designRefs.current[x.id]=el; }} style={{ display:"inline-block", color:tc,
                         width: (x.needsHoles && vis.holeScores && x.cat !== CAT_COLS) || x.fit ? "min-content" : undefined }}>
                         {logo && logoPos==="top" && logoImg}
-                        <DesignCard x={x} d={dd} v={vis} s={stats} bg={bgFor(x)} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} accent={accent} fa={bgAlpha/100} />
+                        <DesignCard x={x} d={dd} v={vis} s={stats} bg={bgFor(x)} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} accent={accentFor(x)} fa={bgAlpha/100} />
                         {logo && logoPos==="bottom" && logoImg}
                       </div>
                     </div>

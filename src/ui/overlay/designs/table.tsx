@@ -3,14 +3,14 @@
  * V15 B&W Card, V28 Full Table, V31 To-Par Cumulat., V32 College Red,
  * V34 Clean White, V35 Accent Bar, V14 Compact Table, V16 Light Card, V17 Glass Card.
  */
-import { II, OS, BN, SG, TS, vpC, vpCd, fillA, ink, isLightText } from "../shared";
+import { II, OS, BN, SG, TS, vpC, vpCd, fillA, ink, isLightText, onColor } from "../shared";
 import { SC, SCL, TpBadge, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 void TpBadge;
 
 /* V14 · COMPACT TABLE */
-export function V14({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+export function V14({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   /* W tem de ser >= sz (24) para evitar overlap dos badges nos bordos. */
   const is18 = d.scores.length >= 18; const W = 26;
   return (
@@ -23,7 +23,7 @@ export function V14({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
       <div style={{ marginBottom:4 }}><Info d={d} v={v} tc={tc} tc3={tc3} fs={10} fit /></div>
       {v.holeScores && (is18 ? [[0,9,s.sF,s.pF],[9,9,s.sB,s.pB]] as [number,number,number,number][] : [[0,d.scores.length,s.sT,s.pT] as [number,number,number,number]]).map(([off,len,sub,subP],ri) => (
         <div key={off}>
-          <div style={{ display:"flex", background:"rgba(45,106,48,.65)", padding:"2px 0", borderRadius:ri===0?"5px 5px 0 0":0 }}>
+          <div style={{ display:"flex", background:ink(tc, .14), padding:"2px 0", borderRadius:ri===0?"5px 5px 0 0":0 }}>
             {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:800,color:tc2}}>{off+i+1}</div>)}
             <div style={{ width:32, padding:"0 3px", fontSize:10, fontWeight:800, color:tc2 }}>{is18?(ri===0?"Out":"In"):"Tot"}</div>
           </div>
@@ -35,7 +35,7 @@ export function V14({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
           )}
           <div style={{ display:"flex", padding:"2px 0", borderBottom:ri===0&&is18?`1px solid ${ink(tc, .07)}`:"none" }}>
             {d.scores.slice(off,off+len).map((sc,i) => <div key={i} style={{width:W,display:"flex",justifyContent:"center"}}><SC sc={sc} par={d.par[off+i]} h={off+i} sz={24} /></div>)}
-            <div style={{ width:32, padding:"0 3px", fontFamily:OS, fontSize:18, fontWeight:900, color:tc, display:"flex", alignItems:"center" }}>{sub}</div>
+            <div style={{ width:32, padding:"0 3px", fontFamily:OS, fontSize:18, fontWeight:900, color:ta, display:"flex", alignItems:"center" }}>{sub}</div>
           </div>
           {ri===0&&is18 && <div style={{height:3}} />}
         </div>
@@ -142,7 +142,7 @@ export function V16({ d, v, s, fa }: P) {
 }
 
 /* V17 · GLASS CARD — W >= sz (26 >= 22) garante que nada se sobrepoe. */
-export function V17({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+export function V17({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   const is18 = d.scores.length >= 18; const W = 26;
   return (
     <div style={{ fontFamily:II, display:"inline-block", padding:"3px 6px 4px", background:bg||"rgba(0,0,0,.75)", borderRadius:10, color:tc, border:`1px solid ${ink(tc, .1)}`, textShadow:TS }}>
@@ -152,10 +152,10 @@ export function V17({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
         const subP = d.par.slice(off,off+cnt).reduce((a,b)=>a+b,0);
         return (
           <div key={off} style={{ marginBottom:ri===0&&is18?2:0 }}>
-            <div style={{ display:"flex", background:"rgba(45,106,48,.75)", borderRadius:ri===0?"6px 6px 0 0":0, padding:"3px 0" }}>
-              <div style={{ width:46, padding:"0 6px", fontWeight:900, fontSize:11, color:"#fff" }}>Hole</div>
-              {d.par.slice(off,off+cnt).map((_,i) => <div key={i} style={{width:W,textAlign:"center",fontWeight:800,fontSize:11,color:"#fff"}}>{off+i+1}</div>)}
-              <div style={{ width:34, textAlign:"center", fontWeight:900, fontSize:11, color:"#fff" }}>{label}</div>
+            <div style={{ display:"flex", background:ink(tc, .14), borderTop:`2px solid ${ta}`, borderRadius:ri===0?"6px 6px 0 0":0, padding:"3px 0" }}>
+              <div style={{ width:46, padding:"0 6px", fontWeight:900, fontSize:11, color:tc }}>Hole</div>
+              {d.par.slice(off,off+cnt).map((_,i) => <div key={i} style={{width:W,textAlign:"center",fontWeight:800,fontSize:11,color:tc}}>{off+i+1}</div>)}
+              <div style={{ width:34, textAlign:"center", fontWeight:900, fontSize:11, color:tc }}>{label}</div>
             </div>
             {v.holeSI && (
               <div style={{ display:"flex", padding:"1px 0", background:ink(tc, .04) }}>
@@ -193,9 +193,9 @@ export function V17({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 }
 
 /* V28 · FULL TABLE — scorecard completo estilo Taylor McCormick/Grandhall. */
-export function V28({ d, v, s, fa, bg, tc="white", tc2, tc3 }: P) {
+export function V28({ d, v, s, fa, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   const is18 = d.scores.length >= 18; const W = 26;
-  const accent = "#e87722";
+  const accent = ta;   // barras no destaque do cartão (o laranja fixo não combinava)
   return (
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.88)", borderRadius:8, overflow:"hidden", textShadow:TS }}>
       {((v.player&&d.player)||(v.event&&d.event)||v.round||(v.position&&d.position)) && (
@@ -213,9 +213,9 @@ export function V28({ d, v, s, fa, bg, tc="white", tc2, tc3 }: P) {
       {v.holeScores && (is18 ? [[0,9,s.sF,s.pF,"FRONT"],[9,9,s.sB,s.pB,"BACK"]] as [number,number,number,number,string][] : [[0,d.scores.length,s.sT,s.pT,"TOT"] as [number,number,number,number,string]]).map(([off,len,sub,subP,lbl],ri) => (
         <div key={off}>
           <div style={{ display:"flex", background:fillA(accent, fa), padding:"2px 0" }}>
-            <div style={{ width:36, fontSize:8, fontWeight:800, color:"#fff", letterSpacing:1, display:"flex", alignItems:"center", paddingLeft:4 }}>HOLE</div>
-            {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:800,color:"#fff"}}>{off+i+1}</div>)}
-            <div style={{ width:30, textAlign:"center", fontSize:8, fontWeight:800, color:"#fff", letterSpacing:1, display:"flex", alignItems:"center", justifyContent:"center" }}>{lbl}</div>
+            <div style={{ width:36, fontSize:8, fontWeight:800, color:onColor(accent), letterSpacing:1, display:"flex", alignItems:"center", paddingLeft:4 }}>HOLE</div>
+            {Array.from({length:len},(_,i) => <div key={i} style={{width:W,textAlign:"center",fontSize:10,fontWeight:800,color:onColor(accent)}}>{off+i+1}</div>)}
+            <div style={{ width:30, textAlign:"center", fontSize:8, fontWeight:800, color:onColor(accent), letterSpacing:1, display:"flex", alignItems:"center", justifyContent:"center" }}>{lbl}</div>
           </div>
           {v.holePar && (
             <div style={{ display:"flex", padding:"2px 0", background:ink(tc, .06) }}>
@@ -337,7 +337,7 @@ export function V32({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 }
 
 /* V34 · CLEAN WHITE — Estilo PGA/CBS broadcast, fundo branco puro. */
-export function V34({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V34({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const isDark = isLightText(tc);
   const bgF = bg || (isDark ? "#1a1e2a" : "#fff");
@@ -350,7 +350,7 @@ export function V34({ d, v, s, fa, bg, tc="white", tc3 }: P) {
   const cw = 28; const hw = 36;
   return (
     <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:6, overflow:"hidden", border:isDark?"1px solid #333":"1px solid #ddd" }}>
-      <div style={{ padding:"6px 10px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:8 }}>
+      <div style={{ padding:"6px 10px", display:"flex", justifyContent:"space-between", alignItems:"center", gap:8, borderBottom:`3px solid ${ta}` }}>
         <div style={{ flex:1, minWidth:0 }}>
           {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:22, letterSpacing:1 }}>{d.player.toUpperCase()}</div>}
           <Info d={d} v={v} tc={tx} tc3={tc3||tx3} fs={10} fit />
@@ -391,10 +391,10 @@ export function V34({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 }
 
 /* V35 · ACCENT BAR — Barra colorida no topo, resto branco. */
-export function V35({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V35({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const isDark = isLightText(tc);
-  const accent = "#1a5632";
+  const accent = ta;   // «Accent Bar»: a barra é o destaque do cartão
   const bgF = bg || (isDark ? "#1a1e2a" : "#fff");
   const tx = tc;
   const tx3 = isDark ? "#a3b1c6" : "#777";
@@ -405,12 +405,12 @@ export function V35({ d, v, s, fa, bg, tc="white", tc3 }: P) {
     <div style={{ fontFamily:SG, display:"inline-block", background:bgF ?? undefined, color:tx, borderRadius:6, overflow:"hidden" }}>
       <div style={{ background:fillA(accent, fa), padding:"6px 10px", display:"flex", justifyContent:"space-between", alignItems:"center" }}>
         <div>
-          {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:20, letterSpacing:1.5, color:"#fff" }}>{d.player.toUpperCase()}</div>}
-          <Info d={d} v={v} keys={["event", "round"]} tc="#ffffff" tc3="rgba(255,255,255,.75)" fs={9} />
+          {v.player&&d.player && <div style={{ fontFamily:BN, fontSize:20, letterSpacing:1.5, color:onColor(accent) }}>{d.player.toUpperCase()}</div>}
+          <Info d={d} v={v} keys={["event", "round"]} tc={onColor(accent)} tc3={onColor(accent)} fs={9} />
         </div>
         <div style={{ display:"flex", alignItems:"baseline", gap:4 }}>
-          <span style={{ fontFamily:BN, fontSize:34, color:"#fff" }}>{s.sT}</span>
-          <span style={{ fontSize:14, fontWeight:700, color:"rgba(255,255,255,.85)" }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontFamily:BN, fontSize:34, color:onColor(accent) }}>{s.sT}</span>
+          <span style={{ fontSize:14, fontWeight:700, color:onColor(accent), opacity:.85 }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
       {v.holeScores && (is18 ? [[0,9,"Out",s.sF],[9,9,"In",s.sB]] as [number,number,string,number][] : [[0,d.scores.length,"Tot",s.sT] as [number,number,string,number]]).map(([off,len,lbl,sub]) => (

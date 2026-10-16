@@ -24,14 +24,14 @@ export function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 }
 
 /* V2 · STRIP */
-export function V2({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V2({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"center", gap:6, padding:"4px 10px", background:bg||"rgba(0,0,0,.78)", color:tc, textShadow:TS }}>
       <div className="u-col-flex2">
         {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:18, fontWeight:700 }}>{d.player.toUpperCase()}</div>}
         <div style={{ minWidth:170, maxWidth:220 }}><Info d={d} v={v} tc={tc} tc3={tc3} fs={10} st={v.stats ? s.st : null} /></div>
       </div>
-      <div style={{ width:1, background:ink(tc, .15), alignSelf:"stretch" }} />
+      <div style={{ width:2, background:ta, opacity:.7, alignSelf:"stretch", borderRadius:1 }} />
       <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
         <span style={{ fontFamily:OS, fontSize:40, fontWeight:900, lineHeight:1, color:tc }}>{s.sT}</span>
         <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
@@ -41,7 +41,7 @@ export function V2({ d, v, s, bg, tc="white", tc3 }: P) {
 }
 
 /* V3 · FRONT/BACK */
-export function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+export function V3({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const Half = ({ lbl, score, vpar }: { lbl:string; score:number; vpar:number }) => (
     <div style={{ display:"flex", alignItems:"center", padding:"3px 8px", gap:5 }}>
@@ -63,7 +63,7 @@ export function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
         <Half lbl="BACK" score={s.sB} vpar={s.vpB} />
         <div style={{ height:1, background:ink(tc, .2) }} />
       </>}
-      <div style={{ display:"flex", alignItems:"center", padding:"3px 8px", gap:5, background:ink(tc, .07) }}>
+      <div style={{ display:"flex", alignItems:"center", padding:"3px 8px 3px 5px", gap:5, background:ink(tc, .07), borderLeft:`3px solid ${ta}` }}>
         <span style={{ fontSize:10, fontWeight:700, letterSpacing:1, color:tc2, minWidth:40 }}>TOTAL</span>
         <span style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, color:tc, flex:1 }}>{s.sT}</span>
         <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
@@ -74,12 +74,12 @@ export function V3({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
 }
 
 /* V4 · NEON RING */
-export function V4({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V4({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   return (
     <div style={{ fontFamily:II, width:180, color:tc, textAlign:"center", background:bg ?? undefined, padding:"3px 6px", borderRadius:10, textShadow:TS }}>
       {v.player&&d.player && <div style={{ fontFamily:OS, fontSize:16, fontWeight:700, marginTop:2 }}>{d.player.toUpperCase()}</div>}
       <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={10} align="center" />
-      <div style={{ margin:"4px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${vpC(s.vpT, tc)}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
+      <div style={{ margin:"4px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${s.vpT < 0 ? "#dc2626" : ta}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
         <div style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1, letterSpacing:-1, color:tc }}>{s.sT}</div>
         <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
       </div>
@@ -89,7 +89,7 @@ export function V4({ d, v, s, bg, tc="white", tc3 }: P) {
 }
 
 /* V23 · BROADCAST — Barra de TV, nome a esquerda, front·back·total à direita. */
-export function V23({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+export function V23({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
     <div style={{ fontFamily:II, display:"inline-flex", alignItems:"stretch", background:bg||"rgba(15,30,60,.92)", color:tc, overflow:"hidden", borderRadius:6, textShadow:TS }}>
@@ -110,7 +110,7 @@ export function V23({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
             </div>
           </>
         )}
-        <div style={{ padding:"4px 12px", textAlign:"center", background:ink(tc, .07) }}>
+        <div style={{ padding:"4px 12px", textAlign:"center", background:ink(tc, .07), borderTop:`3px solid ${ta}` }}>
           <div style={{ fontFamily:OS, fontSize:28, fontWeight:900, lineHeight:1 }}>{s.sT}</div>
           <div style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT, tc), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
         </div>

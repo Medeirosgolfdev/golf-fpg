@@ -3,13 +3,13 @@
  * V45 PGA Broadcast, V46 College Poster, V47 PGA Tour U,
  * V29 Tour Classic, V38 PGA Americas, V30 Korn Ferry.
  */
-import { II, OS, LO, BN, SG, TS, fillA, ink, panel, isLightText } from "../shared";
+import { II, OS, LO, BN, SG, TS, fillA, ink, panel, isLightText, onColor } from "../shared";
 import { SC, SCL, SCO, SCA, TpBadge, StatsRow, Info } from "../badges";
 import type { P } from "../types";
 
 /* V29 · TOUR CLASSIC — Estilo PGA Tour Americas / Auburn.
    Duas linhas de scores com hole numbers, score GRANDE à direita, nome + evento em baixo. */
-export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V29({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
     /* O fundo envolve TUDO — o texto por baixo, sem fundo, não se lia sobre fotos claras. */
@@ -38,7 +38,8 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
           </div>
         )}
       </div>
-      <div style={{ fontFamily:II, marginTop:6 }}>
+      {/* Filete no destaque a marcar o bloco do nome/info */}
+      <div style={{ fontFamily:II, marginTop:6, borderLeft:`3px solid ${ta}`, paddingLeft:8 }}>
         {v.player&&d.player && <div style={{ fontSize:13, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase", color:tc }}>{d.player}</div>}
         <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} upper fit st={v.stats ? s.st : null} mt={1} />
       </div>
@@ -48,9 +49,10 @@ export function V29({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V30 · KORN FERRY — Estilo Korn Ferry Tour.
    Barra de accent com nome do jogador, round + to-par, score grande à direita. */
-export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V30({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const accent = "#047857";
+  /* Barra do nome no destaque do cartão (era verde fixo — não combinava com o fundo) */
+  const accent = ta;
   const isDark = isLightText(tc);
   return (
     <div style={{ fontFamily:SG, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.85)", borderRadius:10, overflow:"hidden", textShadow:isDark?TS:"none" }}>
@@ -58,7 +60,7 @@ export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
         <div style={{ flex:1, padding:"6px 10px", display:"flex", flexDirection:"column", justifyContent:"center" }}>
           {v.player&&d.player && (
             <div style={{ display:"inline-block" }}>
-              <span style={{ fontFamily:BN, background:fillA(accent, fa), padding:"2px 10px", fontSize:18, letterSpacing:1.5, color:"#fff" }}>{d.player.toUpperCase()}</span>
+              <span style={{ fontFamily:BN, background:fillA(accent, fa), padding:"2px 10px", fontSize:18, letterSpacing:1.5, color:onColor(accent) }}>{d.player.toUpperCase()}</span>
             </div>
           )}
           {v.round && (
@@ -90,7 +92,7 @@ export function V30({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 
 /* V38 · PGA AMERICAS — Estilo PGA Tour Americas.
    Transparente. Nome GRANDE em cima, hole numbers + 2 filas de circles, score ENORME à direita. */
-export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V38({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   /* Score fontSize compacto: 18H 80px (~altura 2 filas circles 28+28+gap) vs 9H 56px */
   const scoreFs = is18 ? 80 : 56;
@@ -135,7 +137,7 @@ export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
       )}
       {((v.round && d.round) || (v.position && d.position)) && (
         <div style={{ marginTop:6, display:"flex", gap:4, fontSize:10, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase" }}>
-          {v.round && d.round > 0 && <span style={{ background:fillA("#dc2626", fa), padding:"2px 8px", color:"#fff" }}>R{d.round}</span>}
+          {v.round && d.round > 0 && <span style={{ background:fillA(ta, fa), padding:"2px 8px", color:onColor(ta) }}>R{d.round}</span>}
           {v.position && d.position && <span style={{ background:ink(tc, .15), padding:"2px 8px", color:tc }}>POS {d.position}</span>}
         </div>
       )}
@@ -146,7 +148,7 @@ export function V38({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 
 /* V45 · PGA BROADCAST — Estilo @pgatour Min Woo Lee / Houston Open.
    Score ENORME a esquerda + metadata empilhada a direita, blocos buracos com fundo. */
-export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V45({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const hasMeta = (v.player&&d.player) || (v.event&&d.event) || (v.course&&d.course) || v.round || (v.date&&d.date) || (v.position&&d.position) || v.hiCh || v.sd;
   return (
@@ -166,7 +168,7 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
               <div style={{ fontFamily: LO, fontSize: 18, fontWeight: 700, fontStyle: "italic", letterSpacing: .3 }}>{d.player}</div>
             )}
             {v.event && d.event && (
-              <div style={{ background: fillA("#dc2626", fa), padding: "3px 10px", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: "#fff", textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.event}</div>
+              <div style={{ background: fillA(ta, fa), padding: "3px 10px", fontSize: 10, fontWeight: 800, letterSpacing: 1.5, color: onColor(ta), textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{d.event}{v.division && d.division ? <span style={{ fontWeight: 600, opacity: .8 }}>{" · "}{d.division}</span> : null}</div>
             )}
             {(v.course || v.tee || v.teeDist) && (v.course&&d.course || v.tee&&d.tee || v.teeDist&&d.teeDist) && (
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{[v.course&&d.course, v.tee&&d.tee, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
@@ -213,7 +215,7 @@ export function V45({ d, v, s, fa, bg, tc="white", tc3 }: P) {
 
 /* V46 · COLLEGE POSTER — Estilo @auburngolf / Jackson Koivun.
    2 filas de circles outline com separador, score ENORME à direita com badge em baixo. */
-export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V46({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const scoreFs = is18 ? 100 : 78;
   return (
@@ -234,7 +236,7 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
                   {d.scores.slice(off, off + len).map((sc, i) => <SCO key={i} sc={sc} par={d.par[off + i]} h={off + i} sz={36} />)}
                 </div>
                 {ri === 0 && is18 && (
-                  <div style={{ height: 2, background: ink(tc, .35), margin: "4px 0" }} />
+                  <div style={{ height: 2, background: ta, opacity: .7, margin: "4px 0" }} />
                 )}
                 {is18 && ri === 1 && (
                   <div style={{ display: "flex", gap: 3, marginTop: 1 }}>
@@ -268,10 +270,11 @@ export function V46({ d, v, s, bg, tc="white", tc3 }: P) {
 
 /* V47 · PGA TOUR U — Estilo @pgatouru David Ford / Phichaksn Maichon.
    Nome ENORME, barra accent, circles com accent color, score enorme em baixo. */
-export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V47({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
-  const accent = "#e87722";
-  const accentBar = "#3b1f7e";
+  /* Números e contornos no destaque do cartão; a barra da info é um painel
+     neutro (o roxo/laranja fixos não combinavam com fundo nenhum). */
+  const accent = ta;
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, padding: "4px 6px" }}>
       {/* Nome — HUGE (last name dominante) */}
@@ -293,11 +296,10 @@ export function V47({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           <TpBadge vp={s.vpT} sz={18} />
         </div>
       </div>
-      {/* Info bar roxo — wordBreak garante que texto longo quebra para multi-linhas. */}
+      {/* Barra da info: painel neutro com o filete no destaque. */}
       {((v.event && d.event) || v.round || (v.course && d.course) || (v.tee && d.tee) || (v.teeDist && d.teeDist) || (v.position && d.position)) && (
-        /* Barra roxa fixa: texto sempre branco */
-        <div style={{ background: fillA(accentBar, fa), padding: "3px 10px 4px", marginBottom: 4 }}>
-          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "position"]} tc="#ffffff" tc3="rgba(255,255,255,.8)" fs={9} upper fit />
+        <div style={{ background: panel(tc, (fa ?? .88) * .3), borderLeft: `3px solid ${accent}`, padding: "3px 10px 4px", marginBottom: 4 }}>
+          <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist", "position"]} tc={tc} tc3={tc3} fs={9} upper fit />
         </div>
       )}
       {/* Score circles 2×9 com accent color */}

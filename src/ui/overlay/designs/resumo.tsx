@@ -21,7 +21,7 @@ const dCol = (d: number) => (d < 0 ? "#22c55e" : d > 0 ? "#f87171" : "inherit");
 const fmtD = (d: number) => (d > 0 ? `+${d}` : d < 0 ? `${d}` : "=");
 
 /* V50 · RESUMO DO TORNEIO — total, posição e cada volta numa linha. */
-export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
+export function V50({ d, v, bg, tc = "white", ta = tc, tc3, fa }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   /* «Evolução» desligada: sem realce da melhor volta — só os scores. */
@@ -40,12 +40,12 @@ export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
       <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
         {rs.map((r) => (
           <div key={r.round} style={{ display: "flex", alignItems: "baseline", gap: 10, padding: "3px 8px", borderRadius: 6,
-            background: r.gross === best ? ink(tc, (fa ?? .88) * .18) : undefined }}>
+            background: r.gross === best ? ink(tc, (fa ?? .88) * .14) : undefined, borderLeft: `3px solid ${r.gross === best ? ta : "transparent"}` }}>
             <span style={{ fontFamily: OS, fontSize: 13, fontWeight: 700, color: tc3, width: 22 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 26, lineHeight: 1, width: 34 }}>{r.gross}</span>
             <span style={{ fontSize: 13, fontWeight: 800, color: vpC(r.toPar, tc), width: 34 }}>{fmtToPar(r.toPar)}</span>
             {v.date && r.date && <span style={{ fontSize: 10, color: tc3, whiteSpace: "nowrap" }}>{r.date}</span>}
-            {r.gross === best && <span style={{ fontSize: 11 }}>★</span>}
+            {r.gross === best && <span style={{ fontSize: 11, color: ta }}>★</span>}
           </div>
         ))}
       </div>
@@ -56,7 +56,7 @@ export function V50({ d, v, bg, tc = "white", tc3, fa }: P) {
 
 /* V51 · VOLTAS LADO A LADO — buraco a buraco, uma linha por volta; com 2+
    voltas, a linha Δ mostra a diferença da última para a anterior. */
-export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
+export function V51({ d, v, bg, tc = "white", ta = tc, tc3, fa }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const nh = rs[0].scores.length;
@@ -86,7 +86,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
           </div>
           {rs.map((r) => (
             <div key={r.round} style={{ display: "flex", gap: 2, alignItems: "center", marginTop: 2 }}>
-              <span style={{ width: LW, fontFamily: OS, fontSize: 11, fontWeight: 700, color: tc3 }}>R{r.round}</span>
+              <span style={{ width: LW, fontFamily: OS, fontSize: 11, fontWeight: 700, color: ta }}>R{r.round}</span>
               {r.scores.slice(off, off + len).map((sc, i) => (
                 <span key={i} style={{ width: W, display: "flex", justifyContent: "center" }}><SC sc={sc} par={r.par[off + i]} h={off + i} sz={SZ} /></span>
               ))}
@@ -113,7 +113,7 @@ export function V51({ d, v, bg, tc = "white", tc3, fa }: P) {
 }
 
 /* V52 · EVOLUÇÃO — «85 → 80», a melhoria em pancadas, total e posição. */
-export function V52({ d, v, bg, tc = "white", tc3 }: P) {
+export function V52({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const a = rs[0], b = rs[rs.length - 1];
@@ -131,7 +131,7 @@ export function V52({ d, v, bg, tc = "white", tc3 }: P) {
           const big = v.evolution && i === rs.length - 1;
           return (
             <span key={r.round} style={{ display: "inline-flex", alignItems: "flex-end", gap: 8 }}>
-              {v.evolution && i > 0 && <span style={{ fontSize: 22, color: tc3, paddingBottom: 22 }}>→</span>}
+              {v.evolution && i > 0 && <span style={{ fontSize: 22, color: ta, paddingBottom: 22 }}>→</span>}
               <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center" }}>
                 <span style={{ fontFamily: BN, fontSize: big ? 64 : v.evolution ? 44 : 52, lineHeight: .9, opacity: !v.evolution || big ? 1 : .75 }}>{r.gross}</span>
                 <span style={{ fontFamily: OS, fontSize: 11, fontWeight: 700, color: tc3 }}>R{r.round}</span>
@@ -208,7 +208,7 @@ export function V53({ d, v, fa }: P) {
 }
 
 /* V54 · POSIÇÃO — a classificação em grande («9º de 42»), o total e as voltas. */
-export function V54({ d, v, bg, tc = "white", tc3 }: P) {
+export function V54({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const sp = v.position ? splitPos(d.position) : null;
@@ -218,7 +218,7 @@ export function V54({ d, v, bg, tc = "white", tc3 }: P) {
       <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={10} upper align="center" fit />
       {sp ? (
         <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 6, marginTop: 4 }}>
-          <span style={{ fontFamily: BN, fontSize: 92, lineHeight: .85 }}>{sp.pos}</span>
+          <span style={{ fontFamily: BN, fontSize: 92, lineHeight: .85, color: ta }}>{sp.pos}</span>
           {sp.of && <span style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, color: tc3 }}>de {sp.of}</span>}
         </div>
       ) : null}
@@ -242,7 +242,7 @@ export function V54({ d, v, bg, tc = "white", tc3 }: P) {
 }
 
 /* V55 · BARRAS — uma barra por volta, do tamanho do resultado acima do par. */
-export function V55({ d, v, bg, tc = "white", tc3 }: P) {
+export function V55({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const lo = Math.min(0, ...rs.map((r) => r.toPar)), hi = Math.max(1, ...rs.map((r) => r.toPar));
@@ -267,7 +267,7 @@ export function V55({ d, v, bg, tc = "white", tc3 }: P) {
             <div key={r.round} style={{ display: "flex", alignItems: "center", gap: 6 }}>
               <span style={{ fontFamily: OS, fontSize: 12, fontWeight: 700, color: tc3, width: 22 }}>R{r.round}</span>
               <span style={{ width: W, display: "flex" }}>
-                <span style={{ width: w, height: 18, borderRadius: 4, background: r.toPar < 0 ? "rgba(220,38,38,.75)" : ink(tc, r.gross === best ? .55 : .25) }} />
+                <span style={{ width: w, height: 18, borderRadius: 4, background: r.toPar < 0 ? "rgba(220,38,38,.75)" : (r.gross === best ? ta : ink(tc, .25)) }} />
               </span>
               <span style={{ fontFamily: BN, fontSize: 22, lineHeight: 1, width: 30 }}>{r.gross}</span>
               <span style={{ fontSize: 12, fontWeight: 800, color: vpC(r.toPar, tc), width: 30 }}>{fmtToPar(r.toPar)}</span>
@@ -281,7 +281,7 @@ export function V55({ d, v, bg, tc = "white", tc3 }: P) {
 }
 
 /* V57 · STATS POR VOLTA — birdies, pares, bogeys e duplos+ de cada volta. */
-export function V57({ d, v, bg, tc = "white", tc3 }: P) {
+export function V57({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const cols = [
@@ -298,7 +298,7 @@ export function V57({ d, v, bg, tc = "white", tc3 }: P) {
       {v.player && d.player && <div style={{ fontFamily: OS, fontSize: 17, fontWeight: 700, letterSpacing: 1, textTransform: "uppercase" }}>{d.player}</div>}
       <Info d={d} v={v} keys={["event"]} tc={tc} tc3={tc3} fs={9} upper fit />
       <div style={{ marginTop: 6 }}>
-        <div style={{ display: "flex", fontSize: 10, fontWeight: 800, color: tc3, borderBottom: `1px solid ${ink(tc, .2)}`, paddingBottom: 2 }}>
+        <div style={{ display: "flex", fontSize: 10, fontWeight: 800, color: tc3, borderBottom: `2px solid ${ta}`, paddingBottom: 2 }}>
           <span style={{ width: 30 }} />
           {cols.map((c) => (
             <span key={c.k} style={{ width: C, display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 3 }}>
@@ -328,11 +328,11 @@ export function V57({ d, v, bg, tc = "white", tc3 }: P) {
 }
 
 /* V58 · FAIXA — compacta: cada volta, o total e a posição numa tira. */
-export function V58({ d, v, bg, tc = "white", tc3 }: P) {
+export function V58({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
   const rs = d.rounds ?? [];
   if (rs.length < 2) return null;
   const sp = v.position ? splitPos(d.position) : null;
-  const sep = <span style={{ width: 1, alignSelf: "stretch", background: ink(tc, .2) }} />;
+  const sep = <span style={{ width: 2, alignSelf: "stretch", background: ta, opacity: .7, borderRadius: 1 }} />;
   return (
     <div style={{ fontFamily: II, display: "inline-block", color: tc, background: bg ?? undefined, borderRadius: 10, padding: "6px 10px" }}>
       {v.player && d.player && <div style={{ fontSize: 13, fontWeight: 800, whiteSpace: "nowrap" }}>{d.player}</div>}

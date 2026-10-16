@@ -46,6 +46,8 @@ export const isLightText = (tc?: string) => {
   const n = parseInt(m[1], 16);
   return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) > 140;
 };
+/** Cor de texto legível POR CIMA de uma cor (ex.: pílula no destaque). */
+export const onColor = (hex: string) => isLightText(hex) ? "#1c1f26" : "#ffffff";
 /** Tinta da cor do texto com transparência — linhas, divisórias, realces. */
 export const ink = (tc: string | undefined, a: number) => isLightText(tc) ? `rgba(255,255,255,${a})` : `rgba(0,0,0,${a})`;
 /** Painel interior por cima do fundo: escurece sob texto branco, clareia sob texto preto. */

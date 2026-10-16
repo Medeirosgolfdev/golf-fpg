@@ -57,7 +57,7 @@ export const DESIGNS: DesignDef[] = [
   /* 🏌️ Hole-in-One — design celebratório para HIO */
   { id:"V48", label:"Ace Celebration", C:V48, needsHoles:true, needsHIO:true, cat:CAT_HIO, has:[] },
   /* ⭐ Pro Tour — estilo PGA Tour / PGA Tour U / College Golf */
-  { id:"V45", label:"PGA Broadcast",  C:V45, needsHoles:true, cat:CAT_PRO, has:["holeScores","stats","course","tee","teeDist","player","hiCh","sd","event","round","date","position"] },
+  { id:"V45", label:"PGA Broadcast",  C:V45, needsHoles:true, cat:CAT_PRO, has:["holeScores","stats","course","tee","teeDist","player","hiCh","sd","event","division","round","date","position"] },
   { id:"V46", label:"College Poster", C:V46, needsHoles:true, cat:CAT_PRO, has:["holeScores","stats","course","tee","teeDist","player","hiCh","sd","event","division","round","date","position"] },
   { id:"V47", label:"PGA Tour U",     C:V47, needsHoles:true, cat:CAT_PRO, has:["holeScores","stats","course","tee","teeDist","player","hiCh","sd","event","division","round","date","position"] },
   { id:"V29", label:"Tour Classic",   C:V29, needsHoles:true, cat:CAT_PRO, has:["holeScores","stats","course","tee","teeDist","player","hiCh","sd","event","division","round","date","position"] },
@@ -160,6 +160,8 @@ export const VIS_PRESETS: { label:string; desc:string; vis:Vis }[] = [
 /** Segunda cor do texto (nome do torneio): variante para texto claro e
  *  para texto escuro. «Sem» = tudo na cor do texto. */
 export const ACCENTS: { id: string; label: string; light?: string; dark?: string }[] = [
+  /* «Auto»: o destaque que combina com o fundo de cada cartão (MIX_ACC / BG_ACC). */
+  { id: "auto",  label: "Auto" },
   { id: "gold",  label: "Dourado", light: "#f2c14e", dark: "#8a5a00" },
   { id: "lime",  label: "Lima",    light: "#b8e26b", dark: "#3f6f12" },
   { id: "coral", label: "Coral",   light: "#ff9f85", dark: "#b23a1a" },
@@ -186,3 +188,28 @@ export const MIX_BG = ["#1c2a44", "#1f3d30", "#46212d", "#262626", "#1c3a46", "#
 /** O mesmo «Variado» para texto ESCURO: tons claros e sóbrios (texto escuro em
  *  fundo escuro parecia transparente). */
 export const MIX_BG_LIGHT = ["#eef1f6", "#e8f1ea", "#f6eaec", "#f1f0ee", "#e6f0f3", "#f4eee4", "#efeaf5", "#edf1e6", "#f6ece4"];
+/** Destaque «Auto» de cada fundo do «Variado» (mesma ordem): `light` para o
+ *  fundo escuro (texto claro), `dark` para o fundo claro (texto escuro).
+ *  Azul→dourado, verde→salva, vinho→rosa, grafite→âmbar, petróleo→água,
+ *  café→areia, ameixa→lilás, musgo→limão, ferrugem→pêssego. */
+export const MIX_ACC: { light: string; dark: string }[] = [
+  { light: "#f2c14e", dark: "#1e3a8a" },
+  { light: "#cfe3a0", dark: "#166534" },
+  { light: "#f4b8a8", dark: "#9f1239" },
+  { light: "#f5a524", dark: "#9a3412" },
+  { light: "#8fe0d8", dark: "#0f5f6e" },
+  { light: "#e8c48a", dark: "#8a5a00" },
+  { light: "#c7b3ff", dark: "#5b21b6" },
+  { light: "#e6dc7a", dark: "#4d5f12" },
+  { light: "#ffc7a1", dark: "#b23a1a" },
+];
+/** Destaque «Auto» dos fundos lisos. */
+export const BG_ACC: Record<string, { light: string; dark: string }> = {
+  black:   { light: "#f5a524", dark: "#9a3412" },
+  navy:    { light: "#f2c14e", dark: "#1e3a8a" },
+  pga:     { light: "#f2c14e", dark: "#1e3a8a" },
+  masters: { light: "#f6d55c", dark: "#166534" },
+  green:   { light: "#cfe3a0", dark: "#166534" },
+  wine:    { light: "#f4b8a8", dark: "#9f1239" },
+  white:   { light: "#f2c14e", dark: "#1e3a8a" },
+};

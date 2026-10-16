@@ -2,13 +2,13 @@
  * Designs COLS — verticais (story format) e colunares.
  * V24 Story, V19 PGA Columns, V21 DP World, V33 College Grid.
  */
-import { II, OS, BN, TS, TS_SCORE, vpC, vpCd, fillA, ink, panel, isLightText } from "../shared";
+import { II, OS, BN, TS, TS_SCORE, vpC, fillA, ink, panel, isLightText, onColor } from "../shared";
 import { SC, TpBadge, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
 /* V19 · PGA COLUMNS — sem barra horizontal */
-export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
+export function V19({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   const maxW = is18 ? 80 : 42;
   return (
@@ -35,9 +35,10 @@ export function V19({ d, v, s, fa, bg, tc="white", tc3 }: P) {
           )}
         </div>
       )}
-      <div style={{ background:fillA("#ffffff", fa), padding:"3px 7px", textAlign:"center", width:"100%" }}>
-        <div style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1, color:"#0d1e38" }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:14, fontWeight:900, color:vpCd(s.vpT), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
+      {/* Faixa do total no destaque do cartão */}
+      <div style={{ background:fillA(ta, fa), padding:"3px 7px", textAlign:"center", width:"100%" }}>
+        <div style={{ fontFamily:OS, fontSize:26, fontWeight:700, lineHeight:1, color:onColor(ta) }}>{s.sT}</div>
+        <div style={{ fontFamily:II, fontSize:14, fontWeight:900, color:onColor(ta), opacity:.8, marginTop:0 }}>{fmtToPar(s.vpT)}</div>
       </div>
       <div style={{ fontFamily:II, padding:"3px 6px 5px", alignSelf:"stretch" }}>
         <Info d={d} v={v} keys={["course", "tee", "teeDist", "position", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={9} align="center" fit st={v.stats ? s.st : null} />
@@ -56,7 +57,7 @@ function V21Col({ scores, pars, tc, off = 0 }: { scores:number[]; pars:number[];
 }
 
 /* V21 · DP WORLD COLUMNS */
-export function V21({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V21({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
     /* maxWidth ~150 (scores são só ~90px, força wrap em ~2 linhas de texto). */
@@ -75,7 +76,7 @@ export function V21({ d, v, s, bg, tc="white", tc3 }: P) {
         <div style={{ display:"flex", alignItems:"flex-start" }}>
           <V21Col scores={d.scores.slice(0,is18?9:d.scores.length)} pars={d.par.slice(0,is18?9:d.par.length)} tc={tc} />
           {is18 && <>
-            <div style={{ width:1, background:ink(tc, .2), margin:"0 8px", alignSelf:"stretch" }} />
+            <div style={{ width:1, background:ta, opacity:.6, margin:"0 8px", alignSelf:"stretch" }} />
             <V21Col scores={d.scores.slice(9)} pars={d.par.slice(9)} tc={tc} off={9} />
           </>}
         </div>
@@ -86,7 +87,7 @@ export function V21({ d, v, s, bg, tc="white", tc3 }: P) {
 }
 
 /* V24 · STORY — formato 9:16, fundo apenas na coluna de scores. */
-export function V24({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V24({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   /* Com fundo escolhido, o fundo envolve tudo (o texto solto não se lia sobre
      fotos claras) e a coluna dos scores fica um tom mais escura. */
@@ -102,7 +103,7 @@ export function V24({ d, v, s, bg, tc="white", tc3 }: P) {
       {v.holeScores && is18 && (
         <div style={{ display:"flex", gap:6, marginTop:4, background:scoreBg, borderRadius:10, padding:"6px 8px" }}>
           {[{off:0,sub:s.sF},{off:9,sub:s.sB}].map(({off,sub},ci) => (
-            <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?`1px solid ${ink(tc, .15)}`:"none", paddingRight:ci===0?6:0 }}>
+            <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2, borderRight:ci===0?`1px solid ${ta}`:"none", paddingRight:ci===0?6:0 }}>
               {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={26} />)}
               <div style={{ fontFamily:II, fontSize:12, fontWeight:900, color:tc3, marginTop:2 }}>{sub}</div>
             </div>
@@ -120,7 +121,7 @@ export function V24({ d, v, s, bg, tc="white", tc3 }: P) {
 }
 
 /* V33 · COLLEGE GRID — Estilo Texas A&M, duas colunas verticais. */
-export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V33({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   const is18 = d.scores.length >= 18;
   return (
     /* maxWidth ~160 (scores ~90px, força wrap do titulo do torneio). */
@@ -131,7 +132,7 @@ export function V33({ d, v, s, bg, tc="white", tc3 }: P) {
           {[{off:0,sub:s.sF,lbl:"FRONT"},{off:9,sub:s.sB,lbl:"BACK"}].map(({off,sub,lbl}) => (
             <div key={off} style={{ display:"flex", flexDirection:"column", alignItems:"center", gap:2 }}>
               {d.scores.slice(off,off+9).map((sc,i) => <SC key={i} sc={sc} par={d.par[off+i]} h={off+i} sz={30} />)}
-              <div style={{ borderTop:`2px solid ${ink(tc, .2)}`, width:"100%", textAlign:"center", paddingTop:3, marginTop:2 }}>
+              <div style={{ borderTop:`2px solid ${ta}`, width:"100%", textAlign:"center", paddingTop:3, marginTop:2 }}>
                 <div style={{ fontFamily:II, fontSize:8, fontWeight:700, letterSpacing:1, color:tc3 }}>{lbl}</div>
                 <div style={{ fontSize:20, fontWeight:900, lineHeight:1 }}>{sub}</div>
               </div>

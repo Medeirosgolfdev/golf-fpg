@@ -533,6 +533,8 @@ export default function DrawTab({
     return list.filter(p => keep.has(`${p.pos}-${p.fed ?? p.nome}`));
   }, [sorted, omFilter, omLookup, pFilter, playersDB]);
 
+  // Buraco de saída: só interessa quando há saídas fora do 1 (shotgun / tee 10).
+  const showHole = flat.some((p) => p.startHole != null && p.startHole !== 1);
   const rows: ScorecardRow[] = useMemo(() => {
     // Separador de grupos: linha mais grossa entre flights quando a ordenação
     // respeita o agrupamento natural (sort por `pos`, `hora` ou `buraco` — rows
@@ -641,14 +643,16 @@ export default function DrawTab({
             <td className="mono fs-10 fw-700" style={{ whiteSpace: "nowrap", textAlign: "center", ...bStyle }}>
               {p.teeTime}
             </td>
-            <td className="fs-11" style={{ textAlign: "center", ...bStyle }}>
-              {p.startHole != null ? `T${p.startHole}` : "–"}
-            </td>
+            {showHole && (
+              <td className="fs-11" style={{ textAlign: "center", ...bStyle }}>
+                {p.startHole != null ? `T${p.startHole}` : "–"}
+              </td>
+            )}
           </>
         ),
       };
     });
-  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc]);
+  }, [visibleSorted, playersDB, teeName, effDate, sortKey, hc.esc, hc.fed, hc.clube, hc.hcp, hc.tee, hc.nasc, showHole]);
 
   if (draw.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -689,7 +693,7 @@ export default function DrawTab({
   const postScorecardHeaderCells = (
     <>
       <SortableHdr k="hora"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Hora</SortableHdr>
-      <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</SortableHdr>
+      {showHole && <SortableHdr k="buraco" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>Buraco</SortableHdr>}
     </>
   );
 
