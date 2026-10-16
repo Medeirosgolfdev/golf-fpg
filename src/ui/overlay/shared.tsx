@@ -131,7 +131,7 @@ export function metaStr(d: DD, flags: Partial<Record<string, boolean>>): string 
 /** Partes da informação da volta, na ordem pedida, só as ligadas e com
  *  valor — o mesmo texto em todos os desenhos. Chaves: event, round,
  *  position, course, tee, teeDist, date, hiCh, sd (e player). */
-export type InfoKey = "player" | "event" | "round" | "position" | "course" | "tee" | "teeDist" | "date" | "hiCh" | "sd";
+export type InfoKey = "player" | "event" | "division" | "round" | "position" | "course" | "tee" | "teeDist" | "date" | "hiCh" | "sd";
 export const INFO_ALL: InfoKey[] = ["event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"];
 export function infoParts(d: DD, v: Vis, keys: InfoKey[] = INFO_ALL, o: { roundWord?: string; posWord?: string } = {}): string[] {
   const out: string[] = [];

@@ -264,9 +264,13 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
   const acc = ta ?? (isLightText(tc) ? ctxAccent.light : ctxAccent.dark) ?? tc;
   const on = (k: InfoKey) => keys.includes(k) && v[k];
   const ev = on("event") && d.event ? d.event : "";
+  /* O escalão anda com o torneio: onde o desenho mostra o torneio, mostra-o a seguir. */
+  const dv = (keys.includes("event") || keys.includes("division")) && v.division && d.division ? d.division : "";
   const rd = on("round") && d.round && !d.rounds ? `R${d.round}` : "";
+  const suffix = [ev ? dv : "", rd].filter(Boolean).join(" · ");
   const course = [on("course") && d.course, on("tee") && d.tee, on("teeDist") && d.teeDist ? `${d.teeDist}m` : ""].filter(Boolean).join(" · ");
   const chips: { l?: string; val: string }[] = [];
+  if (!ev && dv) chips.push({ val: dv });
   if (!ev && rd) chips.push({ val: rd });
   if (on("date") && d.date) chips.push({ val: d.date });
   if (on("position") && d.position) chips.push({ l: "POS", val: d.position });
@@ -282,7 +286,7 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
     <div style={{ ...(fit ? { width: 0, minWidth: "100%" } : {}), textAlign: align, marginTop: mt, display: "flex", flexDirection: "column", gap: 2, lineHeight: 1.3 }}>
       {ev && (
         <div style={{ fontSize: fs + 1, fontWeight: 800, color: acc, ...tt }}>
-          {ev}{rd && <span style={{ fontWeight: 700, color: tc3, opacity: .85, whiteSpace: "nowrap" }}>{"\u00a0\u00a0"}{rd}</span>}
+          {ev}{suffix && <span style={{ fontWeight: 700, color: tc3, opacity: .85, whiteSpace: "nowrap" }}>{"\u00a0\u00a0"}{suffix}</span>}
         </div>
       )}
       {course && <div style={{ fontSize: fs, fontWeight: 600, color: tc3, ...tt }}>{course}</div>}

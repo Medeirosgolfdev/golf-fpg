@@ -11,7 +11,7 @@ import type { DD, Vis } from "../overlay/types";
 
 const par = [4, 4, 5, 3, 4, 4, 5, 3, 4, 5, 4, 4, 4, 3, 4, 4, 3, 5];
 const one: DD = {
-  player: "Manuel Medeiros", event: "Faldo Junior Tour Madeira", round: 1, date: "16 Out 2026", position: "10º",
+  player: "Manuel Medeiros", event: "Faldo Junior Tour Madeira", division: "Boys 11", round: 1, date: "16 Out 2026", position: "10º",
   course: "Santo da Serra", tee: "White", teeDist: 5594, cr: 71, slope: 137,
   par, scores: [5, 4, 9, 3, 6, 4, 5, 4, 5, 6, 5, 5, 5, 3, 4, 4, 3, 5],
   si: [15, 13, 5, 11, 1, 7, 3, 17, 9, 2, 4, 14, 12, 8, 6, 16, 10, 18],
@@ -29,6 +29,7 @@ const P = { bg: "rgba(20,30,50,.88)", tc: "#fff", tc2: "#f0f0f0", tc3: "#e0e0e0"
 const notApplicable = (x: (typeof DESIGNS)[number], key: string) =>
   (["holeScores", "holePar", "holeSI"].includes(key) && !x.needsHoles)
   || (x.needsRounds && ["round", "sd", "stats"].includes(key))
+  || (!x.needsRounds && key === "evolution")
   || (x.needsHIO === true);
 
 describe("opções do «Mostrar» nos PNGs", () => {
