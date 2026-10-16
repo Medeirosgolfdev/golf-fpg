@@ -32,6 +32,11 @@ Regras dos desenhos (revistos todos a 2026-10-16, com uma volta real):
   algarismo (a letra encolhe um pouco se for preciso) — por baixo cortavam o 9.
 - **Nome completo** do jogador da volta (`data.player`); no painel dos torneios
   escolhe-se qualquer jogador que acabou a volta (o Manuel por omissão).
+- **Logos** (`overlay/logos.ts`, ficheiros em `public/img/overlay-logos/`, PNG
+  transparentes recortados): escolhem-se no painel (em cima/em baixo, S/M/L) e
+  entram no PNG; altura fixa, nunca alargam o cartão. `match` escolhe-o à
+  partida pelo nome do torneio (CGSS + Faldo nos torneios Faldo). Para juntar
+  outro logo: pôr o PNG na pasta e uma linha em `OVERLAY_LOGOS`.
 - **Partilha só com o ficheiro** (`navigator.share({ files })`): com `title`, o
   «Copiar» do iPhone copiava o texto e não a imagem.
 
