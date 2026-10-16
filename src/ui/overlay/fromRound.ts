@@ -60,6 +60,11 @@ export function overlayFromRound(
   const parTotal = par.reduce((a, b) => a + b, 0);
   const round = roundNumberOf(t);
   const pos = (p as { _pos?: number })._pos;
+  const field = (p as { _field?: number })._field;
+  /* Escalão: o do jogador/torneio; nos circuitos o `name` da volta É o escalão
+     (o nome do torneio vem à parte em ctx.event). */
+  const division = String(p.escalao || t.escalao || (ctx.event && t.name && t.name !== ctx.event ? t.name : "") || "")
+    .replace(/^\s*\d{4}\s*(\/\/|[-–·|])\s*/, "").trim();   // «2026 // Boys 10-11» → «Boys 10-11»
   return {
     courseName: p.course || (rs as { course?: string } | undefined)?.course || t.campo || ctx.course || "",
     teeName: p.teeName || rs?.teeName || "",
@@ -76,6 +81,7 @@ export function overlayFromRound(
     event: ctx.event || t.name || "",
     round,
     date: roundDate(t, p, round, ctx.date),
-    position: pos && pos < 9999 ? `${pos}º` : "",
+    position: pos && pos < 9999 ? (field ? `${pos}º de ${field}` : `${pos}º`) : "",
+    division,
   };
 }

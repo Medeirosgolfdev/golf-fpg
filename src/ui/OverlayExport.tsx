@@ -51,10 +51,10 @@ function LogoView({ logo, h, style }: { logo: OverlayLogo; h: number; style?: Re
  *  do desenho (width 0 + minWidth 100% — nunca o alarga, o texto quebra). */
 function ExtraInfo({ d, v, s, has, bg, tc, tc3 }: { d: DD; v: Vis; s: Stats; has: string[]; bg: string; tc: string; tc3: string }) {
   const on = (k: string) => !!v[k] && !has.includes(k);
-  const keys = (["event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"] as const).filter(on);
+  const keys = (["event", "division", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"] as const).filter(on);
   const player = on("player") && d.player;
   const stats = on("stats") && !d.rounds;
-  const hasInfo = keys.some((k) => k === "round" ? !d.rounds && d.round : k === "hiCh" ? d.hi != null : k === "sd" ? d.sd != null : k === "teeDist" ? d.teeDist : (d as unknown as Record<string, unknown>)[k]);
+  const hasInfo = keys.some((k) => k === "division" ? !!d.division : k === "round" ? !d.rounds && d.round : k === "hiCh" ? d.hi != null : k === "sd" ? d.sd != null : k === "teeDist" ? d.teeDist : (d as unknown as Record<string, unknown>)[k]);
   if (!player && !hasInfo && !stats) return null;
   return (
     <div style={{ width:0, minWidth:"100%", boxSizing:"border-box", marginTop:4, padding:"4px 8px 5px", borderRadius:8, background:bg, fontFamily:"'Inter',sans-serif", color:tc }}>
@@ -179,6 +179,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
     sd: noHoleData ? (manualSD ?? null) : data.sd,
     is9h: data.is9h, hasHoles: data.hasHoles,
     rounds: data.rounds,
+    division: data.division,
   }), [data, player, event, round, date, position, filledScores, noHoleData, manualSD]);
 
   const stats = useMemo((): Stats => {
@@ -204,13 +205,14 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
   /* Só se mostram as opções que mudam alguma coisa nos desenhos disponíveis
      (no Resumo, «Round», «HI/CH» ou «SD» não faziam nada). Uma opção conta se
      há o dado e se algum desenho o trata ou a linha de info por baixo o mostra. */
-  const EXTRA_KEYS = ["player", "event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd", "stats"];
+  const EXTRA_KEYS = ["player", "event", "division", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd", "stats"];
   const toggleUseful = (k: string): boolean => {
     const holes = available.some(x => x.needsHoles) && !noHoleData;
     if (k === "holeScores") return holes && available.some(x => x.has.includes(k));
     if (k === "holePar" || k === "holeSI") return holes && (k !== "holeSI" || dd.si.some(n => n > 0));
     const hasData =
       k === "round" ? !dd.rounds :
+      k === "division" ? !!dd.division :
       k === "hiCh" ? dd.hi != null :
       k === "sd" ? dd.sd != null :
       k === "course" ? !!dd.course :

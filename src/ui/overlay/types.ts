@@ -13,6 +13,8 @@ export type OverlayData = {
   player: string; event: string; round: number; date: string; position: string;
   /** Torneio completo (Resumo): uma entrada por volta jogada. Só nos desenhos
    *  «Resumo do torneio»; `scores`/`par` do topo são os da última volta. */
+  /** Escalão (ex.: «Boys 11», «Sub 12»). */
+  division?: string;
   rounds?: RoundSum[];
 };
 
@@ -28,6 +30,8 @@ export type DD = {
   meters?: (number | null)[];
   hi: number | null; courseHcp: number | null; sd: number | null;
   is9h: boolean; hasHoles: boolean;
+  /** Escalão (ex.: «Boys 11», «Sub 12»). */
+  division?: string;
   rounds?: RoundSum[];
 };
 

@@ -30,7 +30,7 @@ describe("shareOptions", () => {
     ]);
     const m = o.options.find((x) => x.key === o.defaultKey)!;
     expect(m.data.rounds?.map((r) => [r.round, r.gross, r.toPar])).toEqual([[1, 78, 6], [2, 72, 0]]);
-    expect(m.data.position).toBe("1º");
+    expect(m.data.position).toBe("1º de 2");
     expect(m.data.date).toBe("3 Out – 4 Out 2026");
   });
 });

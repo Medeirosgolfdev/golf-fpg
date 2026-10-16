@@ -30,7 +30,7 @@ export function shareOptionsForRound(t: Tournament, ctx: Ctx = {}, prefix = ""):
     // Posição na volta, com empates (o mesmo gross = a mesma posição).
     let pos = i + 1;
     while (pos > 1 && numGross(done[pos - 2]) === numGross(p)) pos--;
-    const data = overlayFromRound(t, { ...p, _pos: pos } as typeof p, computeRoundSD(p, t.date).sd, ctx);
+    const data = overlayFromRound(t, { ...p, _pos: pos, _field: done.length } as typeof p, computeRoundSD(p, t.date).sd, ctx);
     if (!data) return;
     const key = `${prefix}${p.scoreId || p.name}`;
     const pid = String(p.fed || p.fedCode || p.name).toLowerCase();
@@ -92,7 +92,7 @@ export function shareOptionsForTournament(rounds: Tournament[], ctx: Ctx = {}): 
     options.push({
       key: k,
       label: `Torneio · ${pos}º · ${a.name} — ${sums.map((x) => x.gross).join("+")} = ${total(a)}`,
-      data: { ...last, sd: null, position: `${pos}º`, round: sums.length, rounds: sums,
+      data: { ...last, sd: null, position: `${pos}º de ${ranked.length}`, round: sums.length, rounds: sums,
         date: d0 && d1 && d0 !== d1 ? `${d0.replace(/ \d{4}$/, "")} – ${d1}` : d1 },
     });
     if (!defaultKey && a.manuel) defaultKey = k;
