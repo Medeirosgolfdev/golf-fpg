@@ -1,368 +1,833 @@
 {
   "tournament": "Faldo Junior Tour Madeira",
   "year": 2026,
+  "startDate": "2026-10-16",
+  "endDate": "2026-10-18",
+  "source": "https://www.golfgenius.com/pages/12568228117405011890",
+  "course": "Clube de Golf Santo da Serra | Machico Serras",
   "divisions": [
     {
-      "division": "Boys",
-      "tid": null,
-      "par": null,
-      "parTotal": null,
+      "division": "Boys 16 & Under",
+      "tid": "12568569409800539787",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        352,
+        362,
+        476,
+        185,
+        368,
+        302,
+        460,
+        128,
+        310,
+        474,
+        326,
+        309,
+        279,
+        148,
+        338,
+        247,
+        122,
+        408
+      ],
+      "si": null,
+      "teeName": "White",
       "players": [
         {
-          "pos": "",
-          "name": "Calum Dalby",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": -1.1,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "club": "Denham",
-          "hcpEstimated": true,
-          "birthYearEst": 2006,
-          "birthYearEstMax": 2007,
-          "estNote": "média EGR (Avg. to CR 75,2, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U21 em 2026 (europeangolfrankings.com/players/47527) = 2006–07"
-        },
-        {
-          "pos": "",
-          "name": "Harrison Barnett",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 0.6,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "GolfBox 5388972 (Belgian Intl U14) · 02/07/2026",
-          "dob": "2013-04-21",
-          "club": "Thorpe Hall"
-        },
-        {
-          "pos": "",
+          "pos": "1",
           "name": "Joshua Hockenhull",
           "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": -0.7,
-          "toPar": null,
+          "location": "Prestbury",
+          "detailId": "13158715576706698793",
+          "toPar": -3,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            69
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                5,
+                6,
+                6,
+                2,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                4
+              ],
+              "gross": 69,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11970112680724828036",
           "club": "Prestbury",
+          "hcp": -0.7,
           "hcpEstimated": true,
           "birthYearEst": 2010,
           "birthYearEstMax": 2011,
           "estNote": "média EGR (Avg. to CR 75,84, 8 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/51134) = 2010–11; McGregor U16 e Scottish Boys U16 em 2026, Reid Trophy U14 em 2024 (o Carris U18 foi a jogar acima)"
         },
         {
-          "pos": "",
-          "name": "Leon Brooks",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 3.7,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "dob": "2008-04-14",
-          "club": "Perranporth",
-          "hcpEstimated": true,
-          "estNote": "média EGR (Avg. to CR 82,8, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · médias de 2024; a GolfBox dá 999 (sem HCP)"
-        },
-        {
-          "pos": "",
-          "name": "Alain Messmer",
-          "country": "CH",
-          "location": "CH",
-          "hcp": -1.8,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "GolfBox 5597512 (Zürcher Meisterschaften) · 28/08/2026",
-          "dob": "2010-05-03",
-          "club": "GC Breitenloo"
-        },
-        {
-          "pos": "",
-          "name": "Ralph Barnett",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 4,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "GJG entry list 361 · 17/02/2026",
-          "club": "Thorpe Hall",
-          "birthYearEst": 2011,
-          "estNote": "ano: Global Junior Golf: graduação 2029, escalão 14 · ano: EGR U16 em 2026 (europeangolfrankings.com/players/52436) = 2010–11; jogou o Douglas Johns Trophy U15 em 2026 → 2011"
-        },
-        {
-          "pos": "",
-          "name": "Daniel Hobbs",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 4.3,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "GJG entry list 370 (Loretto Juniors) · 22/06/2026",
-          "club": "Brookmans Park",
-          "birthYearEst": 2008,
-          "birthYearEstMax": 2009,
-          "estNote": "ano: Global Junior Golf: graduação 2026, escalão 18 · ano: EGR U18 em 2026 (europeangolfrankings.com/players/53500) = 2008–09 (a Global Junior Golf dá graduação 2026 → 2008)"
-        },
-        {
-          "pos": "",
-          "name": "Joseph Thorne",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 1.9,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "club": "Hayling",
-          "hcpEstimated": true,
-          "birthYearEst": 2008,
-          "birthYearEstMax": 2009,
-          "estNote": "média EGR (Avg. to CR 79,9, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2024 tinha handicap de jogo 9 (open Hayling) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/58391) = 2008–09"
-        },
-        {
-          "pos": "",
-          "name": "Jake Servan-Smalley",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": -0.8,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpEstimated": true,
-          "birthYearEst": 2008,
-          "birthYearEstMax": 2009,
-          "estNote": "média EGR (Avg. to CR 75,61, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/61515) = 2008–09"
-        },
-        {
-          "pos": "",
-          "name": "Ethan Kwan",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 1,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "club": "Hindhead",
-          "hcpEstimated": true,
-          "birthYearEst": 2012,
-          "birthYearEstMax": 2013,
-          "estNote": "média EGR (Avg. to CR 78,54, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2025 tinha handicap de jogo 10 (Hindhead) · ano: EGR U14 em 2026 (europeangolfrankings.com/players/61345) = 2012–13; Reid Trophy U14 e North of England U14 em 2026"
-        },
-        {
-          "pos": "",
-          "name": "Tommy Gorman",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 22,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpEstimated": true,
-          "countryEstimated": true,
-          "estNote": "Única fonte: Tyrrell Hatton Junior Masters 2024 (Harleyford GC, Inglaterra, 08/09/2024, tees pretos 6.604 yd) — handicap de jogo 22 a 95%, gross 100 (harleyford.intelligentgolf.co.uk/viewround.php?roundid=55638). HCP com mais de um ano e de jogo, não HI; país deduzido de jogar provas de juniores em Inglaterra. Sem perfil EGR; idade desconhecida. Pode inscrever-se como Tom."
-        },
-        {
-          "pos": "",
-          "name": "Mateus Penucho",
-          "country": "PT",
-          "location": "Santo da Serra",
-          "hcp": 12.6,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "52393",
-          "dob": "2013-08-05",
-          "club": "Clube de Golfe do Santo da Serra"
-        },
-        {
-          "pos": "",
-          "name": "André Gonçalves",
-          "country": "PT",
-          "location": "Palheiro",
-          "hcp": 5.5,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "41121",
-          "dob": "2009-11-27",
-          "club": "Clube Palheiro Golfe"
-        },
-        {
-          "pos": "",
-          "name": "Lucas Duarte",
-          "country": "PT",
-          "location": "Palheiro",
-          "hcp": 25.7,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "38195",
-          "dob": "2010-04-27",
-          "club": "Clube Palheiro Golfe"
-        },
-        {
-          "pos": "",
-          "name": "William Gao",
-          "country": "PT",
-          "location": "Quinta do Peru",
-          "hcp": 3.7,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "51524",
-          "dob": "2012-11-14",
-          "club": "Clube de Golf da Quinta do Peru"
-        },
-        {
-          "pos": "",
+          "pos": "2",
           "name": "Santiago Dias",
           "country": "PT",
-          "location": "Oporto",
-          "hcp": -2.1,
-          "toPar": null,
+          "location": "Oporto Golf Club",
+          "detailId": "13158715576740253237",
+          "toPar": -2,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 70,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13043556915903238123",
+          "hcp": -2.1,
           "hcpSource": "FPG federados 2026-10-14",
           "fed": "42908",
           "dob": "2012-05-29",
           "club": "Oporto Golf Clube"
         },
         {
-          "pos": "",
-          "name": "Gonçalo Gouveia",
-          "country": "PT",
-          "location": "Santo da Serra",
-          "hcp": 16,
-          "toPar": null,
+          "pos": "3",
+          "name": "Ralph Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715576706698794",
+          "toPar": 0,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "50398",
-          "dob": "2012-01-14",
-          "club": "Clube de Golfe do Santo da Serra"
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10227697879405858459",
+          "hcp": 4,
+          "hcpSource": "GJG entry list 361 · 17/02/2026",
+          "club": "Thorpe Hall",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2029, escalão 14 · ano: EGR U16 em 2026 (europeangolfrankings.com/players/52436) = 2010–11; jogou o Douglas Johns Trophy U15 em 2026 → 2011"
         },
         {
-          "pos": "",
+          "pos": "4",
           "name": "Leonardo Könemund",
           "country": "DE",
-          "location": "DE",
-          "hcp": 1.9,
-          "toPar": null,
+          "location": "Golf- und Land-Club Berlin-Wannsee e.V.",
+          "detailId": "13158715576706698796",
+          "toPar": 3,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10731591631565262741",
+          "hcp": 1.9,
           "hcpSource": "DGV DMM AK16 (Startliste) · 10/10/2026",
           "club": "Berlin-Wannsee",
           "birthYearEst": 2011,
           "estNote": "ano: Global Junior Golf: graduação 2030 (AK14 em 2025) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/47448) = 2010–11; DMM AK14 da DGV em Set/2025 → 2011"
         },
         {
-          "pos": "",
-          "name": "Manuel Medeiros",
-          "country": "PT",
-          "location": "Santo da Serra",
-          "hcp": 6.4,
-          "toPar": null,
+          "pos": "5",
+          "name": "Harrison Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715576706698792",
+          "toPar": 4,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "52884",
-          "dob": "2014-04-29",
-          "club": "Clube de Golfe do Santo da Serra"
+          "roundGross": [
+            76
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                5,
+                7,
+                2,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4
+              ],
+              "gross": 76,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13052159330126695963",
+          "hcp": 0.6,
+          "hcpSource": "GolfBox 5388972 (Belgian Intl U14) · 02/07/2026",
+          "dob": "2013-04-21",
+          "club": "Thorpe Hall"
         },
         {
-          "pos": "",
+          "pos": "T6",
+          "name": "William Gao",
+          "country": "PT",
+          "location": "quinta do peru",
+          "detailId": "13158715576740253236",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                3,
+                5,
+                4,
+                7,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680699970517503747",
+          "hcp": 3.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "51524",
+          "dob": "2012-11-14",
+          "club": "Clube de Golf da Quinta do Peru"
+        },
+        {
+          "pos": "T6",
+          "name": "Ethan Kwan",
+          "country": "GB-ENG",
+          "location": "Hindhead",
+          "detailId": "13158715576740253231",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                5,
+                5,
+                5,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12827271226414108394",
+          "club": "Hindhead",
+          "hcp": 1,
+          "hcpEstimated": true,
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "média EGR (Avg. to CR 78,54, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2025 tinha handicap de jogo 10 (Hindhead) · ano: EGR U14 em 2026 (europeangolfrankings.com/players/61345) = 2012–13; Reid Trophy U14 e North of England U14 em 2026"
+        },
+        {
+          "pos": "8",
           "name": "Alfie Kitteridge",
           "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": -1,
-          "toPar": null,
+          "location": "Bishop's Stortford",
+          "detailId": "13158715576740253230",
+          "toPar": 9,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                3,
+                6,
+                3,
+                3,
+                5,
+                5,
+                4,
+                5,
+                6,
+                7,
+                5,
+                5,
+                3,
+                3,
+                6,
+                4,
+                5
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12445077187512537054",
           "club": "Bishop's Stortford",
+          "hcp": -1,
           "hcpEstimated": true,
           "birthYearEst": 2010,
           "birthYearEstMax": 2011,
           "estNote": "média EGR (Avg. to CR 75,33, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/56320) = 2010–11; Scottish Boys U16 e North of England U16 em 2026"
         },
         {
-          "pos": "",
+          "pos": "9",
+          "name": "André Gonçalves",
+          "country": "PT",
+          "location": "Palheiro Golf",
+          "detailId": "13158715576740253234",
+          "toPar": 11,
+          "total": null,
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                7,
+                5,
+                5,
+                3,
+                6,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12869638254613270229",
+          "hcp": 5.5,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "41121",
+          "dob": "2009-11-27",
+          "club": "Clube Palheiro Golfe"
+        },
+        {
+          "pos": "10",
+          "name": "Manuel Medeiros",
+          "country": "PT",
+          "location": "Santo da Serra",
+          "detailId": "13158715576706698797",
+          "toPar": 13,
+          "total": null,
+          "roundGross": [
+            85
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                9,
+                3,
+                6,
+                4,
+                5,
+                4,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 85,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13048636779345776265",
+          "hcp": 6.4,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "52884",
+          "dob": "2014-04-29",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "11",
+          "name": "Tommy Gorman",
+          "country": "GB",
+          "location": "Aspley Guise and Woburn Sands",
+          "detailId": "13158715576740253232",
+          "toPar": 14,
+          "total": null,
+          "roundGross": [
+            86
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                8,
+                4,
+                5,
+                3,
+                4,
+                6,
+                5,
+                6,
+                6,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "gross": 86,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13030539016393494301",
+          "hcp": 22,
+          "hcpEstimated": true,
+          "estNote": "Única fonte: Tyrrell Hatton Junior Masters 2024 (Harleyford GC, Inglaterra, 08/09/2024, tees pretos 6.604 yd) — handicap de jogo 22 a 95%, gross 100 (harleyford.intelligentgolf.co.uk/viewround.php?roundid=55638). HCP com mais de um ano e de jogo, não HI; país deduzido de jogar provas de juniores em Inglaterra. Sem perfil EGR; idade desconhecida. Pode inscrever-se como Tom."
+        },
+        {
+          "pos": "12",
           "name": "Richard Groß",
           "country": "DE",
-          "location": "DE",
-          "hcp": 9.7,
-          "toPar": null,
+          "location": "GC Chemnitz",
+          "detailId": "13158715576740253238",
+          "toPar": 16,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                6,
+                9,
+                5,
+                5,
+                5,
+                3,
+                6,
+                3,
+                3,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752019243000696401",
+          "hcp": 9.7,
           "hcpSource": "GVST Jugend-EM 2026 (resultados) · 23/08/2026",
           "club": "GC Chemnitz",
           "birthYearEst": 2012,
@@ -370,23 +835,205 @@
           "estNote": "ano: AK14 na DGV em 2026, EGR U14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/51248) = 2012–13; AK14 da DGV em 2026"
         },
         {
-          "pos": "",
-          "name": "Martim Pinto Johansen",
+          "pos": "13",
+          "name": "Mateus Penucho",
           "country": "PT",
-          "location": "Vilamoura, C. G",
-          "hcp": -2,
-          "toPar": null,
+          "location": "Santo da Serra (007)",
+          "detailId": "13158715576740253233",
+          "toPar": 17,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "White",
-          "sex": "M",
+          "roundGross": [
+            89
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                4,
+                5,
+                4,
+                6,
+                3,
+                4,
+                6,
+                7,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                6
+              ],
+              "gross": 89,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13068361849337057088",
+          "hcp": 12.6,
           "hcpSource": "FPG federados 2026-10-14",
-          "fed": "40115",
-          "dob": "2010-05-23",
-          "club": "Clube de Golfe de Vilamoura"
+          "fed": "52393",
+          "dob": "2013-08-05",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "14",
+          "name": "Gonçalo Gouveia",
+          "country": "PT",
+          "location": "Club golf santo sa serra",
+          "detailId": "13158715576706698795",
+          "toPar": 19,
+          "total": null,
+          "roundGross": [
+            91
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                5,
+                8,
+                7,
+                2,
+                4,
+                5,
+                6,
+                8,
+                5,
+                4,
+                5,
+                4,
+                4,
+                6
+              ],
+              "gross": 91,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13118541337383177759",
+          "hcp": 16,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "50398",
+          "dob": "2012-01-14",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "15",
+          "name": "Lucas Duarte",
+          "country": "PT",
+          "location": "CLUB PALHEIRO GOLF",
+          "detailId": "13158715576740253235",
+          "toPar": 33,
+          "total": null,
+          "roundGross": [
+            105
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                11,
+                7,
+                5,
+                6,
+                6,
+                7,
+                4,
+                6,
+                6,
+                5,
+                7,
+                5,
+                5,
+                6,
+                4,
+                4,
+                6
+              ],
+              "gross": 105,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13091706726925766601",
+          "hcp": 25.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "38195",
+          "dob": "2010-04-27",
+          "club": "Clube Palheiro Golfe"
         }
       ],
+      "courseRating": 71,
+      "slope": 137,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
       "draws": {
         "1": {
           "round": 1,
@@ -414,6 +1061,133 @@
                 },
                 {
                   "name": "Leon Brooks"
+                },
+                {
+                  "name": "Ralph Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Ethan Kwan"
+                },
+                {
+                  "name": "Tommy Gorman"
+                },
+                {
+                  "name": "Mateus Penucho"
+                }
+              ]
+            },
+            {
+              "time": "10:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "André Gonçalves"
+                },
+                {
+                  "name": "Lucas Duarte"
+                },
+                {
+                  "name": "William Gao"
+                }
+              ]
+            },
+            {
+              "time": "10:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Santiago Dias"
+                },
+                {
+                  "name": "Gonçalo Gouveia"
+                },
+                {
+                  "name": "Leonardo Könemund"
+                }
+              ]
+            },
+            {
+              "time": "10:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Manuel Medeiros"
+                },
+                {
+                  "name": "Alfie Kitteridge"
+                },
+                {
+                  "name": "Richard Groß"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "label": "Round 2 (Sat, October 17)",
+          "date": "Sat, October 17",
+          "groups": [
+            {
+              "time": "8:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Manuel Medeiros"
+                },
+                {
+                  "name": "Richard Groß"
+                }
+              ]
+            },
+            {
+              "time": "9:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Gonçalo Gouveia"
+                },
+                {
+                  "name": "Santiago Dias"
+                },
+                {
+                  "name": "Alfie Kitteridge"
+                }
+              ]
+            },
+            {
+              "time": "9:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Leonardo Könemund"
+                },
+                {
+                  "name": "Tommy Gorman"
+                },
+                {
+                  "name": "William Gao"
+                }
+              ]
+            },
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Ethan Kwan"
+                },
+                {
+                  "name": "Lucas Duarte"
                 }
               ]
             },
@@ -422,7 +1196,1932 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Alain Messmer"
+                  "name": "André Gonçalves"
+                },
+                {
+                  "name": "Mateus Penucho"
+                },
+                {
+                  "name": "Joseph Thorne"
+                }
+              ]
+            },
+            {
+              "time": "9:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Ralph Barnett"
+                },
+                {
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            },
+            {
+              "time": "9:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                },
+                {
+                  "name": "Leon Brooks"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "division": "Boys 21 & Under",
+      "tid": "12568569436308541071",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        352,
+        362,
+        476,
+        185,
+        368,
+        302,
+        460,
+        128,
+        310,
+        474,
+        326,
+        309,
+        279,
+        148,
+        338,
+        247,
+        122,
+        408
+      ],
+      "si": null,
+      "teeName": "White",
+      "players": [
+        {
+          "pos": "1",
+          "name": "Calum Dalby",
+          "country": "GB-ENG",
+          "location": "Denham",
+          "detailId": "13158590785794379739",
+          "toPar": 0,
+          "total": null,
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                2,
+                5,
+                3,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10176160483359362678",
+          "club": "Denham",
+          "hcp": -1.1,
+          "hcpEstimated": true,
+          "birthYearEst": 2006,
+          "birthYearEstMax": 2007,
+          "estNote": "média EGR (Avg. to CR 75,2, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U21 em 2026 (europeangolfrankings.com/players/47527) = 2006–07"
+        },
+        {
+          "pos": "2",
+          "name": "Joseph Thorne",
+          "country": "GB-ENG",
+          "location": "Hayling GC",
+          "detailId": "13158590785794379741",
+          "toPar": 5,
+          "total": null,
+          "roundGross": [
+            77
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                5,
+                3,
+                4,
+                6,
+                6,
+                4,
+                5,
+                2,
+                5,
+                3,
+                3,
+                6
+              ],
+              "gross": 77,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12225742115635760765",
+          "club": "Hayling",
+          "hcp": 1.9,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 79,9, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2024 tinha handicap de jogo 9 (open Hayling) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/58391) = 2008–09"
+        },
+        {
+          "pos": "3",
+          "name": "Leon Brooks",
+          "country": "GB-ENG",
+          "location": "Perranporth",
+          "detailId": "13158590785794379740",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                6,
+                3,
+                5,
+                5,
+                6,
+                3,
+                4,
+                5,
+                4,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752977895404637823",
+          "dob": "2008-04-14",
+          "club": "Perranporth",
+          "hcp": 3.7,
+          "hcpEstimated": true,
+          "estNote": "média EGR (Avg. to CR 82,8, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · médias de 2024; a GolfBox dá 999 (sem HCP)"
+        },
+        {
+          "pos": "T4",
+          "name": "Daniel Hobbs",
+          "country": "GB-ENG",
+          "location": "Brookmans Park",
+          "detailId": "13158590785794379742",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4,
+                6,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10244881820990607079",
+          "hcp": 4.3,
+          "hcpSource": "GJG entry list 370 (Loretto Juniors) · 22/06/2026",
+          "club": "Brookmans Park",
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "ano: Global Junior Golf: graduação 2026, escalão 18 · ano: EGR U18 em 2026 (europeangolfrankings.com/players/53500) = 2008–09 (a Global Junior Golf dá graduação 2026 → 2008)"
+        },
+        {
+          "pos": "T4",
+          "name": "Jake Servan-Smalley",
+          "country": "GB-ENG",
+          "location": "Dartmouth golf and country club",
+          "detailId": "13158590785794379743",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4,
+                8,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12443310867280334795",
+          "hcp": -0.8,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 75,61, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/61515) = 2008–09"
+        }
+      ],
+      "courseRating": 71,
+      "slope": 137,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
+      "draws": {
+        "1": {
+          "round": 1,
+          "label": "Round 1 (Fri, October 16)",
+          "date": "Fri, October 16",
+          "groups": [
+            {
+              "time": "9:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Leon Brooks"
+                },
+                {
+                  "name": "Ralph Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Joseph Thorne"
+                },
+                {
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "label": "Round 2 (Sat, October 17)",
+          "date": "Sat, October 17",
+          "groups": [
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Ethan Kwan"
+                },
+                {
+                  "name": "Lucas Duarte"
+                }
+              ]
+            },
+            {
+              "time": "9:30 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "André Gonçalves"
+                },
+                {
+                  "name": "Mateus Penucho"
+                },
+                {
+                  "name": "Joseph Thorne"
+                }
+              ]
+            },
+            {
+              "time": "9:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Ralph Barnett"
+                },
+                {
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            },
+            {
+              "time": "9:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                },
+                {
+                  "name": "Leon Brooks"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "division": "Overall Boys (WAGR)",
+      "tid": "12568569512477101723",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        352,
+        362,
+        476,
+        185,
+        368,
+        302,
+        460,
+        128,
+        310,
+        474,
+        326,
+        309,
+        279,
+        148,
+        338,
+        247,
+        122,
+        408
+      ],
+      "si": null,
+      "teeName": "White",
+      "players": [
+        {
+          "pos": "1",
+          "name": "Joshua Hockenhull",
+          "country": "GB-ENG",
+          "location": "Prestbury",
+          "detailId": "13158715765517487698",
+          "toPar": -3,
+          "total": null,
+          "roundGross": [
+            69
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                5,
+                6,
+                6,
+                2,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                4
+              ],
+              "gross": 69,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11970112680724828036",
+          "club": "Prestbury",
+          "hcp": -0.7,
+          "hcpEstimated": true,
+          "birthYearEst": 2010,
+          "birthYearEstMax": 2011,
+          "estNote": "média EGR (Avg. to CR 75,84, 8 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/51134) = 2010–11; McGregor U16 e Scottish Boys U16 em 2026, Reid Trophy U14 em 2024 (o Carris U18 foi a jogar acima)"
+        },
+        {
+          "pos": "2",
+          "name": "Santiago Dias",
+          "country": "PT",
+          "location": "Oporto Golf Club",
+          "detailId": "13158715765517487687",
+          "toPar": -2,
+          "total": null,
+          "roundGross": [
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 70,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13043556915903238123",
+          "hcp": -2.1,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "42908",
+          "dob": "2012-05-29",
+          "club": "Oporto Golf Clube"
+        },
+        {
+          "pos": "T3",
+          "name": "Calum Dalby",
+          "country": "GB-ENG",
+          "location": "Denham",
+          "detailId": "13158715765517487693",
+          "toPar": 0,
+          "total": null,
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                2,
+                5,
+                3,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10176160483359362678",
+          "club": "Denham",
+          "hcp": -1.1,
+          "hcpEstimated": true,
+          "birthYearEst": 2006,
+          "birthYearEstMax": 2007,
+          "estNote": "média EGR (Avg. to CR 75,2, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U21 em 2026 (europeangolfrankings.com/players/47527) = 2006–07"
+        },
+        {
+          "pos": "T3",
+          "name": "Ralph Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715765517487700",
+          "toPar": 0,
+          "total": null,
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10227697879405858459",
+          "hcp": 4,
+          "hcpSource": "GJG entry list 361 · 17/02/2026",
+          "club": "Thorpe Hall",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2029, escalão 14 · ano: EGR U16 em 2026 (europeangolfrankings.com/players/52436) = 2010–11; jogou o Douglas Johns Trophy U15 em 2026 → 2011"
+        },
+        {
+          "pos": "5",
+          "name": "Leonardo Könemund",
+          "country": "DE",
+          "location": "Golf- und Land-Club Berlin-Wannsee e.V.",
+          "detailId": "13158715765517487695",
+          "toPar": 3,
+          "total": null,
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10731591631565262741",
+          "hcp": 1.9,
+          "hcpSource": "DGV DMM AK16 (Startliste) · 10/10/2026",
+          "club": "Berlin-Wannsee",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2030 (AK14 em 2025) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/47448) = 2010–11; DMM AK14 da DGV em Set/2025 → 2011"
+        },
+        {
+          "pos": "6",
+          "name": "Harrison Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715765517487697",
+          "toPar": 4,
+          "total": null,
+          "roundGross": [
+            76
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                5,
+                7,
+                2,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4
+              ],
+              "gross": 76,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13052159330126695963",
+          "hcp": 0.6,
+          "hcpSource": "GolfBox 5388972 (Belgian Intl U14) · 02/07/2026",
+          "dob": "2013-04-21",
+          "club": "Thorpe Hall"
+        },
+        {
+          "pos": "7",
+          "name": "Joseph Thorne",
+          "country": "GB-ENG",
+          "location": "Hayling GC",
+          "detailId": "13158715765517487692",
+          "toPar": 5,
+          "total": null,
+          "roundGross": [
+            77
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                5,
+                3,
+                4,
+                6,
+                6,
+                4,
+                5,
+                2,
+                5,
+                3,
+                3,
+                6
+              ],
+              "gross": 77,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12225742115635760765",
+          "club": "Hayling",
+          "hcp": 1.9,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 79,9, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2024 tinha handicap de jogo 9 (open Hayling) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/58391) = 2008–09"
+        },
+        {
+          "pos": "T8",
+          "name": "Leon Brooks",
+          "country": "GB-ENG",
+          "location": "Perranporth",
+          "detailId": "13158715765517487699",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                6,
+                3,
+                5,
+                5,
+                6,
+                3,
+                4,
+                5,
+                4,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752977895404637823",
+          "dob": "2008-04-14",
+          "club": "Perranporth",
+          "hcp": 3.7,
+          "hcpEstimated": true,
+          "estNote": "média EGR (Avg. to CR 82,8, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · médias de 2024; a GolfBox dá 999 (sem HCP)"
+        },
+        {
+          "pos": "T8",
+          "name": "William Gao",
+          "country": "PT",
+          "location": "quinta do peru",
+          "detailId": "13158715765517487704",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                3,
+                5,
+                4,
+                7,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680699970517503747",
+          "hcp": 3.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "51524",
+          "dob": "2012-11-14",
+          "club": "Clube de Golf da Quinta do Peru"
+        },
+        {
+          "pos": "T8",
+          "name": "Ethan Kwan",
+          "country": "GB-ENG",
+          "location": "Hindhead",
+          "detailId": "13158715765517487689",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                5,
+                5,
+                5,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12827271226414108394",
+          "club": "Hindhead",
+          "hcp": 1,
+          "hcpEstimated": true,
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "média EGR (Avg. to CR 78,54, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2025 tinha handicap de jogo 10 (Hindhead) · ano: EGR U14 em 2026 (europeangolfrankings.com/players/61345) = 2012–13; Reid Trophy U14 e North of England U14 em 2026"
+        },
+        {
+          "pos": "T11",
+          "name": "Daniel Hobbs",
+          "country": "GB-ENG",
+          "location": "Brookmans Park",
+          "detailId": "13158715765517487701",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4,
+                6,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10244881820990607079",
+          "hcp": 4.3,
+          "hcpSource": "GJG entry list 370 (Loretto Juniors) · 22/06/2026",
+          "club": "Brookmans Park",
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "ano: Global Junior Golf: graduação 2026, escalão 18 · ano: EGR U18 em 2026 (europeangolfrankings.com/players/53500) = 2008–09 (a Global Junior Golf dá graduação 2026 → 2008)"
+        },
+        {
+          "pos": "T11",
+          "name": "Jake Servan-Smalley",
+          "country": "GB-ENG",
+          "location": "Dartmouth golf and country club",
+          "detailId": "13158715765517487702",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4,
+                8,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12443310867280334795",
+          "hcp": -0.8,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 75,61, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/61515) = 2008–09"
+        },
+        {
+          "pos": "T11",
+          "name": "Alfie Kitteridge",
+          "country": "GB-ENG",
+          "location": "Bishop's Stortford",
+          "detailId": "13158715765517487686",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                3,
+                6,
+                3,
+                3,
+                5,
+                5,
+                4,
+                5,
+                6,
+                7,
+                5,
+                5,
+                3,
+                3,
+                6,
+                4,
+                5
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12445077187512537054",
+          "club": "Bishop's Stortford",
+          "hcp": -1,
+          "hcpEstimated": true,
+          "birthYearEst": 2010,
+          "birthYearEstMax": 2011,
+          "estNote": "média EGR (Avg. to CR 75,33, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/56320) = 2010–11; Scottish Boys U16 e North of England U16 em 2026"
+        },
+        {
+          "pos": "14",
+          "name": "André Gonçalves",
+          "country": "PT",
+          "location": "Palheiro Golf",
+          "detailId": "13158715765517487691",
+          "toPar": 11,
+          "total": null,
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                7,
+                5,
+                5,
+                3,
+                6,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12869638254613270229",
+          "hcp": 5.5,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "41121",
+          "dob": "2009-11-27",
+          "club": "Clube Palheiro Golfe"
+        },
+        {
+          "pos": "15",
+          "name": "Manuel Medeiros",
+          "country": "PT",
+          "location": "Santo da Serra",
+          "detailId": "13158715765517487696",
+          "toPar": 13,
+          "total": null,
+          "roundGross": [
+            85
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                9,
+                3,
+                6,
+                4,
+                5,
+                4,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 85,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13048636779345776265",
+          "hcp": 6.4,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "52884",
+          "dob": "2014-04-29",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "16",
+          "name": "Tommy Gorman",
+          "country": "GB",
+          "location": "Aspley Guise and Woburn Sands",
+          "detailId": "13158715765517487690",
+          "toPar": 14,
+          "total": null,
+          "roundGross": [
+            86
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                8,
+                4,
+                5,
+                3,
+                4,
+                6,
+                5,
+                6,
+                6,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "gross": 86,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13030539016393494301",
+          "hcp": 22,
+          "hcpEstimated": true,
+          "estNote": "Única fonte: Tyrrell Hatton Junior Masters 2024 (Harleyford GC, Inglaterra, 08/09/2024, tees pretos 6.604 yd) — handicap de jogo 22 a 95%, gross 100 (harleyford.intelligentgolf.co.uk/viewround.php?roundid=55638). HCP com mais de um ano e de jogo, não HI; país deduzido de jogar provas de juniores em Inglaterra. Sem perfil EGR; idade desconhecida. Pode inscrever-se como Tom."
+        },
+        {
+          "pos": "17",
+          "name": "Richard Groß",
+          "country": "DE",
+          "location": "GC Chemnitz",
+          "detailId": "13158715765517487705",
+          "toPar": 16,
+          "total": null,
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                6,
+                9,
+                5,
+                5,
+                5,
+                3,
+                6,
+                3,
+                3,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752019243000696401",
+          "hcp": 9.7,
+          "hcpSource": "GVST Jugend-EM 2026 (resultados) · 23/08/2026",
+          "club": "GC Chemnitz",
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "ano: AK14 na DGV em 2026, EGR U14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/51248) = 2012–13; AK14 da DGV em 2026"
+        },
+        {
+          "pos": "18",
+          "name": "Mateus Penucho",
+          "country": "PT",
+          "location": "Santo da Serra (007)",
+          "detailId": "13158715765517487703",
+          "toPar": 17,
+          "total": null,
+          "roundGross": [
+            89
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                4,
+                5,
+                4,
+                6,
+                3,
+                4,
+                6,
+                7,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                6
+              ],
+              "gross": 89,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13068361849337057088",
+          "hcp": 12.6,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "52393",
+          "dob": "2013-08-05",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "19",
+          "name": "Gonçalo Gouveia",
+          "country": "PT",
+          "location": "Club golf santo sa serra",
+          "detailId": "13158715765517487688",
+          "toPar": 19,
+          "total": null,
+          "roundGross": [
+            91
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                5,
+                8,
+                7,
+                2,
+                4,
+                5,
+                6,
+                8,
+                5,
+                4,
+                5,
+                4,
+                4,
+                6
+              ],
+              "gross": 91,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13118541337383177759",
+          "hcp": 16,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "50398",
+          "dob": "2012-01-14",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "20",
+          "name": "Lucas Duarte",
+          "country": "PT",
+          "location": "CLUB PALHEIRO GOLF",
+          "detailId": "13158715765517487694",
+          "toPar": 33,
+          "total": null,
+          "roundGross": [
+            105
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                11,
+                7,
+                5,
+                6,
+                6,
+                7,
+                4,
+                6,
+                6,
+                5,
+                7,
+                5,
+                5,
+                6,
+                4,
+                4,
+                6
+              ],
+              "gross": 105,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13091706726925766601",
+          "hcp": 25.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "38195",
+          "dob": "2010-04-27",
+          "club": "Clube Palheiro Golfe"
+        }
+      ],
+      "courseRating": 71,
+      "slope": 137,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
+      "draws": {
+        "1": {
+          "round": 1,
+          "label": "Round 1 (Fri, October 16)",
+          "date": "Fri, October 16",
+          "groups": [
+            {
+              "time": "9:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Leon Brooks"
                 },
                 {
                   "name": "Ralph Barnett"
@@ -512,41 +3211,14 @@
           "date": "Sat, October 17",
           "groups": [
             {
-              "time": "8:30 AM",
-              "startHole": null,
-              "players": [
-                {
-                  "name": "Calum Dalby"
-                },
-                {
-                  "name": "Harrison Barnett"
-                }
-              ]
-            },
-            {
-              "time": "8:40 AM",
-              "startHole": null,
-              "players": [
-                {
-                  "name": "Joshua Hockenhull"
-                },
-                {
-                  "name": "Leon Brooks"
-                }
-              ]
-            },
-            {
               "time": "8:50 AM",
               "startHole": null,
               "players": [
                 {
-                  "name": "Alain Messmer"
-                },
-                {
-                  "name": "Ralph Barnett"
-                },
-                {
                   "name": "Manuel Medeiros"
+                },
+                {
+                  "name": "Richard Groß"
                 }
               ]
             },
@@ -555,13 +3227,13 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Daniel Hobbs"
+                  "name": "Gonçalo Gouveia"
                 },
                 {
-                  "name": "Joseph Thorne"
+                  "name": "Santiago Dias"
                 },
                 {
-                  "name": "Jake Servan-Smalley"
+                  "name": "Alfie Kitteridge"
                 }
               ]
             },
@@ -570,13 +3242,13 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Ethan Kwan"
+                  "name": "Leonardo Könemund"
                 },
                 {
                   "name": "Tommy Gorman"
                 },
                 {
-                  "name": "Mateus Penucho"
+                  "name": "William Gao"
                 }
               ]
             },
@@ -585,13 +3257,13 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "André Gonçalves"
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Ethan Kwan"
                 },
                 {
                   "name": "Lucas Duarte"
-                },
-                {
-                  "name": "William Gao"
                 }
               ]
             },
@@ -600,13 +3272,13 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Santiago Dias"
+                  "name": "André Gonçalves"
                 },
                 {
-                  "name": "Gonçalo Gouveia"
+                  "name": "Mateus Penucho"
                 },
                 {
-                  "name": "Leonardo Könemund"
+                  "name": "Joseph Thorne"
                 }
               ]
             },
@@ -615,55 +3287,270 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Martim Pinto Johansen"
+                  "name": "Joshua Hockenhull"
                 },
                 {
-                  "name": "Alfie Kitteridge"
+                  "name": "Ralph Barnett"
                 },
                 {
-                  "name": "Richard Groß"
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            },
+            {
+              "time": "9:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                },
+                {
+                  "name": "Leon Brooks"
                 }
               ]
             }
           ]
         }
-      },
-      "teeName": "White"
+      }
     },
     {
-      "division": "Girls",
-      "tid": null,
-      "par": null,
-      "parTotal": null,
+      "division": "Girls 16 & Under",
+      "tid": "12568569468319469203",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        299,
+        352,
+        451,
+        163,
+        347,
+        282,
+        434,
+        93,
+        285,
+        454,
+        311,
+        284,
+        256,
+        131,
+        291,
+        208,
+        102,
+        387
+      ],
+      "si": null,
+      "teeName": "Yellow",
       "players": [
         {
-          "pos": "",
+          "pos": "1",
+          "name": "Daisy Lee",
+          "country": "GB-ENG",
+          "location": "Lancaster",
+          "detailId": "13158489577272413872",
+          "toPar": -1,
+          "total": null,
+          "roundGross": [
+            71
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                6
+              ],
+              "gross": 71,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12524302601098923609",
+          "hcp": -1.8,
+          "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.) · 07/07/2026",
+          "dob": "2009-10-28",
+          "club": "Lancaster"
+        },
+        {
+          "pos": "2",
           "name": "Ashling Poynton",
           "country": "BE",
-          "location": "BE",
-          "hcp": -0.5,
-          "toPar": null,
+          "location": "Rinkven",
+          "detailId": "13158489577272413868",
+          "toPar": 3,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                2,
+                5,
+                7,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11705414353380478727",
+          "hcp": -0.5,
           "hcpSource": "GolfBox 5646864 (inscrição Triple A European Ch.) · Out/2026",
           "dob": "2011-09-14",
           "club": "Rinkven"
         },
         {
-          "pos": "",
+          "pos": "3",
           "name": "Emily Tuck",
           "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 9.1,
-          "toPar": null,
+          "location": "St Georges Hill",
+          "detailId": "13158489577272413869",
+          "toPar": 11,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                5,
+                4,
+                6,
+                3,
+                6,
+                6,
+                7,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10892475212134125080",
+          "hcp": 9.1,
           "hcpSource": "GJG entry list 423 (Portuguese Junior Classics 2026) · lido 13/10/2026 (data do valor não indicada)",
           "club": "St George's Hill",
           "birthYearEst": 2012,
@@ -671,176 +3558,205 @@
           "estNote": "ano: Global Junior Golf: graduação 2031, escalão 14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/57658) = 2012–13 (a Global Junior Golf dá graduação 2031 → 2013)"
         },
         {
-          "pos": "",
-          "name": "Scarlett Reeves",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": 1.8,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "club": "Studley Wood",
-          "hcpEstimated": true,
-          "birthYearEst": 2008,
-          "birthYearEstMax": 2009,
-          "estNote": "média EGR (Avg. to CR 79,77, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/58716) = 2008–09"
-        },
-        {
-          "pos": "",
+          "pos": "T4",
           "name": "Carlota Braz Gil",
           "country": "PT",
           "location": "Santo da Serra",
-          "hcp": 12.9,
-          "toPar": null,
+          "detailId": "13158489577272413871",
+          "toPar": 12,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                5,
+                6,
+                4,
+                4,
+                7,
+                4,
+                5,
+                6,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13138374221690343092",
+          "hcp": 12.9,
           "hcpSource": "FPG federados 2026-10-14",
           "fed": "47374",
           "dob": "2012-07-18",
           "club": "Clube de Golfe do Santo da Serra"
         },
         {
-          "pos": "",
+          "pos": "T4",
           "name": "Angelina Gao",
           "country": "PT",
-          "location": "Quinta do Peru",
-          "hcp": 2.9,
-          "toPar": null,
+          "location": "quinta do peru",
+          "detailId": "13158489577272413870",
+          "toPar": 12,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                6,
+                3,
+                5,
+                3,
+                6,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680691033227431682",
+          "hcp": 2.9,
           "hcpSource": "FPG federados 2026-10-14",
           "fed": "51523",
           "dob": "2011-06-09",
           "club": "Clube de Golf da Quinta do Peru"
         },
         {
-          "pos": "",
+          "pos": "6",
           "name": "Maria Cunha",
           "country": "PT",
-          "location": "Palheiro",
-          "hcp": 3.8,
-          "toPar": null,
+          "location": "Clube Palheiro Golfe",
+          "detailId": "13158489577272413873",
+          "toPar": 16,
           "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                5,
+                5,
+                5,
+                6,
+                4,
+                5,
+                8,
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13081188743665192739",
+          "hcp": 3.8,
           "hcpSource": "FPG federados 2026-10-14",
           "fed": "46482",
           "dob": "2011-02-18",
           "club": "Clube Palheiro Golfe"
-        },
-        {
-          "pos": "",
-          "name": "Daisy Lee",
-          "country": "GB-ENG",
-          "location": "GB-ENG",
-          "hcp": -1.8,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.) · 07/07/2026",
-          "dob": "2009-10-28",
-          "club": "Lancaster"
-        },
-        {
-          "pos": "",
-          "name": "Sophie Willschke",
-          "country": "AT",
-          "location": "AT",
-          "hcp": -3,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "hcpSource": "golf.at 17003028 (Austrian Intl Amateur) · 01/09/2026",
-          "dob": "2009-02-19",
-          "club": "Colony Club Gutenhof"
-        },
-        {
-          "pos": "",
-          "name": "Jessica Sutton",
-          "country": "IE",
-          "location": "IE",
-          "hcp": 4.1,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "hcpSource": "Scottish Golf 57808 (Scottish Girls U16 Open) · 12/06/2026",
-          "club": "Ballyneety",
-          "birthYearEst": 2010,
-          "estNote": "ano: 15 anos em Ago/2025 e 16 em Jul/2026 (Limerick Post) → Ago/2009–Jul/2010 · ano: EGR U16 em 2026 (europeangolfrankings.com/players/50003) = 2010–11; Limerick Post: 15 anos em Ago/2025 e 16 em Jul/2026 → 2010"
-        },
-        {
-          "pos": "",
-          "name": "Maria Câmara",
-          "country": "PT",
-          "location": "Santo da Serra",
-          "hcp": 8.4,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "40990",
-          "dob": "2009-12-17",
-          "club": "Clube de Golfe do Santo da Serra"
-        },
-        {
-          "pos": "",
-          "name": "Laura Santos",
-          "country": "PT",
-          "location": "PXO Clube",
-          "hcp": 0,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "hcpSource": "FPG federados 2026-10-14",
-          "fed": "45393",
-          "dob": "2012-02-12",
-          "club": "PXO Clube de Golfe"
-        },
-        {
-          "pos": "",
-          "name": "Ava Niland",
-          "country": "IE",
-          "location": "IE",
-          "hcp": 7.5,
-          "toPar": null,
-          "total": null,
-          "roundGross": [],
-          "rounds": [],
-          "tee": "Yellow",
-          "sex": "F",
-          "club": "Strandhill",
-          "hcpEstimated": true,
-          "birthYearEst": 2012,
-          "birthYearEstMax": 2013,
-          "estNote": "média EGR (Avg. to CR 88,89, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U14 em 2026 (europeangolfrankings.com/players/58343) = 2012–13"
         }
       ],
+      "courseRating": 68.7,
+      "slope": 132,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
       "draws": {
         "1": {
           "round": 1,
@@ -864,7 +3780,7 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Scarlett Reeves"
+                  "name": "Angelina Gao"
                 },
                 {
                   "name": "Carlota Braz Gil"
@@ -876,13 +3792,10 @@
               "startHole": null,
               "players": [
                 {
-                  "name": "Angelina Gao"
+                  "name": "Daisy Lee"
                 },
                 {
                   "name": "Maria Cunha"
-                },
-                {
-                  "name": "Daisy Lee"
                 }
               ]
             }
@@ -894,17 +3807,2558 @@
           "date": "Sat, October 17",
           "groups": [
             {
+              "time": "10:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Ashling Poynton"
+                },
+                {
+                  "name": "Daisy Lee"
+                },
+                {
+                  "name": "Carlota Braz Gil"
+                }
+              ]
+            },
+            {
+              "time": "10:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Angelina Gao"
+                },
+                {
+                  "name": "Maria Cunha"
+                },
+                {
+                  "name": "Emily Tuck"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "division": "Overall Girls (WAGR)",
+      "tid": "12568569536334302879",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        299,
+        352,
+        451,
+        163,
+        347,
+        282,
+        434,
+        93,
+        285,
+        454,
+        311,
+        284,
+        256,
+        131,
+        291,
+        208,
+        102,
+        387
+      ],
+      "si": null,
+      "teeName": "Yellow",
+      "players": [
+        {
+          "pos": "1",
+          "name": "Daisy Lee",
+          "country": "GB-ENG",
+          "location": "Lancaster",
+          "detailId": "13158489711859240636",
+          "toPar": -1,
+          "total": null,
+          "roundGross": [
+            71
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                6
+              ],
+              "gross": 71,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12524302601098923609",
+          "hcp": -1.8,
+          "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.) · 07/07/2026",
+          "dob": "2009-10-28",
+          "club": "Lancaster"
+        },
+        {
+          "pos": "2",
+          "name": "Ashling Poynton",
+          "country": "BE",
+          "location": "Rinkven",
+          "detailId": "13158489711825686200",
+          "toPar": 3,
+          "total": null,
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                2,
+                5,
+                7,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11705414353380478727",
+          "hcp": -0.5,
+          "hcpSource": "GolfBox 5646864 (inscrição Triple A European Ch.) · Out/2026",
+          "dob": "2011-09-14",
+          "club": "Rinkven"
+        },
+        {
+          "pos": "3",
+          "name": "Emily Tuck",
+          "country": "GB-ENG",
+          "location": "St Georges Hill",
+          "detailId": "13158489711859240633",
+          "toPar": 11,
+          "total": null,
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                5,
+                4,
+                6,
+                3,
+                6,
+                6,
+                7,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10892475212134125080",
+          "hcp": 9.1,
+          "hcpSource": "GJG entry list 423 (Portuguese Junior Classics 2026) · lido 13/10/2026 (data do valor não indicada)",
+          "club": "St George's Hill",
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "ano: Global Junior Golf: graduação 2031, escalão 14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/57658) = 2012–13 (a Global Junior Golf dá graduação 2031 → 2013)"
+        },
+        {
+          "pos": "T4",
+          "name": "Carlota Braz Gil",
+          "country": "PT",
+          "location": "Santo da Serra",
+          "detailId": "13158489711859240635",
+          "toPar": 12,
+          "total": null,
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                5,
+                6,
+                4,
+                4,
+                7,
+                4,
+                5,
+                6,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13138374221690343092",
+          "hcp": 12.9,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "47374",
+          "dob": "2012-07-18",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "T4",
+          "name": "Angelina Gao",
+          "country": "PT",
+          "location": "quinta do peru",
+          "detailId": "13158489711859240634",
+          "toPar": 12,
+          "total": null,
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                6,
+                3,
+                5,
+                3,
+                6,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680691033227431682",
+          "hcp": 2.9,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "51523",
+          "dob": "2011-06-09",
+          "club": "Clube de Golf da Quinta do Peru"
+        },
+        {
+          "pos": "6",
+          "name": "Maria Cunha",
+          "country": "PT",
+          "location": "Clube Palheiro Golfe",
+          "detailId": "13158489711859240637",
+          "toPar": 16,
+          "total": null,
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                5,
+                5,
+                5,
+                6,
+                4,
+                5,
+                8,
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13081188743665192739",
+          "hcp": 3.8,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "46482",
+          "dob": "2011-02-18",
+          "club": "Clube Palheiro Golfe"
+        }
+      ],
+      "courseRating": 68.7,
+      "slope": 132,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
+      "draws": {
+        "1": {
+          "round": 1,
+          "label": "Round 1 (Fri, October 16)",
+          "date": "Fri, October 16",
+          "groups": [
+            {
+              "time": "8:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Ashling Poynton"
+                },
+                {
+                  "name": "Emily Tuck"
+                }
+              ]
+            },
+            {
+              "time": "8:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Angelina Gao"
+                },
+                {
+                  "name": "Carlota Braz Gil"
+                }
+              ]
+            },
+            {
+              "time": "9:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daisy Lee"
+                },
+                {
+                  "name": "Maria Cunha"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "label": "Round 2 (Sat, October 17)",
+          "date": "Sat, October 17",
+          "groups": [
+            {
+              "time": "10:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Ashling Poynton"
+                },
+                {
+                  "name": "Daisy Lee"
+                },
+                {
+                  "name": "Carlota Braz Gil"
+                }
+              ]
+            },
+            {
+              "time": "10:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Angelina Gao"
+                },
+                {
+                  "name": "Maria Cunha"
+                },
+                {
+                  "name": "Emily Tuck"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "division": "Overall Leaderboard",
+      "tid": "12568228239308263043",
+      "par": [
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        5,
+        3,
+        4,
+        5,
+        4,
+        4,
+        4,
+        3,
+        4,
+        4,
+        3,
+        5
+      ],
+      "parTotal": 72,
+      "meters": [
+        352,
+        362,
+        476,
+        185,
+        368,
+        302,
+        460,
+        128,
+        310,
+        474,
+        326,
+        309,
+        279,
+        148,
+        338,
+        247,
+        122,
+        408
+      ],
+      "si": null,
+      "teeName": "White",
+      "players": [
+        {
+          "pos": "1",
+          "name": "Joshua Hockenhull",
+          "country": "GB-ENG",
+          "location": "Prestbury",
+          "detailId": "13158715360817483773",
+          "toPar": -3,
+          "total": null,
+          "roundGross": [
+            69
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                4,
+                3,
+                5,
+                6,
+                6,
+                2,
+                3,
+                5,
+                3,
+                4,
+                4,
+                3,
+                3,
+                3,
+                3,
+                4
+              ],
+              "gross": 69,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11970112680724828036",
+          "club": "Prestbury",
+          "hcp": -0.7,
+          "hcpEstimated": true,
+          "birthYearEst": 2010,
+          "birthYearEstMax": 2011,
+          "estNote": "média EGR (Avg. to CR 75,84, 8 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/51134) = 2010–11; McGregor U16 e Scottish Boys U16 em 2026, Reid Trophy U14 em 2024 (o Carris U18 foi a jogar acima)"
+        },
+        {
+          "pos": "2",
+          "name": "Santiago Dias",
+          "country": "PT",
+          "location": "Oporto Golf Club",
+          "detailId": "13158715360817483272",
+          "toPar": -2,
+          "total": null,
+          "roundGross": [
+            70
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 70,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13043556915903238123",
+          "hcp": -2.1,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "42908",
+          "dob": "2012-05-29",
+          "club": "Oporto Golf Clube"
+        },
+        {
+          "pos": "3",
+          "name": "Daisy Lee",
+          "country": "GB-ENG",
+          "location": "Lancaster",
+          "detailId": "13158715360817483769",
+          "toPar": -1,
+          "total": null,
+          "roundGross": [
+            71
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                4,
+                6
+              ],
+              "gross": 71,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12524302601098923609",
+          "hcp": -1.8,
+          "hcpSource": "GolfBox 5478100 (European Girls' Team Ch.) · 07/07/2026",
+          "dob": "2009-10-28",
+          "club": "Lancaster"
+        },
+        {
+          "pos": "T4",
+          "name": "Calum Dalby",
+          "country": "GB-ENG",
+          "location": "Denham",
+          "detailId": "13158715360817483771",
+          "toPar": 0,
+          "total": null,
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                2,
+                5,
+                3,
+                6,
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10176160483359362678",
+          "club": "Denham",
+          "hcp": -1.1,
+          "hcpEstimated": true,
+          "birthYearEst": 2006,
+          "birthYearEstMax": 2007,
+          "estNote": "média EGR (Avg. to CR 75,2, 1 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U21 em 2026 (europeangolfrankings.com/players/47527) = 2006–07"
+        },
+        {
+          "pos": "T4",
+          "name": "Ralph Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715360817483775",
+          "toPar": 0,
+          "total": null,
+          "roundGross": [
+            72
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 72,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10227697879405858459",
+          "hcp": 4,
+          "hcpSource": "GJG entry list 361 · 17/02/2026",
+          "club": "Thorpe Hall",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2029, escalão 14 · ano: EGR U16 em 2026 (europeangolfrankings.com/players/52436) = 2010–11; jogou o Douglas Johns Trophy U15 em 2026 → 2011"
+        },
+        {
+          "pos": "T6",
+          "name": "Leonardo Könemund",
+          "country": "DE",
+          "location": "Golf- und Land-Club Berlin-Wannsee e.V.",
+          "detailId": "13158715360817483271",
+          "toPar": 3,
+          "total": null,
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                5,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                5,
+                4,
+                4,
+                4,
+                4,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10731591631565262741",
+          "hcp": 1.9,
+          "hcpSource": "DGV DMM AK16 (Startliste) · 10/10/2026",
+          "club": "Berlin-Wannsee",
+          "birthYearEst": 2011,
+          "estNote": "ano: Global Junior Golf: graduação 2030 (AK14 em 2025) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/47448) = 2010–11; DMM AK14 da DGV em Set/2025 → 2011"
+        },
+        {
+          "pos": "T6",
+          "name": "Ashling Poynton",
+          "country": "BE",
+          "location": "Rinkven",
+          "detailId": "13158715360783929332",
+          "toPar": 3,
+          "total": null,
+          "roundGross": [
+            75
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                5,
+                2,
+                5,
+                7,
+                4,
+                3,
+                4,
+                3,
+                4,
+                5,
+                3,
+                5
+              ],
+              "gross": 75,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "11705414353380478727",
+          "hcp": -0.5,
+          "hcpSource": "GolfBox 5646864 (inscrição Triple A European Ch.) · Out/2026",
+          "dob": "2011-09-14",
+          "club": "Rinkven"
+        },
+        {
+          "pos": "8",
+          "name": "Harrison Barnett",
+          "country": "GB-ENG",
+          "location": "Thorpe Hall",
+          "detailId": "13158715360817483772",
+          "toPar": 4,
+          "total": null,
+          "roundGross": [
+            76
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                5,
+                3,
+                4,
+                5,
+                7,
+                2,
+                5,
+                4,
+                6,
+                4,
+                5,
+                3,
+                4,
+                5,
+                3,
+                4
+              ],
+              "gross": 76,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13052159330126695963",
+          "hcp": 0.6,
+          "hcpSource": "GolfBox 5388972 (Belgian Intl U14) · 02/07/2026",
+          "dob": "2013-04-21",
+          "club": "Thorpe Hall"
+        },
+        {
+          "pos": "9",
+          "name": "Joseph Thorne",
+          "country": "GB-ENG",
+          "location": "Hayling GC",
+          "detailId": "13158715360817483265",
+          "toPar": 5,
+          "total": null,
+          "roundGross": [
+            77
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                5,
+                3,
+                5,
+                4,
+                5,
+                3,
+                4,
+                6,
+                6,
+                4,
+                5,
+                2,
+                5,
+                3,
+                3,
+                6
+              ],
+              "gross": 77,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12225742115635760765",
+          "club": "Hayling",
+          "hcp": 1.9,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 79,9, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2024 tinha handicap de jogo 9 (open Hayling) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/58391) = 2008–09"
+        },
+        {
+          "pos": "T10",
+          "name": "Leon Brooks",
+          "country": "GB-ENG",
+          "location": "Perranporth",
+          "detailId": "13158715360817483774",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                6,
+                3,
+                5,
+                5,
+                6,
+                3,
+                4,
+                5,
+                4,
+                5,
+                5,
+                3,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752977895404637823",
+          "dob": "2008-04-14",
+          "club": "Perranporth",
+          "hcp": 3.7,
+          "hcpEstimated": true,
+          "estNote": "média EGR (Avg. to CR 82,8, 2 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · médias de 2024; a GolfBox dá 999 (sem HCP)"
+        },
+        {
+          "pos": "T10",
+          "name": "William Gao",
+          "country": "PT",
+          "location": "quinta do peru",
+          "detailId": "13158715360783929334",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                3,
+                5,
+                4,
+                7,
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                3,
+                4
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680699970517503747",
+          "hcp": 3.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "51524",
+          "dob": "2012-11-14",
+          "club": "Clube de Golf da Quinta do Peru"
+        },
+        {
+          "pos": "T10",
+          "name": "Ethan Kwan",
+          "country": "GB-ENG",
+          "location": "Hindhead",
+          "detailId": "13158715360817483267",
+          "toPar": 7,
+          "total": null,
+          "roundGross": [
+            79
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                4,
+                6,
+                3,
+                5,
+                5,
+                5,
+                4,
+                5,
+                5,
+                6,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 79,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12827271226414108394",
+          "club": "Hindhead",
+          "hcp": 1,
+          "hcpEstimated": true,
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "média EGR (Avg. to CR 78,54, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · em Mai/2025 tinha handicap de jogo 10 (Hindhead) · ano: EGR U14 em 2026 (europeangolfrankings.com/players/61345) = 2012–13; Reid Trophy U14 e North of England U14 em 2026"
+        },
+        {
+          "pos": "T13",
+          "name": "Daniel Hobbs",
+          "country": "GB-ENG",
+          "location": "Brookmans Park",
+          "detailId": "13158715360817483264",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                3,
+                6,
+                4,
+                5,
+                6,
+                5,
+                4,
+                6,
+                4,
+                6,
+                4,
+                4,
+                4,
+                5,
+                4,
+                3,
+                4
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10244881820990607079",
+          "hcp": 4.3,
+          "hcpSource": "GJG entry list 370 (Loretto Juniors) · 22/06/2026",
+          "club": "Brookmans Park",
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "ano: Global Junior Golf: graduação 2026, escalão 18 · ano: EGR U18 em 2026 (europeangolfrankings.com/players/53500) = 2008–09 (a Global Junior Golf dá graduação 2026 → 2008)"
+        },
+        {
+          "pos": "T13",
+          "name": "Jake Servan-Smalley",
+          "country": "GB-ENG",
+          "location": "Dartmouth golf and country club",
+          "detailId": "13158715360817483266",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                4,
+                4,
+                5,
+                6,
+                4,
+                4,
+                8,
+                4,
+                5,
+                4,
+                3,
+                5,
+                4,
+                4,
+                3
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12443310867280334795",
+          "hcp": -0.8,
+          "hcpEstimated": true,
+          "birthYearEst": 2008,
+          "birthYearEstMax": 2009,
+          "estNote": "média EGR (Avg. to CR 75,61, 3 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U18 em 2026 (europeangolfrankings.com/players/61515) = 2008–09"
+        },
+        {
+          "pos": "T13",
+          "name": "Alfie Kitteridge",
+          "country": "GB-ENG",
+          "location": "Bishop's Stortford",
+          "detailId": "13158715360851037707",
+          "toPar": 9,
+          "total": null,
+          "roundGross": [
+            81
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                3,
+                3,
+                6,
+                3,
+                3,
+                5,
+                5,
+                4,
+                5,
+                6,
+                7,
+                5,
+                5,
+                3,
+                3,
+                6,
+                4,
+                5
+              ],
+              "gross": 81,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12445077187512537054",
+          "club": "Bishop's Stortford",
+          "hcp": -1,
+          "hcpEstimated": true,
+          "birthYearEst": 2010,
+          "birthYearEstMax": 2011,
+          "estNote": "média EGR (Avg. to CR 75,33, 5 provas) → HI ≈ −48,2 + 0,627 × média (calibrado em 23 juniores PT com HCP FPG; erro típico ±1,5, maior acima de 5) · ano: EGR U16 em 2026 (europeangolfrankings.com/players/56320) = 2010–11; Scottish Boys U16 e North of England U16 em 2026"
+        },
+        {
+          "pos": "T16",
+          "name": "André Gonçalves",
+          "country": "PT",
+          "location": "Palheiro Golf",
+          "detailId": "13158715360817483270",
+          "toPar": 11,
+          "total": null,
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                4,
+                4,
+                7,
+                5,
+                5,
+                3,
+                6,
+                5,
+                6,
+                4,
+                4,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12869638254613270229",
+          "hcp": 5.5,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "41121",
+          "dob": "2009-11-27",
+          "club": "Clube Palheiro Golfe"
+        },
+        {
+          "pos": "T16",
+          "name": "Emily Tuck",
+          "country": "GB-ENG",
+          "location": "St Georges Hill",
+          "detailId": "13158715360783929333",
+          "toPar": 11,
+          "total": null,
+          "roundGross": [
+            83
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                3,
+                5,
+                4,
+                6,
+                3,
+                6,
+                6,
+                7,
+                4,
+                5,
+                3,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 83,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "10892475212134125080",
+          "hcp": 9.1,
+          "hcpSource": "GJG entry list 423 (Portuguese Junior Classics 2026) · lido 13/10/2026 (data do valor não indicada)",
+          "club": "St George's Hill",
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "ano: Global Junior Golf: graduação 2031, escalão 14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/57658) = 2012–13 (a Global Junior Golf dá graduação 2031 → 2013)"
+        },
+        {
+          "pos": "T18",
+          "name": "Carlota Braz Gil",
+          "country": "PT",
+          "location": "Santo da Serra",
+          "detailId": "13158715360817483768",
+          "toPar": 12,
+          "total": null,
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                5,
+                6,
+                4,
+                4,
+                7,
+                4,
+                5,
+                6,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13138374221690343092",
+          "hcp": 12.9,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "47374",
+          "dob": "2012-07-18",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "T18",
+          "name": "Angelina Gao",
+          "country": "PT",
+          "location": "quinta do peru",
+          "detailId": "13158715360817483767",
+          "toPar": 12,
+          "total": null,
+          "roundGross": [
+            84
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                6,
+                5,
+                2,
+                6,
+                4,
+                5,
+                5,
+                5,
+                6,
+                6,
+                3,
+                5,
+                3,
+                6,
+                4,
+                3,
+                5
+              ],
+              "gross": 84,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12680691033227431682",
+          "hcp": 2.9,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "51523",
+          "dob": "2011-06-09",
+          "club": "Clube de Golf da Quinta do Peru"
+        },
+        {
+          "pos": "20",
+          "name": "Manuel Medeiros",
+          "country": "PT",
+          "location": "Santo da Serra",
+          "detailId": "13158715360851037709",
+          "toPar": 13,
+          "total": null,
+          "roundGross": [
+            85
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                9,
+                3,
+                6,
+                4,
+                5,
+                4,
+                5,
+                6,
+                5,
+                5,
+                5,
+                3,
+                4,
+                4,
+                3,
+                5
+              ],
+              "gross": 85,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13048636779345776265",
+          "hcp": 6.4,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "52884",
+          "dob": "2014-04-29",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "21",
+          "name": "Tommy Gorman",
+          "country": "GB",
+          "location": "Aspley Guise and Woburn Sands",
+          "detailId": "13158715360817483268",
+          "toPar": 14,
+          "total": null,
+          "roundGross": [
+            86
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                6,
+                5,
+                5,
+                3,
+                8,
+                4,
+                5,
+                3,
+                4,
+                6,
+                5,
+                6,
+                6,
+                3,
+                5,
+                4,
+                4,
+                4
+              ],
+              "gross": 86,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13030539016393494301",
+          "hcp": 22,
+          "hcpEstimated": true,
+          "estNote": "Única fonte: Tyrrell Hatton Junior Masters 2024 (Harleyford GC, Inglaterra, 08/09/2024, tees pretos 6.604 yd) — handicap de jogo 22 a 95%, gross 100 (harleyford.intelligentgolf.co.uk/viewround.php?roundid=55638). HCP com mais de um ano e de jogo, não HI; país deduzido de jogar provas de juniores em Inglaterra. Sem perfil EGR; idade desconhecida. Pode inscrever-se como Tom."
+        },
+        {
+          "pos": "T22",
+          "name": "Richard Groß",
+          "country": "DE",
+          "location": "GC Chemnitz",
+          "detailId": "13158715360851037708",
+          "toPar": 16,
+          "total": null,
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                7,
+                4,
+                5,
+                4,
+                5,
+                4,
+                5,
+                4,
+                6,
+                9,
+                5,
+                5,
+                5,
+                3,
+                6,
+                3,
+                3,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "12752019243000696401",
+          "hcp": 9.7,
+          "hcpSource": "GVST Jugend-EM 2026 (resultados) · 23/08/2026",
+          "club": "GC Chemnitz",
+          "birthYearEst": 2012,
+          "birthYearEstMax": 2013,
+          "estNote": "ano: AK14 na DGV em 2026, EGR U14 · ano: EGR U14 em 2026 (europeangolfrankings.com/players/51248) = 2012–13; AK14 da DGV em 2026"
+        },
+        {
+          "pos": "T22",
+          "name": "Maria Cunha",
+          "country": "PT",
+          "location": "Clube Palheiro Golfe",
+          "detailId": "13158715360817483770",
+          "toPar": 16,
+          "total": null,
+          "roundGross": [
+            88
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                5,
+                5,
+                5,
+                5,
+                6,
+                4,
+                5,
+                8,
+                6,
+                4,
+                5,
+                4,
+                4,
+                4,
+                4,
+                5
+              ],
+              "gross": 88,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13081188743665192739",
+          "hcp": 3.8,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "46482",
+          "dob": "2011-02-18",
+          "club": "Clube Palheiro Golfe"
+        },
+        {
+          "pos": "24",
+          "name": "Mateus Penucho",
+          "country": "PT",
+          "location": "Santo da Serra (007)",
+          "detailId": "13158715360817483269",
+          "toPar": 17,
+          "total": null,
+          "roundGross": [
+            89
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                4,
+                5,
+                6,
+                4,
+                5,
+                4,
+                6,
+                3,
+                4,
+                6,
+                7,
+                6,
+                4,
+                4,
+                6,
+                4,
+                5,
+                6
+              ],
+              "gross": 89,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13068361849337057088",
+          "hcp": 12.6,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "52393",
+          "dob": "2013-08-05",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "25",
+          "name": "Gonçalo Gouveia",
+          "country": "PT",
+          "location": "Club golf santo sa serra",
+          "detailId": "13158715360817483273",
+          "toPar": 19,
+          "total": null,
+          "roundGross": [
+            91
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                4,
+                5,
+                4,
+                5,
+                8,
+                7,
+                2,
+                4,
+                5,
+                6,
+                8,
+                5,
+                4,
+                5,
+                4,
+                4,
+                6
+              ],
+              "gross": 91,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13118541337383177759",
+          "hcp": 16,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "50398",
+          "dob": "2012-01-14",
+          "club": "Clube de Golfe do Santo da Serra"
+        },
+        {
+          "pos": "26",
+          "name": "Lucas Duarte",
+          "country": "PT",
+          "location": "CLUB PALHEIRO GOLF",
+          "detailId": "13158715360851037706",
+          "toPar": 33,
+          "total": null,
+          "roundGross": [
+            105
+          ],
+          "rounds": [
+            {
+              "day": 1,
+              "scores": [
+                5,
+                11,
+                7,
+                5,
+                6,
+                6,
+                7,
+                4,
+                6,
+                6,
+                5,
+                7,
+                5,
+                5,
+                6,
+                4,
+                4,
+                6
+              ],
+              "gross": 105,
+              "date": "Fri, October 16",
+              "pars": [
+                4,
+                4,
+                5,
+                3,
+                4,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3,
+                5
+              ]
+            }
+          ],
+          "profileId": "13091706726925766601",
+          "hcp": 25.7,
+          "hcpSource": "FPG federados 2026-10-14",
+          "fed": "38195",
+          "dob": "2010-04-27",
+          "club": "Clube Palheiro Golfe"
+        }
+      ],
+      "courseRating": 71,
+      "slope": 137,
+      "cardSource": "gg-tee-card",
+      "cardRounds": 1,
+      "draws": {
+        "1": {
+          "round": 1,
+          "label": "Round 1 (Fri, October 16)",
+          "date": "Fri, October 16",
+          "groups": [
+            {
+              "time": "8:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Ashling Poynton"
+                },
+                {
+                  "name": "Emily Tuck"
+                }
+              ]
+            },
+            {
+              "time": "8:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Angelina Gao"
+                },
+                {
+                  "name": "Carlota Braz Gil"
+                }
+              ]
+            },
+            {
+              "time": "9:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daisy Lee"
+                },
+                {
+                  "name": "Maria Cunha"
+                }
+              ]
+            },
+            {
+              "time": "9:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Leon Brooks"
+                },
+                {
+                  "name": "Ralph Barnett"
+                }
+              ]
+            },
+            {
+              "time": "9:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Joseph Thorne"
+                },
+                {
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            },
+            {
               "time": "9:50 AM",
               "startHole": null,
               "players": [
                 {
-                  "name": "Sophie Willschke"
+                  "name": "Ethan Kwan"
                 },
                 {
-                  "name": "Jessica Sutton"
+                  "name": "Tommy Gorman"
                 },
                 {
-                  "name": "Maria Câmara"
+                  "name": "Mateus Penucho"
+                }
+              ]
+            },
+            {
+              "time": "10:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "André Gonçalves"
+                },
+                {
+                  "name": "Lucas Duarte"
+                },
+                {
+                  "name": "William Gao"
+                }
+              ]
+            },
+            {
+              "time": "10:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Santiago Dias"
+                },
+                {
+                  "name": "Gonçalo Gouveia"
+                },
+                {
+                  "name": "Leonardo Könemund"
+                }
+              ]
+            },
+            {
+              "time": "10:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Manuel Medeiros"
+                },
+                {
+                  "name": "Alfie Kitteridge"
+                },
+                {
+                  "name": "Richard Groß"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "round": 2,
+          "label": "Round 2 (Sat, October 17)",
+          "date": "Sat, October 17",
+          "groups": [
+            {
+              "time": "8:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Manuel Medeiros"
+                },
+                {
+                  "name": "Richard Groß"
+                }
+              ]
+            },
+            {
+              "time": "9:00 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Gonçalo Gouveia"
+                },
+                {
+                  "name": "Santiago Dias"
+                },
+                {
+                  "name": "Alfie Kitteridge"
+                }
+              ]
+            },
+            {
+              "time": "9:10 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Leonardo Könemund"
+                },
+                {
+                  "name": "Tommy Gorman"
+                },
+                {
+                  "name": "William Gao"
+                }
+              ]
+            },
+            {
+              "time": "9:20 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Daniel Hobbs"
+                },
+                {
+                  "name": "Ethan Kwan"
+                },
+                {
+                  "name": "Lucas Duarte"
+                }
+              ]
+            },
+            {
+              "time": "9:30 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "André Gonçalves"
+                },
+                {
+                  "name": "Mateus Penucho"
+                },
+                {
+                  "name": "Joseph Thorne"
+                }
+              ]
+            },
+            {
+              "time": "9:40 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Joshua Hockenhull"
+                },
+                {
+                  "name": "Ralph Barnett"
+                },
+                {
+                  "name": "Jake Servan-Smalley"
+                }
+              ]
+            },
+            {
+              "time": "9:50 AM",
+              "startHole": null,
+              "players": [
+                {
+                  "name": "Calum Dalby"
+                },
+                {
+                  "name": "Harrison Barnett"
+                },
+                {
+                  "name": "Leon Brooks"
                 }
               ]
             },
@@ -916,30 +6370,15 @@
                   "name": "Ashling Poynton"
                 },
                 {
-                  "name": "Emily Tuck"
+                  "name": "Daisy Lee"
                 },
                 {
-                  "name": "Laura Santos"
+                  "name": "Carlota Braz Gil"
                 }
               ]
             },
             {
               "time": "10:10 AM",
-              "startHole": null,
-              "players": [
-                {
-                  "name": "Scarlett Reeves"
-                },
-                {
-                  "name": "Carlota Braz Gil"
-                },
-                {
-                  "name": "Ava Niland"
-                }
-              ]
-            },
-            {
-              "time": "10:20 AM",
               "startHole": null,
               "players": [
                 {
@@ -949,17 +6388,14 @@
                   "name": "Maria Cunha"
                 },
                 {
-                  "name": "Daisy Lee"
+                  "name": "Emily Tuck"
                 }
               ]
             }
           ]
         }
-      },
-      "teeName": "Yellow"
+      }
     }
   ],
-  "source": "https://www.golfgenius.com/pages/12568228117405011890",
-  "startDate": "2026-10-16",
-  "endDate": "2026-10-18"
+  "scrapedAt": "2026-10-16T14:35:10.285Z"
 }
