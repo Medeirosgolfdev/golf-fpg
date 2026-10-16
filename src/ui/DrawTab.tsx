@@ -610,6 +610,7 @@ export default function DrawTab({
               // Nasc. + Idade: o mesmo componente do scorecard (BirthCells) —
               // pílulas neutras; estimativas a vermelho.
               const bc = birthCells({ dob: p.dob ?? (p.dobShown ? p.dobShown.split("/").reverse().join("-") : null),
+                showDate: !!p.dobShown,   // data completa só se a prova a publica
                 birthYear: p.dobYear, birthYearEst: p.birthYearEst,
                 ...("birthYearEstMax" in p ? { birthYearEstMax: p.birthYearEstMax } : {}), estNote: p.estNote }, effDate);
               return <>
@@ -694,7 +695,7 @@ export default function DrawTab({
   const filterBar = (
     <>
       {/* Linha de resumo no formato do scorecard: «N jog · N grupos · data». */}
-      <div className="lb-info-line flex-wrap">
+      <div className="lb-info-line flex-wrap" style={{ display: "flex", gap: 4, alignItems: "baseline" }}>
         <span>{visibleSorted.length !== total ? `${visibleSorted.length}/${total}` : total} jog · {(draw.groups || []).length} grupos{roundNum ? ` · R${roundNum}` : ""}{isEstimated ? " (estimado)" : ""}</span>
         {draw.date && <span>· {draw.date.split("-").reverse().join("/")}</span>}
         {fpgUrl && (

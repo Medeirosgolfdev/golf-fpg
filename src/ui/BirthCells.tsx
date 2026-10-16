@@ -19,6 +19,9 @@ export interface BirthInfo {
   birthYearEst?: number | null;
   birthYearEstMax?: number | null;
   estNote?: string | null;
+  /** Mostrar a data completa (só quando é a própria prova que a publica — senão
+   *  só o ano, como no Resumo e nas Inscrições da FPG). Default: true. */
+  showDate?: boolean;
 }
 
 /** Nasc. e Idade (ReactNode) + tooltip, à data `refDate` (ISO). */
@@ -33,7 +36,7 @@ export function birthCells(b: BirthInfo, refDate?: string | null): { nasc: React
   const estYear = !est ? null : hi === null ? `≥${lo}` : hi != null && hi > lo! ? `${lo}–${String(hi).slice(2)}` : `${lo}`;
   const estAge = !est || !y ? null : hi === null ? `≤${y - lo!}` : hi != null && hi > lo! ? `~${y - hi}–${y - lo!}` : `~${y - lo!}`;
   const tip = dob ? `${dob} (${age ?? "?"} anos à data)` : est ? `Estimativa — ${b.estNote || "ano deduzido, não lido"}` : "";
-  const shown = dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? dob.split("-").reverse().join("/") : dobYear;
+  const shown = b.showDate !== false && dob && /^\d{4}-\d{2}-\d{2}$/.test(dob) ? dob.split("-").reverse().join("/") : dobYear;
   return {
     nasc: dobYear != null ? <BirthPill>{shown}</BirthPill>
       : est ? <span className="est-value">{estYear}</span> : <span className="muted">–</span>,
