@@ -2709,7 +2709,7 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 
 /* ═══════════════════════════════════════════════════════════════
    CS-TABLE — tabela temporada cruzada (jogadores × torneios)
-   Usada por: ResumoTable, TournamentGrid (Sub-12)
+   Usada por: TournamentGrid (Sub-12)
    ═══════════════════════════════════════════════════════════════ */
 .cs-table { border-collapse: collapse; font-size: var(--fs-12); }
 .cs-table th,

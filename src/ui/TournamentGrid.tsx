@@ -164,7 +164,7 @@ function TournamentGrid({
     });
   }, [rows, sortKey, sortDir, playersDB, escalaoDeRow]);
 
-  // Mesmas constantes exactas do ResumoTable
+  // Constantes de layout da grelha
 
   /** Variante local intencional: lógica invertida (negativo=danger, positivo=neutro) — específica do CrossSeason DRIVE */
   const tpColor2 = (v: number | null) =>
