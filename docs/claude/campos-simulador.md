@@ -379,6 +379,8 @@ escreve-as em frases: total vs volta anterior, front/back nine, birdies vs
 duplos+, bogeys, par 3/4/5, buracos que mudaram ±2, arranque/fecho, posição após
 cada volta e, no torneio, ponto forte/fraco por tipo de par, buracos sempre acima
 do par e onde ganhou/perdeu face à média do campo. O painel «🧠 Análise das
-voltas» (`src/ui/RoundAnalysisPanel.tsx`) aparece por cima do «📷 Partilhar
-volta» sempre que há 2+ voltas (`ShareRoundsPanel`), com o Manuel por omissão;
-o campo são as mesmas opções do Resumo (`shareOptionsForTournament`).
+voltas» (`src/ui/RoundAnalysisPanel.tsx`) aparece no separador **Resumo**
+(completa, `ShareRoundsPanel analysis`) e em cada separador de volta **R2, R3…**
+só com essa volta contra a anterior (`RoundAnalysisFor`, calculada com as voltas
+até ela). Não aparece no Draw, na R1 nem nos Scorecards. Manuel por omissão; o
+campo são as mesmas opções do Resumo (`shareOptionsForTournament`).

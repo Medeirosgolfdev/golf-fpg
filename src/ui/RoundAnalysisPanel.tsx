@@ -22,7 +22,9 @@ function Line({ i }: { i: Insight }) {
   );
 }
 
-export default function RoundAnalysisPanel({ options, defaultKey }: { options: ShareOption[]; defaultKey?: string }) {
+/** `only`: mostra só a comparação dessa volta com a anterior (separador da volta);
+ *  sem ele, todas as comparações e o resumo do torneio (separador Resumo). */
+export default function RoundAnalysisPanel({ options, defaultKey, only }: { options: ShareOption[]; defaultKey?: string; only?: number }) {
   const [sel, setSel] = useState(defaultKey);
   const cur = options.find((o) => o.key === sel) ?? options.find((o) => o.key === defaultKey) ?? options[0];
   const field = useMemo(() => options.map((o) => o.data.rounds ?? []), [options]);
@@ -30,7 +32,7 @@ export default function RoundAnalysisPanel({ options, defaultKey }: { options: S
   if (!cur || !an) return null;
   return (
     <details className="mt-12" open>
-      <summary className="sim-section-toggle">🧠 Análise das voltas</summary>
+      <summary className="sim-section-toggle">{only ? `🧠 Análise R${only} vs R${only - 1}` : "🧠 Análise das voltas"}</summary>
       <div className="mt-8" style={{ maxWidth: 760 }}>
         {options.length > 1 && (
           <label className="fs-12 mb-8" style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -40,18 +42,20 @@ export default function RoundAnalysisPanel({ options, defaultKey }: { options: S
             </select>
           </label>
         )}
-        {an.rounds.slice().reverse().map((b) => (
+        {an.rounds.filter((b) => !only || b.round === only).reverse().map((b) => (
           <div key={b.round} className="mb-8">
-            <div className="fw-700 fs-13 mb-4">R{b.round} vs R{b.prev}</div>
+            {!only && <div className="fw-700 fs-13 mb-4">R{b.round} vs R{b.prev}</div>}
             <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
               {b.insights.map((x, k) => <Line key={k} i={x} />)}
             </ul>
           </div>
         ))}
-        <div className="fw-700 fs-13 mb-4">No torneio</div>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
-          {an.tournament.map((x, k) => <Line key={k} i={x} />)}
-        </ul>
+        {!only && <>
+          <div className="fw-700 fs-13 mb-4">No torneio</div>
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 3 }}>
+            {an.tournament.map((x, k) => <Line key={k} i={x} />)}
+          </ul>
+        </>}
       </div>
     </details>
   );

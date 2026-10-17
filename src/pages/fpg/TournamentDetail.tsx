@@ -9,7 +9,7 @@
  * Antes vivia inline em FPGPage.tsx (linhas 542-872) — extraído para reduzir
  * o ficheiro principal e permitir reuso.
  */
-import { ShareRoundsPanel } from "../../ui/ShareRoundPanel";
+import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
@@ -256,7 +256,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   // «📷 Partilhar volta» no Resumo / Scorecards / Draw: torneio completo + cada
   // volta já jogada (no Draw da volta seguinte também — o Faldo abre aí).
   const shareRounds = isResumoTab || isCombinedTab || isDrawTab
-    ? <ShareRoundsPanel key={tournament.tcode} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={options?.shareEvent} course={options?.shareCourse} date={options?.shareDate} />
+    ? <ShareRoundsPanel key={tournament.tcode} rounds={isMulti ? expanded.filter((e: any) => !e._isTotal) : [tournament]} event={options?.shareEvent} course={options?.shareCourse} date={options?.shareDate} analysis={isResumoTab} />
     : null;
 
   // Info about tournament
@@ -547,7 +547,11 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
         if (isAcc)
           return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} />{shareRounds}</>;
         if (isRoundTab || !isMulti)
-          return <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />;
+          return <>
+            <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />
+            {/* Volta 2+: análise dessa volta contra a anterior */}
+            {isMulti && isRoundTab && roundIdx >= 1 && <RoundAnalysisFor key={`${tournament.tcode}-an${roundIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={roundIdx + 1} />}
+          </>;
         return null;
       })()}
     </div>

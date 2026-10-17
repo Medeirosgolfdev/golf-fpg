@@ -11,7 +11,7 @@
  * are injected via props — either simple slots or full render-section callbacks.
  */
 
-import { ShareRoundsPanel } from "./ShareRoundPanel";
+import { ShareRoundsPanel, RoundAnalysisFor } from "./ShareRoundPanel";
 import React, { useMemo, useState, useCallback, useEffect, useRef } from "react";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "./tournamentPrimitives";
 import { AccumulatedLB, ScorecardLB, AllRoundsScorecardLB } from "./LeaderboardComponents";
@@ -311,7 +311,7 @@ export function IntlTournView({
     const accNRounds = isPreCutTab && preCutTourn ? (cutAfterRound as number) : nR;
     // «📷 Partilhar volta» no Resumo / Scorecards: torneio completo + cada volta.
     const shareRounds = (isCombined || isAcc)
-      ? <ShareRoundsPanel key={tournament.tcode} rounds={expanded.filter((e: any) => !e._isTotal)} event={scOptions.shareEvent} course={scOptions.shareCourse} date={scOptions.shareDate} />
+      ? <ShareRoundsPanel key={tournament.tcode} rounds={expanded.filter((e: any) => !e._isTotal)} event={scOptions.shareEvent} course={scOptions.shareCourse} date={scOptions.shareDate} analysis={isAcc && !isCombined} />
       : null;
     if (isCombined) {
       return <><AllRoundsScorecardLB tournament={tournament} escLookup={EMPTY_ESC_LOOKUP} playersDB={EMPTY_PLAYERS_DB} options={opts} />{shareRounds}</>;
@@ -337,7 +337,11 @@ export function IntlTournView({
         options={opts}
       />
     );
-    return renderRoundSection ? renderRoundSection(roundLB, rtab) : <>{roundLB}{roundExtra?.(rtab)}</>;
+    // Volta 2+: a análise dessa volta contra a anterior, por baixo do leaderboard.
+    const roundAn = isMulti && !isPreCutTab && expIdx >= 1
+      ? <RoundAnalysisFor key={`${tournament.tcode}-an${expIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={expIdx + 1} />
+      : null;
+    return renderRoundSection ? <>{renderRoundSection(roundLB, rtab)}{roundAn}</> : <>{roundLB}{roundExtra?.(rtab)}{roundAn}</>;
   };
 
   return (

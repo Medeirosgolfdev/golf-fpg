@@ -48,7 +48,8 @@ export default function ShareRoundPanel({ options, defaultKey }: { options: Shar
 /** Painel do Resumo / Scorecards: o torneio completo (voltas comparadas) e
  *  cada volta de cada jogador. Por omissão o torneio do Manuel (ou a última
  *  volta dele, se ainda só jogou uma). */
-export function ShareRoundsPanel({ rounds, event, course, date }: { rounds: Tournament[]; event?: string; course?: string; date?: string }) {
+/** `analysis`: mostra a «Análise das voltas» completa por cima (só no Resumo). */
+export function ShareRoundsPanel({ rounds, event, course, date, analysis = false }: { rounds: Tournament[]; event?: string; course?: string; date?: string; analysis?: boolean }) {
   const share = useMemo(() => {
     const ctx = { event, course, date };
     const t = shareOptionsForTournament(rounds, ctx);
@@ -59,10 +60,18 @@ export function ShareRoundsPanel({ rounds, event, course, date }: { rounds: Tour
   return (
     <>
       {/* Torneio com 2+ voltas: o analisador por cima do partilhar */}
-      {share.tour.options.length > 0 && (
+      {analysis && share.tour.options.length > 0 && (
         <Suspense fallback={null}><RoundAnalysisPanel options={share.tour.options} defaultKey={share.tour.defaultKey} /></Suspense>
       )}
       <ShareRoundPanel options={share.options} defaultKey={share.defaultKey} />
     </>
   );
+}
+
+/** Separador de uma volta (R2, R3…): só a análise dessa volta contra a anterior,
+ *  calculada com as voltas jogadas até ela (a posição é a de depois dessa volta). */
+export function RoundAnalysisFor({ rounds, round }: { rounds: Tournament[]; round: number }) {
+  const t = useMemo(() => (round >= 2 ? shareOptionsForTournament(rounds.slice(0, round)) : null), [rounds, round]);
+  if (!t || !t.options.length) return null;
+  return <Suspense fallback={null}><RoundAnalysisPanel options={t.options} defaultKey={t.defaultKey} only={round} /></Suspense>;
 }
