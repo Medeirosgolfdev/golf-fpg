@@ -19,10 +19,12 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { isManuelByName as isM } from "../constants/manuel";
 import { gf } from "../utils/flagUtils";
 import LoadingState from "../ui/LoadingState";
-import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { type Tournament as FPGTournament, type ScorecardOptions } from "./FPGPage";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
+import { intlScorecardOptions } from "../data/intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
 
 /* ── Nome de país (por extenso, vindo do scraper) → ISO-2 ──────────
    O scraper GJGL extrai o país de um comentário HTML embutido na row do
@@ -168,69 +170,27 @@ function loadGjglOverrides(): Promise<GjglOverrides> {
 /* ── Adapter GjglData → FPGTournament por escalão ─────────────────── */
 function divisionToTournament(d: GjglData, div: GjglDivision, label: string, ovr?: GjglCourseOverride | null): FPGTournament {
   const par18: number[] = d.par && d.par.length >= 18 ? (d.par as number[]) : new Array(18).fill(4);
-  const parTotal = d.parTotal || par18.reduce((a, b) => a + b, 0);
-  const nR = Math.max(...div.players.map(p => (p.rounds || []).length), 0);
-  const fpgPlayers: FPGPlayer[] = div.players
-    .filter(p => (p.rounds || []).length > 0)
-    .map(p => {
+  return buildFPGTournament(
+    { name: label, tcode: `${d.slug}-u${div.ak}`, date: d.start_date || "", campo: ovr?.course || d.course || d.country },
+    { par: par18, teeName: "Tee" },
+    div.players.map((p): IntlPlayerIn => {
       // Tee curado por sexo — só se houver evidência para ESSE sexo (não
       // mostrar metros dos rapazes a uma rapariga).
       const teeOvr = ovr?.tees?.[p.gender === "f" ? "F" : "M"] ?? null;
-      const pRounds = p.rounds || [];
-      const roundScores: FPGRoundScore[] = pRounds.map((r, ri) => ({
-        round: ri + 1,
-        gross: r.gross ?? 0,
-        scores: (r.scores ?? []).map(x => x ?? 0),
-        pars: par18,
-        si: teeOvr?.si ?? [],
-        meters: teeOvr?.meters ?? [],
-        teeName: teeOvr?.tee ?? "Tee",
-      }));
-      const playedR = pRounds.length;
-      const tp = p.total != null && parTotal > 0 ? p.total - parTotal * playedR : null;
-      const flag = flagForCountry(p.country);
       const dispCountry = /united states/i.test(p.country || "") ? "USA" : (p.country || "");
       return {
-        scoreId: p.playerKey || p.name,
-        pos: p.pos,
-        name: p.name,
-        club: p.country ? `${flag} ${dispCountry}` : "",
-        grossTotal: p.total,
-        toPar: tp,
-        nholes: 18,
-        parTotal,
-        scores: pRounds[0]?.scores?.map(x => x ?? 0),
-        par: par18,
-        si: teeOvr?.si,
-        meters: teeOvr?.meters,
-        teeName: teeOvr?.tee ?? "Tee",
-        roundScores,
-        _roundsPlayed: playedR,
-        hcpExact: p.hcp ?? undefined,
-        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
-      } as FPGPlayer;
-    });
-  return {
-    name: label,
-    tcode: `${d.slug}-u${div.ak}`,
-    date: d.start_date || "",
-    campo: ovr?.course || d.course || d.country,
-    rounds: nR,
-    playerCount: fpgPlayers.length,
-    players: fpgPlayers,
-  };
+        id: p.playerKey || p.name, name: p.name, pos: p.pos,
+        club: p.country ? `${flagForCountry(p.country)} ${dispCountry}` : "",
+        country: p.country, total: p.total, hcp: p.hcp, rounds: p.rounds || [],
+        wd: false,
+        course: teeOvr ? { si: teeOvr.si, meters: teeOvr.meters, teeName: teeOvr.tee ?? "Tee" } : undefined,
+      };
+    }),
+  );
 }
 
 function gjglScorecardOptions(hasTees?: boolean): ScorecardOptions {
-  return {
-    hideHCP: false,
-    // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
-    hideSD: false,
-    hideEsc: true,
-    hideFed: true,
-    hideTee: !hasTees,
-    clubLabel: "País",
-  };
+  return intlScorecardOptions({ hideHCP: false, hideTee: !hasTees });
 }
 
 const CATALOG_URL = "/data/gjgl-catalog.json";

@@ -11,11 +11,13 @@
 import { SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import { gf, normPaisDisplay } from "../utils/flagUtils";
-import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { type Tournament as FPGTournament, type ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
 import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
 import { type EvoEntry } from "../hooks/useEvoComparison";
 import type { CircuitDivision } from "../ui/circuit/types";
+import { intlScorecardOptions } from "../data/intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
 
 /** EvoEntry estendido para Doral:
  *  - prevYear: ano de origem da comparação (mais recente onde participou)
@@ -252,52 +254,17 @@ export function normalizeFile(raw: RawGG, sourceUrl: string): Entry[] {
 
 /* ── Adaptador Entry → FPGTournament para reutilizar AllRoundsScorecardLB ── */
 function entryToTournament(entry: Entry): FPGTournament {
-  const nR = Math.max(...entry.players.map(p => p.rounds.length), 0);
-  const players: FPGPlayer[] = entry.players
-    .filter(p => p.rounds.length > 0)
-    .map(p => {
-      const roundScores: FPGRoundScore[] = p.rounds.map((r, ri) => ({
-        round: ri + 1,
-        gross: r.gross,
-        scores: r.scores,
-        pars: entry.par,
-        si: entry.metres,       // metros na linha SI (siLabel="m")
-        meters: entry.metres,
-        courseRating: entry.cr,
-        slope: entry.slope,
-      }));
-      const incomplete = p.rounds.length < nR;
-      return {
-        scoreId: p.id,
-        pos: p.pos,
-        name: p.name,
-        club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
-        grossTotal: p.total,
-        toPar: p.toPar,
-        nholes: entry.par.length || (entry.nineHole ? 9 : 18),
-        parTotal: entry.parTotal,
-        scores: p.rounds[0]?.scores,
-        par: entry.par,
-        si: entry.metres,       // metros na linha SI
-        meters: entry.metres,
-        course: entry.course,   // Red Tiger, Golden Palm, Silver Fox, Blue Monster — usado na linha de stats
-        courseRating: entry.cr,
-        slope: entry.slope,
-        roundScores,
-        _wd: incomplete,
-        _roundsPlayed: p.rounds.length,
-        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
-      } as FPGPlayer;
-    });
-  return {
-    name: entry.label,
-    tcode: entry.id,
-    date: "",
-    campo: entry.course,
-    rounds: nR,
-    playerCount: players.length,
-    players,
-  };
+  return buildFPGTournament(
+    { name: entry.label, tcode: entry.id, campo: entry.course },
+    // Metros na linha SI (siLabel="m"); Red Tiger, Golden Palm, Silver Fox,
+    // Blue Monster — o percurso vai para a linha de stats.
+    { par: entry.par, si: entry.metres, meters: entry.metres, course: entry.course, courseRating: entry.cr, slope: entry.slope },
+    entry.players.map((p): IntlPlayerIn => ({
+      id: p.id, name: p.name, pos: p.pos,
+      club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+      country: p.country, total: p.total, toPar: p.toPar, rounds: p.rounds,
+    })),
+  );
 }
 
 
@@ -307,15 +274,7 @@ function doralScorecardOptions(entry: Entry): ScorecardOptions {
   const startHole = entry.players[0]?.rounds[0]?.startingHole === 10 ? 10 : 1;
   // SD só se esconde quando não há CR/slope
   const hasRating = entry.cr != null && entry.slope != null;
-  return {
-    hideHCP: true,
-    hideSD: !hasRating,
-    hideEsc: true,
-    hideFed: true,
-    hideTee: true,
-    clubLabel: "País",
-    startHole,
-  };
+  return intlScorecardOptions({ hideSD: !hasRating, startHole });
 }
 
 /** Mini-resumo de evolução: jogadores que já passaram pelo Doral, com
