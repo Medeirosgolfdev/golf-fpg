@@ -80,9 +80,12 @@ export interface TournamentDetailProps {
   hideHeader?: boolean;
   /** Prever o draw da próxima volta a partir do acumulado (regra FPG). Default true. */
   synthDraws?: boolean;
+  /** Parâmetro do URL que guarda a aba (default «tab»; a /uskids usa «tab»
+   *  para as suas abas e passa outro). */
+  tabParam?: string;
 }
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true }: TournamentDetailProps) {
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab" }: TournamentDetailProps) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -272,7 +275,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   // ("📋 Scorecards", "🎯 Análise") são vistas alternativas e ficam fora do
   // auto-select — quem quer essas vai por link explícito.
   const [searchParams] = useSearchParams();
-  const urlTabKey = searchParams.get("tab");
+  const urlTabKey = searchParams.get(tabParam);
   const urlTabIdx = urlTabKey ? tabs.findIndex(t => t.key === urlTabKey) : -1;
   const lastProgressionIdx = useMemo(() => {
     // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
@@ -530,7 +533,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
         <div className="tab-bar">
           {tabs.map((t, i) => {
             const sp = new URLSearchParams(searchParams);
-            sp.set("tab", t.key);
+            sp.set(tabParam, t.key);
             return (
               <Link
                 key={t.key}

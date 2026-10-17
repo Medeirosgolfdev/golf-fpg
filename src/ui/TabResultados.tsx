@@ -1,15 +1,12 @@
 import { useState, useMemo } from "react";
-// Components: TabResultados + EscalaoTabs + EscalaoSection (Draw R{n} integrado).
+// Components: TabResultados + EscalaoTabs + EscalaoSection (TournamentDetail, com os Draw R{n}).
 import React from "react";
-import { displayName, fmtDate, fmtToPar } from "../utils/format";
+import { displayName, fmtDate, fmtToPar, norm } from "../utils/format";
 import { flag } from "../utils/flagUtils";
-import {
-  ScorecardLB,
-  AccumulatedLB,
-  AllRoundsScorecardLB,
-  expandMultiRound,
-  type Tournament as TATournament,
-} from "../pages/FPGPage";
+import type { Tournament as TATournament } from "../pages/FPGPage";
+import { TournamentDetail, type TournamentDetailProps } from "../pages/fpg/TournamentDetail";
+import DrawTab from "./DrawTab";
+import type { FpgDraw } from "../data/nacional2026Loader";
 import { normName as normNameAuto, type AutoRivalPlayer } from "../data/KIDSdataLoader";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
@@ -19,7 +16,6 @@ import type { TorneioResult, EscalaoResult, ResultsData, GreatgolfData,
   UskidsDrawsData, UskidsDrawRonda } from "./uskidsTypes";
 import { sortEscaloes } from "./uskidsTypes";
 import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx } from "./USKIDSPageHelpers";
-import UskidsDrawTab from "./UskidsDrawTab";
 import { TournExternalLinks } from "./TabCampoDetalhe";
 
 // ─────────────────────────────────────────────
@@ -141,9 +137,37 @@ function escalaoToTournament(
   } as any;
 }
 
+/** Draw de uma volta USKids → formato FPG (DrawTab partilhado). A cidade vai
+ *  na coluna do clube; o país dá a bandeira. */
+function uskidsDrawToFpg(dr: UskidsDrawRonda): FpgDraw {
+  return {
+    groups: dr.grupos.map((g) => ({
+      teeTime: g.tee_time, startHole: g.start_hole ?? null, tee: null,
+      players: g.jogadores.map((j) => ({ nome: displayName(j.nome), clube: j.cidade || null, country: j.pais || null })),
+    })),
+  };
+}
+
+/** Resultado de cada jogador numa volta (para as colunas ±/Tot do draw), por
+ *  nome normalizado. Sem ±par na fonte, calcula-o com o par da volta. */
+function uskidsRoundResults(e: EscalaoResult, ronda: number): Map<string, { gross: number; toPar: number | null }> {
+  const m = new Map<string, { gross: number; toPar: number | null }>();
+  const r = e.rondas.find((x) => x.ronda === ronda);
+  if (!r) return m;
+  const parTotal = r.total_par ?? (r.par?.length ? r.par.reduce((s, v) => s + (v || 0), 0) : null);
+  for (const j of r.leaderboard ?? r.jogadores ?? []) {
+    if (!j.nome || !(j.score > 0)) continue;
+    const toPar = j.to_par ?? (parTotal ? j.score - parTotal : null);
+    m.set(norm(displayName(j.nome)), { gross: j.score, toPar });
+  }
+  return m;
+}
+
+const DRAW_HIDE = { esc: true, fed: true, hcp: true, tee: true, nasc: true };
+
 // ─────────────────────────────────────────────
-// ESCALÃO SECTION — tabs R1 / R2 / Acumulado
-// usa ScorecardLB e AccumulatedLB de FPGPage
+// ESCALÃO SECTION — o detalhe de torneio único (TournamentDetail), com os
+// draws por volta («Draw R{n}» antes da volta n) pelo DrawTab partilhado.
 // ─────────────────────────────────────────────
 function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
   escalao: EscalaoResult;
@@ -153,100 +177,24 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
 }) {
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
 
-  // Procurar o escalão correspondente no drawsData (matching por t + age_group)
-  const drawEscalao = useMemo(() => {
-    if (!drawsData) return null;
-    const td = drawsData.torneios.find(x => x.t === t.t);
-    if (!td) return null;
-    return td.escaloes.find(x => x.age_group === e.age_group) || null;
-  }, [drawsData, t.t, e.age_group]);
-
-  // Mapa ronda → UskidsDrawRonda (só inclui rondas com pelo menos 1 grupo)
-  const drawsByRonda = useMemo(() => {
-    const m = new Map<number, UskidsDrawRonda>();
-    if (!drawEscalao) return m;
-    for (const r of drawEscalao.rondas) {
-      if ((r.grupos || []).length > 0) m.set(r.ronda, r);
-    }
-    return m;
-  }, [drawEscalao]);
-
-  if (!rondasComDados.length && drawsByRonda.size === 0) {
-    return <EmptyState size="sm" message="Sem dados para este escalão." />;
-  }
-
-  // Estrutura de tabs: para cada ronda com dados criamos UMA entry de Draw
-  // (se existir no drawsData) e UMA entry de leaderboard. Depois Resumo +
-  // 📋 Scorecards quando há ≥ 2 rondas. Cada item carrega tipo + índice
-  // associado.
-  type TabEntry =
-    | { kind: "draw"; ronda: number; drawRonda: UskidsDrawRonda }
-    | { kind: "round"; index: number; ronda: number }
-    | { kind: "resumo" }
-    | { kind: "scorecards" };
-  const tabsEntries: TabEntry[] = [];
-  for (let i = 0; i < rondasComDados.length; i++) {
-    const rondaNum = rondasComDados[i].ronda;
-    const dr = drawsByRonda.get(rondaNum);
-    if (dr) tabsEntries.push({ kind: "draw", ronda: rondaNum, drawRonda: dr });
-    tabsEntries.push({ kind: "round", index: i, ronda: rondaNum });
-  }
-  // Caso especial: o draw publicou para uma ronda que ainda não tem leaderboard
-  // (ex: torneio futuro com draw disponível). Acrescentar essas rondas de draw
-  // no início para que apareçam mesmo sem dados de scores.
-  if (!rondasComDados.length) {
-    for (const r of drawsByRonda.values()) {
-      tabsEntries.push({ kind: "draw", ronda: r.ronda, drawRonda: r });
-    }
-  } else {
-    // Apanhar rondas de draw que não correspondem a nenhuma ronda do leaderboard
-    const rondasComLb = new Set(rondasComDados.map(r => r.ronda));
-    for (const r of drawsByRonda.values()) {
-      if (!rondasComLb.has(r.ronda)) {
-        tabsEntries.push({ kind: "draw", ronda: r.ronda, drawRonda: r });
-      }
-    }
-  }
-  const hasAcumulado = rondasComDados.length >= 2;
-  if (hasAcumulado) {
-    tabsEntries.push({ kind: "resumo" });
-    tabsEntries.push({ kind: "scorecards" });
-  }
-
-  // Tab activa por defeito: primeira ronda com Manuel; ou primeiro "round";
-  // ou primeiro draw se não há rondas; ou 0.
-  const defaultTab = (() => {
-    for (let i = 0; i < tabsEntries.length; i++) {
-      const ent = tabsEntries[i];
-      if (ent.kind !== "round") continue;
-      const lb = rondasComDados[ent.index].leaderboard ?? rondasComDados[ent.index].jogadores ?? [];
-      if (lb.some(j => isManuel(j.nome))) return i;
-    }
-    const idxFirstRound = tabsEntries.findIndex(e => e.kind === "round");
-    if (idxFirstRound >= 0) return idxFirstRound;
-    const idxFirstDraw = tabsEntries.findIndex(e => e.kind === "draw");
-    return idxFirstDraw >= 0 ? idxFirstDraw : 0;
-  })();
-  const [tab, setTab] = useState(defaultTab);
+  // Draws do escalão (matching por t + age_group), só rondas com grupos.
+  const roundDraws = useMemo(() => {
+    const td = drawsData?.torneios.find(x => x.t === t.t);
+    const de = td?.escaloes.find(x => x.age_group === e.age_group);
+    return (de?.rondas ?? []).filter(r => (r.grupos || []).length > 0).map(dr => ({
+      round: dr.ronda,
+      render: () => <DrawTab draw={uskidsDrawToFpg(dr)} roundNum={dr.ronda} tournamentDate={t.date_inicio}
+        results={uskidsRoundResults(e, dr.ronda)} hideCols={DRAW_HIDE} clubLabel="Cidade" />,
+    }));
+  }, [drawsData, t, e]);
 
   const tournament = useMemo(() => escalaoToTournament(e, t, arMap), [e, t, arMap]);
-  const expandedT = useMemo(() => expandMultiRound(tournament), [tournament]);
-
-  const activeEntry = tabsEntries[tab] ?? tabsEntries[0];
-  const isAccTab       = activeEntry?.kind === "resumo";
-  const isScorecardTab = activeEntry?.kind === "scorecards";
-  const isDrawTab      = activeEntry?.kind === "draw";
-  const isRoundTab     = activeEntry?.kind === "round";
-
-  const curT = isRoundTab
-    ? (expandedT[activeEntry.index] ?? tournament)
-    : (expandedT[expandedT.length - 1] ?? tournament);
-
-  const campo = (curT as any).campo || tournament.campo || "";
   // Escalão num campo diferente do do torneio (ex.: European Championship, um
   // campo por escalão): o campo vai para a linha de informação, junto do CR e
   // do Slope, em vez de uma linha solta por cima das abas (14/10/2026).
+  const campo = tournament.campo || "";
   const campoProprio = !!campo && campo.trim() !== (t.campo || "").trim();
+  const options = useMemo(() => ({ noInferBlanks: true, showCourse: campoProprio }), [campoProprio]);
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {
@@ -265,15 +213,9 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
     return db;
   }, [arMap, rondasComDados]);
 
-  // Externa URL signupanytime — link "↗" no header do draw.
-  // Aponta para a página `v=results` (que abre OK no browser); o user pode
-  // mudar para "Tee Time" usando o dropdown da própria página signupanytime.
-  // Nota: tentámos `v=teetimes` mas o iframe oficial fica preso em "Loading
-  // Age Group Information" sem nunca renderizar o draw (bug do site).
-  // Preservar o ax que vem do `url_resultados` quando existe (Marco Simone=2739,
-  // El Prat=2760, default=1129).
-  const drawExternalUrl = t.url_resultados ||
-    `https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t.t}`;
+  if (!rondasComDados.length && roundDraws.length === 0) {
+    return <EmptyState size="sm" message="Sem dados para este escalão." />;
+  }
 
   // Notas sobre resultados (ex.: penalização do Manuel no Marco Simone 2026),
   // visíveis por cima das tabelas do escalão — 14/10/2026.
@@ -282,61 +224,14 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
 
   return (
     <div>
-      {/* Campo do escalão só quando é diferente do do torneio (já está no
-          cabeçalho) — 14/10/2026: aparecia duas vezes. */}
-
       {notas.map(j => (
         <div key={j.nome + j._nota} className="notice" style={{ margin: "2px 0 6px", padding: "5px 10px" }}>
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
         </div>
       ))}
-      {/* Sub-tabs Draw R1 / R1 / Draw R2 / R2 / Resumo / 📋 Scorecards */}
-      {tabsEntries.length > 1 && (
-        <div style={{ display: "flex", flexWrap: "wrap", borderBottom: "1px solid var(--border)", marginBottom: 8 }}>
-          {tabsEntries.map((ent, i) => {
-            const label =
-              ent.kind === "draw"       ? `Draw R${ent.ronda}` :
-              ent.kind === "round"      ? `R${ent.ronda}` :
-              ent.kind === "resumo"     ? "Resumo" :
-                                          "📋 Scorecards";
-            return (
-              <button key={i} className={`tab-under${tab === i ? " active" : ""}`} onClick={() => setTab(i)}>
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      )}
-      {(() => {
-        if (isDrawTab && activeEntry.kind === "draw") {
-          // Cruzar com leaderboard da MESMA ronda para popular a coluna Resultado.
-          const lbRound = e.rondas.find(r => r.ronda === activeEntry.ronda);
-          const roundLeaderboard = lbRound?.leaderboard ?? lbRound?.jogadores ?? undefined;
-          // Par total da ronda — usado como fallback se o leaderboard não tem
-          // `to_par` por jogador (acontece em alguns torneios completos antigos).
-          const parTotal = lbRound?.total_par
-            ?? (lbRound?.par?.length ? lbRound.par.reduce((s, v) => s + (v || 0), 0) : null);
-          return (
-            <UskidsDrawTab
-              draw={activeEntry.drawRonda}
-              roundNum={activeEntry.ronda}
-              escalaoNome={e.nome}
-              isManuelEscalao={!!e.is_manuel || e.age_group === t.escalao_manuel}
-              externalUrl={drawExternalUrl}
-              roundLeaderboard={roundLeaderboard}
-              roundParTotal={parTotal}
-            />
-          );
-        }
-        if (isScorecardTab) {
-          return <AllRoundsScorecardLB tournament={tournament} escLookup={new Map()} playersDB={kidsDB} />;
-        }
-        if (isAccTab) {
-          return <AccumulatedLB tournament={curT} nRounds={rondasComDados.length} escLookup={new Map()} playersDB={kidsDB} showCourse={campoProprio} />;
-        }
-        return <ScorecardLB tournament={curT} escLookup={new Map()} playersDB={kidsDB} siLabel="m" options={{ noInferBlanks: true, showCourse: campoProprio }} />;
-      })()}
-
+      {/* «rt»: a /uskids já usa «tab» para as abas da página. */}
+      <TournamentDetail tournament={tournament} escLookup={new Map()} playersDB={kidsDB as unknown as TournamentDetailProps["playersDB"]}
+        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} tabParam="rt" />
     </div>
   );
 }
