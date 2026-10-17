@@ -30,23 +30,20 @@ import { isManuelByName as isM } from "../constants/manuel";
  *  jogador perdia o destaque na aba Match Play da mesma página. */
 import { isPT } from "../utils/ptPlayers";
 import ExtLink from "../ui/ExternalLink";
-import { gf, flagOrEmpty, normPaisDisplay } from "../utils/flagUtils";
+import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import DetailHeader from "../ui/DetailHeader";
 import LoadingState from "../ui/LoadingState";
-import { ManuelPill } from "../ui/PillBadge";
 import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitLink, CircuitSpecialItem } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import type { MatchplayFile, MatchplayRound, MatchplayTeamMatch } from "../ui/circuit/matchplayTypes";
 import { FFGPlayersView } from "./ffg/PlayersView";
-import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
-import SortableHdr from "../ui/SortableHdr";
 import DrawTab from "../ui/DrawTab";
-import type { FpgDraw } from "../data/nacional2026Loader";
-import { useSort } from "../hooks/useSort";
+import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
+import TotalsResumo from "../ui/circuit/TotalsResumo";
 import { ffgEscalaoCanonico } from "../utils/ffgEscalao";
 
 /* ── Tipos do ficheiro novo (1 torneio = 1 ficheiro) ──────────── */
@@ -478,10 +475,6 @@ function ffgCountry(p: { nationality?: string | null; flag?: string | null }): s
   if (!c) return null;
   return c === "FRA" ? "FR" : c;
 }
-/** Bandeira só quando há país real (senão string vazia — sem 🏳️ nem FR falso). */
-function ffgFlag(p: { nationality?: string | null; flag?: string | null }): string {
-  return flagOrEmpty(ffgCountry(p));
-}
 
 /* ── Legenda das siglas de divisão / categoria FFG ─────────────
    B = Benjamin (~13-14 anos), M = Minime (~14-15), C = Cadet (~16-17)
@@ -908,342 +901,40 @@ node scripts/parse-vademecum-distances.js`}
     </div>
   );
 }
-/* ── LGPIDFView (PDF-only — mostra inscritos, tee times, course map) ─ */
-function LGPIDFView({ data }: { data: LGPIDFTournament }) {
-  type TabKey = "inscritos" | "tee-times" | "course-map" | "leaderboard";
-  // Default tab: a primeira fonte com dados
-  const defaultTab: TabKey =
-    data.inscritosPdfs.length > 0 ? "inscritos" :
-    data.teeTimePdfs.length > 0 ? "tee-times" :
-    data.courseMapPdfs.length > 0 ? "course-map" :
-    "leaderboard";
-  const [tab, setTab] = useState<TabKey>(defaultTab);
+/* ── LGPIDF (PDFs Paris-Île-de-France) → os componentes partilhados ──────
+ * Inscritos → AdmissionsTab, tee times → DrawTab, leaderboard (só totais) →
+ * TotalsResumo; o mapa do campo fica numa aba própria da divisão. */
 
-  const totalInscritos = data.inscritosPdfs.reduce((s, p) => s + p.players.length, 0);
-  const totalTeeTimeGroups = data.teeTimePdfs.reduce((s, p) => s + p.groups.length, 0);
-  const totalCourseHoles = data.courseMapPdfs.reduce((s, p) => s + p.holes.length, 0);
-
-  const tabs: Array<{ key: TabKey; label: string; count: number; show: boolean }> = [
-    { key: "inscritos", label: "📋 Inscritos", count: totalInscritos, show: data.inscritosPdfs.length > 0 },
-    { key: "tee-times", label: "🕐 Tee times", count: totalTeeTimeGroups, show: data.teeTimePdfs.length > 0 },
-    { key: "course-map", label: "📐 Mapa do campo", count: totalCourseHoles, show: data.courseMapPdfs.length > 0 },
-    { key: "leaderboard", label: "🏆 Leaderboard", count: data.players.length, show: data.players.length > 0 },
-  ];
-
-  // Formatar datas (PT)
-  const fmtDate = (iso?: string | null) => {
-    if (!iso) return null;
-    const [y, m, d] = iso.split("-");
-    return `${d}/${m}/${y}`;
-  };
-  const dateStr = data.dateStart && data.dateEnd && data.dateStart !== data.dateEnd
-    ? `${fmtDate(data.dateStart)} – ${fmtDate(data.dateEnd)}`
-    : fmtDate(data.dateStart);
-
-  return (
-    <div className="lgpidf-view">
-      <div className="muted fs-10 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
-        <span>🇫🇷 Paris-Île-de-France</span>
-        {dateStr && <span>· 📅 {dateStr}</span>}
-        {data.course?.name && <span>· 📍 {data.course.name}</span>}
-        {data.course && data.course.metersTotal > 0 && (
-          <span>· {data.course.metersTotal.toLocaleString("pt-PT")} m</span>
-        )}
-      </div>
-      {data.divisions && data.divisions.length > 0 && (
-        <div className="fs-10 mb-8" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-          <span className="muted">Divisões:</span>
-          {data.divisions.map((d) => (
-            <span key={d} className="chip" style={{ fontSize: "var(--fs-10)" }} title={divisionLabel(d)}>
-              <strong>{d}</strong> <span className="muted">— {divisionLabel(d)}</span>
-            </span>
-          ))}
-        </div>
-      )}
-
-      {/* Lista de PDFs descarregáveis */}
-      {data.allPdfs && data.allPdfs.length > 0 && (
-        <div className="mb-12" style={{ display: "flex", flexWrap: "wrap", gap: 6, alignItems: "center" }}>
-          <span className="muted fs-10">📁 PDFs:</span>
-          {data.allPdfs.map((p) => (
-            <ExtLink key={p.filename} href={p.url} className="chip fs-10" style={{ textDecoration: "none" }}>
-              📄 {p.kind}{p.category ? ` · ${p.category}` : ""}
-            </ExtLink>
-          ))}
-        </div>
-      )}
-
-      {/* Tabs */}
-      <div className="mb-12" style={{ display: "flex", gap: 8, borderBottom: "1px solid var(--border)" }}>
-        {tabs.filter((t) => t.show).map((t) => (
-          <button
-            key={t.key}
-            className={`tab-under ${tab === t.key ? "active" : ""}`}
-            onClick={() => setTab(t.key)}
-            style={{ padding: "8px 12px", border: "none", background: "none", cursor: "pointer", fontSize: "var(--fs-13)" }}
-          >
-            {t.label} <span className="muted">({t.count})</span>
-          </button>
-        ))}
-      </div>
-
-      {tab === "inscritos" && <LGPIDFInscritosTab data={data} />}
-      {tab === "tee-times" && <LGPIDFTeeTimesTab data={data} />}
-      {tab === "course-map" && <LGPIDFCourseMapTab data={data} />}
-      {tab === "leaderboard" && <LGPIDFLeaderboardTab data={data} />}
-    </div>
-  );
+function lgpidfAdmissions(data: LGPIDFTournament): FpgAdmissions | undefined {
+  const players: FpgAdmissionPlayer[] = data.inscritosPdfs.flatMap((pdf) => pdf.players.map((p): FpgAdmissionPlayer => ({
+    pos: p.rank, fed: null, nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp,
+    vac: null, dataInscricao: null, status: "confirmed",
+    country: ffgCountry(p as { nationality?: string | null }), escalao: p.category ?? pdf.category ?? null,
+    tags: [p.wildCard && "WC", p.scratch && "SCR"].filter(Boolean) as string[],
+  })));
+  return players.length ? { players, totalInscritos: players.length } : undefined;
 }
 
-function LGPIDFInscritosTab({ data }: { data: LGPIDFTournament }) {
-  type SortKey = "pos" | "nome" | "club" | "category" | "hcp";
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos");
-  const [catFilter, setCatFilter] = useState<string>("all");
-
-  // Concatenar todas as listas de inscritos (1 PDF pode ter várias categorias)
-  const all = useMemo(() => {
-    const list: LGPIDFInscrito[] = [];
-    for (const pdf of data.inscritosPdfs) for (const p of pdf.players) list.push(p);
-    return list;
-  }, [data]);
-
-  const allCategories = useMemo(
-    () => [...new Set(all.map((p) => p.category || ""))].filter(Boolean).sort(),
-    [all],
-  );
-
-  const filtered = useMemo(
-    () => catFilter === "all" ? all : all.filter((p) => p.category === catFilter),
-    [all, catFilter],
-  );
-
-  const sorted = useMemo(() => {
-    const list = [...filtered];
-    const mult = sortDir === "asc" ? 1 : -1;
-    list.sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "pos":      v = (a.rank ?? 999) - (b.rank ?? 999); break;
-        case "nome":     v = a.name.localeCompare(b.name); break;
-        case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
-        case "category": v = (a.category || "").localeCompare(b.category || ""); break;
-        case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
-      }
-      return mult * v;
-    });
-    return list;
-  }, [filtered, sortKey, sortDir]);
-
-  const rows: ScorecardRow[] = useMemo(() => sorted.map((p, i) => {
-    const manuel = isM(p.name);
-    return {
-      key: `${p.name}-${i}`,
-      pos: p.scratch ? "SCR" : (p.rank ?? "—"),
-      gross: 0,
-      toPar: null,
-      scores: [],
-      isManuel: manuel,
-      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
-      sortPos: p.rank,
-      sortName: normalizeName(p.name),
-      nameContent: (
-        <>
-          <span style={{ marginRight: 4 }}>{ffgFlag(p)}</span>
-          <span className="fw-700">{normalizeName(p.name)}</span>
-          {manuel && <> {" "}<ManuelPill /></>}
-        </>
-      ),
-      prefixCells: (
-        <>
-          <td className="lb-club" title={p.club}>{p.club || "—"}</td>
-          <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.category || "—"}</td>
-        </>
-      ),
-      postScorecardCells: (
-        <td style={{ padding: "6px 8px", textAlign: "center" }}>
-          {p.wildCard && <span className="chip" style={{ background: "var(--accent, #2563eb)", color: "#fff", fontSize: "var(--fs-10)" }}>WC</span>}
-          {p.scratch && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)" }}>SCR</span>}
-          {!p.wildCard && !p.scratch && <span className="muted fs-10">—</span>}
-        </td>
-      ),
-    } as ScorecardRow;
-  }), [sorted]);
-
-  if (!all.length) return <div className="muted">Sem inscritos.</div>;
-
-  const prefixHeaderCells = (
-    <>
-      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">Idx</SortableHdr>
-      <SortableHdr k="category" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">CAT.</SortableHdr>
-    </>
-  );
-
-  const postScorecardHeaderCells = (
-    <th style={{ padding: "7px 8px", textAlign: "center" }}>WC/SCR</th>
-  );
-
-  const filterBar = (
-    <div className="detail-toolbar" style={{ flexWrap: "wrap", gap: 8 }}>
-      {allCategories.length > 1 && (
-        <>
-          <span className="fs-12 fw-700">Categoria:</span>
-          <select className="input" value={catFilter} onChange={(e) => setCatFilter(e.target.value)} style={{ maxWidth: 240 }}>
-            <option value="all">Todas ({all.length})</option>
-            {allCategories.map((c) => (
-              <option key={c} value={c}>
-                {c} — {divisionLabel(c)} ({all.filter((p) => p.category === c).length})
-              </option>
-            ))}
-          </select>
-        </>
-      )}
-      <span className="muted fs-12">{sorted.length} inscritos</span>
-      <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-        {data.inscritosPdfs.map((pdf) => (
-          <ExtLink key={pdf.pdfFilename} href={pdf.pdfUrl} className="fs-11" style={{ color: "var(--chart-2)" }}>
-            📄 PDF ↗
-          </ExtLink>
-        ))}
-      </div>
-    </div>
-  );
-
-  return (
-    <ScorecardLeaderboard
-      par={[]}
-      rows={rows}
-      prefixHeaderCells={prefixHeaderCells}
-      postScorecardHeaderCells={postScorecardHeaderCells}
-      postScorecardColCount={1}
-      showScorecard={false}
-      filterBar={filterBar}
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("nome")}
-      activeSortKey={sortKey}
-      activeSortDir={sortDir}
-    />
-  );
+/** Um PDF de horários por volta (pela ordem publicada). */
+function lgpidfDraws(data: LGPIDFTournament): FpgDraw[] {
+  return data.teeTimePdfs.map((pdf) => ({
+    groups: pdf.groups.map((g): FpgDrawFlight => ({
+      teeTime: g.players.find((p) => p.teeTime)?.teeTime ?? "",
+      startHole: g.players.find((p) => p.startHole != null)?.startHole ?? null,
+      tee: null,
+      players: g.players.map((p) => ({ nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp ?? null })),
+    })),
+  }));
 }
 
-function LGPIDFTeeTimesTab({ data }: { data: LGPIDFTournament }) {
-  type SortKey = "pos" | "nome" | "club" | "category" | "hcp" | "tee" | "hole";
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("tee");
-
-  // Flatten todos os PDFs em rows de jogadores
-  const allFlat = useMemo(() => {
-    const list: Array<LGPIDFTeeTimePlayer & { groupNumber: number; pdfFilename: string }> = [];
-    for (const pdf of data.teeTimePdfs) {
-      for (const g of pdf.groups) {
-        for (const p of g.players) {
-          list.push({ ...p, groupNumber: g.groupNumber, pdfFilename: pdf.pdfFilename });
-        }
-      }
-    }
-    return list;
-  }, [data]);
-
-  const sorted = useMemo(() => {
-    const list = [...allFlat];
-    const mult = sortDir === "asc" ? 1 : -1;
-    list.sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "pos":      v = a.groupNumber - b.groupNumber; break;
-        case "nome":     v = a.name.localeCompare(b.name); break;
-        case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
-        case "category": v = (a.category || "").localeCompare(b.category || ""); break;
-        case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
-        case "tee":      v = (a.teeTime || "99:99").localeCompare(b.teeTime || "99:99"); break;
-        case "hole":     v = (a.startHole ?? 99) - (b.startHole ?? 99); break;
-      }
-      return mult * v;
-    });
-    return list;
-  }, [allFlat, sortKey, sortDir]);
-
-  const rows: ScorecardRow[] = useMemo(() => sorted.map((p, i) => {
-    const manuel = isM(p.name);
-    return {
-      key: `${p.name}-${i}`,
-      pos: p.groupNumber,
-      gross: 0,
-      toPar: null,
-      scores: [],
-      isManuel: manuel,
-      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
-      sortPos: p.groupNumber,
-      sortName: normalizeName(p.name),
-      nameContent: (
-        <>
-          <span style={{ marginRight: 4 }}>{ffgFlag(p as { nationality?: string | null; flag?: string | null })}</span>
-          <span className="fw-700">{normalizeName(p.name)}</span>
-          {manuel && <> {" "}<ManuelPill /></>}
-        </>
-      ),
-      prefixCells: (
-        <>
-          <td className="lb-club" title={p.club}>{p.club || "—"}</td>
-          <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.category || "—"}</td>
-        </>
-      ),
-      postScorecardCells: (
-        <>
-          <td style={{ padding: "6px 8px", textAlign: "center", fontWeight: 600 }}>{p.teeTime || "—"}</td>
-          <td style={{ padding: "6px 8px", textAlign: "center" }}>{p.startHole != null ? `T${p.startHole}` : "—"}</td>
-        </>
-      ),
-    } as ScorecardRow;
-  }), [sorted]);
-
-  if (!allFlat.length) return <div className="muted">Sem tee-times.</div>;
-
-  const prefixHeaderCells = (
-    <>
-      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">Idx</SortableHdr>
-      <SortableHdr k="category" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">CAT.</SortableHdr>
-    </>
-  );
-
-  const postScorecardHeaderCells = (
-    <>
-      <SortableHdr k="tee" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>HORA</SortableHdr>
-      <SortableHdr k="hole" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "center" }}>TEE</SortableHdr>
-    </>
-  );
-
-  const filterBar = (
-    <div className="detail-toolbar">
-      <span className="muted fs-12">
-        {allFlat.length} jogadores em {data.teeTimePdfs.reduce((s, p) => s + p.groups.length, 0)} grupos
-      </span>
-      <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-        {data.teeTimePdfs.map((pdf) => (
-          <ExtLink key={pdf.pdfFilename} href={pdf.pdfUrl} className="fs-11" style={{ color: "var(--chart-2)" }}>
-            📄 {pdf.pdfKind} ↗
-          </ExtLink>
-        ))}
-      </div>
-    </div>
-  );
-
+/** Par 72 assumido (18 buracos — standard nos Grand Prix Jeunes franceses):
+ *  o PDF de resultados não traz o par. */
+function LGPIDFTotals({ data }: { data: LGPIDFTournament }) {
   return (
-    <ScorecardLeaderboard
-      par={[]}
-      rows={rows}
-      prefixHeaderCells={prefixHeaderCells}
-      postScorecardHeaderCells={postScorecardHeaderCells}
-      postScorecardColCount={2}
-      showScorecard={false}
-      filterBar={filterBar}
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("nome")}
-      activeSortKey={sortKey}
-      activeSortDir={sortDir}
-    />
+    <TotalsResumo parPerRound={72} tournamentDate={data.dateStart ?? undefined}
+      players={data.players.map((p) => ({ name: normalizeName(p.name), country: p.country ?? null, club: p.club ?? null,
+        hcp: p.hcp ?? null, pos: p.pos ?? null, rounds: [p.r1 ?? null, p.r2 ?? null].slice(0, data.rounds || 2), total: p.total ?? null }))}
+      notice={<span className="muted fs-10">* ±Par com par 72 assumido — o PDF de resultados não traz o par do campo.</span>} />
   );
 }
 
@@ -1288,144 +979,6 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
   );
 }
 
-function LGPIDFLeaderboardTab({ data }: { data: LGPIDFTournament }) {
-  type SortKey = "pos" | "nome" | "club" | "division" | "hcp" | "r1" | "r2" | "total";
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("total");
-  const [divFilter, setDivFilter] = useState<string>("all");
-
-  const allDivisions = useMemo(
-    () => [...new Set(data.players.map((p) => p.division || ""))].filter(Boolean).sort(),
-    [data.players],
-  );
-
-  const filtered = useMemo(
-    () => divFilter === "all" ? data.players : data.players.filter((p) => p.division === divFilter),
-    [data.players, divFilter],
-  );
-
-  const sorted = useMemo(() => {
-    const list = [...filtered];
-    const mult = sortDir === "asc" ? 1 : -1;
-    list.sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "pos":      v = (a.pos ?? 999) - (b.pos ?? 999); break;
-        case "nome":     v = a.name.localeCompare(b.name); break;
-        case "club":     v = (a.club || "").localeCompare(b.club || ""); break;
-        case "division": v = (a.division || "").localeCompare(b.division || ""); break;
-        case "hcp":      v = (a.hcp ?? 99) - (b.hcp ?? 99); break;
-        case "r1":       v = (a.r1 ?? 999) - (b.r1 ?? 999); break;
-        case "r2":       v = (a.r2 ?? 999) - (b.r2 ?? 999); break;
-        case "total":    v = (a.total ?? 999) - (b.total ?? 999); break;
-      }
-      return mult * v;
-    });
-    return list;
-  }, [filtered, sortKey, sortDir]);
-
-  // Par assumido por torneio: 72 é standard nos GP Jeunes franceses (18 buracos).
-  // Como o PDF não nos dá par real, calculamos to-par como gross - 72.
-  // Marcado na UI com asterisco e nota explicativa.
-  const ASSUMED_PAR_18 = 72;
-  const ASSUMED_PAR_TOTAL = data.rounds * ASSUMED_PAR_18;
-
-  const rows: ScorecardRow[] = useMemo(() => sorted.map((p, i) => {
-    const manuel = isM(p.name);
-    const gross = p.total ?? 0;
-    const toPar = gross > 0 ? gross - ASSUMED_PAR_TOTAL : null;
-    return {
-      key: `${p.name}-${i}`,
-      pos: p.pos ?? (i + 1),
-      gross,
-      toPar,  // gross - par(72×rondas) — PAR ASSUMIDO, ver nota no filterBar
-      scores: [],
-      isManuel: manuel,
-      isPortuguese: !manuel && isPT((p as any).nationality, (p as any).flag, p.name),
-      sortPos: p.pos,
-      sortName: normalizeName(p.name),
-      nameContent: (
-        <>
-          <span style={{ marginRight: 4 }}>{ffgFlag(p as { nationality?: string | null; flag?: string | null })}</span>
-          <span className="fw-700">{normalizeName(p.name)}</span>
-          {manuel && <> {" "}<ManuelPill /></>}
-          {p.dnf && <span className="chip" style={{ marginLeft: 4, fontSize: "var(--fs-10)", background: "var(--bg-muted)" }}>DNF</span>}
-        </>
-      ),
-      prefixCells: (
-        <>
-          <td className="lb-club" title={p.club}>{p.club || "—"}</td>
-          <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>
-          <td className="lb-tee" style={{ fontSize: "var(--fs-11)" }}>{p.division || "—"}</td>
-        </>
-      ),
-      postScorecardCells: (
-        <>
-          <td style={{ padding: "6px 8px", textAlign: "right" }}>{p.r1 ?? "—"}</td>
-          <td style={{ padding: "6px 8px", textAlign: "right" }}>{p.r2 ?? "—"}</td>
-        </>
-      ),
-    } as ScorecardRow;
-  }), [sorted, ASSUMED_PAR_TOTAL]);
-
-  if (!data.players.length) return <div className="muted">Sem leaderboard ainda.</div>;
-
-  const prefixHeaderCells = (
-    <>
-      <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">CLUBE</SortableHdr>
-      <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">Idx</SortableHdr>
-      <SortableHdr k="division" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-tee">DIV.</SortableHdr>
-    </>
-  );
-
-  const postScorecardHeaderCells = (
-    <>
-      <SortableHdr k="r1" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "right" }}>R1</SortableHdr>
-      <SortableHdr k="r2" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} style={{ padding: "7px 8px", textAlign: "right" }}>R2</SortableHdr>
-    </>
-  );
-
-  const filterBar = (
-    <div className="detail-toolbar" style={{ flexWrap: "wrap", gap: 8 }}>
-      {allDivisions.length > 1 && (
-        <>
-          <span className="fs-12 fw-700">Divisão:</span>
-          <select className="input" value={divFilter} onChange={(e) => setDivFilter(e.target.value)} style={{ maxWidth: 240 }}>
-            <option value="all">Todas ({data.players.length})</option>
-            {allDivisions.map((d) => (
-              <option key={d} value={d}>
-                {d} — {divisionLabel(d)} ({data.players.filter((p) => p.division === d).length})
-              </option>
-            ))}
-          </select>
-        </>
-      )}
-      <span className="muted fs-12">
-        {sorted.length} jogadores · ± calculado vs par {ASSUMED_PAR_18}* · scores validados por soma R1+R2=Total
-      </span>
-    </div>
-  );
-
-  return (
-    <>
-      <ScorecardLeaderboard
-        par={[]}
-        rows={rows}
-        prefixHeaderCells={prefixHeaderCells}
-        postScorecardHeaderCells={postScorecardHeaderCells}
-        postScorecardColCount={2}
-        showScorecard={false}
-        filterBar={filterBar}
-        onSortPos={() => toggleSort("pos")}
-        onSortName={() => toggleSort("nome")}
-        activeSortKey={sortKey}
-        activeSortDir={sortDir}
-      />
-      <div className="muted fs-10 mt-8" style={{ padding: "0 8px" }}>
-        * Par 72 assumido (standard nos Grand Prix Jeunes franceses 18 buracos). Distância real do campo só está disponível quando o PDF do mapa do campo é descarregado.
-      </div>
-    </>
-  );
-}
 
 /* ═══════════════════════════════════════════════════════════════
    FFGPage (NOVO) — assente no CircuitShell partilhado.
@@ -1833,7 +1386,16 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
       key: "main",
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
-      customResults: <LGPIDFView data={data} />,
+      customResults: data.players.length ? <LGPIDFTotals data={data} /> : undefined,
+      admissions: lgpidfAdmissions(data),
+      roundDraws: lgpidfDraws(data).map((draw, i) => ({
+        round: i + 1,
+        render: () => <DrawTab draw={draw} roundNum={i + 1} tournamentDate={data.dateStart ?? null} />,
+      })),
+      extraSections: data.courseMapPdfs.length
+        ? [{ key: "course-map", label: "📐 Mapa do campo", content: <LGPIDFCourseMapTab data={data} /> }]
+        : undefined,
+      links: (data.allPdfs ?? []).map((p) => ({ label: `${p.kind}${p.category ? ` · ${p.category}` : ""}`, url: p.url, icon: "📄", title: p.filename })),
     }],
   };
 }

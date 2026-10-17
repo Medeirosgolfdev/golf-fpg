@@ -14,7 +14,7 @@
 
 import { useMemo, useState } from "react";
 import type { FpgAdmissions } from "../data/nacional2026Loader";
-import { fmtHcp, ageAtDate, escalaoAtDate } from "../utils/format";
+import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
@@ -88,7 +88,7 @@ export default function AdmissionsTab({
     // sem escalao e sem marcacao calculada pelo regulamento.
     const dob: string | undefined =
       p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob;
-    const dobYear = dob ? parseInt(dob.slice(0, 4), 10) : null;
+    const dobYear = birthYearOf(dob);
     let clube = p.clube;
     if (!clube && bd) {
       const club = typeof bd.club === "string" ? bd.club : bd.club?.short;
@@ -199,6 +199,9 @@ export default function AdmissionsTab({
           highlight={manuel}
         />
       );
+      const nameWithTags = p.tags?.length
+        ? <span className="inline-flex items-center gap-4">{nameNode}{p.tags.map(t => <span key={t} className="chip fs-10">{t}</span>)}</span>
+        : nameNode;
       return {
         key: `${p.fed ?? p.nome}-${i}`,
         pos: isDesist ? <span className="muted">–</span> : numPos,
@@ -212,8 +215,8 @@ export default function AdmissionsTab({
           : isDesist ? "color-mix(in srgb, var(--text-muted) 10%, transparent)"
           : isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
         nameContent: isDesist
-          ? <span style={{ textDecoration: "line-through", opacity: 0.6 }}>{nameNode}</span>
-          : nameNode,
+          ? <span style={{ textDecoration: "line-through", opacity: 0.6 }}>{nameWithTags}</span>
+          : nameWithTags,
         prefixCells: (
           <>
             <td className="lb-esc">

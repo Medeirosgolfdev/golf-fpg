@@ -28,7 +28,6 @@ import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
-import AdmissionsTab from "../ui/AdmissionsTab";
 import { loadFedByName, fedByNameKeys, type FedByNameEntry } from "../ui/InscricoesComponents";
 import { loadGolfboxPlayers, golfboxLookup, type GolfboxEntry } from "../ui/InscricoesComponents";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
@@ -36,7 +35,7 @@ import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FP
 import { RFEGFederationsView } from "./rfeg/FederationsView";
 import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitInscritoRow, CircuitSex, CircuitLink } from "../ui/circuit/types";
+import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex, CircuitLink } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { vetKey } from "../utils/normName";
 
@@ -203,17 +202,6 @@ interface RFEGDetail {
     }>;
   }>;
 }
-
-type ListKind = "admitidos" | "reservas" | "bajas" | "invitados" | "noAdmitidos" | "provisional";
-
-const LIST_LABELS: Record<ListKind, string> = {
-  admitidos: "Admitidos",
-  reservas: "Reservas",
-  bajas: "Bajas",
-  invitados: "Invitados",
-  noAdmitidos: "No admitidos",
-  provisional: "Provisional",
-};
 
 /* ── Helpers ───────────────────────────────────────────── */
 
@@ -2100,21 +2088,6 @@ function rfegPlayerFlag(name: string | null | undefined, pais: string | null | u
   return rfegForeignFlag(pais);
 }
 
-function rfegInscritoRow(p: RFEGPlayer): CircuitInscritoRow {
-  return {
-    pos: p.pos ?? undefined,
-    name: p.name ? formatPlayerName(p.name) : "—",
-    club: p.club ? displayName(p.club) : undefined,
-    fed: p.licencia ?? undefined,
-    hcp: p.hcp,
-    escalao: p.catEdad ?? undefined,
-    sex: p.sexo === "M" || p.sexo === "F" ? p.sexo : undefined,
-    country: rfegPlayerFlag(p.name, p.pais),
-    dob: p.dob ?? undefined,
-    status: p.estado ?? undefined,
-  };
-}
-
 function rfegSourceUrl(t: RFEGIndexEntry): string {
   return t.source === "rfegolf"
     ? `https://rfegolf.es/CompetenciaPaginas/CompetitionMicrosite.aspx?CompId=${t.compId}`
@@ -2312,9 +2285,6 @@ async function rfegLoadDivisions(
     : rfegolfToFPGTournament(data, dob);
   else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dob) as unknown as FPGTournament | null;
 
-  const lists = (Object.keys(LIST_LABELS) as ListKind[])
-    .map((k) => ({ key: k, label: LIST_LABELS[k], players: (data.inscritos[k] || []).map(rfegInscritoRow) }))
-    .filter((l) => l.players.length > 0);
 
   // Links de PDF originais — o RFEGolf publica ~65% dos resultados só em PDF.
   // Cada grupo de resultados traz o seu pdfUrl; juntamos os únicos como links
@@ -2353,11 +2323,9 @@ async function rfegLoadDivisions(
     }
   }
 
-  // Unificação com a FPGPage: TODAS as fontes España renderizam os inscritos e o
-  // draw pelos MESMOS componentes partilhados (AdmissionsTab / DrawTab via
-  // DrawSaidaView), via os hooks renderInscritos/renderDrawSection do CircuitShell
-  // (mesmo padrão que a DrivePage usa). hidePostCols esconde VAC/Registo/Status
-  // (que o NextCaddy/España não têm). Cada jogador traz dob/escalão/país/tee como
+  // Unificação com a FPGPage: TODAS as fontes España entregam as inscrições no
+  // formato FPG (o shell desenha-as com o AdmissionsTab partilhado) e o draw
+  // pelo DrawTab (via DrawSaidaView). Cada jogador traz dob/escalão/país/tee como
   // overrides; o tee mostra a distância do cartão (rapazes/raparigas jogam tees ≠).
   const buildAdmissions = (): FpgAdmissions => {
     // ⚠ As listas RFEG sobrepõem-se: `provisional` é o SUPERCONJUNTO (admitidos ∪
@@ -2442,10 +2410,7 @@ async function rfegLoadDivisions(
     sex: rfegSex(t.sex),
     results: results ?? undefined,
     customResults,
-    inscritos: lists.length ? { lists } : undefined,
-    renderInscritos: lists.length
-      ? () => <AdmissionsTab admissions={buildAdmissions()} date={esDateToIso(data.meta.dateStart) ?? data.meta.dateStart} hidePostCols />
-      : undefined,
+    admissions: buildAdmissions(),
     // Draw por ronda intercalado (ver roundDraws acima) — sem aba "Draw" agregada.
     roundDraws: roundDraws.length ? roundDraws : undefined,
     links: links.length ? links : undefined,

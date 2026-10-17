@@ -33,6 +33,7 @@ export interface FpgAdmissionPlayer {
   country?: string | null;   // código flag-icon (ex.: "ES")
   escalao?: string | null;   // escalão já resolvido (ex.: "Alevín")
   teeName?: string | null;   // tee do jogador (ex.: "5498 m") — texto, não cor
+  tags?: string[];           // marcas da fonte ao lado do nome (ex.: LGPIDF "WC", "SCR")
   // Listas de apurados (finais Drive): pontos do ranking que o apurou, a posição
   // nesse ranking ("1º Madeira", "Net 2º") e o detalhe para o tooltip.
   regiao?: string | null;

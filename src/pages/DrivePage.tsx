@@ -1110,12 +1110,9 @@ function DriveContent() {
     const ents = buildDriveEntries(src as any);
     // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
     // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
-    // inscrições/draws sozinho por ccode-tcode. Limpamos as secções genéricas do
-    // shell para não aparecerem section-tabs duplicados.
+    // inscrições/draws sozinho por ccode-tcode.
     for (const e of ents) {
       for (const d of e.divisions ?? []) {
-        d.inscritos = undefined;
-        d.draw = undefined;
         const t = d.results as any;
         const eqData = equipasIdx[`${t?.ccode}-${t?.tcode}`];
         const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <DriveEquipasTab data={eqData} /> } : null;
