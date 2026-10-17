@@ -23,7 +23,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "../context/AppContext";
-import { norm, shortDate } from "../utils/format";
+import { norm, shortDate, ageAtDate, todayIso } from "../utils/format";
 import { gf } from "../utils/flagUtils";
 import { hcpDisplay } from "../utils/playerUtils";
 import {
@@ -109,17 +109,6 @@ type Row = {
   ppRoundsYear: number | null; // cartões P&P no ano (actividade)
   ppOnly: boolean;             // só existe no mundo P&P (não está na lista de golfe)
 };
-
-function calcAge(dob: string | null): number | null {
-  if (!dob) return null;
-  const d = new Date(dob);
-  if (isNaN(d.getTime())) return null;
-  const today = new Date();
-  let age = today.getFullYear() - d.getFullYear();
-  const m = today.getMonth() - d.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < d.getDate())) age--;
-  return age;
-}
 
 function fmtSD(v: number | null): string {
   if (v == null) return "—";
@@ -233,7 +222,7 @@ export default function JogadoresListPage() {
         clubShort: f?.acronym || pClub?.short || "",
         clubLong: f?.club_name || pClub?.long || "",
         dob,
-        age: calcAge(dob),
+        age: ageAtDate(dob, todayIso()),
         hcp: f?.hcp_exact ?? p.hcp ?? null,
         hcpStatus: f?.hcp_status || "",
         hcpStatusId: f?.hcp_status_id ?? 0,
@@ -270,7 +259,7 @@ export default function JogadoresListPage() {
         clubShort: ppr.acronym || "",
         clubLong: ppr.club || "",
         dob: ppr.dob || null,
-        age: calcAge(ppr.dob || null),
+        age: ageAtDate(ppr.dob || null, todayIso()),
         hcp: null,
         hcpStatus: "",
         hcpStatusId: 0,

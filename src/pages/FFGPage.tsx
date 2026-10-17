@@ -30,7 +30,7 @@ import { isManuelByName as isM } from "../constants/manuel";
  *  jogador perdia o destaque na aba Match Play da mesma página. */
 import { isPT } from "../utils/ptPlayers";
 import ExtLink from "../ui/ExternalLink";
-import { gf, normPaisDisplay } from "../utils/flagUtils";
+import { gf, flagOrEmpty, normPaisDisplay } from "../utils/flagUtils";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
 import DetailHeader from "../ui/DetailHeader";
@@ -480,8 +480,7 @@ function ffgCountry(p: { nationality?: string | null; flag?: string | null }): s
 }
 /** Bandeira só quando há país real (senão string vazia — sem 🏳️ nem FR falso). */
 function ffgFlag(p: { nationality?: string | null; flag?: string | null }): string {
-  const c = ffgCountry(p);
-  return c ? gf(c) : "";
+  return flagOrEmpty(ffgCountry(p));
 }
 
 /* ── Legenda das siglas de divisão / categoria FFG ─────────────

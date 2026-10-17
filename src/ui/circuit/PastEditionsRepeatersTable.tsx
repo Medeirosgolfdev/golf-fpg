@@ -13,14 +13,10 @@ import { normName } from "../../utils/normName";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
-import { fmtToPar } from "../../utils/format";
+import { fmtToPar, shortDateSlash } from "../../utils/format";
+import { clubFlagPrefix } from "../../utils/flagUtils";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import type { RepeatersResult, RepeaterRow } from "./repeaters";
-
-function flagOf(club?: string | null): string {
-  const first = (club || "").trim().split(/\s+/)[0] || "";
-  return /^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}]/u.test(first) ? first + " " : "";
-}
 
 /** Resumo do kids2 escrito pelo agregador (`scripts/aggregator/util/form.js`):
  *  últimos torneios [data, ±par, buracos, lugar, field] e confrontos com o Manuel. */
@@ -34,7 +30,6 @@ function formaMedia(f: JuniorForm | undefined): number | null {
   if (!r.length) return null;
   return Math.round((r.reduce((s, x) => s + (x[1] * 18) / x[2], 0) / r.length) * 10) / 10;
 }
-const ddmm = (iso: string) => `${iso.slice(8, 10)}/${iso.slice(5, 7)}`;
 
 export default function PastEditionsRepeatersTable({ data }: { data: RepeatersResult }) {
   const { sortKey, sortDir, toggleSort } = useSort<string>("n", "desc", { name: "asc", best: "asc", avg: "asc", forma: "asc" });
@@ -118,7 +113,7 @@ export default function PastEditionsRepeatersTable({ data }: { data: RepeatersRe
             {sorted.map((r) => (
               <tr key={r.key} className={r.isManuel ? "row-manuel" : undefined}>
                 <td style={{ textAlign: "left", whiteSpace: "nowrap" }} className={r.isManuel ? "fw-700" : undefined}>
-                  {flagOf(r.club)}{r.name} <KidsLink nome={r.name} />
+                  {clubFlagPrefix(r.club)}{r.name} <KidsLink nome={r.name} />
                 </td>
                 <td className="mono">{r.n}</td>
                 <td className="mono">{r.bestPos != null ? `${r.bestPos}º` : "–"}</td>
@@ -130,7 +125,7 @@ export default function PastEditionsRepeatersTable({ data }: { data: RepeatersRe
                   const fm = formaMedia(f);
                   return (
                     <td className="mono" style={{ color: fm != null ? tpColorDark(fm) : undefined }}
-                      title={f?.r.slice(0, N_FORMA).map((x) => `${ddmm(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`).join("\n")}>
+                      title={f?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`).join("\n")}>
                       {fm != null ? fmtToPar(fm) : "–"}
                     </td>
                   );
@@ -139,7 +134,7 @@ export default function PastEditionsRepeatersTable({ data }: { data: RepeatersRe
                   const u = formOf(r)?.r[0];
                   return (
                     <td className="mono" style={{ whiteSpace: "nowrap" }}>
-                      {u ? <>{u[3] ? `${u[3]}º/${u[4]}` : fmtToPar(u[1])} <span className="muted fs-10">{ddmm(u[0])}</span></> : "–"}
+                      {u ? <>{u[3] ? `${u[3]}º/${u[4]}` : fmtToPar(u[1])} <span className="muted fs-10">{shortDateSlash(u[0])}</span></> : "–"}
                     </td>
                   );
                 })()}

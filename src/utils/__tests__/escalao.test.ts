@@ -20,7 +20,7 @@
  *     Super Sénior ...... 70+     (FPG: "SuperSenior")
  */
 import { describe, it, expect } from "vitest";
-import { escalaoAtDate, ageAtDate, anoEscalao } from "../format";
+import { escalaoAtDate, ageAtDate, anoEscalao, birthYearOf } from "../format";
 
 describe("escalaoAtDate — regra FPG year-based (year − yearOfBirth)", () => {
   describe("casos óbvios year-based", () => {
@@ -178,5 +178,22 @@ describe("anoEscalao — 1º vs 2º ano do escalão (year-based)", () => {
   it("cai para ano actual se não dado", () => {
     const r = anoEscalao("2014-04-29", "Sub-12");
     expect(r === "1A" || r === "2A").toBe(true);
+  });
+});
+
+describe("dateParts / ageAtDate / birthYearOf — formatos das fontes", () => {
+  it("ISO e DD/MM/YYYY dão a mesma idade", () => {
+    expect(ageAtDate("2014-04-29", "2026-04-28")).toBe(11);
+    expect(ageAtDate("29/04/2014", "2026-04-29")).toBe(12);
+    expect(ageAtDate("29.04.2014", "29/04/2026")).toBe(12);
+  });
+  it("sem data ou data inválida → null", () => {
+    expect(ageAtDate("2014-04-29", null)).toBeNull();
+    expect(ageAtDate("—", "2026-01-01")).toBeNull();
+  });
+  it("ano de nascimento", () => {
+    expect(birthYearOf("2014-04-29")).toBe(2014);
+    expect(birthYearOf("19/07/2008")).toBe(2008);
+    expect(birthYearOf(null)).toBeNull();
   });
 });

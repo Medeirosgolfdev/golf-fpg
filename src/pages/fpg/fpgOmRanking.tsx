@@ -25,7 +25,7 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
-import { norm } from "../../utils/format";
+import { norm, shortDateSlash } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 
 /* ── Tipos do om-cgss-junior.json ── */
@@ -220,7 +220,6 @@ const OM_CALENDAR: Array<{ name: string; level: Level; rx: RegExp; date: string 
   { name: "Rali", level: "C", rx: /\brali\b/i, date: "2026-08-01" },
   { name: "Summer", level: "C", rx: /\bsummer\b/i, date: "2026-08-22" },
 ];
-const ddmm = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}` : "");
 const hojeISO = () => {
   const d = new Date();
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -418,7 +417,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                           {isHere && <span className="fs-11" style={{ color: "var(--accent)", fontWeight: 800 }}>▼ esta prova</span>}
                           <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(ev.name)}</span>
-                          <span className="fs-11 p-muted">{ddmm(ev.date)}</span>
+                          <span className="fs-11 p-muted">{shortDateSlash(ev.date ?? undefined)}</span>
                           {/* Pill ANTES do nível = modalidade da prova (os Termos não falam de
                               juniores); DEPOIS do nível = o que os Termos dizem para os juniores. */}
                           {ev.juniorScoring && ev.juniorBasis !== "termos" &&
@@ -431,11 +430,11 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                     );
                   })}
                   {futuras.map(c => (
-                    <th key={c.name} title={`${c.name} — ${ddmm(c.date)} — por jogar`}
+                    <th key={c.name} title={`${c.name} — ${shortDateSlash(c.date ?? undefined)} — por jogar`}
                       style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }}>
                       <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                         <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(c.name)}</span>
-                        <span className="fs-11 p-muted">{ddmm(c.date)}</span>
+                        <span className="fs-11 p-muted">{shortDateSlash(c.date ?? undefined)}</span>
                         <LevelPill level={c.level} />
                         <span className="fs-11 p-muted" style={{ fontStyle: "italic" }}>por jogar</span>
                       </span>
@@ -515,8 +514,8 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         <span key={m.name} className="p p-sm"
                           style={isThis ? { background: "var(--accent-light)", borderColor: "var(--accent)", fontWeight: 700 } : undefined}
                           title={isThis ? "É esta prova (ainda sem resultados publicados)."
-                            : m.estado === "a-aguardar" ? `Jogou-se a ${ddmm(m.date)} — à espera dos resultados.`
-                            : m.date ? `Joga-se a ${ddmm(m.date)}.` : undefined}>
+                            : m.estado === "a-aguardar" ? `Jogou-se a ${shortDateSlash(m.date ?? undefined)} — à espera dos resultados.`
+                            : m.date ? `Joga-se a ${shortDateSlash(m.date ?? undefined)}.` : undefined}>
                           {m.name}{isThis ? " ← esta prova" : ""}
                         </span>
                       );
@@ -535,7 +534,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                 <div className="fs-11 p-muted" style={{ marginTop: 6 }}>
                   Não contam em 2026:{" "}
                   {[
-                    ...naoRealizadas.map(m => `${m.name} (${ddmm(m.date)} — não se realizou, regra 7)`),
+                    ...naoRealizadas.map(m => `${m.name} (${shortDateSlash(m.date ?? undefined)} — não se realizou, regra 7)`),
                     ...(foraCalendario.length ? [`${foraCalendario.map(m => m.name).join(", ")} (fora do calendário do clube)`] : []),
                   ].join(" · ")}.
                 </div>
@@ -696,7 +695,7 @@ function OmModalidades({ events }: { events: OmEvent[] }) {
           <tbody>
             {rows.map(e => (
               <tr key={e.tcode}>
-                <td style={{ whiteSpace: "nowrap" }}>{ddmm(e.date)}</td>
+                <td style={{ whiteSpace: "nowrap" }}>{shortDateSlash(e.date ?? undefined)}</td>
                 <td style={{ whiteSpace: "nowrap" }}>{shortEv(e.name)}</td>
                 <td style={{ textAlign: "center" }}><LevelPill level={e.level} curto /></td>
                 <td>{e.scoring ? <ModalidadePill nome={e.scoring} /> : "—"}</td>

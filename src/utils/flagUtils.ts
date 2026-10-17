@@ -267,6 +267,18 @@ export function gf(country: string): string {
   return FL[country] ?? flag(country);
 }
 
+/** Bandeira do país, ou nada quando não há país (sem 🏳️). */
+export function flagOrEmpty(country: string | null | undefined): string {
+  return country ? gf(country) : "";
+}
+
+/** Só a bandeira de um rótulo de clube com emoji ("🇿🇼 Zimbabwe" → "🇿🇼 "), para
+ *  colunas estreitas. Rótulos sem emoji não dão nada. */
+export function clubFlagPrefix(club?: string | null): string {
+  const first = (club || "").trim().split(/\s+/)[0] || "";
+  return /^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}]/u.test(first) ? first + " " : "";
+}
+
 /** Conterrâneo? Aceita nome ("Portugal") ou código ISO ("PT"/"PRT"/"POR") —
  *  espelha o `isPtCountry` do build-major-catalog.js. Para o destaque
  *  `.row-portuguese` obrigatório em todas as tabelas internacionais. */

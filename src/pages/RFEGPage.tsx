@@ -23,7 +23,7 @@ import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { isManuelByName as isM } from "../constants/manuel";
-import { displayName, norm } from "../utils/format";
+import { displayName, norm, ageAtDate, todayIso } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { formatPlayerName } from "../utils/playerUtils";
 import DrawTab from "../ui/DrawTab";
@@ -217,34 +217,6 @@ const LIST_LABELS: Record<ListKind, string> = {
 
 /* ── Helpers ───────────────────────────────────────────── */
 
-/** Ano/mês/dia de uma data, nos DOIS formatos que aqui se cruzam: "19/07/2008"
- *  (fontes espanholas) e "2008-07-19" (ISO — federados FPG e as datas dos
- *  torneios). ⚠ Antes só o primeiro era aceite, com dois efeitos: os
- *  portugueses, cuja ficha vem da FPG em ISO, ficavam sem idade nenhuma; e a
- *  data do TORNEIO (também ISO) caía sempre no `else`, ou seja, a idade era
- *  calculada à data de hoje em vez de à data em que se jogou. */
-function ymd(s: string | null | undefined): { y: number; m: number; d: number } | null {
-  if (!s) return null;
-  const dmy = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
-  if (dmy) return { y: +dmy[3], m: +dmy[2], d: +dmy[1] };
-  const iso = /(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
-  if (iso) return { y: +iso[1], m: +iso[2], d: +iso[3] };
-  return null;
-}
-
-function ageAt(dob: string | null, ref: string | null | undefined): number | null {
-  const b = ymd(dob);
-  if (!b) return null;
-  const r = ymd(ref);
-  const today = new Date();
-  const ry = r ? r.y : today.getFullYear();
-  const rmm = r ? r.m : today.getMonth() + 1;
-  const rd = r ? r.d : today.getDate();
-  let age = ry - b.y;
-  if (rmm < b.m || (rmm === b.m && rd < b.d)) age--;
-  return age;
-}
-
 /** Converte uma data "DD/MM/YYYY" (formato das fontes España) para ISO
  *  "YYYY-MM-DD". Deixa passar valores já-ISO e devolve null se não reconhecer.
  *  O AdmissionsTab partilhado — e os utils `ageAtDate`/`escalaoAtDate` que ele usa —
@@ -413,7 +385,7 @@ function lgsToFPGTournament(
     const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;
     const club = e?.club ? displayName(e.club) : (ptFed?.club ? displayName(ptFed.club) : (gb?.club ? displayName(gb.club) : ""));
     const dobRef = e?.dob || ptFed?.dob || gb?.dob || null;
-    const age = dobRef ? ageAt(dobRef, dateRef) : null;
+    const age = dobRef ? ageAtDate(dobRef, dateRef ?? todayIso()) : null;
     const escLabel = escaloEsForPlayer(e?.catEdad, dobRef, dateRef);
     const sex: "M" | "F" | null = (e?.sex || ptFed?.sex) === "M" ? "M" : (e?.sex || ptFed?.sex) === "F" ? "F" : null;
     // "Incompleto" (→ WD) mede-se só contra as voltas FECHADAS: quem ainda não
@@ -673,7 +645,7 @@ function ncToFPGTournament(
   const fpgPlayers: FPGPlayer[] = players.map((p, idx) => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
-    const age = ageAt(dob, dateRef);
+    const age = ageAtDate(dob, dateRef ?? todayIso());
     // Termo RFEG (Alevín, Benjamín, etc.) — coerência: sempre o termo da
     // federação espanhola, nunca "Sub-N". EscPill tem mapeamento ES→Sub-N CSS,
     // logo "Alevín" recebe a mesma cor que "Sub-12". Categoria oficial da fonte
@@ -892,7 +864,7 @@ function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FP
   const players: FPGPlayer[] = group.players.map((p, idx) => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
-    const age = ageAt(dob, dateRef);
+    const age = ageAtDate(dob, dateRef ?? todayIso());
     // Termo RFEG (Alevín/Benjamín/Infantil): categoria oficial canonizada +
     // fallback por cohort de ano (mesma função usada no resto da página).
     const escLabel = escaloEsForPlayer(p.catEdad, dob, dateRef) || ageToEscalaoEs(age);

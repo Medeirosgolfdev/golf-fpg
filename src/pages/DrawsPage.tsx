@@ -31,7 +31,7 @@ import KpiCard from "../ui/KpiCard";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
-import { norm, escalaoAtDate, displayName } from "../utils/format";
+import { norm, escalaoAtDate, displayName, fmtToPar } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
 import { loadPlayers } from "../data/loader";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -166,15 +166,10 @@ interface IntlLinksFile {
 
 // ── Helpers ───────────────────────────────────────────────────────────
 
-function fmtToPar(v: number | null | undefined): string {
-  if (v == null) return "";
-  if (v === 0) return "E";
-  return v > 0 ? `+${v}` : String(v);
-}
 
 function fmtScore(s: Score): string {
   if (!s) return "—";
-  const tp = s.toPar != null ? ` (${fmtToPar(s.toPar)})` : "";
+  const tp = s.toPar != null ? ` (${fmtToPar(s.toPar, "")})` : "";
   return `${s.gross}${tp}`;
 }
 

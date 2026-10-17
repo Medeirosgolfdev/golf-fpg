@@ -15,6 +15,7 @@
  */
 import { useMemo, useState } from "react";
 import { fmtToPar } from "../../utils/format";
+import { clubFlagPrefix } from "../../utils/flagUtils";
 import { tpColorDark } from "../../utils/scoreDisplay";
 import EmptyState from "../EmptyState";
 
@@ -59,13 +60,6 @@ export interface PastEdition {
 /** Ordenação: "pos" (default) ou `{ano}_{T|TP|R{n}}` — cada edição é uma lista
  *  independente, por isso ordenar por uma coluna só reordena ESSA edição. */
 type SortDir = "asc" | "desc";
-
-/** Só a bandeira do rótulo de clube ("🇿🇼 Zimbabwe" → "🇿🇼 "), para a coluna
- *  do nome não estourar. Rótulos sem emoji não mostram nada. */
-function flagOf(club?: string | null): string {
-  const first = (club || "").trim().split(/\s+/)[0] || "";
-  return /^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}]/u.test(first) ? first + " " : "";
-}
 
 export default function PastEditionsTable({ editions, title }: { editions: PastEdition[]; title?: string }) {
   const [sortKey, setSortKey] = useState<string>("pos");
@@ -199,7 +193,7 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                           className={[p?.isManuel ? "cell-manuel fw-700" : p?.isPt ? "cell-portuguese" : ""].filter(Boolean).join(" ") || undefined}
                           style={{ textAlign: "left", borderLeft: bl(ei), whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: 160 }}
                           title={p ? `${p.name}${p.club ? ` · ${p.club}` : ""}${p.pos ? ` · ${p.pos}º oficial` : ""}` : undefined}>
-                        {p ? <>{flagOf(p.club) }{p.name}</> : <span className="c-muted">–</span>}
+                        {p ? <>{clubFlagPrefix(p.club) }{p.name}</> : <span className="c-muted">–</span>}
                       </td>,
                       // Total de quem NÃO completou (WD/DNF ou volta a decorrer)
                       // fica esbatido — 2 voltas somam menos que 3 e um total

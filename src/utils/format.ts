@@ -134,6 +134,13 @@ export function fmtDobPt(dob?: string | null): string | null {
   return m ? `${m[3]}/${m[2]}/${m[1]}` : dob;
 }
 
+/** Intervalo de datas ISO → "15/05/2026 → 17/05/2026" (uma só data se iguais). */
+export function fmtDateRangePt(d1?: string | null, d2?: string | null): string {
+  const a = fmtDobPt(d1) ?? "", b = fmtDobPt(d2) ?? "";
+  if (a && b && a !== b) return `${a} → ${b}`;
+  return a || b || "";
+}
+
 /** Data "17 Mar 2026" (dia sem zero à esquerda, mês abreviado PT, ano) a partir de ISO. */
 export function fmtDayMonthYear(iso: string): string {
   if (!iso) return "";
@@ -266,29 +273,36 @@ function yearOfDate(s: string | number | null | undefined): number | null {
   return m ? parseInt(m[1], 10) : null;
 }
 
+/** Ano/mês/dia de "YYYY-MM-DD" (ISO, com ou sem hora) ou "DD/MM/YYYY"
+ *  (também "DD.MM.YYYY"/"DD-MM-YYYY" — fontes ES/FR). null se não for data. */
+export function dateParts(s: string | null | undefined): { y: number; m: number; d: number } | null {
+  if (!s) return null;
+  const t = s.trim();
+  const iso = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(t);
+  if (iso) return { y: +iso[1], m: +iso[2], d: +iso[3] };
+  const dmy = /^(\d{1,2})[/.-](\d{1,2})[/.-](\d{4})/.exec(t);
+  return dmy ? { y: +dmy[3], m: +dmy[2], d: +dmy[1] } : null;
+}
+
+/** Data de hoje em ISO local ("YYYY-MM-DD"). */
+export function todayIso(): string {
+  const t = new Date();
+  return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
+}
+
+/** Idade (anos completos) de quem nasceu em `dob` à data `date` — os dois em
+ *  qualquer formato do `dateParts`. Para a idade de hoje: `ageAtDate(dob, todayIso())`. */
 export function ageAtDate(dob: string | null | undefined, date: string | null | undefined): number | null {
-  if (!dob || !date) return null;
-  // "19/07/2008" (fontes ES/FR) é Invalid Date em JS → normalizar para ISO antes.
-  const iso = (s: string) => {
-    const m = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})$/.exec(s.trim());
-    return m ? `${m[3]}-${m[2].padStart(2, "0")}-${m[1].padStart(2, "0")}` : s;
-  };
-  const d = new Date(iso(dob)), t = new Date(iso(date));
-  if (isNaN(+d) || isNaN(+t)) return null;
-  let age = t.getFullYear() - d.getFullYear();
-  const md = t.getMonth() - d.getMonth();
-  if (md < 0 || (md === 0 && t.getDate() < d.getDate())) age--;
+  const b = dateParts(dob), t = dateParts(date);
+  if (!b || !t) return null;
+  let age = t.y - b.y;
+  if (t.m < b.m || (t.m === b.m && t.d < b.d)) age--;
   return age >= 0 ? age : null;
 }
 
-/** Ano de nascimento de uma data "YYYY-MM-DD" ou "DD/MM/YYYY" (null se não for data). */
+/** Ano de nascimento de uma data em qualquer formato do `dateParts` (null se não for data). */
 export function birthYearOf(dob: string | null | undefined): number | null {
-  if (!dob) return null;
-  const s = dob.trim();
-  const iso = /^(\d{4})-\d{2}-\d{2}/.exec(s);
-  if (iso) return +iso[1];
-  const dmy = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})/.exec(s);
-  return dmy ? +dmy[3] : null;
+  return dateParts(dob)?.y ?? null;
 }
 
 /** Escalão FPG no ano do torneio, calculado a partir da data de nascimento.

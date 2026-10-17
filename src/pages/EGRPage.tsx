@@ -27,8 +27,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
-import { gf } from "../utils/flagUtils";
-import { norm } from "../utils/format";
+import { gf, flagOrEmpty } from "../utils/flagUtils";
+import { norm, fmtToPar } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import { KidsLink, KidsLinkCtx } from "../ui/KidsLink";
@@ -95,10 +95,8 @@ interface EgrPlayerEvents {
 /* ── Helpers ───────────────────────────────────────────────────── */
 const num = (n: number | null | undefined, d = 2) =>
   n == null || Number.isNaN(n) ? "—" : n.toFixed(d);
-const flagOf = (c: string | null) => (c && c !== "Portugal" ? gf(c) : c === "Portugal" ? gf("Portugal") : "");
 const toPar = (total: number | null, par: number | null, rounds: number) =>
   total != null && par != null && rounds > 0 ? total - par * rounds : null;
-const fmtToPar = (tp: number | null) => (tp == null ? "" : tp === 0 ? "E" : tp > 0 ? `+${tp}` : `${tp}`);
 
 /* ═══════════════════════════════════════════════════════════════ */
 export default function EGRPage() {
@@ -328,7 +326,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
                           </span>
                         </span>
                       </td>
-                      <td title={p.country || ""}>{flagOf(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
+                      <td title={p.country || ""}>{flagOrEmpty(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
                       <td>{p.sex ? <SexBadge sex={p.sex} /> : ""}</td>
                       <td className="tight">{p.ageGroup || "—"}</td>
                       <td className="num" title={p.birthYear ? "Ano de nascimento via GolfBox" : ""}>{p.birthYear ?? ""}</td>
@@ -415,7 +413,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
 
       {/* Cabeçalho do jogador */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-        <h2 style={{ margin: 0 }}>{flagOf(player.country)} {player.name}</h2>
+        <h2 style={{ margin: 0 }}>{flagOrEmpty(player.country)} {player.name}</h2>
         {player.sex && <SexBadge sex={player.sex} />}
         {player.ageGroup && <span className="p p-sm">{player.ageGroup}</span>}
         <a href={`${EGR_SITE}/players/${id}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>
@@ -464,12 +462,12 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
                     <td>
                       <a href={`${EGR_SITE}/events/${e.eventId}`} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a>
                     </td>
-                    <td className="tight" title={e.country || ""}>{flagOf(e.country)}</td>
+                    <td className="tight" title={e.country || ""}>{flagOrEmpty(e.country)}</td>
                     <td className="tight">{e.ageGroup || "—"}</td>
                     <td className="num" style={{ fontWeight: 600 }}>{e.pos ?? "—"}</td>
                     <td className="tight" style={{ color: "var(--text-muted)" }}>{e.rounds.join("·") || "—"}</td>
                     <td className="num">{e.total ?? "—"}</td>
-                    <td className="num" style={{ color: tp != null && tp < 0 ? "var(--score-birdie, #dc2626)" : undefined }}>{fmtToPar(tp)}</td>
+                    <td className="num" style={{ color: tp != null && tp < 0 ? "var(--score-birdie, #dc2626)" : undefined }}>{fmtToPar(tp, "")}</td>
                     <td className="num" style={{ color: "var(--text-muted)" }}>{num(e.egrPoints, 0)}</td>
                   </tr>
                 );

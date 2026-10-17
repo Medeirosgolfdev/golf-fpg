@@ -30,7 +30,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
-import { gf } from "../utils/flagUtils";
+import { gf, flagOrEmpty } from "../utils/flagUtils";
 import { norm } from "../utils/format";
 import { useSort } from "../hooks/useSort";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
@@ -106,7 +106,6 @@ interface WagrPlayerEvents { players: Record<string, WagrPlayerEvent[]> }
 /* ── Helpers ───────────────────────────────────────────────────── */
 const num = (n: number | null | undefined, d = 2) =>
   n == null || Number.isNaN(n) ? "—" : n.toFixed(d);
-const flagOf = (c: string | null) => (c ? gf(c) : "");
 /** Variação de ranking na semana: positivo = subiu. */
 function ChangeCell({ v }: { v: number | null }) {
   if (v == null || v === 0) return <span style={{ color: "var(--text-muted)" }}>–</span>;
@@ -340,7 +339,7 @@ function WAGRList({ ranking }: { ranking: WagrRanking }) {
                           </span>
                         </span>
                       </td>
-                      <td title={p.country || ""}>{flagOf(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
+                      <td title={p.country || ""}>{flagOrEmpty(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
                       <td><SexBadge sex={p.sex} /></td>
                       <td className="num" style={{ color: "var(--text-muted)" }}>{num(p.divisor)}</td>
                       <td className="num" style={{ fontWeight: 600 }}>{num(p.pointsAverage)}</td>
@@ -418,7 +417,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
 
       {/* Cabeçalho do jogador */}
       <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
-        <h2 style={{ margin: 0 }}>{flagOf(player.country)} {player.name}</h2>
+        <h2 style={{ margin: 0 }}>{flagOrEmpty(player.country)} {player.name}</h2>
         <SexBadge sex={player.sex} />
         {player.profileLink && (
           <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>
@@ -470,7 +469,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
                       title="Abrir o leaderboard deste evento no site"
                     >↗ leaderboard</button>
                   </td>
-                  <td className="tight" title={e.country || ""}>{flagOf(e.country)}</td>
+                  <td className="tight" title={e.country || ""}>{flagOrEmpty(e.country)}</td>
                   <td className="tight">{e.eventType || "—"}</td>
                   <td className="num" style={{ fontWeight: 600 }}>{e.pos ?? "—"}</td>
                   <td className="tight" style={{ color: "var(--text-muted)" }}>{e.rounds.join("·") || "—"}</td>

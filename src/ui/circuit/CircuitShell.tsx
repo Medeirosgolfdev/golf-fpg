@@ -44,7 +44,7 @@ import MatchplayView from "./MatchplayView";
 import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
-import { monthLabel } from "../../utils/format";
+import { monthLabel, fmtDateRangePt, ageAtDate, birthYearOf, todayIso } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
 import { displayFed } from "../../utils/fedKeys";
 import type {
@@ -162,43 +162,6 @@ function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
 function entryPlayerCount(e: CircuitEntry): number {
   if (e.playerCount != null) return e.playerCount;
   return (e.divisions ?? []).reduce((acc, d) => acc + (d.results?.players.length ?? 0), 0);
-}
-
-/** "2026-05-15" → "15/05/2026"; outros formatos passam tal-qual. */
-function fmtDate(d?: string): string {
-  if (!d) return "";
-  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d);
-  return m ? `${m[3]}/${m[2]}/${m[1]}` : d;
-}
-/** Intervalo de datas para a sidebar (start → end se diferentes). */
-function fmtDateRange(d1?: string, d2?: string): string {
-  const a = fmtDate(d1), b = fmtDate(d2);
-  if (a && b && a !== b) return `${a} → ${b}`;
-  return a || b || "";
-}
-/** Parte numérica de uma data "DD/MM/YYYY" ou "YYYY-MM-DD". */
-function parseDateParts(s?: string): { y: number; m: number; d: number } | null {
-  if (!s) return null;
-  let m = /^(\d{4})-(\d{1,2})-(\d{1,2})/.exec(s);
-  if (m) return { y: +m[1], m: +m[2], d: +m[3] };
-  m = /(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(s);
-  if (m) return { y: +m[3], m: +m[2], d: +m[1] };
-  return null;
-}
-/** Idade (anos) à data de referência (default: hoje). */
-function ageAtRef(dob?: string, ref?: string): number | null {
-  const b = parseDateParts(dob);
-  if (!b) return null;
-  const t = new Date();
-  const r = parseDateParts(ref) ?? { y: t.getFullYear(), m: t.getMonth() + 1, d: t.getDate() };
-  let age = r.y - b.y;
-  if (r.m < b.m || (r.m === b.m && r.d < b.d)) age--;
-  return age;
-}
-/** Ano de nascimento (primeiro grupo de 4 dígitos da dob). */
-function birthYearOf(dob?: string): number | null {
-  const m = dob ? /\d{4}/.exec(dob) : null;
-  return m ? +m[0] : null;
 }
 
 /** Texto branco/preto consoante a luminosidade da cor de fundo (hex #rrggbb). */
@@ -358,7 +321,7 @@ function InscritosTable({ rows, dateRef }: { rows: CircuitInscritoRow[]; dateRef
           {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>}
           {showDob && (() => {
             const yr = birthYearOf(p.dob);
-            const age = ageAtRef(p.dob, dateRef);
+            const age = ageAtDate(p.dob, dateRef ?? todayIso());
             return (
               <td title={p.dob ? `${p.dob}${age != null ? ` (${age} anos à data)` : ""}` : ""}
                   style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
@@ -832,7 +795,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     const aces = tournamentAces(players);
     return { nPlayers, nRounds, parTotal, aces };
   })();
-  const curDateStr = fmtDateRange(cur?.dateStart, cur?.dateEnd);
+  const curDateStr = fmtDateRangePt(cur?.dateStart, cur?.dateEnd);
   /** Links de ação do header (cur.links + sourceUrl como "Leaderboard oficial"). */
   const headerHasActions = !!(cur && (cur.sourceUrl || (cur.links && cur.links.length > 0) || (curDiv?.links && curDiv.links.length > 0)));
 
@@ -1271,7 +1234,7 @@ function CircuitSidebar({
                 const sex = e.sex ?? e.divisions?.[0]?.sex;
                 const srcColor = e.source ? config.sourceColors?.[e.source] : undefined;
                 const srcLabel = e.source ? (config.sourceLabels?.[e.source] ?? e.source) : undefined;
-                const dateStr = fmtDateRange(e.dateStart, e.dateEnd);
+                const dateStr = fmtDateRangePt(e.dateStart, e.dateEnd);
                 const accent = srcColor ?? config.color ?? "var(--accent)";
                 return (
                   <div
