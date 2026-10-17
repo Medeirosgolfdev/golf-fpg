@@ -70,7 +70,7 @@ export function V21({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
       )}
       <div style={{ display:"flex", alignItems:"flex-start", gap:6, margin:"4px 0" }}>
         <div style={{ fontFamily:OS, fontSize:38, fontWeight:900, letterSpacing:-2, lineHeight:1, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT, tc), paddingTop:4 }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT, tc, ta), paddingTop:4 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && (
         <div style={{ display:"flex", alignItems:"flex-start" }}>
@@ -98,7 +98,7 @@ export function V24({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
       {v.player&&d.player && <div style={{ fontSize:14, fontWeight:700, letterSpacing:1, marginTop:2, textTransform:"uppercase", wordBreak:"break-word", textAlign:"center" }}>{d.player}</div>}
       <div style={{ margin:"4px 0 2px", display:"flex", alignItems:"baseline", gap:6 }}>
         <div style={{ fontSize:72, fontWeight:700, lineHeight:.9, letterSpacing:-4 }}>{s.sT}</div>
-        <div style={{ fontFamily:II, fontSize:20, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:II, fontSize:20, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.holeScores && is18 && (
         <div style={{ display:"flex", gap:6, marginTop:4, background:scoreBg, borderRadius:10, padding:"6px 8px" }}>

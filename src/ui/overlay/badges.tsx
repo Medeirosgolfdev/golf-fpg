@@ -7,7 +7,7 @@
  */
 import React, { createContext, useContext } from "react";
 import { II } from "./shared";
-import { HIO_GREEN, scBg, INFO_ALL, isLightText, type InfoKey } from "./shared";
+import { HIO_GREEN, scBg, INFO_ALL, isLightText, hexToRgba, type InfoKey } from "./shared";
 import { fmtSD } from "../../utils/format";
 import type { DD, StT, Vis } from "./types";
 
@@ -175,6 +175,8 @@ function SCACell({ sc, par, sz, accent = "#e87722" }: { sc: number; par: number;
 /* ═══════ TpBadge: pill colorida de to-par ═══════ */
 /** To-par badge — pill colorida como nos posts do PGA Tour. */
 export function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
+  /* Acima/no par: vidro tingido no destaque do cartão (AccentCtx.cur), se houver. */
+  const { cur } = useContext(AccentCtx);
   /* Pílula de vidro (16/10/2026): o bloco azul forte competia com o azul dos
      bogeys e tapava a foto. Acima do par = cor do texto do desenho; abaixo =
      vermelho suave (a cor dos birdies); fundo e contorno semi-transparentes. */
@@ -182,8 +184,8 @@ export function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
   const txt = vp < 0 ? String(vp) : vp > 0 ? `+${vp}` : "E";
   return (
     <div style={{
-      background: under ? "rgba(220,38,38,.22)" : "rgba(128,128,128,.22)",
-      border: `1.5px solid ${under ? "rgba(248,113,113,.7)" : "rgba(128,128,128,.55)"}`,
+      background: under ? "rgba(220,38,38,.22)" : cur ? hexToRgba(cur, .2) : "rgba(128,128,128,.22)",
+      border: `1.5px solid ${under ? "rgba(248,113,113,.7)" : cur ? hexToRgba(cur, .65) : "rgba(128,128,128,.55)"}`,
       color: under ? "#f87171" : "inherit", fontFamily: II, fontSize: sz, fontWeight: 900,
       padding: `${Math.round(sz * 0.18)}px ${Math.round(sz * 0.45)}px`, borderRadius: Math.round(sz * 0.3),
       display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 1,
@@ -243,7 +245,7 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
 /* ═══════ INFO — o bloco de informação comum a todos os desenhos ═══════ */
 /** Cor de destaque escolhida no painel (nome do torneio). Vem por contexto
  *  para não ter de passar por todos os desenhos; sem destaque = cor do texto. */
-export const AccentCtx = createContext<{ light?: string; dark?: string }>({});
+export const AccentCtx = createContext<{ light?: string; dark?: string; cur?: string }>({});
 /**
  * Em vez de uma linha corrida «Torneio · R1 · POS 10º · Campo · White · 5594m ·
  * data · HI · CH · SD», a info sai com hierarquia:

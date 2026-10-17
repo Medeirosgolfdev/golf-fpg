@@ -190,26 +190,27 @@ export const MIX_BG = ["#1c2a44", "#1f3d30", "#46212d", "#262626", "#1c3a46", "#
 export const MIX_BG_LIGHT = ["#eef1f6", "#e8f1ea", "#f6eaec", "#f1f0ee", "#e6f0f3", "#f4eee4", "#efeaf5", "#edf1e6", "#f6ece4"];
 /** Destaque «Auto» de cada fundo do «Variado» (mesma ordem): `light` para o
  *  fundo escuro (texto claro), `dark` para o fundo claro (texto escuro).
- *  Azul→dourado, verde→salva, vinho→rosa, grafite→âmbar, petróleo→água,
- *  café→areia, ameixa→lilás, musgo→limão, ferrugem→pêssego. */
+ *  Azul→dourado, verde→salva, vinho→champanhe, grafite→âmbar, petróleo→água,
+ *  café→areia, ameixa→lilás, musgo→limão, ferrugem→pêssego. Nada avermelhado:
+ *  o resultado acima do par sai nesta cor e o vermelho é dos birdies. */
 export const MIX_ACC: { light: string; dark: string }[] = [
   { light: "#f2c14e", dark: "#1e3a8a" },
   { light: "#cfe3a0", dark: "#166534" },
-  { light: "#f4b8a8", dark: "#9f1239" },
-  { light: "#f5a524", dark: "#9a3412" },
+  { light: "#f2d0a4", dark: "#7a4b12" },
+  { light: "#f5a524", dark: "#7c4a03" },
   { light: "#8fe0d8", dark: "#0f5f6e" },
   { light: "#e8c48a", dark: "#8a5a00" },
   { light: "#c7b3ff", dark: "#5b21b6" },
   { light: "#e6dc7a", dark: "#4d5f12" },
-  { light: "#ffc7a1", dark: "#b23a1a" },
+  { light: "#ffd6a8", dark: "#8a4b0f" },
 ];
 /** Destaque «Auto» dos fundos lisos. */
 export const BG_ACC: Record<string, { light: string; dark: string }> = {
-  black:   { light: "#f5a524", dark: "#9a3412" },
+  black:   { light: "#f5a524", dark: "#7c4a03" },
   navy:    { light: "#f2c14e", dark: "#1e3a8a" },
   pga:     { light: "#f2c14e", dark: "#1e3a8a" },
   masters: { light: "#f6d55c", dark: "#166534" },
   green:   { light: "#cfe3a0", dark: "#166534" },
-  wine:    { light: "#f4b8a8", dark: "#9f1239" },
+  wine:    { light: "#f2d0a4", dark: "#7a4b12" },
   white:   { light: "#f2c14e", dark: "#1e3a8a" },
 };

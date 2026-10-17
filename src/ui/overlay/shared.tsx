@@ -54,7 +54,10 @@ export const ink = (tc: string | undefined, a: number) => isLightText(tc) ? `rgb
 export const panel = (tc: string | undefined, a: number) => isLightText(tc) ? `rgba(0,0,0,${a})` : `rgba(255,255,255,${a})`;
 
 /** Cor do resultado vs par. Com `tc` preto (fundo claro) usa as cores escuras (vpCd). */
-export const vpC = (v: number, tc?: string) => {
+export const vpC = (v: number, tc?: string, ta?: string) => {
+  /* Acima do par no destaque do cartão (quando o desenho o passa) — o resultado
+     fica ligado às cores do cartão em vez de um cinzento que destoava. */
+  if (ta && v > 0) return ta;
   if (tc && !isLightText(tc)) return vpCd(v);
   if (v <= -2) return "#d4a017";
   if (v === -1) return "#ef4444";

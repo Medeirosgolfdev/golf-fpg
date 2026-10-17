@@ -8,7 +8,7 @@ import { fmtToPar } from "../../../utils/format";
 import type { P } from "../types";
 
 /* V48 · HOLE-IN-ONE CELEBRATION — design especial para HIO (score=1) */
-export function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
+export function V48({ d, v, s, bg, tc="white", ta = tc, tc2="#aaa", tc3="#888" }: P) {
   /* Detectar buracos com HIO */
   const hioHoles: { hole: number; par: number; meters: number | null }[] = [];
   d.scores.forEach((sc, i) => { if (sc === 1) hioHoles.push({ hole: i + 1, par: d.par[i], meters: d.meters?.[i] ?? null }); });
@@ -59,7 +59,7 @@ export function V48({ d, v, s, bg, tc="white", tc2="#aaa", tc3="#888" }: P) {
         <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6, padding: "4px 12px", background: ink(tc, .06), borderRadius: 6 }}>
           <span style={{ fontSize: 11, fontWeight: 600, color: tc3 }}>Score Total</span>
           <span style={{ fontFamily: OS, fontSize: 18, fontWeight: 700, color: tc }}>{s.sT}</span>
-          <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, color: vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontFamily: OS, fontSize: 14, fontWeight: 700, color: vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
     </div>

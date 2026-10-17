@@ -17,7 +17,7 @@ export function V14({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"2px 5px", borderRadius:8, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"center", gap:6, marginBottom:3, flexWrap:"wrap" }}>
         <span style={{ fontFamily:OS, fontSize:36, fontWeight:700, lineHeight:1 }}>{s.sT}</span>
-        <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
         {v.player&&d.player && <span style={{ fontSize:13, fontWeight:800, color:tc2, marginLeft:4 }}>{d.player}</span>}
       </div>
       <div style={{ marginBottom:4 }}><Info d={d} v={v} tc={tc} tc3={tc3} fs={10} fit /></div>
@@ -183,7 +183,7 @@ export function V17({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
       <div style={{ marginTop:3, padding:"3px 8px 5px", background:ink(tc, .07), borderRadius:8 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:8 }}>
           <span style={{ fontFamily:OS, fontSize:28, fontWeight:900, letterSpacing:-1, lineHeight:1 }}>{s.sT}</span>
-          <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontSize:16, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
           {v.player&&d.player && <span style={{ fontSize:14, fontWeight:900, marginLeft:"auto" }}>{d.player}</span>}
         </div>
         <Info d={d} v={v} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} mt={2} />
@@ -206,7 +206,7 @@ export function V28({ d, v, s, fa, bg, tc="white", ta = tc, tc2, tc3 }: P) {
           </div>
           <div style={{ textAlign:"right" }}>
             <div style={{ fontFamily:OS, fontSize:32, fontWeight:900, lineHeight:1 }}>{s.sT}</div>
-            <div style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
+            <div style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
@@ -357,7 +357,7 @@ export function V34({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
         </div>
         <div style={{ display:"flex", alignItems:"baseline", gap:4, flexShrink:0 }}>
           <span style={{ fontFamily:BN, fontSize:36, color:tx }}>{s.sT}</span>
-          <span style={{ fontSize:14, fontWeight:700, color:isDark?vpC(s.vpT, tc):vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontSize:14, fontWeight:700, color:isDark?vpC(s.vpT, tc, ta):vpCd(s.vpT) }}>{fmtToPar(s.vpT)}</span>
         </div>
       </div>
       {v.holeScores && (is18 ? [[0,9,"Out",s.sF],[9,9,"In",s.sB]] as [number,number,string,number][] : [[0,d.scores.length,"Tot",s.sT] as [number,number,string,number]]).map(([off,len,lbl,sub]) => (
