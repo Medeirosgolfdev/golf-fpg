@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-10-16T22:29:36.428Z",
+  "lastUpdated": "2026-10-17T21:53:29.825Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-10-16",
+  "today": "2026-10-17",
   "summary": {
     "total": 1793,
     "complete": 824,
-    "in_progress": 0,
-    "future": 4,
+    "in_progress": 2,
+    "future": 2,
     "stale": 10,
     "excluded": 955,
     "missing_admissions": 0,
@@ -385,7 +385,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "000",
@@ -406,7 +406,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "future"
+      "status": "in_progress"
     },
     {
       "ccode": "988",
