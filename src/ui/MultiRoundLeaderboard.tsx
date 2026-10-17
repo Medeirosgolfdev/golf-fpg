@@ -1,11 +1,10 @@
 ﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
-import { normLoose } from "../utils/normName";
-import { fmtHcp, medal, fmtDobPt } from "../utils/format";
+import { fmtHcp, medal, fmtDobPt, birthYearOf, ageAtDate } from "../utils/format";
+import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
-import FilterChip from "../ui/FilterChip";
 import WdBadge from "../ui/WdBadge";
 import EmptyState from "../ui/EmptyState";
 import SortableHdr from "../ui/SortableHdr";
@@ -44,7 +43,6 @@ import SortableHdr from "../ui/SortableHdr";
  * Datas nas rondas via `roundDates`.
  */
 import React, { useState, useMemo } from "react";
-import { getTeeHex } from "../utils/teeColors";
 import {
   fmtTP,
   tpColor,
@@ -53,153 +51,8 @@ import {
   SDPill,
   type PlayersDB,
 } from "./tournamentPrimitives";
-import { toggleArr } from "../utils/mathUtils";
-import { EscPill, ESC_STYLE } from "../ui/PillBadge";
+import { EscPill } from "../ui/PillBadge";
 import { displayFed } from "../utils/fedKeys";
-
-/* ══════════════════════════════════════════════════════════════
-   TIPOS PÚBLICOS
-   ══════════════════════════════════════════════════════════════ */
-
-/** Ronda individual normalizada, com stats próprias */
-/** Linha normalizada para MultiRoundLeaderboard */
-/* ══════════════════════════════════════════════════════════════
-   FILTRO
-   ══════════════════════════════════════════════════════════════ */
-
-/** Resolve sexo de uma row via row.sex, fed→playersDB[fed].sex, ou nome
- *  via playersDB. Replica a lógica do PlayerFilterBar partilhado. */
-function resolveSex(row: MultiRoundRow, playersDB?: PlayersDB, byName?: Map<string, string>): "M" | "F" | undefined {
-  const s = row.sex || (row.fed && playersDB?.[row.fed]?.sex);
-  if (s === "M" || s === "F") return s;
-  if (row.name && byName) {
-    const norm = normLoose;
-    const v = byName.get(norm(row.name));
-    if (v === "M" || v === "F") return v;
-  }
-  return undefined;
-}
-
-function buildSexByName(playersDB?: PlayersDB): Map<string, string> {
-  const m = new Map<string, string>();
-  if (!playersDB) return m;
-  const norm = normLoose;
-  for (const k in playersDB) {
-    const e = (playersDB as any)[k];
-    if ((e?.sex === "M" || e?.sex === "F") && e?.name) {
-      const nn = norm(e.name);
-      if (!m.has(nn)) m.set(nn, e.sex);
-    }
-  }
-  return m;
-}
-
-/** Ano de nascimento de uma row (row.dob → playersDB[fed].dob). null se desconhecido. */
-function rowBirthYear(row: MultiRoundRow, playersDB?: PlayersDB): number | null {
-  const dob = row.dob || (row.fed ? (playersDB?.[row.fed] as any)?.dob ?? null : null);
-  return birthYearOf(dob);
-}
-
-export function filterRows<T extends MultiRoundRow>(rows: T[], f: PlayerFilter, playersDB?: PlayersDB, byName?: Map<string, string>): T[] {
-  let ps = rows;
-  if (f.name) { const q = f.name.toLowerCase(); ps = ps.filter(r => r.name.toLowerCase().includes(q) || (r.club || "").toLowerCase().includes(q)); }
-  if (f.escs.length) ps = ps.filter(r => r.esc != null && f.escs.includes(r.esc));
-  if (f.tees.length) ps = ps.filter(r => r.teeName != null && f.tees.includes(r.teeName));
-  if (f.club) ps = ps.filter(r => r.club === f.club);
-  if (f.sex) ps = ps.filter(r => resolveSex(r, playersDB, byName) === f.sex);
-  if (f.birthYears && f.birthYears.length) ps = ps.filter(r => { const y = rowBirthYear(r, playersDB); return y != null && f.birthYears!.includes(y); });
-  return ps;
-}
-
-/** Barra de filtros do scorecard (pesquisa · escalões · tees · clube · M/F · Nasc.) —
- *  exportada para o Draw usar a MESMA (13/10/2026, «o mesmo look»). */
-export function PlayerFilterBar({ rows, filter, onChange, total, playersDB }: {
-  rows: MultiRoundRow[]; filter: PlayerFilter; onChange: (f: PlayerFilter) => void; total: number; playersDB?: PlayersDB;
-}) {
-  const availEsc   = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.esc) s.add(r.esc); return [...s].sort((a,b) => a.localeCompare(b)); }, [rows]);
-  const availTees  = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.teeName) s.add(r.teeName); return [...s].sort(); }, [rows]);
-  const availClubs = useMemo(() => { const s = new Set<string>(); for (const r of rows) if (r.club) s.add(r.club); return [...s].sort((a,b) => a.localeCompare(b,"pt")); }, [rows]);
-  const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
-  const availSex   = useMemo(() => { const s = new Set<string>(); for (const r of rows) { const sx = resolveSex(r, playersDB, sexByName); if (sx) s.add(sx); } return [...s] as ("M"|"F")[]; }, [rows, playersDB, sexByName]);
-  const availYears = useMemo(() => { const s = new Set<number>(); for (const r of rows) { const y = rowBirthYear(r, playersDB); if (y != null) s.add(y); } return [...s].sort((a, b) => a - b); }, [rows, playersDB]);
-  const selYears = filter.birthYears || [];
-  const isActive = !!(filter.name || filter.escs.length || filter.tees.length || filter.club || filter.sex || selYears.length);
-  const filtered = useMemo(() => filterRows(rows, filter, playersDB, sexByName), [rows, filter, playersDB, sexByName]);
-  const hasOpts = availClubs.length > 1 || availEsc.length > 1 || availTees.length > 1 || availSex.length === 2 || availYears.length > 1;
-  if (total < 8 && !isActive) return null;
-
-  return (
-    <div className="filter-bar">
-      <div className="search-wrap">
-        <span className="search-icon-abs">🔍</span>
-        <input type="text" placeholder="Nome ou clube…" value={filter.name} onChange={e => onChange({ ...filter, name:e.target.value })}
-          style={{ fontSize: "var(--fs-11)", padding:"3px 8px 3px 22px", borderRadius:6, border:"1px solid var(--border)", background:"var(--bg-card,#fff)", color:"var(--text)", width:140, outline:"none" }} />
-      </div>
-      {hasOpts && <span style={{ color:"var(--border)", fontSize: "var(--fs-11)" }}>|</span>}
-      {availEsc.length > 1 && availEsc.map(e => { const k = e.toLowerCase().replace(/[\s-]/g,""); const s = ESC_STYLE[k]; return <FilterChip key={e} active={filter.escs.includes(e)} onClick={() => onChange({ ...filter, escs:toggleArr(filter.escs,e) })} color={s?.bg}>{e}</FilterChip>; })}
-      {availTees.length > 1 && availTees.map(t => { const hex = getTeeHex(t); return (
-        <FilterChip key={t} active={filter.tees.includes(t)} onClick={() => onChange({ ...filter, tees:toggleArr(filter.tees,t) })} color={hex}>
-          <span style={{ display:"flex", alignItems:"center", gap:4 }}>
-            <span className="tee-dot-sq" style={{ background:hex }} />{t}
-          </span>
-        </FilterChip>
-      ); })}
-      {availClubs.length > 2 && <select value={filter.club} onChange={e => onChange({ ...filter, club:e.target.value })} style={{ fontSize: "var(--fs-11)", padding:"3px 6px", borderRadius:6, border:`1px solid ${filter.club?"var(--accent)":"var(--border)"}`, background:"var(--bg-card,#fff)", color:"var(--text)", cursor:"pointer", fontWeight:filter.club?700:400 }}><option value="">Todos os clubes</option>{availClubs.map(c => <option key={c} value={c}>{c}</option>)}</select>}
-      {availSex.length === 2 && (
-        <>
-          <FilterChip active={filter.sex === "M"} onClick={() => onChange({ ...filter, sex: filter.sex === "M" ? "" : "M" })} color="var(--badge-male, #2563eb)">M</FilterChip>
-          <FilterChip active={filter.sex === "F"} onClick={() => onChange({ ...filter, sex: filter.sex === "F" ? "" : "F" })} color="var(--badge-female, #ec4899)">F</FilterChip>
-        </>
-      )}
-      {availYears.length > 1 && (
-        <>
-          <span style={{ color: "var(--border)", fontSize: "var(--fs-11)" }}>|</span>
-          <span style={{ fontSize: "var(--fs-10)", color: "var(--text-muted)", fontWeight: 600 }}>Nasc.</span>
-          {availYears.map(y => (
-            <FilterChip key={y} active={selYears.includes(y)} onClick={() => onChange({ ...filter, birthYears: toggleArr(selYears, y) })}>{y}</FilterChip>
-          ))}
-        </>
-      )}
-      {isActive && <><span style={{ fontSize: "var(--fs-10)", color:"var(--text-muted)", marginLeft:2 }}>{filtered.length} de {total}</span><button onClick={() => onChange(EMPTY_FILTER)} className="filter-clear-btn" style={{ fontSize: "var(--fs-10)", color:"var(--text-muted)" }}>✕ limpar</button></>}
-    </div>
-  );
-}
-
-/* ══════════════════════════════════════════════════════════════
-   DATA DE NASCIMENTO / IDADE
-   ══════════════════════════════════════════════════════════════ */
-
-/** Converte dob ("YYYY-MM-DD" ou "DD/MM/YYYY") num Date. null se inválido. */
-function parseDob(dob?: string | null): Date | null {
-  if (!dob) return null;
-  const s = dob.trim();
-  let d: Date | null = null;
-  if (/^\d{4}-\d{2}-\d{2}/.test(s)) {
-    d = new Date(s.slice(0, 10));
-  } else {
-    const m = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
-    if (m) d = new Date(+m[3], +m[2] - 1, +m[1]);
-  }
-  return d && !isNaN(+d) ? d : null;
-}
-
-/** Ano de nascimento (number) a partir de dob. null se inválido. */
-function birthYearOf(dob?: string | null): number | null {
-  const d = parseDob(dob);
-  return d ? d.getFullYear() : null;
-}
-
-/** Idade (anos completos) à data de referência. null se inválido. */
-function ageAt(dob?: string | null, refDate?: string): number | null {
-  const d = parseDob(dob);
-  if (!d) return null;
-  const t = refDate ? new Date(refDate) : new Date();
-  if (isNaN(+t)) return null;
-  let age = t.getFullYear() - d.getFullYear();
-  const mo = t.getMonth() - d.getMonth();
-  if (mo < 0 || (mo === 0 && t.getDate() < d.getDate())) age--;
-  return age >= 0 && age < 100 ? age : null;
-}
 
 /* ══════════════════════════════════════════════════════════════
    TIPOS SORT
@@ -292,7 +145,7 @@ export function MultiRoundLeaderboard({
   // Nasc./Idade: usa dob da row, com fallback ao playersDB[fed].dob.
   const dobOf = useMemo(() => (r: MultiRoundRow): string | null =>
     r.dob || (r.fed ? (playersDB?.[r.fed] as any)?.dob ?? null : null), [playersDB]);
-  const hasAnyDob  = useMemo(() => rows.some(r => parseDob(dobOf(r)) != null), [rows, dobOf]);
+  const hasAnyDob  = useMemo(() => rows.some(r => birthYearOf(dobOf(r)) != null), [rows, dobOf]);
 
   const showEsc = wantEsc && hasAnyEsc;
   const showFed = wantFed && hasAnyFed;
@@ -437,8 +290,8 @@ export function MultiRoundLeaderboard({
       case "age": {
         // Idade real à data do torneio (não o ano) — dois jogadores do mesmo
         // ano podem ter idades diferentes consoante já fizeram anos.
-        const aa = ageAt(dobOf(a), tournamentDate);
-        const ab = ageAt(dobOf(b), tournamentDate);
+        const aa = ageAtDate(dobOf(a), tournamentDate ?? new Date().toISOString().slice(0, 10));
+        const ab = ageAtDate(dobOf(b), tournamentDate ?? new Date().toISOString().slice(0, 10));
         if (aa == null && ab == null) return 0;
         if (aa == null) return 1;   // sem data → sempre no fim
         if (ab == null) return -1;
@@ -482,7 +335,7 @@ export function MultiRoundLeaderboard({
   return (
     <div>
       {filterable && (
-        <PlayerFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} playersDB={playersDB} />
+        <RowsFilterBar rows={withPos} filter={filter} onChange={setFilter} total={rows.length} playersDB={playersDB} />
       )}
       {compareSel.bar}
       <div className="bjgt-chart-scroll">
@@ -620,7 +473,7 @@ export function MultiRoundLeaderboard({
                     // Sem ela o ageAt caía em HOJE e o tooltip contradizia o pill
                     // (pill "19a" = idade no ano do torneio, tooltip "18 anos" = hoje).
                     const hasTDate = !!(tournamentDate && !isNaN(+new Date(tournamentDate)));
-                    const ageReal = hasTDate ? ageAt(dob, tournamentDate) : null;
+                    const ageReal = hasTDate ? ageAtDate(dob, tournamentDate) : null;
                     // Tooltip COMPLETO (DOB + idade) nas DUAS colunas — o utilizador
                     // pousa o rato numa qualquer e recebe a informação toda.
                     const tip = [

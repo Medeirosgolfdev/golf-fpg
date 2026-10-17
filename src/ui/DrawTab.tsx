@@ -30,7 +30,7 @@ import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
 import { escalaoAgeCap, fitsEscalaoAgeCap } from "../data/fpgUtils";
 import { displayFed } from "../utils/fedKeys";
-import { PlayerFilterBar, filterRows } from "./MultiRoundLeaderboard";
+import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 
 interface Props {
@@ -719,7 +719,7 @@ export default function DrawTab({
           </a>
         )}
       </div>
-      <PlayerFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={total} playersDB={playersDB} />
+      <RowsFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={total} playersDB={playersDB} />
       {showOm && (
         <div className="detail-toolbar" style={{ gap: 6, flexWrap: "wrap" }}>
           <span className="muted fs-11">Ordem de Mérito:</span>

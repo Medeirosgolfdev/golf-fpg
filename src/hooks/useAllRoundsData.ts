@@ -5,7 +5,7 @@
  *   - Row building (grouped + flat)
  *   - Ranking
  *   - Sorting (grouped + flat)
- *   - Filtering (nome + clube)
+ *   - Filtering (PlayerFilter, a regra da barra de filtros partilhada)
  *   - Par/SI reference extraction
  *   - UI state (groupMode, showSC, filter, sort)
  *
@@ -15,8 +15,10 @@
 
 import { useState, useMemo } from "react";
 import { useSort } from "./useSort";
-import { toggleArr } from "../utils/mathUtils";
-import type { Player, Tournament, RoundScore } from "../data/fpgTypes";
+import type { Player, Tournament, RoundScore, PlayerFilter } from "../data/fpgTypes";
+import { EMPTY_FILTER } from "../ui/multiRoundTypes";
+import { filterRows } from "../ui/PlayerFilterBar";
+import type { PlayersDB } from "../ui/tournamentPrimitives";
 
 /* ── Helpers de sort (Out/In a partir dos scores da ronda) ── */
 function frontSum(rd: { scores: number[] }): number {
@@ -28,7 +30,7 @@ function backSum(rd: { scores: number[] }): number {
 
 /* ── Types exportados ── */
 
-interface RdData {
+export interface RdData {
   scores: number[];
   gross: number;
   toPar: number;
@@ -116,6 +118,8 @@ export interface UseAllRoundsOptions {
   computeRoundSD?: ComputeRoundSD;
   /** References por ronda (pars/si/cr/slope). Se omitida, usa R1 para todas */
   roundRefs?: RoundRef[];
+  /** Para o filtro M/F e Nasc. (sexo/data de nascimento dos federados). */
+  playersDB?: PlayersDB;
 }
 
 export interface AllRoundsResult {
@@ -146,25 +150,13 @@ export interface AllRoundsResult {
   setGroupMode: (v: boolean) => void;
   showSC: boolean;
   setShowSC: React.Dispatch<React.SetStateAction<boolean>>;
-  nameQ: string;
-  setNameQ: (v: string) => void;
-  clubQ: string;
-  setClubQ: (v: string) => void;
-  escFilter: string[];
-  setEscFilter: (v: string[]) => void;
-  toggleEsc: (e: string) => void;
-  teeFilter: string[];
-  setTeeFilter: (v: string[]) => void;
-  toggleTee: (t: string) => void;
+  filter: PlayerFilter;
+  setFilter: (f: PlayerFilter) => void;
   sortKey: string;
   sortDir: "asc" | "desc";
   toggleSort: (k: string) => void;
-  availClubs: string[];
-  availEsc: string[];
-  availTees: string[];
-
-  /* Helpers */
-  clearFilter: () => void;
+  /** Todas as linhas agrupadas, antes do filtro (opções da barra de filtros). */
+  allGrouped: PRow[];
 }
 
 /* ── Hook ── */
@@ -176,13 +168,11 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     resolveEsc: resolveEscFn,
     playerFilter,
     computeRoundSD,
+    playersDB,
   } = opts;
 
   // UI state
-  const [nameQ, setNameQ] = useState("");
-  const [clubQ, setClubQ] = useState("");
-  const [escFilter, setEscFilter] = useState<string[]>([]);
-  const [teeFilter, setTeeFilter] = useState<string[]>([]);
+  const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   const [showSC, setShowSC] = useState(true);
   const [groupMode, setGroupMode] = useState(true);
   const { sortKey, sortDir, toggleSort } = useSort<string>("pos");
@@ -339,8 +329,14 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
       }
       stdHoles[ri] = mx;
     }
+    // Volta só com o total (sem cartão buraco a buraco — ex.: R1 do WJGC) não é
+    // curta: conta o gross. Curta é o cartão começado e por acabar.
     const hasShortRound = (r: PRow) =>
-      r.rds.some((rd, ri) => rd != null && rd.scores.filter((s) => s > 0).length < (stdHoles[ri] || 0));
+      r.rds.some((rd, ri) => {
+        if (rd == null) return false;
+        const n = rd.scores.filter((s) => s > 0).length;
+        return (n > 0 || !rd.gross) && n < (stdHoles[ri] || 0);
+      });
     const pm = new Map<string, number>();
     const complete = groupedRows
       .filter((r) => r._rdCount === fullCount && r.total != null && !r.isWD && !hasShortRound(r))
@@ -528,56 +524,16 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
     ];
   }, [rankedFlat, sortKey, sortDir]);
 
-  /* ── Filtering ── */
-  const gDisplayed = useMemo(() => {
-    const q = nameQ.toLowerCase();
-    return sortedGrouped.filter(
-      (r) =>
-        (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
-        (!clubQ || r.club === clubQ) &&
-        (escFilter.length === 0 || (r.esc && escFilter.includes(r.esc))) &&
-        (teeFilter.length === 0 || (r.teeName && teeFilter.includes(r.teeName))),
-    );
-  }, [sortedGrouped, nameQ, clubQ, escFilter, teeFilter]);
-
-  const displayed = useMemo(() => {
-    const q = nameQ.toLowerCase();
-    return sortedFlat.filter(
-      (r) =>
-        (!q || r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q)) &&
-        (!clubQ || r.club === clubQ) &&
-        (escFilter.length === 0 || (r.esc && escFilter.includes(r.esc))) &&
-        (teeFilter.length === 0 || (r.teeName && teeFilter.includes(r.teeName))),
-    );
-  }, [sortedFlat, nameQ, clubQ, escFilter, teeFilter]);
-
-  const availClubs = useMemo(() => {
-    const s = new Set<string>();
-    for (const r of sortedGrouped) if (r.club) s.add(r.club);
-    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
-  }, [sortedGrouped]);
-
-  const availEsc = useMemo(() => {
-    const s = new Set<string>();
-    for (const r of sortedGrouped) if (r.esc) s.add(r.esc);
-    return [...s].sort((a, b) => a.localeCompare(b, "pt"));
-  }, [sortedGrouped]);
-
-  const availTees = useMemo(() => {
-    const s = new Set<string>();
-    for (const r of sortedGrouped) if (r.teeName) s.add(r.teeName);
-    return [...s].sort();
-  }, [sortedGrouped]);
+  /* ── Filtering (a mesma regra da barra de filtros partilhada) ── */
+  const gDisplayed = useMemo(() => filterRows(sortedGrouped, filter, playersDB), [sortedGrouped, filter, playersDB]);
+  const displayed = useMemo(() => filterRows(sortedFlat, filter, playersDB), [sortedFlat, filter, playersDB]);
 
   return {
     par, si, meters, teeMeters, nh, is9, parF9, parB9, parTot, hasSI, hasMeters, playedRounds, roundRefs,
     gDisplayed, displayed,
     groupMode, setGroupMode, showSC, setShowSC,
-    nameQ, setNameQ, clubQ, setClubQ,
-    escFilter, setEscFilter, toggleEsc: (e: string) => setEscFilter(toggleArr(escFilter, e)),
-    teeFilter, setTeeFilter, toggleTee: (t: string) => setTeeFilter(toggleArr(teeFilter, t)),
+    filter, setFilter,
     sortKey, sortDir, toggleSort,
-    availClubs, availEsc, availTees,
-    clearFilter: () => { setNameQ(""); setClubQ(""); setEscFilter([]); setTeeFilter([]); },
+    allGrouped: sortedGrouped,
   };
 }

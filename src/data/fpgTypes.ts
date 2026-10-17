@@ -134,4 +134,6 @@ export interface PlayerFilter {
   club: string;
   /** Filtro M/F: "" = todos, "M" = só masculino, "F" = só feminino. */
   sex?: "" | "M" | "F";
+  /** Anos de nascimento seleccionados (vazio = todos os anos). */
+  birthYears?: number[];
 }

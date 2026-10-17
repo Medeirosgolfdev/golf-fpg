@@ -3,6 +3,8 @@
  * Separados do componente para evitar conflitos de Fast Refresh.
  */
 import type React from "react";
+import type { PlayerFilter } from "../data/fpgTypes";
+export type { PlayerFilter };
 
 export interface MRRound {
   roundKey?: string;
@@ -68,17 +70,6 @@ export interface ExtraColumn<R = MultiRoundRow & { _pos?: number | null }> {
   headerStyle?: React.CSSProperties;
   /** Renderizar célula para cada linha */
   cell: (row: R, idx: number) => React.ReactNode;
-}
-
-export interface PlayerFilter {
-  name: string;
-  escs: string[];
-  tees: string[];
-  club: string;
-  /** Filtro M/F: "" = todos, "M" = só masculino, "F" = só feminino. */
-  sex?: "" | "M" | "F";
-  /** Anos de nascimento seleccionados (vazio = todos os anos). */
-  birthYears?: number[];
 }
 
 /** Filtro vazio (estado inicial / botão "limpar"). */
