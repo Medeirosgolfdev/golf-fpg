@@ -178,7 +178,7 @@ export function V13({ d, v, s, bg, tc="white", ta = tc, tc3, tc4 }: P) {
             { n: s.st.pars, l: "PAR", c: undefined },
             { n: s.st.bogeys, l: "BOGEY", c: "#5BADE6" },
             { n: s.st.doubles + s.st.triples + s.st.quads, l: "DBL+", c: undefined },
-          ].filter((x) => x.n > 0).map((x) => <V13Bx key={x.l} val={x.n} label={x.l} c={x.c} tc={tc} tc3={tc3 || "#9ca3af"} />)}
+          ].filter((x) => x.n > 0).map((x) => <V13Bx key={x.l} val={x.n} label={x.l} tc={tc} tc3={tc3 || "#9ca3af"} line={x.c ?? ink(tc, .35)} />)}
         </div>
       )}
       {v.holeScores && <div className="u-flex-jc"><Grid2 d={d} sz={28} gap={3} nc={tc4} /></div>}

@@ -216,11 +216,10 @@ export function Grid2({ d, sz = 24, gap = 2, nc = "#555" }: { d: DD; sz?: number
 export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?: string; gap?: number; fs?: number; justify?: "center" }) {
   const items = [
     { n: st.hio,     l: "HIO", c: HIO_GREEN  },
-    { n: st.eagles,  l: "🦅",  c: "#d4a017" },
+    { n: st.eagles,  l: "Eag", c: "#d4a017" },
     { n: st.birdies, l: "Bir", c: "#dc2626"  },
     { n: st.pars,    l: "Par", c: tc3        },
-    // Texto na cor secundária (o azul-claro desaparecia sobre fotos); a bolinha diz que é bogey.
-    { n: st.bogeys,  l: "Bog", c: "#5BADE6", plain: true },
+    { n: st.bogeys,  l: "Bog", c: "#5BADE6" },
     // Azuis-escuros (as cores do cartão): o texto vai na cor secundária do
     // desenho e a bolinha leva contorno — em fundo escuro não se liam.
     { n: st.doubles, l: "Dbl", c: "#2B6EA0", dark: true },
@@ -235,7 +234,10 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
           {/* Anel com border (a box-shadow saía cortada no PNG — «◖1 Dbl») */}
           <span style={{ width: 8, height: 8, boxSizing: "border-box", borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0,
             border: "dark" in x ? `1px solid ${tc3 ?? "currentColor"}` : undefined }} />
-          <span style={{ color: "dark" in x || "plain" in x ? (tc3 ?? "inherit") : x.c }}>{x.n} {x.l}</span>
+          {/* Texto sempre na cor secundária do cartão: a cor vai só na bolinha
+             (o vermelho/azul do texto não se lia em fundos escuros nem sobre fotos;
+             o emoji 🦅 do eagle destoava). */}
+          <span style={{ color: tc3 ?? "inherit" }}>{x.n} {x.l}</span>
         </div>
       ))}
     </div>
