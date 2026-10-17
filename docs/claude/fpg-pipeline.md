@@ -185,8 +185,8 @@ manual): mudam devagar e dominavam o tempo do workflow.
 (+ espelho `scripts/lib/drive-points.cjs`) exporta `tournamentPoints(field,
 series)` — pontos de UMA prova por federado, com empates partilhados (Aquapor
 por sexo) — e `rankingTotal(results)` — melhores-4 da fase regular + Finais
-regionais ×1.5 (Final Nacional fora). A `DrivePage` (`buildSub12Data`) e a
-`ResumoTable` usam-nas em vez de somar `drivePoints` de todas as provas.
+regionais ×1.5 (Final Nacional fora). A `DrivePage` (`buildSub12Data`) usa-as
+em vez de somar `drivePoints` de todas as provas.
 Teste de integração `scripts/lib/drive-ranking-vs-oficial.test.js` confronta o
 total calculado com os rankings oficiais reais do repo (RFDC_ quando existe).
 

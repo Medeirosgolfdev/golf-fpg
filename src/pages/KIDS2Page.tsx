@@ -22,6 +22,7 @@ import { DataSourcesChip } from "../ui/DataSources";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
+import MasterDetail from "../ui/MasterDetail";
 
 export type Kids2SourceKey = "uskids" | "fpg" | "rfeg" | "fcg" | "ffgolf" | "wjgc" | "eowagr" | "doral" | "fm" | "england" | "gjgl" | "fsga" | "uajt" | "uaworlds" | "mexnacional" | "coc" | "reidtrophy" | "evianjc" | "faldomadeira" | "icopa" | "interzonas" | "avtrophy" | "job" | "ebtc2" | "egtc" | "elg" | "eym" | "ejo" | "ejt" | "egr" | "optimist" | "dgv";
 
@@ -210,8 +211,7 @@ function KIDS2PageContent() {
       </Kids2SubNav>
 
       {/* ── Layout master-detail ── */}
-      <div className="master-detail">
-        <div className={md.sidebarClass}>
+      <MasterDetail md={md} sidebar={<>
           <Sidebar
             data={data}
             selectedId={selectedId || null}
@@ -222,15 +222,13 @@ function KIDS2PageContent() {
             onlyVsManuel={onlyVsManuel}
             onlyWins={onlyWins}
           />
-        </div>
-        <div className="course-detail" ref={md.detailRef}>
+      </>}>
           {selected ? (
             <PlayerProfile data={data} junior={selected} />
           ) : (
             <EmptyState size="md" message="Selecciona um rival na barra lateral." />
           )}
-        </div>
-      </div>
+      </MasterDetail>
     </div>
   );
 }

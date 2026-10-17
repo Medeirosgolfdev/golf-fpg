@@ -34,7 +34,18 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
   - Quando renderizas via `ScorecardLeaderboard` a pos/nome/gross/toPar são ordenáveis com `sortable={true}`. **Mas colunas custom em `prefixHeaderCells`/`postScorecardHeaderCells` não são ordenáveis automaticamente** — tens de ordenar os rows manualmente antes de passar (com useSort + sort do array + SortableHdr nos headers custom). Ver `AdmissionsTab.tsx` e `DrawTab.tsx` como referência actual.
 - `PillBadge.tsx`: usa classes CSS (`p`, `p-sm`, `p-muted`, `p-tourn`, `p-sub10`, `p-sub12`, `p-sub14`); a excepção são as cores das pills de ronda e de tcode (`PILL_ROUND`/`PILL_TCODE`, inline — o `PILL_ROUND` também é usado pela `DrawsPage`). `RoundPill` exportado para pills de rondas.
 - Toggles de scorecard: usar `<span>`, não `<button>` (o styling default do browser sobrepõe o CSS).
-- Hooks partilhados: `useIsMobile.ts`, `useMasterDetail.ts`, `SidebarToggle.tsx` para sidebar unificada.
+- Hooks partilhados: `useIsMobile.ts`, `useMasterDetail.ts`, `SidebarToggle.tsx` para sidebar unificada; o layout é o `MasterDetail` (`src/ui/MasterDetail.tsx`: `<MasterDetail md={md} sidebar={…}>detalhe</MasterDetail>`).
+- **Componentes únicos (consolidação de 2026-10-17)** — antes de escrever uma tabela, ver se já existe:
+  - Inscrições: `AdmissionsTab` (aceita overrides por jogador: `dob`, `country`, `escalao`, `teeName`, `tags`). No CircuitShell a divisão entrega `admissions` (formato `FpgAdmissions`).
+  - Draws: `DrawTab`. Fontes de fora convertem para `FpgDraw` (USKids `uskidsDrawToFpg`, LGPIDF `lgpidfDraws`, FM `fmDrawsToFpg`, Espanha `DrawSaidaView`); no CircuitShell vão em `roundDraws`.
+  - Filtros de jogadores: `PlayerFilterBar.tsx` — `PlayerFilterBar` (jogadores FPG do ScorecardLB) e `RowsFilterBar` + `filterRows` (linhas `MultiRoundRow`/Inscrições/Draw/Scorecards combinado), a mesma `FilterBarView`.
+  - Scorecards de todas as voltas: `AllRoundsScorecardLB` desenha na `ScorecardLeaderboard`.
+  - Só totais (sem buraco a buraco): `TotalsResumo`.
+  - Rankings com circuito de eventos: `ui/ranking/RankingPage` (`RankingPage`, `RankingList`, `RankingTable`, `RankingDetail`) — a página só dá configuração e colunas.
+  - Evolução ano-a-ano: `ui/evo.tsx` (`EvoSummary`, `tagEvo`, `makeEvoCols`).
+  - Provas de fora da FPG: `intlScorecardOptions({...})` (`src/data/intlScorecard.ts`) e `buildFPGTournament()` (`src/data/intlTournament.ts`).
+  - CircuitShell: abas próprias de uma divisão em `extraSections`.
+- Datas/idades/bandeiras em `utils/`: `dateParts`, `ageAtDate`, `birthYearOf`, `todayIso`, `fmtDateRangePt`, `shortDateSlash` (`format.ts`); `flagOrEmpty`, `clubFlagPrefix`, `isPtCountry` (`flagUtils.ts`); `normLoose`/`normName` (`normName.ts`).
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.
 - `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (alias de C de colors.ts).
 - `mathUtils.ts`: `zTier()`, `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.

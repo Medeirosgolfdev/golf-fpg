@@ -44,6 +44,7 @@ import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
 import { monthLabel, fmtDateRangePt } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
+import MasterDetail from "../MasterDetail";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
   CircuitSectionKind,
@@ -730,10 +731,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
         </Toolbar>
         {slot.below}
 
-        <div className="master-detail">
-
-          {/* Sidebar */}
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+        <MasterDetail md={md} sidebar={<>
             <CircuitSidebar
               entries={visible}
               config={config}
@@ -741,10 +739,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               onSelect={selectEntry}
               renderItem={renderSidebarItem}
             />
-          </div>
-
-          {/* Detalhe */}
-          <div className="course-detail" ref={md.detailRef}>
+        </>}>
             {curInfoItem ? (
               curInfoItem.render()
             ) : !cur ? (
@@ -920,8 +915,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
             ) : (
               <EmptyState message="Sem dados para este torneio." />
             )}
-          </div>
-        </div>
+        </MasterDetail>
       </div>
     </KidsLinkCtx.Provider>
   );
@@ -1017,74 +1011,79 @@ function CircuitSidebar({
                 // Render custom (FPG reutiliza o TournSidebarItem) — assume o item
                 // inteiro; o shell só fornece `active` + o seu `onSelect`.
                 if (renderItem) return <React.Fragment key={e.id}>{renderItem(e, { active, onSelect: () => onSelect(e) })}</React.Fragment>;
-                const nP = entryPlayerCount(e);
-                const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
-                const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;
-                const esc = e.escalao ?? e.divisions?.[0]?.escalao;
-                const sex = e.sex ?? e.divisions?.[0]?.sex;
-                const srcColor = e.source ? config.sourceColors?.[e.source] : undefined;
-                const srcLabel = e.source ? (config.sourceLabels?.[e.source] ?? e.source) : undefined;
-                const dateStr = fmtDateRangePt(e.dateStart, e.dateEnd);
-                const accent = srcColor ?? config.color ?? "var(--accent)";
-                return (
-                  <div
-                    key={e.id}
-                    role="button" tabIndex={0}
-                    className={`course-item ${active ? "active" : ""}`}
-                    onClick={() => onSelect(e)}
-                    onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") onSelect(e); }}
-                    style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0" }}
-                  >
-                    {/* Linha 1: nome */}
-                    <div className="course-item-name" style={{ fontSize: "var(--fs-12)", fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
-                      {e.name}
-                      {e.hasManuel && <ManuelPill />}
-                      {entryHasAce(e) && <span title="Hole-in-one neste torneio"> 🕳️</span>}
-                    </div>
-
-                    {/* Linha 2: campo */}
-                    {e.course && (
-                      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
-                        📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
-                      </div>
-                    )}
-
-                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
-
-                    {/* Linha 3: pills */}
-                    <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
-                      {e.tcode && <span className="p p-sm p-muted">{e.tcode}</span>}
-                      {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
-                          mostrar apenas "N esc." (senão parece que só tem o 1º). */}
-                      {nDiv <= 1 && esc && <EscPill esc={esc} />}
-                      {nDiv <= 1 && sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
-                      {nDiv <= 1 && sex === "Mixed" && <SexBadge sex="F" />}
-                      {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
-                      {nR > 1 && <RoundPill nR={nR} />}
-                      <LigaPills entry={e} config={config} max={2} />
-                    </div>
-
-                    <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
-
-                    {/* Linha 4: data · fonte (ficheiro) · nº jog */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
-                      <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>
-                        {dateStr ? `📅 ${dateStr}` : "—"}
-                      </span>
-                      <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
-                        {srcLabel && (
-                          <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
-                        )}
-                        {nP > 0 && <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{nP} jog</span>}
-                      </div>
-                    </div>
-                  </div>
-                );
+                return <CircuitSidebarItem key={e.id} e={e} config={config} active={active} onSelect={() => onSelect(e)} />;
               })}
             </React.Fragment>
           ))}
         </React.Fragment>
       ))}
     </>
+  );
+}
+
+/** Item da sidebar do shell (as páginas podem trocá-lo por `renderSidebarItem`,
+ *  como a FPG com o TournSidebarItem): nome · campo · pills · data/fonte/jog. */
+function CircuitSidebarItem({ e, config, active, onSelect }: { e: CircuitEntry; config: CircuitConfig; active: boolean; onSelect: () => void }) {
+  const nP = entryPlayerCount(e);
+  const nR = e.roundsCount ?? Math.max(0, ...(e.divisions ?? []).map(d => d.results?.rounds ?? 0));
+  const nDiv = e.divisionCount ?? e.divisions?.length ?? 1;
+  const esc = e.escalao ?? e.divisions?.[0]?.escalao;
+  const sex = e.sex ?? e.divisions?.[0]?.sex;
+  const srcColor = e.source ? config.sourceColors?.[e.source] : undefined;
+  const srcLabel = e.source ? (config.sourceLabels?.[e.source] ?? e.source) : undefined;
+  const dateStr = fmtDateRangePt(e.dateStart, e.dateEnd);
+  const accent = srcColor ?? config.color ?? "var(--accent)";
+  return (
+    <div
+      role="button" tabIndex={0}
+      className={`course-item ${active ? "active" : ""}`}
+      onClick={onSelect}
+      onKeyDown={ev => { if (ev.key === "Enter" || ev.key === " ") onSelect(); }}
+      style={{ borderLeft: `4px solid ${accent}`, borderRadius: "0 6px 6px 0" }}
+    >
+      {/* Linha 1: nome */}
+      <div className="course-item-name" style={{ fontSize: "var(--fs-12)", fontWeight: active ? 700 : 500, lineHeight: 1.3 }}>
+        {e.name}
+        {e.hasManuel && <ManuelPill />}
+        {entryHasAce(e) && <span title="Hole-in-one neste torneio"> 🕳️</span>}
+      </div>
+
+      {/* Linha 2: campo */}
+      {e.course && (
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-2)", fontWeight: 500, marginTop: 3 }}>
+          📍 {e.course.length > 50 ? e.course.slice(0, 50) + "…" : e.course}
+        </div>
+      )}
+
+      <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+
+      {/* Linha 3: pills */}
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center", margin: "3px 0" }}>
+        {e.tcode && <span className="p p-sm p-muted">{e.tcode}</span>}
+        {/* Escalão/sexo só fazem sentido quando há UM escalão; com vários
+            mostrar apenas "N esc." (senão parece que só tem o 1º). */}
+        {nDiv <= 1 && esc && <EscPill esc={esc} />}
+        {nDiv <= 1 && sex && <SexBadge sex={sex === "Mixed" ? "M" : sex} />}
+        {nDiv <= 1 && sex === "Mixed" && <SexBadge sex="F" />}
+        {nDiv > 1 && <span className="p p-sm p-muted">{nDiv} esc.</span>}
+        {nR > 1 && <RoundPill nR={nR} />}
+        <LigaPills entry={e} config={config} max={2} />
+      </div>
+
+      <div style={{ height: ".5px", background: "var(--border-light,rgba(0,0,0,.08))", margin: "4px 0" }} />
+
+      {/* Linha 4: data · fonte (ficheiro) · nº jog */}
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 6 }}>
+        <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)", flexShrink: 0 }}>
+          {dateStr ? `📅 ${dateStr}` : "—"}
+        </span>
+        <div style={{ display: "flex", alignItems: "center", gap: 4, flexShrink: 0 }}>
+          {srcLabel && (
+            <span className="chip" title={`Fonte: ${srcLabel}`} style={{ fontSize: "var(--fs-9)", padding: "1px 6px", borderRadius: 8, background: srcColor, color: fgFor(srcColor) }}>{srcLabel}</span>
+          )}
+          {nP > 0 && <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{nP} jog</span>}
+        </div>
+      </div>
+    </div>
   );
 }

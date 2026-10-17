@@ -80,6 +80,7 @@ function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], 
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig } from "../ui/circuit/types";
 import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
+import MasterDetail from "../ui/MasterDetail";
 
 /* ─────────────────────────────────────────────
    MAIN CONTENT
@@ -2487,9 +2488,7 @@ function Content() {
 
       {/* ── Clubes ─────────────────────────────────────────────────────── */}
       {navMode === "torneios" && seriesFilter === "clubes" && (
-        <div className="master-detail">
-          {/* Sidebar Clubes */}
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+        <MasterDetail md={md} sidebar={<>
             {clubesLoading && <LoadingState size="sm" message="A carregar…" />}
             {clubesLoaded && clubesList.length === 0 && !clubesLoading && (
               <div className="muted fs-11 u-pad-italic">
@@ -2530,10 +2529,7 @@ function Content() {
                 })}
               </React.Fragment>
             ))}
-          </div>
-
-          {/* Detail Clubes */}
-          <div className="course-detail" ref={md.detailRef}>
+        </>}>
             {/* Tabs Individual / Grupos */}
             <div className="tabbar-under" style={{
               background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
@@ -2800,14 +2796,12 @@ function Content() {
                   );
                 })()
             }
-          </div>
-        </div>
+        </MasterDetail>
       )}
 
       {/* Master-detail Jovens */}
       {navMode === "torneios" && seriesFilter === "jovens" && (
-        <div className="master-detail">
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+        <MasterDetail md={md} sidebar={<>
             {jovensLoading && <LoadingState size="sm" message="A carregar…" />}
             {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
               <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
@@ -2923,8 +2917,7 @@ function Content() {
                 })}
               </React.Fragment>
             ))}
-          </div>
-          <div className="course-detail" ref={md.detailRef}>
+        </>}>
             {jovensShowAnalise ? (
               // Análise foi migrada para /titulos em 2026-05-04 — qualquer
               // entrada residual nesta vista redirecciona automaticamente.
@@ -2973,8 +2966,7 @@ function Content() {
                   : <LoadingState size="sm" message="A carregar…" />
               )
             )}
-          </div>
-        </div>
+        </MasterDetail>
       )}
 
       {/* Ranking Sub-12 (e abaixo) — média dos 8 melhores SD oficiais de cada

@@ -171,10 +171,19 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   mesmo tee — contar e listar com `physicalTeeGroups`/`physicalTeeKey`.
 - **Detalhe de torneio: um só componente, `TournamentDetail`**
   (`src/pages/fpg/TournamentDetail.tsx`) — FPG, Drive, MAJOR, França, Espanha,
-  Global Junior. Tem tudo (Inscrições, Draws, voltas, Pré-Cut, Resumo,
-  Scorecards, análise, partilhar volta, tabs extra, encaixes por volta/Resumo) e
-  cada página esconde o que não precisa por props. O `IntlTournView` é só um
-  adaptador da interface antiga — funcionalidade nova entra no TournamentDetail.
+  Global Junior, USKids (cada escalão) e a análise BJGT. Tem tudo (Inscrições,
+  Draws, voltas, Pré-Cut, Resumo, Scorecards, análise, partilhar volta, tabs
+  extra, encaixes por volta/Resumo) e cada página esconde o que não precisa por
+  props. O `IntlTournView` é só um adaptador da interface antiga — funcionalidade
+  nova entra no TournamentDetail. A aba vive no URL (`?tab=`; `tabParam` muda o
+  nome — a `/uskids` usa `rt`).
+- **Peças únicas, nunca uma tabela própria por página:** inscrições →
+  `AdmissionsTab`; draws → `DrawTab` (fontes de fora convertem para `FpgDraw`;
+  no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros
+  de jogadores → `PlayerFilterBar.tsx`; só totais → `TotalsResumo`; lista +
+  detalhe → `MasterDetail`; rankings com eventos (EGR, WAGR) →
+  `ui/ranking/RankingPage`; evolução ano-a-ano → `ui/evo`. Provas de fora da FPG:
+  `intlScorecardOptions()` e `buildFPGTournament()` (`src/data/`).
 - Definições partilhadas vivem em `constants/`, `utils/` e `App.css`, nunca
   duplicadas por página. Filtrar e calcular nos loaders, não nos componentes.
   Sem código morto.

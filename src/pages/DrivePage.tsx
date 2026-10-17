@@ -43,6 +43,7 @@ import { expandMultiRound, isDNS } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
+import MasterDetail from "../ui/MasterDetail";
 
 import type {
   Tournament,
@@ -1575,10 +1576,7 @@ function DriveContent() {
           MODO SUB-12
           ══════════════════════════════════════════ */}
       {navMode === "ranking-sub12" && (
-        <div className="master-detail">
-
-          {/* Sidebar Sub-12 */}
-          <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+        <MasterDetail md={md} sidebar={<>
             {/* Séries */}
             <div className="sidebar-section-title">Série</div>
             {SUB12_SERIES_TABS.map(s => {
@@ -1640,11 +1638,8 @@ function DriveContent() {
             <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)", marginTop: 8 }}>
               {sub12EscLabel} · scoring.datagolf.pt
             </div>
-          </div>
-
-          {/* Conteúdo principal */}
-          <div className="content" ref={md.detailRef}>
-            <div style={{ padding: "0 12px 12px" }}>
+        </>}>
+            <div>
 
               {/* Detalhe jogador (se aberto) */}
               {sub12Player && (
@@ -1677,9 +1672,7 @@ function DriveContent() {
                 {sub12View === "evolucao" && <EvolutionChart rows={sub12Filtered} />}
               </div>
             </div>
-          </div>
-
-        </div>
+        </MasterDetail>
       )}
 
       {/* ══════════════════════════════════════════

@@ -33,6 +33,7 @@ import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
 import TeeBars from "../ui/TeeBars";
 import DetailHeader from "../ui/DetailHeader";
+import MasterDetail from "../ui/MasterDetail";
 
 /* Mapa fed-code → nome para jogadores que não estão em players.json.
    Gerado por scripts/build-course-player-names.js a partir de federados.json.
@@ -1500,9 +1501,7 @@ export default function CamposPage() {
       </Toolbar>
 
       {/* Master-detail */}
-      <div className="master-detail">
-        {/* Lista de campos */}
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`}>
+      <MasterDetail md={md} sidebar={<>
           {filtered.map((c) => {
             const active = selected?.courseKey === c.courseKey;
             const nTees = new Set(filterTees(c.master.tees, sexFilter)
@@ -1530,10 +1529,7 @@ export default function CamposPage() {
           {filtered.length === 0 && (
             <EmptyState size="sm" message="Nenhum campo encontrado" />
           )}
-        </div>
-
-        {/* Detalhe */}
-        <div className="course-detail" ref={md.detailRef}>
+      </>}>
           {selected ? (
             <>
               <DetailHeader
@@ -1663,8 +1659,7 @@ export default function CamposPage() {
           ) : (
             <EmptyState icon="⛳" message="Selecciona um campo" />
           )}
-        </div>
-      </div>
+      </MasterDetail>
     </div>
   );
 }

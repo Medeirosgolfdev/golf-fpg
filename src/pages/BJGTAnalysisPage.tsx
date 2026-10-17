@@ -30,6 +30,7 @@ import FieldPlayerDetail from "../ui/FieldPlayerDetail";
 import ContestLeaderboard from "../ui/ContestLeaderboard";
 import TabRow from "../ui/TabRow";
 import Counter from "../ui/Counter";
+import MasterDetail from "../ui/MasterDetail";
 import type {
   RivalPlayer,
   TournDef,
@@ -1057,9 +1058,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
       </Toolbar>
 
       {/* ── Master-detail ── */}
-      <div className="master-detail">
-        {/* Sidebar: Contest players */}
-        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
+      <MasterDetail md={md} sidebar={<>
           <div className="sidebar-section-title">
             {CONTEST_LABELS[tab]}
           </div>
@@ -1074,10 +1073,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Detail: content */}
-        <div className="course-detail">
+      </>}>
 
       {/* ═══ PLAYER DETAIL (from sidebar click) ═══ */}
       {selectedPlayer && (
@@ -1092,8 +1088,7 @@ function BJGTContent({ playerFed }: { playerFed?: string }) {
         />
       )}
 
-        </div>
-      </div>
+      </MasterDetail>
     </div>
   );
 }

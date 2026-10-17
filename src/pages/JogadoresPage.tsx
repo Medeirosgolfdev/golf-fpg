@@ -42,6 +42,7 @@ import FederadosStatsPanel, { computeGlobalStats } from "./jogadores/FederadosSt
 import FilteredStatsCard, { type FilteredPlayer } from "./jogadores/FilteredStatsCard";
 import { syntheticFederadoFromFedCode } from "./jogadores/syntheticFederado";
 import type { PlayerPageData } from "../data/playerDataLoader";
+import MasterDetail from "../ui/MasterDetail";
 // Comparar jogadores lado a lado (vista «⚔️ Comparar» da toolbar).
 const CompararPlayersView = lazy(() => import("./CompararPage"));
 
@@ -429,8 +430,7 @@ export default function JogadoresPage() {
         onToggleSidebar={md.toggle}
       />
 
-      <div className="master-detail">
-        <div className={`sidebar ${md.open ? "" : "sidebar-closed"}`} ref={sidebarRef}>
+      <MasterDetail md={md} sidebarRef={sidebarRef} detailClassName="jog-detail" sidebar={<>
           {viewMode === "todos" && isJuvenilFilter && (() => {
             // KPI por escalão jovem — contagem total e por sexo
             const jovensOrdem = ESCALOES_JOVENS;
@@ -522,9 +522,7 @@ export default function JogadoresPage() {
             </div>
           )}
           {filtered.length === 0 && <EmptyState size="sm" message="Nenhum jogador encontrado" />}
-        </div>
-
-        <div className="course-detail jog-detail" ref={md.detailRef}>
+      </>}>
           {showCompare ? (
             <Suspense fallback={<LoadingState size="sm" message="A carregar…" />}>
               <CompararPlayersView players={players} />
@@ -552,8 +550,7 @@ export default function JogadoresPage() {
               activeFiltersCount={activeFiltersCount}
             />
           )}
-        </div>
-      </div>
+      </MasterDetail>
     </div>
   );
 }

@@ -28,6 +28,7 @@ import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from 
 import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import TabelaGlobal from "../ui/TabelaGlobal";
+import MasterDetail from "../ui/MasterDetail";
 import type { UskidsDrawsData } from "../ui/uskidsTypes"; // pairings (Draw R{n})
 
 
@@ -1227,10 +1228,7 @@ export default function USKidsFieldPage() {
       </Toolbar>
 
       {/* ── MASTER-DETAIL ── */}
-      <div className="master-detail">
-
-        {/* ── SIDEBAR ── */}
-        <div className={`sidebar${md.open ? "" : " sidebar-closed"}`}>
+      <MasterDetail md={md} sidebar={<>
 
         {/* Pesquisa por nome de torneio (Torneios + Resultados) */}
         {tab !== "rivais" && (
@@ -1265,10 +1263,7 @@ export default function USKidsFieldPage() {
         <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
           signupanytime.com · actualização diária
         </div>
-      </div>
-
-      {/* ── CONTEÚDO ── */}
-      <div style={{ flex:1, overflow:"auto", padding:"16px 20px" }}>
+      </>}>
 
         {tab === "campo" && (
           selectedFieldTorneio
@@ -1306,9 +1301,7 @@ export default function USKidsFieldPage() {
           </SectionErrorBoundary>
         )}
 
-      </div>
-      {/* ← fecha master-detail */}
-      </div>
+      </MasterDetail>
     {/* ← fecha tourn-layout */}
     </div>
     </DataSourcesProvider>
