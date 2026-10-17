@@ -17,10 +17,12 @@ import EvoBadge from "../ui/EvoBadge";
 import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
 import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
-import { type Tournament as FPGTournament, type Player as FPGPlayer, type RoundScore as FPGRoundScore, type ScorecardOptions } from "./FPGPage";
+import { type Tournament as FPGTournament, type ScorecardOptions } from "./FPGPage";
 import { RoundPill } from "../ui/PillBadge";
 import { buildEvoMap, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
 import type { CircuitDivision } from "../ui/circuit/types";
+import { intlScorecardOptions } from "../data/intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
 
 /* ── Types ── */
 interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -205,60 +207,10 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
   // Distâncias: o BlueGolf dá `yards` por buraco → converter para metros.
   const meters = data.yards && data.yards.length >= par.length ? data.yards.map(y => Math.round(y * 0.9144)) : [];
   const hasMeters = meters.length >= par.length && par.length > 0;
-  const teeName = hasMeters ? (data.course || "Tee") : undefined;
-  const fpgPlayers: FPGPlayer[] = players
-    .filter(p => p.rounds.length > 0)
-    .map(p => {
-      const roundScores: FPGRoundScore[] = p.rounds.map((r, ri) => ({
-        round: ri + 1,
-        gross: r.gross,
-        scores: r.scores ?? [],
-        pars: par,
-        si: si && si.length >= par.length ? si : [],
-        meters: hasMeters ? meters : [],
-        teeName,
-      }));
-      // Rondas em falta OU ronda parcial (WD/DNF) → não terminou. Reusa o
-      // resultado de loadT (`_complete`); fallback para quem não passou por loadT.
-      const incomplete = (p as any)._complete != null
-        ? !(p as any)._complete
-        : !isPlayerComplete(p, nR, par.length);
-      // JWGC/FCG: os ficheiros trazem `gradYear` + país já limpo (p/ bandeira) +
-      // `hometown` (cidade/estado, ex: "New York, NY"). Defensivo p/ dados antigos
-      // "CLASSE, LOCAL" ainda no country. A coluna "País" mostra a bandeira do país
-      // + a ORIGEM detalhada (hometown quando existe — mais informativo que só "USA").
-      const rawCountry = p.country || "";
-      const ym = /^(\d{4})\s*,\s*(.*)$/.exec(rawCountry);
-      const gradField = (p as unknown as { gradYear?: number }).gradYear;
-      const classYear = gradField ?? (ym ? +ym[1] : null);
-      const flagCountry = gradField != null ? rawCountry : (ym ? ym[2].trim() : rawCountry);
-      const hometown = (p as unknown as { hometown?: string }).hometown ?? (ym ? ym[2].trim() : "");
-      const origin = hometown || normPaisDisplay(flagCountry);
-      return {
-        scoreId: p.name,
-        pos: p.pos,
-        name: p.name,
-        club: flagCountry ? `${flagForLocation(flagCountry)} ${origin}` : "",
-        _classYear: classYear,
-        grossTotal: p.total,
-        toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
-        nholes: par.length,
-        parTotal,
-        scores: p.rounds[0]?.scores ?? undefined,
-        par,
-        si: si && si.length >= par.length ? si : undefined,
-        meters: hasMeters ? meters : undefined,
-        teeName,
-        roundScores,
-        _wd: incomplete,
-        _roundsPlayed: p.rounds.length,
-        _isPortuguese: /portugal/i.test(p.country || "") || /^(pt|prt)$/i.test(p.country || ""),
-      } as FPGPlayer;
-    });
-  return {
+  return buildFPGTournament({
     name: def.label,
     tcode: def.id,
-    date: "",
+    rounds: nR,
     // ⚠ O campo hardcoded só vale para as séries para que foi escrito: os
     // ficheiros BJGT/WJGC trazem "Villa Padierna" sem o percurso (Flamingos vs
     // Alferini) e o EOWAGR vem vazio. Quando o FCG e o JWGC entraram nesta
@@ -268,25 +220,39 @@ function tDataToTournament(data: TData, def: TDef): FPGTournament {
     campo: def.series === "eowagr" ? "Le Touquet GC — La Forêt"
       : def.series === "bjgt" ? (def.category === "Boys 12-13" ? "Villa Padierna — Alferini" : "Villa Padierna — Flamingos")
       : (data.course || ""),
-    rounds: nR,
-    playerCount: fpgPlayers.length,
-    players: fpgPlayers,
-  };
+  }, { par, si, meters: hasMeters ? meters : null, teeName: hasMeters ? (data.course || "Tee") : undefined },
+  players.map((p): IntlPlayerIn => {
+    // JWGC/FCG: os ficheiros trazem `gradYear` + país já limpo (p/ bandeira) +
+    // `hometown` (cidade/estado, ex: "New York, NY"). Defensivo p/ dados antigos
+    // "CLASSE, LOCAL" ainda no country. A coluna "País" mostra a bandeira do país
+    // + a ORIGEM detalhada (hometown quando existe — mais informativo que só "USA").
+    const rawCountry = p.country || "";
+    const ym = /^(\d{4})\s*,\s*(.*)$/.exec(rawCountry);
+    const gradField = (p as unknown as { gradYear?: number }).gradYear;
+    const classYear = gradField ?? (ym ? +ym[1] : null);
+    const flagCountry = gradField != null ? rawCountry : (ym ? ym[2].trim() : rawCountry);
+    const hometown = (p as unknown as { hometown?: string }).hometown ?? (ym ? ym[2].trim() : "");
+    const origin = hometown || normPaisDisplay(flagCountry);
+    return {
+      id: p.name, name: p.name, pos: p.pos,
+      club: flagCountry ? `${flagForLocation(flagCountry)} ${origin}` : "",
+      country: p.country,
+      total: p.total,
+      toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
+      rounds: p.rounds,
+      // Rondas em falta OU ronda parcial (WD/DNF) → não terminou. Reusa o
+      // resultado de loadT (`_complete`); fallback para quem não passou por loadT.
+      wd: (p as any)._complete != null ? !(p as any)._complete : !isPlayerComplete(p, nR, par.length),
+      extra: { _classYear: classYear },
+    };
+  }));
 }
 
 
 /** Opções para ocultar colunas FPG-específicas e adaptar ao contexto BJGT */
+/** Coluna ANO (class year) — só JWGC/FCG a expõem. */
 function bjgtScorecardOptions(showClass = false): ScorecardOptions {
-  return {
-    hideHCP: true,
-    // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
-    hideSD: false,
-    hideEsc: true,
-    hideFed: true,
-    hideTee: true,
-    showClass,      // coluna ANO (class year) — só JWGC/FCG a expõem
-    clubLabel: "País",
-  };
+  return intlScorecardOptions({ showClass });
 }
 
 /* ═══════════════════════════════════════════════════════════════

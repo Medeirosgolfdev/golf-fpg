@@ -10,7 +10,9 @@ import { flag } from "../utils/flagUtils";
 import EvoBadge from "./EvoBadge";
 import { SC } from "../utils/scoreDisplay";
 import { IntlTournView } from "./IntlTournView";
-import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "../pages/FPGPage";
+import type { Tournament as FPGTournament } from "../pages/FPGPage";
+import { intlScorecardOptions } from "../data/intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
 
 interface ContestData {
   label: string;
@@ -53,25 +55,14 @@ interface ContestLeaderboardProps {
 
 /** ContestData → Tournament (o formato que o TournamentDetail lê). */
 function contestToTournament(c: ContestData): FPGTournament {
-  const par = c.parArr;
-  const players = c.players.filter((p) => p.rd.length > 0).map((p): FPGPlayer => {
-    const roundScores: FPGRoundScore[] = p.rd.map((r, ri) => ({
-      round: ri + 1, gross: r.g, scores: r.s ?? [], pars: par, si: [], meters: [], teeName: "",
-    }) as FPGRoundScore);
-    return {
-      scoreId: p.n, pos: p.p, name: p.n,
-      club: p.co ? `${flag(p.co)} ${p.co}` : "",
-      grossTotal: p.t, toPar: p.tp, nholes: 18, parTotal: c.par,
-      scores: p.rd[0]?.s ?? [], par, roundScores, _roundsPlayed: p.rd.length,
-      _isPortuguese: /^(pt|prt|portugal)$/i.test(p.co || ""),
-    } as unknown as FPGPlayer;
-  });
-  return { name: c.label, tcode: c.label, date: "", campo: "", rounds: c.nRounds, playerCount: players.length, players } as FPGTournament;
+  return buildFPGTournament({ name: c.label, tcode: c.label, rounds: c.nRounds }, { par: c.parArr },
+    c.players.map((p): IntlPlayerIn => ({
+      id: p.n, name: p.n, pos: p.p, club: p.co ? `${flag(p.co)} ${p.co}` : "", country: p.co,
+      total: p.t, toPar: p.tp, rounds: p.rd.map((r) => ({ gross: r.g, scores: r.s })), wd: false,
+    })));
 }
 
-const SC_OPTIONS: ScorecardOptions = {
-  hideHCP: true, hideSD: true, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País",
-};
+const SC_OPTIONS = intlScorecardOptions({ hideSD: true });
 
 export default function ContestLeaderboard({ contest, evo }: ContestLeaderboardProps) {
   const tournament = useMemo(() => contestToTournament(contest), [contest]);

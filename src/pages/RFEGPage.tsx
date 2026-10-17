@@ -38,6 +38,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex, CircuitLink } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { vetKey } from "../utils/normName";
+import { intlScorecardOptions } from "../data/intlScorecard";
 
 /** Normaliza nome/texto ES para matching: NFKD, sem diacríticos, vírgulas/pontos → espaço.
  *  ⚠ Diferente do `norm` partilhado (format.ts), que tira apóstrofos em vez de vírgulas. */
@@ -452,15 +453,7 @@ function lgsScorecardOptions(): ScorecardOptions {
   // - TEE escondido
   // - noPlayerLink: licenças espanholas (AM12345...) não correspondem a fed codes
   //   FPG — não criar link /jogadores/{fed} a apontar para nada útil.
-  return {
-    hideHCP: false,
-    hideEsc: false,
-    hideClub: true,
-    hideSD: false,
-    hideTee: true,
-    showAge: true,
-    noPlayerLink: true,
-  };
+  return intlScorecardOptions({ hideHCP: false, hideEsc: false, hideFed: false, hideClub: true, showAge: true, noPlayerLink: true });
 }
 
 /* ── Helpers de conversão idade → Sub-N (escalão FPG/RFEG) ──────

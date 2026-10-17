@@ -45,6 +45,7 @@ import DrawTab from "../ui/DrawTab";
 import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import TotalsResumo from "../ui/circuit/TotalsResumo";
 import { ffgEscalaoCanonico } from "../utils/ffgEscalao";
+import { intlScorecardOptions } from "../data/intlScorecard";
 
 /* ── Tipos do ficheiro novo (1 torneio = 1 ficheiro) ──────────── */
 interface CourseInfo {
@@ -753,15 +754,7 @@ function toFPGTournament(t: FFGTournament): FPGTournament {
 }
 
 function ffgScorecardOptions(): ScorecardOptions {
-  return {
-    hideHCP: false,
-    // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
-    hideSD: false,
-    hideEsc: true,
-    hideFed: true,
-    hideTee: true,
-    clubLabel: "Clube",
-  };
+  return intlScorecardOptions({ hideHCP: false, clubLabel: "Clube" });
 }
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */

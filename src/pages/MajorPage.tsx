@@ -33,6 +33,7 @@ import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
 import { playedParTotal } from "../data/fpgUtils";
 import { KidsLink } from "../ui/KidsLink";
 import MajorVeteransView from "./major/MajorVeteransView";
+import { intlScorecardOptions } from "../data/intlScorecard";
 
 /** Seta ↗ para a página KIDS2 do jogador, injectada nos nomes do detalhe (via
  *  `nameDecorator`). Resolve pelo KidsLinkCtx que o CircuitShell já fornece — só
@@ -155,9 +156,7 @@ const JOB_DIV_LABELS = ["Rapazes", "Raparigas"];
 // não exibir colunas vazias. showAges: coluna IDADE (idade À DATA do torneio via
 // dob+startDate; fallback ano − birthYear) — ligar só em fontes com birthYear.
 export function jobScorecardOptions(opts?: { showRatings?: boolean; showAges?: boolean }): ScorecardOptions {
-  const hide = !opts?.showRatings;
-  // SD: decide o ScorecardLB pelos dados (CR/Slope) — regra única, 14/10/2026.
-  return { hideHCP: hide, hideSD: false, hideEsc: true, hideFed: true, hideTee: true, clubLabel: "País", showAge: !!opts?.showAges };
+  return intlScorecardOptions({ hideHCP: !opts?.showRatings, showAge: !!opts?.showAges });
 }
 
 export function jobDivisionToTournament(div: JobDivision, name: string, year?: number, date?: string | null): FPGTournament {
