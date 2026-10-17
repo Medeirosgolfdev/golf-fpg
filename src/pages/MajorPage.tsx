@@ -20,7 +20,8 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitRenderFullExtras } from "../ui/circuit/types";
 import type { MatchplayFile } from "../ui/circuit/matchplayTypes";
 import MatchplayView from "../ui/circuit/MatchplayView";
-import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, makeEvoCols, EvoSummary, type TDef } from "./BJGTPage";
+import { URLS as BJGT_URLS, loadT as bjgtLoadT, bjgtEvoFor, bjgtMajorDivision, type TDef } from "./BJGTPage";
+import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
 import { DATA_FILES as DORAL_FILES, normalizeFile, doralEvoFor, doralMajorDivision, type Entry } from "./DORALPage";
 import { buildEvoMap, type EvoEntry } from "../hooks/useEvoComparison";
 import { gf, normPaisDisplay, isPtCountry } from "../utils/flagUtils";
@@ -408,22 +409,6 @@ function fmDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players: JobPlay
   } as FpgDraw]));
 }
 
-/** Marca cada jogador do torneio com _regressado (aparece no evo do ano anterior)
- *  e _subiu (mudou de escalão para cima), a partir do mapa de evolução. */
-function tagEvo(
-  results: { players: { name: string }[] },
-  evo: ReadonlyMap<string, { pill: string }> | null | undefined,
-): void {
-  if (!evo || evo.size === 0) return;
-  for (const pl of results.players) {
-    const ev = evo.get(pl.name);
-    if (ev) {
-      (pl as unknown as { _regressado?: boolean })._regressado = true;
-      if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true;
-    }
-  }
-}
-
 function buildFmEntries(files: JobFile[]): CircuitEntry[] {
   return files.map((f): CircuitEntry => {
     const divisions: CircuitDivision[] = f.divisions.map((dv, i) => {
@@ -467,7 +452,7 @@ function buildFmEntries(files: JobFile[]): CircuitEntry[] {
             options={{ ...withKidsLink(jobScorecardOptions()), shareEvent: `Future Masters Golf ${f.year}`, shareCourse: f.course || "Dothan Country Club" }}
             accShowCols={{ esc: false, fed: false, tee: false, hcp: false }}
             accExtraColumns={evoCols}
-            accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+            accHeader={hasEvo ? <EvoSummary evo={evo!} what={`regressaram de ${evoYear}`} metric="±par" /> : undefined}
             drawHideCols={FM_DRAW_HIDE_COLS}
             hideHeader
             extraTabs={[extras?.pastEditionsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x)}
@@ -537,7 +522,7 @@ function buildGgJobEntries(files: JobFile[], opts: { source: string; series: str
             options={{ ...scOpts, shareEvent: f.tournament || `${opts.series} ${f.year}`, shareCourse: f.course || undefined }}
             accShowCols={{ esc: false, fed: false, tee: false, hcp: !!opts.showRatings }}
             accExtraColumns={evoCols}
-            accHeader={hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined}
+            accHeader={hasEvo ? <EvoSummary evo={evo!} what={`regressaram de ${evoYear}`} metric="±par" /> : undefined}
             drawHideCols={{
               ...FM_DRAW_HIDE_COLS,
               ...(dv.players.some((p) => typeof p.hcp === "number") ? { hcp: false } : {}),
@@ -585,7 +570,7 @@ function buildJobEntries(files: JobFile[]): CircuitEntry[] {
         results,
         scOptions: jobScorecardOptions(),
         evoCols: hasEvo ? makeEvoCols(evo!, evoYear) : undefined,
-        accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
+        accHeader: hasEvo ? <EvoSummary evo={evo!} what={`regressaram de ${evoYear}`} metric="±par" /> : undefined,
       };
     });
     const all = f.divisions.flatMap((d) => d.players);

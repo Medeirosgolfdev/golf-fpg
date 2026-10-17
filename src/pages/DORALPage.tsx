@@ -14,7 +14,8 @@ import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { type Tournament as FPGTournament, type ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
 import type { ExtraColumn, MultiRoundRow } from "../ui/multiRoundTypes";
-import { type EvoEntry } from "../hooks/useEvoComparison";
+import { nameMatch, type EvoEntry } from "../hooks/useEvoComparison";
+import { EvoSummary, tagEvo } from "../ui/evo";
 import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
@@ -277,49 +278,26 @@ function doralScorecardOptions(entry: Entry): ScorecardOptions {
   return intlScorecardOptions({ hideSD: !hasRating, startHole });
 }
 
-/** Mini-resumo de evolução: jogadores que já passaram pelo Doral, com
- *  distribuição por número de edições anteriores (1x, 2x, 3x+). */
-function EvoSummary({ evo }: { entry: Entry; evo: Map<string, EvoEntryD> }) {
-  if (!evo.size) return null;
-  const entries = [...evo.values()];
-  const returning = entries.filter(e => e.delta !== 0);
-  const improved  = returning.filter(e => e.delta < 0).length;
-  const total     = returning.length;
-  // Distribuição: quantos jogadores têm 1, 2, 3+ edições anteriores
+/** Quantos regressados têm 1, 2, 3+ edições anteriores (para o resumo de evolução). */
+function editionsBreakdown(evo: Map<string, EvoEntryD>): string {
   let solo = 0, twice = 0, veteran = 0;
-  for (const e of entries) {
+  for (const e of evo.values()) {
     if (e.history.length === 1) solo++;
     else if (e.history.length === 2) twice++;
     else veteran++;
   }
-  const breakdown: string[] = [];
-  if (solo)    breakdown.push(`${solo} c/ 1 edição`);
-  if (twice)   breakdown.push(`${twice} c/ 2`);
-  if (veteran) breakdown.push(`${veteran} c/ 3+`);
-  return (
-    <div className="lb-evo-summary">
-      {evo.size} jogadores já passaram pelo Doral{breakdown.length ? ` (${breakdown.join(", ")})` : ""}
-      {total > 0 ? ` · ${improved}/${total} melhoraram` : ""}
-    </div>
-  );
+  return [solo && `${solo} c/ 1 edição`, twice && `${twice} c/ 2`, veteran && `${veteran} c/ 3+`].filter(Boolean).join(", ");
 }
 
 /* ═══════════════════════════════════════════════════════════════
    Helpers para a página MAJOR (CircuitShell) — evolução multi-ano
-   própria da Doral + CircuitDivision (results + evoCols + EvoSummary).
+   própria da Doral + CircuitDivision (results + evoCols + resumo de evolução).
    ═══════════════════════════════════════════════════════════════ */
 
 /** Evolução multi-ano da Doral para uma Entry (histórico de edições). Pura. */
 export function doralEvoFor(cur: Entry, entries: Entry[]): Map<string, EvoEntryD> | undefined {
   const earlierYears = [...new Set(entries.map((e) => e.year))].filter((y) => y < cur.year).sort((a, b) => b - a);
   if (!earlierYears.length) return undefined;
-  const nameMatch = (a: string, b: string): boolean => {
-    const na = a.toLowerCase().replace(/\s+/g, " ").trim();
-    const nb = b.toLowerCase().replace(/\s+/g, " ").trim();
-    if (na === nb) return true;
-    const ap = na.split(" "), bp = nb.split(" ");
-    return ap[0] === bp[0] && ap[ap.length - 1] === bp[bp.length - 1];
-  };
   const fieldSizeMap = new Map<string, number>();
   for (const e of entries) {
     if (e.year >= cur.year) continue;
@@ -404,10 +382,7 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
     },
   ] : undefined;
   const results = entryToTournament(entry);
-  if (hasEvo) for (const pl of results.players) {
-    const ev = evo!.get(pl.name);
-    if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
-  }
+  tagEvo(results, evo);
   return {
     key: entry.id,
     escalao: entry.category,
@@ -418,6 +393,6 @@ export function doralMajorDivision(entry: Entry, evo: Map<string, EvoEntryD> | u
     scOptions: doralScorecardOptions(entry),
     siLabel: "m",
     evoCols,
-    accHeader: hasEvo ? <EvoSummary entry={entry} evo={evo!} /> : undefined,
+    accHeader: hasEvo ? <EvoSummary evo={evo!} what="já passaram pelo Doral" detail={editionsBreakdown(evo!) || undefined} /> : undefined,
   };
 }

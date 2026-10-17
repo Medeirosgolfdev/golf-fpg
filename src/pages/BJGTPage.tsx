@@ -6,20 +6,19 @@
  * removida — /bjgt-legacy redirecciona agora para /major.
  *
  * Este módulo exporta o catálogo URLS, o loader loadT, os tipos
- * TData/TDef/RoundData/PlayerData e os módulos ricos (EvoSummary, bjgtEvoFor,
+ * TData/TDef/RoundData/PlayerData e os módulos ricos (bjgtEvoFor,
  * makeEvoCols, bjgtMajorDivision — que embrulha FStats/HoleDiff/ManuelDay e o
  * adaptador tDataToTournament) consumidos pela MajorPage (CircuitShell).
  */
 import React from "react";
 import { scClass, SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
-import EvoBadge from "../ui/EvoBadge";
 import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
-import type { MultiRoundRow, ExtraColumn } from "../ui/multiRoundTypes";
 import { type Tournament as FPGTournament, type ScorecardOptions } from "./FPGPage";
 import { RoundPill } from "../ui/PillBadge";
 import { buildEvoMap, type EvoEntry, type EvoInput } from "../hooks/useEvoComparison";
+import { EvoSummary, tagEvo, makeEvoCols } from "../ui/evo";
 import type { CircuitDivision } from "../ui/circuit/types";
 import { intlScorecardOptions } from "../data/intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn } from "../data/intlTournament";
@@ -375,21 +374,9 @@ function FStats({ data, ri }: { data: TData; ri: number | "all" }) {
   return <div className="muted fs-10 mb-8">{scores.length} jogadores · Par {parTotal} · Média R{(ri as number)+1}: {avg.toFixed(1)} ({fmtToPar(Math.round(avg - parTotal))}){nSC < scores.length && ` · ${nSC} com scorecard`}</div>;
 }
 
-/** Mini-resumo de evolução ano-a-ano */
-export function EvoSummary({ evo, evoYear }: { evo: Map<string, EvoEntry>; evoYear: string }) {
-  if (!evo.size) return null;
-  const returning = [...evo.values()].filter(e => e.delta !== 0);
-  const improved = returning.filter(e => e.delta < 0).length;
-  return (
-    <div className="lb-evo-summary">
-      {evo.size} jogadores regressaram de {evoYear}{returning.length > 0 ? ` · ${improved}/${returning.length} melhoraram (±par)` : ""}
-    </div>
-  );
-}
-
 /* ═══════════════════════════════════════════════════════════════
    Helpers para a página MAJOR (CircuitShell) — reutilizam os módulos
-   ricos locais (HoleDiff/ManuelDay/FStats/EvoSummary) + o adaptador.
+   ricos locais (HoleDiff/ManuelDay/FStats) + o adaptador.
    ═══════════════════════════════════════════════════════════════ */
 
 /** Evolução ano-a-ano para um TDef (bidirecional 2025↔2026). Pura (sem hooks). */
@@ -421,33 +408,6 @@ export function bjgtEvoFor(cur: TDef, all: TDef[]): { evo?: Map<string, EvoEntry
   return { evo: raw.evoMap, evoYear: raw.evoYear };
 }
 
-/** Tipo de linha do MultiRoundLeaderboard com posição calculada. */
-export type EvoRowWithPos = MultiRoundRow & { _pos?: number | null };
-
-/** Constrói as 3 colunas de evolução ano-a-ano (Ant. · Δ · Percurso).
- *  Partilhado por BJGT/EOWAGR e Junior Orange Bowl no CircuitShell. */
-export function makeEvoCols(evo: Map<string, EvoEntry>, evoYear?: string): ExtraColumn<EvoRowWithPos>[] {
-  return [
-    {
-      // ⚠ O separador do grupo de evolução é bordo da COLUNA (`lb-col-divider`,
-      // aplicado ao th E ao td), não um border-left num <span> dentro da célula:
-      // assim é uma linha vertical contínua da tabela, em vez de um traço curto
-      // à altura do texto, colado ao número e diferente em cada linha.
-      header: evoYear || "Ant.", className: "ta-c fs-11 fw-600 lb-col-divider",
-      headerStyle: { width: 44, textAlign: "center" as const, padding: "0 3px" },
-      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <span>{fmtSign(ev.otherValue)}</span> : <span className="c-muted">–</span>; },
-    },
-    {
-      header: "Δ", className: "ta-c fs-11 fw-700", headerStyle: { width: 34, textAlign: "center" as const, padding: "0 3px" },
-      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); if (!ev) return <span className="c-muted">–</span>; return <span style={{ color: ev.delta < 0 ? "var(--good-dark)" : ev.delta > 0 ? SC.danger : "var(--text-3)" }}>{ev.delta > 0 ? "+" : ""}{ev.delta}</span>; },
-    },
-    {
-      header: "Percurso", className: "ta-c", headerStyle: { width: 140, textAlign: "center" as const, padding: "0 4px" },
-      cell: (row: EvoRowWithPos) => { const ev = evo.get(row.name); return ev ? <EvoBadge pill={ev.pill} from={ev.from} to={ev.to} /> : <EvoBadge pill="NEW" label={evoYear === "2026" ? "não voltou" : "novo"} />; },
-    },
-  ];
-}
-
 /** CircuitDivision de um torneio BJGT/EOWAGR (results + evoCols + módulos ricos). */
 export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefined, evoYear: string | undefined, sourceUrl?: string): CircuitDivision {
   const data = def.data;
@@ -457,10 +417,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
   const rLabel = (i: number) => (def.roundDates?.[i] ? `R${i + 1} · ${def.roundDates[i]}` : `R${i + 1}`);
   const evoCols = hasEvo ? makeEvoCols(evo!, evoYear) : undefined;
   const results = tDataToTournament(data, def);
-  if (hasEvo) for (const pl of results.players) {
-    const ev = evo!.get(pl.name);
-    if (ev) { (pl as unknown as { _regressado?: boolean })._regressado = true; if (ev.pill === "UP") (pl as unknown as { _subiu?: boolean })._subiu = true; }
-  }
+  tagEvo(results, evo);
   return {
     key: def.id,
     escalao: def.category,
@@ -474,7 +431,7 @@ export function bjgtMajorDivision(def: TDef, evo: Map<string, EvoEntry> | undefi
     // Apresentação PLANA (igual ao JOB/Doral): o leaderboard renderiza sem
     // "janela"/card. A análise extra (média + dificuldade por buraco + ManuelDay)
     // flui POR BAIXO, em cards próprios, via accHeader/accExtra/roundExtra.
-    accHeader: hasEvo ? <EvoSummary evo={evo!} evoYear={evoYear!} /> : undefined,
+    accHeader: hasEvo ? <EvoSummary evo={evo!} what={`regressaram de ${evoYear}`} metric="±par" /> : undefined,
     accExtra: (
       <div className="card">
         <div className="h-md">📊 Dificuldade por Buraco — Todas as rondas</div>

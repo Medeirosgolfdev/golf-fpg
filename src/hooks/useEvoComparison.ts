@@ -51,9 +51,9 @@ export interface EvoResult {
   manuelEvo: EvoEntry | undefined;
 }
 
-/* ── Name matching (partilhado — mesmo algoritmo de ambas as páginas) ── */
+/* ── Name matching (partilhado — o mesmo em todas as evoluções) ── */
 
-function nameMatch(a: string, b: string): boolean {
+export function nameMatch(a: string, b: string): boolean {
   const na = a.toLowerCase().replace(/\s+/g, " ").trim();
   const nb = b.toLowerCase().replace(/\s+/g, " ").trim();
   if (na === nb) return true;
