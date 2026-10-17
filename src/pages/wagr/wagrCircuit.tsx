@@ -63,9 +63,6 @@ export const WAGR_SITE = "https://www.wagr.com";
 export const wagrEventUrl = (id: string | number) => `${WAGR_SITE}/events/x-${id}`;
 export const wagrPlayerUrl = (link: string) => `${WAGR_SITE}/playerprofile/${link}`;
 
-export const isPtCountry = (c: string | null | undefined) =>
-  /portugal/i.test(String(c || "")) || /^(pt|prt|por)$/i.test(String(c || "").trim());
-
 /* ── Adapter: evento → divisão (lazy) ───────────────────────────── */
 async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[]> {
   const ev = await cachedFetchJson<WagrEventFull>(`/data/wagr/events/wagr_${e.id}.json`);

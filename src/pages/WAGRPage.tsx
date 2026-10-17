@@ -1,10 +1,10 @@
 /**
  * WAGRPage.tsx — World Amateur Golf Ranking (wagr.com, The R&A + USGA).
  *
- * O ranking amador OFICIAL do mundo, assente no CircuitShell partilhado (como
- * EGR/RFEG/England/GJGL): os EVENTOS WAGR são as entries da sidebar (leaderboard
- * de totais via `customResults`, sem scorecards) e o ranking mundial vive como
- * vista "info" (specialItem "jogadores"), igual ao /egr/info/jogadores.
+ * O ranking amador OFICIAL do mundo, na RankingPage partilhada com o EGR
+ * (ui/ranking): os EVENTOS WAGR são as entries do CircuitShell (leaderboard de
+ * totais, sem scorecards) e o ranking mundial vive como vista "info". Aqui só
+ * a configuração, as colunas e os shards do histórico.
  * Filtra-se por tipo de evento (Junior, All Ages, Collegiate…), sexo, ano e INTL.
  *
  * Rotas:
@@ -27,29 +27,16 @@
  *   Ver memória `wagr-source`.
  */
 
-import { useEffect, useMemo, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { cachedFetchJson } from "../data/fetchCache";
-import { gf, flagOrEmpty } from "../utils/flagUtils";
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { flagOrEmpty, isPtCountry } from "../utils/flagUtils";
 import { norm } from "../utils/format";
-import { useSort } from "../hooks/useSort";
-import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
-import { KidsLink, KidsLinkCtx } from "../ui/KidsLink";
-import SortableHdr from "../ui/SortableHdr";
 import SexBadge from "../ui/SexBadge";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
-import LoadingState from "../ui/LoadingState";
-import EmptyState from "../ui/EmptyState";
-import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitConfig, CircuitEntry } from "../ui/circuit/types";
 import {
-  buildWagrEntries, isPtCountry, wagrEventUrl, wagrPlayerUrl, WAGR_SITE,
-  type WagrEventsList,
-} from "./wagr/wagrCircuit";
-
-const EVENTS_LIST_URL = "/data/wagr/wagr-events-list.json";
-const RANKING_URL = "/data/wagr-ranking.json";
-const PAGE_SIZE = 100;
+  RankingPage, RankingList, RankingMeta, RankingTable, RankingDetail, usePlayerEvents,
+  nameCell, countryCell, num, type RankingCol, type RankingPageConfig,
+} from "../ui/ranking/RankingPage";
+import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr/wagrCircuit";
 
 /**
  * Nº de shards do rollup jogador→eventos.
@@ -101,11 +88,8 @@ interface WagrPlayerEvent {
   rounds: number[];
   points: number | null;
 }
-interface WagrPlayerEvents { players: Record<string, WagrPlayerEvent[]> }
 
 /* ── Helpers ───────────────────────────────────────────────────── */
-const num = (n: number | null | undefined, d = 2) =>
-  n == null || Number.isNaN(n) ? "—" : n.toFixed(d);
 /** Variação de ranking na semana: positivo = subiu. */
 function ChangeCell({ v }: { v: number | null }) {
   if (v == null || v === 0) return <span style={{ color: "var(--text-muted)" }}>–</span>;
@@ -118,54 +102,13 @@ function ChangeCell({ v }: { v: number | null }) {
 }
 
 /* ═══════════════════════════════════════════════════════════════ */
-export default function WAGRPage() {
-  const params = useParams<{ source?: string; id?: string }>();
-  // Detalhe do jogador (drill-down do ranking), página inteira: /wagr/jogador/:id
-  if (params.source === "jogador" && params.id) return <WAGRRankingRoot playerId={params.id} />;
-  // Circuito de EVENTOS no CircuitShell (ranking vive como vista "info").
-  return <WAGREventsCircuit params={params} />;
-}
-
-/** Carrega o ranking (wagr-ranking.json, ~2 MB) e mostra a tabela de jogadores
- *  (vista "info") ou o detalhe de um jogador. Lazy — só ao abrir o Ranking. */
-function WAGRRankingRoot({ playerId }: { playerId?: string }) {
-  const [ranking, setRanking] = useState<WagrRanking | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<WagrRanking>(RANKING_URL)
-      .then((d) => { if (alive) setRanking(d); })
-      .catch((e) => { if (alive) setErr(String(e?.message || e)); });
-    return () => { alive = false; };
-  }, []);
-  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar o ranking WAGR: ${err}`} />;
-  if (!ranking) return <LoadingState message="A carregar o ranking mundial…" />;
-  return playerId ? <WAGRDetail ranking={ranking} id={playerId} /> : <WAGRList ranking={ranking} />;
-}
-
-/** WAGRPage assente no CircuitShell partilhado: os EVENTOS são as entries e o
- *  ranking é um specialItem (vista "info"), igual ao /egr/info/jogadores. */
-function WAGREventsCircuit({ params }: { params: { source?: string; id?: string } }) {
-  const navigate = useNavigate();
-  const [entries, setEntries] = useState<CircuitEntry[] | null>(null);
-  const [err, setErr] = useState<string | null>(null);
-
-  useEffect(() => {
-    let alive = true;
-    cachedFetchJson<WagrEventsList>(EVENTS_LIST_URL)
-      .then((d) => { if (alive) setEntries(buildWagrEntries(d?.events || [])); })
-      .catch((e) => { if (alive) setErr(String(e?.message || e)); });
-    return () => { alive = false; };
-  }, []);
-
-  // Vista informativa via URL: /wagr/info/{key} (deep-linkável). "info" não
-  // colide com "evt" (evento) nem "jogador" (detalhe).
-  const onInfo = params.source === "info";
-  const selectedInfo = onInfo ? (params.id ?? null) : null;
-  const selectedId = !onInfo && params.source === "evt" && params.id ? `evt:${params.id}` : undefined;
-
-  const config = useMemo<CircuitConfig>(() => ({
-    routeBase: "/wagr",
+const CFG: RankingPageConfig<WagrRanking, Parameters<typeof buildWagrEntries>[0][number]> = {
+  base: "/wagr",
+  name: "WAGR",
+  rankingUrl: "/data/wagr-ranking.json",
+  eventsUrl: "/data/wagr/wagr-events-list.json",
+  buildEntries: buildWagrEntries,
+  shell: {
     title: "🌍 World Amateur Golf Ranking",
     color: "#0f3d2e",
     textColor: "#fff",
@@ -178,332 +121,88 @@ function WAGREventsCircuit({ params }: { params: { source?: string; id?: string 
     // Os anos anteriores continuam a um clique nas pills, e os deep-links
     // /wagr/evt/{id} de qualquer ano continuam a abrir.
     filters: { search: true, year: true, escalao: true, sex: true, intl: true, defaultYear: "current", toggles: ["pt", "top10"] },
-    specialItems: [
-      { key: "jogadores", label: "🏅 Ranking mundial", render: () => <WAGRRankingRoot /> },
-    ],
-    loadingMessage: "A carregar eventos WAGR…",
-  }), []);
+  },
+  rankingLabel: "🏅 Ranking mundial",
+  loadingRanking: "A carregar o ranking mundial…",
+  List: (r) => <WAGRList ranking={r} />,
+  Detail: (r, id) => <WAGRDetail ranking={r} id={id} />,
+};
 
-  if (err) return <EmptyState icon="⚠️" message={`Erro ao carregar os eventos WAGR: ${err}`} />;
-
-  return (
-    <CircuitShell
-      entries={entries || []}
-      config={config}
-      loading={!entries}
-      selectedId={selectedId}
-      onSelectEntry={(e) => navigate(`/wagr/evt/${e.id.split(":")[1]}`)}
-      selectedInfo={selectedInfo}
-      onSelectInfo={(key) => navigate(key ? `/wagr/info/${key}` : "/wagr")}
-    />
-  );
+export default function WAGRPage() {
+  return <RankingPage cfg={CFG} />;
 }
 
-/* ── Vista LISTA (ranking mundial) ─────────────────────────────── */
-type ListKey = "rank" | "change" | "name" | "country" | "divisor" | "points";
+/* ── Lista (ranking mundial) ───────────────────────────────────── */
+const LIST_COLS: RankingCol<WagrPlayer>[] = [
+  { key: "rank", label: "#", title: "Ranking WAGR (por sexo)", className: "num", sort: (p) => p.rank ?? 1e9, cell: (p) => p.rank ?? "—", tdStyle: { color: "var(--text-muted)" } },
+  { key: "change", label: "Var.", title: "Variação face à semana anterior", className: "tight", sort: (p) => p.change ?? 0, firstDir: "desc", cell: (p) => <ChangeCell v={p.change} /> },
+  { key: "name", label: "Nome", sort: (p) => norm(p.name), cell: (p) => nameCell(p.name), tdStyle: { fontWeight: 500 } },
+  { key: "country", label: "País", sort: (p) => norm(p.country || ""), cell: (p) => countryCell(p.country) },
+  { key: "sex", label: "Sexo", className: "tight", tdClassName: "", cell: (p) => <SexBadge sex={p.sex} /> },
+  { key: "divisor", label: "Divisor", title: "Divisor aplicado (nº de eventos sobre o qual a média é calculada)", className: "num", sort: (p) => p.divisor ?? 1e9, cell: (p) => num(p.divisor), tdStyle: { color: "var(--text-muted)" } },
+  { key: "points", label: "Pts méd.", title: "Pontos médios WAGR", className: "num", sort: (p) => p.pointsAverage ?? -1, firstDir: "desc", cell: (p) => num(p.pointsAverage), tdStyle: { fontWeight: 600 } },
+];
 
 function WAGRList({ ranking }: { ranking: WagrRanking }) {
-  const navigate = useNavigate();
-  const { kidsMap } = useKidsLinkMap();
-  const [q, setQ] = useState("");
-  const [country, setCountry] = useState("");
-  // ⚠ Masculino e feminino são DOIS rankings separados (o wagr.com tem duas
-  // páginas). Sem filtro, o #1 aparece duas vezes e a lista fica intercalada —
-  // por isso abre em Homens, como o site.
-  const [sex, setSex] = useState<"" | "M" | "F">("M");
-  const [ptOnly, setPtOnly] = useState(false);
-  const [page, setPage] = useState(0);
-  const { sortKey, sortDir, toggleSort } = useSort<ListKey>("rank", "asc", {
-    points: "desc", change: "desc",
-  });
-
-  const countries = useMemo(
-    () => Array.from(new Set(ranking.players.map((p) => p.country).filter(Boolean) as string[])).sort(),
-    [ranking]
-  );
-
-  const filtered = useMemo(() => {
-    const nq = norm(q);
-    const rows = ranking.players.filter((p) => {
-      if (ptOnly && !isPtCountry(p.country)) return false;
-      if (country && p.country !== country) return false;
-      if (sex && p.sex !== sex) return false;
-      if (nq && !norm(p.name).includes(nq)) return false;
-      return true;
-    });
-    const dir = sortDir === "asc" ? 1 : -1;
-    const val = (p: WagrPlayer): number | string => {
-      switch (sortKey) {
-        case "rank": return p.rank ?? 1e9;
-        case "change": return p.change ?? 0;
-        case "name": return norm(p.name);
-        case "country": return norm(p.country || "");
-        case "divisor": return p.divisor ?? 1e9;
-        case "points": return p.pointsAverage ?? -1;
-      }
-    };
-    return [...rows].sort((a, b) => {
-      const va = val(a), vb = val(b);
-      const cmp = (typeof va === "string" || typeof vb === "string")
-        ? String(va).localeCompare(String(vb)) * dir
-        : (va - vb) * dir;
+  return (
+    <RankingList players={ranking.players} title="🌍 World Amateur Golf Ranking" cols={LIST_COLS}
+      meta={<RankingMeta totalMen={ranking.totalMen} totalWomen={ranking.totalWomen} site={WAGR_SITE} siteLabel="wagr.com"
+        siteTitle="O ranking amador oficial (The R&A + USGA). Sem data de nascimento nem escalão do jogador."
+        extra={ranking.week ? <span title="Semana oficial do ranking">Semana {ranking.week}</span> : undefined} />}
+      rowKey={(p) => `${p.sex}-${p.id}`} playerHref={(p) => `/wagr/jogador/${p.id}`}
+      defaultSort="rank" defaultDir="asc"
       // Desempate estável: com M+F há dois #1, dois #2… — os pontos médios
       // decidem a ordem dentro do mesmo lugar em vez de ficar ao acaso.
-      return cmp || (b.pointsAverage ?? -1) - (a.pointsAverage ?? -1);
-    });
-  }, [ranking, q, country, sex, ptOnly, sortKey, sortDir]);
-
-  // reset página quando os filtros mudam
-  useEffect(() => { setPage(0); }, [q, country, sex, ptOnly, sortKey, sortDir]);
-
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const pageRows = filtered.slice(page * PAGE_SIZE, page * PAGE_SIZE + PAGE_SIZE);
-
-  return (
-   <KidsLinkCtx.Provider value={kidsMap}>
-    <div style={{ padding: "8px 12px 24px" }}>
-      <Toolbar>
-        <ToolbarTitle>🌍 World Amateur Golf Ranking</ToolbarTitle>
-        <ToolbarSep />
-        <ToolbarMeta>{ranking.totalMen.toLocaleString("pt")} ♂ · {ranking.totalWomen.toLocaleString("pt")} ♀</ToolbarMeta>
-        {ranking.week && <><ToolbarSep /><ToolbarMeta><span title="Semana oficial do ranking">Semana {ranking.week}</span></ToolbarMeta></>}
-        <ToolbarSep />
-        <ToolbarMeta>
-          <a href={WAGR_SITE} target="_blank" rel="noopener noreferrer" title="O ranking amador oficial (The R&A + USGA). Sem data de nascimento nem escalão do jogador.">wagr.com ↗</a>
-        </ToolbarMeta>
-      </Toolbar>
-
-      {/* Filtros */}
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center", margin: "8px 0 12px" }}>
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Pesquisar nome…"
-          style={{ padding: "5px 9px", minWidth: 180, fontSize: "var(--fs-13)" }}
-        />
-        <select value={country} onChange={(e) => setCountry(e.target.value)} style={{ padding: "5px", fontSize: "var(--fs-13)" }}>
-          <option value="">Todos os países</option>
-          {countries.map((c) => <option key={c} value={c}>{c}</option>)}
-        </select>
-        <select value={sex} onChange={(e) => setSex(e.target.value as "" | "M" | "F")} style={{ padding: "5px", fontSize: "var(--fs-13)" }}>
-          <option value="M">♂ Homens</option>
-          <option value="F">♀ Senhoras</option>
-          <option value="">M + F (dois rankings juntos)</option>
-        </select>
-        <label style={{ display: "flex", alignItems: "center", gap: 4, fontSize: "var(--fs-13)", cursor: "pointer" }}>
-          <input type="checkbox" checked={ptOnly} onChange={(e) => setPtOnly(e.target.checked)} />
-          {gf("Portugal")} só Portugal
-        </label>
-        <span style={{ marginLeft: "auto", fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
-          {filtered.length.toLocaleString("pt")} jogadores
-        </span>
-      </div>
-
-      {filtered.length === 0 ? (
-        <EmptyState icon="🔍" message="Nenhum jogador corresponde aos filtros." />
-      ) : (
-        <>
-          <div style={{ overflowX: "auto" }}>
-            <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
-              <thead>
-                <tr>
-                  <SortableHdr k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Ranking WAGR (por sexo)">#</SortableHdr>
-                  <SortableHdr k="change" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Variação face à semana anterior">Var.</SortableHdr>
-                  <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
-                  <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>País</SortableHdr>
-                  <th className="tight">Sexo</th>
-                  <SortableHdr k="divisor" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Divisor aplicado (nº de eventos sobre o qual a média é calculada)">Divisor</SortableHdr>
-                  <SortableHdr k="points" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Pontos médios WAGR">Pts méd.</SortableHdr>
-                </tr>
-              </thead>
-              <tbody>
-                {pageRows.map((p) => {
-                  const isPt = isPtCountry(p.country);
-                  return (
-                    <tr
-                      key={`${p.sex}-${p.id}`}
-                      onClick={() => navigate(`/wagr/jogador/${p.id}`)}
-                      style={{ cursor: "pointer", background: isPt ? "var(--accent-light, rgba(0,120,0,.06))" : undefined }}
-                      className="player-list-row"
-                      title="Ver histórico e stats deste jogador"
-                    >
-                      <td className="num" style={{ color: "var(--text-muted)" }}>{p.rank ?? "—"}</td>
-                      <td className="tight"><ChangeCell v={p.change} /></td>
-                      <td style={{ fontWeight: 500 }}>
-                        <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                          {p.name}
-                          {/* ↗ para a ficha /kids2 (só se houver ficha no roster canónico).
-                              stopPropagation: não disparar a navegação da linha. */}
-                          <span onClick={(e) => e.stopPropagation()} style={{ display: "inline-flex" }}>
-                            <KidsLink nome={p.name} />
-                          </span>
-                        </span>
-                      </td>
-                      <td title={p.country || ""}>{flagOrEmpty(p.country)} <span style={{ color: "var(--text-muted)", fontSize: "var(--fs-11)" }}>{p.country}</span></td>
-                      <td><SexBadge sex={p.sex} /></td>
-                      <td className="num" style={{ color: "var(--text-muted)" }}>{num(p.divisor)}</td>
-                      <td className="num" style={{ fontWeight: 600 }}>{num(p.pointsAverage)}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {totalPages > 1 && <Pagination page={page} totalPages={totalPages} onPage={setPage} />}
-        </>
-      )}
-    </div>
-   </KidsLinkCtx.Provider>
+      tieBreak={(a, b) => (b.pointsAverage ?? -1) - (a.pointsAverage ?? -1)}
+      // ⚠ Masculino e feminino são DOIS rankings separados (o wagr.com tem duas
+      // páginas). Sem filtro, o #1 aparece duas vezes e a lista fica intercalada —
+      // por isso abre em Homens, como o site.
+      sexOptions={[["M", "♂ Homens"], ["F", "♀ Senhoras"], ["", "M + F (dois rankings juntos)"]]} initialSex="M"
+      isPt={(p) => isPtCountry(p.country)} />
   );
 }
 
-/* ── Vista DETALHE (/wagr/jogador/:id) ─────────────────────────── */
-type DetKey = "date" | "event" | "country" | "type" | "pos" | "total" | "points" | "power";
-
+/* ── Detalhe (/wagr/jogador/:id) ───────────────────────────────── */
 function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
   const navigate = useNavigate();
   const player = useMemo(() => ranking.players.find((p) => p.id === id) || null, [ranking, id]);
-  const [events, setEvents] = useState<WagrPlayerEvent[] | null>(null);
-  const [loadingEv, setLoadingEv] = useState(true);
-  const { sortKey, sortDir, toggleSort } = useSort<DetKey>("date", "desc", {
-    event: "asc", country: "asc", type: "asc", pos: "asc", total: "asc",
-  });
-
-  useEffect(() => {
-    let alive = true;
-    setLoadingEv(true);
-    cachedFetchJson<WagrPlayerEvents>(playerEventsUrl(id))
-      .then((d) => { if (alive) setEvents(d?.players?.[id] || []); })
-      .catch(() => { if (alive) setEvents([]); })
-      .finally(() => { if (alive) setLoadingEv(false); });
-    return () => { alive = false; };
-  }, [id]);
-
-  const sortedEvents = useMemo(() => {
-    if (!events) return [];
-    const dir = sortDir === "asc" ? 1 : -1;
-    const val = (e: WagrPlayerEvent): number | string => {
-      switch (sortKey) {
-        case "date": return e.date || "";
-        case "event": return norm(e.name || "");
-        case "country": return norm(e.country || "");
-        case "type": return norm(e.eventType || "");
-        case "pos": return typeof e.pos === "number" ? e.pos : 9999;
-        case "total": return e.total ?? 1e9;
-        case "points": return e.points ?? -1;
-        case "power": return e.power ?? -1;
-      }
-    };
-    return [...events].sort((a, b) => {
-      const va = val(a), vb = val(b);
-      if (typeof va === "string" || typeof vb === "string") return String(va).localeCompare(String(vb)) * dir;
-      return (va - vb) * dir;
-    });
-  }, [events, sortKey, sortDir]);
-
-  if (!player) {
-    return (
-      <div style={{ padding: "8px 12px 24px" }}>
-        <button className="btn-link" onClick={() => navigate("/wagr/info/jogadores")}>← Voltar ao ranking</button>
-        <EmptyState icon="🔍" message={`Jogador não encontrado — sem entrada para o id ${id} no ranking WAGR.`} />
-      </div>
-    );
-  }
-
+  const events = usePlayerEvents<WagrPlayerEvent>(playerEventsUrl(id), id);
+  const cols = useMemo((): RankingCol<WagrPlayerEvent>[] => [
+    { key: "date", label: "Data", sort: (e) => e.date || "", cell: (e) => e.date || "—", tdStyle: { whiteSpace: "nowrap", color: "var(--text-muted)" } },
+    { key: "event", label: "Evento", sort: (e) => norm(e.name || ""), firstDir: "asc", cell: (e) => <>
+      <a href={wagrEventUrl(e.eventId)} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a>
+      {" "}
+      <button className="btn-link" style={{ fontSize: "var(--fs-11)" }} onClick={() => navigate(`/wagr/evt/${e.eventId}`)}
+        title="Abrir o leaderboard deste evento no site">↗ leaderboard</button>
+    </> },
+    { key: "country", label: "Local", className: "tight", sort: (e) => norm(e.country || ""), firstDir: "asc", cell: (e) => <span title={e.country || ""}>{flagOrEmpty(e.country)}</span> },
+    { key: "type", label: "Tipo", className: "tight", sort: (e) => norm(e.eventType || ""), firstDir: "asc", cell: (e) => e.eventType || "—" },
+    { key: "pos", label: "Pos", className: "num", sort: (e) => typeof e.pos === "number" ? e.pos : 9999, firstDir: "asc", cell: (e) => e.pos ?? "—", tdStyle: { fontWeight: 600 } },
+    { key: "rounds", label: "Rondas", title: "Rondas", className: "tight", cell: (e) => e.rounds.join("·") || "—", tdStyle: { color: "var(--text-muted)" } },
+    { key: "total", label: "Total", className: "num", sort: (e) => e.total ?? 1e9, firstDir: "asc", cell: (e) => e.total ?? "—" },
+    { key: "power", label: "Power", title: "Power do evento (força do campo segundo o WAGR)", className: "num", sort: (e) => e.power ?? -1, cell: (e) => num(e.power, 1), tdStyle: { color: "var(--text-muted)" } },
+    { key: "points", label: "Pts", title: "Pontos WAGR ganhos", className: "num", sort: (e) => e.points ?? -1, cell: (e) => num(e.points), tdStyle: { fontWeight: 600 } },
+  ], [navigate]);
+  if (!player) return <RankingDetail backTo="/wagr/info/jogadores" notFound={`Jogador não encontrado — sem entrada para o id ${id} no ranking WAGR.`} />;
   return (
-    <div style={{ padding: "8px 12px 24px" }}>
-      <button className="btn-link" onClick={() => navigate("/wagr/info/jogadores")} style={{ marginBottom: 8 }}>← Voltar ao ranking</button>
-
-      {/* Cabeçalho do jogador */}
-      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 10, marginBottom: 4 }}>
+    <RankingDetail backTo="/wagr/info/jogadores"
+      header={<>
         <h2 style={{ margin: 0 }}>{flagOrEmpty(player.country)} {player.name}</h2>
         <SexBadge sex={player.sex} />
         {player.profileLink && (
-          <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>
-            perfil WAGR ↗
-          </a>
+          <a href={wagrPlayerUrl(player.profileLink)} target="_blank" rel="noopener noreferrer" style={{ fontSize: "var(--fs-12)" }}>perfil WAGR ↗</a>
         )}
-      </div>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, margin: "8px 0 16px", fontSize: "var(--fs-13)" }}>
-        <Stat label="País" value={player.country || "—"} />
-        <Stat label="Ranking WAGR" value={player.rank != null ? `#${player.rank} ${player.sex === "F" ? "♀" : "♂"}` : "—"} />
-        <Stat label="Semana anterior" value={player.rankLastWeek != null ? `#${player.rankLastWeek}` : "—"} />
-        <Stat label="Pontos médios" value={num(player.pointsAverage)} />
-        <Stat label="Divisor" value={num(player.divisor)} title="Nº de eventos sobre o qual a média é calculada" />
-      </div>
-
-      {/* Histórico de eventos */}
-      <h3 style={{ margin: "0 0 6px" }}>Eventos {loadingEv ? "" : `(${sortedEvents.length})`}</h3>
-      {loadingEv ? (
-        <LoadingState message="A carregar histórico…" />
-      ) : sortedEvents.length === 0 ? (
-        <EmptyState icon="📭" message="Sem eventos registados — só aparecem provas dos anos já scrapados." />
-      ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table className="player-list-table" style={{ width: "100%", fontSize: "var(--fs-12)" }}>
-            <thead>
-              <tr>
-                <SortableHdr k="date" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Data</SortableHdr>
-                <SortableHdr k="event" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Evento</SortableHdr>
-                <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Local</SortableHdr>
-                <SortableHdr k="type" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Tipo</SortableHdr>
-                <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Pos</SortableHdr>
-                <th className="tight" title="Rondas">Rondas</th>
-                <SortableHdr k="total" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">Total</SortableHdr>
-                <SortableHdr k="power" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Power do evento (força do campo segundo o WAGR)">Power</SortableHdr>
-                <SortableHdr k="points" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Pontos WAGR ganhos">Pts</SortableHdr>
-              </tr>
-            </thead>
-            <tbody>
-              {sortedEvents.map((e) => (
-                <tr key={e.eventId} className="player-list-row">
-                  <td style={{ whiteSpace: "nowrap", color: "var(--text-muted)" }}>{e.date || "—"}</td>
-                  <td>
-                    <a href={wagrEventUrl(e.eventId)} target="_blank" rel="noopener noreferrer">{e.name || `Evento ${e.eventId}`}</a>
-                    {" "}
-                    <button
-                      className="btn-link"
-                      style={{ fontSize: "var(--fs-11)" }}
-                      onClick={() => navigate(`/wagr/evt/${e.eventId}`)}
-                      title="Abrir o leaderboard deste evento no site"
-                    >↗ leaderboard</button>
-                  </td>
-                  <td className="tight" title={e.country || ""}>{flagOrEmpty(e.country)}</td>
-                  <td className="tight">{e.eventType || "—"}</td>
-                  <td className="num" style={{ fontWeight: 600 }}>{e.pos ?? "—"}</td>
-                  <td className="tight" style={{ color: "var(--text-muted)" }}>{e.rounds.join("·") || "—"}</td>
-                  <td className="num">{e.total ?? "—"}</td>
-                  <td className="num" style={{ color: "var(--text-muted)" }}>{num(e.power, 1)}</td>
-                  <td className="num" style={{ fontWeight: 600 }}>{num(e.points)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-    </div>
-  );
-}
-
-/* ── Componentes auxiliares ────────────────────────────────────── */
-function Stat({ label, value, title }: { label: string; value: string; title?: string }) {
-  return (
-    <div title={title} style={{ display: "flex", flexDirection: "column" }}>
-      <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{label}</span>
-      <span style={{ fontWeight: 600 }}>{value}</span>
-    </div>
-  );
-}
-
-function Pagination({ page, totalPages, onPage }: { page: number; totalPages: number; onPage: (p: number) => void }) {
-  return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 8, padding: "12px 0", fontSize: "var(--fs-12)" }}>
-      <button className="btn-link" disabled={page === 0} onClick={() => onPage(0)}>«</button>
-      <button className="btn-link" disabled={page === 0} onClick={() => onPage(page - 1)}>‹</button>
-      <span>Página {page + 1} de {totalPages}</span>
-      <button className="btn-link" disabled={page >= totalPages - 1} onClick={() => onPage(page + 1)}>›</button>
-      <button className="btn-link" disabled={page >= totalPages - 1} onClick={() => onPage(totalPages - 1)}>»</button>
-    </div>
+      </>}
+      stats={[
+        { label: "País", value: player.country || "—" },
+        { label: "Ranking WAGR", value: player.rank != null ? `#${player.rank} ${player.sex === "F" ? "♀" : "♂"}` : "—" },
+        { label: "Semana anterior", value: player.rankLastWeek != null ? `#${player.rankLastWeek}` : "—" },
+        { label: "Pontos médios", value: num(player.pointsAverage) },
+        { label: "Divisor", value: num(player.divisor), title: "Nº de eventos sobre o qual a média é calculada" },
+      ]}
+      eventsTitle="Eventos" events={events}
+      emptyMessage="Sem eventos registados — só aparecem provas dos anos já scrapados.">
+      <RankingTable rows={events ?? []} cols={cols} rowKey={(e) => e.eventId} defaultSort="date" defaultDir="desc" />
+    </RankingDetail>
   );
 }

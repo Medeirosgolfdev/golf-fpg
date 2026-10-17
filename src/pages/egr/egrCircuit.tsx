@@ -4,10 +4,10 @@
  * Os eventos EGR (europeangolfrankings.com) trazem leaderboard de TOTAIS por
  * ronda (R1-R4) + país/clube, mas NÃO scorecards buraco-a-buraco. Por isso cada
  * evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision` cujo
- * `customResults` é o `ScorecardLeaderboard` partilhado sem scorecard — o mesmo
- * padrão do RFEG (NCResultsLeaderboard) e do GJGL. Zero tabelas próprias.
+ * `customResults` é o TotalsResumo partilhado (o mesmo do GJGL e da LGPIDF).
  */
 import { cachedFetchJson } from "../../data/fetchCache";
+import { normLoose } from "../../utils/normName";
 import TotalsResumo from "../../ui/circuit/TotalsResumo";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 
@@ -48,14 +48,13 @@ interface EgrEventPlayer {
 /* ── HCP do roster GolfBox (egr-dob-roster.json), por nome. O leaderboard EGR
  *  não traz HCP; junta-se aqui o índice actual onde existir. Carrega 1× (cache). */
 interface EgrRoster { players: Record<string, { name: string; hcp?: number | null }> }
-const normNm = (s: string) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 let _hcpMapPromise: Promise<Map<string, number>> | null = null;
 function loadHcpMap(): Promise<Map<string, number>> {
   if (!_hcpMapPromise) {
     _hcpMapPromise = cachedFetchJson<EgrRoster>("/data/egr/egr-dob-roster.json")
       .then((r) => {
         const m = new Map<string, number>();
-        for (const v of Object.values(r?.players || {})) if (typeof v.hcp === "number") m.set(normNm(v.name), v.hcp);
+        for (const v of Object.values(r?.players || {})) if (typeof v.hcp === "number") m.set(normLoose(v.name), v.hcp);
         return m;
       })
       .catch(() => new Map<string, number>());
@@ -74,7 +73,7 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     cachedFetchJson<EgrEventFull>(`/data/egr/events/egr_${e.id}.json`),
     loadHcpMap(),
   ]);
-  const players = (ev?.players || []).map((p) => ({ ...p, _hcp: hcpMap.get(normNm(p.name)) ?? null }));
+  const players = (ev?.players || []).map((p) => ({ ...p, _hcp: hcpMap.get(normLoose(p.name)) ?? null }));
   return [{
     key: "main",
     escalao: e.ageGroup || "—",
