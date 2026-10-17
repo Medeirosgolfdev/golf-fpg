@@ -1,5 +1,5 @@
 /**
- * useAllRoundsData — Hook partilhado entre AllRoundsScorecardLB e DriveAllRoundsScorecardLB
+ * useAllRoundsData — dados do AllRoundsScorecardLB (scorecards de todas as voltas)
  *
  * Extrai toda a lógica de dados comum:
  *   - Row building (grouped + flat)

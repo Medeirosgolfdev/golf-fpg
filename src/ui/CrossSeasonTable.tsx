@@ -16,7 +16,7 @@
  * ═══════════════════════════════════════════════════════════════
  * CrossSeasonTable.tsx — Tabela temporada cruzada: jogadores × torneios
  *
- * Utilizada por ResumoTable (Drive Tour/Challenge/Aquapor) e TournamentGrid (Sub-12).
+ * Utilizada pelo TournamentGrid (Sub-12).
  * Não contém lógica de dados nem sort — apenas renderiza a estrutura HTML/CSS partilhada.
  *
  * Estrutura de colunas:
@@ -107,7 +107,7 @@ interface CrossSeasonTableProps {
    *  Default = 5 (Jogador / Fed / Esc / Clube / HCP). PJARankingView usa 3 (Jogador / Esc / Clube). */
   identityColSpan?: number;
   /** Classe extra na <table>. Callers com checkbox de comparação na coluna #
-   *  (ResumoTable, TournamentGrid) passam "has-cmp" para alargar a coluna e
+   *  (TournamentGrid) passam "has-cmp" para alargar a coluna e
    *  deslocar a sticky do nome (senão o nº da posição fica tapado). */
   className?: string;
 }

@@ -9,11 +9,7 @@
  *
  * Estratégia de leaderboard: NATIVA do CircuitShell. Cada divisão entrega o
  * seu `results: FPGTournament` e o `IntlTournView` desenha o leaderboard
- * (incl. tabs de ronda a partir de `players[].roundScores`). Assim NÃO é preciso
- * extrair os componentes internos da DrivePage (ScorecardLB / DriveAccumulatedLB /
- * DriveAllRoundsScorecardLB) — isso fica para uma fase posterior caso se queira
- * replicar exactamente o render acumulado/scorecards-combinados via
- * `renderAccSection`/`renderRoundSection`.
+ * (incl. tabs de ronda a partir de `players[].roundScores`).
  *
  * ⚠ Ainda por ligar (fase seguinte, precisa de extração de componentes da
  *   DrivePage e/ou do fetch runtime de inscrições):
