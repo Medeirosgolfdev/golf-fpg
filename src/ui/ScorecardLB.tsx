@@ -127,7 +127,12 @@ export function ScorecardLB({
     setFilter(EMPTY_FILTER);
   }
 
-  const rawPlayers = tournament.players.filter((p) => p.scores && p.scores.length > 0);
+  // Quem tem cartão buraco a buraco e, numa volta em que há cartões, também
+  // quem só tem o total (ex.: R1 do WJGC sem buraco a buraco para quase todos)
+  // — com o gross e o ±par e os buracos em branco, em vez de desaparecer.
+  const hasCard = (p: Player) => !!(p.scores && p.scores.length > 0);
+  const anyCard = tournament.players.some(hasCard);
+  const rawPlayers = tournament.players.filter((p) => hasCard(p) || (anyCard && !p._wd && numGross(p) > 0 && numGross(p) < 900));
 
   // ─── Calcular ref, par, posições ANTES de qualquer early return ───────────
   // (React exige que todos os hooks sejam chamados incondicionalmente)
@@ -240,7 +245,7 @@ export function ScorecardLB({
   const statsByPlayer = useMemo(() => {
     const m = new Map<Player, { eags: number; birds: number; pars: number; bogs: number; scores: number[]; inferred: boolean[] }>();
     for (const p of rawPlayers) {
-      const { scores, inferred } = noInfer ? rawFilled(p) : fillBlankHoles(p);
+      const { scores, inferred } = !hasCard(p) ? { scores: [] as number[], inferred: [] as boolean[] } : noInfer ? rawFilled(p) : fillBlankHoles(p);
       const pp = playerPar(p);
       let eags = 0, birds = 0, pars = 0, bogs = 0;
       for (let i = 0; i < scores.length && i < pp.length; i++) {

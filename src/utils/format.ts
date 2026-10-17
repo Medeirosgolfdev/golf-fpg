@@ -281,6 +281,16 @@ export function ageAtDate(dob: string | null | undefined, date: string | null | 
   return age >= 0 ? age : null;
 }
 
+/** Ano de nascimento de uma data "YYYY-MM-DD" ou "DD/MM/YYYY" (null se não for data). */
+export function birthYearOf(dob: string | null | undefined): number | null {
+  if (!dob) return null;
+  const s = dob.trim();
+  const iso = /^(\d{4})-\d{2}-\d{2}/.exec(s);
+  if (iso) return +iso[1];
+  const dmy = /^(\d{1,2})[/.](\d{1,2})[/.](\d{4})/.exec(s);
+  return dmy ? +dmy[3] : null;
+}
+
 /** Escalão FPG no ano do torneio, calculado a partir da data de nascimento.
  *
  *  Regra FPG (confirmada): o escalão é atribuído no início do ano civil e mantém-se

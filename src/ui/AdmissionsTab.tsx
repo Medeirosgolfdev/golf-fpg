@@ -27,7 +27,7 @@ import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard"
 import { useSort } from "../hooks/useSort";
 import SortableHdr from "./SortableHdr";
 import { displayFed } from "../utils/fedKeys";
-import { PlayerFilterBar, filterRows } from "./MultiRoundLeaderboard";
+import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 
 interface Props {
@@ -326,7 +326,7 @@ export default function AdmissionsTab({
           </a>
         )}
       </div>
-      <PlayerFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={players.length} playersDB={playersDB} />
+      <RowsFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={players.length} playersDB={playersDB} />
     </>
   );
 
