@@ -7,7 +7,7 @@
  * Só aparecem quando o painel escolhe «Torneio» (d.rounds com 2+ voltas).
  */
 import type React from "react";
-import { II, OS, BN, countHoles, vpC, ink, panel, fillA } from "../shared";
+import { II, OS, BN, countHoles, vpC, ink, panel, fillA, isLightText } from "../shared";
 import { SC, TpBadge, StatsRow, Info } from "../badges";
 import { fmtToPar } from "../../../utils/format";
 import type { P, RoundSum } from "../types";
@@ -17,7 +17,10 @@ const totPar = (rs: RoundSum[]) => rs.reduce((a, r) => a + r.toPar, 0);
 /** Breakdown de todas as voltas juntas. */
 const allStats = (rs: RoundSum[]) => countHoles(rs.flatMap((r) => r.scores), rs.flatMap((r) => r.par));
 /** Cor da diferença de pancadas: menos = verde, mais = vermelho. */
-const dCol = (d: number) => (d < 0 ? "#22c55e" : d > 0 ? "#f87171" : "inherit");
+const dCol = (d: number, tc?: string) => {
+  const light = isLightText(tc);   // texto claro (fundo escuro) → tons claros; senão escuros
+  return d < 0 ? (light ? "#22c55e" : "#15803d") : d > 0 ? (light ? "#f87171" : "#b91c1c") : "inherit";
+};
 const fmtD = (d: number) => (d > 0 ? `+${d}` : d < 0 ? `${d}` : "=");
 
 /* V50 · RESUMO DO TORNEIO — total, posição e cada volta numa linha. */
@@ -97,15 +100,15 @@ export function V51({ d, v, bg, tc = "white", ta = tc, tc3, fa }: P) {
             <span style={{ width: LW, fontFamily: OS, color: tc3 }}>Δ</span>
             {Array.from({ length: len }, (_, i) => {
               const dd = b.scores[off + i] - a.scores[off + i];
-              return <span key={i} style={{ width: W, textAlign: "center", color: dd ? dCol(dd) : tc3, opacity: dd ? 1 : .5 }}>{dd ? fmtD(dd) : "·"}</span>;
+              return <span key={i} style={{ width: W, textAlign: "center", color: dd ? dCol(dd, tc) : tc3, opacity: dd ? 1 : .5 }}>{dd ? fmtD(dd) : "·"}</span>;
             })}
-            {(() => { const dd = sub(b, off, len) - sub(a, off, len); return <span style={{ width: 30, textAlign: "center", color: dCol(dd) }}>{fmtD(dd)}</span>; })()}
+            {(() => { const dd = sub(b, off, len) - sub(a, off, len); return <span style={{ width: 30, textAlign: "center", color: dCol(dd, tc) }}>{fmtD(dd)}</span>; })()}
           </div>}
         </div>
       ))}
       <div style={{ fontSize: 10, fontWeight: 700, color: tc3 }}>
         {rs.map((r) => `R${r.round} ${r.gross}`).join(" · ")}
-        {v.evolution && <>{" · "}<span style={{ color: dCol(b.gross - a.gross) }}>R{b.round} vs R{a.round}: {fmtD(b.gross - a.gross)}</span></>}
+        {v.evolution && <>{" · "}<span style={{ color: dCol(b.gross - a.gross, tc) }}>R{b.round} vs R{a.round}: {fmtD(b.gross - a.gross)}</span></>}
       </div>
       <Info d={d} v={v} keys={["course", "tee", "teeDist", "date"]} tc={tc} tc3={tc3} fs={10} fit mt={3} />
     </div>
@@ -140,7 +143,7 @@ export function V52({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
           );
         })}
       </div>
-      {v.evolution && <div style={{ fontFamily: OS, fontSize: 16, fontWeight: 700, letterSpacing: 1, color: dCol(diff), marginTop: 4, textTransform: "uppercase" }}>{msg}</div>}
+      {v.evolution && <div style={{ fontFamily: OS, fontSize: 16, fontWeight: 700, letterSpacing: 1, color: dCol(diff, tc), marginTop: 4, textTransform: "uppercase" }}>{msg}</div>}
       <div style={{ fontSize: 12, fontWeight: 800, marginTop: 4 }}>
         Total {tot(rs)} <span style={{ color: tc3 }}>({fmtToPar(totPar(rs))})</span>
       </div>
@@ -232,7 +235,7 @@ export function V54({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
             <span style={{ fontFamily: OS, fontSize: 10, fontWeight: 700, color: tc3 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 24, lineHeight: 1 }}>{r.gross}</span>
             {/* «Evolução»: diferença para a volta anterior */}
-            {v.evolution && i > 0 && <span style={{ fontSize: 10, fontWeight: 800, color: dCol(r.gross - rs[i - 1].gross) }}>{fmtD(r.gross - rs[i - 1].gross)}</span>}
+            {v.evolution && i > 0 && <span style={{ fontSize: 10, fontWeight: 800, color: dCol(r.gross - rs[i - 1].gross, tc) }}>{fmtD(r.gross - rs[i - 1].gross)}</span>}
           </span>
         ))}
       </div>
@@ -313,7 +316,7 @@ export function V57({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
             <span style={{ width: 30, fontFamily: OS, fontSize: 12, fontWeight: 700, color: tc3 }}>R{r.round}</span>
             {cols.map((c) => <span key={c.k} style={{ width: C, textAlign: "center", fontSize: 15, fontWeight: 800 }}>{c.n(st) || "·"}</span>)}
             <span style={{ width: C, textAlign: "center", fontFamily: BN, fontSize: 20 }}>{r.gross}</span>
-            {v.evolution && <span style={{ width: 30, textAlign: "center", fontSize: 11, fontWeight: 800, color: i ? dCol(r.gross - rs[i - 1].gross) : tc3 }}>{i ? fmtD(r.gross - rs[i - 1].gross) : "·"}</span>}
+            {v.evolution && <span style={{ width: 30, textAlign: "center", fontSize: 11, fontWeight: 800, color: i ? dCol(r.gross - rs[i - 1].gross, tc) : tc3 }}>{i ? fmtD(r.gross - rs[i - 1].gross) : "·"}</span>}
           </div>
         ))}
         <div style={{ display: "flex", alignItems: "center", paddingTop: 2 }}>
@@ -341,7 +344,7 @@ export function V58({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
           <span key={r.round} style={{ display: "inline-flex", flexDirection: "column", alignItems: "center" }}>
             <span style={{ fontFamily: OS, fontSize: 9, fontWeight: 700, color: tc3 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 24, lineHeight: 1 }}>{r.gross}</span>
-            {v.evolution && <span style={{ fontSize: 9, fontWeight: 800, color: i ? dCol(r.gross - rs[i - 1].gross) : "transparent" }}>{i ? fmtD(r.gross - rs[i - 1].gross) : "·"}</span>}
+            {v.evolution && <span style={{ fontSize: 9, fontWeight: 800, color: i ? dCol(r.gross - rs[i - 1].gross, tc) : "transparent" }}>{i ? fmtD(r.gross - rs[i - 1].gross) : "·"}</span>}
           </span>
         ))}
         {sep}

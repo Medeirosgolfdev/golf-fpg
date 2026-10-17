@@ -14,9 +14,9 @@ export function V19({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
   return (
     <div style={{ fontFamily:OS, display:"inline-flex", flexDirection:"column", alignItems:"center", color:tc, background:bg ?? undefined, overflow:"hidden", borderRadius:8, textShadow:TS, maxWidth: maxW + 40 }}>
       {(v.player||v.event||v.round) && (
-        <div style={{ padding:"6px 8px 3px", textAlign:"center", maxWidth: maxW + 30, overflow:"hidden" }}>
+        <div style={{ padding:"6px 8px 3px", textAlign:"center", alignSelf:"stretch", wordBreak:"break-word" }}>
           {v.player&&d.player && <div style={{ fontSize:16, fontWeight:700, lineHeight:1.2, wordBreak:"break-word" }}>{d.player.toUpperCase()}</div>}
-          <div style={{ fontFamily:II, marginTop:1 }}><Info d={d} v={v} keys={["event", "round"]} tc={tc} tc3={tc3} fs={9} upper align="center" /></div>
+          <div style={{ fontFamily:II, marginTop:1 }}><Info d={d} v={v} keys={["event", "round"]} tc={tc} tc3={tc3} fs={9} upper align="center" fit /></div>
         </div>
       )}
       {v.holeScores && (

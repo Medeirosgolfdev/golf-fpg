@@ -192,9 +192,10 @@ export const MIX_BG_LIGHT = ["#eef1f6", "#e8f1ea", "#f6eaec", "#f1f0ee", "#e6f0f
  *  fundo escuro (texto claro), `dark` para o fundo claro (texto escuro).
  *  Azul→dourado, verde→salva, vinho→champanhe, grafite→âmbar, petróleo→água,
  *  café→areia, ameixa→lilás, musgo→limão, ferrugem→pêssego. Nada avermelhado:
- *  o resultado acima do par sai nesta cor e o vermelho é dos birdies. */
+ *  o resultado acima do par sai nesta cor e o vermelho é dos birdies.
+ *  Nada azul também (o azul é dos bogeys). */
 export const MIX_ACC: { light: string; dark: string }[] = [
-  { light: "#f2c14e", dark: "#1e3a8a" },
+  { light: "#f2c14e", dark: "#8a5a00" },
   { light: "#cfe3a0", dark: "#166534" },
   { light: "#f2d0a4", dark: "#7a4b12" },
   { light: "#f5a524", dark: "#7c4a03" },
@@ -207,10 +208,10 @@ export const MIX_ACC: { light: string; dark: string }[] = [
 /** Destaque «Auto» dos fundos lisos. */
 export const BG_ACC: Record<string, { light: string; dark: string }> = {
   black:   { light: "#f5a524", dark: "#7c4a03" },
-  navy:    { light: "#f2c14e", dark: "#1e3a8a" },
-  pga:     { light: "#f2c14e", dark: "#1e3a8a" },
+  navy:    { light: "#f2c14e", dark: "#8a5a00" },
+  pga:     { light: "#f2c14e", dark: "#8a5a00" },
   masters: { light: "#f6d55c", dark: "#166534" },
   green:   { light: "#cfe3a0", dark: "#166534" },
   wine:    { light: "#f2d0a4", dark: "#7a4b12" },
-  white:   { light: "#f2c14e", dark: "#1e3a8a" },
+  white:   { light: "#f2c14e", dark: "#8a5a00" },
 };

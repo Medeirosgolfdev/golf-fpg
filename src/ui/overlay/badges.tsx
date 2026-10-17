@@ -288,7 +288,7 @@ export function Info({ d, v, keys = INFO_ALL, tc, tc3, ta, fs = 10, align = "lef
     <div style={{ ...(fit ? { width: 0, minWidth: "100%" } : {}), textAlign: align, marginTop: mt, display: "flex", flexDirection: "column", gap: 2, lineHeight: 1.3 }}>
       {ev && (
         <div style={{ fontSize: fs + 1, fontWeight: 800, color: acc, ...tt }}>
-          {ev}{suffix && <span style={{ fontWeight: 700, color: tc3, opacity: .85, whiteSpace: "nowrap" }}>{"\u00a0\u00a0"}{suffix}</span>}
+          {ev}{suffix && <span style={{ fontWeight: 700, color: tc3, opacity: .85 }}>{"\u00a0\u00a0"}{suffix}</span>}
         </div>
       )}
       {course && <div style={{ fontSize: fs, fontWeight: 600, color: tc3, ...tt }}>{course}</div>}

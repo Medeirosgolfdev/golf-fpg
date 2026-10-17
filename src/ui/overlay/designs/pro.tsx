@@ -63,11 +63,6 @@ export function V30({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
               <span style={{ fontFamily:BN, background:fillA(accent, fa), padding:"2px 10px", fontSize:18, letterSpacing:1.5, color:onColor(accent) }}>{d.player.toUpperCase()}</span>
             </div>
           )}
-          {v.round && (
-            <div style={{ marginTop:3 }}>
-              <span style={{ fontSize:9, fontWeight:700, letterSpacing:2, color:tc3 }}>R{d.round}</span>
-            </div>
-          )}
         </div>
         <div style={{ padding:"6px 12px 2px", display:"flex", alignItems:"center", gap:8 }}>
           <div style={{ fontFamily:BN, fontSize:52, lineHeight:.85, letterSpacing:-2, color:tc }}>{s.sT}</div>
@@ -84,7 +79,7 @@ export function V30({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
         </div>
       )}
       <div style={{ padding:"4px 10px 6px", borderTop:`1px solid ${ink(tc, .08)}` }}>
-        <Info d={d} v={v} keys={["event", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} />
+        <Info d={d} v={v} keys={["event", "round", "position", "course", "tee", "teeDist", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} />
       </div>
     </div>
   );
@@ -174,7 +169,7 @@ export function V45({ d, v, s, fa, bg, tc="white", ta = tc, tc3 }: P) {
               <div style={{ fontSize: 10, fontWeight: 700, letterSpacing: 1, color: tc3, textTransform: "uppercase", lineHeight: 1.35, wordBreak: "break-word" }}>{[v.course&&d.course, v.tee&&d.tee, v.teeDist&&d.teeDist?`${d.teeDist}m`:null].filter(Boolean).join(" · ")}</div>
             )}
             {(v.round || (v.date && d.date) || (v.position && d.position)) && (
-              <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+              <div style={{ display: "flex", gap: 4, alignItems: "center", flexWrap: "wrap", whiteSpace: "nowrap" }}>
                 {v.round && (
                   <div style={{ background: ink(tc, .15), padding: "2px 8px", fontSize: 9, fontWeight: 800, letterSpacing: 1.2, color: tc, textTransform: "uppercase" }}>R{d.round}</div>
                 )}

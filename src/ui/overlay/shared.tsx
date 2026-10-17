@@ -41,9 +41,11 @@ export function scBg(d: number, sc?: number): string | null {
 /** O texto do cartão é branco (fundos escuros)? */
 export const isLightText = (tc?: string) => {
   if (!tc || tc === "white") return true;
-  const m = /^#([0-9a-f]{6})$/i.exec(tc);
+  // #rgb (ex.: "#222") também — antes caía em «claro» e trocava o destaque.
+  const m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(tc);
   if (!m) return true;
-  const n = parseInt(m[1], 16);
+  const hex = m[1].length === 3 ? m[1].split("").map((c) => c + c).join("") : m[1];
+  const n = parseInt(hex, 16);
   return (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) > 140;
 };
 /** Cor de texto legível POR CIMA de uma cor (ex.: pílula no destaque). */

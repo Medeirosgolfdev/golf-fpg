@@ -32,14 +32,14 @@ export function V39({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
           {/* Score sozinho na coluna; -1 sai como badge absolute para alturas casarem. */}
           <div style={{ flexShrink:0, marginLeft:6, position:"relative", display:"inline-block" }}>
             <div style={{ fontFamily:BN, fontSize:88, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
-            <div style={{ fontFamily:SG, fontSize:13, fontWeight:800, color:tc3, position:"absolute", right:0, bottom:-6, letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
+            <div style={{ fontFamily:SG, fontSize:14, fontWeight:800, color:vpC(s.vpT, tc, ta), position:"absolute", right:0, bottom:-6, letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
           </div>
         </div>
       )}
       {!v.holeScores && (
         <div style={{ textAlign:"center" }}>
           <div style={{ fontFamily:BN, fontSize:88, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
-          <div style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:tc3, marginTop:2 }}>{fmtToPar(s.vpT)}</div>
+          <div style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:vpC(s.vpT, tc, ta), marginTop:2 }}>{fmtToPar(s.vpT)}</div>
         </div>
       )}
       {v.player&&d.player && <div style={{ marginTop:6, fontSize:13, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase" }}>{d.player}</div>}
