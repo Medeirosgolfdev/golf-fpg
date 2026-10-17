@@ -17,6 +17,8 @@
  */
 
 import ManuelResultPills from "../ManuelResultPills";
+import AdmissionsTab from "../AdmissionsTab";
+import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
@@ -31,25 +33,20 @@ import LoadingState from "../LoadingState";
 import Counter from "../Counter";
 import SexBadge from "../SexBadge";
 import ExtLink from "../ExternalLink";
-import { EscPill, RoundPill, ManuelPill, YearPill } from "../PillBadge";
+import { EscPill, RoundPill, ManuelPill } from "../PillBadge";
 import { IntlTournView } from "../IntlTournView";
-import { ScorecardLeaderboard, type ScorecardRow } from "../ScorecardLeaderboard";
 import { KidsLinkCtx } from "../KidsLink";
 import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
-import { flag } from "../../utils/flagUtils";
-import SortableHdr from "../SortableHdr";
 import MatchplayView from "./MatchplayView";
-import { useSort } from "../../hooks/useSort";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
-import { monthLabel, fmtDateRangePt, ageAtDate, birthYearOf, todayIso } from "../../utils/format";
+import { monthLabel, fmtDateRangePt } from "../../utils/format";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
-import { displayFed } from "../../utils/fedKeys";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
-  CircuitSectionKind, CircuitInscritoRow, CircuitDrawGroup,
+  CircuitSectionKind,
 } from "./types";
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
@@ -150,10 +147,8 @@ const sectionLabel = (s: CircuitSectionKind): string => {
 function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   const out: CircuitSectionKind[] = [];
   if (d.results || d.customResults) out.push("results");
-  if (d.inscritos && d.inscritos.lists.some(l => l.players.length > 0)) out.push("inscritos");
-  // "draw" aparece se a divisão traz um render próprio (DrawSaidaView/DrawTab — RFEG)
-  // OU dados de draw genéricos não-vazios (DrawView do shell).
-  if (d.renderDrawSection || (d.draw && Object.keys(d.draw.rounds).length > 0)) out.push("draw");
+  if (d.admissions?.players?.length) out.push("inscritos");
+  if (d.roundDraws?.length) out.push("draw");
   if (d.matchplay && d.matchplay.flights.length > 0) out.push("matchplay");
   return out;
 }
@@ -206,218 +201,25 @@ function applyToggles(
   return { ...t, players };
 }
 
-// ── Sub-vistas: Inscritos e Draw ──────────────────────────────────────
-
-function InscritosView({ lists, dateRef }: { lists: NonNullable<CircuitDivision["inscritos"]>["lists"]; dateRef?: string }) {
-  const available = lists.filter(l => l.players.length > 0);
-  const [active, setActive] = useState(available[0]?.key ?? "");
-  useEffect(() => { if (!available.some(l => l.key === active)) setActive(available[0]?.key ?? ""); }, [available, active]);
-  const cur = available.find(l => l.key === active) ?? available[0];
-  if (!cur) return null;
-  return (
-    <div>
-      {available.length > 1 && (
-        <div className="tab-bar" style={{ marginBottom: 8 }}>
-          {available.map(l => (
-            <button key={l.key} className={`tab-under${active === l.key ? " active" : ""}`} onClick={() => setActive(l.key)}>
-              {l.label} <span className="muted">({l.players.length})</span>
-            </button>
-          ))}
-        </div>
-      )}
-      <InscritosTable rows={cur.players} dateRef={dateRef} />
-    </div>
-  );
+// ── Inscrições: o AdmissionsTab partilhado (o mesmo da FPG/Drive) ──
+function DivisionAdmissions({ admissions, date }: { admissions: FpgAdmissions; date?: string }) {
+  const ps = admissions.players ?? [];
+  // VAC/Registo/Status só quando a fonte os tem (a FPG tem; Espanha não).
+  const hidePostCols = !ps.some(p => p.vac != null || p.dataInscricao);
+  return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} />;
 }
 
-type InscritosSortKey = "pos" | "name" | "escalao" | "sex" | "club" | "hcp" | "dob" | "status" | "country" | "fed";
-
-// Há ≥1 jogador com país preenchido / licença? Só mostramos a coluna nesse caso
-// (outras páginas-circuito podem não trazer estes campos).
-function anyCountry(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.country); }
-function anyFed(rows: CircuitInscritoRow[]): boolean { return rows.some(p => !!p.fed); }
-
-function InscritosTable({ rows, dateRef }: { rows: CircuitInscritoRow[]; dateRef?: string }) {
-  const { sortKey, sortDir, toggleSort } = useSort<InscritosSortKey>("pos");
-  const [q, setQ] = useState("");
-  // Layout alinhado com a aba Inscrições da FPG (AdmissionsTab): bandeira + sexo
-  // ficam INLINE no nome (não em colunas próprias); colunas = ESC · Lic · Clube ·
-  // HCP · Nasc. (ano + idade). Cada coluna opcional só aparece se ALGUM jogador
-  // tiver esse dado (uma coluna 100% vazia fica oculta).
-  const hasCountry = anyCountry(rows);
-  const hasSex = rows.some(p => p.sex === "M" || p.sex === "F");
-  const showFed = anyFed(rows);
-  const showEsc = rows.some(p => !!p.escalao);
-  const showClub = rows.some(p => !!p.club);
-  const showHcp = rows.some(p => p.hcp != null);
-  const showDob = rows.some(p => !!p.dob);
-  const showStatus = rows.some(p => !!p.status);
-
-  // Pesquisa por nome / clube / licença (igual à aba Inscrições da FPG).
-  const term = normName(q);
-  const filtered = useMemo(() => {
-    if (!term) return rows;
-    return rows.filter(p =>
-      normName(p.name || "").includes(term) ||
-      normName(p.club || "").includes(term) ||
-      (p.fed || "").toLowerCase().includes(term)
-    );
-  }, [rows, term]);
-
-  const sorted = useMemo(() => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    const val = (p: CircuitInscritoRow): string | number => {
-      switch (sortKey) {
-        case "pos": return typeof p.pos === "number" ? p.pos : 99999;
-        case "name": return (p.name || "").toLowerCase();
-        case "escalao": return (p.escalao || "").toLowerCase();
-        case "sex": return p.sex || "";
-        case "club": return (p.club || "").toLowerCase();
-        case "hcp": return p.hcp ?? 999;
-        case "dob": return p.dob || "";
-        case "status": return (p.status || "").toLowerCase();
-        case "country": return (p.country || "").toUpperCase();
-        case "fed": return (p.fed || "").toLowerCase();
-      }
-    };
-    return [...filtered].sort((a, b) => {
-      const va = val(a), vb = val(b);
-      return va < vb ? -dir : va > vb ? dir : 0;
-    });
-  }, [filtered, sortKey, sortDir]);
-
-  // Construído sobre o ScorecardLeaderboard (mesmo componente/estilo .sc-lb que
-  // os resultados e o resto da app) — sem scorecard nem colunas de total. Layout
-  // FPG: bandeira+sexo INLINE no nome; colunas ESC./Lic./Clube/HCP/Nasc. entram
-  // como prefix cells e Estado como postScorecard; a ordenação é externa (useSort
-  // acima), por isso passamos activeSortKey/Dir + SortableHdr nos headers custom.
-  const scRows: ScorecardRow[] = sorted.map((p, i) => {
-    const manuel = isManuelByName(p.name);
-    const pt = !manuel && (p.country ? flag(p.country) === "🇵🇹" : false);
-    return {
-      key: i,
-      pos: p.pos ?? i + 1,
-      gross: 0,
-      toPar: null,
-      isManuel: manuel,
-      isPortuguese: pt,
-      sortPos: typeof p.pos === "number" ? p.pos : null,
-      sortName: p.name,
-      nameContent: (
-        <span className="tourn-pname" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-          {hasCountry && p.country && (
-            <span title={p.country} style={{ fontSize: "var(--fs-16)" }}>{flag(p.country)}</span>
-          )}
-          {p.name}
-          {hasSex && p.sex && <SexBadge sex={p.sex} />}
-          {manuel && <ManuelPill />}
-        </span>
-      ),
-      prefixCells: (
-        <>
-          {showEsc && <td className="lb-esc">{p.escalao ? <EscPill esc={p.escalao} /> : <span className="muted">–</span>}</td>}
-          {showFed && <td className="lb-fed">{displayFed(p.fed) || "–"}</td>}
-          {showClub && <td className="lb-club" title={p.club || ""} style={{ textAlign: "left" }}>{p.club || "–"}</td>}
-          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "–"}</td>}
-          {showDob && (() => {
-            const yr = birthYearOf(p.dob);
-            const age = ageAtDate(p.dob, dateRef ?? todayIso());
-            return (
-              <td title={p.dob ? `${p.dob}${age != null ? ` (${age} anos à data)` : ""}` : ""}
-                  style={{ textAlign: "center", padding: "6px 8px", whiteSpace: "nowrap" }}>
-                {yr != null ? (
-                  <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-                    <YearPill year={yr} />
-                    {age != null && <span className="muted fs-10">({age})</span>}
-                  </span>
-                ) : <span className="muted">–</span>}
-              </td>
-            );
-          })()}
-        </>
-      ),
-      postScorecardCells: showStatus ? (
-        <td style={{ textAlign: "center" }}>
-          {p.status
-            ? <span className="p p-sm p-muted">{p.status}</span>
-            : <span className="muted">—</span>}
-        </td>
-      ) : undefined,
-    };
-  });
-
-  const prefixHeaderCells = (
+/** Draws por ronda numa só secção (quando não há resultados de ronda onde os intercalar). */
+function DivisionDraws({ roundDraws }: { roundDraws: NonNullable<CircuitDivision["roundDraws"]> }) {
+  return (
     <>
-      {showEsc && <SortableHdr k="escalao" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-esc">ESC.</SortableHdr>}
-      {showFed && <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-fed">Lic.</SortableHdr>}
-      {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-club">CLUBE</SortableHdr>}
-      {showHcp && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="lb-hcp">HCP</SortableHdr>}
-      {showDob && <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ padding: "7px 8px", textAlign: "center" }}>Nasc.</SortableHdr>}
-    </>
-  );
-
-  const filterBar = (
-    <div className="detail-toolbar">
-      <input className="input" value={q} onChange={e => setQ(e.target.value)}
-        placeholder="Nome, clube, licença..." style={{ maxWidth: 240 }} />
-      <span className="muted fs-12">
-        {term ? `${filtered.length} de ${rows.length} inscritos` : `${rows.length} inscritos`}
-      </span>
-    </div>
-  );
-
-  return (
-    <ScorecardLeaderboard
-      par={[]}
-      rows={scRows}
-      showScorecard={false}
-      hideTotals
-      filterBar={filterBar}
-      prefixHeaderCells={prefixHeaderCells}
-      postScorecardHeaderCells={
-        showStatus ? <SortableHdr k="status" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Estado</SortableHdr> : undefined
-      }
-      postScorecardColCount={showStatus ? 1 : 0}
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("name")}
-      activeSortKey={sortKey}
-      activeSortDir={sortDir}
-    />
-  );
-}
-
-function DrawView({ rounds }: { rounds: Record<string, CircuitDrawGroup[]> }) {
-  const roundKeys = Object.keys(rounds).sort();
-  const [active, setActive] = useState(roundKeys[0] ?? "");
-  useEffect(() => { if (!roundKeys.includes(active)) setActive(roundKeys[0] ?? ""); }, [roundKeys, active]);
-  const groups = rounds[active] ?? [];
-  return (
-    <div>
-      {roundKeys.length > 1 && (
-        <div className="tab-bar" style={{ marginBottom: 8 }}>
-          {roundKeys.map(r => (
-            <button key={r} className={`tab-under${active === r ? " active" : ""}`} onClick={() => setActive(r)}>
-              R{r}
-            </button>
-          ))}
+      {roundDraws.map(rd => (
+        <div key={rd.round} className="mb-12">
+          {roundDraws.length > 1 && <div className="fw-700 mb-4">Draw R{rd.round}</div>}
+          {rd.render()}
         </div>
-      )}
-      <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-        {groups.map((g, i) => (
-          <div key={i} className="card" style={{ padding: 8 }}>
-            <div className="fw-700" style={{ marginBottom: 4 }}>
-              {g.teeTime || "—"}{g.startHole ? ` · Buraco ${g.startHole}` : ""}{g.tee ? ` · ${g.tee}` : ""}
-            </div>
-            <div className="muted" style={{ fontSize: "var(--fs-13)" }}>
-              {g.players.map((pl, j) => (
-                <span key={j}>{j > 0 ? " · " : ""}{pl.name}{pl.club ? ` (${pl.club})` : ""}</span>
-              ))}
-            </div>
-          </div>
-        ))}
-        {groups.length === 0 && <div className="muted">Sem draw publicado para esta ronda.</div>}
-      </div>
-    </div>
+      ))}
+    </>
   );
 }
 
@@ -645,8 +447,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
 
   // ── Secção activa ───────────────────────────────────────────────────
   const sections = useMemo(() => (curDiv ? divisionSections(curDiv) : []), [curDiv]);
-  const [section, setSection] = useState<CircuitSectionKind | null>(null);
-  const curSection: CircuitSectionKind | null = section && sections.includes(section) ? section : sections[0] ?? null;
+  // Barra de secções (sem resultados de ronda): as secções-padrão e as abas próprias da divisão.
+  const sectionTabs = useMemo(() => [
+    ...sections.map(s => ({ key: s as string, label: sectionLabel(s) })),
+    ...(curDiv?.extraSections ?? []).map(x => ({ key: x.key, label: x.label })),
+  ], [sections, curDiv]);
+  const [section, setSection] = useState<string | null>(null);
+  const curSection: string | null = section && sectionTabs.some(t => t.key === section) ? section : sectionTabs[0]?.key ?? null;
   useEffect(() => { setSection(null); }, [curDiv?.key]);
 
   const toggle = (t: CircuitToggle) => setToggles(prev => {
@@ -673,24 +480,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // (customResults / só inscritos), ficam como barra de secção — ver render.
   const leadingTabs: { key: string; label: string; content: React.ReactNode }[] = [];
   if (curDiv && !curDiv.renderFull) {
-    if (sections.includes("inscritos")) {
+    if (sections.includes("inscritos") && curDiv.admissions) {
       leadingTabs.push({
         key: "inscritos",
         label: sectionLabel("inscritos"),
-        content: curDiv.renderInscritos
-          ? curDiv.renderInscritos()
-          : (curDiv.inscritos ? <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} /> : null),
-      });
-    }
-    // Aba "Draw" agregada (sub-menu de rondas) — SÓ quando a divisão não fornece
-    // `roundDraws` (draw por ronda intercalado com os resultados na barra principal).
-    if (sections.includes("draw") && !(curDiv.roundDraws && curDiv.roundDraws.length)) {
-      leadingTabs.push({
-        key: "draw",
-        label: sectionLabel("draw"),
-        content: curDiv.renderDrawSection
-          ? curDiv.renderDrawSection()
-          : (curDiv.draw ? <DrawView rounds={curDiv.draw.rounds} /> : null),
+        content: <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} />,
       });
     }
   }
@@ -704,6 +498,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       content: <MatchplayView data={curDiv.matchplay} />,
     });
   }
+  if (curDiv && !curDiv.renderFull && curDiv.extraSections) trailingTabs.push(...curDiv.extraSections);
   // ── Deep-link da aba (?tab=…) ──────────────────────────────────────
   // Mesmo vocabulário do TournamentDetail ("round:0", "draw:2", "resumo",
   // "scorecards", "matchplay", "past-editions"), para o link funcionar tanto
@@ -1097,33 +892,28 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 ) : (
                   <>
                     {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
-                    {sections.length > 1 && (
+                    {sectionTabs.length > 1 && (
                       <div className="tab-bar" style={{ marginBottom: 8 }}>
-                        {sections.map(s => (
+                        {sectionTabs.map(t => (
                           <button
-                            key={s}
-                            className={`tab-under${curSection === s ? " active" : ""}`}
-                            onClick={() => setSection(s)}
+                            key={t.key}
+                            className={`tab-under${curSection === t.key ? " active" : ""}`}
+                            onClick={() => setSection(t.key)}
                           >
-                            {sectionLabel(s)}
+                            {t.label}
                           </button>
                         ))}
                       </div>
                     )}
                     {curSection === "results" && curDiv.customResults}
-                    {curSection === "inscritos" && (
-                      curDiv.renderInscritos
-                        ? curDiv.renderInscritos()
-                        : curDiv.inscritos && <InscritosView lists={curDiv.inscritos.lists} dateRef={cur?.dateStart ?? cur?.dateEnd} />
+                    {curSection === "inscritos" && curDiv.admissions && (
+                      <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} />
                     )}
-                    {curSection === "draw" && (
-                      curDiv.renderDrawSection
-                        ? curDiv.renderDrawSection()
-                        : curDiv.draw && <DrawView rounds={curDiv.draw.rounds} />
-                    )}
+                    {curSection === "draw" && curDiv.roundDraws && <DivisionDraws roundDraws={curDiv.roundDraws} />}
                     {curSection === "matchplay" && curDiv.matchplay && (
                       <MatchplayView data={curDiv.matchplay} />
                     )}
+                    {curDiv.extraSections?.find(x => x.key === curSection)?.content}
                   </>
                 ))}
               </>

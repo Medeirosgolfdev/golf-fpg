@@ -15,6 +15,7 @@ import type React from "react";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
+import type { FpgAdmissions } from "../../data/nacional2026Loader";
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
@@ -74,10 +75,9 @@ export interface CircuitDivision {
    * Se `results` existir, tem precedência sobre `customResults`.
    */
   customResults?: React.ReactNode;
-  /** Lista(s) de inscritos (admitidos/reservas/...). Estrutura livre por página. */
-  inscritos?: CircuitInscritos;
-  /** Draw / tee times. Estrutura livre por página (convertida para DrawTab). */
-  draw?: CircuitDraw;
+  /** Inscrições, no formato da FPG — desenhadas pelo AdmissionsTab partilhado
+   *  (o mesmo da FPG/Drive). Cada jogador pode trazer dob/país/escalão/tee. */
+  admissions?: FpgAdmissions;
 
   /** Links de origem desta divisão (ex: BlueGolf/GolfGenius do escalão) —
    *  mostrados no header do detalhe junto aos links do torneio. */
@@ -108,12 +108,6 @@ export interface CircuitDivision {
   renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
 
   /**
-   * Substituição total da secção de Inscritos. Quando definido, o shell renderiza
-   * isto em vez do `InscritosView` interno (a DrivePage usa-o para mostrar o
-   * `AdmissionsTab` da FPGPage). A secção continua a aparecer com base em `inscritos`.
-   */
-  renderInscritos?: () => React.ReactNode;
-  /**
    * Substituição TOTAL do detalhe da divisão (header + section-tabs + conteúdo).
    * Quando definido, o shell desenha só as tabs de escalão e delega TUDO o resto
    * neste node — a DrivePage usa-o para montar o `TournamentDetail` da FPGPage
@@ -131,20 +125,16 @@ export interface CircuitDivision {
    */
   renderFullKeepHeader?: boolean;
   /**
-   * Substituição total da secção de Draw. Quando definido, o shell renderiza isto
-   * em vez do `DrawView` interno (a DrivePage usa-o para mostrar o `DrawTab` da
-   * FPGPage, com selector de ronda próprio). A secção aparece com base em `draw`.
-   */
-  renderDrawSection?: () => React.ReactNode;
-  /**
-   * Draws POR RONDA, para intercalar com os resultados na barra principal
-   * (Inscrições · Draw R1 · R1 · Draw R2 · R2 · …) em vez de uma aba "Draw" única
-   * com sub-menu. Quando presente, o shell NÃO mostra a aba "Draw" agregada e
-   * passa estes a `IntlTournView`, que insere cada "Draw R{n}" antes da ronda n.
-   * `round` é 1-based. Pode incluir rondas ainda não jogadas (ex: Draw R3 com só
-   * os pairings, sem resultados).
+   * Draws POR RONDA (cada um um DrawTab partilhado), intercalados com os
+   * resultados na barra principal (Inscrições · Draw R1 · R1 · Draw R2 · R2 · …):
+   * o shell passa-os ao `IntlTournView`, que insere cada "Draw R{n}" antes da
+   * ronda n. Sem resultados de ronda, aparecem na secção "Draw". `round` é
+   * 1-based. Pode incluir rondas ainda não jogadas (só os pairings).
    */
   roundDraws?: { round: number; render: () => React.ReactNode }[];
+  /** Abas próprias da divisão (ex.: mapa do campo da LGPIDF): no fim da barra
+   *  quando há resultados de ronda, senão na barra de secções. */
+  extraSections?: { key: string; label: string; content: React.ReactNode }[];
   /**
    * MATCH PLAY (brackets) do torneio — schema `MatchplayFile` gerado pelo
    * `scrape-golfbox-matchplay.js` (ETC no GolfBox: {slug}_matchplay_{ano}.json).
@@ -153,38 +143,6 @@ export interface CircuitDivision {
    * rondas, entra na barra de secções. Renderizado pelo <MatchplayView>.
    */
   matchplay?: MatchplayFile;
-}
-
-/** Lista de inscritos de uma divisão — sub-listas opcionais. */
-export interface CircuitInscritos {
-  /** Sub-listas nomeadas (admitidos, reservas, bajas, ...). A 1ª é o default. */
-  lists: Array<{ key: string; label: string; players: CircuitInscritoRow[] }>;
-}
-
-export interface CircuitInscritoRow {
-  pos?: number | string;
-  name: string;
-  club?: string;
-  fed?: string;
-  hcp?: number | null;
-  escalao?: string;
-  sex?: "M" | "F";
-  country?: string;
-  dob?: string;
-  status?: string;
-}
-
-/** Draw / tee times de uma divisão — por ronda. */
-export interface CircuitDraw {
-  /** Por número de ronda → grupos de saída. */
-  rounds: Record<string, CircuitDrawGroup[]>;
-}
-
-export interface CircuitDrawGroup {
-  teeTime?: string;
-  startHole?: number;
-  tee?: string;
-  players: Array<{ name: string; club?: string; fed?: string }>;
 }
 
 /**

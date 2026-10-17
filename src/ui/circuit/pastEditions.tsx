@@ -25,15 +25,13 @@ import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
 import PastEditionsRepeatersTable from "./PastEditionsRepeatersTable";
 import { buildRepeaters, type FieldPlayer } from "./repeaters";
 
-/** Field de hoje de uma divisão: resultados → inscritos → draw (o 1º que houver). */
+/** Field de hoje de uma divisão: resultados → inscritos (o 1º que houver). */
 export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
   if (!d) return [];
   const res = d.results?.players?.filter((p) => p.name);
   if (res?.length) return res.map((p) => ({ name: p.name, club: p.club || null }));
-  const ins = d.inscritos?.lists?.[0]?.players;
-  if (ins?.length) return ins.map((p) => ({ name: p.name, club: p.club || p.country || null }));
-  const r1 = d.draw ? Object.values(d.draw.rounds)[0] : null;
-  if (r1?.length) return r1.flatMap((g) => g.players.map((p) => ({ name: p.name, club: p.club || null })));
+  const ins = d.admissions?.players?.filter((p) => p.status !== "desistente");
+  if (ins?.length) return ins.map((p) => ({ name: p.nome, club: p.clube || p.country || null }));
   return [];
 }
 
