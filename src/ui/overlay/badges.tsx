@@ -7,7 +7,7 @@
  */
 import React, { createContext, useContext } from "react";
 import { II } from "./shared";
-import { HIO_GREEN, scBg, INFO_ALL, isLightText, hexToRgba, type InfoKey } from "./shared";
+import { HIO_GREEN, scBg, INFO_ALL, isLightText, hexToRgba, onColor, type InfoKey } from "./shared";
 import { fmtSD } from "../../utils/format";
 import type { DD, StT, Vis } from "./types";
 
@@ -175,19 +175,18 @@ function SCACell({ sc, par, sz, accent = "#e87722" }: { sc: number; par: number;
 /* ═══════ TpBadge: pill colorida de to-par ═══════ */
 /** To-par badge — pill colorida como nos posts do PGA Tour. */
 export function TpBadge({ vp, sz = 22 }: { vp: number; sz?: number }) {
-  /* Acima/no par: vidro tingido no destaque do cartão (AccentCtx.cur), se houver. */
+  /* Pílula CHEIA, sem contorno (17/10/2026 — o vidro com contorno parecia
+     perdida): abaixo do par vermelho (a cor dos birdies); no par/acima no
+     destaque do cartão (AccentCtx.cur), com o texto em contraste. */
   const { cur } = useContext(AccentCtx);
-  /* Pílula de vidro (16/10/2026): o bloco azul forte competia com o azul dos
-     bogeys e tapava a foto. Acima do par = cor do texto do desenho; abaixo =
-     vermelho suave (a cor dos birdies); fundo e contorno semi-transparentes. */
   const under = vp < 0;
   const txt = vp < 0 ? String(vp) : vp > 0 ? `+${vp}` : "E";
+  const fill = under ? "#dc2626" : cur ?? "#6b7280";
   return (
     <div style={{
-      background: under ? "rgba(220,38,38,.22)" : cur ? hexToRgba(cur, .2) : "rgba(128,128,128,.22)",
-      border: `1.5px solid ${under ? "rgba(248,113,113,.7)" : cur ? hexToRgba(cur, .65) : "rgba(128,128,128,.55)"}`,
-      color: under ? "#f87171" : "inherit", fontFamily: II, fontSize: sz, fontWeight: 900,
-      padding: `${Math.round(sz * 0.18)}px ${Math.round(sz * 0.45)}px`, borderRadius: Math.round(sz * 0.3),
+      background: hexToRgba(fill, .92), color: onColor(fill),
+      fontFamily: II, fontSize: sz, fontWeight: 900,
+      padding: `${Math.round(sz * 0.2)}px ${Math.round(sz * 0.42)}px`, borderRadius: Math.round(sz * 0.32),
       display: "inline-flex", alignItems: "center", justifyContent: "center", lineHeight: 1,
     }}>{txt}</div>
   );
@@ -233,8 +232,9 @@ export function StatsRow({ st, tc3, gap = 8, fs = 11, justify }: { st: StT; tc3?
     <div style={{ display: "flex", alignItems: "center", gap, flexWrap: "wrap", rowGap: 2, justifyContent: justify }}>
       {items.map(x => (
         <div key={x.l} style={{ display: "inline-flex", alignItems: "center", gap: 3, fontSize: fs, fontWeight: 700 }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0,
-            boxShadow: "dark" in x ? `0 0 0 1px ${tc3 ?? "currentColor"}` : undefined }} />
+          {/* Anel com border (a box-shadow saía cortada no PNG — «◖1 Dbl») */}
+          <span style={{ width: 8, height: 8, boxSizing: "border-box", borderRadius: "50%", background: x.c, display: "inline-block", flexShrink: 0,
+            border: "dark" in x ? `1px solid ${tc3 ?? "currentColor"}` : undefined }} />
           <span style={{ color: "dark" in x || "plain" in x ? (tc3 ?? "inherit") : x.c }}>{x.n} {x.l}</span>
         </div>
       ))}
