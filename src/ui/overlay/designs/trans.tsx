@@ -54,7 +54,7 @@ export function V41({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
     <div style={{ fontFamily:II, display:"inline-block", color:tc, background:bg ?? undefined, padding:"4px 8px 6px", minWidth:200 }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
         <div style={{ fontFamily:BN, fontSize:96, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</div>
-        <div style={{ fontFamily:SG, fontSize:18, fontWeight:800, color:vpC(s.vpT, tc), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontFamily:SG, fontSize:18, fontWeight:800, color:vpC(s.vpT, tc, ta), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</div>
       </div>
       {v.player&&d.player && (
         <div style={{ fontFamily:LO, fontSize:18, fontWeight:700, fontStyle:"italic", marginTop:1, letterSpacing:.3, borderBottom:`2px solid ${ta}`, display:"inline-block", paddingBottom:1 }}>{d.player}</div>
@@ -80,7 +80,7 @@ export function V42({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
         <div style={{ flexShrink:0 }}>
           <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
             <span style={{ fontFamily:BN, fontSize:62, lineHeight:.9, letterSpacing:-2, color:accent }}>{s.sT}</span>
-            <span style={{ fontSize:16, fontWeight:800, color:s.vpT < 0 ? accent : vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+            <span style={{ fontSize:16, fontWeight:800, color:s.vpT < 0 ? accent : vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
           </div>
           {v.player&&d.player && (
             <div style={{ fontFamily:OS, fontSize:14, fontWeight:800, letterSpacing:1, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>
@@ -117,7 +117,7 @@ export function V43({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
       <div style={{ minWidth:190 }}>
         <div style={{ display:"flex", alignItems:"baseline", gap:5 }}>
           <span style={{ fontFamily:BN, fontSize:78, lineHeight:.9, letterSpacing:-3, color:tc }}>{s.sT}</span>
-          <span style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:vpC(s.vpT, tc), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</span>
+          <span style={{ fontFamily:SG, fontSize:16, fontWeight:800, color:vpC(s.vpT, tc, ta), letterSpacing:.5 }}>{fmtToPar(s.vpT)}</span>
         </div>
         {v.player&&d.player && (
           <div style={{ fontFamily:OS, fontSize:12, fontWeight:800, letterSpacing:1.5, textTransform:"uppercase", marginTop:1 }}>{d.player}</div>

@@ -43,7 +43,7 @@ export function V50({ d, v, bg, tc = "white", ta = tc, tc3, fa }: P) {
             background: r.gross === best ? ink(tc, (fa ?? .88) * .14) : undefined, borderLeft: `3px solid ${r.gross === best ? ta : "transparent"}` }}>
             <span style={{ fontFamily: OS, fontSize: 13, fontWeight: 700, color: tc3, width: 22 }}>R{r.round}</span>
             <span style={{ fontFamily: BN, fontSize: 26, lineHeight: 1, width: 34 }}>{r.gross}</span>
-            <span style={{ fontSize: 13, fontWeight: 800, color: vpC(r.toPar, tc), width: 34 }}>{fmtToPar(r.toPar)}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: vpC(r.toPar, tc, ta), width: 34 }}>{fmtToPar(r.toPar)}</span>
             {v.date && r.date && <span style={{ fontSize: 10, color: tc3, whiteSpace: "nowrap" }}>{r.date}</span>}
             {r.gross === best && <span style={{ fontSize: 11, color: ta }}>★</span>}
           </div>
@@ -270,7 +270,7 @@ export function V55({ d, v, bg, tc = "white", ta = tc, tc3 }: P) {
                 <span style={{ width: w, height: 18, borderRadius: 4, background: r.toPar < 0 ? "rgba(220,38,38,.75)" : (r.gross === best ? ta : ink(tc, .25)) }} />
               </span>
               <span style={{ fontFamily: BN, fontSize: 22, lineHeight: 1, width: 30 }}>{r.gross}</span>
-              <span style={{ fontSize: 12, fontWeight: 800, color: vpC(r.toPar, tc), width: 30 }}>{fmtToPar(r.toPar)}</span>
+              <span style={{ fontSize: 12, fontWeight: 800, color: vpC(r.toPar, tc, ta), width: 30 }}>{fmtToPar(r.toPar)}</span>
             </div>
           );
         })}

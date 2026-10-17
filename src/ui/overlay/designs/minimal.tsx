@@ -10,11 +10,11 @@ import type { P } from "../types";
 
 /* V1 · STICKER — pill: score + nome numa linha; a info por baixo quebra na
    largura dessa linha (não estica o sticker). */
-export function V1({ d, v, s, bg, tc="white", tc2, tc3 }: P) {
+export function V1({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
   return (
     <div style={{ fontFamily:II, display:"inline-block", minWidth:220, padding:"3px 10px 4px", borderRadius:12, background:bg||"rgba(0,0,0,.75)", color:tc, textShadow:TS }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:6, whiteSpace:"nowrap" }}>
-        <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontFamily:OS, fontSize:22, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
         <span style={{ fontFamily:OS, fontSize:22, fontWeight:700, color:tc }}>{s.sT}</span>
         {v.player&&d.player && <span style={{ fontSize:13, fontWeight:700, color:tc2 }}>{d.player}</span>}
       </div>
@@ -34,7 +34,7 @@ export function V2({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
       <div style={{ width:2, background:ta, opacity:.7, alignSelf:"stretch", borderRadius:1 }} />
       <div style={{ display:"flex", alignItems:"baseline", gap:5, flexShrink:0 }}>
         <span style={{ fontFamily:OS, fontSize:40, fontWeight:900, lineHeight:1, color:tc }}>{s.sT}</span>
-        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
       </div>
     </div>
   );
@@ -47,7 +47,7 @@ export function V3({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
     <div style={{ display:"flex", alignItems:"center", padding:"3px 8px", gap:5 }}>
       <span style={{ fontSize:10, fontWeight:700, letterSpacing:1, color:tc3, minWidth:40 }}>{lbl}</span>
       <span style={{ fontFamily:OS, fontSize:26, fontWeight:900, lineHeight:1, color:tc, flex:1 }}>{score}</span>
-      <span style={{ fontSize:16, fontWeight:900, color:vpC(vpar, tc) }}>{fmtToPar(vpar)}</span>
+      <span style={{ fontSize:16, fontWeight:900, color:vpC(vpar, tc, ta) }}>{fmtToPar(vpar)}</span>
     </div>
   );
   return (
@@ -66,7 +66,7 @@ export function V3({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
       <div style={{ display:"flex", alignItems:"center", padding:"3px 8px 3px 5px", gap:5, background:ink(tc, .07), borderLeft:`3px solid ${ta}` }}>
         <span style={{ fontSize:10, fontWeight:700, letterSpacing:1, color:tc2, minWidth:40 }}>TOTAL</span>
         <span style={{ fontFamily:OS, fontSize:36, fontWeight:900, lineHeight:1, color:tc, flex:1 }}>{s.sT}</span>
-        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontSize:18, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
       </div>
       {v.stats && <div style={{ padding:"3px 8px 4px", borderTop:`1px solid ${ink(tc, .08)}` }}><Info d={d} v={v} keys={[]} tc={tc} tc3={tc3} fs={10} fit st={s.st} /></div>}
     </div>
@@ -81,7 +81,7 @@ export function V4({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
       <Info d={d} v={v} keys={["event", "round", "course", "tee", "teeDist"]} tc={tc} tc3={tc3} fs={10} align="center" />
       <div style={{ margin:"4px auto", width:90, height:90, borderRadius:"50%", border:`3px solid ${s.vpT < 0 ? "#dc2626" : ta}`, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center" }}>
         <div style={{ fontFamily:OS, fontSize:34, fontWeight:900, lineHeight:1, letterSpacing:-1, color:tc }}>{s.sT}</div>
-        <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</div>
+        <div style={{ fontSize:20, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</div>
       </div>
       <Info d={d} v={v} keys={["position", "date", "hiCh", "sd"]} tc={tc} tc3={tc3} fs={10} align="center" st={v.stats ? s.st : null} />
     </div>
@@ -112,7 +112,7 @@ export function V23({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
         )}
         <div style={{ padding:"4px 12px", textAlign:"center", background:ink(tc, .07), borderTop:`3px solid ${ta}` }}>
           <div style={{ fontFamily:OS, fontSize:28, fontWeight:900, lineHeight:1 }}>{s.sT}</div>
-          <div style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT, tc), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
+          <div style={{ fontSize:13, fontWeight:900, color:vpC(s.vpT, tc, ta), marginTop:0 }}>{fmtToPar(s.vpT)}</div>
         </div>
       </div>
       {v.position&&d.position && <div style={{ padding:"4px 8px", display:"flex", alignItems:"center", fontSize:12, fontWeight:800, color:tc2 }}>{d.position}</div>}
@@ -121,12 +121,13 @@ export function V23({ d, v, s, bg, tc="white", ta = tc, tc2, tc3 }: P) {
 }
 
 /* V25 · MINIMAL — ultra-compacto: só score + toPar + nome. */
-export function V25({ d, v, s, bg, tc="white", tc3 }: P) {
+export function V25({ d, v, s, bg, tc="white", ta = tc, tc3 }: P) {
   return (
-    <div style={{ fontFamily:OS, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.65)", borderRadius:8, padding:"4px 10px", textShadow:TS }}>
+    /* Filete à esquerda no destaque — dá-lhe identidade sem acrescentar ruído */
+    <div style={{ fontFamily:OS, display:"inline-block", color:tc, background:bg||"rgba(0,0,0,.65)", borderRadius:8, padding:"5px 12px 6px 10px", textShadow:TS, borderLeft:`4px solid ${ta}` }}>
       <div style={{ display:"flex", alignItems:"baseline", gap:6 }}>
-        <span style={{ fontSize:42, fontWeight:900, lineHeight:.85, letterSpacing:-2, color:tc }}>{s.sT}</span>
-        <span style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT, tc) }}>{fmtToPar(s.vpT)}</span>
+        <span style={{ fontSize:46, fontWeight:900, lineHeight:.85, letterSpacing:-2, color:tc }}>{s.sT}</span>
+        <span style={{ fontFamily:II, fontSize:18, fontWeight:900, color:vpC(s.vpT, tc, ta) }}>{fmtToPar(s.vpT)}</span>
         {v.player&&d.player && <span style={{ fontFamily:II, fontSize:12, fontWeight:700, color:tc3, marginLeft:2 }}>{d.player}</span>}
       </div>
       <div style={{ fontFamily:II, minWidth:200 }}><Info d={d} v={v} tc={tc} tc3={tc3} fs={10} fit st={v.stats ? s.st : null} mt={3} /></div>

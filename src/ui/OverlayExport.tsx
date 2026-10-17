@@ -71,7 +71,7 @@ export function DesignCard({ x, d, v, s, bg, tc, tc2, tc3, tc4, accent = {}, fa 
   accent?: { light?: string; dark?: string }; fa: number;
 }) {
   return (
-    <AccentCtx.Provider value={accent}>
+    <AccentCtx.Provider value={{ ...accent, cur: (isLightText(tc) ? accent.light : accent.dark) }}>
       <CellInfoCtx.Provider value={{ d, par: !!v.holePar && !x.has.includes("holePar"), si: !!v.holeSI && !x.has.includes("holeSI") }}>
         <x.C d={d} v={v} s={s} bg={bg} tc={tc} tc2={tc2} tc3={tc3} tc4={tc4} fa={fa}
           ta={(isLightText(tc) ? accent.light : accent.dark) ?? tc} />
@@ -449,7 +449,7 @@ export default function OverlayExport({ data, inline, nextEvent }: { data: Overl
               <button key={a.id} className={`ov-opt-btn${accentId===a.id?" active":""}`} onClick={()=>setAccentId(a.id)}
                 style={{ display:"inline-flex", alignItems:"center", gap:5 }}>
                 {a.light && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:theme==="light"?a.dark:a.light, border:"1.5px solid rgba(128,128,128,0.3)" }} />}
-                {a.id === "auto" && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:"conic-gradient(#f2c14e,#cfe3a0,#f4b8a8,#8fe0d8,#c7b3ff,#f2c14e)", border:"1.5px solid rgba(128,128,128,0.3)" }} />}
+                {a.id === "auto" && <span style={{ display:"inline-block", width:12, height:12, borderRadius:"50%", background:"conic-gradient(#f2c14e,#cfe3a0,#f2d0a4,#8fe0d8,#c7b3ff,#f2c14e)", border:"1.5px solid rgba(128,128,128,0.3)" }} />}
                 <span>{a.label}</span>
               </button>
             ))}
