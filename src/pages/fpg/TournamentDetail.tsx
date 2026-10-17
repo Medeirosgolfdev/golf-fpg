@@ -43,7 +43,46 @@ function dedupLinks(links: Array<{ label: string; url: string; icon?: string }>)
   return links.filter(l => !seen.has(l.url) && seen.add(l.url));
 }
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options, accShowCols, accExtraColumns, accHeader, drawHideCols, hideHeader }: { tournament: Tournament; escLookup: EscLookup; playersDB: PlayersDB; extraTabs?: { key: string; label: string; content: React.ReactNode }[]; options?: ScorecardOptions; accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean }; accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"]; accHeader?: React.ReactNode; drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"]; hideHeader?: boolean }) {
+type TabContent = { key: string; label: string; content: React.ReactNode };
+
+/** Tudo o que uma página de torneio pode ligar — O ÚNICO componente de detalhe
+ *  de torneio da app (FPG, Drive, MAJOR, França, Espanha, Global Junior…; o
+ *  IntlTournView é só um adaptador). Cada página esconde o que não precisa. */
+export interface TournamentDetailProps {
+  tournament: Tournament;
+  escLookup: EscLookup;
+  playersDB: PlayersDB;
+  options?: ScorecardOptions;
+  /** Tabs DEPOIS das voltas/Resumo/Scorecards (Match Play, Edições anteriores…). */
+  extraTabs?: TabContent[];
+  /** Tabs ANTES de tudo (ex.: Inscritos de uma fonte internacional). */
+  leadingTabs?: TabContent[];
+  /** Draws desenhados pela página (fontes internacionais), por volta — entram
+   *  como «Draw R{n}» antes da volta n, em vez do DrawTab FPG. */
+  roundDraws?: { round: number; render: () => React.ReactNode }[];
+  /** Etiquetas próprias das voltas (ex.: «R1 · 25 Fev»). */
+  roundLabels?: string[];
+  /** Etiqueta da linha de SI no scorecard (ex.: «m»). */
+  siLabel?: string;
+  accShowCols?: { esc?: boolean; fed?: boolean; tee?: boolean; club?: boolean; hcp?: boolean; age?: boolean; birthYear?: boolean };
+  accExtraColumns?: React.ComponentProps<typeof AccumulatedLB>["extraColumns"];
+  /** Por cima / por baixo do Resumo. */
+  accHeader?: React.ReactNode;
+  accExtra?: React.ReactNode;
+  /** Por baixo de cada volta (índice da volta, 0 = R1). */
+  roundExtra?: (roundIndex: number) => React.ReactNode;
+  /** Substituição total das secções (recebem o leaderboard já montado). */
+  renderRoundSection?: (leaderboard: React.ReactNode, roundIndex: number) => React.ReactNode;
+  renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
+  /** Nome no Resumo (ex.: bandeira + seta kids2). */
+  renderAccName?: (row: MultiRoundRow) => React.ReactNode;
+  drawHideCols?: React.ComponentProps<typeof DrawTab>["hideCols"];
+  hideHeader?: boolean;
+  /** Prever o draw da próxima volta a partir do acumulado (regra FPG). Default true. */
+  synthDraws?: boolean;
+}
+
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true }: TournamentDetailProps) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -106,16 +145,48 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
     const nR = tournament.rounds || 1;
     const playedRounds = Math.max(0, ...(tournament.players ?? []).map(p => p.roundScores?.length ?? 0));
     const nextRound = playedRounds + 1;
-    if (nextRound >= 2 && nextRound <= nR && !out.has(nextRound)) {
+    if (synthDraws && nextRound >= 2 && nextRound <= nR && !out.has(nextRound)) {
       const synth = synthesizeDrawFromCumulative(tournament, nextRound);
       if (synth && (synth.groups?.length ?? 0) > 0) out.set(nextRound, synth);
     }
     return out;
-  }, [draws, tournament]);
+  }, [draws, tournament, synthDraws]);
+  // Draws desenhados pela página (internacionais) — ganham ao DrawTab FPG.
+  const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, d.render] as const)), [roundDraws]);
+  const hasDraw = (r: number) => drawsByRound.has(r) || customDraw.has(r);
+  const allDrawRounds = useMemo(() => [...new Set([...drawsByRound.keys(), ...customDraw.keys()])].sort((a, b) => a - b), [drawsByRound, customDraw]);
 
   // Expanded list: R1, R2, ..., Resumo
   const expanded = useMemo(() => expandMultiRound(tournament), [tournament]);
 
+  // ── Pré-Cut ── (vem do expandMultiRound: _cutAfterRound no Resumo). Cut após
+  // a R1 não gera tab (seria igual à própria R1).
+  const cutAfterRound = useMemo(() => {
+    const tot = expanded.find((t: any) => t._isTotal) as { _cutAfterRound?: number } | undefined;
+    const n = tot?._cutAfterRound;
+    return n != null && n >= 2 ? n : undefined;
+  }, [expanded]);
+  /** Classificação no momento do cut: quem tem score válido em TODAS as voltas
+   *  1..cut, só com essas voltas (sem isso, quem faltou a uma volta ficava com
+   *  toPar absurdo e em 1º). */
+  const preCutTourn = useMemo(() => {
+    if (!cutAfterRound) return null;
+    const wanted = Array.from({ length: cutAfterRound }, (_, i) => i + 1);
+    const trimmed = tournament.players.map((p) => {
+      const rs = (p.roundScores || []).filter((r) => r.round <= cutAfterRound);
+      const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && (r.gross || 0) > 0 && (r.gross || 0) < 999));
+      const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
+      const gross = rs.reduce((x, r) => x + (r.gross || 0), 0);
+      return { ...p, roundScores: rs, grossTotal: gross, toPar: gross - parPerRound * cutAfterRound, parTotal: parPerRound,
+        _wd: false, _cut: false, _incomplete: false, _roundsPlayed: cutAfterRound, _hasAll: hasAll };
+    }).filter((p) => p._hasAll);
+    trimmed.sort((a, b) => (a.grossTotal ?? 99999) - (b.grossTotal ?? 99999));
+    let pos = 1;
+    trimmed.forEach((p, i) => { if (i > 0 && (p.grossTotal ?? 0) !== (trimmed[i - 1].grossTotal ?? 0)) pos = i + 1; (p as any)._pos = pos; });
+    return { ...tournament, players: trimmed, rounds: cutAfterRound, _roundLabel: `Resumo Pré-Cut (R1–R${cutAfterRound})`, _isTotal: true } as unknown as Tournament;
+  }, [tournament, cutAfterRound]);
+  /** Etiqueta da volta i (0 = R1): a da página, a do expandMultiRound ou «R{n}». */
+  const roundLabel = (i: number, fallback: string) => roundLabels?.[i] || fallback;
   /**
    * Ordem canónica das tabs:
    *   Inscrições → Draw R1 → R1 → Draw R2 → R2 → Draw R3 → R3 → Resumo → 📋 Scorecards
@@ -129,6 +200,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   type TabDef = { key: string; label: string };
   const tabs: TabDef[] = useMemo(() => {
     const out: TabDef[] = [];
+    for (const lt of leadingTabs ?? []) out.push({ key: lt.key, label: lt.label });
     if (hasAdmissions) out.push({ key: "admissions", label: "Inscrições" });
     if (isMulti) {
       // expanded é [R1, R2, ..., RN, Resumo] — últio elemento é o Resumo.
@@ -136,18 +208,20 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       const temResumo = expanded.some((e: any) => e._isTotal);
       for (let i = 0; i < rondas.length; i++) {
         const roundNum = i + 1;
-        if (drawsByRound.has(roundNum)) {
+        if (hasDraw(roundNum)) {
           out.push({ key: `draw:${roundNum}`, label: `Draw R${roundNum}` });
         }
-        out.push({ key: `round:${i}`, label: (rondas[i] as any)._roundLabel || `R${roundNum}` });
+        out.push({ key: `round:${i}`, label: roundLabel(i, (rondas[i] as any)._roundLabel || `R${roundNum}`) });
+        if (cutAfterRound && roundNum === cutAfterRound && rondas.length > cutAfterRound) out.push({ key: "precut", label: `Pré-Cut R1–R${cutAfterRound}` });
       }
       // Draws de rondas FUTURAS ainda sem scores (ex: Draw R3 publicado na
       // véspera com R1-R2 jogadas — Reid Trophy) — o loop acima só intercala
       // draws de rondas que JÁ têm dados. O ramo de 1 ronda já fazia isto.
-      const futureDrawsMulti = [...drawsByRound.keys()].filter(r => r > rondas.length).sort((a, b) => a - b);
+      const futureDrawsMulti = allDrawRounds.filter(r => r > rondas.length);
       for (const r of futureDrawsMulti) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
       if (temResumo) out.push({ key: "resumo", label: "Resumo" });
-      out.push({ key: "scorecards", label: COMBINED_TAB });
+      // Sem cartão buraco a buraco (ex.: RFEG só PDF → _noHbh) não há Scorecards.
+      if (!(tournament as { _noHbh?: boolean })._noHbh) out.push({ key: "scorecards", label: COMBINED_TAB });
       // Tab "Análise Aroeira II" — só para o PJA Aroeira Masters 2026 (029/10543)
       if (tournament.ccode === "029" && tournament.tcode === "10543") {
         out.push({ key: "analise-aroeira2", label: "🎯 Análise" });
@@ -156,12 +230,12 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       // 1-round OU multi-round parcialmente jogado (ex: R1 com scorecards, R2
       // ainda só draw publicado). Mostrar:
       //   - Draw R1 (se existir) → Scorecard (R1) → Draw R2..N (se houver)
-      if (drawsByRound.has(1)) out.push({ key: "draw:1", label: "Draw R1" });
+      if (hasDraw(1)) out.push({ key: "draw:1", label: "Draw R1" });
       // «R1» também quando já há draw de uma volta seguinte (Faldo Madeira:
       // só a R1 jogada, Draw R2 publicado) — dizia «Scorecard» (16/10/2026).
-      out.push({ key: "round:0", label: nRounds > 1 || [...drawsByRound.keys()].some(r => r >= 2) ? "R1" : "Scorecard" });
+      out.push({ key: "round:0", label: roundLabel(0, nRounds > 1 || allDrawRounds.some(r => r >= 2) ? "R1" : "Scorecard") });
       // Draws de rondas futuras ainda não jogadas (R2, R3, ...)
-      const futureDraws = [...drawsByRound.keys()].filter(r => r >= 2).sort((a, b) => a - b);
+      const futureDraws = allDrawRounds.filter(r => r >= 2);
       for (const r of futureDraws) {
         out.push({ key: `draw:${r}`, label: `Draw R${r}` });
       }
@@ -172,11 +246,11 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       // concluídos e o utilizador não precisa de esperar pela última ronda.
       if (nRounds > 1) {
         out.push({ key: "resumo", label: "Resumo" });
-        out.push({ key: "scorecards", label: COMBINED_TAB });
+        if (!(tournament as { _noHbh?: boolean })._noHbh) out.push({ key: "scorecards", label: COMBINED_TAB });
       }
     } else {
       // Sem rondas jogadas — pode ter só draws (torneio prestes a começar)
-      const drawKeys = [...drawsByRound.keys()].sort((a, b) => a - b);
+      const drawKeys = allDrawRounds;
       for (const r of drawKeys) out.push({ key: `draw:${r}`, label: `Draw R${r}` });
     }
     // Tabs extra injectadas pelo parent (ex: scorecards de match play)
@@ -184,7 +258,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       if (!out.some(t => t.key === et.key)) out.push({ key: et.key, label: et.label });
     }
     return out;
-  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds, extraTabs]);
+  }, [hasAdmissions, isMulti, expanded, drawsByRound, hasAnyRounds, extraTabs, leadingTabs, allDrawRounds, roundLabels, cutAfterRound, tournament]);
 
   // Tab activa = URL state (?tab=KEY). Permite deep-links como
   //   /FPG/torneio/000-10935?tab=draw:1   → abre directo no Draw R1
@@ -203,17 +277,17 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const lastProgressionIdx = useMemo(() => {
     // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
     // a fase knockout vê-se por clique explícito na tab "Match Play".
-    const SKIP = new Set(["scorecards", "analise-aroeira2", "matchplay"]);
+    const SKIP = new Set(["scorecards", "analise-aroeira2", "matchplay", "precut"]);
     // As tabs extra injectadas pelo parent (Época, Edições anteriores, …) são
     // vistas SUPLEMENTARES — nunca podem ser o auto-default, senão um torneio
     // com resultados abre na "Época" (vazia) em vez do Resumo. Vêm no fim da
     // barra (a seguir a Scorecards) e só se abrem por clique / ?tab= explícito.
-    const extraKeys = new Set((extraTabs ?? []).map(et => et.key));
+    const extraKeys = new Set([...(extraTabs ?? []), ...(leadingTabs ?? [])].map(et => et.key));
     for (let i = tabs.length - 1; i >= 0; i--) {
       if (!SKIP.has(tabs[i].key) && !extraKeys.has(tabs[i].key)) return i;
     }
     return 0;
-  }, [tabs, extraTabs]);
+  }, [tabs, extraTabs, leadingTabs]);
   const tab = urlTabIdx >= 0 ? urlTabIdx : lastProgressionIdx;
 
   const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];
@@ -224,6 +298,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   const isResumoTab = activeKey === "resumo";
   const isCombinedTab = activeKey === "scorecards";
   const isAnaliseAroeiraTab = activeKey === "analise-aroeira2";
+  const isPreCutTab = activeKey === "precut";
   const isRoundTab = activeKey.startsWith("round:");
   const roundIdx = isRoundTab ? parseInt(activeKey.slice(6), 10) : 0;
 
@@ -270,10 +345,10 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
   // também aqui. Base = nome a bold, igual ao fallback do MultiRoundLeaderboard
   // quando não há playersDB (o caso das fontes internacionais).
   const accRenderName = useMemo(
-    () => (options?.nameDecorator
+    () => renderAccName ?? (options?.nameDecorator
       ? (row: MultiRoundRow) => options.nameDecorator!(row.name, <span className="fw-700">{row.name}</span>)
       : undefined),
-    [options],
+    [options, renderAccName],
   );
 
   return (
@@ -474,7 +549,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
       {/* Conteúdo */}
       {(() => {
         // Extra tab injectada pelo parent (ex: scorecards de match play)
-        const extraTab = (extraTabs ?? []).find(et => et.key === activeKey);
+        const extraTab = [...(extraTabs ?? []), ...(leadingTabs ?? [])].find(et => et.key === activeKey);
         if (extraTab) return extraTab.content;
         if (isAdmissionsTab && effAdmissions)
           return <>
@@ -525,6 +600,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
               teeRule={teeRuleFor(tournament.ccode, tournament.tcode)}
             />
           </>;
+        if (isDrawTab && customDraw.has(drawRoundNum))
+          return <>{customDraw.get(drawRoundNum)!()}{shareRounds}</>;
         if (isDrawTab)
           return <><DrawTab
             draw={drawsByRound.get(drawRoundNum) || { groups: [] }}
@@ -544,14 +621,22 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, options
           return <><AllRoundsScorecardLB tournament={tournament} escLookup={escLookup} playersDB={playersDB} options={options} />{shareRounds}</>;
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
-        if (isAcc)
-          return <>{accHeader}<AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} />{shareRounds}</>;
-        if (isRoundTab || !isMulti)
-          return <>
-            <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} options={options} />
-            {/* Volta 2+: análise dessa volta contra a anterior */}
-            {isMulti && isRoundTab && roundIdx >= 1 && <RoundAnalysisFor key={`${tournament.tcode}-an${roundIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={roundIdx + 1} />}
-          </>;
+        if (isPreCutTab && preCutTourn)
+          return <AccumulatedLB tournament={preCutTourn} nRounds={cutAfterRound!} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} />;
+        if (isAcc) {
+          const accLB = <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} />;
+          return renderAccSection ? <>{renderAccSection(accLB)}{shareRounds}</> : <>{accHeader}{accLB}{accExtra}{shareRounds}</>;
+        }
+        if (isRoundTab || !isMulti) {
+          const roundLB = <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} siLabel={siLabel} options={options} />;
+          // Volta 2+: análise dessa volta contra a anterior
+          const roundAn = isMulti && isRoundTab && roundIdx >= 1
+            ? <RoundAnalysisFor key={`${tournament.tcode}-an${roundIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={roundIdx + 1} />
+            : null;
+          return renderRoundSection
+            ? <>{renderRoundSection(roundLB, roundIdx)}{roundAn}</>
+            : <>{roundLB}{roundExtra?.(roundIdx)}{roundAn}</>;
+        }
         return null;
       })()}
     </div>

@@ -169,6 +169,12 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **Scorecard:** eagle âmbar, birdie vermelho, par branco, bogey azul de cantos rectos.
 - **Tee físico:** um tee é cor + distância; M e F são só ratings diferentes do
   mesmo tee — contar e listar com `physicalTeeGroups`/`physicalTeeKey`.
+- **Detalhe de torneio: um só componente, `TournamentDetail`**
+  (`src/pages/fpg/TournamentDetail.tsx`) — FPG, Drive, MAJOR, França, Espanha,
+  Global Junior. Tem tudo (Inscrições, Draws, voltas, Pré-Cut, Resumo,
+  Scorecards, análise, partilhar volta, tabs extra, encaixes por volta/Resumo) e
+  cada página esconde o que não precisa por props. O `IntlTournView` é só um
+  adaptador da interface antiga — funcionalidade nova entra no TournamentDetail.
 - Definições partilhadas vivem em `constants/`, `utils/` e `App.css`, nunca
   duplicadas por página. Filtrar e calcular nos loaders, não nos componentes.
   Sem código morto.
