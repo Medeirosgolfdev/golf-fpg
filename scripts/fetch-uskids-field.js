@@ -661,7 +661,13 @@ async function main() {
       let doCache = [], doField = [];
       try { doCache = JSON.parse(fs.readFileSync(CACHE_PATH, 'utf8')).torneios || []; } catch {}
       try { doField = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')).torneios || []; } catch {}
-      torneios = [...only].map(t => doCache.find(x => x.t === t) || doField.find(x => x.t === t)).filter(Boolean);
+      // Um torneio acabado de entrar (ex.: FORCAR_INCLUIR novo) ainda não está
+      // na cache nem no field — vem do catálogo, sem pedido nenhum.
+      const doCatalogo = (t) => {
+        const e = (fs.existsSync(CATALOGO_PATH) ? JSON.parse(fs.readFileSync(CATALOGO_PATH, 'utf8')).entradas : {})[t];
+        return e && { t, name: e.n, date_inicio: e.s, date_fim: e.e, rondas: e.r, campo: e.c, fee_18: e.f, tour: e.tour, type: e.ty };
+      };
+      torneios = [...only].map(t => doCache.find(x => x.t === t) || doField.find(x => x.t === t) || doCatalogo(t)).filter(Boolean);
       console.log(`\n🎯 --only: ${torneios.map(t => `${t.name} (t=${t.t})`).join(' · ') || 'nenhum torneio conhecido'}`);
     } else {
       // Fase 1 todos os dias: agora custa ~50 pedidos (era ~6.000).
@@ -765,7 +771,9 @@ async function main() {
       // canário distinguir "a fonte cortou-nos" de "a rede falhou sem
       // explicação". Sem isto, os dois casos chegam lá iguais.
       rate_limit_hits: only ? (anterior.rate_limit_hits ?? 0) : rateLimitHits,
-      torneios: final,
+      // `seguido`: está no uskids-seguir-diario.json — a /uskids mostra-o sempre,
+      // seja qual for a categoria escondida (ex.: um Local Tour em observação).
+      torneios: final.map(t => diarios.has(t.t) ? { ...t, seguido: true } : (({ seguido, ...r }) => r)(t)),
     }, null, 2), 'utf8');
 
     console.log('\n══════════════════════════════════════');

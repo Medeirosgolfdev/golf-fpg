@@ -54,6 +54,7 @@ interface Torneio {
   sem_flights?: boolean; erro?: string;
   url_uskids?: string | null;
   tour?: string | null; type?: number | null;
+  seguido?: boolean; // em scripts/uskids-seguir-diario.json — nunca se esconde por categoria
 }
 
 
@@ -429,7 +430,7 @@ type TorneioEntry = {
   campo?: string; totalInscritos?: number; totalMaximo?: number;
   urlResultados?: string; manuelJogou?: boolean; terminado?: boolean;
   manuelPos?: number | null; manuelScore?: number | null; nPaises?: number;
-  tipo?: number | null;
+  tipo?: number | null; seguido?: boolean;
 };
 
 export default function USKidsFieldPage() {
@@ -681,6 +682,7 @@ export default function USKidsFieldPage() {
         terminado: ended,
         manuelJogou: manuelInscrito,
         tipo: t.type ?? null,
+        seguido: t.seguido,
       });
     }
     for (const t of torneiosResultados) {
@@ -836,9 +838,10 @@ export default function USKidsFieldPage() {
   // Torneios e Resultados (os mesmos filtros nas duas — 13/10/2026; sem tipo
   // conhecido nunca se esconde) e só com o ★ Manuel DESLIGADO: ligado, a lista é "os torneios do Manuel" e nenhuma
   // categoria os pode esconder (uma escolha antiga de chips escondia o Spanish
-  // Open). Sem tipo conhecido, ou pedido por link, nunca se esconde.
+  // Open). Sem tipo conhecido, pedido por link ou seguido (uskids-seguir-diario.json)
+  // nunca se esconde.
   const catFilter = (t: TorneioEntry) =>
-    tab === "rivais" || filterManuel || t.tipo == null || t.t === tLigado || catVisiveis.has(t.tipo);
+    tab === "rivais" || filterManuel || t.tipo == null || t.t === tLigado || !!t.seguido || catVisiveis.has(t.tipo);
   // Os chips saem dos DADOS, não da lista fixa: um tipo que a USKids venha a
   // usar e que não está em CATEGORIAS aparece sozinho, como "Tipo N".
   const ordemCat = (tipo: number) => { const i = CATEGORIAS.findIndex(c => c.tipo === tipo); return i < 0 ? 99 : i; };

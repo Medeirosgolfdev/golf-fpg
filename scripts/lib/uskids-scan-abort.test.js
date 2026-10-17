@@ -84,6 +84,7 @@ describe('descobrirTorneios — de ponta a ponta', () => {
   it('um dia normal: acha os novos, guarda o buraco, e custa 3 + MARGEM pedidos', async () => {
     const { descobrirTorneios } = await import('../fetch-uskids-field.js');
     const { MARGEM } = await import('./uskids-frontier.js');
+    const { FORCAR_INCLUIR } = await import('./uskids-classify.js');
     limpar();
     // Fronteira em 1000; existem o 1001 (Internacional) e o 1003 (Local Tour,
     // excluído — mas vai para o catálogo). O 1002 não existe.
@@ -98,9 +99,9 @@ describe('descobrirTorneios — de ponta a ponta', () => {
 
     const torneios = await descobrirTorneios();
 
-    // 3 FORCAR_INCLUIR (fora do catálogo) + 1001…1003 + MARGEM inexistentes.
+    // Os FORCAR_INCLUIR (fora do catálogo) + 1001…1003 + MARGEM inexistentes.
     // O backfill não pede nada: a fronteira está abaixo do piso.
-    expect(pedidos).toBe(3 + 3 + MARGEM);
+    expect(pedidos).toBe(FORCAR_INCLUIR.size + 3 + MARGEM);
     expect(torneios.map(t => t.t)).toEqual([1001]);
     const cache = ler('uskids-discovery-cache.json');
     expect(cache.varredura.fim).toBe('fronteira');
@@ -113,6 +114,7 @@ describe('descobrirTorneios — de ponta a ponta', () => {
   it('uma regra nova aplica-se ao catálogo sem pedir nada', async () => {
     const { descobrirTorneios } = await import('../fetch-uskids-field.js');
     const { MARGEM } = await import('./uskids-frontier.js');
+    const { FORCAR_INCLUIR } = await import('./uskids-classify.js');
     // O catálogo já tem um Tour Championship dos EUA, visto quando ainda não
     // entrava; a cache não o tem. Tem de entrar sem nenhum pedido a ele.
     const cat = ler('uskids-tcode-catalog.json');
@@ -124,8 +126,8 @@ describe('descobrirTorneios — de ponta a ponta', () => {
     const torneios = await descobrirTorneios();
 
     expect(torneios.map(t => t.t)).toContain(1004);
-    // Os 3 forçados (que aqui não existem, logo não ficaram no catálogo) e a
+    // Os forçados (que aqui não existem, logo não ficaram no catálogo) e a
     // fronteira a partir do 1004 — nenhum pedido ao próprio 1004.
-    expect(pedidos).toBe(3 + MARGEM);
+    expect(pedidos).toBe(FORCAR_INCLUIR.size + MARGEM);
   });
 });

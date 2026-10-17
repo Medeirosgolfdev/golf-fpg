@@ -103,7 +103,9 @@ const INCLUIR_FORTE = [
 // ── Camada 3: excepções por tcode ─────────────────────────────────────────
 // 21080=Marco Simone 2026, 21133=Jekyll Island Cup,
 // 21667=World Teen Championship 2026 (hoje já entra pelo tipo 3)
-const FORCAR_INCLUIR = new Set([21080, 21133, 21667]);
+// 23819-23823 = Casablanca (MA) Tour 2026, local tour em observação (17/10/2026,
+// pedido dela: "quero perceber se é competitivo"); o final, 23824, entra pelo tipo 6.
+const FORCAR_INCLUIR = new Set([21080, 21133, 21667, 23819, 23820, 23821, 23822, 23823]);
 const FORCAR_EXCLUIR = new Set([
   21573, // Marco Simone local tour
   21298, // International Teen Series at Al Hamra
