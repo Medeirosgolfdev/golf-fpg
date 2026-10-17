@@ -13,6 +13,7 @@ import type { Tournament } from "../data/fpgTypes";
 import { shareOptionsForRounds, shareOptionsForTournament } from "./overlay/shareOptions";
 
 const OverlayExport = lazy(() => import("./OverlayExport"));
+const RoundAnalysisPanel = lazy(() => import("./RoundAnalysisPanel"));
 
 /** `pid` = o jogador entre voltas (fed ou nome — o scoreId da FPG muda de volta para volta). */
 export type ShareOption = { key: string; label: string; data: OverlayData; pid?: string };
@@ -52,8 +53,16 @@ export function ShareRoundsPanel({ rounds, event, course, date }: { rounds: Tour
     const ctx = { event, course, date };
     const t = shareOptionsForTournament(rounds, ctx);
     const r = shareOptionsForRounds(rounds, ctx);
-    return { options: [...t.options, ...r.options], defaultKey: t.defaultKey ?? r.defaultKey };
+    return { options: [...t.options, ...r.options], defaultKey: t.defaultKey ?? r.defaultKey, tour: t };
   }, [rounds, event, course, date]);
   if (!share.options.length) return null;
-  return <ShareRoundPanel options={share.options} defaultKey={share.defaultKey} />;
+  return (
+    <>
+      {/* Torneio com 2+ voltas: o analisador por cima do partilhar */}
+      {share.tour.options.length > 0 && (
+        <Suspense fallback={null}><RoundAnalysisPanel options={share.tour.options} defaultKey={share.tour.defaultKey} /></Suspense>
+      )}
+      <ShareRoundPanel options={share.options} defaultKey={share.defaultKey} />
+    </>
+  );
 }
