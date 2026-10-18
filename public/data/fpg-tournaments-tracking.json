@@ -1,10 +1,10 @@
 {
-  "lastUpdated": "2026-10-18T05:43:10.191Z",
+  "lastUpdated": "2026-10-18T22:03:34.365Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-10-18",
   "summary": {
     "total": 1794,
-    "complete": 826,
+    "complete": 825,
     "in_progress": 1,
     "future": 2,
     "stale": 10,
@@ -12,7 +12,7 @@
     "missing_admissions": 0,
     "missing_classif": 0,
     "missing_scorecards": 0,
-    "missing_draws": 0,
+    "missing_draws": 1,
     "unknown": 0
   },
   "tournaments": [
@@ -372,11 +372,11 @@
       "name": "5º Torneio do Circuito Aquapor",
       "date": "2026-10-17",
       "rounds": 2,
-      "has_admissions": false,
-      "admissions_count": 0,
-      "has_draws": false,
-      "draws_rounds_with_data": 0,
-      "draws_players_total": 0,
+      "has_admissions": true,
+      "admissions_count": 49,
+      "has_draws": true,
+      "draws_rounds_with_data": 2,
+      "draws_players_total": 110,
       "has_classif": true,
       "player_count": 55,
       "players_with_scorecards": 55,
@@ -393,8 +393,8 @@
       "name": "5º Torneio do Circuito Aquapor S",
       "date": "2026-10-17",
       "rounds": 1,
-      "has_admissions": false,
-      "admissions_count": 0,
+      "has_admissions": true,
+      "admissions_count": 6,
       "has_draws": false,
       "draws_rounds_with_data": 0,
       "draws_players_total": 0,
@@ -406,7 +406,7 @@
       "scorecards_ratio": 0,
       "full_scorecards_ratio": 0,
       "has_manuel": false,
-      "status": "complete"
+      "status": "missing_draws"
     },
     {
       "ccode": "988",
