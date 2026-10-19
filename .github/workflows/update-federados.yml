@@ -148,15 +148,30 @@ jobs:
           fi
 
           DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m "data: refresh federados.json ${DATE}"
-          # Push robusto: retry com pull --rebase em cada tentativa.
+          MSG="data: refresh federados.json ${DATE}"
+          # Os ficheiros são inteiramente gerados por este job: guardá-los e,
+          # em cada tentativa, pô-los por cima do main mais recente.
+          # Não usar pull --rebase: o checkout é raso (depth 1) e, se o main
+          # avançou durante o scrape, o git fica sem base comum e dá o
+          # federados.json inteiro como conflito (19/10/2026).
+          SAVE=$(mktemp -d)
+          FILES=$(git diff --staged --name-only)
+          for f in $FILES; do mkdir -p "$SAVE/$(dirname "$f")"; cp "$f" "$SAVE/$f"; done
           PUSH_OK=0
           for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
+            git fetch --depth=1 origin ${GITHUB_REF_NAME}
+            git reset --hard FETCH_HEAD
+            for f in $FILES; do cp "$SAVE/$f" "$f"; git add "$f"; done
+            if git diff --staged --quiet; then
+              echo "O main já tem estes dados — sem commit."
               PUSH_OK=1
               break
             fi
-            git rebase --abort 2>/dev/null || true
+            git commit -m "$MSG"
+            if git push origin HEAD:${GITHUB_REF_NAME}; then
+              PUSH_OK=1
+              break
+            fi
             echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
             sleep $((i * 5))
           done
