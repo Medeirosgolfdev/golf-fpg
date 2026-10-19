@@ -1,0 +1,451 @@
+{
+  "tourId": 74577,
+  "url": "https://www.nextcaddy.com/tour/74577",
+  "scrapedAt": "2026-10-19T09:50:41.670Z",
+  "meta": {
+    "name": "1ª P. Circuito Infantil B.K. 9 HOYOS 18-10-26",
+    "organizer": null,
+    "course": "Real Club de Golf Vista Hermosa",
+    "courseCode": "AM05",
+    "dateStart": "2026-10-18",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Infantil",
+      "Caballeros",
+      "Señoras",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-18",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      5,
+      3,
+      4,
+      3,
+      4,
+      4,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      9,
+      17,
+      3,
+      11,
+      15,
+      5,
+      1,
+      13,
+      7
+    ],
+    "meters": [
+      412,
+      133,
+      304,
+      107,
+      246,
+      291,
+      295,
+      189,
+      388
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Daniel Otero Sanchez",
+          "licencia": "AM05349349",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2426683,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                6,
+                7,
+                6,
+                null,
+                5,
+                5,
+                5,
+                7
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Delgado Perez De Guzman",
+          "licencia": "AM05350633",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2426695,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                4,
+                7,
+                5,
+                null,
+                null,
+                7,
+                6,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Oscar Franco Belda",
+          "licencia": "AM05032189",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2426685,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                3,
+                8,
+                7,
+                6,
+                null,
+                9,
+                4,
+                7
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Argudo De Montalembert",
+          "licencia": "AM05492624",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2427522,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                7,
+                null,
+                3,
+                null,
+                8,
+                7,
+                6,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 5,
+          "name": "Matilde Lechuga Melgosa",
+          "licencia": "AM05492601",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2426694,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                6,
+                null,
+                null,
+                null,
+                7,
+                8,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 6,
+          "name": "Kostka Delgado Perez De Guzman",
+          "licencia": "AM05489377",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2426696,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                412,
+                133,
+                304,
+                107,
+                246,
+                291,
+                295,
+                189,
+                388
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Daniel Otero Sanchez",
+      "licencia": "AM05349349",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Oscar Franco Belda",
+      "licencia": "AM05032189",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Kostka Delgado Perez De Guzman",
+      "licencia": "AM05489377",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Rafael Argudo De Montalembert",
+      "licencia": "AM05492624",
+      "hcp": 48,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Matilde Lechuga Melgosa",
+      "licencia": "AM05492601",
+      "hcp": null,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Delgado Perez De Guzman",
+      "licencia": "AM05350633",
+      "hcp": null,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Rafael Argudo De Montalembert",
+          "hcp": 48,
+          "ins": "2427522",
+          "jid": "79882",
+          "nivel": "A"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Daniel Otero Sanchez",
+          "hcp": 48,
+          "ins": "2426683",
+          "jid": "79882",
+          "nivel": "B"
+        },
+        {
+          "time": "10:00",
+          "tee": 1,
+          "name": "Oscar Franco Belda",
+          "hcp": 48,
+          "ins": "2426685",
+          "jid": "79882",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Matilde Lechuga Melgosa",
+          "hcp": 48,
+          "ins": "2426694",
+          "jid": "79882",
+          "nivel": "A"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Carmen Delgado Perez De Guzman",
+          "hcp": 48,
+          "ins": "2426695",
+          "jid": "79882",
+          "nivel": "B"
+        },
+        {
+          "time": "10:10",
+          "tee": 1,
+          "name": "Kostka Delgado Perez De Guzman",
+          "hcp": 48,
+          "ins": "2426696",
+          "jid": "79882",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79882
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

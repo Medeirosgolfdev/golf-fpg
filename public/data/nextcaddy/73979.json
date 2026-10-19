@@ -25,7 +25,40 @@
   "leaderboardPdfOnly": true,
   "categoryNames": {},
   "inscritos": [],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Virginia Ibiricu Diaz",
+          "hcp": 21,
+          "ins": "2427342",
+          "jid": "79232",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Mercedes Irujo Espinosa De Los Monteros",
+          "hcp": 28.9,
+          "ins": "2427074",
+          "jid": "79232",
+          "nivel": "S"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Paula Machimbarrena Carasa",
+          "hcp": 32.8,
+          "ins": "2427505",
+          "jid": "79232",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -45,5 +78,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-10-12T12:10:10.956Z"
+  "horariosScrapedAt": "2026-10-19T09:49:45.939Z"
 }

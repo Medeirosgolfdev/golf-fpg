@@ -1,0 +1,968 @@
+{
+  "tourId": 74532,
+  "url": "https://www.nextcaddy.com/tour/74532",
+  "scrapedAt": "2026-10-19T09:48:47.313Z",
+  "meta": {
+    "name": "PULL",
+    "organizer": null,
+    "course": "la Monacilla Golf Club",
+    "courseCode": "AMG8",
+    "dateStart": "2026-10-14",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-14",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Carlos Romero Fernandez",
+          "licencia": "AMG8470550",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2424277
+        },
+        {
+          "pos": 2,
+          "name": "Michael Bailiff",
+          "licencia": "AMG8809036",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2424280
+        },
+        {
+          "pos": 3,
+          "name": "Charles Mittelmeijer",
+          "licencia": "AMA9753648",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2424284
+        },
+        {
+          "pos": 4,
+          "name": "Peter John Lloyd",
+          "licencia": "AMG8964965",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2424273
+        },
+        {
+          "pos": 5,
+          "name": "Craig Donaldson",
+          "licencia": "AMG8473010",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2424283
+        },
+        {
+          "pos": 6,
+          "name": "Andrew Buxton",
+          "licencia": "AMG8975559",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424278
+        },
+        {
+          "pos": 7,
+          "name": "Michael John Hyde",
+          "licencia": "AMG8074197",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424274
+        },
+        {
+          "pos": 8,
+          "name": "Brian Fordyce",
+          "licencia": "AMG8475071",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424285
+        },
+        {
+          "pos": 9,
+          "name": "Paul Robertson",
+          "licencia": "AMG8975397",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2424272
+        },
+        {
+          "pos": 10,
+          "name": "Garry Christopher Smith",
+          "licencia": "AMG8489925",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2424275
+        },
+        {
+          "pos": 11,
+          "name": "Andrew Cruikshank",
+          "licencia": "AMG8886342",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2424276
+        },
+        {
+          "pos": 12,
+          "name": "Richard Picard",
+          "licencia": "AM07530320",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2424281
+        },
+        {
+          "pos": 13,
+          "name": "Clifford Harper",
+          "licencia": "AMG8942929",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2424279
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Paul Robertson",
+      "licencia": "AMG8975397",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Peter John Lloyd",
+      "licencia": "AMG8964965",
+      "hcp": 7.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Michael John Hyde",
+      "licencia": "AMG8074197",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Garry Christopher Smith",
+      "licencia": "AMG8489925",
+      "hcp": 17.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Andrew Cruikshank",
+      "licencia": "AMG8886342",
+      "hcp": 7.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Juan Carlos Romero Fernandez",
+      "licencia": "AMG8470550",
+      "hcp": 1.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Andrew Buxton",
+      "licencia": "AMG8975559",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Clifford Harper",
+      "licencia": "AMG8942929",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Michael Bailiff",
+      "licencia": "AMG8809036",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Richard Picard",
+      "licencia": "AM07530320",
+      "hcp": 19.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Craig Donaldson",
+      "licencia": "AMG8473010",
+      "hcp": 24.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Charles Mittelmeijer",
+      "licencia": "AMA9753648",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Brian Fordyce",
+      "licencia": "AMG8475071",
+      "hcp": 24.7,
+      "nivel": "Mid"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:10",
+          "tee": 10,
+          "name": "Paul Robertson",
+          "hcp": 13.3,
+          "ins": "2424272",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 10,
+          "name": "Peter John Lloyd",
+          "hcp": 7.7,
+          "ins": "2424273",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 10,
+          "name": "Michael John Hyde",
+          "hcp": 17.9,
+          "ins": "2424274",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:10",
+          "tee": 10,
+          "name": "Garry Christopher Smith",
+          "hcp": 17.3,
+          "ins": "2424275",
+          "jid": "79837",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Andrew Cruikshank",
+          "hcp": 7.2,
+          "ins": "2424276",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Juan Carlos Romero Fernandez",
+          "hcp": 1.1,
+          "ins": "2424277",
+          "jid": "79837",
+          "nivel": "M"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Andrew Buxton",
+          "hcp": 14.7,
+          "ins": "2424278",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Clifford Harper",
+          "hcp": 9.8,
+          "ins": "2424279",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Michael Bailiff",
+          "hcp": 10.7,
+          "ins": "2424280",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Richard Picard",
+          "hcp": 19.1,
+          "ins": "2424281",
+          "jid": "79837",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Craig Donaldson",
+          "hcp": 24.5,
+          "ins": "2424283",
+          "jid": "79837",
+          "nivel": "M"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Charles Mittelmeijer",
+          "hcp": 31.7,
+          "ins": "2424284",
+          "jid": "79837",
+          "nivel": "S"
+        },
+        {
+          "time": "09:40",
+          "tee": 10,
+          "name": "Brian Fordyce",
+          "hcp": 24.7,
+          "ins": "2424285",
+          "jid": "79837",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 162162,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            63
+          ],
+          [
+            "Birdie",
+            6
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            88
+          ],
+          [
+            "Peor",
+            53
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162163,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            5
+          ],
+          [
+            "2",
+            5
+          ],
+          [
+            "3",
+            15
+          ],
+          [
+            "4",
+            11
+          ],
+          [
+            "5",
+            15
+          ],
+          [
+            "6",
+            9
+          ],
+          [
+            "7",
+            10
+          ],
+          [
+            "8",
+            18
+          ],
+          [
+            "9",
+            7
+          ],
+          [
+            "10",
+            16
+          ],
+          [
+            "11",
+            6
+          ],
+          [
+            "12",
+            8
+          ],
+          [
+            "13",
+            15
+          ],
+          [
+            "14",
+            17
+          ],
+          [
+            "15",
+            13
+          ],
+          [
+            "16",
+            8
+          ],
+          [
+            "17",
+            14
+          ],
+          [
+            "18",
+            11
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162164,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN CARLOS ROMERO FERNANDEZ",
+            "MICHAEL BAILIFF ",
+            "CHARLES MITTELMEIJER "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            3,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            3,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            5,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            5,
+            2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            4,
+            4
+          ],
+          [
+            "Hoyo 8",
+            0,
+            4,
+            2
+          ],
+          [
+            "Hoyo 9",
+            0,
+            4,
+            3
+          ],
+          [
+            "Hoyo 10",
+            0,
+            5,
+            2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            4,
+            2
+          ],
+          [
+            "Hoyo 12",
+            0,
+            4,
+            2
+          ],
+          [
+            "Hoyo 13",
+            0,
+            2,
+            4
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            3,
+            3
+          ],
+          [
+            "Hoyo 15",
+            0,
+            3,
+            3
+          ],
+          [
+            "Hoyo 16",
+            0,
+            3,
+            3
+          ],
+          [
+            "Hoyo 17",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 18",
+            1,
+            2,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162165,
+        "datos": [
+          [
+            "Hoyo",
+            "JUAN CARLOS ROMERO FERNANDEZ",
+            "MICHAEL BAILIFF ",
+            "CHARLES MITTELMEIJER "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            1,
+            2,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            -2,
+            2
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            1,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 79837
+    }
+  ],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Moreno Da Costa Brandao, Pedro José",
+          "holeNumber": 4,
+          "createdAt": "10/08/26 09:12:19"
+        },
+        {
+          "playerName": "Bonet Padilla, Gonzalo",
+          "holeNumber": 6,
+          "createdAt": "10/08/26 09:14:47"
+        },
+        {
+          "playerName": "Laffitte Ageo, Francisco",
+          "holeNumber": 4,
+          "createdAt": "10/08/26 09:31:54"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 3,
+          "createdAt": "10/08/26 09:34:05"
+        },
+        {
+          "playerName": "Gross Davila, Javier",
+          "holeNumber": 3,
+          "createdAt": "10/08/26 09:34:55"
+        },
+        {
+          "playerName": "Garvey Ramirez, Alberto",
+          "holeNumber": 7,
+          "createdAt": "10/08/26 09:42:03"
+        },
+        {
+          "playerName": "Benjumea Troya, Jaime",
+          "holeNumber": 5,
+          "createdAt": "10/08/26 09:44:37"
+        },
+        {
+          "playerName": "Moreno Da Costa Brandao, Pedro José",
+          "holeNumber": 6,
+          "createdAt": "10/08/26 09:45:41"
+        },
+        {
+          "playerName": "Jimenez Sanchez-Dalp, Javier",
+          "holeNumber": 6,
+          "createdAt": "10/08/26 09:46:22"
+        },
+        {
+          "playerName": "Murube Leon, Francisco De Asis",
+          "holeNumber": 3,
+          "createdAt": "10/08/26 09:48:13"
+        },
+        {
+          "playerName": "Benjumea Ochoa, Diego",
+          "holeNumber": 3,
+          "createdAt": "10/08/26 10:04:25"
+        },
+        {
+          "playerName": "Benjumea Ochoa, Diego",
+          "holeNumber": 4,
+          "createdAt": "10/08/26 10:04:25"
+        },
+        {
+          "playerName": "Murube Leon, Francisco De Asis",
+          "holeNumber": 5,
+          "createdAt": "10/08/26 10:04:53"
+        },
+        {
+          "playerName": "Camacho Rodriguez, Carlos",
+          "holeNumber": 4,
+          "createdAt": "10/08/26 10:22:48"
+        },
+        {
+          "playerName": "Garvey Canivell, Luis",
+          "holeNumber": 5,
+          "createdAt": "10/08/26 10:25:52"
+        },
+        {
+          "playerName": "Alvear Garijo, Francisco",
+          "holeNumber": 6,
+          "createdAt": "10/08/26 10:31:41"
+        },
+        {
+          "playerName": "Garvey Canivell, Luis",
+          "holeNumber": 7,
+          "createdAt": "10/08/26 10:50:06"
+        },
+        {
+          "playerName": "Maldonado Lopez De Carrizosa, Borja",
+          "holeNumber": 14,
+          "createdAt": "10/08/26 10:50:52"
+        },
+        {
+          "playerName": "Garvey Robles, Ignacio",
+          "holeNumber": 11,
+          "createdAt": "10/08/26 10:51:38"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 9,
+          "createdAt": "10/08/26 11:08:47"
+        },
+        {
+          "playerName": "Baron Rivero, Carlos",
+          "holeNumber": 16,
+          "createdAt": "10/08/26 11:29:41"
+        },
+        {
+          "playerName": "Garvey Ramirez, Luis",
+          "holeNumber": 14,
+          "createdAt": "10/08/26 11:33:38"
+        },
+        {
+          "playerName": "Parias Mora-Figueroa, Leopoldo",
+          "holeNumber": 4,
+          "createdAt": "10/08/26 12:01:12"
+        },
+        {
+          "playerName": "Alvear Garijo, Francisco",
+          "holeNumber": 12,
+          "createdAt": "10/08/26 12:07:57"
+        },
+        {
+          "playerName": "Valenzuela Etayo, Carlos",
+          "holeNumber": 14,
+          "createdAt": "10/08/26 12:26:02"
+        },
+        {
+          "playerName": "Garvey Canivell, Luis",
+          "holeNumber": 16,
+          "createdAt": "10/08/26 13:24:19"
+        },
+        {
+          "playerName": "Medina De La Paz, Rodrigo",
+          "holeNumber": 17,
+          "createdAt": "10/08/26 13:27:43"
+        },
+        {
+          "playerName": "Gross Davila, Jorge",
+          "holeNumber": 17,
+          "createdAt": "10/08/26 13:36:04"
+        },
+        {
+          "playerName": "Galvez Diaz De Bustamante, Luis",
+          "holeNumber": 17,
+          "createdAt": "10/08/26 13:46:57"
+        },
+        {
+          "playerName": "Gross Davila, Javier",
+          "holeNumber": 16,
+          "createdAt": "10/08/26 13:49:53"
+        },
+        {
+          "playerName": "Benjumea Troya, Jaime",
+          "holeNumber": 3,
+          "createdAt": "10/08/26 14:34:34"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

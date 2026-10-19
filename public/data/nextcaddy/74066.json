@@ -1,7 +1,7 @@
 {
   "tourId": 74066,
   "url": "https://www.nextcaddy.com/tour/74066",
-  "scrapedAt": "2026-10-12T12:08:27.895Z",
+  "scrapedAt": "2026-10-19T09:50:54.187Z",
   "meta": {
     "name": "CIRCUITO INFANTIL MCDONALD´S 2026 2027 4 hoyos",
     "organizer": null,
@@ -21,7 +21,69 @@
     "dateIso": "2026-09-25",
     "year": 2026
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      4,
+      5,
+      5,
+      4,
+      3,
+      4,
+      4,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      5,
+      17,
+      7,
+      13,
+      1,
+      15,
+      3,
+      9,
+      11,
+      16,
+      8,
+      14,
+      4,
+      2,
+      12,
+      10,
+      6,
+      18
+    ],
+    "meters": [
+      307,
+      95,
+      300,
+      269,
+      438,
+      146,
+      329,
+      282,
+      400,
+      409,
+      305,
+      162,
+      278,
+      308,
+      134,
+      302,
+      301,
+      387
+    ],
+    "parTotal": 72
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -49,7 +111,53 @@
           "hcpJuego": [],
           "total": 8,
           "toPar": 28,
-          "inscribedId": 2412188
+          "inscribedId": 2412188,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                5,
+                6,
+                7,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400,
+                409,
+                305,
+                162,
+                278,
+                308,
+                134,
+                302,
+                301,
+                387
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -61,7 +169,53 @@
           "hcpJuego": [],
           "total": 3,
           "toPar": 33,
-          "inscribedId": 2412187
+          "inscribedId": 2412187,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                9,
+                9,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400,
+                409,
+                305,
+                162,
+                278,
+                308,
+                134,
+                302,
+                301,
+                387
+              ]
+            }
+          ]
         },
         {
           "pos": 3,
@@ -73,7 +227,53 @@
           "hcpJuego": [],
           "total": 2,
           "toPar": 34,
-          "inscribedId": 2412831
+          "inscribedId": 2412831,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                11,
+                10,
+                7,
+                11,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400,
+                409,
+                305,
+                162,
+                278,
+                308,
+                134,
+                302,
+                301,
+                387
+              ]
+            }
+          ]
         }
       ]
     }
@@ -128,5 +328,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-10-12T12:10:11.416Z"
+  "horariosScrapedAt": "2026-10-19T09:49:46.436Z"
 }

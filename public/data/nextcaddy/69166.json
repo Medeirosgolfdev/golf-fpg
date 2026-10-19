@@ -1,7 +1,7 @@
 {
   "tourId": 69166,
   "url": "https://www.nextcaddy.com/tour/69166",
-  "scrapedAt": "2026-10-12T12:03:49.431Z",
+  "scrapedAt": "2026-10-19T09:50:17.149Z",
   "meta": {
     "name": "TORNEO INFANTIL 9 HOYOS PandP 14/03/2026",
     "organizer": null,
@@ -22,7 +22,42 @@
     "dateIso": "2026-03-14",
     "year": 2026
   },
-  "course": null,
+  "course": {
+    "par": [
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      17,
+      15,
+      1,
+      5,
+      3,
+      9,
+      13,
+      11,
+      7
+    ],
+    "meters": [
+      83,
+      107,
+      120,
+      83,
+      52,
+      73,
+      119,
+      111,
+      116
+    ],
+    "parTotal": 27
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -50,7 +85,35 @@
           "hcpJuego": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2281220
+          "inscribedId": 2281220,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                3,
+                5,
+                5,
+                4,
+                4,
+                5,
+                4
+              ],
+              "total": 40,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -62,7 +125,35 @@
           "hcpJuego": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2281221
+          "inscribedId": 2281221,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                3,
+                4,
+                4,
+                3,
+                4,
+                4,
+                3
+              ],
+              "total": 34,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         },
         {
           "pos": 3,
@@ -74,7 +165,35 @@
           "hcpJuego": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2281222
+          "inscribedId": 2281222,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                3,
+                4,
+                4,
+                6,
+                3,
+                6,
+                3,
+                5
+              ],
+              "total": 38,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         },
         {
           "pos": 4,
@@ -86,7 +205,35 @@
           "hcpJuego": [],
           "total": 17,
           "toPar": 1,
-          "inscribedId": 2281225
+          "inscribedId": 2281225,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                4,
+                5,
+                5,
+                4,
+                4,
+                6,
+                5
+              ],
+              "total": 43,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         },
         {
           "pos": 5,
@@ -98,7 +245,35 @@
           "hcpJuego": [],
           "total": 16,
           "toPar": 2,
-          "inscribedId": 2281223
+          "inscribedId": 2281223,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                3,
+                4,
+                3,
+                3,
+                4,
+                3,
+                4,
+                4,
+                4
+              ],
+              "total": 32,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         },
         {
           "pos": 6,
@@ -110,7 +285,35 @@
           "hcpJuego": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2281226
+          "inscribedId": 2281226,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                8,
+                4,
+                5,
+                6,
+                6,
+                5,
+                4,
+                6
+              ],
+              "total": 48,
+              "meters": [
+                83,
+                107,
+                120,
+                83,
+                52,
+                73,
+                119,
+                111,
+                116
+              ]
+            }
+          ]
         }
       ]
     }
@@ -598,5 +801,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-10-12T12:09:52.532Z"
+  "horariosScrapedAt": "2026-10-19T09:49:28.139Z"
 }

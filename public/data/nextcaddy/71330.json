@@ -1,7 +1,7 @@
 {
   "tourId": 71330,
   "url": "https://www.nextcaddy.com/tour/71330",
-  "scrapedAt": "2026-10-12T12:06:01.717Z",
+  "scrapedAt": "2026-10-19T09:50:56.068Z",
   "meta": {
     "name": "8º TORNEO INFANTIL (5 hoyos)",
     "organizer": null,
@@ -22,7 +22,42 @@
     "dateIso": "2026-06-07",
     "year": 2026
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      4,
+      4,
+      5,
+      3,
+      4,
+      4,
+      5,
+      3
+    ],
+    "si": [
+      8,
+      6,
+      12,
+      14,
+      10,
+      16,
+      2,
+      4,
+      18
+    ],
+    "meters": [
+      253,
+      294,
+      265,
+      388,
+      134,
+      283,
+      322,
+      429,
+      125
+    ],
+    "parTotal": 36
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -50,7 +85,35 @@
           "hcpJuego": [],
           "total": 15,
           "toPar": 3,
-          "inscribedId": 2335806
+          "inscribedId": 2335806,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                5,
+                6,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -62,7 +125,35 @@
           "hcpJuego": [],
           "total": 13,
           "toPar": 5,
-          "inscribedId": 2335807
+          "inscribedId": 2335807,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                9,
+                5,
+                5,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                253,
+                294,
+                265,
+                388,
+                134,
+                283,
+                322,
+                429,
+                125
+              ]
+            }
+          ]
         }
       ]
     }

@@ -1,7 +1,7 @@
 {
   "tourId": 71865,
   "url": "https://www.nextcaddy.com/tour/71865",
-  "scrapedAt": "2026-10-12T12:06:42.269Z",
+  "scrapedAt": "2026-10-19T09:51:04.301Z",
   "meta": {
     "name": "6ª PRUEBA LIGA INFANTIL 5 HOYOS",
     "organizer": null,
@@ -22,7 +22,42 @@
     "dateIso": "2026-06-28",
     "year": 2026
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5
+    ],
+    "si": [
+      14,
+      2,
+      12,
+      6,
+      18,
+      4,
+      8,
+      16,
+      10
+    ],
+    "meters": [
+      196,
+      225,
+      73,
+      246,
+      271,
+      281,
+      96,
+      220,
+      339
+    ],
+    "parTotal": 36
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -50,7 +85,35 @@
           "hcpJuego": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2348818
+          "inscribedId": 2348818,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                8,
+                3,
+                null,
+                5,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                196,
+                225,
+                73,
+                246,
+                271,
+                281,
+                96,
+                220,
+                339
+              ]
+            }
+          ]
         }
       ]
     }

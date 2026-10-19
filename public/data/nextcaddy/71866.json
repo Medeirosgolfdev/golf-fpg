@@ -1,7 +1,7 @@
 {
   "tourId": 71866,
   "url": "https://www.nextcaddy.com/tour/71866",
-  "scrapedAt": "2026-10-12T12:06:42.406Z",
+  "scrapedAt": "2026-10-19T09:50:37.655Z",
   "meta": {
     "name": "6ª PRUEBA LIGA INFANTIL 9 HOYOS",
     "organizer": null,
@@ -25,7 +25,69 @@
     "dateIso": "2026-06-28",
     "year": 2026
   },
-  "course": null,
+  "course": {
+    "par": [
+      4,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      5,
+      3,
+      4
+    ],
+    "si": [
+      14,
+      2,
+      12,
+      6,
+      18,
+      4,
+      8,
+      16,
+      10,
+      11,
+      9,
+      15,
+      17,
+      5,
+      1,
+      13,
+      7,
+      3
+    ],
+    "meters": [
+      312,
+      346,
+      135,
+      350,
+      396,
+      360,
+      160,
+      299,
+      421,
+      328,
+      144,
+      305,
+      427,
+      356,
+      375,
+      408,
+      172,
+      343
+    ],
+    "parTotal": 72
+  },
   "leaderboard": [
     {
       "category": 1,
@@ -53,7 +115,35 @@
           "hcpJuego": [],
           "total": 21,
           "toPar": -3,
-          "inscribedId": 2351575
+          "inscribedId": 2351575,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                7,
+                5,
+                6,
+                8,
+                5,
+                6,
+                6
+              ],
+              "total": 55,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -65,7 +155,35 @@
           "hcpJuego": [],
           "total": 19,
           "toPar": -1,
-          "inscribedId": 2348816
+          "inscribedId": 2348816,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                5,
+                7,
+                8,
+                7,
+                4,
+                8,
+                7
+              ],
+              "total": 58,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
         },
         {
           "pos": 3,
@@ -77,7 +195,35 @@
           "hcpJuego": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2350193
+          "inscribedId": 2350193,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                7,
+                9,
+                6,
+                6,
+                7,
+                6,
+                6,
+                8
+              ],
+              "total": 62,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
         },
         {
           "pos": 4,
@@ -89,7 +235,35 @@
           "hcpJuego": [],
           "total": 18,
           "toPar": null,
-          "inscribedId": 2351574
+          "inscribedId": 2351574,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                10,
+                5,
+                10,
+                7,
+                8,
+                5,
+                7,
+                7
+              ],
+              "total": 66,
+              "meters": [
+                292,
+                331,
+                121,
+                328,
+                370,
+                342,
+                145,
+                279,
+                403
+              ]
+            }
+          ]
         },
         {
           "pos": 5,
@@ -101,7 +275,35 @@
           "hcpJuego": [],
           "total": 11,
           "toPar": 7,
-          "inscribedId": 2351580
+          "inscribedId": 2351580,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                null,
+                null,
+                5,
+                7,
+                9,
+                6,
+                7,
+                null
+              ],
+              "total": null,
+              "meters": [
+                312,
+                346,
+                135,
+                350,
+                396,
+                360,
+                160,
+                299,
+                421
+              ]
+            }
+          ]
         },
         {
           "pos": null,
@@ -113,7 +315,53 @@
           "hcpJuego": [],
           "total": null,
           "toPar": null,
-          "inscribedId": 2351578
+          "inscribedId": 2351578,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                312,
+                346,
+                135,
+                350,
+                396,
+                360,
+                160,
+                299,
+                421,
+                328,
+                144,
+                305,
+                427,
+                356,
+                375,
+                408,
+                172,
+                343
+              ]
+            }
+          ]
         }
       ]
     }
