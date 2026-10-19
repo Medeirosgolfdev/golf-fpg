@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-18T18:35:51.598Z",
+  "generatedAt": "2026-10-19T11:13:25.178Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -456,6 +456,7 @@
         "rfeg-nc68403_infantil",
         "rfeg-nc68404_infantil",
         "rfeg-nc68405_infantil",
+        "rfeg-nc68420_infantil_hcp",
         "rfeg-nc68421_infantil_hcp",
         "rfeg-nc68422_infantil_hcp",
         "rfeg-nc68444_junior",
@@ -520,6 +521,7 @@
         "rfeg-nc69060_sub21_hcp",
         "rfeg-nc69161_benjamín",
         "rfeg-nc69161_alevín",
+        "rfeg-nc69166_infantil_hcp",
         "rfeg-nc69168_junior_hcp",
         "rfeg-nc69226_infantil_hcp",
         "rfeg-nc69226_alevín_hcp",
@@ -545,10 +547,12 @@
         "rfeg-nc69649_junior_hcp",
         "rfeg-nc69677_infantil_hcp",
         "rfeg-nc69678_infantil_hcp",
+        "rfeg-nc69679_infantil_hcp",
         "rfeg-nc69713_infantil_sc",
         "rfeg-nc69713_infantil_hcp",
         "rfeg-nc69714_infantil_hcp",
         "rfeg-nc69715_infantil_hcp",
+        "rfeg-nc69751_infantil_hcp",
         "rfeg-nc70061_infantil_hcp",
         "rfeg-nc70061_infantil_sc",
         "rfeg-nc70088_cadete",
@@ -557,6 +561,7 @@
         "rfeg-nc70111_junior_hcp",
         "rfeg-nc70139_infantil_hcp",
         "rfeg-nc70141_infantil_hcp",
+        "rfeg-nc70143_infantil_hcp",
         "rfeg-nc70381_infantil_sc",
         "rfeg-nc70381_infantil_hcp",
         "rfeg-nc70382_infantil_sc",
@@ -564,6 +569,7 @@
         "rfeg-nc70383_infantil_hcp",
         "rfeg-nc70384_infantil_hcp",
         "rfeg-nc70399_junior_hcp",
+        "rfeg-nc70403_infantil_hcp",
         "rfeg-nc70472_junior_sc",
         "rfeg-nc70472_junior_hcp",
         "rfeg-nc70472_cadete_sc",
@@ -594,6 +600,7 @@
         "rfeg-nc70657_benjamín_hcp",
         "rfeg-nc70657_alevín_sc",
         "rfeg-nc70657_alevín_hcp",
+        "rfeg-nc70702_infantil_hcp",
         "rfeg-nc70703_infantil_hcp",
         "rfeg-nc70704_infantil_hcp",
         "rfeg-nc70738_infantil_sc",
@@ -612,9 +619,11 @@
         "rfeg-nc71285_infantil",
         "rfeg-nc71286_infantil",
         "rfeg-nc71308_junior",
+        "rfeg-nc71327_infantil_hcp",
         "rfeg-nc71328_infantil_sc",
         "rfeg-nc71328_infantil_hcp",
         "rfeg-nc71329_infantil_hcp",
+        "rfeg-nc71330_infantil_hcp",
         "rfeg-nc71362_benjamín_sc",
         "rfeg-nc71362_alevín_sc",
         "rfeg-nc71362_infantil_sc",
@@ -648,6 +657,9 @@
         "rfeg-nc71759_infantil_sc",
         "rfeg-nc71759_infantil_hcp",
         "rfeg-nc71825_junior",
+        "rfeg-nc71865_infantil_hcp",
+        "rfeg-nc71866_infantil_hcp",
+        "rfeg-nc71867_infantil",
         "rfeg-nc72159_infantil_sc",
         "rfeg-nc72159_infantil_hcp",
         "rfeg-nc72161_infantil_hcp",
@@ -681,8 +693,11 @@
         "rfeg-nc73851_junior_hcp",
         "rfeg-nc73886_infantil_sc",
         "rfeg-nc73886_infantil_hcp",
+        "rfeg-nc73887_infantil_hcp",
         "rfeg-nc73888_infantil_hcp",
         "rfeg-nc74063_junior_hcp",
+        "rfeg-nc74065_infantil",
+        "rfeg-nc74066_infantil",
         "rfeg-nc74231_benjamín_sc",
         "rfeg-nc74231_benjamín_hcp",
         "rfeg-nc74253_benjamín",
@@ -691,6 +706,9 @@
         "rfeg-nc74441_junior_hcp",
         "rfeg-nc74461_alevín_sc",
         "rfeg-nc74461_alevín_hcp",
+        "rfeg-nc74574_infantil_hcp",
+        "rfeg-nc74577_infantil_hcp",
+        "rfeg-nc74578_infantil_hcp",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -699,8 +717,8 @@
         "rfeg-rfeg15923_girlsboys_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-10-11",
-      "editionsCount": 690
+      "lastDate": "2026-10-18",
+      "editionsCount": 708
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -60332,6 +60350,18 @@
       "editionsCount": 2
     },
     {
+      "id": "gjgl-magix-moments-junior-international",
+      "label": "Magix Moments Junior International",
+      "sourceId": "gjgl",
+      "tournamentIds": [
+        "gjgl-magix-moments-junior-international-2025-germany",
+        "gjgl-magix-moments-junior-international-2026-germany"
+      ],
+      "firstDate": "2025-07-28",
+      "lastDate": "2026-10-18",
+      "editionsCount": 2
+    },
+    {
       "id": "gjgl-rb-german-junior",
       "label": "RB German Junior",
       "sourceId": "gjgl",
@@ -96121,17 +96151,6 @@
       ],
       "firstDate": "2026-06-22",
       "lastDate": "2026-06-22",
-      "editionsCount": 1
-    },
-    {
-      "id": "gjgl-magix-moments-junior-international",
-      "label": "Magix Moments Junior International",
-      "sourceId": "gjgl",
-      "tournamentIds": [
-        "gjgl-magix-moments-junior-international-2025-germany"
-      ],
-      "firstDate": "2025-07-28",
-      "lastDate": "2025-07-28",
       "editionsCount": 1
     },
     {
