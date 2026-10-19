@@ -51,6 +51,20 @@ const HISTORICOS = [
     date_inicio: '10/18/2025', date_fim: '10/18/2025', rondas: 2, ax: 1129,
     escalao_manuel: 2104, age_groups: [2103, 2104, 2105],
     url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=20175' },
+  // ── PGA Golf Club Invitational (Florida) — edições anteriores para as abas
+  // «Edições anteriores»/«Quem repete» do 2026 (t=22986): saber quem joga lá há
+  // 3 anos ou mais (pedido dela, 19/10/2026). Escalões Boys 6 & Under..13-14 (1..8),
+  // os mesmos do 2026. tcodes do uskids-member-history-slim.
+  { t: 19281, name: 'PGA Golf Club Invitational 2025',
+    date_inicio: '10/11/2025', date_fim: '10/12/2025', rondas: 2, ax: 1129,
+    escalao_manuel: null, age_groups: [1, 2, 3, 4, 5, 6, 7, 8],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=19281' },
+  // 2024 (t=17441) fica de fora: a fonte não tem nenhum resultado (0 jogadores em
+  // todos os escalões a 19/10/2026; não está no uskids-field-sizes — não se jogou?).
+  { t: 14845, name: 'PGA Golf Club Invitational 2023',
+    date_inicio: '10/7/2023', date_fim: '10/8/2023', rondas: 2, ax: 1129,
+    escalao_manuel: null, age_groups: [1, 2, 3, 4, 5, 6, 7, 8],
+    url_resultados: 'https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=14845' },
   // ── Irish Open (Irlanda) ──
   { t: 16020, name: 'Irish Open 2024',
     date_inicio: '7/9/2024', date_fim: '7/10/2024', rondas: 2, ax: 1129,
@@ -527,7 +541,11 @@ async function main() {
     return false;
   });
 
-  const aProcessar = [...emCurso, ...historicosNovos];
+  // --only t1,t2 → processa só esses tcodes (para acrescentar edições sem mexer
+  // no resto nem gastar pedidos à fonte, que tem rate limit).
+  const oi = process.argv.indexOf('--only');
+  const only = oi > 0 ? new Set(String(process.argv[oi + 1] || '').split(',').map(Number).filter(Boolean)) : null;
+  const aProcessar = [...emCurso, ...historicosNovos].filter(t => !only || only.has(t.t));
   console.log(`\n   Em curso: ${emCurso.length} | Históricos novos: ${historicosNovos.length}`);
 
   if (!aProcessar.length) {

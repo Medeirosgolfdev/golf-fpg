@@ -179,12 +179,19 @@ function matchEscalao(escaloes: EscalaoResult[], e: EscalaoResult): EscalaoResul
 
 const temDados = (esc: EscalaoResult) => esc.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
 
+/** Campo do escalão: o das voltas (no World cada escalão joga noutro campo e o
+ *  `campo` do torneio é a lista de todos). */
+function campoEscalao(esc: EscalaoResult): string {
+  const voltas = [...new Set(esc.rondas.map(r => (r as { campo?: string }).campo).filter(Boolean))];
+  return esc.campo || voltas.join(" / ");
+}
+
 /** Uma coluna de edição (PastEdition) para um escalão de um torneio. */
 function uskidsEdition(esc: EscalaoResult, ed: TorneioResult, arMap?: Map<string, AutoRivalPlayer>, label?: string): { ed: PastEdition; stamp: string } | null {
   const stamp = isoDate(ed.date_inicio);
   const pe = buildPastEditionFromTournament(escalaoToTournament(esc, ed, arMap), {
     id: label ? `${ed.t}:${esc.age_group}` : String(ed.t), year: parseInt(stamp.slice(0, 4), 10) || 0,
-    division: esc.nome, course: esc.campo || ed.campo || null, label: label ?? null,
+    division: esc.nome, course: campoEscalao(esc) || ed.campo || null, label: label ?? null,
   });
   if (!pe) return null;
   // O adaptador deixa toPar a null e parTotal a 0 quando não há par (o Resumo

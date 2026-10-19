@@ -143,7 +143,10 @@ export default function PastEditionsTable({ editions, title }: { editions: PastE
                       <div className="fs-10" style={{ color: "var(--text-3)", fontWeight: 600 }}>{e.division}</div>
                     )}
                     {e.course && (
-                      <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic" }}>{e.course}</div>
+                      // Nome do campo nunca alarga a coluna (USKids World: 11 campos numa
+                      // string) — corta com reticências, o nome todo no tooltip.
+                      <div title={e.course} style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500, lineHeight: 1.2, fontStyle: "italic",
+                        maxWidth: 280, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.course}</div>
                     )}
                   </div>
                 </th>
