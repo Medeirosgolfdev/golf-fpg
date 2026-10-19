@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-19T11:13:25.178Z",
+  "generatedAt": "2026-10-19T12:48:41.973Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -60722,6 +60722,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-dgv-region-nord-2-ak16-18-madchen",
+      "label": "DGV-Region Nord 2. AK16/18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12944",
+        "egr-egr8281"
+      ],
+      "firstDate": "2023-07-01",
+      "lastDate": "2026-07-04",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-sgf-national-matchplay",
       "label": "SGF National Matchplay",
       "sourceId": "egr",
@@ -96407,6 +96419,50 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-dgv-gvsh-meisterschaft-ak16-18-jungen",
+      "label": "DGV-GVSH Meisterschaft AK16/18 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12946"
+      ],
+      "firstDate": "2026-09-19",
+      "lastDate": "2026-09-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvsh-meisterschaft-ak14-jungen",
+      "label": "DGV-GVSH Meisterschaft AK14 Jungen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12947"
+      ],
+      "firstDate": "2026-09-19",
+      "lastDate": "2026-09-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvsh-meisterschaft-ak16-18-madchen",
+      "label": "DGV-GVSH Meisterschaft AK16/18 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12948"
+      ],
+      "firstDate": "2026-09-19",
+      "lastDate": "2026-09-19",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-gvsh-meisterschaft-ak14-madchen",
+      "label": "DGV-GVSH Meisterschaft AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12949"
+      ],
+      "firstDate": "2026-09-19",
+      "lastDate": "2026-09-19",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-midlands-boys-u14-county-championship",
       "label": "Midlands Boys U14 County Championship",
       "sourceId": "egr",
@@ -96852,6 +96908,17 @@
       "sourceId": "egr",
       "tournamentIds": [
         "egr-egr12829"
+      ],
+      "firstDate": "2026-07-04",
+      "lastDate": "2026-07-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-dgv-region-nord-2-ak14-madchen",
+      "label": "DGV-Region Nord 2. AK14 Mädchen",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr12945"
       ],
       "firstDate": "2026-07-04",
       "lastDate": "2026-07-04",
@@ -100023,17 +100090,6 @@
       ],
       "firstDate": "2023-07-04",
       "lastDate": "2023-07-04",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-dgv-region-nord-2-ak16-18-madchen",
-      "label": "DGV-Region Nord 2. AK16/18 Mädchen",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8281"
-      ],
-      "firstDate": "2023-07-01",
-      "lastDate": "2023-07-01",
       "editionsCount": 1
     },
     {
