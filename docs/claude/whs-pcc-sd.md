@@ -20,9 +20,22 @@ meters_1..18, course_rating?, slope?}`. Gerado por **`scripts/enrich-intl-round.
 node scripts/enrich-intl-round.js --scores 4333809,4333833,4333835 --uskids 21795:2105 --course "Val d'Europe"
 # Fonte cópia: outra entrada do melhorias (D2/D3 a partir do D1; mesmo tee físico noutro ano)
 node scripts/enrich-intl-round.js --scores 4213116 --copy-from 3946427 --tee "Boys 10-11"
+# Fonte FFG: percurso da série (ffgolf-course-overrides.json, do PDF da Liga) +
+# cartão buraco a buraco do jogador (ffgolf-resultats); --scores pela ordem R1, R2…
+# (jogador novo no melhorias.json é criado). CR/Slope ficam vazios — só o SD da FPG vale.
+node scripts/enrich-intl-round.js --fed 49085 --scores 4413345,4413346 --ffgolf 2601477509:U12G \
+  --player "Castro Ferreira Ricardo" --course "Armor — Golf Bluegreen Rennes St Jacques" --tee "U12 Garçons (Azuis + Vermelhas)"
 # Depois, sempre:
 node pipeline.js --skip-import 52884 && npm test && npm run build
 ```
+
+**Voltas importadas sem cartão (2026-10-19):** a FPG importa voltas de outras
+federações (França, Espanha, internacionais) com o cartão **vazio** — buracos a
+0, `gross_total` = par (72), CR/Slope 72/113 e tee de enchimento; só o SD
+(`sgd`) e o Stableford do WHS são reais. O pipeline trata esse cartão como "sem
+cartão" (`isEmptyCard`, `lib/scorecard-fragment.js`, depois de aplicar as
+melhorias): sem gross falso, 18 buracos do WHS. Para ter o cartão real, enriquecer
+pela fonte do torneio (ex.: `--ffgolf`).
 
 Flags: `--course`/`--tee` sobrepõem os da fonte (default: campo/tee do lookup);
 `--par n,n,...` sobrepõe o par da fonte — para quando a ORGANIZAÇÃO joga o campo

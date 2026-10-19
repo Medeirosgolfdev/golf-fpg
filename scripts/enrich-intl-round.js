@@ -21,6 +21,14 @@
  *   --copy-from <scoreId>        copia par/metros/CR/Slope/campo/tee de uma
  *                                entrada existente do melhorias.json (ex.: D2/D3
  *                                a partir do D1; outro ano do mesmo tee físico).
+ *   --ffgolf <trnId>:<série>     torneio FFG (pages.ffgolf.org): par/metros/tee
+ *     --player "<nome FFG>"      da série em public/data/ffgolf-course-overrides.json
+ *                                (do PDF da Liga) e o cartão buraco a buraco do
+ *                                jogador em public/data/ffgolf-resultats/. As
+ *                                --scores vão pela ordem das voltas (R1, R2…).
+ *                                Para as voltas que a FPG importa sem cartão
+ *                                (buracos a 0, CR/Slope 72/113 de enchimento):
+ *                                CR/Slope ficam vazios — só o SD da FPG vale.
  *
  * O ficheiro é editado por SPLICE TEXTUAL por entrada (nunca re-serializado
  * inteiro: o JS reordenaria as chaves numéricas para a frente dos _comment_* e
@@ -58,6 +66,8 @@ function parseArgs(argv) {
     if (k === "--scores") a.scores = next().split(",").map((s) => s.trim()).filter(Boolean);
     else if (k === "--uskids") a.uskids = next();
     else if (k === "--copy-from") a.copyFrom = next();
+    else if (k === "--ffgolf") a.ffgolf = next();
+    else if (k === "--player") a.player = next();
     else if (k === "--fed") a.fed = next();
     else if (k === "--course") a.course = next();
     else if (k === "--tee") a.tee = next();
@@ -72,8 +82,10 @@ function parseArgs(argv) {
     else { console.error(`Flag desconhecida: ${k}`); process.exit(1); }
   }
   if (!a.scores?.length) { console.error("Falta --scores id[,id...]"); process.exit(1); }
-  if (!a.uskids && !a.copyFrom) { console.error("Falta a fonte: --uskids tcode:ageGroup ou --copy-from scoreId"); process.exit(1); }
-  if (a.uskids && a.copyFrom) { console.error("--uskids e --copy-from são mutuamente exclusivos"); process.exit(1); }
+  const nSrc = [a.uskids, a.copyFrom, a.ffgolf].filter(Boolean).length;
+  if (!nSrc) { console.error("Falta a fonte: --uskids tcode:ageGroup, --copy-from scoreId ou --ffgolf trnId:série"); process.exit(1); }
+  if (nSrc > 1) { console.error("--uskids, --copy-from e --ffgolf são mutuamente exclusivos"); process.exit(1); }
+  if (a.ffgolf && !a.player) { console.error("--ffgolf precisa de --player \"<nome como na FFG>\""); process.exit(1); }
   return a;
 }
 
@@ -135,8 +147,33 @@ function sourceFromEntry(melhorias, fed, scoreId) {
   };
 }
 
+// ── fonte: torneio FFG (percurso da Liga + cartões do jogador) ───────
+function sourceFromFfgolf(spec, player) {
+  const m = /^(\d+):(\S+)$/.exec(spec);
+  if (!m) { console.error(`--ffgolf inválido: "${spec}" (esperado trnId:série)`); process.exit(1); }
+  const [trnId, serie] = [m[1], m[2]];
+  const ovr = JSON.parse(fs.readFileSync(path.join(ROOT, "public/data/ffgolf-course-overrides.json"), "utf8"));
+  const t = ovr.resultats?.[trnId];
+  const sc = t?.series?.[serie];
+  if (!sc?.par?.length || !sc?.meters?.length) { console.error(`ffgolf-course-overrides.json não tem par/metros para ${trnId}/${serie}`); process.exit(1); }
+  const dir = path.join(ROOT, "public/data/ffgolf-resultats");
+  const file = fs.readdirSync(dir).find((f) => f.endsWith(`-${trnId}.json`));
+  if (!file) { console.error(`Sem public/data/ffgolf-resultats/*-${trnId}.json`); process.exit(1); }
+  const res = JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
+  const norm = (x) => String(x || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
+  const hits = (res.details?.series || []).flatMap((s) => s.players.map((p) => ({ s, p }))).filter(({ p }) => norm(p.name) === norm(player));
+  if (hits.length !== 1) { console.error(`--player "${player}": ${hits.length} jogadores com esse nome em ${file}`); process.exit(1); }
+  const { s, p } = hits[0];
+  const rounds = [p.scoresR1, p.scoresR2, p.scoresR3, p.scoresR4].filter((r) => Array.isArray(r) && r.length);
+  return {
+    course: t.course, tee: sc.tee, par: sc.par, meters: sc.meters,
+    cr: null, slope: null, clearRating: true, rounds,
+    fonte: `ffgolf ${trnId}/${serie} (${t.fonte || "ffgolf-course-overrides.json"}) + cartão FFG de ${p.name} (série ${s.label}, ${p.pos}.º)`,
+  };
+}
+
 // ── construção da entrada (formato canónico) ─────────────────────────
-function buildEntry(existing, src, a) {
+function buildEntry(existing, src, a, gross) {
   const scorecard = {
     course_description: a.course ?? src.course,
     tee_name: a.tee ?? src.tee,
@@ -145,6 +182,13 @@ function buildEntry(existing, src, a) {
   src.meters.forEach((v, i) => { scorecard[`meters_${i + 1}`] = v; });
   if (src.cr != null) scorecard.course_rating = src.cr;
   if (src.slope != null) scorecard.slope = src.slope;
+  // CR/Slope 72/113 de enchimento da FPG nas voltas importadas → vazios.
+  if (src.clearRating) { scorecard.course_rating = null; scorecard.slope = null; }
+  // Cartão buraco a buraco da volta (fonte FFG): gross_1..n + gross_total.
+  if (gross) {
+    gross.forEach((v, i) => { scorecard[`gross_${i + 1}`] = v; });
+    scorecard.gross_total = gross.reduce((t, v) => t + v, 0);
+  }
 
   const hoje = new Date().toISOString().slice(0, 10);
   const notaAuto = `Enriquecido via scripts/enrich-intl-round.js (${src.fonte}) — ${hoje}`;
@@ -197,7 +241,14 @@ function upsert(txt, fed, scoreId, entry, comment) {
   // nova entrada: inserir antes do fecho do objecto do jogador
   const fedRe = new RegExp(`^  "${fed}": \\{`, "m");
   const fedHit = fedRe.exec(txt);
-  if (!fedHit) throw new Error(`Jogador ${fed} não existe no melhorias.json`);
+  if (!fedHit) {
+    // jogador novo: objecto próprio no fim do ficheiro
+    const rootClose = txt.lastIndexOf("}");
+    const before = txt.slice(0, rootClose).replace(/[\s]+$/, "");
+    const commentLine = comment ? `    "_comment_${comment.slug}": "${comment.text}",${eol}` : "";
+    const block = `  "${fed}": {${eol}${commentLine}${entryText(scoreId, entry)}${eol}  }`;
+    return { txt: `${before},${eol}${block}${eol}${txt.slice(rootClose)}`, created: true };
+  }
   const open = txt.indexOf("{", fedHit.index);
   const close = matchBrace(txt, open);
   // recuar até ao fim da última entrada (antes do whitespace que precede o '}')
@@ -212,7 +263,12 @@ function main() {
   const a = parseArgs(process.argv);
   let txt = fs.readFileSync(MELHORIAS, "utf8");
   const melhorias = JSON.parse(txt);
-  const src = a.uskids ? sourceFromUskids(a.uskids) : sourceFromEntry(melhorias, a.fed, a.copyFrom);
+  const src = a.uskids ? sourceFromUskids(a.uskids)
+    : a.ffgolf ? sourceFromFfgolf(a.ffgolf, a.player)
+    : sourceFromEntry(melhorias, a.fed, a.copyFrom);
+  if (src.rounds && src.rounds.length !== a.scores.length) {
+    console.error(`--scores tem ${a.scores.length} voltas e o jogador tem ${src.rounds.length} cartões na FFG`); process.exit(1);
+  }
   if (a.par) {
     if (a.par.length !== src.par.length || a.par.some((v) => !Number.isInteger(v) || v < 3 || v > 6)) {
       console.error(`--par inválido (esperado ${src.par.length} valores 3-6)`); process.exit(1);
@@ -233,13 +289,14 @@ function main() {
   let comment = null;
   if (a.comment) comment = { slug: a.comment.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""), text: `===== ${a.comment} =====` };
 
-  for (const sid of a.scores) {
+  for (const [k, sid] of a.scores.entries()) {
     const existing = melhorias[a.fed]?.[sid] ?? null;
-    const entry = buildEntry(existing, src, a);
+    const gross = src.rounds ? src.rounds[k] : null;
+    const entry = buildEntry(existing, src, a, gross);
     const r = upsert(txt, a.fed, sid, entry, entry && comment);
     txt = r.txt;
     if (r.created) comment = null; // o comentário só antecede a primeira entrada nova
-    console.log(`  ${r.created ? "criada" : "actualizada"}: ${sid} (tee "${entry.scorecard.tee_name}")`);
+    console.log(`  ${r.created ? "criada" : "actualizada"}: ${sid} (tee "${entry.scorecard.tee_name}"${gross ? `, gross ${entry.scorecard.gross_total}` : ""})`);
   }
 
   JSON.parse(txt); // validação — rebenta antes de escrever se o splice corromper
