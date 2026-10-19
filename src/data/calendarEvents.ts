@@ -275,6 +275,8 @@ export const EVENTS: CalEvent[] = [
   ev("dest_intl", "2nd Castro Marim Portuguese International U14",     new Date(2026,11,3), "Championship Quinta do Vale", "Strokeplay", new Date(2026,11,6)),
   ev("dest_intl", "Greatgolf Junior Open — Luis Figo Foundation",      new Date(2026,1,15), "Vilamoura",                   "Strokeplay", new Date(2026,1,17)),
   ev("dest_intl", "World Kids Golf 2026 by Amendoeira",                new Date(2026,6,29), "Amendoeira",                  "3R Strokeplay (jantar de encerramento)", new Date(2026,6,31)),
+  // Global Junior Golf — 6.ª etapa do tour, 1.ª edição na Madeira (5769 m; WAGR e JGR).
+  ev("dest_intl", "GJG Madeira Juniors International 2027",            new Date(2027,1,25), "Palheiro Golf",               "Strokeplay · WAGR & JGR", new Date(2027,1,28)),
 
   /* ══════════════════════════════════════
      DESTAQUE — Camp. Nacional Sub14 & 18 (laranja)
@@ -303,12 +305,14 @@ export const EVENTS: CalEvent[] = [
   // 2026-09-02). San Roque fica em Sotogrande (Cádiz), a ~1h de Málaga — daí
   // os voos para AGP.
   ev("dest_uskids", "US Kids Spanish Open 2026",              new Date(2026,10,20), "San Roque Golf & Resort (ES)",     "3R Strokeplay", new Date(2026,10,22)),
+  ev("dest_uskids", "Holiday Classic 2026",                   new Date(2026,11,21), "PGA National, Palm Beach Gardens (US)", "", new Date(2026,11,22)),
   // ev("dest_uskids", "Canadian Invitational 2026",     new Date(2026,6,6),  "Canadá",                           "", new Date(2026,6,7)),
 
   /* ══════════════════════════════════════
      DESTAQUE — BJGT (vermelho escuro)
      ══════════════════════════════════════ */
   ev("dest_bjgt", "Daily Mail World Junior Golf Championship 2026", new Date(2026,1,24), "Villa Padierna, Málaga (ES)", "", new Date(2026,1,27)),
+  ev("dest_bjgt", "British Junior Golf Tour — Villa Padierna 2027",  new Date(2027,1,24), "Villa Padierna, Málaga (ES)", "", new Date(2027,1,26)),
 
   /* ══════════════════════════════════════
      PJA Tour 2026 (excluindo Drive Tour já listados)
