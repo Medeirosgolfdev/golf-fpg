@@ -10,6 +10,7 @@
 node scripts/fetch-uskids-results.js
 ```
 Output: `public/data/uskids-results.json`
+`--only t1,t2` corre só esses tcodes (acrescentar edições sem gastar pedidos com o resto — a fonte tem rate limit). Edições anteriores de um torneio entram nos `HISTORICOS` com os `age_groups` do torneio de hoje; servem as abas «Edições anteriores»/«Quem repete» da /uskids (`TabResultados.tsx`; o «Quem repete» compara com o escalão do ano anterior — idade − anos de diferença).
 
 **fetch-uskids-member-history.js** — Histórico completo de carreira USKids de cada jogador nos flights configurados. Matching memberID→nome por strokes fingerprinting. Grava em adição: cada jogador guardado e cada "já visto" vai logo para `data-archive/uskids-member-diario.jsonl` (reposto no início da corrida seguinte, apagado no fim de uma corrida completa) — seguro interromper em qualquer ponto. Torneios vivos com a mesma assinatura (inscritos por escalão + acabou/aberto) usam o guardado: 1 GetMeta em vez de ~30-40 pedidos. Uma corrida sem novidades leva ~7 s.
 ```bash
