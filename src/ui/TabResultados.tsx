@@ -177,6 +177,30 @@ function matchEscalao(escaloes: EscalaoResult[], e: EscalaoResult): EscalaoResul
   return escaloes.find(x => { const kx = divKey(x.nome); return kx.sex === k.sex && kx.age === k.age; }) ?? null;
 }
 
+const temDados = (esc: EscalaoResult) => esc.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
+
+/** Uma coluna de edição (PastEdition) para um escalão de um torneio. */
+function uskidsEdition(esc: EscalaoResult, ed: TorneioResult, arMap?: Map<string, AutoRivalPlayer>, label?: string): { ed: PastEdition; stamp: string } | null {
+  const stamp = isoDate(ed.date_inicio);
+  const pe = buildPastEditionFromTournament(escalaoToTournament(esc, ed, arMap), {
+    id: label ? `${ed.t}:${esc.age_group}` : String(ed.t), year: parseInt(stamp.slice(0, 4), 10) || 0,
+    division: esc.nome, course: esc.campo || ed.campo || null, label: label ?? null,
+  });
+  if (!pe) return null;
+  // O adaptador deixa toPar a null e parTotal a 0 quando não há par (o Resumo
+  // calcula o ±Par à parte) → par 0 = desconhecido; ±Par pelas voltas jogadas.
+  const par = pe.parPerRound || null;
+  pe.parPerRound = par;
+  for (const p of pe.players) {
+    const n = p.rounds.filter(Boolean).length;
+    if (p.toPar == null && par && p.total && n) p.toPar = p.total - par * n;
+  }
+  return { ed: pe, stamp };
+}
+
+const porData = (rows: { ed: PastEdition; stamp: string }[]) =>
+  rows.sort((a, b) => b.stamp.localeCompare(a.stamp)).map(r => r.ed);
+
 /** «Edições anteriores» do USKids — a /uskids não usa o CircuitShell, por isso
  *  monta aqui as mesmas colunas (PastEditionsTable) a partir das edições do
  *  mesmo torneio (`tournamentFamilyKey`) já em memória (19/10/2026). */
@@ -184,24 +208,44 @@ function uskidsPastEditions(e: EscalaoResult, edicoes: TorneioResult[], arMap?: 
   const rows: { ed: PastEdition; stamp: string }[] = [];
   for (const ed of edicoes) {
     const esc = matchEscalao(ed.escaloes, e);
-    if (!esc || !esc.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).length > 0)) continue;
-    const stamp = isoDate(ed.date_inicio);
-    const pe = buildPastEditionFromTournament(escalaoToTournament(esc, ed, arMap), {
-      id: String(ed.t), year: parseInt(stamp.slice(0, 4), 10) || 0, division: esc.nome,
-      course: esc.campo || ed.campo || null,
-    });
-    if (!pe) continue;
-    // O adaptador deixa toPar a null e parTotal a 0 quando não há par (o Resumo
-    // calcula o ±Par à parte) → par 0 = desconhecido; ±Par pelas voltas jogadas.
-    const par = pe.parPerRound || null;
-    pe.parPerRound = par;
-    for (const p of pe.players) {
-      const n = p.rounds.filter(Boolean).length;
-      if (p.toPar == null && par && p.total && n) p.toPar = p.total - par * n;
-    }
-    rows.push({ ed: pe, stamp });
+    const r = esc && temDados(esc) ? uskidsEdition(esc, ed, arMap) : null;
+    if (r) rows.push(r);
   }
-  return rows.sort((a, b) => b.stamp.localeCompare(a.stamp)).map(r => r.ed);
+  return porData(rows);
+}
+
+/** Idades de um escalão USKids: «Boys 12» → [12,12], «Boys 13-14» → [13,14],
+ *  «Boys 7 & Under» → [0,7]. */
+function idadesEscalao(nome: string): [number, number] | null {
+  const n = (nome.match(/\d+/g) || []).map(Number);
+  if (!n.length) return null;
+  if (/under/i.test(nome)) return [0, n[0]];
+  return [n[0], n[1] ?? n[0]];
+}
+
+/** Edições para o «Quem repete» do USKids (pedido dela, 19/10/2026): os miúdos
+ *  sobem de escalão todos os anos, por isso cada edição anterior entra com o(s)
+ *  escalão(ões) onde estavam ENTÃO — idade de hoje menos os anos de diferença
+ *  (Boys 12 2026 ↔ Boys 11 2025; Boys 13-14 2026 ↔ Boys 12 e 13-14 2025). */
+function uskidsRepeaterEditions(e: EscalaoResult, t: TorneioResult, edicoes: TorneioResult[], arMap?: Map<string, AutoRivalPlayer>): PastEdition[] {
+  const faixa = idadesEscalao(e.nome);
+  if (!faixa) return [];
+  const sexo = divKey(e.nome).sex;
+  const anoHoje = parseInt(isoDate(t.date_inicio).slice(0, 4), 10);
+  const rows: { ed: PastEdition; stamp: string }[] = [];
+  for (const ed of edicoes) {
+    if (ed.t === t.t) continue;
+    const dif = anoHoje - (parseInt(isoDate(ed.date_inicio).slice(0, 4), 10) || anoHoje);
+    if (dif <= 0) continue;
+    const [lo, hi] = [faixa[0] - dif, faixa[1] - dif];
+    for (const esc of ed.escaloes) {
+      const f = idadesEscalao(esc.nome);
+      if (!f || divKey(esc.nome).sex !== sexo || f[1] < lo || f[0] > hi || !temDados(esc)) continue;
+      const r = uskidsEdition(esc, ed, arMap, esc.nome);
+      if (r) rows.push(r);
+    }
+  }
+  return porData(rows);
 }
 
 // ─────────────────────────────────────────────
@@ -240,14 +284,16 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData, edicoes }: {
   // «Edições anteriores» e «Quem repete», como nas outras secções.
   const extraTabs = useMemo(() => {
     if (!edicoes) return undefined;
+    const tabs: { key: string; label: string; content: React.ReactNode }[] = [];
     const rows = uskidsPastEditions(e, edicoes, arMap);
-    if (rows.length < 2) return undefined;
-    const field = tournament.players.filter(p => p.name).map(p => ({ name: p.name, club: p.club || null }));
-    return [
-      { key: "past-editions", label: "Edições anteriores", content: <PastEditionsTable editions={rows} title={e.nome} /> },
-      { key: "repeaters", label: "Quem repete", content: <PastEditionsRepeatersTable data={buildRepeaters(field, rows, String(t.t))} /> },
-    ];
-  }, [edicoes, e, arMap, tournament, t.t]);
+    if (rows.length >= 2) tabs.push({ key: "past-editions", label: "Edições anteriores", content: <PastEditionsTable editions={rows} title={e.nome} /> });
+    const rep = uskidsRepeaterEditions(e, t, edicoes, arMap);
+    if (rep.length) {
+      const field = tournament.players.filter(p => p.name).map(p => ({ name: p.name, club: p.club || null }));
+      tabs.push({ key: "repeaters", label: "Quem repete", content: <PastEditionsRepeatersTable data={buildRepeaters(field, rep, String(t.t))} /> });
+    }
+    return tabs.length ? tabs : undefined;
+  }, [edicoes, e, arMap, tournament, t]);
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {
