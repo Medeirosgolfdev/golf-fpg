@@ -4,8 +4,8 @@
   "country": "US",
   "place": "24141, VA",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-09-28T13:10:56.801Z",
-  "totalTorneios": 14,
+  "lastUpdated": "2026-10-19T12:18:27.542Z",
+  "totalTorneios": 15,
   "torneios": {
     "19750": {
       "tcode": "19750",
@@ -860,12 +860,12 @@
         }
       }
     },
-    "22986": {
-      "tcode": "22986",
-      "name": "PGA Golf Club Invitational 2026",
+    "23318": {
+      "tcode": "23318",
+      "name": "Colonial Williamsburg Classic 2026",
       "type": "Regional Championships",
-      "startDate": "10/10/2026",
-      "endDate": "10/11/2026",
+      "startDate": "11/7/2026",
+      "endDate": "11/8/2026",
       "totalRounds": 2,
       "holesPerRound": 9,
       "par": [
@@ -879,14 +879,14 @@
         0,
         0,
         4,
-        4,
         3,
+        4,
+        4,
+        4,
         5,
         4,
-        4,
         3,
-        5,
-        4
+        5
       ],
       "yards": [
         0,
@@ -898,15 +898,15 @@
         0,
         0,
         0,
-        192,
-        201,
-        98,
-        315,
-        190,
-        237,
-        103,
-        298,
-        194
+        186,
+        102,
+        220,
+        182,
+        230,
+        287,
+        205,
+        72,
+        306
       ],
       "flightCourses": {},
       "ageGroup": "Boys 8",
@@ -948,32 +948,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "PGA Golf Club - Ryder Course"
-        },
-        "2": {
-          "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
-          ],
-          "numStrokes": 0,
-          "numHoles": 0,
-          "course": "PGA Golf Club - Ryder Course"
+          "course": "Golden Horseshoe - Green Course "
         }
       }
     },
@@ -1158,6 +1133,98 @@
           "numStrokes": 42,
           "numHoles": 9,
           "course": "Longleaf Golf & Family Club"
+        }
+      }
+    },
+    "23495": {
+      "tcode": "23495",
+      "name": "Gates Four Golf & Country Club",
+      "type": " Sandhills, NC Local Tour",
+      "startDate": "10/18/2026",
+      "endDate": "10/18/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        228,
+        202,
+        81,
+        250,
+        182,
+        213,
+        78,
+        243,
+        305,
+        217,
+        79,
+        198,
+        269,
+        220,
+        99,
+        195,
+        271,
+        230
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Gates Four Golf & Country Club"
         }
       }
     },

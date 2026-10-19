@@ -4,7 +4,7 @@
   "country": "DE",
   "place": "Potsdam, BB",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-09-28T13:10:56.441Z",
+  "lastUpdated": "2026-10-19T12:18:27.247Z",
   "totalTorneios": 33,
   "torneios": {
     "16689": {
@@ -3426,8 +3426,8 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 6,
+      "totalStrokes": 165,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3438,7 +3438,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            4,
+            6,
+            3,
+            4,
+            7,
+            8,
+            5,
+            6,
+            6
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Golf Valley München"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            4,
+            2,
+            6,
+            6,
+            3,
+            4,
+            4,
+            4,
+            6,
+            3,
+            6,
+            5,
+            4,
+            3,
+            4,
+            6
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Golf Valley München"
+        }
+      }
     },
     "23511": {
       "tcode": "23511",

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Nolensville, TN",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:56.569Z",
-  "totalTorneios": 44,
+  "lastUpdated": "2026-10-19T12:18:27.354Z",
+  "totalTorneios": 45,
   "torneios": {
     "17148": {
       "tcode": "17148",
@@ -3897,9 +3897,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 35,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3912,15 +3912,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            2,
+            5,
+            4,
+            4,
+            4,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -3931,8 +3931,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "Towhee Golf Club"
         }
       }
@@ -4304,6 +4304,72 @@
           "course": "Henry Horton Golf Course"
         }
       }
+    },
+    "23817": {
+      "tcode": "23817",
+      "name": "Sandestin Championship 2027",
+      "type": "Regional Championships",
+      "startDate": "1/16/2027",
+      "endDate": "1/17/2027",
+      "totalRounds": 2,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5,
+        4,
+        3,
+        5
+      ],
+      "yards": [
+        235,
+        221,
+        96,
+        240,
+        368,
+        227,
+        105,
+        231,
+        375,
+        220,
+        90,
+        350,
+        230,
+        80,
+        335,
+        227,
+        85,
+        340
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

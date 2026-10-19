@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Ponte Vedra , FL",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-09-28T13:10:56.747Z",
-  "totalTorneios": 65,
+  "lastUpdated": "2026-10-19T12:18:27.502Z",
+  "totalTorneios": 66,
   "torneios": {
     "19567": {
       "tcode": "19567",
@@ -6196,8 +6196,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 71,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6211,15 +6211,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4,
+            3,
+            3,
+            5,
             0,
             0,
             0,
@@ -6230,8 +6230,33 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Tunxis Plantation GC (Red)"
+        },
+        "2": {
+          "strokes": [
+            3,
+            4,
+            3,
+            5,
+            5,
+            4,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "Tunxis Plantation GC (Red)"
         }
       }
@@ -6288,8 +6313,8 @@
       "ageGroup": "Boys 6 & Under",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 2,
+      "totalStrokes": 75,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -6303,15 +6328,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            3,
+            5,
+            5,
+            4,
+            4,
+            5,
+            3,
+            5,
             0,
             0,
             0,
@@ -6322,21 +6347,21 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 40,
+          "numHoles": 9,
           "course": "PGA Golf Club - Wanamaker Course"
         },
         "2": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            5,
+            3,
+            4,
+            5,
+            3,
+            3,
             0,
             0,
             0,
@@ -6347,8 +6372,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "PGA Golf Club - Wanamaker Course"
         }
       }
@@ -6509,7 +6534,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Reunion Resort - Watson"
+        }
+      }
     },
     "23670": {
       "tcode": "23670",
@@ -6575,7 +6626,125 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Fazio"
+        }
+      }
+    },
+    "23817": {
+      "tcode": "23817",
+      "name": "Sandestin Championship 2027",
+      "type": "Regional Championships",
+      "startDate": "1/16/2027",
+      "endDate": "1/17/2027",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 6 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Sandestin (Burnt Pine)"
+        }
+      }
     }
   }
 }

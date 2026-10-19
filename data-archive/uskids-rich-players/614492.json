@@ -4,7 +4,7 @@
   "country": "DE",
   "place": "Stuttgart, BW",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-09-28T13:10:56.463Z",
+  "lastUpdated": "2026-10-19T12:18:27.264Z",
   "totalTorneios": 13,
   "torneios": {
     "16594": {
@@ -1503,8 +1503,8 @@
       "ageGroup": "Boys 12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 11,
+      "totalStrokes": 182,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1515,7 +1515,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            6,
+            4,
+            4,
+            6,
+            4,
+            5,
+            4,
+            5,
+            6,
+            3,
+            4,
+            6,
+            5,
+            4,
+            5,
+            5
+          ],
+          "numStrokes": 86,
+          "numHoles": 18,
+          "course": "Golf Valley München"
+        },
+        "2": {
+          "strokes": [
+            6,
+            6,
+            6,
+            3,
+            4,
+            7,
+            4,
+            5,
+            6,
+            5,
+            6,
+            3,
+            5,
+            6,
+            5,
+            11,
+            4,
+            4
+          ],
+          "numStrokes": 96,
+          "numHoles": 18,
+          "course": "Golf Valley München"
+        }
+      }
     }
   }
 }

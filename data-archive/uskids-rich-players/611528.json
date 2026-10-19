@@ -4,8 +4,8 @@
   "country": "CA",
   "place": "Toronto, ON",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-09-28T13:10:56.406Z",
-  "totalTorneios": 41,
+  "lastUpdated": "2026-10-19T12:18:27.216Z",
+  "totalTorneios": 42,
   "torneios": {
     "16058": {
       "tcode": "16058",
@@ -4012,6 +4012,72 @@
         }
       }
     },
+    "23386": {
+      "tcode": "23386",
+      "name": "Holiday Classic Parent/Child 2026",
+      "type": "Parent Child",
+      "startDate": "12/19/2026",
+      "endDate": "12/19/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        241,
+        175,
+        181,
+        232,
+        65,
+        162,
+        76,
+        188,
+        199,
+        187,
+        182,
+        238,
+        65,
+        172,
+        189,
+        81,
+        242,
+        171
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 8 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
     "23670": {
       "tcode": "23670",
       "name": "Holiday Classic 2026",
@@ -4076,7 +4142,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Fazio"
+        }
+      }
     }
   }
 }

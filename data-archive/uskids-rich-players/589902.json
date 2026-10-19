@@ -4,8 +4,8 @@
   "country": "IE",
   "place": "Limerick, LM",
   "ageGroup": "Boys 11",
-  "lastUpdated": "2026-09-28T13:10:55.745Z",
-  "totalTorneios": 14,
+  "lastUpdated": "2026-10-19T12:18:26.691Z",
+  "totalTorneios": 15,
   "torneios": {
     "13470": {
       "tcode": "13470",
@@ -1527,7 +1527,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     },
     "23511": {
       "tcode": "23511",
@@ -1577,6 +1628,34 @@
         297,
         240
       ],
+      "flightCourses": {},
+      "ageGroup": "Boys 11",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
+    "23695": {
+      "tcode": "23695",
+      "name": "NCBA Kenya Invitational 2026",
+      "type": "International Championships",
+      "startDate": "12/20/2026",
+      "endDate": "12/22/2026",
+      "totalRounds": 3,
+      "holesPerRound": 18,
+      "par": [],
+      "yards": [],
       "flightCourses": {},
       "ageGroup": "Boys 11",
       "flightId": null,

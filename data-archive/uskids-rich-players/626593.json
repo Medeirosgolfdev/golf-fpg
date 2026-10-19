@@ -3,9 +3,9 @@
   "name": "Grady Hall",
   "country": "US",
   "place": "Cary, NC",
-  "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:56.669Z",
-  "totalTorneios": 39,
+  "ageGroup": "Boys 10",
+  "lastUpdated": "2026-10-19T12:18:27.440Z",
+  "totalTorneios": 40,
   "torneios": {
     "18229": {
       "tcode": "18229",
@@ -3329,9 +3329,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 42,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3344,15 +3344,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            4,
+            5,
+            7,
+            5,
+            5,
+            3,
+            4,
+            4,
             0,
             0,
             0,
@@ -3363,8 +3363,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 42,
+          "numHoles": 9,
           "course": "Scotch Meadows Country Club"
         }
       }
@@ -3421,9 +3421,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 39,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3436,15 +3436,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            6,
+            5,
+            3,
+            4,
+            4,
+            3,
+            4,
+            4,
             0,
             0,
             0,
@@ -3455,8 +3455,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 39,
+          "numHoles": 9,
           "course": "Gates Four Golf & Country Club"
         }
       }
@@ -3644,6 +3644,72 @@
           "course": "Longleaf Golf & Family Club"
         }
       }
+    },
+    "23797": {
+      "tcode": "23797",
+      "name": "Pinehurst No. 8 ",
+      "type": " Pinehurst Local Tour",
+      "startDate": "12/13/2026",
+      "endDate": "12/13/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        4,
+        5,
+        4,
+        4,
+        3,
+        5,
+        4,
+        3,
+        4,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        281,
+        401,
+        295,
+        310,
+        116,
+        390,
+        271,
+        81,
+        248,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "US",
   "place": "New Port Richey, FL",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-09-28T13:10:55.816Z",
+  "lastUpdated": "2026-10-19T12:18:26.746Z",
   "totalTorneios": 81,
   "torneios": {
     "13709": {
@@ -3410,22 +3410,65 @@
         220,
         300
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            5
+          ],
+          "lengths": [
+            216,
+            215,
+            100,
+            300,
+            87,
+            205,
+            217,
+            300,
+            220,
+            200,
+            228,
+            89,
+            200,
+            225,
+            110,
+            280,
+            220,
+            300
+          ]
+        }
+      },
       "ageGroup": "Boys 8",
-      "flightId": null,
-      "pid": null,
+      "flightId": "227408",
+      "pid": "1413360",
       "place": 3,
       "totalStrokes": 44,
       "points": 15,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 2",
+      "teeMarkerColor": "Yellow",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "*",
       "rounds": {
         "1": {
           "strokes": [
@@ -3450,7 +3493,53 @@
           ],
           "numStrokes": 44,
           "numHoles": 9,
-          "course": "Dubsdread Golf Course"
+          "course": "Dubsdread Golf Course",
+          "startHole": 1,
+          "startTime": "09:00",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "240816",
+          "pars": [
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            4,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            5
+          ],
+          "yards": [
+            216,
+            215,
+            100,
+            300,
+            87,
+            205,
+            217,
+            300,
+            220,
+            200,
+            228,
+            89,
+            200,
+            225,
+            110,
+            280,
+            220,
+            300
+          ]
         }
       }
     },
@@ -8019,7 +8108,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Reunion Resort - Watson"
+        }
+      }
     }
   }
 }

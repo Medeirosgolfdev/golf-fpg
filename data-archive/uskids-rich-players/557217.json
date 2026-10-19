@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Corona De Tucson, AZ",
   "ageGroup": "Girls 11-12",
-  "lastUpdated": "2026-09-28T13:10:57.495Z",
+  "lastUpdated": "2026-10-19T12:18:28.143Z",
   "totalTorneios": 46,
   "torneios": {
     "9187": {
@@ -147,22 +147,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            5,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            230,
+            70,
+            200,
+            65,
+            200,
+            160,
+            100,
+            140,
+            55,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 7 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "111535",
+      "pid": "704504",
       "place": 4,
       "totalStrokes": 67,
       "points": 12,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -187,7 +230,53 @@
           ],
           "numStrokes": 67,
           "numHoles": 9,
-          "course": "Wigwam Golf & Country Club"
+          "course": "Wigwam Golf & Country Club",
+          "startHole": 1,
+          "startTime": "14:13",
+          "groupNumber": 2,
+          "playerNumber": 2,
+          "liveScoringId": "",
+          "flightRound": "120271",
+          "pars": [
+            5,
+            3,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            230,
+            70,
+            200,
+            65,
+            200,
+            160,
+            100,
+            140,
+            55,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -4098,9 +4187,9 @@
       "ageGroup": "Girls 11-12",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 78,
+      "points": 15,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4113,27 +4202,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            3,
+            5,
+            5,
+            5,
+            3,
+            4,
+            4,
+            6,
+            4,
+            6,
+            4,
+            2,
+            4,
+            5,
+            4,
+            5,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 78,
+          "numHoles": 18,
           "course": "Scottsdale Silverado Golf Club"
         }
       }
@@ -4294,7 +4383,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Junior National Golf Club"
+        }
+      }
     },
     "22742": {
       "tcode": "22742",
@@ -4360,7 +4475,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Arizona Biltmore Golf & Country Club"
+        }
+      }
     }
   }
 }

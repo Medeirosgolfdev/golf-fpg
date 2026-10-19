@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Bologna , BO",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:56.029Z",
+  "lastUpdated": "2026-10-19T12:18:26.916Z",
   "totalTorneios": 39,
   "torneios": {
     "13682": {
@@ -5002,7 +5002,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 67,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -5013,7 +5013,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            4,
+            5,
+            3,
+            4,
+            5,
+            2,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 35,
+          "numHoles": 9,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            2,
+            4,
+            4,
+            3,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 32,
+          "numHoles": 9,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     },
     "22885": {
       "tcode": "22885",
@@ -5211,7 +5262,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Fazio"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Auburn, AL",
   "ageGroup": "Girls 13-14",
-  "lastUpdated": "2026-09-28T13:10:57.399Z",
-  "totalTorneios": 103,
+  "lastUpdated": "2026-10-19T12:18:28.054Z",
+  "totalTorneios": 104,
   "torneios": {
     "8300": {
       "tcode": "8300",
@@ -13785,6 +13785,72 @@
         }
       }
     },
+    "23386": {
+      "tcode": "23386",
+      "name": "Holiday Classic Parent/Child 2026",
+      "type": "Parent Child",
+      "startDate": "12/19/2026",
+      "endDate": "12/19/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        4,
+        5,
+        3,
+        4,
+        3,
+        4,
+        4,
+        4,
+        4,
+        5,
+        3,
+        4,
+        4,
+        3,
+        5,
+        4
+      ],
+      "yards": [
+        475,
+        302,
+        300,
+        430,
+        110,
+        285,
+        125,
+        275,
+        312,
+        280,
+        305,
+        452,
+        108,
+        305,
+        285,
+        135,
+        421,
+        310
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 13-14",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
+    },
     "23670": {
       "tcode": "23670",
       "name": "Holiday Classic 2026",
@@ -13849,7 +13915,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Palmer"
+        },
+        "2": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Palmer"
+        }
+      }
     }
   }
 }

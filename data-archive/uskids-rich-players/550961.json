@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Southern Pines, NC",
   "ageGroup": "Boys 13-14",
-  "lastUpdated": "2026-09-28T13:10:53.285Z",
-  "totalTorneios": 178,
+  "lastUpdated": "2026-10-19T12:18:24.567Z",
+  "totalTorneios": 179,
   "torneios": {
     "8559": {
       "tcode": "8559",
@@ -21482,6 +21482,98 @@
         }
       }
     },
+    "23495": {
+      "tcode": "23495",
+      "name": "Gates Four Golf & Country Club",
+      "type": " Sandhills, NC Local Tour",
+      "startDate": "10/18/2026",
+      "endDate": "10/18/2026",
+      "totalRounds": 1,
+      "holesPerRound": 18,
+      "par": [
+        4,
+        4,
+        3,
+        5,
+        4,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        5,
+        4
+      ],
+      "yards": [
+        380,
+        352,
+        140,
+        445,
+        328,
+        336,
+        151,
+        400,
+        475,
+        353,
+        146,
+        358,
+        491,
+        348,
+        165,
+        329,
+        462,
+        382
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 13-14",
+      "flightId": null,
+      "pid": null,
+      "place": 1,
+      "totalStrokes": 80,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            3,
+            6,
+            4,
+            5,
+            3,
+            6,
+            4,
+            5,
+            3,
+            4,
+            6,
+            4,
+            4,
+            4,
+            5,
+            5
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Gates Four Golf & Country Club"
+        }
+      }
+    },
     "23497": {
       "tcode": "23497",
       "name": "Longleaf Golf & Family Club (Tour Championship)",
@@ -21546,7 +21638,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Longleaf Golf & Family Club"
+        }
+      }
     }
   }
 }

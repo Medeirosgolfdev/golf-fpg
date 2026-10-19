@@ -4,7 +4,7 @@
   "country": "GB",
   "place": "Edinburgh",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-09-28T13:10:56.571Z",
+  "lastUpdated": "2026-10-19T12:18:27.358Z",
   "totalTorneios": 6,
   "torneios": {
     "16795": {
@@ -960,7 +960,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 148,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -971,7 +971,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            3,
+            6,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            3,
+            5,
+            3,
+            4,
+            4,
+            4,
+            5,
+            5,
+            4,
+            3,
+            5,
+            4,
+            5,
+            5,
+            3,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     }
   }
 }

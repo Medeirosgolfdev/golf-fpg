@@ -4,8 +4,8 @@
   "country": "US",
   "place": "PHOENIX, AZ",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-09-28T13:10:56.558Z",
-  "totalTorneios": 56,
+  "lastUpdated": "2026-10-19T12:18:27.343Z",
+  "totalTorneios": 55,
   "torneios": {
     "16807": {
       "tcode": "16807",
@@ -5043,9 +5043,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 35,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5058,15 +5058,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            3,
+            4,
             0,
             0,
             0,
@@ -5077,8 +5077,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 35,
+          "numHoles": 9,
           "course": "Scottsdale Silverado Golf Club"
         }
       }
@@ -5239,72 +5239,6 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
-    },
-    "23420": {
-      "tcode": "23420",
-      "name": "Monterey Challenge 2026",
-      "type": "Regional Championships",
-      "startDate": "11/7/2026",
-      "endDate": "11/8/2026",
-      "totalRounds": 2,
-      "holesPerRound": 18,
-      "par": [
-        5,
-        4,
-        3,
-        4,
-        5,
-        5,
-        3,
-        3,
-        4,
-        4,
-        3,
-        4,
-        3,
-        4,
-        4,
-        5,
-        4,
-        5
-      ],
-      "yards": [
-        425,
-        238,
-        111,
-        243,
-        355,
-        349,
-        119,
-        99,
-        286,
-        314,
-        110,
-        304,
-        120,
-        315,
-        280,
-        426,
-        294,
-        398
-      ],
-      "flightCourses": {},
-      "ageGroup": "Boys 10",
-      "flightId": null,
-      "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
-      "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
       "rounds": {
         "1": {
           "strokes": [
@@ -5329,7 +5263,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Monterey Pines Golf Course"
+          "course": "Arizona Biltmore Golf & Country Club"
         }
       }
     }

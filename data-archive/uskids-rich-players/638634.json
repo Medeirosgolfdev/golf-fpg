@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Scottsdale, AZ",
   "ageGroup": "Boys 6 & Under",
-  "lastUpdated": "2026-09-28T13:10:56.796Z",
-  "totalTorneios": 22,
+  "lastUpdated": "2026-10-19T12:18:27.539Z",
+  "totalTorneios": 23,
   "torneios": {
     "19925": {
       "tcode": "19925",
@@ -1855,6 +1855,98 @@
         }
       }
     },
+    "22739": {
+      "tcode": "22739",
+      "name": "Silverado Golf Club",
+      "type": " Phoenix Local Tour",
+      "startDate": "10/4/2026",
+      "endDate": "10/4/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        3,
+        4,
+        5,
+        4,
+        3,
+        4,
+        3,
+        5,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        212,
+        74,
+        159,
+        224,
+        149,
+        85,
+        151,
+        54,
+        223,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 6 & Under",
+      "flightId": null,
+      "pid": null,
+      "place": 1,
+      "totalStrokes": 38,
+      "points": 30,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            3,
+            5,
+            4,
+            6,
+            4,
+            4,
+            3,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 38,
+          "numHoles": 9,
+          "course": "Scottsdale Silverado Golf Club"
+        }
+      }
+    },
     "22740": {
       "tcode": "22740",
       "name": "Sun City Country Club",
@@ -2011,7 +2103,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Junior National Golf Club"
+        }
+      }
     },
     "22742": {
       "tcode": "22742",
@@ -2077,7 +2195,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Arizona Biltmore Golf & Country Club"
+        }
+      }
     }
   }
 }

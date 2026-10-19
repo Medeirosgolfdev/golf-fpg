@@ -4,8 +4,8 @@
   "country": "IT",
   "place": "Rome, RM",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-09-28T13:10:56.867Z",
-  "totalTorneios": 32,
+  "lastUpdated": "2026-10-19T12:18:27.597Z",
+  "totalTorneios": 33,
   "torneios": {
     "13994": {
       "tcode": "13994",
@@ -3420,7 +3420,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 88,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -3434,15 +3434,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            6,
+            3,
+            5,
+            4,
+            3,
+            7,
+            5,
             0,
             0,
             0,
@@ -3453,8 +3453,33 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 43,
+          "numHoles": 9,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            5,
+            5,
+            5,
+            3,
+            6,
+            5,
+            5,
+            4,
+            7,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 45,
+          "numHoles": 9,
           "course": "Terre Dei Consoli Golf Club"
         }
       }
@@ -3523,7 +3548,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Marco Simone Golf & Country Club"
+        }
+      }
     },
     "23646": {
       "tcode": "23646",
@@ -3614,6 +3665,98 @@
           "numStrokes": 0,
           "numHoles": 0,
           "course": "Terre Dei Consoli Golf Club"
+        }
+      }
+    },
+    "23648": {
+      "tcode": "23648",
+      "name": "Golf Nazionale",
+      "type": " Rome (IT) Local Tour",
+      "startDate": "10/10/2026",
+      "endDate": "10/10/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        5,
+        4,
+        3,
+        4,
+        4,
+        4,
+        5,
+        4,
+        3,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        285,
+        147,
+        105,
+        189,
+        196,
+        215,
+        275,
+        145,
+        92,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 2,
+      "totalStrokes": 45,
+      "points": 20,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            5,
+            6,
+            4,
+            6,
+            6,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 45,
+          "numHoles": 9,
+          "course": "Golf Nazionale"
         }
       }
     }

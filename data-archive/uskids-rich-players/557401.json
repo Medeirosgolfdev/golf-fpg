@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Desenzano Del Garda, BS",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-09-28T13:10:53.908Z",
+  "lastUpdated": "2026-10-19T12:18:25.187Z",
   "totalTorneios": 70,
   "torneios": {
     "9958": {
@@ -8020,7 +8020,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 170,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -8031,7 +8031,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            6,
+            5,
+            3,
+            5,
+            6,
+            5,
+            4,
+            6,
+            5,
+            5,
+            5,
+            4,
+            4,
+            4,
+            5,
+            3,
+            6,
+            4
+          ],
+          "numStrokes": 85,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            4,
+            6,
+            7,
+            4,
+            6,
+            3,
+            4,
+            6,
+            5,
+            3,
+            4,
+            5,
+            5,
+            5,
+            5
+          ],
+          "numStrokes": 85,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     }
   }
 }

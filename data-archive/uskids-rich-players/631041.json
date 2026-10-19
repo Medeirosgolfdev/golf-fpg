@@ -4,7 +4,7 @@
   "country": "HK",
   "place": "Hong Kong, HCW",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:56.725Z",
+  "lastUpdated": "2026-10-19T12:18:27.483Z",
   "totalTorneios": 20,
   "torneios": {
     "19224": {
@@ -2173,7 +2173,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 146,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2184,7 +2184,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            3,
+            5,
+            5,
+            2,
+            6,
+            5,
+            3,
+            6,
+            3,
+            4,
+            5,
+            4,
+            4,
+            4,
+            3,
+            2,
+            5,
+            3
+          ],
+          "numStrokes": 72,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            3,
+            6,
+            3,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
+            6,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5,
+            4
+          ],
+          "numStrokes": 74,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     }
   }
 }

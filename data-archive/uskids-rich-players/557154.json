@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Casalecchio Di Reno, BO",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-09-28T13:10:53.890Z",
+  "lastUpdated": "2026-10-19T12:18:25.169Z",
   "totalTorneios": 29,
   "torneios": {
     "9386": {
@@ -2938,7 +2938,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 153,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2949,7 +2949,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            7,
+            4,
+            5,
+            5,
+            4,
+            4,
+            4,
+            3,
+            4,
+            3,
+            4,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5
+          ],
+          "numStrokes": 77,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            3,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            5,
+            8,
+            4,
+            4,
+            4
+          ],
+          "numStrokes": 76,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
   "country": "IT",
   "place": "Brienno",
   "ageGroup": "Boys 12",
-  "lastUpdated": "2026-09-28T13:10:56.620Z",
+  "lastUpdated": "2026-10-19T12:18:27.398Z",
   "totalTorneios": 37,
   "torneios": {
     "17865": {
@@ -2803,7 +2803,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 161,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2814,7 +2814,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            5,
+            4,
+            6,
+            5,
+            6,
+            5,
+            5,
+            3,
+            4,
+            5,
+            4,
+            3,
+            4,
+            5,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            5,
+            5,
+            3,
+            4,
+            6,
+            3,
+            5,
+            5,
+            4,
+            3,
+            4,
+            5,
+            4,
+            5,
+            6
+          ],
+          "numStrokes": 80,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     },
     "23550": {
       "tcode": "23550",
@@ -3144,9 +3195,9 @@
       "ageGroup": "Boys 11",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 3,
+      "totalStrokes": 83,
+      "points": 13.5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -3159,27 +3210,27 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0
+            5,
+            5,
+            5,
+            4,
+            4,
+            4,
+            4,
+            6,
+            3,
+            6,
+            3,
+            5,
+            9,
+            4,
+            3,
+            3,
+            6,
+            4
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 83,
+          "numHoles": 18,
           "course": "Ambrosiano Golf Club"
         }
       }
@@ -3248,7 +3299,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Green Club Golf Lainate"
+        }
+      }
     },
     "23556": {
       "tcode": "23556",

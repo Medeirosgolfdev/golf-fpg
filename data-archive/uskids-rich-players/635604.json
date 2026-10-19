@@ -4,7 +4,7 @@
   "country": "DE",
   "place": "Bad Homburg, HE",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-09-28T13:10:56.774Z",
+  "lastUpdated": "2026-10-19T12:18:27.521Z",
   "totalTorneios": 6,
   "torneios": {
     "19418": {
@@ -644,8 +644,8 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 94,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -656,7 +656,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            6,
+            5,
+            3,
+            2,
+            6,
+            4,
+            4,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 41,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        },
+        "2": {
+          "strokes": [
+            8,
+            5,
+            5,
+            2,
+            6,
+            7,
+            7,
+            7,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 53,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        }
+      }
     }
   }
 }

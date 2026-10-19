@@ -1,10 +1,10 @@
 {
   "memberID": "619902",
-  "name": null,
-  "country": null,
-  "place": null,
+  "name": "Alessandro  Di Ciacca",
+  "country": "GB",
+  "place": "Edinburgh , EDH",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-09-28T13:10:56.573Z",
+  "lastUpdated": "2026-10-19T12:18:27.359Z",
   "totalTorneios": 3,
   "torneios": {
     "16795": {
@@ -294,7 +294,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 160,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -305,7 +305,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            6,
+            4,
+            5,
+            5,
+            4,
+            4,
+            5,
+            3,
+            4,
+            7,
+            4,
+            2,
+            4,
+            5,
+            4,
+            5,
+            6
+          ],
+          "numStrokes": 81,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            4,
+            6,
+            5,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            5,
+            5,
+            3,
+            5,
+            4,
+            5,
+            3,
+            5,
+            4
+          ],
+          "numStrokes": 79,
+          "numHoles": 18,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     }
   }
 }

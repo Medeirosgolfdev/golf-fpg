@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Ocala, FL",
   "ageGroup": "Girls 13-14",
-  "lastUpdated": "2026-09-28T13:10:57.703Z",
+  "lastUpdated": "2026-10-19T12:18:28.315Z",
   "totalTorneios": 112,
   "torneios": {
     "8363": {
@@ -533,22 +533,65 @@
         0,
         0
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "lengths": [
+            140,
+            130,
+            95,
+            120,
+            105,
+            70,
+            125,
+            220,
+            95,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      },
       "ageGroup": "Girls 7 & Under",
-      "flightId": null,
-      "pid": null,
+      "flightId": "110196",
+      "pid": "691656",
       "place": 2,
       "totalStrokes": 51,
       "points": 20,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee RS",
+      "teeMarkerColor": "Green",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -573,7 +616,53 @@
           ],
           "numStrokes": 51,
           "numHoles": 9,
-          "course": "Clearwater Golf Club"
+          "course": "Clearwater Golf Club",
+          "startHole": 1,
+          "startTime": "13:26",
+          "groupNumber": 1,
+          "playerNumber": 3,
+          "liveScoringId": "",
+          "flightRound": "118851",
+          "pars": [
+            4,
+            4,
+            4,
+            4,
+            4,
+            3,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "yards": [
+            140,
+            130,
+            95,
+            120,
+            105,
+            70,
+            125,
+            220,
+            95,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
         }
       }
     },
@@ -14670,7 +14759,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Reunion Resort - Watson"
+        }
+      }
     },
     "23462": {
       "tcode": "23462",

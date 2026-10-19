@@ -4,7 +4,7 @@
   "country": "US",
   "place": "Greenville, SC",
   "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:55.271Z",
+  "lastUpdated": "2026-10-19T12:18:26.302Z",
   "totalTorneios": 69,
   "torneios": {
     "12743": {
@@ -2744,22 +2744,107 @@
         85,
         177
       ],
-      "flightCourses": {},
+      "flightCourses": {
+        "1": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            155,
+            81,
+            168,
+            177,
+            222,
+            188,
+            264,
+            85,
+            177
+          ]
+        },
+        "2": {
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4
+          ],
+          "lengths": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            155,
+            81,
+            168,
+            177,
+            222,
+            188,
+            264,
+            85,
+            177
+          ]
+        }
+      },
       "ageGroup": "Boys 7",
-      "flightId": null,
-      "pid": null,
+      "flightId": "214057",
+      "pid": "1318383",
       "place": 4,
       "totalStrokes": 73,
       "points": 0,
-      "status": null,
-      "teeMarkerName": null,
-      "teeMarkerColor": null,
-      "handicap": null,
+      "status": 1,
+      "teeMarkerName": "Tee 1",
+      "teeMarkerColor": "Blue",
+      "handicap": "",
       "driverLength": null,
-      "pointsAll": null,
-      "tiebreaker": null,
-      "isCaptain": null,
-      "isNewPlayer": null,
+      "pointsAll": "0",
+      "tiebreaker": 0,
+      "isCaptain": 0,
+      "isNewPlayer": "",
       "rounds": {
         "1": {
           "strokes": [
@@ -2784,7 +2869,53 @@
           ],
           "numStrokes": 37,
           "numHoles": 9,
-          "course": "Longleaf (Front)"
+          "course": "Longleaf (Front)",
+          "startHole": 10,
+          "startTime": "09:36",
+          "groupNumber": 4,
+          "playerNumber": 3,
+          "liveScoringId": " (fcgfbdk)",
+          "flightRound": "226873",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            155,
+            81,
+            168,
+            177,
+            222,
+            188,
+            264,
+            85,
+            177
+          ]
         },
         "2": {
           "strokes": [
@@ -2809,7 +2940,53 @@
           ],
           "numStrokes": 36,
           "numHoles": 9,
-          "course": "Longleaf (Front)"
+          "course": "Longleaf (Front)",
+          "startHole": 10,
+          "startTime": "10:21",
+          "groupNumber": 4,
+          "playerNumber": 1,
+          "liveScoringId": " (yeu294f)",
+          "flightRound": "226874",
+          "pars": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            4,
+            3,
+            4,
+            4,
+            5,
+            4,
+            5,
+            3,
+            4
+          ],
+          "yards": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            155,
+            81,
+            168,
+            177,
+            222,
+            188,
+            264,
+            85,
+            177
+          ]
         }
       }
     },
@@ -6932,7 +7109,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Junior National Golf Club"
+        }
+      }
     },
     "22742": {
       "tcode": "22742",
@@ -6998,7 +7201,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Arizona Biltmore Golf & Country Club"
+        }
+      }
     }
   }
 }

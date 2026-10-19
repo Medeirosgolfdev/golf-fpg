@@ -3,9 +3,9 @@
   "name": "Ryan Hicham",
   "country": "MA",
   "place": "Marrakech, MRK",
-  "ageGroup": "Boys 9",
-  "lastUpdated": "2026-09-28T13:10:55.825Z",
-  "totalTorneios": 52,
+  "ageGroup": "Boys 8",
+  "lastUpdated": "2026-10-19T12:18:26.754Z",
+  "totalTorneios": 53,
   "torneios": {
     "13943": {
       "tcode": "13943",
@@ -5124,9 +5124,9 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 43,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5139,15 +5139,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            5,
+            5,
+            5,
+            4,
+            4,
+            7,
+            3,
             0,
             0,
             0,
@@ -5158,8 +5158,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 43,
+          "numHoles": 9,
           "course": "Azata Golf"
         }
       }
@@ -5216,6 +5216,60 @@
       "ageGroup": "Boys 9",
       "flightId": null,
       "pid": null,
+      "place": 1,
+      "totalStrokes": 36,
+      "points": 60,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            4,
+            5,
+            3,
+            4,
+            3,
+            4,
+            5,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Azata Golf"
+        }
+      }
+    },
+    "23132": {
+      "tcode": "23132",
+      "name": "Spanish Open 2026",
+      "type": "International Championships",
+      "startDate": "11/20/2026",
+      "endDate": "11/22/2026",
+      "totalRounds": 3,
+      "holesPerRound": 9,
+      "par": [],
+      "yards": [],
+      "flightCourses": {},
+      "ageGroup": "Boys 8",
+      "flightId": null,
+      "pid": null,
       "place": 0,
       "totalStrokes": 0,
       "points": 0,
@@ -5252,7 +5306,7 @@
           ],
           "numStrokes": 0,
           "numHoles": 0,
-          "course": "Azata Golf"
+          "course": "San Roque Golf & Resort"
         }
       }
     }

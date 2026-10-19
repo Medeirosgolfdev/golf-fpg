@@ -4,8 +4,8 @@
   "country": "US",
   "place": "Newport, CA",
   "ageGroup": "Boys 7",
-  "lastUpdated": "2026-09-28T13:10:56.732Z",
-  "totalTorneios": 21,
+  "lastUpdated": "2026-10-19T12:18:27.488Z",
+  "totalTorneios": 22,
   "torneios": {
     "19224": {
       "tcode": "19224",
@@ -1562,6 +1562,98 @@
         }
       }
     },
+    "23420": {
+      "tcode": "23420",
+      "name": "Monterey Challenge 2026",
+      "type": "Regional Championships",
+      "startDate": "11/7/2026",
+      "endDate": "11/8/2026",
+      "totalRounds": 2,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        3,
+        4,
+        3,
+        4,
+        4,
+        5,
+        4,
+        5
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        165,
+        78,
+        159,
+        71,
+        195,
+        178,
+        266,
+        170,
+        258
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 7",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "Monterey Pines Golf Course"
+        }
+      }
+    },
     "23596": {
       "tcode": "23596",
       "name": "Rio Hondo Golf Club ",
@@ -1890,9 +1982,9 @@
       "ageGroup": "Boys 7",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 7,
+      "totalStrokes": 44,
+      "points": 5,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -1902,7 +1994,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            5,
+            7,
+            5,
+            6,
+            3,
+            5,
+            5,
+            3,
+            5,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Olivas Links Golf Course"
+        }
+      }
     },
     "23600": {
       "tcode": "23600",
@@ -1957,7 +2075,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 38,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -1971,15 +2089,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            6,
+            5,
+            3,
+            5,
+            3,
+            5,
+            4,
+            3,
+            4,
             0,
             0,
             0,
@@ -1990,8 +2108,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "DeBell Golf Course"
         }
       }

@@ -4,8 +4,8 @@
   "country": "ES",
   "place": "SAN MIGUEL DE ABONA, SC",
   "ageGroup": "Boys 10",
-  "lastUpdated": "2026-09-28T13:10:56.865Z",
-  "totalTorneios": 5,
+  "lastUpdated": "2026-10-19T12:18:27.596Z",
+  "totalTorneios": 6,
   "torneios": {
     "22767": {
       "tcode": "22767",
@@ -243,9 +243,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 43,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -258,15 +258,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            4,
+            4,
+            4,
+            5,
+            5,
+            5,
+            7,
+            4,
             0,
             0,
             0,
@@ -277,8 +277,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 43,
+          "numHoles": 9,
           "course": "Azata Golf"
         }
       }
@@ -335,9 +335,9 @@
       "ageGroup": "Boys 10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 41,
+      "points": 60,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -350,15 +350,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            3,
+            3,
+            5,
+            4,
+            4,
+            8,
+            4,
             0,
             0,
             0,
@@ -369,8 +369,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 41,
+          "numHoles": 9,
           "course": "Azata Golf"
         }
       }
@@ -428,6 +428,72 @@
           "course": "San Roque Golf & Resort"
         }
       }
+    },
+    "23589": {
+      "tcode": "23589",
+      "name": "Spanish Open Parent/Child 2026",
+      "type": "Parent Child",
+      "startDate": "11/18/2026",
+      "endDate": "11/18/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "flightCourses": {},
+      "ageGroup": "Boys 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {}
     }
   }
 }

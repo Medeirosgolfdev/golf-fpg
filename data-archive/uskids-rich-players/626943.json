@@ -4,7 +4,7 @@
   "country": "GB",
   "place": "London, LND",
   "ageGroup": "Boys 8",
-  "lastUpdated": "2026-09-28T13:10:56.674Z",
+  "lastUpdated": "2026-10-19T12:18:27.445Z",
   "totalTorneios": 53,
   "torneios": {
     "18242": {
@@ -4959,7 +4959,7 @@
       "flightId": null,
       "pid": null,
       "place": 0,
-      "totalStrokes": 0,
+      "totalStrokes": 73,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -4970,7 +4970,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            4,
+            5,
+            3,
+            4,
+            4,
+            3,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 36,
+          "numHoles": 9,
+          "course": "Terre Dei Consoli Golf Club"
+        },
+        "2": {
+          "strokes": [
+            4,
+            5,
+            4,
+            3,
+            4,
+            4,
+            4,
+            5,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Terre Dei Consoli Golf Club"
+        }
+      }
     },
     "23563": {
       "tcode": "23563",
@@ -5208,9 +5259,9 @@
       "ageGroup": "Boys 8",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 38,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -5223,15 +5274,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            4,
+            4,
+            6,
+            4,
+            4,
+            4,
             0,
             0,
             0,
@@ -5242,8 +5293,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "North Downs Golf Club"
         }
       }
@@ -5496,7 +5547,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "West Essex Golf Club"
+        }
+      }
     }
   }
 }

@@ -4,8 +4,8 @@
   "country": "US",
   "place": "VAN BUREN, AR",
   "ageGroup": "Girls 10",
-  "lastUpdated": "2026-09-28T13:10:57.186Z",
-  "totalTorneios": 54,
+  "lastUpdated": "2026-10-19T12:18:27.867Z",
+  "totalTorneios": 55,
   "torneios": {
     "18663": {
       "tcode": "18663",
@@ -4742,9 +4742,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 2,
+      "totalStrokes": 38,
+      "points": 20,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4757,15 +4757,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            4,
+            4,
+            4,
+            4,
+            6,
+            5,
+            3,
+            4,
+            4,
             0,
             0,
             0,
@@ -4776,8 +4776,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 38,
+          "numHoles": 9,
           "course": "Scotsdale Golf Course"
         }
       }
@@ -4834,9 +4834,9 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
-      "points": 0,
+      "place": 1,
+      "totalStrokes": 36,
+      "points": 30,
       "status": null,
       "teeMarkerName": null,
       "teeMarkerColor": null,
@@ -4849,15 +4849,15 @@
       "rounds": {
         "1": {
           "strokes": [
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
+            5,
+            5,
+            4,
+            3,
+            4,
+            3,
+            5,
+            3,
+            4,
             0,
             0,
             0,
@@ -4868,8 +4868,8 @@
             0,
             0
           ],
-          "numStrokes": 0,
-          "numHoles": 0,
+          "numStrokes": 36,
+          "numHoles": 9,
           "course": "Eagle Crest Golf Course"
         }
       }
@@ -5058,6 +5058,98 @@
         }
       }
     },
+    "23355": {
+      "tcode": "23355",
+      "name": "The Greens at Nutters Chapel ",
+      "type": " Little Rock Local Tour",
+      "startDate": "10/17/2026",
+      "endDate": "10/17/2026",
+      "totalRounds": 1,
+      "holesPerRound": 9,
+      "par": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        4,
+        4,
+        3,
+        4,
+        5,
+        3,
+        4,
+        5
+      ],
+      "yards": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        220,
+        180,
+        260,
+        85,
+        225,
+        285,
+        85,
+        215,
+        250
+      ],
+      "flightCourses": {},
+      "ageGroup": "Girls 9-10",
+      "flightId": null,
+      "pid": null,
+      "place": 0,
+      "totalStrokes": 0,
+      "points": 0,
+      "status": null,
+      "teeMarkerName": null,
+      "teeMarkerColor": null,
+      "handicap": null,
+      "driverLength": null,
+      "pointsAll": null,
+      "tiebreaker": null,
+      "isCaptain": null,
+      "isNewPlayer": null,
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "The Greens At Nutters Chapel"
+        }
+      }
+    },
     "23670": {
       "tcode": "23670",
       "name": "Holiday Classic 2026",
@@ -5122,7 +5214,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "PGA National Golf Club - Match"
+        }
+      }
     }
   }
 }

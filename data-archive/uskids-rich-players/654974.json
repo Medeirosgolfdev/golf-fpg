@@ -4,7 +4,7 @@
   "country": "NL",
   "place": "The Hague, ZH",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-09-28T13:10:57.637Z",
+  "lastUpdated": "2026-10-19T12:18:28.259Z",
   "totalTorneios": 5,
   "torneios": {
     "21795": {
@@ -552,8 +552,8 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 5,
+      "totalStrokes": 84,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -564,7 +564,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            7,
+            4,
+            4,
+            3,
+            5,
+            5,
+            3,
+            7,
+            6,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 44,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        },
+        "2": {
+          "strokes": [
+            5,
+            5,
+            4,
+            3,
+            5,
+            7,
+            3,
+            4,
+            4,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 40,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        }
+      }
     }
   }
 }

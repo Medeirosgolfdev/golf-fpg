@@ -4,7 +4,7 @@
   "country": "PL",
   "place": "Skórzewo, WP",
   "ageGroup": "Girls 9-10",
-  "lastUpdated": "2026-09-28T13:10:56.912Z",
+  "lastUpdated": "2026-10-19T12:18:27.633Z",
   "totalTorneios": 30,
   "torneios": {
     "17800": {
@@ -2983,8 +2983,8 @@
       "ageGroup": "Girls 9-10",
       "flightId": null,
       "pid": null,
-      "place": 0,
-      "totalStrokes": 0,
+      "place": 1,
+      "totalStrokes": 70,
       "points": 0,
       "status": null,
       "teeMarkerName": null,
@@ -2995,7 +2995,58 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            4,
+            3,
+            4,
+            3,
+            4,
+            5,
+            3,
+            4,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 33,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        },
+        "2": {
+          "strokes": [
+            8,
+            5,
+            4,
+            3,
+            3,
+            5,
+            3,
+            3,
+            3,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 37,
+          "numHoles": 9,
+          "course": "Golf Valley München"
+        }
+      }
     },
     "23132": {
       "tcode": "23132",
@@ -3089,7 +3140,33 @@
       "tiebreaker": null,
       "isCaptain": null,
       "isNewPlayer": null,
-      "rounds": {}
+      "rounds": {
+        "1": {
+          "strokes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "numStrokes": 0,
+          "numHoles": 0,
+          "course": "San Roque Golf & Resort"
+        }
+      }
     }
   }
 }
