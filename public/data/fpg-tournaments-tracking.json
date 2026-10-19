@@ -1,11 +1,11 @@
 {
-  "lastUpdated": "2026-10-18T22:03:34.365Z",
+  "lastUpdated": "2026-10-19T05:59:31.384Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
-  "today": "2026-10-18",
+  "today": "2026-10-19",
   "summary": {
     "total": 1794,
-    "complete": 825,
-    "in_progress": 1,
+    "complete": 826,
+    "in_progress": 0,
     "future": 2,
     "stale": 10,
     "excluded": 955,
@@ -380,12 +380,12 @@
       "has_classif": true,
       "player_count": 55,
       "players_with_scorecards": 55,
-      "players_with_full_scorecards": 0,
+      "players_with_full_scorecards": 55,
       "scorecards_source": "aquapor-data-2026-10.json",
       "scorecards_ratio": 1,
-      "full_scorecards_ratio": 0,
+      "full_scorecards_ratio": 1,
       "has_manuel": false,
-      "status": "in_progress"
+      "status": "complete"
     },
     {
       "ccode": "000",
