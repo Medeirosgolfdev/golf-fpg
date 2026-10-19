@@ -730,6 +730,14 @@ function mergeWithDisk(file, out) {
     for (const k of ['meters', 'si', 'teeName', 'courseRating', 'slope']) {
       if (dv[k] == null && prevEntry.div[k] != null) dv[k] = prevEntry.div[k];
     }
+    // Draws: o GG tira o tee sheet de uma volta quando sai o da seguinte (o
+    // Faldo Madeira perdeu o draw da R3 no scrape final de 18/10/2026). As
+    // voltas que só existem em disco ficam; as que vêm no scrape ganham.
+    if (prevEntry.div.draws && typeof prevEntry.div.draws === 'object') {
+      for (const [rn, rd] of Object.entries(prevEntry.div.draws)) {
+        if (!dv.draws || !dv.draws[rn]) { dv.draws = { ...(dv.draws || {}), [rn]: rd }; restored++; }
+      }
+    }
     const old = prevEntry.players;
     for (const p of dv.players) {
       const o = old.get(pKey(p));

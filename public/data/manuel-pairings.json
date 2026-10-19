@@ -1,12 +1,12 @@
 {
-  "geradoEm": "2026-10-18T22:03:32.859Z",
+  "geradoEm": "2026-10-19T13:57:49.478Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 157,
-  "totalCompanheirosUnicos": 188,
+  "totalRondas": 160,
+  "totalCompanheirosUnicos": 191,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 139,
@@ -662,13 +662,111 @@
       "torneiosSemDrawDetalhe": []
     },
     "intl": {
-      "rondasJogadas": 14,
-      "rondasComDraw": 14,
-      "torneiosJogados": 7,
-      "torneiosComDraw": 7
+      "rondasJogadas": 17,
+      "rondasComDraw": 17,
+      "torneiosJogados": 8,
+      "torneiosComDraw": 8
     }
   },
   "rondas": [
+    {
+      "circuito": "Intl",
+      "torneioId": "gg-faldomadeira_2026",
+      "torneioNome": "Faldo Junior Tour Madeira 2026",
+      "data": "2026-10-18",
+      "ronda": 3,
+      "teeTime": "8:25 AM",
+      "startHole": 10,
+      "campo": "Clube de Golf Santo da Serra | Machico Serras",
+      "fonte": "GolfGenius tee sheet (faldomadeira_2026.json)",
+      "manuelScore": {
+        "gross": 82,
+        "toPar": 10
+      },
+      "companheiros": [
+        {
+          "nome": "Tommy Gorman",
+          "fed": null,
+          "clube": null,
+          "pais": "GB",
+          "score": null
+        },
+        {
+          "nome": "Richard Groß",
+          "fed": null,
+          "clube": "GC Chemnitz",
+          "pais": "DE",
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "gg-faldomadeira_2026",
+      "torneioNome": "Faldo Junior Tour Madeira 2026",
+      "data": "2026-10-17",
+      "ronda": 2,
+      "teeTime": "8:50 AM",
+      "startHole": null,
+      "campo": "Clube de Golf Santo da Serra | Machico Serras",
+      "fonte": "GolfGenius tee sheet (faldomadeira_2026.json)",
+      "manuelScore": {
+        "gross": 85,
+        "toPar": 13
+      },
+      "companheiros": [
+        {
+          "nome": "Richard Groß",
+          "fed": null,
+          "clube": "GC Chemnitz",
+          "pais": "DE",
+          "score": {
+            "gross": 86,
+            "toPar": 14
+          }
+        }
+      ]
+    },
+    {
+      "circuito": "Intl",
+      "torneioId": "gg-faldomadeira_2026",
+      "torneioNome": "Faldo Junior Tour Madeira 2026",
+      "data": "2026-10-16",
+      "ronda": 1,
+      "teeTime": "10:20 AM",
+      "startHole": null,
+      "campo": "Clube de Golf Santo da Serra | Machico Serras",
+      "fonte": "GolfGenius tee sheet (faldomadeira_2026.json)",
+      "manuelScore": {
+        "gross": 85,
+        "toPar": 13
+      },
+      "companheiros": [
+        {
+          "nome": "Alfie Kitteridge",
+          "fed": null,
+          "clube": "Bishop's Stortford",
+          "pais": "GB-ENG",
+          "score": {
+            "gross": 81,
+            "toPar": 9
+          }
+        },
+        {
+          "nome": "Richard Groß",
+          "fed": null,
+          "clube": "GC Chemnitz",
+          "pais": "DE",
+          "score": {
+            "gross": 88,
+            "toPar": 16
+          }
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "988-10307",

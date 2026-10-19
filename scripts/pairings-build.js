@@ -549,6 +549,70 @@ function buildIntlPairingsFromOverrides(overrides) {
   });
 }
 
+// ─── Intl automáticos: draws dos ficheiros MAJOR (GolfGenius) ─────────
+// Os tee sheets do GolfGenius ({slug}_{ano}.json, divisions[].draws) trazem os
+// grupos de cada volta — o Faldo Madeira 2026, por exemplo. Cada volta em que o
+// Manuel aparece vira uma ronda Intl, com os scores do leaderboard da divisão.
+// As provas que já estão nos overrides manuais (mesmo nome + ronda) ficam lá.
+const MESES_EN = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
+function ggDateIso(label, year) {
+  const m = String(label || "").match(/([A-Za-z]{3})[a-z]*\.?\s+(\d{1,2})/);
+  if (!m || !MESES_EN[m[1].toLowerCase()]) return null;
+  return `${year}-${String(MESES_EN[m[1].toLowerCase()]).padStart(2, "0")}-${m[2].padStart(2, "0")}`;
+}
+function buildMajorDrawPairings(jaCobertos) {
+  const out = [];
+  const files = fs.readdirSync(DATA).filter((f) => /^[a-z0-9]+_\d{4}\.json$/.test(f));
+  for (const f of files) {
+    const j = readJSON(path.join(DATA, f));
+    if (!j || !Array.isArray(j.divisions) || !j.divisions.some((d) => d.draws && Object.keys(d.draws).length)) continue;
+    const year = j.year || Number(f.match(/_(\d{4})\./)[1]);
+    const nome = `${j.tournament || f.replace(/\.json$/, "")} ${year}`;
+    const campo = typeof j.course === "string" ? j.course : (j.course && j.course.name) || null;
+    const vistas = new Set();
+    for (const dv of j.divisions) {
+      const byName = new Map((dv.players || []).map((p) => [normName(p.name), p]));
+      const sumPar = (r) => Array.isArray(r && r.pars) && r.pars.length ? r.pars.reduce((a, b) => a + (Number(b) || 0), 0) : null;
+      const scoreOf = (nm, rn, dataLbl) => {
+        const p = byName.get(normName(nm));
+        if (!p) return null;
+        const r = (p.rounds || []).find((x) => dataLbl && x.date === dataLbl) || (p.rounds || []).find((x) => Number(x.day) === rn);
+        if (!r || r.gross == null) return null;
+        const par = sumPar(r);
+        return { gross: Number(r.gross), toPar: par != null ? Number(r.gross) - par : null };
+      };
+      for (const [rnKey, rd] of Object.entries(dv.draws || {})) {
+        const rn = Number(rd.round || rnKey);
+        for (const g of rd.groups || []) {
+          const nomes = (g.players || []).map((x) => x.name);
+          const mNome = nomes.find((n) => isManuel(n));
+          if (!mNome) continue;
+          const key = `${rn}|${g.time}`;
+          if (vistas.has(key) || jaCobertos.has(`${normName(nome)}|${rn}`)) continue;
+          vistas.add(key);
+          out.push({
+            circuito: "Intl",
+            torneioId: `gg-${f.replace(/\.json$/, "")}`,
+            torneioNome: nome,
+            data: ggDateIso(rd.date || rd.label, year),
+            ronda: rn,
+            teeTime: g.time || null,
+            startHole: g.startHole != null ? Number(g.startHole) : null,
+            campo,
+            fonte: `GolfGenius tee sheet (${f})`,
+            manuelScore: scoreOf(mNome, rn, rd.date),
+            companheiros: nomes.filter((n) => n !== mNome).map((n) => {
+              const p = byName.get(normName(n)) || {};
+              return { nome: n, fed: p.fed || null, clube: p.club || null, pais: p.country || null, score: scoreOf(n, rn, rd.date) };
+            }),
+          });
+        }
+      }
+    }
+  }
+  return out;
+}
+
 // ─── Lista de torneios FPG do Manuel (cobertura) ────────────────────
 
 function buildManuelTournamentsList() {
@@ -647,6 +711,10 @@ function main() {
   const fpgPairings = extractFpgPairings(fpg, fpgScoreIdx, fpgScoreByNameIdx, nomeIdx, clubeIdx, manuelTournIdx);
   const uskidsPairings = extractUskidsPairings(uskidsDraws, uskScoreIdx);
   const intlPairings = buildIntlPairingsFromOverrides(overrides);
+  const cobertosIntl = new Set(intlPairings.map((r) => `${normName(r.torneioNome)}|${r.ronda}`));
+  const majorPairings = buildMajorDrawPairings(cobertosIntl);
+  console.log(`  MAJOR (tee sheets GolfGenius): ${majorPairings.length} ronda(s) do Manuel`);
+  intlPairings.push(...majorPairings);
 
   // dedup global FPG por NOME (com fallback nome+clube para homónimos)
   const nomeToFeds = new Map();
