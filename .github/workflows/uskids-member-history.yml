@@ -3,6 +3,14 @@ on:
   schedule:
     - cron: '30 16 * * *'
   workflow_dispatch:
+# Uma corrida de cada vez entre os dois workflows que escrevem o histórico
+# USKids (uskids-member-history + uskids-refresh-all). A 19/10/2026 o refresh-all
+# manual (13:48-17:14) e o agendado (que o GitHub atrasou das 09:00 para as
+# 15:58) correram sobrepostos e o segundo falhou o push com conflito nos chunks
+# e no slim. Com o grupo, o segundo espera e faz checkout já com o push do outro.
+concurrency:
+  group: uskids-member-history
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
