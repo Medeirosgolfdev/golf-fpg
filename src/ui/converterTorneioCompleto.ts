@@ -35,8 +35,17 @@ export function converterTorneioCompleto(raw: any): TorneioResult | null {
     }>();
 
     const flightsDict: Record<string, any> = raw.flights ?? {};
-    for (const [_fidStr, flight] of Object.entries(flightsDict)) {
-      const category: string = flight.category ?? '';
+    // World 2024: escalões grandes divididos em flights «A»/«B» — o `category`
+    // traz a letra e não o escalão. O escalão verdadeiro está em
+    // meta.flights[fid].age_group (19/10/2026; antes só saíam 4 escalões).
+    const metaFlights: Record<string, { age_group?: number }> = raw.meta?.flights ?? {};
+    const nomeEscalao = (fid: string, cat: string): string => {
+      if (Object.values(ageGroups).some(v => v.name === cat)) return cat;
+      const ag = metaFlights[fid]?.age_group;
+      return (ag != null && ageGroups[String(ag)]?.name) || cat;
+    };
+    for (const [fidStr, flight] of Object.entries(flightsDict)) {
+      const category: string = nomeEscalao(fidStr, flight.category ?? '');
       if (!category) continue;
 
       // Mapear category → id numérico (lookup nos age_groups pelo nome)
