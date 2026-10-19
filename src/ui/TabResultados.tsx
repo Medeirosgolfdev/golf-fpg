@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 // Components: TabResultados + EscalaoTabs + EscalaoSection (TournamentDetail, com os Draw R{n}).
 import React from "react";
-import { displayName, fmtDate, fmtToPar, norm } from "../utils/format";
+import { displayName, fmtDate, fmtToPar, isoDate, norm } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import type { Tournament as TATournament } from "../pages/FPGPage";
 import { TournamentDetail, type TournamentDetailProps } from "../pages/fpg/TournamentDetail";
@@ -17,6 +17,10 @@ import type { TorneioResult, EscalaoResult, ResultsData, GreatgolfData,
 import { sortEscaloes } from "./uskidsTypes";
 import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx } from "./USKIDSPageHelpers";
 import { TournExternalLinks } from "./TabCampoDetalhe";
+import { tournamentFamilyKey, divKey, buildPastEditionFromTournament } from "./circuit/pastEditions";
+import PastEditionsTable, { type PastEdition } from "./circuit/PastEditionsTable";
+import PastEditionsRepeatersTable from "./circuit/PastEditionsRepeatersTable";
+import { buildRepeaters } from "./circuit/repeaters";
 
 // ─────────────────────────────────────────────
 // ADAPTER: escalaoToTournament
@@ -165,15 +169,52 @@ function uskidsRoundResults(e: EscalaoResult, ronda: number): Map<string, { gros
 
 const DRAW_HIDE = { esc: true, fed: true, hcp: true, tee: true, nasc: true };
 
+/** Escalão correspondente noutra edição: nome igual, senão sexo + idade. */
+function matchEscalao(escaloes: EscalaoResult[], e: EscalaoResult): EscalaoResult | null {
+  const exact = escaloes.find(x => x.nome === e.nome);
+  if (exact) return exact;
+  const k = divKey(e.nome);
+  return escaloes.find(x => { const kx = divKey(x.nome); return kx.sex === k.sex && kx.age === k.age; }) ?? null;
+}
+
+/** «Edições anteriores» do USKids — a /uskids não usa o CircuitShell, por isso
+ *  monta aqui as mesmas colunas (PastEditionsTable) a partir das edições do
+ *  mesmo torneio (`tournamentFamilyKey`) já em memória (19/10/2026). */
+function uskidsPastEditions(e: EscalaoResult, edicoes: TorneioResult[], arMap?: Map<string, AutoRivalPlayer>): PastEdition[] {
+  const rows: { ed: PastEdition; stamp: string }[] = [];
+  for (const ed of edicoes) {
+    const esc = matchEscalao(ed.escaloes, e);
+    if (!esc || !esc.rondas.some(r => (r.leaderboard ?? r.jogadores ?? []).length > 0)) continue;
+    const stamp = isoDate(ed.date_inicio);
+    const pe = buildPastEditionFromTournament(escalaoToTournament(esc, ed, arMap), {
+      id: String(ed.t), year: parseInt(stamp.slice(0, 4), 10) || 0, division: esc.nome,
+      course: esc.campo || ed.campo || null,
+    });
+    if (!pe) continue;
+    // O adaptador deixa toPar a null e parTotal a 0 quando não há par (o Resumo
+    // calcula o ±Par à parte) → par 0 = desconhecido; ±Par pelas voltas jogadas.
+    const par = pe.parPerRound || null;
+    pe.parPerRound = par;
+    for (const p of pe.players) {
+      const n = p.rounds.filter(Boolean).length;
+      if (p.toPar == null && par && p.total && n) p.toPar = p.total - par * n;
+    }
+    rows.push({ ed: pe, stamp });
+  }
+  return rows.sort((a, b) => b.stamp.localeCompare(a.stamp)).map(r => r.ed);
+}
+
 // ─────────────────────────────────────────────
 // ESCALÃO SECTION — o detalhe de torneio único (TournamentDetail), com os
 // draws por volta («Draw R{n}» antes da volta n) pelo DrawTab partilhado.
 // ─────────────────────────────────────────────
-function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
+function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData, edicoes }: {
   escalao: EscalaoResult;
   torneio: TorneioResult;
   arMap?: Map<string, AutoRivalPlayer>;
   drawsData?: UskidsDrawsData | null;
+  /** O mesmo torneio noutros anos (incluindo este) — só com ≥2. */
+  edicoes?: TorneioResult[] | null;
 }) {
   const rondasComDados = e.rondas.filter(r => (r.leaderboard ?? r.jogadores ?? []).length > 0);
 
@@ -195,6 +236,18 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
   const campo = tournament.campo || "";
   const campoProprio = !!campo && campo.trim() !== (t.campo || "").trim();
   const options = useMemo(() => ({ noInferBlanks: true, showCourse: campoProprio }), [campoProprio]);
+
+  // «Edições anteriores» e «Quem repete», como nas outras secções.
+  const extraTabs = useMemo(() => {
+    if (!edicoes) return undefined;
+    const rows = uskidsPastEditions(e, edicoes, arMap);
+    if (rows.length < 2) return undefined;
+    const field = tournament.players.filter(p => p.name).map(p => ({ name: p.name, club: p.club || null }));
+    return [
+      { key: "past-editions", label: "Edições anteriores", content: <PastEditionsTable editions={rows} title={e.nome} /> },
+      { key: "repeaters", label: "Quem repete", content: <PastEditionsRepeatersTable data={buildRepeaters(field, rows, String(t.t))} /> },
+    ];
+  }, [edicoes, e, arMap, tournament, t.t]);
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {
@@ -231,7 +284,7 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData }: {
       ))}
       {/* «rt»: a /uskids já usa «tab» para as abas da página. */}
       <TournamentDetail tournament={tournament} escLookup={new Map()} playersDB={kidsDB as unknown as TournamentDetailProps["playersDB"]}
-        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} tabParam="rt" />
+        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} extraTabs={extraTabs} tabParam="rt" />
     </div>
   );
 }
@@ -244,12 +297,13 @@ function escalaoTemManuel(e: EscalaoResult, t: TorneioResult, escalaoEsperado: n
   return t.escalao_manuel ? e.age_group === t.escalao_manuel : (e.is_manuel === true && e.age_group === escalaoEsperado);
 }
 
-function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
+function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData, edicoes }: {
   escaloes: EscalaoResult[];
   torneio: TorneioResult;
   defaultIdx: number;
   arMap?: Map<string, AutoRivalPlayer>;
   drawsData?: UskidsDrawsData | null;
+  edicoes?: TorneioResult[] | null;
 }) {
   const [esc, setEsc] = useState(defaultIdx);
   const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
@@ -279,7 +333,7 @@ function EscalaoTabs({ escaloes, torneio: t, defaultIdx, arMap, drawsData }: {
         })}
       </div>
       {/* Conteúdo do escalão activo */}
-      {e && <EscalaoSection key={e.age_group} escalao={e} torneio={t} arMap={arMap} drawsData={drawsData} />}
+      {e && <EscalaoSection key={e.age_group} escalao={e} torneio={t} arMap={arMap} drawsData={drawsData} edicoes={edicoes} />}
     </div>
   );
 }
@@ -368,6 +422,13 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
 }) {
   const arMap = React.useContext(ArMapCtx);
   const t = data.resultados.find(r => r.t === selectedT) ?? null;
+  // O mesmo torneio noutros anos (Rome Classic 2025 ↔ 2026…), pelo nome sem ano.
+  const edicoes = useMemo(() => {
+    const k = t ? tournamentFamilyKey(t.name) : null;
+    if (!k) return null;
+    const sib = [...new Map(data.resultados.filter(r => tournamentFamilyKey(r.name) === k).map(r => [r.t, r])).values()];
+    return sib.length >= 2 ? sib : null;
+  }, [data.resultados, t]);
 
 
   if (!data.resultados.length) return (
@@ -445,7 +506,7 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
         if (!escaloes.length) return null;
         const escalaoEsperado = escalaoManuelParaData(t.date_inicio);
         const manuelIdx = escaloes.findIndex(e => escalaoTemManuel(e, t, escalaoEsperado));
-        return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} arMap={arMap} drawsData={drawsData} />;
+        return <EscalaoTabs escaloes={escaloes} torneio={t} defaultIdx={manuelIdx >= 0 ? manuelIdx : 0} arMap={arMap} drawsData={drawsData} edicoes={edicoes} />;
       })()}
 
       {/* ── Greatgolf Junior Open ── */}
