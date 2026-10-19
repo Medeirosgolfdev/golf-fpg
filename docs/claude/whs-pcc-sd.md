@@ -35,7 +35,12 @@ federações (França, Espanha, internacionais) com o cartão **vazio** — bura
 (`sgd`) e o Stableford do WHS são reais. O pipeline trata esse cartão como "sem
 cartão" (`isEmptyCard`, `lib/scorecard-fragment.js`, depois de aplicar as
 melhorias): sem gross falso, 18 buracos do WHS. Para ter o cartão real, enriquecer
-pela fonte do torneio (ex.: `--ffgolf`).
+pela fonte do torneio (ex.: `--ffgolf`). O Stableford **36** dessas voltas também é
+enchimento (cartão vazio, par 72) e fica vazio — mesmo depois de enriquecidas: o
+Stableford net real depende do handicap de jogo, que precisa do CR/Slope do
+percurso (Rennes: percurso misto sem rating → 41-42 / 42-43, não determinável ao
+ponto). Outros valores que a federação de origem mande ficam. `--si` +
+`--si-fonte` põem o SI do campo no cartão quando a fonte do torneio não o traz.
 
 Flags: `--course`/`--tee` sobrepõem os da fonte (default: campo/tee do lookup);
 `--par n,n,...` sobrepõe o par da fonte — para quando a ORGANIZAÇÃO joga o campo

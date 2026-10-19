@@ -43,7 +43,8 @@
  * Flags: --fed (default 52884) · --course/--tee (default: os da fonte) ·
  *   --par n,n,... (override do par da fonte — para quando a ORGANIZAÇÃO joga o
  *   campo com par diferente do homologado, ex.: WJGC 2026 jogou o Flamingos
- *   par-71 como par 72 no buraco 10) · --pill (default INTL em entradas novas) ·
+ *   par-71 como par 72 no buraco 10) · --si n,n,... + --si-fonte "<de onde>"
+ *   (SI do campo quando a fonte não o traz; nunca dos cartões dos clubes) · --pill (default INTL em entradas novas) ·
  *   --group · --nota (só entradas novas ou com --force-nota) · --link <url
  *   resultados> · --comment "<texto>" (linha _comment_* antes da primeira
  *   entrada nova) · --dry-run
@@ -72,6 +73,8 @@ function parseArgs(argv) {
     else if (k === "--course") a.course = next();
     else if (k === "--tee") a.tee = next();
     else if (k === "--par") a.par = next().split(",").map((s) => Number(s.trim()));
+    else if (k === "--si") a.si = next().split(",").map((s) => Number(s.trim()));
+    else if (k === "--si-fonte") a.siFonte = next();
     else if (k === "--pill") a.pill = next();
     else if (k === "--group") a.group = next();
     else if (k === "--nota") a.nota = next();
@@ -179,6 +182,7 @@ function buildEntry(existing, src, a, gross) {
     tee_name: a.tee ?? src.tee,
   };
   src.par.forEach((v, i) => { scorecard[`par_${i + 1}`] = v; });
+  if (a.si) a.si.forEach((v, i) => { scorecard[`stroke_index_${i + 1}`] = v; });
   src.meters.forEach((v, i) => { scorecard[`meters_${i + 1}`] = v; });
   if (src.cr != null) scorecard.course_rating = src.cr;
   if (src.slope != null) scorecard.slope = src.slope;
@@ -280,6 +284,12 @@ function main() {
   }
 
   const nHoles = src.par.length;
+  if (a.si) {
+    const ok = a.si.length === nHoles && [...a.si].sort((x, y) => x - y).every((v, i) => v === i + 1);
+    if (!ok) { console.error(`--si inválido (esperado ${nHoles} valores, permutação de 1..${nHoles})`); process.exit(1); }
+    if (!a.siFonte) { console.error("--si precisa de --si-fonte"); process.exit(1); }
+    src.fonte += ` + SI: ${a.siFonte}`;
+  }
   if (nHoles !== src.meters.length) { console.error(`par (${nHoles}) e metros (${src.meters.length}) com tamanhos diferentes`); process.exit(1); }
   const parTotal = src.par.reduce((s, v) => s + v, 0);
   const mTotal = src.meters.reduce((s, v) => s + v, 0);
