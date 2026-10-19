@@ -246,13 +246,13 @@ export const EVENTS: CalEvent[] = [
   // "7o-…-belas-cc" mas os títulos são agora 5º e 6º. O circuito tem 6 provas.
   ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2026,9,17), "Estela",              "Strokeplay", new Date(2026,9,18)),
   ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2026,10,14),"Belas CC",            "Strokeplay", new Date(2026,10,15)),
-  // 2027 — já publicado em competicoes.fpg.pt (o 6º ainda sem campo).
+  // 2027 — calendário FPG 2027.
   ev("fpg_aquapor", "1º Torneio do Circuito AQUAPOR",  new Date(2027,0,16), "Morgado do Reguengo", "Strokeplay", new Date(2027,0,17)),
   ev("fpg_aquapor", "2º Torneio do Circuito AQUAPOR",  new Date(2027,1,20), "Quinta do Peru",      "Strokeplay", new Date(2027,1,21)),
   ev("fpg_aquapor", "3º Torneio do Circuito AQUAPOR",  new Date(2027,3,17), "Oporto",              "Strokeplay", new Date(2027,3,18)),
   ev("fpg_aquapor", "4º Torneio do Circuito AQUAPOR",  new Date(2027,4,8),  "Vidago Palace",       "Strokeplay", new Date(2027,4,9)),
-  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2027,6,17), "Penina",              "Strokeplay", new Date(2027,6,18)),
-  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2027,10,20),"TBA",                 "Strokeplay", new Date(2027,10,21)),
+  ev("fpg_aquapor", "5º Torneio do Circuito AQUAPOR",  new Date(2027,6,13), "Penina",              "Strokeplay", new Date(2027,6,14)),
+  ev("fpg_aquapor", "6º Torneio do Circuito AQUAPOR",  new Date(2027,10,20),"Belas CC",            "Strokeplay", new Date(2027,10,21)),
 
   /* ══════════════════════════════════════
      FPG — Torneios (roxo)
@@ -263,9 +263,14 @@ export const EVENTS: CalEvent[] = [
   ev("fpg_torneios", "Taça RS Yeatman",         new Date(2026,5,20), "CG Miramar",    "Strokeplay", new Date(2026,5,21)),
   ev("fpg_torneios", "Taça Mendes D'Almeida",   new Date(2026,7,15), "Vidago Palace", "Strokeplay", new Date(2026,7,16)),
   ev("fpg_torneios", "Taça FPG",                new Date(2026,9,10), "Santo Estêvão", "Strokeplay e Match", new Date(2026,9,13)),
-  // 2027 — competicoes.fpg.pt. Aberto a todas as idades (por categoria de HCP):
-  // é dele, por isso vai também em MANUEL_EXCEPCOES.
+  // 2027 — calendário FPG 2027.
+  ev("fpg_torneios", "Camp. Nacional de Mid-Amateur — BPI", new Date(2027,3,3),  "Quinta do Peru", "Strokeplay", new Date(2027,3,4)),
+  // Aberto a todas as idades (por categoria de HCP): é dele, por isso vai
+  // também em MANUEL_EXCEPCOES.
   ev("fpg_torneios", "Camp. Nacional de 2ª, 3ª e 4ª Categorias", new Date(2027,3,10), "Montebelo", "", new Date(2027,3,11)),
+  ev("fpg_torneios", "Aberto do Estoril",       new Date(2027,4,29), "CG Estoril",    "Strokeplay", new Date(2027,4,30)),
+  ev("fpg_torneios", "Taça RS Yeatman",         new Date(2027,5,19), "CG Miramar",    "Strokeplay", new Date(2027,5,20)),
+  ev("fpg_torneios", "Taça FPG — BPI",          new Date(2027,9,7),  "Santo Estêvão", "Strokeplay e Match", new Date(2027,9,10)),
 
   /* ══════════════════════════════════════
      DESTAQUE — Internacionais (vermelho)
@@ -283,8 +288,8 @@ export const EVENTS: CalEvent[] = [
      ══════════════════════════════════════ */
   ev("dest_nac_jr", "Camp. Nacional Clubes Sub14 & 18",  new Date(2026,2,31), "Oporto",  "Strokeplay", new Date(2026,3,2)),
   ev("dest_nac_jr", "Camp. Nacional de Jovens",          new Date(2026,4,1),  "Aroeira", "Strokeplay", new Date(2026,4,3)),
-  // 2027 — já publicado em competicoes.fpg.pt (o dos Jovens ainda sem campo).
-  ev("dest_nac_jr", "Camp. Nacional Clubes Sub14 & 18",  new Date(2027,2,24), "Montado", "Strokeplay", new Date(2027,2,26)),
+  // 2027 — calendário FPG 2027 (o dos Jovens ainda sem campo).
+  ev("dest_nac_jr", "Camp. Nacional Clubes Sub14 & 18",  new Date(2027,2,23), "Montado", "Strokeplay", new Date(2027,2,25)),
   ev("dest_nac_jr", "Camp. Nacional de Jovens",          new Date(2027,3,30), "TBA",     "Strokeplay", new Date(2027,4,2)),
 
   /* ══════════════════════════════════════
@@ -323,6 +328,8 @@ export const EVENTS: CalEvent[] = [
   ev("dest_pja", "PJA — Quinta do Peru",             new Date(2026,5,27), "Quinta do Peru",     "Strokeplay", new Date(2026,5,28)),
   ev("dest_pja", "PJA — Torre",                      new Date(2026,8,5),  "Terras da Comporta - Torre", "2R Strokeplay", new Date(2026,8,6)),
   ev("dest_pja", "PJA — Dunas — Grande Final",       new Date(2026,10,28),"Dunas",              "Strokeplay", new Date(2026,10,29)),
+  // 2027 — o mesmo torneio de Agosto em Miramar, com o nome do calendário FPG 2027.
+  ev("dest_pja", "Miramar Junior Open",              new Date(2027,7,25), "CG Miramar",         "3R Strokeplay", new Date(2027,7,27)),
 
   /* ══════════════════════════════════════
      🎂 PESSOAL
