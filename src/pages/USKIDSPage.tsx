@@ -1,20 +1,16 @@
 ﻿// @refresh reset
 import { useEffect, useState, useMemo, useTransition, useCallback } from "react";
-import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
-import { useMasterDetail } from "../hooks/useMasterDetail";
-import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtDate, fmtToPar } from "../utils/format";
+import { isoDate, fmtToPar } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
 import { KidsLink } from "../ui/TabCampoDetalhe";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
-import TorneioRivaisDetalhe from "../ui/TorneioRivaisDetalhe";
 import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
 import {
   REGIONAL_CHAMPIONSHIPS,
@@ -26,7 +22,6 @@ import { buildAutoRivals, normName as normNameAuto, type AutoRivalPlayer } from 
 import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import TabelaGlobal from "../ui/TabelaGlobal";
-import MasterDetail from "../ui/MasterDetail";
 import type { UskidsDrawsData, Torneio as UskTorneio, TorneioResult as UskTorneioResult } from "../ui/uskidsTypes"; // pairings (Draw R{n})
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
@@ -248,134 +243,9 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
 
 
 
-// ─────────────────────────────────────────────
-// TAB RIVAIS
-// ─────────────────────────────────────────────
-
-
-
-/* ════════════════════════════════════════════════════════════════
-   RivCell — célula de resultado passado (score + posição)
-   ════════════════════════════════════════════════════════════════ */
-/* ════════════════════════════════════════════════════════════════
-   TabRivais — componente principal
-   ════════════════════════════════════════════════════════════════ */
-function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSelectedT, autoRivals, showTabela, setShowTabela, futureTorneios, abrirScout }: {
-  resultados: TorneioResult[];
-  fieldData: FieldData | null;
-  torneiosComManuel: TorneioComManuel[];
-  selectedT: number | null;
-  setSelectedT: (t: number | null) => void;
-  autoRivals: AutoRivalPlayer[];
-  showTabela: boolean;
-  setShowTabela: (v: boolean) => void;
-  futureTorneios?: TorneioComManuel[];
-  /** Abre a aba «Scout» do torneio (Torneios ou Resultados). */
-  abrirScout: (t: number) => void;
-}) {
-  const kidsMap = useMemo(() => {
-    const m = new Map<string, string>();
-    for (const r of autoRivals) m.set(normNameAuto(r.n), r.n);
-    return m;
-  }, [autoRivals]);
-
-  const arMap = useMemo(() => {
-    const m = new Map<string, AutoRivalPlayer>();
-    // Homónimos (ex.: Noah Birk Andersen USKids × UA Worlds antes de fundidos):
-    // fica a ficha com mais torneios, não a última lida.
-    for (const r of autoRivals) {
-      const k = normNameAuto(r.n);
-      const antes = m.get(k);
-      if (!antes || Object.keys(r.r).length > Object.keys(antes.r).length) m.set(k, r);
-    }
-    return m;
-  }, [autoRivals]);
-
-  const selectedTorneio = !showTabela && selectedT != null
-    ? torneiosComManuel.find(t => t.t === selectedT) ?? null
-    : null;
-
-  const handleSelectTorneio = (t: number) => {
-    setShowTabela(false);
-    setSelectedT(t);
-  };
-
-  if (showTabela) {
-    const futureCols = (futureTorneios ?? []).map(t => ({
-      tid: `usk${t.t}`,
-      short: t.name.replace(/\s*\d{4}$/, "").slice(0, 12),
-      escalao: t.escalaoManuel ?? "",
-      url: undefined as string | undefined,
-    }));
-    return (
-      <TabelaGlobal
-        autoRivals={autoRivals}
-        futureCols={futureCols}
-        fieldData={fieldData as any /* FieldData local ≠ FieldData do KIDSdataLoader */}
-        KidsLink={KidsLink}
-      />
-    );
-  }
-
-  if (selectedTorneio) {
-    return (
-      <TorneioRivaisDetalhe
-        torneio={selectedTorneio}
-        resultados={resultados}
-        fieldData={fieldData as any /* FieldData local ≠ FieldData do uskidsTypes */}
-        torneiosComManuel={torneiosComManuel}
-        arMap={arMap}
-        kidsMap={kidsMap}
-      />
-    );
-  }
-
-  const today = new Date().toISOString().slice(0, 10);
-  return (
-    <div style={{ display:"flex", flexDirection:"column", gap:10 }}>
-      <div className="h-sm" style={{ marginBottom:4 }}>Torneios do Manuel ({torneiosComManuel.length})</div>
-      {torneiosComManuel.map(t => {
-        const isFuture = isoDate(t.date_inicio) > today;
-        const resT = resultados.find(r => r.t === t.t);
-        // 🔭 → a aba «Scout» do próprio torneio (20/10/2026; antes abria o Kids 2).
-        return (
-          <div key={t.t}
-            className="course-item"
-            style={{ display:"flex", alignItems:"stretch", width:"100%", padding:0 }}>
-            <button
-              style={{ flex:1, textAlign:"left", padding:"12px 16px", background:"transparent", border:0, cursor:"pointer", color:"inherit", font:"inherit", minWidth:0 }}
-              onClick={() => handleSelectTorneio(t.t)}>
-              <div className="h-md" style={{ marginBottom:4 }}>{t.name}</div>
-              <div className="detail-sub">
-                {t.date_inicio && <span className="muted">📅 {fmtDate(t.date_inicio)}</span>}
-                {t.escalaoManuel && <span className="chip">{t.escalaoManuel}</span>}
-                {isFuture
-                  ? <span className="p p-sm toggle-pill-info">inscrito</span>
-                  : resT && <span className="p p-sm toggle-pill-success">resultados</span>
-                }
-              </div>
-            </button>
-            <button
-              type="button"
-              title="Scout — os inscritos, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
-              onClick={(e) => { e.stopPropagation(); abrirScout(t.t); }}
-              style={{
-                display:"flex", alignItems:"center", justifyContent:"center",
-                padding:"0 14px", border:0, borderLeft:"1px solid var(--border)", background:"transparent", cursor:"pointer",
-                color:"var(--color-info)", fontSize: "var(--fs-18)",
-              }}>
-              🔭
-            </button>
-          </div>
-        );
-      })}
-    </div>
-  );
-}
-
 // COMPONENTE PRINCIPAL
 // ─────────────────────────────────────────────
-type Tab = "campo" | "resultados" | "rivais";
+type Tab = "campo" | "resultados";
 
 // Categorias da lista de torneios, pelo `type` do GetMeta (a mesma taxonomia de
 // scripts/lib/uskids-classify.js). Vigiam-se todas; a lista esconde as que
@@ -441,7 +311,7 @@ type TorneioEntry = {
 export default function USKidsFieldPage() {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const VALID_TABS: Tab[] = ["campo", "resultados", "rivais"];
+  const VALID_TABS: Tab[] = ["campo", "resultados"];
   const paramTab = searchParams.get("tab") as Tab | null;
 
   const [fieldData,   setFieldData]   = useState<FieldData | null>(null);
@@ -456,11 +326,29 @@ export default function USKidsFieldPage() {
     if (paramTab && VALID_TABS.includes(paramTab)) return paramTab;
     return "campo";
   });
+  // A vista «Rivais» saiu (20/10/2026 — tudo no CircuitShell): ?tab=rivais abre
+  // Torneios com o ★ Manuel; com ?t= abre o Scout desse torneio (o efeito da
+  // selecção passa-o a Resultados se já foi jogado).
+  useEffect(() => {
+    if (searchParams.get("tab") !== "rivais") return;
+    setSearchParams(prev => {
+      const n = new URLSearchParams(prev);
+      n.set("tab", "campo");
+      if (n.get("t")) n.set("rt", "scout");
+      return n;
+    }, { replace: true });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  // Vista informativa do shell (menu ⓘ Info), no URL: ?info=tabela.
+  const selectedInfo = searchParams.get("info");
+  const setSelectedInfo = (k: string | null) => setSearchParams(prev => {
+    const n = new URLSearchParams(prev);
+    if (k) n.set("info", k); else n.delete("info");
+    return n;
+  }, { replace: true });
   const setTab = (t: Tab) => {
     setTabState(t);
     setSearchParams(prev => { const n = new URLSearchParams(prev); n.set("tab", t); return n; }, { replace: true });
   };
-  const md = useMasterDetail();
   const [filterManuel, setFilterManuel] = useState(true);
   // Ocultar torneios com campo pequeno (< 60 jogadores) na tab Resultados
   const [filterSmallField, setFilterSmallField] = useState(false);
@@ -496,7 +384,6 @@ export default function USKidsFieldPage() {
   const [, startRivalsTransition] = useTransition();
 
   const [fileMeta, setFileMeta] = useState<DataSource[]>([]);
-  const [showRivaisTabela, setShowRivaisTabela] = useState(false);
 
   // Upsert em vez de append — evita duplicados quando o effect corre duas vezes
   // (React StrictMode em dev) ou quando o mesmo ficheiro é reportado mais que
@@ -768,7 +655,7 @@ export default function USKidsFieldPage() {
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
   }, [torneiosCampo, torneiosResultados]);
 
-  // Torneios onde o Manuel participou ou está inscrito (para tab Rivais)
+  // Torneios onde o Manuel participou ou está inscrito (colunas futuras da Tabela global)
   const torneiosComManuel = useMemo((): TorneioComManuel[] => {
     const map = new Map<number, TorneioComManuel>();
 
@@ -803,7 +690,6 @@ export default function USKidsFieldPage() {
     return [...map.values()].sort((a, b) => isoDate(b.date_inicio).localeCompare(isoDate(a.date_inicio)));
   }, [fieldData, resultsData]);
 
-  const nRivais = torneiosComManuel.length || null;
 
   // useMemo ANTES dos early returns — obrigatório pelas Rules of Hooks
   // Roster canónico para a seta ↗ (aliases e nomes do meio) — ver KidsLink.
@@ -820,6 +706,28 @@ export default function USKidsFieldPage() {
     return m;
   }, [autoRivals]);
 
+  // Tabela global (todos os jogadores × todos os torneios do Manuel): vista do
+  // menu ⓘ Info do shell, nas duas vistas (era a 1.ª entrada dos Rivais).
+  const [configCampo, configResultados] = useMemo(() => {
+    const hoje = new Date().toISOString().slice(0, 10);
+    const futureCols = torneiosComManuel
+      .filter(t => isoDate(t.date_inicio) > hoje)
+      .map(t => ({ tid: `usk${t.t}`, short: t.name.replace(/\s*\d{4}$/, "").slice(0, 12), escalao: t.escalaoManuel ?? "", url: undefined }));
+    const specialItems = [{
+      key: "tabela",
+      label: "📊 Tabela global",
+      render: () => (
+        <TabelaGlobal
+          autoRivals={autoRivals}
+          futureCols={futureCols}
+          fieldData={fieldData as any /* FieldData local ≠ FieldData do uskidsTypes */}
+          KidsLink={KidsLink}
+        />
+      ),
+    }];
+    return [{ ...USKIDS_CONFIG_CAMPO, specialItems }, { ...USKIDS_CONFIG_RESULTADOS, specialItems }];
+  }, [torneiosComManuel, autoRivals, fieldData]);
+
   // Torneio de resultados mais RECENTE (allTorneios está ordenado por data asc,
   // logo o último com resultados é o mais recente). Usado como default ao abrir
   // a tab Resultados.
@@ -834,7 +742,6 @@ export default function USKidsFieldPage() {
   // Primeiro sem o filtro de categoria — as contagens dos chips saem daqui,
   // para mostrarem também quantos estão escondidos. A pesquisa é a do shell.
   const listaSemCategoria = useMemo(() => {
-    if (tab === "rivais") return [];
     const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
     // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
     // (= soma de participantes na última ronda de cada escalão).
@@ -862,7 +769,7 @@ export default function USKidsFieldPage() {
   const contagemCat = [...new Set(listaSemCategoria.map(t => t.tipo).filter((x): x is number => x != null))]
     .sort((a, b) => ordemCat(a) - ordemCat(b) || a - b)
     .map(tipo => ({ tipo, label: labelCategoria(tipo), n: listaSemCategoria.filter(t => t.tipo === tipo).length }));
-  const mostrarChips = tab !== "rivais" && !filterManuel
+  const mostrarChips = !filterManuel
     && (contagemCat.length > 1 || contagemCat.some(c => !catVisiveis.has(c.tipo)));
 
   // ── CircuitShell: entradas e divisões ──────────────────────────────────
@@ -976,7 +883,6 @@ export default function USKidsFieldPage() {
   // Quando muda de tab, verificar se o torneio seleccionado existe nessa tab
   const handleTabChange = (newTab: Tab) => {
     setTab(newTab);
-    if (newTab !== "rivais") setShowRivaisTabela(false);
     if (newTab === "resultados") {
       // Ir para o torneio mais recente, a menos que o seleccionado já tenha resultados.
       const exists = selectedT != null && torneiosResultados.some(t => t.t === selectedT);
@@ -984,104 +890,10 @@ export default function USKidsFieldPage() {
     }
   };
 
-  // 🔭 dos Rivais: a aba «Scout» do torneio — Resultados se já tem, senão Torneios.
-  // Um só setSearchParams (as actualizações funcionais não se acumulam).
-  const abrirScout = (t: number) => {
-    const novaTab: Tab = torneiosResultados.some(r => r.t === t) ? "resultados" : "campo";
-    setShowRivaisTabela(false);
-    setTabState(novaTab);
-    setSelectedTState(t);
-    setSearchParams(prev => {
-      const n = new URLSearchParams(prev);
-      n.set("t", String(t)); n.set("tab", novaTab); n.set("rt", "scout");
-      return n;
-    }, { replace: true });
-  };
-
   const TABS: { id: Tab; label: string; badge: number | null }[] = [
     { id:"campo",      label:"⛳ Torneios",   badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
-    { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
   ];
-
-  // ── Render functions para o sidebar — extraídas dos IIFEs para melhor legibilidade ──
-
-  const renderSidebarRivais = () => {
-    const today = new Date().toISOString().slice(0, 10);
-    return (
-      <>
-        {/* ── Tabela global (entrada fixa no topo) ── */}
-        <button
-          className={`course-item${showRivaisTabela ? " active" : ""}`}
-          style={{ padding:"10px 14px", display:"block", width:"100%", textAlign:"left", borderBottom:"2px solid var(--border-light)" }}
-          onClick={() => { setShowRivaisTabela(true); setSelectedT(null); md.onSelect(); }}>
-          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
-            <span style={{ fontSize: "var(--fs-15)" }}>📊</span>
-            <span className="fs-13 fw-700" style={{ color: showRivaisTabela ? "var(--accent)" : "var(--text)" }}>
-              Tabela global
-            </span>
-            <span className="p p-sm p-muted fs-10" style={{ marginLeft:"auto" }}>
-              {torneiosComManuel.length} torneios
-            </span>
-          </div>
-          <div className="fs-11 c-text-3" style={{ marginTop:2 }}>
-            Todos os jogadores × todos os torneios
-          </div>
-        </button>
-
-        <div className="sidebar-section-title">{torneiosComManuel.length} torneios</div>
-        {torneiosComManuel.length === 0 && (
-          <div className="muted fs-12" style={{ padding:"16px 12px" }}>Sem torneios com o Manuel</div>
-        )}
-        {torneiosComManuel.map(t => {
-          const active = !showRivaisTabela && t.t === selectedT;
-          const isFuture = isoDate(t.date_inicio) > today;
-          const resT = resultsData?.resultados.find(r => r.t === t.t);
-          const temResultados = !isFuture && !!resT;
-          return (
-            <div key={t.t}
-              className={`course-item${active ? " active" : ""}`}
-              style={{ display:"flex", alignItems:"stretch", width:"100%", padding:0 }}>
-              <button
-                style={{ flex:1, padding:"9px 10px 9px 12px", textAlign:"left", background:"transparent", border:0, cursor:"pointer", color:"inherit", font:"inherit", minWidth:0 }}
-                onClick={() => { setShowRivaisTabela(false); setSelectedT(t.t); md.onSelect(); }}>
-                <div className="fs-13" style={{ fontWeight: active ? 700 : 600, color:"var(--text)",
-                  overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap", marginBottom:3 }}>
-                  {t.name.replace(/\s*\d{4}$/, "")} <span className="fs-12 fw-400 c-text-3">'{isoDate(t.date_inicio).slice(2,4)}</span>
-                </div>
-                <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
-                  <span className="fs-11 c-text-3">{fmtDate(t.date_inicio)}</span>
-                  {t.escalaoManuel && (
-                    <span className="p p-sm p-muted fs-10">{t.escalaoManuel}</span>
-                  )}
-                  {temResultados && (
-                    <span className="p p-sm fs-10 toggle-pill-success">
-                      resultados
-                    </span>
-                  )}
-                  {isFuture && (
-                    <span className="p p-sm fs-10 toggle-pill-info">
-                      inscrito
-                    </span>
-                  )}
-                </div>
-              </button>
-              <button
-                type="button"
-                title="Scout — os inscritos, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
-                onClick={(e) => { e.stopPropagation(); abrirScout(t.t); }}
-                style={{
-                  display:"flex", alignItems:"center", justifyContent:"center", border:0, background:"transparent", cursor:"pointer",
-                  padding:"0 10px", color:"var(--color-info)", fontSize: "var(--fs-14)",
-                }}>
-                🔭
-              </button>
-            </div>
-          );
-        })}
-      </>
-    );
-  };
 
   // ── Item da barra lateral (TournSidebarItem — o mesmo de sempre; o shell só
   // dá o `active` e o `onSelect`) ──────────────────────────────────────────
@@ -1202,9 +1014,8 @@ export default function USKidsFieldPage() {
     {/* Vistas: o mesmo interruptor segmentado do resto do site. */}
     <TabRow active={tab} onChange={handleTabChange} style={{ flexShrink:0 }}
       tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
-    {tab !== "rivais" && (<>
-      <ToolbarSep />
-      <button
+    <ToolbarSep />
+    <button
         className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
         onClick={() => setFilterManuel(v => !v)}
         style={filterManuel
@@ -1232,7 +1043,6 @@ export default function USKidsFieldPage() {
           );
         })}
       </>)}
-    </>)}
     {tab === "resultados" && (
       <button
         className={"tourn-tab tourn-tab-sm" + (filterSmallField ? " active" : "")}
@@ -1260,60 +1070,33 @@ export default function USKidsFieldPage() {
 
       {/* Torneios e Resultados: o CircuitShell, como as outras páginas de
           circuito (20/10/2026). Os controlos da página entram na barra dele. */}
-      {tab !== "rivais" && (
-        <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
-          <CircuitShell
-            entries={shellEntries}
-            config={tab === "campo" ? USKIDS_CONFIG_CAMPO : USKIDS_CONFIG_RESULTADOS}
-            loading={tab === "resultados" && !resultsData}
-            pastEditionsPool={edicoesPool}
-            selectedId={selectedT != null ? String(selectedT) : undefined}
-            onSelectEntry={(e) => setSelectedT(parseInt(e.id, 10) || null)}
-            renderSidebarItem={(e, { active, onSelect }) => {
-              const t = porId.get(e.id);
-              return t ? renderItem(t, active, onSelect) : null;
-            }}
-          />
-        </CircuitToolbarSlotCtx.Provider>
-      )}
-
-      {/* Rivais: vista própria (não é página de circuito). */}
-      {tab === "rivais" && (<>
-        <Toolbar>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-          {lead}
-          <div style={{ flex:1, minWidth:8 }} />
-          {trail}
-          <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
-        </Toolbar>
-        <MasterDetail md={md} sidebar={<>
-          <div style={{ overflowY:"auto", flex:1 }}>
-            {renderSidebarRivais()}
-          </div>
-          <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
-            signupanytime.com · actualização diária
-          </div>
-        </>}>
-          {!resultsData ? (
-            <LoadingState message="A carregar rivais…" size="md" icon="🤝" />
-          ) : (
-            <SectionErrorBoundary label="TabRivais">
-              <TabRivais
-                resultados={resultsData.resultados}
-                fieldData={fieldData}
-                torneiosComManuel={torneiosComManuel}
-                selectedT={selectedT}
-                setSelectedT={setSelectedT}
-                autoRivals={autoRivals}
-                showTabela={showRivaisTabela}
-                setShowTabela={setShowRivaisTabela}
-                futureTorneios={torneiosComManuel.filter(t => isoDate(t.date_inicio) > new Date().toISOString().slice(0, 10))}
-                abrirScout={abrirScout}
-              />
-            </SectionErrorBoundary>
-          )}
-        </MasterDetail>
-      </>)}
+      <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
+        <CircuitShell
+          entries={shellEntries}
+          config={tab === "campo" ? configCampo : configResultados}
+          loading={tab === "resultados" && !resultsData}
+          pastEditionsPool={edicoesPool}
+          selectedId={selectedT != null ? String(selectedT) : undefined}
+          onSelectEntry={(e) => {
+            // Escolher um torneio sai da vista ⓘ Info — num só setSearchParams
+            // (o do shell, setInfo(null), seria apagado por este).
+            const t = parseInt(e.id, 10) || null;
+            setSelectedTState(t);
+            setSearchParams(prev => {
+              const n = new URLSearchParams(prev);
+              if (t != null) n.set("t", String(t)); else n.delete("t");
+              n.delete("info");
+              return n;
+            }, { replace: true });
+          }}
+          selectedInfo={selectedInfo}
+          onSelectInfo={setSelectedInfo}
+          renderSidebarItem={(e, { active, onSelect }) => {
+            const t = porId.get(e.id);
+            return t ? renderItem(t, active, onSelect) : null;
+          }}
+        />
+      </CircuitToolbarSlotCtx.Provider>
 
     {/* ← fecha tourn-layout */}
     </div>

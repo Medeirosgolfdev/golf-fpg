@@ -100,15 +100,6 @@ export function playerSeriesResult(
   return null;
 }
 
-/** Format rival position for display in series results */
-export function fmtPosRivais(p: number, fieldSize: number): string {
-  if (p <= 0) return "—";
-  if (p === 1) return "🥇";
-  if (p === 2) return "🥈";
-  if (p === 3) return "🥉";
-  return fieldSize > 0 ? `${p}/${fieldSize}` : `${p}º`;
-}
-
 /** Canonical tournament name for matching: "Venice Open 2025" → "venice-25" */
 function tornCanon(s: string): string {
   const low = s.toLowerCase().replace(/['']/g, "").trim();

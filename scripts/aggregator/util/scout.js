@@ -11,7 +11,7 @@
  *
  * Saída (`public/data/juniors-scout.json`, compacta):
  *   { schemaVersion, generatedAt, manuelId, players: {
- *       [juniorId]: { t?: tier, w?: vitórias, t3?: top-3, h?: HCP, d?: "AAAA-MM-DD",
+ *       [juniorId]: { n: torneios na carreira, t?: tier, w?: vitórias, t3?: top-3, h?: HCP, d?: "AAAA-MM-DD",
  *                     c?: clube, p?: país,
  *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel], …],
  *                     mf?: confrontos no mesmo flight } } }
@@ -40,7 +40,8 @@ function buildScout(juniors, tournaments, generatedAt) {
   const players = {};
   for (const j of juniors) {
     if (!j.tournamentIds?.length) continue;
-    const o = {};
+    // n = torneios na carreira (era a coluna «torn.» dos Rivais da /uskids, 20/10/2026).
+    const o = { n: j.tournamentIds.length };
     const tier = computeTier(j, tById, ranking);
     if (tier) o.t = tier;
     const w = countWins(j, tById);

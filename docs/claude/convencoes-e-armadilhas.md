@@ -175,7 +175,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 
 ### Críticos
 
-**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** a tab Rivais via `buildAutoRivals()`. A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-41).json`. Este bug voltou várias vezes.
+**Separação de pipelines USKids vs não-USKids** — Torneios não-USKids (Doral, WJGC, Greatgolf, QDL, EOWAGR) devem alimentar **apenas** os rivais via `buildAutoRivals()` (Tabela global no menu ⓘ Info da /uskids, ↗ do kids2). A tab Resultados carrega **exclusivamente** de `uskids-results.json` e `uskids_torneios_completos(1-41).json`. Este bug voltou várias vezes.
 
 **Manuel tem 4 variantes de nome + 2 contas USKids** — "Manuel Medeiros", "Manuel Francisco Medeiros", "Manuel Goulartt Medeiros", e "Manuel Francisco Goulartt De Medeiros" (este último era da **conta USKids antiga**, antes da migração para mid `630106`). Usar sempre `autoRivals.filter(d => d.isM)` (não `find()`) e fazer merge de todas as entradas. `isManuelByName()` em `src/constants/manuel.ts` já apanha as 4 variantes. Para mid USKids legacy, ver `MANUEL_PLAYER_IDS` (array) — adicionar lá o mid antigo quando validado via `scripts/verify-manuel-legacy-mid.js`.
 

@@ -160,7 +160,7 @@ export default function Scout({
   const { sortKey, sortDir, toggleSort } = useSort<string>(
     ordemInicial?.key ?? (manuelNoField ? "nivel" : "tier"),
     ordemInicial?.dir ?? (manuelNoField ? "desc" : "asc"), {
-    name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", vit: "desc", forma: "asc", ult: "desc",
+    name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", torn: "desc", vit: "desc", forma: "asc", ult: "desc",
     n: "desc", best: "asc", vsm: "desc", vsmp: "asc", prox: "desc",
     ...Object.fromEntries(extras.map((c) => [c.key, c.dir ?? "asc"])),
   });
@@ -172,6 +172,7 @@ export default function Scout({
         case "hcp": return l.sc?.h ?? null;
         case "tier": return l.sc?.t ? TIER_ORD[l.sc.t] : null;
         case "nivel": return l.isManuel ? null : l.threat.score;
+        case "torn": return l.sc?.n ?? null;
         case "vit": return l.sc?.w ?? null;
         case "forma": return formaMedia(l.fm);
         case "ult": return l.fm?.r[0]?.[0] ?? null;
@@ -220,6 +221,7 @@ export default function Scout({
   const tem = {
     idade: linhas.some((l) => l.idade != null),
     hcp: !semHcp && linhas.some((l) => l.sc?.h != null),
+    torn: linhas.some((l) => l.sc?.n),
     vit: linhas.some((l) => l.sc?.w),
     forma: linhas.some((l) => formaMedia(l.fm) != null),
     vsm: linhas.some((l) => l.sc?.m?.length),
@@ -227,7 +229,7 @@ export default function Scout({
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0);
+  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0);
   const nProva = eds.length ? 2 + eds.length : 0;
   const nManuel = tem.vsm ? 2 : 0;
   const nCols = colsAntes.length + 1 + nCarreira + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
@@ -281,6 +283,7 @@ export default function Scout({
               {tem.idade && hdr("idade", "Idade", undefined, true)}
               {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", !tem.idade)}
               {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante). Ordenar por aqui põe primeiro os mais perigosos para o Manuel — o porquê está no tooltip de cada um.", !tem.idade && !tem.hcp)}
+              {tem.torn && hdr("torn", "Torneios", "Torneios na carreira (todas as fontes)")}
               {tem.vit && hdr("vit", "Vitórias", "Vitórias na carreira")}
               {tem.forma && hdr("forma", "Forma", `±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses) — o último está no tooltip`)}
               {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
@@ -328,6 +331,7 @@ export default function Scout({
                         title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined}>
                       {l.sc?.t ? getTierLabel(l.sc.t) : "–"}
                     </td>
+                    {tem.torn && <td>{l.sc?.n || "–"}</td>}
                     {tem.vit && <td>{l.sc?.w || "–"}</td>}
                     {tem.forma && (
                       <td title={[
@@ -348,7 +352,7 @@ export default function Scout({
                       if (!c) return <td key={e.id}>–</td>;
                       return (
                         <td key={e.id}
-                            title={[c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
+                            title={[c.pos != null ? `${c.pos}º de ${c.field}` : null, c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
                             style={c.complete ? undefined : { fontStyle: "italic", color: "var(--text-3)" }}>
                           {c.pos != null ? `${c.pos}º` : "–"}
                         </td>

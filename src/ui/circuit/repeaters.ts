@@ -20,6 +20,8 @@ export interface RepeaterCell {
   toPar: number | null;
   /** Fez todas as voltas da edição (senão o lugar é de quem não acabou). */
   complete: boolean;
+  /** Jogadores dessa edição (o «de N» do lugar). */
+  field: number;
 }
 
 export interface RepeaterRow {
@@ -54,7 +56,7 @@ export function buildRepeaters(field: FieldPlayer[], editions: PastEdition[], cu
     e.players.forEach((p, i) => {
       const k = vetKey(p.name);
       if (!k || m.has(k)) return;
-      m.set(k, { pos: p.pos ?? i + 1, total: p.total, toPar: p.toPar, complete: p.fullRounds >= maxFull });
+      m.set(k, { pos: p.pos ?? i + 1, total: p.total, toPar: p.toPar, complete: p.fullRounds >= maxFull, field: e.players.length });
     });
     const manuel = e.players.find((p) => isManuelByName(p.name));
     return { e, m, manuelKey: manuel ? vetKey(manuel.name) : null };

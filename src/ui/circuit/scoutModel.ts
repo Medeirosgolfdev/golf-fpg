@@ -17,6 +17,8 @@ export interface FormFile { players: Record<string, JuniorForm> }
 
 /** juniors-scout.json (scripts/aggregator/util/scout.js). */
 export interface JuniorScout {
+  /** Torneios na carreira. */
+  n?: number;
   t?: TierKey; w?: number; t3?: number; h?: number; d?: string; c?: string; p?: string;
   /** Provas em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
   m?: [string, string, number | null, number | null, number][];
