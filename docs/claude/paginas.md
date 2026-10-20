@@ -14,7 +14,7 @@
 | `/campos/:courseKey?` | CamposPage | master-courses.json, away-courses.json, extraCourses.ts, course-players.json, {MANUEL}/analysis/data.json (tab "Como jogou") |
 | `/uskids` | USKIDSPage | uskids-results.json, uskids_torneios_completos(1-41).json, uskids-field.json |
 | — (`/kids` e `/kids-legacy` → redirect `/kids2`) | KIDSPage REMOVIDA 2026-08-06 (sunset — ver "Páginas legadas") | — |
-| `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/` |
+| `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/`. `/next-t` (Próximos torneios) é um CircuitShell desde 20/10/2026 (`kids2/nextCircuit.tsx`; `?t=&esc=&tab=`, os links antigos `tab=players&vista=…` continuam) |
 | `/FPG` (+ `/torneio/:tkey`, `/:filter`, `/:filter/:sub`; `/diversos` → redirect `/FPG`) | FPGPage | pull-torneiosNNN.json |
 | `/drive` (+ `/torneio/:tkey`) | DrivePage | drive-data-YYYY-MM.json, aquapor-data-YYYY-MM.json |
 | — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO de dados (URLS, loadT, bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage — UI standalone removida 2026-07-02 | brjgt*_*.json, wjgc_*.json |

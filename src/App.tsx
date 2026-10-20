@@ -81,12 +81,12 @@ const _earlyData = Promise.all([
   fetch("/data/course-players.json").then(r => r.ok ? r.json() : null).then(j => (j?.players ?? {}) as CoursePlayersMap).catch(() => ({} as CoursePlayersMap)),
 ]);
 
-/** /kids2/scout/:tid (Scout antigo, 20/10/2026) → a vista Lista dos Próximos
+/** /kids2/scout/:tid (Scout antigo, 20/10/2026) → a aba Scout dos Próximos
  *  torneios, que usa o Scout partilhado (ui/circuit/Scout.tsx). */
 function Kids2ScoutRedirect() {
   const { tid = "" } = useParams<{ tid: string }>();
   const t = tid.match(/(\d+)$/)?.[1];
-  return <Navigate to={t ? `/kids2/next-t?t=${t}&tab=players&vista=lista` : "/kids2/next-t"} replace />;
+  return <Navigate to={t ? `/kids2/next-t?t=${t}&tab=scout` : "/kids2/next-t"} replace />;
 }
 
 /** /england/t/2025_reid-trophy-2025 → /major/reidtrophy/2025; o resto → Reid Trophy 2026. */

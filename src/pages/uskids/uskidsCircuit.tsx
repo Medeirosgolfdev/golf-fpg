@@ -208,7 +208,7 @@ function escalaoTemManuel(e: EscalaoResult, t: TorneioResult): boolean {
 
 /** Inscritos de um escalão (uskids-field.json) → formato FPG (AdmissionsTab).
  *  Os desinscritos ficam na lista, marcados. */
-function fieldAdmissions(e: FieldEscalao): FpgAdmissions | undefined {
+export function fieldAdmissions(e: FieldEscalao): FpgAdmissions | undefined {
   const base = { fed: null, hcp: null, vac: null, dataInscricao: null, escalao: e.nome } as const;
   const players: FpgAdmissionPlayer[] = [
     ...(e.jogadores ?? []).map((j, i): FpgAdmissionPlayer => ({
@@ -229,11 +229,14 @@ const sexoEscalao = (nome: string) => (/girls/i.test(nome) ? "F" as const : /boy
 // ─────────────────────────────────────────────
 // Detalhe de um escalão com resultados (TournamentDetail)
 // ─────────────────────────────────────────────
-function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras }: {
+function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras, moreTabs, tabParam = "rt" }: {
   escalao: EscalaoResult;
   torneio: TorneioResult;
   drawsData: UskidsDrawsData | null;
   extras?: CircuitRenderFullExtras;
+  /** Abas da página a seguir às do shell (o Kids 2 junta as de análise). */
+  moreTabs?: UskidsExtraTab[];
+  tabParam?: string;
 }) {
   // O arMap chega aos poucos (os rivais carregam em fundo): o torneio monta-se
   // aqui, no render, para o HCP FPG dos portugueses (SD exacto) entrar quando chega.
@@ -248,9 +251,9 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras }: {
   const options = useMemo(() => ({ noInferBlanks: true, showCourse: campoProprio }), [campoProprio]);
   // «Edições anteriores» e «Scout» vêm do shell.
   const extraTabs = useMemo(() => {
-    const tabs = [extras?.pastEditionsTab, extras?.repeatersTab].filter((x): x is NonNullable<typeof x> => !!x);
+    const tabs = [extras?.pastEditionsTab, extras?.repeatersTab, ...(moreTabs ?? [])].filter((x): x is NonNullable<typeof x> => !!x);
     return tabs.length ? tabs : undefined;
-  }, [extras?.pastEditionsTab, extras?.repeatersTab]);
+  }, [extras?.pastEditionsTab, extras?.repeatersTab, moreTabs]);
 
   // playersDB com kidsHash para todos os jogadores deste escalão
   const kidsDB = useMemo(() => {
@@ -284,9 +287,9 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras }: {
           ⚠️ <strong>{displayName(j.nome)}</strong> — {j._nota}
         </div>
       ))}
-      {/* «rt»: a /uskids já usa «tab» para as vistas da página. */}
+      {/* «rt» na /uskids: lá o «tab» é das vistas da página. */}
       <TournamentDetail tournament={tournament} escLookup={new Map()} playersDB={kidsDB as unknown as TournamentDetailProps["playersDB"]}
-        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} extraTabs={extraTabs} tabParam="rt" />
+        options={options} siLabel="m" hideHeader synthDraws={false} roundDraws={roundDraws} extraTabs={extraTabs} tabParam={tabParam} />
     </div>
   );
 }
@@ -295,9 +298,19 @@ function UskidsEscalaoDetail({ escalao: e, torneio: t, drawsData, extras }: {
 // Divisões de um torneio
 // ─────────────────────────────────────────────
 
+export interface UskidsExtraTab { key: string; label: string; content: React.ReactNode }
+export interface UskidsDivisionsOpts {
+  /** Abas próprias de cada escalão, depois das do shell (Kids 2: as de análise). */
+  extraTabs?: (escalao: string) => UskidsExtraTab[];
+  /** Parâmetro do URL das abas do TournamentDetail (default «rt», o da /uskids). */
+  tabParam?: string;
+  /** Sem a grelha «Todos» dos torneios por disputar. */
+  semTodos?: boolean;
+}
+
 /** Escalões de um torneio: os dos resultados (com dados) e os dos inscritos,
  *  juntos pelo age_group; por disputar, a grelha «Todos» à frente. */
-export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null, drawsData: UskidsDrawsData | null): CircuitDivision[] {
+export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null, drawsData: UskidsDrawsData | null, opts: UskidsDivisionsOpts = {}): CircuitDivision[] {
   type Par = { nome: string; age_group: number; r?: EscalaoResult; f?: FieldEscalao };
   const byAge = new Map<number, Par>();
   for (const r of res?.escaloes ?? []) if (temDados(r)) byAge.set(r.age_group, { nome: r.nome, age_group: r.age_group, r });
@@ -319,12 +332,13 @@ export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null
       return {
         ...base, results, roundDraws,
         renderFullKeepHeader: true,
-        renderFull: (extras) => <UskidsEscalaoDetail escalao={r} torneio={res} drawsData={drawsData} extras={extras} />,
+        renderFull: (extras) => <UskidsEscalaoDetail escalao={r} torneio={res} drawsData={drawsData} extras={extras}
+          moreTabs={opts.extraTabs?.(p.nome)} tabParam={opts.tabParam} />,
       };
     }
-    return { ...base, admissions: p.f ? fieldAdmissions(p.f) : undefined, roundDraws, siLabel: "m" };
+    return { ...base, admissions: p.f ? fieldAdmissions(p.f) : undefined, roundDraws, siLabel: "m", extraSections: opts.extraTabs?.(p.nome) };
   });
-  if (campo && !isTerminado(campo.date_fim, campo.date_inicio)) {
+  if (campo && !opts.semTodos && !isTerminado(campo.date_fim, campo.date_inicio)) {
     divs.unshift({
       key: "todos", escalao: "Todos", tabLabel: "Todos",
       renderFull: () => <TabCampoDetalhe torneio={campo} />,

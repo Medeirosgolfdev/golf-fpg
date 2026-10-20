@@ -152,7 +152,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 | Manuel — USKids accountUID | `762810` |
 | Manuel — data de nascimento | `29/04/2014` (`MANUEL_BIRTH_YEAR = 2014`) |
 | Pai (Manuel Medeiros) — FPG nfed | `54907` |
-| `TORNEIOS_COMPLETOS_COUNT` | `41` (constante em `USKIDSPage.tsx` — actualizar ao acrescentar completos) |
+| `TORNEIOS_COMPLETOS_COUNT` | `41` (constante em `src/data/uskidsResultsLoader.ts` — actualizar ao acrescentar completos) |
 | Signupanytime `ax` | `1129` (internacional) · `2739` (Marco Simone 2025) · `2760` (El Prat) |
 
 ## Regras que não se quebram

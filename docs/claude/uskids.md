@@ -512,7 +512,7 @@ carregar `tour`/`type` por torneio.
 
 **uskids_scrape_courses - PERFEITO COM DISTANCIAS.js** (`scripts/`, movido da raiz em 2026-06-23) — **Activo, sem substituto Node** (gerador canónico dos completos). Colar em `www.signupanytime.com` (qualquer página). Gera `uskids_torneios_completos(N).json` com par+yards reais e scorecards completos. Suporta dois formatos de output: v1 (antigo, array) e v2 (novo, objecto com `signupanytime_t`).
 - Configurar: editar array `TOURNAMENTS`: `{ t: "21080" }`
-- Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em USKIDSPage.tsx (actualmente **41**)
+- Após download: copiar para `public/data/` e atualizar `TORNEIOS_COMPLETOS_COUNT` em `src/data/uskidsResultsLoader.ts` (actualmente **41**)
 
 ### Torneios no member-history (`ALL_TCODES` em fetch-uskids-member-history.js)
 

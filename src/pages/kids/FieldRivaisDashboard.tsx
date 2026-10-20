@@ -9,24 +9,19 @@
  * Reutiliza o componente visual RivaisDashboard sem o modificar.
  */
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useSearchParams } from "react-router-dom";
 import RivaisDashboard from "../../ui/RivaisDashboard";
-import LoadingState from "../../ui/LoadingState";
 import { cachedFetchJson } from "../../data/fetchCache";
+import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
-import { normPaisDisplay, flag as flagOf } from "../../utils/flagUtils";
+import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
-import Scout from "../../ui/circuit/Scout";
-import { KidsLinkCtx } from "../../ui/KidsLink";
-import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
-import TabRow from "../../ui/TabRow";
 import { kidsUrl } from "../../ui/KidsLink";
 
 // ─────────────────────────────────────────────────────────────────────
@@ -157,7 +152,7 @@ function pastSeriesKey(name: string): string {
 
 /** True se o escalão "user" (ex: Boys 12) está incluído no escalão "candidato"
  *  (ex: Boys 12-13 ou Boys 11-12 ou U14). Geral/null → sempre matcha. */
-function escalaoMatches(userEsc: string, candEsc: string): boolean {
+export function escalaoMatches(userEsc: string, candEsc: string): boolean {
   if (!candEsc || candEsc === "Geral") return true;
   const u = parseEscalaoRange(userEsc);
   const c = parseEscalaoRange(candEsc);
@@ -526,20 +521,45 @@ interface MHSlim {
 // ─────────────────────────────────────────────────────────────────────
 // Main component
 // ─────────────────────────────────────────────────────────────────────
-type TabKey = "players" | "scores" | "scorecards" | "campo" | "previsao";
-const VALID_TABS: readonly TabKey[] = ["players", "scores", "scorecards", "campo", "previsao"];
 
-export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao = "Boys 12", onSelectPlayer, autoRivals, syncUrl = false }: {
-  defaultT?: number;
-  defaultEscalao?: string;
-  onSelectPlayer?: (name: string) => void;
-  autoRivals?: AutoRivalPlayer[];
-  /** Sincroniza torneio/escalão/tab com o URL (links partilháveis). */
-  syncUrl?: boolean;
-}) {
+type SectionKey = "grelha" | "scores" | "sc-edicoes" | "campo" | "previsao";
+
+/** Abas de análise de cada escalão nos Próximos torneios do Kids 2. Desde
+ *  20/10/2026 a escolha do torneio e do escalão é do CircuitShell
+ *  (src/pages/kids2/nextCircuit.tsx); aqui fica só o conteúdo de cada aba. */
+export const FIELD_SECTIONS: { key: SectionKey; label: string }[] = [
+  { key: "grelha", label: "Por torneio" },
+  { key: "scores", label: "Scores" },
+  // «sc-edicoes»: o «scorecards» é a aba do TournamentDetail (as voltas desta edição).
+  { key: "sc-edicoes", label: "Scorecards anteriores" },
+  { key: "campo", label: "O Campo" },
+  { key: "previsao", label: "🔮 Previsão" },
+];
+
+export type { FieldTorneio, FieldEscalao, FieldPlayer };
+
+/** Tudo o que os Próximos torneios carregam e a lista de torneios que se podem
+ *  analisar: próximos (curados + os do Manuel), passados USKids (do Manuel +
+ *  clássicos, a edição mais recente de cada série) e os de fora (WJGC, Doral,
+ *  EOWAGR, FFG U14, JobFile). */
+export interface FieldRivaisData {
+  field: FieldData;
+  mh: MHSlim;
+  uskRes: USKResData | null;
+  intlCols: Map<string, IntlColData>;
+  upTorn: typeof UP_TORN;
+  upTornFuture: typeof UP_TORN;
+  futureTorneios: FieldTorneio[];
+  buildSyntheticTorneio: (tcode: string) => FieldTorneio | null;
+}
+
+const toIso = usToIso;
+
+/** Carrega os dados e monta a lista. `pedido` = torneio pedido no link (entra
+ *  sempre, mesmo já jogado); `escalaoNome` = escalão de referência dos passados
+ *  (o do Manuel). Null enquanto carrega. */
+export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pedido: number | null, escalaoNome: string): FieldRivaisData | null {
   const [field, setField] = useState<FieldData | null>(null);
-  // Nome → junior do kids2, para o Scout (ui/circuit/Scout.tsx) cruzar os inscritos.
-  const { kidsMap } = useKidsLinkMap();
   const [mh, setMh] = useState<MHSlim | null>(null);
   // uskids-results.json — para sintetizar Passados quando o member-history
   // ainda não foi regenerado (torneio acabou hoje/ontem).
@@ -550,60 +570,15 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   const [jobIntl, setJobIntl] = useState<Map<number, JobIntlFile>>(new Map());
   // Colunas INTL normalizadas (id → dados), ver INTL_COLUMNS.
   const [intlCols, setIntlCols] = useState<Map<string, IntlColData>>(new Map());
-  const [searchParams, setSearchParams] = useSearchParams();
-  // Torneio pedido no link (?t=22876 ou ?t=usk22876 — o link «Scout» da /uskids
-  // usa o prefixo). Entra SEMPRE na lista, mesmo já jogado: antes o Rome Classic
-  // (17/10) abria o Spanish Open sem aviso (20/10/2026).
-  const pedidoT = useRef<number | null>((() => {
-    if (!syncUrl) return null;
-    const n = Number(String(searchParams.get("t") || "").replace(/^usk/i, ""));
-    return Number.isFinite(n) && n !== 0 ? n : null;
-  })());
-  const [torneioT, setTorneioT] = useState<number>(() => pedidoT.current ?? defaultT);
-  // Sem ?t= no endereço, abre-se o próximo torneio em que o Manuel está inscrito
-  // (o defaultT fixo caía num torneio sem ele — ex. Belgium 2026 em vez do Spanish Open).
-  const autoPick = useRef(!(syncUrl && searchParams.get("t")));
-  const [escalaoNome, setEscalaoNome] = useState<string>(() =>
-    (syncUrl && searchParams.get("esc")) || defaultEscalao,
-  );
-  // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
-  // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
-  // «scout» deixou de ser aba (20/10/2026): é a vista «Lista» dos Jogadores.
-  // Links antigos (?tab=scout, ?v=scout da /uskids) abrem a Lista.
-  const [activeTab, setActiveTab] = useState<TabKey>(() => {
-    if (syncUrl) {
-      const t = searchParams.get("tab");
-      if (t === "scout") return "players";
-      if (t && (VALID_TABS as readonly string[]).includes(t)) return t as TabKey;
-    }
-    return "players";
-  });
-  // Vista dos Jogadores: «lista» (uma linha por inscrito — ui/circuit/Scout.tsx) ou
-  // «grelha» (resultados por torneio — RivaisDashboard). Botão segmentado.
-  const [vistaJog, setVistaJog] = useState<"lista" | "grelha">(() =>
-    syncUrl && searchParams.get("vista") === "grelha" ? "grelha" : "lista",
-  );
-
-  // Espelhar torneio/escalão/tab no URL -> cada torneio tem link próprio.
-  useEffect(() => {
-    if (!syncUrl) return;
-    setSearchParams(prev => {
-      const next = new URLSearchParams(prev);
-      next.set("t", String(torneioT));
-      next.set("esc", escalaoNome);
-      next.set("tab", activeTab);
-      next.delete("v");
-      if (activeTab === "players") next.set("vista", vistaJog); else next.delete("vista");
-      return next;
-    }, { replace: true });
-  }, [syncUrl, torneioT, escalaoNome, activeTab, vistaJog, setSearchParams]);
+  const pedidoT = useRef<number | null>(pedido);
 
   // Load field + member history + uskids-results (último é fallback para
   // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
   useEffect(() => {
     cachedFetchJson<FieldData>("/data/uskids-field.json").then(d => d && setField(d)).catch(() => {});
     cachedFetchJson<MHSlim>("/data/uskids-member-history-slim.json").then(d => d && setMh(d)).catch(() => {});
-    cachedFetchJson<USKResData>("/data/uskids-results.json").then(d => d && setUskRes(d)).catch(() => {});
+    // Os mesmos resultados da /uskids (completos + gerado, com as correcções).
+    loadUskidsResults().then(d => setUskRes(d as unknown as USKResData)).catch(() => {});
   }, []);
 
   // Load FFG Internationaux U14 files (carrega em paralelo, falhas silenciosas)
@@ -660,12 +635,6 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return () => { alive = false; };
   }, []);
 
-  // Conversor de data US "M/D/YYYY" → ISO "YYYY-MM-DD"
-  const toIso = (s: string): string => {
-    const [m, d, y] = (s || "").split("/");
-    if (!y) return "";
-    return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-  };
 
   /** Constrói um FieldTorneio sintético para um tcode passado.
    *  Estratégia em cascata:
@@ -736,13 +705,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return null;
   };
 
-  // Lista de torneios seleccionáveis no dropdown:
-  //   • FUTUROS: UP_TORN ∩ uskids-field.json (3 entradas relevantes)
-  //   • PASSADOS: todos os tcodes que Manuel jogou (de member-history-slim).
-  //
-  // Ordenados por data: futuros ascendente (próximo primeiro), passados
-  // descendente (mais recente primeiro). Junta-se as duas listas.
-  // Próximos torneios = curados (UP_TORN) + os do field em que o Manuel está inscrito.
+
   const upTorn = useMemo(() => buildUpTorn(field), [field]);
   const upTornFuture = useMemo(() => upTorn.filter(u => !u.date_iso || u.date_iso >= _today), [upTorn]);
 
@@ -996,56 +959,28 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
 
     return out;
-  }, [field, mh, autoRivals, ffgData, jobIntl, escalaoNome, uskRes]);
+  }, [field, mh, autoRivals, ffgData, jobIntl, uskRes, escalaoNome]);
 
-  // Escalões disponíveis para o torneio escolhido
-  const escaloesDisponiveis = useMemo(() => {
-    const t = futureTorneios.find(x => x.t === torneioT);
-    if (!t) return [] as string[];
-    return t.escaloes.filter(e => (e.jogadores?.length ?? 0) > 0).map(e => e.nome);
-  }, [futureTorneios, torneioT]);
+  return useMemo(() => (field && mh
+    ? { field, mh, uskRes, intlCols, upTorn, upTornFuture, futureTorneios, buildSyntheticTorneio }
+    : null),
+  // buildSyntheticTorneio só lê mh/uskRes, que já estão nas dependências.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  [field, mh, uskRes, intlCols, upTorn, upTornFuture, futureTorneios]);
+}
 
-  // Auto-normalização: quando `futureTorneios` muda (load async ou re-cálculo),
-  // garantir que `torneioT` e `escalaoNome` apontam para algo válido. Sem
-  // isto, o `defaultT/defaultEscalao` pode ficar bloqueado num torneio que
-  // não tem o escalão pedido (caso real: European 2026 saiu do field; WC
-  // tem Boys 12 mas o escalão fica "" no select se algo falhou antes).
-  useEffect(() => {
-    if (futureTorneios.length === 0) return;
-    // 0) Sem ?t= no endereço: o próximo torneio do Manuel (só depois de o field carregar)
-    if (autoPick.current && field) {
-      autoPick.current = false;
-      const inscrito = (t: FieldTorneio) => t.escaloes.find(e => (e.jogadores ?? []).some(j => isManuelNome(j.nome)));
-      const alvo = futureTorneios
-        .filter(t => t.t > 0 && toIso(t.date_inicio) >= _today && inscrito(t))
-        .sort((a, b) => toIso(a.date_inicio).localeCompare(toIso(b.date_inicio)))[0];
-      if (alvo) {
-        setTorneioT(alvo.t);
-        const esc = inscrito(alvo);
-        if (esc) setEscalaoNome(esc.nome);
-        return;
-      }
-    }
-    // 1) Se o torneio actual não existe, fixar no primeiro disponível
-    const currentTorneio = futureTorneios.find(x => x.t === torneioT);
-    if (!currentTorneio) {
-      const first = futureTorneios[0];
-      setTorneioT(first.t);
-      const firstEsc = first.escaloes.find(e => e.nome === escalaoNome && (e.jogadores?.length ?? 0) > 0)
-        || first.escaloes.find(e => (e.jogadores?.length ?? 0) > 0);
-      if (firstEsc) setEscalaoNome(firstEsc.nome);
-      return;
-    }
-    // 2) Se o escalão actual não existe (ou está vazio) para este torneio,
-    //    escolher o primeiro escalão COM jogadores.
-    const currentEsc = currentTorneio.escaloes.find(e => e.nome === escalaoNome && (e.jogadores?.length ?? 0) > 0);
-    if (!currentEsc) {
-      const firstEsc = currentTorneio.escaloes.find(e => (e.jogadores?.length ?? 0) > 0);
-      if (firstEsc) setEscalaoNome(firstEsc.nome);
-    }
-  }, [futureTorneios, torneioT, escalaoNome]);
+/** Uma aba de análise do torneio `torneioT` no escalão `escalaoNome`. */
+export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoRivals, onSelectPlayer }: {
+  data: FieldRivaisData;
+  torneioT: number;
+  escalaoNome: string;
+  section: SectionKey;
+  autoRivals?: AutoRivalPlayer[];
+  onSelectPlayer?: (name: string) => void;
+}) {
+  const { field, mh, uskRes, intlCols, upTorn, upTornFuture, futureTorneios, buildSyntheticTorneio } = data;
+  // Dataset da grelha {D, T, UP, manuel, AVG_R, T_WEIGHTS, allCountries}
 
-  // Construir dataset {D, T, UP, manuel, AVG_R, T_WEIGHTS, allCountries}
   const dataset = useMemo(() => {
     if (!field || !mh) return null;
     // O torneio pode vir de 3 fontes:
@@ -1564,357 +1499,28 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     return { D, T, UP: upTornFuture, manuel, AVG_R, T_WEIGHTS, allCountries, seriesBoundaries };
   }, [field, mh, torneioT, escalaoNome, autoRivals, futureTorneios, uskRes, intlCols]);
 
-  // Detectar "famílias" de torneios — séries recorrentes que aparecem múltiplas
-  // vezes por ano/escalão (Doral, WJGC, EOWAGR). Quando a família tem >1 edição,
-  // o dropdown principal mostra apenas uma entrada e o segundo dropdown deixa
-  // o utilizador escolher (Ano × Escalão).
-  // IMPORTANTE: este useMemo TEM de vir antes dos early returns abaixo, senão
-  // o React queixa-se de "more hooks than during the previous render".
-  const familyOf = (ft: FieldTorneio): string | null => {
-    const m = ft.name.match(/^(WJGC|Doral|EOWAGR)\b/);
-    return m ? m[1] : null;
-  };
-  const familias = useMemo(() => {
-    const m = new Map<string, FieldTorneio[]>();
-    for (const ft of futureTorneios) {
-      const fam = familyOf(ft);
-      if (!fam) continue;
-      if (!m.has(fam)) m.set(fam, []);
-      m.get(fam)!.push(ft);
-    }
-    // Manter só famílias com >1 entrada (senão fica como entrada normal)
-    for (const [k, v] of [...m.entries()]) {
-      if (v.length < 2) m.delete(k);
-    }
-    // Ordenar cada família por ano desc (mais recente primeiro)
-    for (const arr of m.values()) {
-      arr.sort((a, b) => {
-        const ya = parseInt(a.name.match(/(\d{4})/)?.[1] || "0", 10);
-        const yb = parseInt(b.name.match(/(\d{4})/)?.[1] || "0", 10);
-        if (yb !== ya) return yb - ya;
-        return (a.escaloes[0]?.nome || "").localeCompare(b.escaloes[0]?.nome || "");
-      });
-    }
-    return m;
-  }, [futureTorneios]);
-
-  // Render — early returns DEPOIS de todos os hooks acima estarem chamados.
-  if (!field || !mh) {
-    return <LoadingState message="A carregar dados de torneios futuros…" />;
-  }
-  if (futureTorneios.length === 0) {
-    return <div className="muted p-16">Sem torneios futuros disponíveis.</div>;
-  }
-
-  // Torneio actual seleccionado — usado para mostrar data/campo na barra
-  const torneioSelecionado = futureTorneios.find(x => x.t === torneioT) || null;
-  const currentFamilia = torneioSelecionado ? familyOf(torneioSelecionado) : null;
-  const isFamilyMode = !!(currentFamilia && familias.has(currentFamilia));
-  const dropdown1Value = isFamilyMode ? `family:${currentFamilia}` : String(torneioT);
-
+  const torneio = futureTorneios.find(x => x.t === torneioT) || null;
+  if (section === "scores") return <HistoricTopNTable mh={mh} torneio={torneio} escalaoNome={escalaoNome} autoRivals={autoRivals} />;
+  if (section === "sc-edicoes") return <HistoricScorecardsTab mh={mh} torneio={torneio} escalaoNome={escalaoNome} />;
+  if (section === "campo") return <CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} />;
+  if (section === "previsao") return <PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} />;
+  if (!dataset) return <div className="muted p-16">Sem dados para este torneio/escalão.</div>;
   return (
-    <div>
-      <div style={{ display: "flex", gap: 10, alignItems: "center", marginBottom: 12, flexWrap: "wrap" }}>
-        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500 }}>Torneio</span>
-        <select
-          className="select fs-13"
-          value={dropdown1Value}
-          onChange={e => {
-            const v = e.target.value;
-            // Famílias agrupadas (Doral/WJGC/EOWAGR) — escolher a edição mais
-            // recente como default; o utilizador afina depois no dropdown ao lado.
-            if (v.startsWith("family:")) {
-              const fam = v.slice("family:".length);
-              const entries = familias.get(fam) || [];
-              if (entries.length > 0) {
-                const first = entries[0];
-                setTorneioT(first.t);
-                setEscalaoNome(first.escaloes[0]?.nome ?? "");
-              }
-              return;
-            }
-            const newT = parseInt(v);
-            setTorneioT(newT);
-            const newTorn = futureTorneios.find(x => x.t === newT);
-            if (newTorn && !newTorn.escaloes.some(e => e.nome === escalaoNome)) {
-              // Sem match exacto: preferir um escalão COMPATÍVEL (ex: escolher
-              // Future Masters com "Boys 12" → cai em "Boys 11-12").
-              const withPlayers = (e: FieldEscalao) => (e.jogadores?.length ?? 0) > 0;
-              const match = newTorn.escaloes.find(e => withPlayers(e) && escalaoMatches(escalaoNome, e.nome))
-                || newTorn.escaloes.find(withPlayers);
-              if (match) setEscalaoNome(match.nome);
-            }
-          }}
-        >
-          {(() => {
-            const UP_T_SET = new Set(upTorn.map(u => u.tcode));
-            const todayIso = new Date().toISOString().slice(0, 10);
-            const fmtDate = (us: string) => {
-              const iso = (s => { const [m2,d2,y2]=(s||"").split("/"); return y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:s; })(us);
-              if (!iso || !iso.includes("-")) return us;
-              const [y, m, d] = iso.split("-");
-              return `${d}/${m}/${y}`;
-            };
-            const groupOf = (e: FieldTorneio): string => {
-              if (e.t > 0) {
-                if (UP_T_SET.has(String(e.t))) {
-                  const [m2,d2,y2]=(e.date_inicio||"").split("/");
-                  const iso = y2?`${y2}-${String(m2).padStart(2,"0")}-${String(d2).padStart(2,"0")}`:"";
-                  if (iso && iso >= todayIso) return "Próximos torneios";
-                }
-                return "Passados USKids";
-              }
-              if (e.t <= -1000) return "Torneios internacionais";
-              if (e.t > -100) return "Outros";
-              if (e.t > -200) return "FFG · Internationaux U14";
-              // -200+: famílias agrupáveis aparecem só como o nome da série.
-              const fam = familyOf(e);
-              if (fam) return fam;
-              return "Outros";
-            };
-            const groups = new Map<string, FieldTorneio[]>();
-            for (const ft of futureTorneios) {
-              const g = groupOf(ft);
-              let arr = groups.get(g);
-              if (!arr) { arr = []; groups.set(g, arr); }
-              arr.push(ft);
-            }
-            const groupOrder = [
-              "Próximos torneios",
-              "Passados USKids",
-              "WJGC",
-              "Doral",
-              "EOWAGR",
-              "FFG · Internationaux U14",
-              "Torneios internacionais",
-              "Outros",
-            ];
-            const seen = new Set<string>();
-            const ordered: Array<[string, FieldTorneio[]]> = [];
-            for (const g of groupOrder) {
-              if (groups.has(g)) { ordered.push([g, groups.get(g)!]); seen.add(g); }
-            }
-            for (const [g, arr] of groups) {
-              if (!seen.has(g)) ordered.push([g, arr]);
-            }
-            return ordered.map(([groupLabel, items]) => {
-              // Família agrupada: 1 só opção (a escolha de ano/escalão vai
-              // para o segundo dropdown).
-              if (familias.has(groupLabel)) {
-                return (
-                  <option key={`family-${groupLabel}`} value={`family:${groupLabel}`}>
-                    {(() => {
-                      // Contar anos únicos (edição = ano), não combinações
-                      // ano×escalão. Ex: Doral B10-11 2018-2025 + B12-13 2024 →
-                      // 8 anos, não 9 entradas.
-                      const anos = new Set<string>();
-                      for (const ft of items) {
-                        const y = ft.name.match(/(\d{4})/)?.[1];
-                        if (y) anos.add(y);
-                      }
-                      const n = anos.size || items.length;
-                      return `${groupLabel} (${n} ${n === 1 ? "edição" : "edições"})`;
-                    })()}
-                  </option>
-                );
-              }
-              return (
-                <optgroup key={groupLabel} label={groupLabel}>
-                  {items.map(t => (
-                    <option key={t.t} value={t.t}>{t.name} ({fmtDate(t.date_inicio)})</option>
-                  ))}
-                </optgroup>
-              );
-            });
-          })()}
-        </select>
-        <span style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", fontWeight: 500 }}>
-          {isFamilyMode ? "Edição" : "Escalão"}
-        </span>
-        <select
-          className="select fs-13"
-          value={isFamilyMode ? `esc:${escalaoNome}` : escalaoNome}
-          onChange={e => {
-            if (isFamilyMode) {
-              const v = e.target.value;
-              const escolhido = v.startsWith("esc:") ? v.slice("esc:".length) : v;
-              // Encontrar a edição mais recente desse escalão na família
-              // (familia já vem ordenada por ano desc, logo o primeiro match
-              // é o mais recente). O torneio principal usado na tab Jogadores
-              // passa a ser essa edição; a tab Scores agrega todas as edições
-              // do escalão automaticamente.
-              const family = familias.get(currentFamilia!) || [];
-              const target = family.find(ft => (ft.escaloes[0]?.nome || "Geral") === escolhido);
-              if (target) {
-                setTorneioT(target.t);
-                setEscalaoNome(escolhido);
-              }
-            } else {
-              setEscalaoNome(e.target.value);
-            }
-          }}
-        >
-          {isFamilyMode
-            ? (() => {
-                // Escalões únicos da família — sem repetir por ano. A escolha
-                // de "Boys 10-11" agrega todas as edições disponíveis na vista.
-                const seen = new Set<string>();
-                const opts: string[] = [];
-                for (const ft of (familias.get(currentFamilia!) || [])) {
-                  const esc = ft.escaloes[0]?.nome || "Geral";
-                  if (!seen.has(esc)) { seen.add(esc); opts.push(esc); }
-                }
-                // Ordenar por idade ascendente. Escalões sem range numérico
-                // (WAGR, Girls WAGR, Geral) ficam no fim. Boys antes de Girls
-                // quando idades iguais.
-                const sortKey = (esc: string): [number, number, string] => {
-                  const range = parseEscalaoRange(esc);
-                  if (!range) return [9999, 0, esc.toLowerCase()];
-                  const isGirls = /girls/i.test(esc);
-                  return [range[0], isGirls ? 1 : 0, esc.toLowerCase()];
-                };
-                opts.sort((a, b) => {
-                  const ka = sortKey(a);
-                  const kb = sortKey(b);
-                  if (ka[0] !== kb[0]) return ka[0] - kb[0];
-                  if (ka[1] !== kb[1]) return ka[1] - kb[1];
-                  return ka[2].localeCompare(kb[2]);
-                });
-                return opts.map(esc => (
-                  <option key={esc} value={`esc:${esc}`}>{esc}</option>
-                ));
-              })()
-            : escaloesDisponiveis.map(n => <option key={n} value={n}>{n}</option>)
-          }
-        </select>
-        {torneioSelecionado && (
-          <span style={{
-            marginLeft: "auto",
-            fontSize: "var(--fs-12)",
-            color: "var(--text-3)",
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 6,
-          }}>
-            <span>{torneioSelecionado.date_inicio}</span>
-            {(() => {
-              const hub = upTorn.find(u => u.tcode === String(torneioT))?.hub;
-              return hub ? (
-                <a href={hub} target="_blank" rel="noreferrer"
-                   style={{ color: "var(--accent)", textDecoration: "none", fontWeight: 600 }}
-                   title="Player Hub oficial USKids">
-                  🔗 Player Hub
-                </a>
-              ) : null;
-            })()}
-          </span>
-        )}
-      </div>
-
-      <div className="tabbar-under" role="tablist">
-        <button type="button" role="tab" aria-selected={activeTab === "players"}
-          className={"tab-under" + (activeTab === "players" ? " active" : "")}
-          onClick={() => setActiveTab("players")}>
-          Jogadores
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "scores"}
-          className={"tab-under" + (activeTab === "scores" ? " active" : "")}
-          onClick={() => setActiveTab("scores")}>
-          Scores
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "scorecards"}
-          className={"tab-under" + (activeTab === "scorecards" ? " active" : "")}
-          onClick={() => setActiveTab("scorecards")}>
-          Scorecards
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "campo"}
-          className={"tab-under" + (activeTab === "campo" ? " active" : "")}
-          onClick={() => setActiveTab("campo")}>
-          O Campo
-        </button>
-        <button type="button" role="tab" aria-selected={activeTab === "previsao"}
-          className={"tab-under" + (activeTab === "previsao" ? " active" : "")}
-          onClick={() => setActiveTab("previsao")}>
-          🔮 Previsão
-        </button>
-      </div>
-
-      {/* Faixa de cabeçalho consistente por sub-tab (padrão único). */}
-      <div style={{
-        display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap",
-        margin: "12px 0 10px", paddingBottom: 8, borderBottom: "1px solid var(--border-light)",
-      }}>
-        {(() => {
-          const meta: Record<string, { icon: string; title: string; desc: string }> = {
-            players: { icon: "🏌️", title: "Jogadores", desc: vistaJog === "lista" ? "Quem está inscrito, o nível de cada um e como se tem dado com o Manuel." : "Os resultados de cada inscrito nos torneios em comum." },
-            scores: { icon: "📊", title: "Scores", desc: "Totais por ronda nas edições passadas." },
-            scorecards: { icon: "🗂️", title: "Scorecards", desc: "Pancadas buraco-a-buraco dos finishers." },
-            campo: { icon: "⛳", title: "O Campo", desc: "Anatomia do campo e tee do escalão." },
-            previsao: { icon: "🔮", title: "Previsão", desc: "O que o Manuel é capaz de fazer neste campo." },
-          };
-          const m = meta[activeTab];
-          if (!m) return null;
-          return (
-            <>
-              <span style={{ fontSize: "var(--fs-20, 20px)", lineHeight: 1 }}>{m.icon}</span>
-              <span style={{ fontWeight: 800, fontSize: "var(--fs-16, 16px)" }}>{m.title}</span>
-              <span className="muted fs-12">{m.desc}</span>
-              {activeTab === "players" && (
-                <span style={{ marginLeft: "auto" }}>
-                  <TabRow<"lista" | "grelha"> active={vistaJog} onChange={setVistaJog}
-                    tabs={[{ key: "lista", label: "Lista" }, { key: "grelha", label: "Por torneio" }]} />
-                </span>
-              )}
-            </>
-          );
-        })()}
-      </div>
-
-      {activeTab === "players" && vistaJog === "lista" && (() => {
-        // O mesmo Scout dos torneios (ui/circuit/Scout.tsx) — os inscritos deste
-        // escalão com a carreira de cada um (20/10/2026; era o ScoutView do kids2).
-        const esc = futureTorneios.find(x => x.t === torneioT)?.escaloes.find(e => e.nome === escalaoNome);
-        const scoutField = (esc?.jogadores ?? []).map(j => ({ name: j.nome, club: j.pais ? flagOf(j.pais) : null }));
-        return <KidsLinkCtx.Provider value={kidsMap}><Scout field={scoutField} tCode={torneioT > 0 ? torneioT : null} /></KidsLinkCtx.Provider>;
-      })()}
-      {activeTab === "players" && vistaJog === "grelha" && (
-        dataset
-          ? <RivaisDashboard
-              onSelectPlayer={onSelectPlayer}
-              D={dataset.D}
-              T={dataset.T}
-              UP={dataset.UP}
-              manuel={dataset.manuel}
-              T_WEIGHTS={dataset.T_WEIGHTS}
-              AVG_R={dataset.AVG_R}
-              allCountries={dataset.allCountries}
-              showManuelKpis={false}
-              seriesBoundaries={dataset.seriesBoundaries}
-              fieldMode={true}
-              noScroll={true}
-              tournamentDate={(() => {
-                const t = futureTorneios.find(x => x.t === torneioT);
-                if (!t) return undefined;
-                const [m, d, y] = (t.date_inicio || "").split("/");
-                if (!y) return undefined;
-                return `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-              })()}
-            />
-          : <div className="muted p-16">Sem dados para este torneio/escalão.</div>
-      )}
-      {activeTab === "scores" && (
-        <HistoricTopNTable mh={mh} torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} autoRivals={autoRivals} />
-      )}
-      {activeTab === "scorecards" && (
-        <HistoricScorecardsTab mh={mh} torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} />
-      )}
-      {activeTab === "campo" && (
-        <CourseTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
-      )}
-      {activeTab === "previsao" && (
-        <PrevisaoTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
-      )}
-    </div>
+    <RivaisDashboard
+      onSelectPlayer={onSelectPlayer}
+      D={dataset.D}
+      T={dataset.T}
+      UP={dataset.UP}
+      manuel={dataset.manuel}
+      T_WEIGHTS={dataset.T_WEIGHTS}
+      AVG_R={dataset.AVG_R}
+      allCountries={dataset.allCountries}
+      showManuelKpis={false}
+      seriesBoundaries={dataset.seriesBoundaries}
+      fieldMode={true}
+      noScroll={true}
+      tournamentDate={toIso(torneio?.date_inicio || "") || undefined}
+    />
   );
 }
 

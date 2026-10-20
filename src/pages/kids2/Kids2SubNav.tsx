@@ -32,11 +32,12 @@ const TABS: { to: string; label: string; match: (p: string) => boolean }[] = [
   { to: "/kids2/ranking", label: "🏆 Ranking", match: (p) => p.startsWith("/kids2/ranking") },
 ];
 
-export default function Kids2SubNav({ leading, children }: Props) {
+/** Título e vistas do Kids 2 — também na barra do CircuitShell dos Próximos
+ *  torneios (lead do CircuitToolbarSlotCtx). */
+export function Kids2Nav() {
   const { pathname } = useLocation();
   return (
-    <Toolbar>
-      {leading}
+    <>
       <Link to="/kids2" className="toolbar-title" style={{ textDecoration: "none" }}>🌍 Kids 2</Link>
       <ToolbarSep />
       {/* Vistas: o interruptor segmentado do resto do site (14/10/2026). */}
@@ -51,6 +52,15 @@ export default function Kids2SubNav({ leading, children }: Props) {
           );
         })}
       </div>
+    </>
+  );
+}
+
+export default function Kids2SubNav({ leading, children }: Props) {
+  return (
+    <Toolbar>
+      {leading}
+      <Kids2Nav />
       {children && (
         <>
           <ToolbarSep />

@@ -210,7 +210,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 
 | Ficheiro | Papel |
 |----------|-------|
-| `kids/FieldRivaisDashboard.tsx` | Dashboard de field/rivais USKids (tabs Jogadores/Scores/Scorecards/Campo/Previsão/Scout) — renderizado em `/kids2/next-t`; a KIDSPage legacy foi removida 2026-08-06 |
+| `kids/FieldRivaisDashboard.tsx` | Dados e abas de análise dos Próximos torneios do Kids 2 (`useFieldRivaisData` + `FieldRivaisSection`: Por torneio/Scores/Scorecards anteriores/O Campo/Previsão). Desde 20/10/2026 a página `/kids2/next-t` é um CircuitShell (`kids2/nextCircuit.tsx`); a KIDSPage legacy foi removida 2026-08-06 |
 | `KIDSdataLoader.ts` | Loader que consome os 3 ficheiros canónicos do agregador (juniors / juniors-tournaments / tournament-catalog), ~580 linhas; `buildAutoRivals` para o kids2 |
 | `USKIDSPage.tsx` | Resultados USKids com links cruzados para Kids |
 | `FPGPage.tsx` | Dados da federação portuguesa |

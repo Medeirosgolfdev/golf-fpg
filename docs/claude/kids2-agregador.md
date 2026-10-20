@@ -5,7 +5,7 @@
 
 ## KIDSdataLoader — Arquitectura do loader de rivais
 
-O `KIDSdataLoader.ts` era o loader central da KIDSPage (removida 2026-08-06); hoje o consumidor principal é o `kids2/NextTournaments.tsx` (`buildAutoRivals` → `FieldRivaisDashboard`). Exporta `buildAutoRivals()`, `normName()`, `getScorecards()`, `uskTournNames` (Map) e `uskFieldSizes` (Map).
+O `KIDSdataLoader.ts` era o loader central da KIDSPage (removida 2026-08-06); hoje o consumidor principal é o `kids2/NextTournaments.tsx` (`buildAutoRivals` → `useFieldRivaisData` + CircuitShell, `kids2/nextCircuit.tsx`). Exporta `buildAutoRivals()`, `normName()`, `getScorecards()`, `uskTournNames` (Map) e `uskFieldSizes` (Map).
 
 ### Só lê o canónico do agregador (verificado 2026-09-15)
 
