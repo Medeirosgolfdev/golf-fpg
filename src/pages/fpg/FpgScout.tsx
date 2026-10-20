@@ -29,14 +29,12 @@ import {
 
 const n1 = (v: number | null | undefined) => (v == null ? "—" : v.toFixed(1));
 
-/** Forma WHS: differential médio das últimas 5 voltas; verde se está abaixo do
- *  seu normal (a média de 20), vermelho se acima — em golfe, menos é melhor. */
+/** Forma WHS: differential médio das últimas 5 voltas (menos é melhor); o
+ *  detalhe das 8 melhores e da média de 20 fica no tooltip. */
 function FormaCell({ f }: { f: PlayerForm | null }) {
   if (!f || f.avgSD5 == null) return <>–</>;
-  const delta = f.avgSD5 - (f.avgSD20 ?? f.avgSD5);
-  const cor = delta <= -1 ? "var(--accent-dark)" : delta >= 1 ? "var(--score-birdie)" : undefined;
   return (
-    <span style={{ color: cor, fontWeight: 600 }}
+    <span
       title={`últimas 5 voltas: ${n1(f.avgSD5)} · 8 melhores de 20: ${n1(f.avgSD8)} · média de 20: ${n1(f.avgSD20)}\n`
         + `${f.roundsLast3m} voltas nos últimos 3 meses · última a ${f.lastRoundDate ?? "?"}`}>
       {n1(f.avgSD5)}
@@ -99,38 +97,38 @@ export default function FpgScout({ current, previous, playersDB }: {
     if (tem.tee) antes.push({ key: "tee", label: "Tee", cell: (n) => { const t = R(n)?.teeNow; return t ? <TeeDot teeName={t} /> : "–"; } });
     const depois: ScoutExtraCol[] = [];
     if (tem.hcp) {
-      depois.push({ key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n) => R(n)?.hcpNow ?? "–", sort: (n) => R(n)?.hcpNow ?? null });
-      depois.push({ key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n) => {
+      depois.push({ grupo: "WHS", key: "fpghcp", label: "Índice", title: "Índice de hoje (FPG)", cell: (n) => R(n)?.hcpNow ?? "–", sort: (n) => R(n)?.hcpNow ?? null });
+      depois.push({ grupo: "WHS", key: "d3m", label: "Δ 3m", title: "Variação do índice nos últimos 3 meses", cell: (n) => {
         const d = R(n)?.form?.hcpDelta3m;
-        return d ? <span style={{ color: d < 0 ? "var(--accent-dark)" : "var(--text-3)" }}>{d > 0 ? "+" : ""}{d}</span> : "–";
+        return d ? `${d > 0 ? "+" : ""}${d}` : "–";
       } });
     }
     if (tem.forma) {
-      depois.push({ key: "whs", label: "Forma WHS", title: "Differential médio das últimas 5 voltas (verde: acima do seu normal)", cell: (n) => <FormaCell f={R(n)?.form ?? null} />, sort: (n) => R(n)?.form?.avgSD5 ?? null });
-      depois.push({ key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n) => n1(R(n)?.form?.avgSD20) });
+      depois.push({ grupo: "WHS", key: "whs", label: "Forma", title: "Differential médio das últimas 5 voltas (verde: acima do seu normal)", cell: (n) => <FormaCell f={R(n)?.form ?? null} />, sort: (n) => R(n)?.form?.avgSD5 ?? null });
+      depois.push({ grupo: "WHS", key: "whs20", label: "Média", title: "Differential médio das últimas 20 voltas", cell: (n) => n1(R(n)?.form?.avgSD20) });
     }
     if (tem.aqui) {
-      depois.push({ key: "aquiTp", label: "Melhor aqui", title: "Melhor ±par que fez nesta prova", sort: (n) => R(n)?.bestToPar ?? null, cell: (n) => {
+      depois.push({ grupo: "Nesta prova", key: "aquiTp", label: "Melhor ±", title: "Melhor ±par que fez nesta prova", sort: (n) => R(n)?.bestToPar ?? null, cell: (n) => {
         const b = R(n)?.bestToPar;
-        return b != null ? <span style={{ fontWeight: 600, color: tpColorDark(b) }}>{fmtToPar(b)}</span> : "–";
+        return b != null ? fmtToPar(b) : "–";
       } });
-      for (const y of anos) depois.push({ key: `ano${y}`, label: String(y), title: `Lugar na edição de ${y}`,
+      for (const y of anos) depois.push({ grupo: "Nesta prova", key: `ano${y}`, label: String(y), title: `Lugar na edição de ${y}`,
         sort: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e?.pos ?? null; },
         cell: (n) => { const e = R(n)?.editions.find((x) => x.year === y); return e ? (e.pos ? `${e.pos}º` : "jogou") : "–"; } });
-      depois.push({ key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
+      depois.push({ grupo: "Nesta prova", key: "fit", label: "vs Campo", title: "Onde ficou face à mediana do field nesta prova: − melhor que o campo do meio", sort: (n) => R(n)?.courseFit ?? null, cell: (n) => {
         const c = R(n)?.courseFit;
-        return c == null ? "–" : <span style={{ color: c < 0 ? "var(--accent-dark)" : undefined }}>{c > 0 ? "+" : ""}{c}</span>;
+        return c == null ? "–" : `${c > 0 ? "+" : ""}${c}`;
       } });
     }
     if (tem.prev) {
-      depois.push({ key: "prev", label: "Previsão", title: "Gross esperado no torneio", sort: (n) => R(n)?.forecast?.total ?? null, cell: (n) => <b>{R(n)?.forecast?.total ?? "–"}</b> });
-      depois.push({ key: "prevTp", label: "±", cell: (n) => {
+      depois.push({ grupo: "Previsão", key: "prev", label: "Gross", title: "Gross esperado no torneio", sort: (n) => R(n)?.forecast?.total ?? null, cell: (n) => R(n)?.forecast?.total ?? "–" });
+      depois.push({ grupo: "Previsão", key: "prevTp", label: "±", cell: (n) => {
         const tp = R(n)?.forecast?.toPar;
-        return tp != null ? <span style={{ color: tpColorDark(tp) }}>{fmtToPar(tp)}</span> : "–";
+        return tp != null ? fmtToPar(tp) : "–";
       } });
-      depois.push({ key: "prevInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n) => {
+      depois.push({ grupo: "Previsão", key: "prevInt", label: "Intervalo", title: "Intervalo plausível (bom e mau dia)", cell: (n) => {
         const f = R(n)?.forecast;
-        return f ? <span style={{ color: "var(--text-3)" }}>{f.low}–{f.high}</span> : "–";
+        return f ? `${f.low}–${f.high}` : "–";
       } });
     }
     return { antes, depois, temPrev: tem.prev };

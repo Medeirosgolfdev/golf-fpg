@@ -127,16 +127,26 @@ export function MultiRoundLeaderboard({
     toPar: showToPar = true,
   } = showCols;
 
-  // Auto-hide: mesmo que showCols permita, esconder se NENHUM row tem dados.
-  // Para ESC, também conta com rows que têm DOB no playersDB (idade computável).
+  // Auto-hide: mesmo que showCols permita, esconder se nenhum jogador ALÉM DO
+  // MANUEL tem dados (20/10/2026 — num torneio internacional só ele tem escalão,
+  // federado e HCP). Para ESC, também conta com DOB no playersDB (idade).
+  const outros = useMemo(() => rows.filter(r => !r.isHighlighted), [rows]);
   const hasAnyEsc  = useMemo(
-    () => rows.some(r => (r.esc != null && r.esc !== "") || (r.fed && playersDB?.[r.fed]?.dob)),
-    [rows, playersDB]
+    () => outros.some(r => (r.esc != null && r.esc !== "") || (r.fed && playersDB?.[r.fed]?.dob)),
+    [outros, playersDB]
   );
-  const hasAnyFed  = useMemo(() => rows.some(r => r.fed != null && r.fed !== ""), [rows]);
-  const hasAnyClub = useMemo(() => rows.some(r => r.club != null && r.club !== ""), [rows]);
-  const hasAnyHcp  = useMemo(() => rows.some(r => r.hcp != null), [rows]);
-  const hasAnyTee  = useMemo(() => rows.some(r => r.teeName != null && r.teeName !== ""), [rows]);
+  const hasAnyFed  = useMemo(() => outros.some(r => r.fed != null && r.fed !== ""), [outros]);
+  // «Clube» que é só o país (USKids, internacionais: IT, GB-ENG…): a bandeira vai
+  // para antes do nome e a coluna sai — com clubes a sério a coluna fica.
+  const clubesSaoPaises = useMemo(() => rows.some(r => r.club) && rows.every(r => {
+    const u = (r.club || "").trim().toUpperCase();
+    return !u || (/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️");
+  }), [rows]);
+  const hasAnyClub = useMemo(() => !clubesSaoPaises && outros.some(r => r.club != null && r.club !== ""), [outros, clubesSaoPaises]);
+  const hasAnyHcp  = useMemo(() => outros.some(r => r.hcp != null), [outros]);
+  // TEE: também sai quando todos jogam do mesmo tee (já está na informação da prova).
+  const hasAnyTee  = useMemo(() => outros.some(r => r.teeName != null && r.teeName !== "")
+    && new Set(rows.map(r => r.teeName || "")).size > 1, [outros, rows]);
   const hasAnySD   = useMemo(() => rows.some(r => r.rounds?.some(rd => rd?.sd != null)), [rows]);
   // Dados buraco-a-buraco (birdies/pars/bogeys) existem mesmo quando não há CR/Slope
   // para calcular SD (ex.: torneios RFEG/LGS). Mostrar as stats por ronda na mesma —
@@ -438,6 +448,7 @@ export function MultiRoundLeaderboard({
                           : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
+                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={row.club} style={{ marginRight: 4 }}>{flagOf(row.club)}</span>}
                     {renderName
                       ? renderName(row)
                       : playersDB

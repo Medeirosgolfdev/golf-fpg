@@ -21,7 +21,6 @@ import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
-import { tpColorDark } from "../../utils/scoreDisplay";
 import { isManuelByName } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
@@ -37,7 +36,6 @@ interface UskFieldFile {
 interface Proxima { t: number; name: string; date: string; escalao: string }
 
 const TIER_ORD: Record<string, number> = { elite: 0, strong: 1, solid: 2, developing: 3, beginner: 4 };
-const THREAT_DOT: Record<string, string> = { high: "var(--color-danger)", med: "var(--color-amber)", low: "var(--border)", none: "transparent" };
 
 /** Inscrições futuras USKids por nome normalizado (uskids-field.json, ~2 MB). */
 function useProximas(): Map<string, Proxima[]> | null {
@@ -75,6 +73,8 @@ export interface ScoutExtraCol {
   cell: (name: string) => React.ReactNode;
   sort?: (name: string) => number | string | null;
   dir?: "asc" | "desc";
+  /** Bloco da linha de grupos por cima (colunas seguidas do mesmo grupo = um bloco). */
+  grupo?: string;
 }
 
 interface Linha {
@@ -161,7 +161,7 @@ export default function Scout({
     ordemInicial?.key ?? (manuelNoField ? "nivel" : "tier"),
     ordemInicial?.dir ?? (manuelNoField ? "desc" : "asc"), {
     name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", vit: "desc", forma: "asc", ult: "desc",
-    n: "desc", best: "asc", vsm: "desc", prox: "desc",
+    n: "desc", best: "asc", vsm: "desc", vsmp: "asc", prox: "desc",
     ...Object.fromEntries(extras.map((c) => [c.key, c.dir ?? "asc"])),
   });
   const ordenadas = useMemo(() => {
@@ -177,7 +177,8 @@ export default function Scout({
         case "ult": return l.fm?.r[0]?.[0] ?? null;
         case "n": return l.rep?.n ?? null;
         case "best": return l.rep?.bestPos ?? null;
-        case "vsm": return l.sc?.m?.length ? l.frente - l.atras : null;
+        case "vsm": return l.sc?.m?.length ? l.atras / l.sc.m.length : null;
+        case "vsmp": return l.vsMMedia;
         case "prox": return l.proximas.length || null;
         default: {
           const ex = extras.find((c) => c.key === sortKey);
@@ -209,20 +210,48 @@ export default function Scout({
   const altos = rivais.filter((l) => l.sc?.t === "elite" || l.sc?.t === "strong").length;
   const comManuel = rivais.filter((l) => l.sc?.m?.length).length;
   const repetem = rivais.filter((l) => l.rep).length;
+  // Desenho (20/10/2026, pedido da Mariana: «não tem visualmente nada a ver com
+  // nada»): o modelo do Resumo — mesma letra, sem bolas nem cores soltas (o verde
+  // só na linha do Manuel), bandeira antes do nome, e as colunas agrupadas em
+  // blocos com uma linha de grupos por cima: Carreira · Nesta prova · Com o
+  // Manuel · Próximos (+ os blocos próprios da página, ex.: FPG). Colunas sem
+  // dados não aparecem. A ameaça já não se pinta: é a ordem por omissão, e o
+  // motivo fica no tooltip do Nível.
   const tem = {
     idade: linhas.some((l) => l.idade != null),
     hcp: !semHcp && linhas.some((l) => l.sc?.h != null),
     vit: linhas.some((l) => l.sc?.w),
-    forma: linhas.some((l) => l.fm?.r.length),
+    forma: linhas.some((l) => formaMedia(l.fm) != null),
     vsm: linhas.some((l) => l.sc?.m?.length),
     prox: linhas.some((l) => l.proximas.length),
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nCols = 6 + Object.values(tem).filter(Boolean).length + (eds.length ? 2 + eds.length : 0) + extras.length;
-  const extraHdr = (c: ScoutExtraCol) => c.sort
-    ? <SortableHdr key={c.key} k={c.key} {...hp} title={c.title}>{c.label}</SortableHdr>
-    : <th key={c.key} title={c.title}>{c.label}</th>;
+  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0);
+  const nProva = eds.length ? 2 + eds.length : 0;
+  const nManuel = tem.vsm ? 2 : 0;
+  const nCols = colsAntes.length + 1 + nCarreira + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
+  // Blocos das colunas da página (cada coluna diz o seu grupo; seguidas = um bloco).
+  const blocosDepois: { grupo: string; n: number }[] = [];
+  for (const c of colsDepois) {
+    const g = c.grupo ?? "";
+    const ult = blocosDepois[blocosDepois.length - 1];
+    if (ult && ult.grupo === g) ult.n++; else blocosDepois.push({ grupo: g, n: 1 });
+  }
+  const SEP = { borderLeft: "1px solid var(--border)" } as const;
+  const GRUPO = { background: "var(--bg-success-subtle)", color: "var(--color-good-dark)", fontWeight: 600, fontSize: "var(--fs-11)", textAlign: "center" as const, padding: "3px 8px" };
+  const hdr = (k: string, label: React.ReactNode, title?: string, sep?: boolean) =>
+    <SortableHdr k={k} {...hp} title={title} style={sep ? SEP : undefined}>{label}</SortableHdr>;
+  const extraHdr = (c: ScoutExtraCol, i: number, arr: ScoutExtraCol[]) => {
+    const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
+    return c.sort
+      ? <SortableHdr key={c.key} k={c.key} {...hp} title={c.title} style={sep ? SEP : undefined}>{c.label}</SortableHdr>
+      : <th key={c.key} title={c.title} style={sep ? SEP : undefined}>{c.label}</th>;
+  };
+  const extraTd = (l: Linha) => (c: ScoutExtraCol, i: number, arr: ScoutExtraCol[]) => {
+    const sep = i === 0 || (arr[i - 1].grupo ?? "") !== (c.grupo ?? "");
+    return <td key={c.key} style={sep ? SEP : undefined}>{c.cell(l.name)}</td>;
+  };
 
   return (
     <div>
@@ -232,33 +261,40 @@ export default function Scout({
         <span className="muted">·</span><span title="Elite ou Forte"><b style={{ color: "var(--text)" }}>{altos}</b> de nível alto</span>
         <span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{comManuel}</b> já jogaram com o Manuel</span>
         {edsTodas.length > 0 && <><span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
-        {manuelNoField && <span style={{ color: "var(--color-good-dark)", fontWeight: 700, marginLeft: 8 }}>★ Manuel no field</span>}
         {resumoExtra}
       </div>
       <div style={{ overflowX: "auto", paddingBottom: 6 }}>
         <table className="sc-lb sc-lb-airy" style={{ fontVariantNumeric: "tabular-nums", width: "max-content" }}>
           <thead>
             <tr>
+              {colsAntes.length > 0 && <th colSpan={colsAntes.length} />}
+              <th />
+              <th colSpan={nCarreira} style={{ ...GRUPO, ...SEP }}>Carreira</th>
+              {nProva > 0 && <th colSpan={nProva} style={{ ...GRUPO, ...SEP }}>Nesta prova</th>}
+              {nManuel > 0 && <th colSpan={nManuel} style={{ ...GRUPO, ...SEP }}>Com o Manuel</th>}
+              {tem.prox && <th style={{ ...GRUPO, ...SEP }}>Próximos</th>}
+              {blocosDepois.map((b, i) => <th key={i} colSpan={b.n} style={{ ...GRUPO, ...SEP }}>{b.grupo}</th>)}
+            </tr>
+            <tr>
               {colsAntes.map(extraHdr)}
               <SortableHdr k="name" {...hp} style={{ textAlign: "left" }}>Jogador</SortableHdr>
-              {tem.idade && <SortableHdr k="idade" {...hp}>Idade</SortableHdr>}
-              {tem.hcp && <SortableHdr k="hcp" {...hp} title="Handicap (Portugal / Espanha / França)">HCP</SortableHdr>}
-              <SortableHdr k="nivel" {...hp} style={{ textAlign: "left" }}
-                title="Nível na carreira (Elite, Forte, Sólido…); o ponto é a ameaça para o Manuel — vermelho alta, âmbar média. Clicar ordena pela ameaça.">Nível</SortableHdr>
-              {tem.vit && <SortableHdr k="vit" {...hp} title="Vitórias na carreira">Vit.</SortableHdr>}
-              {tem.forma && <SortableHdr k="forma" {...hp} title={`±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses)`}>Forma</SortableHdr>}
-              {tem.forma && <SortableHdr k="ult" {...hp} title="Último torneio: lugar / jogadores do escalão">Último</SortableHdr>}
-              {colsDepois.map(extraHdr)}
-              {eds.length > 0 && <SortableHdr k="n" {...hp} title="Quantas edições anteriores desta prova jogou">Aqui</SortableHdr>}
-              {eds.length > 0 && <SortableHdr k="best" {...hp} title="Melhor lugar numa edição anterior desta prova">Melhor</SortableHdr>}
-              {tem.vsm && <SortableHdr k="vsm" {...hp} title="Todas as provas em comum com o Manuel: Manuel à frente – atrás, e pancadas dele a mais (+) ou a menos (−) que o Manuel, em média">vs Manuel</SortableHdr>}
-              {tem.prox && <SortableHdr k="prox" {...hp} title="Próximos torneios USKids em que está inscrito">Próximos</SortableHdr>}
+              {tem.idade && hdr("idade", "Idade", undefined, true)}
+              {tem.hcp && hdr("hcp", "HCP", "Handicap (Portugal / Espanha / França)", !tem.idade)}
+              {hdr("nivel", "Nível", "Nível na carreira (Elite, Forte, Sólido, Em Dev., Iniciante). Ordenar por aqui põe primeiro os mais perigosos para o Manuel — o porquê está no tooltip de cada um.", !tem.idade && !tem.hcp)}
+              {tem.vit && hdr("vit", "Vitórias", "Vitórias na carreira")}
+              {tem.forma && hdr("forma", "Forma", `±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses) — o último está no tooltip`)}
+              {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
+              {nProva > 0 && hdr("best", "Melhor", "Melhor lugar numa edição anterior desta prova")}
               {eds.map((e) => (
                 <SortableHdr key={e.id} k={e.id} {...hp} title={[e.label, e.division, e.course].filter(Boolean).join(" · ")}>
                   {e.year}
                   {sameYear(e) && e.label ? <div className="fs-10 muted" style={{ fontWeight: 500 }}>{e.label}</div> : null}
                 </SortableHdr>
               ))}
+              {tem.vsm && hdr("vsm", "Ele à frente", "Em quantas das provas em comum ficou à frente do Manuel", true)}
+              {tem.vsm && hdr("vsmp", "Pancadas", "Pancadas a mais (+) ou a menos (−) que o Manuel, em média, nas provas em comum")}
+              {tem.prox && hdr("prox", "Torneios", "Próximos torneios USKids em que está inscrito (a lista no tooltip)", true)}
+              {colsDepois.map(extraHdr)}
             </tr>
           </thead>
           <tbody>
@@ -269,94 +305,79 @@ export default function Scout({
               const bandeira = clubFlagPrefix(l.club) || (paisFlag && paisFlag !== "🏳️" ? paisFlag + " " : "") || (l.sc?.p ? flag(l.sc.p) + " " : "");
               // Clube sem a bandeira do início (quando o «clube» é só a bandeira, fica vazio).
               const clube = (l.club || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
+              const mostraClube = clube && !/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(clube);
               const fmd = formaMedia(l.fm);
               const ult = l.fm?.r[0];
               const detExtra = detalheExtra?.(l.name) ?? null;
               const temDetalhe = !!(l.sc?.m?.length || l.proximas.length || detExtra);
+              const nM = l.sc?.m?.length ?? 0;
               return (
                 <React.Fragment key={l.key}>
                   <tr className={l.isManuel ? "row-manuel" : undefined}
                       onClick={temDetalhe ? () => setAberto(isOpen ? null : l.key) : undefined}
                       style={{ cursor: temDetalhe ? "pointer" : undefined, background: isOpen ? "var(--bg-hover)" : undefined }}
                       title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
-                    {colsAntes.map((c) => <td key={c.key} className="mono">{c.cell(l.name)}</td>)}
+                    {colsAntes.map(extraTd(l))}
                     <td style={{ textAlign: "left", whiteSpace: "nowrap" }} className={l.isManuel ? "fw-700" : undefined}>
                       {bandeira}{l.name} <KidsLink nome={l.name} />
-                      {clube && <span className="muted fs-11"> · {clube}</span>}
+                      {mostraClube && <span className="muted fs-11"> · {clube}</span>}
                     </td>
-                    {tem.idade && <td className="mono">{l.idade ?? "–"}</td>}
-                    {tem.hcp && <td className="mono">{l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}</td>}
-                    <td style={{ textAlign: "left", whiteSpace: "nowrap" }}
-                        title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} — ${l.threat.reasons.join(" · ")}` : undefined}>
-                      <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", marginRight: 6,
-                                     background: l.isManuel ? "transparent" : THREAT_DOT[l.threat.level] }} />
-                      {l.sc?.t ? getTierLabel(l.sc.t) : <span className="muted">–</span>}
+                    {tem.idade && <td style={SEP}>{l.idade ?? "–"}</td>}
+                    {tem.hcp && <td style={!tem.idade ? SEP : undefined}>{l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}</td>}
+                    <td style={!tem.idade && !tem.hcp ? SEP : undefined}
+                        title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined}>
+                      {l.sc?.t ? getTierLabel(l.sc.t) : "–"}
                     </td>
-                    {tem.vit && <td className="mono" style={{ fontWeight: l.sc?.w ? 700 : 400 }}>{l.sc?.w || "–"}</td>}
+                    {tem.vit && <td>{l.sc?.w || "–"}</td>}
                     {tem.forma && (
-                      <td className="mono" style={{ color: fmd != null ? tpColorDark(fmd) : undefined }}
-                          title={l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`).join("\n")}>
+                      <td title={[
+                        ult ? `Último: ${ult[3] ? `${ult[3]}º de ${ult[4]}` : fmtToPar(ult[1])} (${shortDateSlash(ult[0])})` : null,
+                        ...(l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`) ?? []),
+                      ].filter(Boolean).join("\n") || undefined}>
                         {fmd != null ? fmtToPar(fmd) : "–"}
                       </td>
                     )}
-                    {tem.forma && (
-                      <td className="mono" style={{ whiteSpace: "nowrap" }}>
-                        {ult ? <>{ult[3] ? `${ult[3]}º/${ult[4]}` : fmtToPar(ult[1])} <span className="muted fs-10">{shortDateSlash(ult[0])}</span></> : "–"}
+                    {nProva > 0 && (
+                      <td style={SEP} title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
+                        {l.rep ? l.rep.n : "–"}
                       </td>
                     )}
-                    {colsDepois.map((c) => <td key={c.key} className="mono">{c.cell(l.name)}</td>)}
-                    {eds.length > 0 && (
-                      <td className="mono" title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
-                        {l.rep ? `${l.rep.n}×` : "–"}
-                      </td>
-                    )}
-                    {eds.length > 0 && <td className="mono">{l.rep?.bestPos != null ? `${l.rep.bestPos}º` : "–"}</td>}
-                    {tem.vsm && (
-                      <td className="mono" style={{ whiteSpace: "nowrap" }}>
-                        {l.sc?.m?.length ? (
-                          <>
-                            <span style={{ fontWeight: 700, color: l.frente > l.atras ? "var(--accent-dark)" : l.atras > l.frente ? "var(--score-birdie)" : undefined }}
-                                  title="Manuel à frente – atrás">{l.frente}–{l.atras}</span>
-                            {l.vsMMedia != null && <span className="muted fs-10" style={{ marginLeft: 5 }}>{l.vsMMedia > 0 ? "+" : ""}{l.vsMMedia.toFixed(1).replace(".", ",")}</span>}
-                          </>
-                        ) : "–"}
-                      </td>
-                    )}
-                    {tem.prox && (
-                      <td style={{ textAlign: "left", whiteSpace: "nowrap" }}
-                          title={l.proximas.map((x) => `${x.name} · ${x.escalao} (${shortDateSlash(x.date)})`).join("\n") || undefined}>
-                        {l.proximas.length ? <>{l.proximas.length} <span className="muted fs-10">· {shortDateSlash(l.proximas[0].date)}</span></> : <span className="muted">–</span>}
-                      </td>
-                    )}
+                    {nProva > 0 && <td>{l.rep?.bestPos != null ? `${l.rep.bestPos}º` : "–"}</td>}
                     {eds.map((e) => {
                       const c = l.rep?.byEd[e.id];
-                      if (!c) return <td key={e.id} className="muted">–</td>;
+                      if (!c) return <td key={e.id}>–</td>;
                       return (
-                        <td key={e.id} className="mono"
+                        <td key={e.id}
                             title={[c.total != null ? `${c.total}` : null, c.toPar != null ? fmtToPar(c.toPar) : null, c.complete ? null : "não acabou"].filter(Boolean).join(" · ")}
                             style={c.complete ? undefined : { fontStyle: "italic", color: "var(--text-3)" }}>
                           {c.pos != null ? `${c.pos}º` : "–"}
                         </td>
                       );
                     })}
+                    {tem.vsm && <td style={SEP}>{nM ? `${l.atras} de ${nM}` : "–"}</td>}
+                    {tem.vsm && <td>{l.vsMMedia != null ? `${l.vsMMedia > 0 ? "+" : l.vsMMedia < 0 ? "−" : ""}${Math.abs(Math.round(l.vsMMedia))}` : "–"}</td>}
+                    {tem.prox && (
+                      <td style={SEP} title={l.proximas.map((x) => `${x.name} · ${x.escalao} (${shortDateSlash(x.date)})`).join("\n") || undefined}>
+                        {l.proximas.length || "–"}
+                      </td>
+                    )}
+                    {colsDepois.map(extraTd(l))}
                   </tr>
                   {isOpen && (
                     <tr>
                       <td colSpan={nCols} style={{ textAlign: "left", background: "var(--bg-hover)", padding: "6px 10px 12px 28px" }}>
                         {detExtra && <div style={{ marginBottom: 8 }}>{detExtra}</div>}
-                        {l.sc?.m?.length ? (
+                        {nM ? (
                           <table className="sc-lb" style={{ width: "max-content", marginBottom: 6 }}>
-                            <thead><tr><th style={{ textAlign: "left" }}>Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">±</th></tr></thead>
+                            <thead><tr><th style={{ textAlign: "left" }}>Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">Pancadas</th></tr></thead>
                             <tbody>
-                              {l.sc.m.map((x, i) => (
+                              {l.sc!.m!.map((x, i) => (
                                 <tr key={i}>
                                   <td style={{ textAlign: "left" }}>{x[1]}</td>
-                                  <td className="mono muted">{x[0] ? shortDateSlash(x[0]) : "–"}</td>
-                                  <td className="mono">{x[2] != null ? `${x[2]}º` : "–"}</td>
-                                  <td className="mono fw-700" style={{ color: x[2] != null && x[3] != null ? (x[3] < x[2] ? "var(--accent-dark)" : x[3] > x[2] ? "var(--score-birdie)" : undefined) : undefined }}>
-                                    {x[3] != null ? `${x[3]}º` : "–"}
-                                  </td>
-                                  <td className="mono muted">{x[4] > 0 ? "+" : ""}{x[4]}</td>
+                                  <td>{x[0] ? shortDateSlash(x[0]) : "–"}</td>
+                                  <td>{x[2] != null ? `${x[2]}º` : "–"}</td>
+                                  <td>{x[3] != null ? `${x[3]}º` : "–"}</td>
+                                  <td>{x[4] > 0 ? "+" : x[4] < 0 ? "−" : ""}{Math.abs(x[4])}</td>
                                 </tr>
                               ))}
                             </tbody>

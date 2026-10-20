@@ -108,7 +108,15 @@ export function ScorecardLB({
   // informação por cima da tabela — uma coluna igual em todas as linhas).
   const hideTee = (options?.hideTee ?? false) || !temOutros((p) => !!p.teeName)
     || new Set(tournament.players.map((p) => p.teeName || "")).size <= 1;
-  const hideClub_ = (options?.hideClub ?? false) || !temOutros((p) => !!p.club);
+  // «Clube» que é só o país (USKids, torneios internacionais: IT, GB-ENG…): a
+  // bandeira passa para antes do nome e a coluna sai — menos uma coluna (pedido
+  // da Mariana, 20/10/2026). Com clubes a sério a coluna fica.
+  const clubEhPais = (c?: string | null) => {
+    const u = (c || "").trim().toUpperCase();
+    return /^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️";
+  };
+  const clubesSaoPaises = tournament.players.some((p) => p.club) && tournament.players.every((p) => !p.club || clubEhPais(p.club));
+  const hideClub_ = (options?.hideClub ?? false) || !temOutros((p) => !!p.club) || clubesSaoPaises;
   const showAge_ = options?.showAge ?? false;
   const showClass_ = options?.showClass ?? false;
   // Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
@@ -488,8 +496,9 @@ export function ScorecardLB({
         // é o default e a bandeira seria ruído; num torneio estrangeiro é o
         // contrário — é a razão de se olhar para a lista. A linha continua
         // destacada (`_isPortuguese`); as duas coisas somam-se.
-        const cc = (p as { _country?: string | null })._country;
-        const withFlag = cc && noLink ? (
+        const ccFonte = (p as { _country?: string | null })._country;
+        const cc = (ccFonte && noLink ? ccFonte : null) || (clubesSaoPaises ? p.club : null);
+        const withFlag = cc ? (
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
             <span aria-label={cc} title={cc}>{flagOf(cc)}</span>
             {baseInner}
