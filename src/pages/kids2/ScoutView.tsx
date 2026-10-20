@@ -23,7 +23,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import {
-  useJuniorsCanonical, computeTier, computeRanking, getTierLabel, getTierColors,
+  useJuniorsCanonical, computeTier, computeRanking, getTierLabel,
   getSharedTournamentIds, getSharedFlightTids, countWins, countTop3,
   bestRoundGross,
 } from "./data";
@@ -33,24 +33,15 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
-import UiKpiCard from "../../ui/KpiCard";
 import { usePasswordGate } from "../../hooks/usePasswordGate";
 import PasswordGate from "../../ui/PasswordGate";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { useUpcomingByJunior, type UpcomingReg } from "./upcomingRegs";
 import Kids2SubNav from "./Kids2SubNav";
 import { MANUEL_BIRTH_YEAR } from "../../constants/manuel";
-import { tpColor } from "../../ui/tournamentPrimitives";
-import { fmtToPar, MONTHS_PT } from "../../utils/format";
+import { MONTHS_PT } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { Pill } from "../../ui/PillBadge";
-
-// ── Tipos para uskids-results.json ───────────────────────────────────
-interface UskRsPlayer { nome: string; pais: string; score: number; buracos: number; to_par?: number }
-interface UskRsRonda  { ronda: number; leaderboard: UskRsPlayer[] }
-interface UskRsEscalao { nome: string; age_group?: number | string; rondas: UskRsRonda[] }
-interface UskRsTourn  { t: number; name: string; escaloes: UskRsEscalao[] }
-interface UskResultsJson { resultados: UskRsTourn[] }
 
 function fmtRegDate(iso: string): string {
   if (!iso) return "";
@@ -80,51 +71,9 @@ function shortReg(name: string): string {
   const n = name.replace(/\b20\d{2}\b/g, "").replace(/\s+/g, " ").trim();
   return n.length > 24 ? n.slice(0, 23) + "…" : n;
 }
-const CIRCUIT_CHIP: Record<string, { bg: string; fg: string; label: string }> = {
-  US: { bg: "var(--bg-info-subtle, var(--bg-info))", fg: "var(--color-info-dark, var(--color-navy))", label: "USKids" },
-  PT: { bg: "var(--bg-success-subtle, #ecfdf5)", fg: "var(--color-good-dark)", label: "FPG (Portugal)" },
-  ES: { bg: "var(--bg-warn-subtle, var(--bg-warn))", fg: "var(--color-warn-dark, var(--color-warn-dark))", label: "RFEG (Espanha)" },
-  FR: { bg: "var(--bg-pink, var(--bg-pink))", fg: "var(--color-purple, #6b21a8)", label: "FFG (França)" },
-};
-
-// ── Séries USKids: tcode → edições [mais recente primeiro] ───────────
-const SERIES_EDITIONS: Record<string, number[]> = {
-  "European Championship":     [21131, 18242, 15704, 13568, 8300],
-  "World Championship":        [21610, 18124, 15807, 14029, 11604],
-  "Venice Open":               [22243, 19418, 16428, 14302, 12229],
-  "Rome Classic":              [20175, 16795, 14670, 12578],
-  "Marco Simone Invitational": [21080, 18438],
-  "Marco Simone":              [21080, 18438],
-  "Irish Open":                [21455, 18978, 16020, 13470],
-  "Paris Invitational":        [21795, 18975],
-  "Belgium Invitational":      [22480],
-  "Red White & Blue Invitational": [18719, 16705, 14218],
-};
-
-function seriesBase(name: string): string {
-  return name.replace(/\s+20\d{2}\b.*$/, "").trim();
-}
-
-function prevEditionTcode(tournName: string, currentTcode: number): number | null {
-  const base = seriesBase(tournName);
-  const editions = SERIES_EDITIONS[base];
-  if (!editions || editions.length < 2) return null;
-  const idx = editions.indexOf(currentTcode);
-  if (idx < 0) return editions[0] !== currentTcode ? editions[0] : (editions[1] ?? null);
-  return editions[idx + 1] ?? null;
-}
-
-function tournTcode(tid: string): number | null {
-  const m1 = tid.match(/^uskids-(\d+)$/);
-  if (m1) return parseInt(m1[1], 10);
-  const m2 = tid.match(/^usk(\d+)$/);
-  if (m2) return parseInt(m2[1], 10);
-  return null;
-}
 
 const ICON_DOT = "·";
 const ICON_SWORDS = "⚔️";
-const ICON_TROPHY = "\u{1F3C6}";
 const ICON_EXTERNAL = "↗";
 
 // ── Modelo de ameaça (quão perigoso é o rival para o Manuel) ──────────
@@ -144,12 +93,6 @@ const THREAT_META: Record<ThreatLevel, { label: string; bg: string; fg: string; 
   none: { label: "—",     bg: "transparent",             fg: "var(--text-3)",            border: "transparent" },
 };
 
-const THREAT_BORDER: Record<ThreatLevel, string> = {
-  high: "3px solid var(--color-danger)",
-  med:  "3px solid var(--color-amber)",
-  low:  "3px solid transparent",
-  none: "3px solid transparent",
-};
 
 function fmtMargin(n: number): string {
   const r = Math.round(n * 10) / 10;
@@ -459,200 +402,8 @@ function buildFieldTournament(ft: FieldTournament, data: CanonicalData): { tourn
 
 const _fieldExtras = new Map<string, { cidade?: string }>();
 
-// ═══════════════════════════════════════════════════════════════════
-//   FieldStrengthPanel — distribuição de tiers + dificuldade
-// ═══════════════════════════════════════════════════════════════════
 
-const TIER_BAR: Record<string, { bar: string; label: string; chip: string }> = {
-  elite:      { bar: "var(--tier-bad)",  label: "Elite",      chip: "var(--bg-danger-subtle)" },
-  strong:     { bar: "var(--tier-weak)", label: "Forte",      chip: "var(--bg-warn-subtle)" },
-  solid:      { bar: "var(--tier-fair)", label: "Sólido",     chip: "var(--bg-info-subtle)" },
-  developing: { bar: "var(--tier-good)", label: "Jovem",      chip: "var(--bg-success-subtle)" },
-  beginner:   { bar: "var(--text-3)",    label: "Estreante",  chip: "var(--bg-muted)" },
-};
 
-function FieldStrengthPanel({ rows, label }: { rows: ScoutRow[]; label?: string }) {
-  const total = rows.length;
-  if (total === 0) return null;
-
-  const counts: Record<string, number> = { elite: 0, strong: 0, solid: 0, developing: 0, beginner: 0, unknown: 0 };
-  const countryMap = new Map<string, number>();
-  for (const r of rows) {
-    const t = r.tier as string | null;
-    counts[t || "unknown"] = (counts[t || "unknown"] || 0) + 1;
-    const c = (r.junior.country || r.junior.nationality || "").toUpperCase();
-    if (c) countryMap.set(c, (countryMap.get(c) || 0) + 1);
-  }
-
-  const topCountries = [...countryMap.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7);
-  const known = total - counts.unknown;
-  const knownPct = (known / total) * 100;
-  const eliteStrongPct = ((counts.elite + counts.strong) / total) * 100;
-
-  // Tiers são ABSOLUTOS (nível do jogador), não relativos ao Manuel — por isso
-  // os limiares são conservadores: só "muito competitivo" com Elite real / muitos
-  // Fortes. Um campo de Sólidos com 1-2 Fortes é apenas "Competitivo/Equilibrado".
-  let diffLabel = "Campo Acessível";
-  let diffColor = "var(--color-good-dark)";
-  if (counts.elite / total >= 0.20 && knownPct >= 40) {
-    diffLabel = "Campo de Elite"; diffColor = "#dc2626";
-  } else if (eliteStrongPct >= 45 && knownPct >= 40) {
-    diffLabel = "Campo Muito Competitivo"; diffColor = "#f59e0b";
-  } else if (eliteStrongPct >= 25 && knownPct >= 30) {
-    diffLabel = "Campo Competitivo"; diffColor = "var(--color-info)";
-  } else if (eliteStrongPct >= 10 && knownPct >= 25) {
-    diffLabel = "Campo Equilibrado"; diffColor = "var(--color-good-dark)";
-  }
-
-  const TIERS = ["elite", "strong", "solid", "developing", "beginner"] as const;
-
-  return (
-    <div style={{ flex: 1, minWidth: 220, padding: "10px 12px", background: "var(--bg-card, var(--bg-muted))",
-                  borderRadius: 8, border: "1px solid var(--border-light)" }}>
-      {label && <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 1, marginBottom: 8 }}>{label}</div>}
-      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "flex-start" }}>
-      <div style={{ minWidth: 150 }}>
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 4 }}>Dificuldade</div>
-        <div style={{ fontSize: "var(--fs-15)", fontWeight: 700, color: diffColor }}>{diffLabel}</div>
-        <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 3 }}>{Math.round(knownPct)}% com histórico USKids</div>
-      </div>
-
-      <div style={{ flex: 1, minWidth: 180 }}>
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 }}>Distribuição de Tier</div>
-        <div style={{ display: "flex", height: 10, borderRadius: 5, overflow: "hidden", gap: 1, background: "var(--border-light)" }}>
-          {TIERS.map((tier) => {
-            const n = counts[tier] || 0;
-            if (n === 0) return null;
-            return (
-              <div key={tier} title={`${TIER_BAR[tier].label}: ${n} (${Math.round((n / total) * 100)}%)`}
-                   style={{ background: TIER_BAR[tier].bar, flex: n, minWidth: 2 }} />
-            );
-          })}
-          {counts.unknown > 0 && (
-            <div title={`Sem perfil: ${counts.unknown}`} style={{ background: "#e2e8f0", flex: counts.unknown, minWidth: 2 }} />
-          )}
-        </div>
-        <div style={{ display: "flex", gap: 5, flexWrap: "wrap", marginTop: 6 }}>
-          {TIERS.filter(t => (counts[t] || 0) > 0).map((tier) => (
-            <span key={tier} style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: TIER_BAR[tier].chip, fontWeight: 600, color: "var(--text-2)" }}>
-              {TIER_BAR[tier].label} {counts[tier]}
-            </span>
-          ))}
-          {counts.unknown > 0 && (
-            <span style={{ fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 3, background: "var(--bg-muted)", color: "var(--text-3)", fontWeight: 600 }}>
-              Novos {counts.unknown}
-            </span>
-          )}
-        </div>
-      </div>
-
-      <div style={{ flex: 1, minWidth: 180 }}>
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 700, textTransform: "uppercase", letterSpacing: 1, marginBottom: 6 }}>Países ({countryMap.size})</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "3px 10px" }}>
-          {topCountries.map(([cc, n]) => (
-            <span key={cc} style={{ fontSize: "var(--fs-12)", whiteSpace: "nowrap" }}>
-              {flagOf(cc)} {cc} <span style={{ color: "var(--text-3)", fontSize: "var(--fs-11)" }}>×{n}</span>
-            </span>
-          ))}
-        </div>
-      </div>
-      </div>{/* flex inner */}
-    </div>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════════
-//   PreviousEditionPanel — resultados da edição anterior
-// ═══════════════════════════════════════════════════════════════════
-
-function PreviousEditionPanel({ prevTcode, resultsData }: {
-  prevTcode: number;
-  resultsData: UskResultsJson | null;
-}) {
-  if (!resultsData) return null;
-  const prevEntry = resultsData.resultados.find(r => r.t === prevTcode);
-  if (!prevEntry) return null;
-
-  // Filtrar escalões Boys 9-13 (relevantes para a análise)
-  const boysRe = /boys?\s*(9|10|11|12|13)/i;
-  const escaloes = prevEntry.escaloes
-    .filter(e => boysRe.test(String(e.nome || e.age_group || "")))
-    .sort((a, b) => {
-      const numOf = (e: typeof a) => parseInt(String(e.nome || e.age_group || "").match(/\d+/)?.[0] ?? "99", 10);
-      return numOf(a) - numOf(b);
-    });
-  const toShow = escaloes.length > 0 ? escaloes : prevEntry.escaloes.slice(0, 4);
-
-  return (
-    <details style={{ marginBottom: 14 }} open>
-      <summary style={{ cursor: "pointer", fontSize: "var(--fs-13)", fontWeight: 600, color: "var(--text-2)",
-                        padding: "8px 12px", background: "var(--bg-muted)", borderRadius: 6,
-                        listStyle: "none", display: "flex", alignItems: "center", gap: 8 }}>
-        <span>📋</span>
-        <span>Edição anterior: <strong style={{ color: "var(--text)" }}>{prevEntry.name}</strong></span>
-        <span style={{ marginLeft: "auto", fontSize: "var(--fs-11)", color: "var(--text-3)" }}>▼</span>
-      </summary>
-      <div style={{ paddingTop: 10, display: "flex", gap: 14, flexWrap: "wrap", alignItems: "flex-start" }}>
-        {toShow.map((esc) => {
-          if (esc.rondas.length === 0) return null;
-          // Acumular to_par de TODAS as rondas por jogador (nome normalizado)
-          const totals = new Map<string, { nome: string; pais: string; tp: number }>();
-          for (const ronda of esc.rondas) {
-            for (const p of ronda.leaderboard) {
-              const key = p.nome.trim().toLowerCase();
-              const prev = totals.get(key);
-              const tp = p.to_par ?? 0;
-              if (prev) { prev.tp += tp; }
-              else { totals.set(key, { nome: p.nome, pais: p.pais, tp }); }
-            }
-          }
-          const top = [...totals.values()]
-            .sort((a, b) => a.tp - b.tp)
-            .slice(0, 10);
-          return (
-            <div key={esc.nome} style={{ minWidth: 190, flex: 1 }}>
-              <div style={{ fontSize: "var(--fs-11)", fontWeight: 700, color: "var(--text-2)",
-                            textTransform: "uppercase", letterSpacing: 1, marginBottom: 5,
-                            borderBottom: "1px solid var(--border-light)", paddingBottom: 3,
-                            display: "flex", alignItems: "center", gap: 6 }}>
-                {esc.nome}
-                {esc.age_group != null && (
-                  <a href={`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${prevTcode}`}
-                     target="_blank" rel="noopener noreferrer"
-                     style={{ fontSize: "var(--fs-10)", fontWeight: 400, textTransform: "none",
-                              letterSpacing: 0, color: "var(--color-info)", lineHeight: 1 }}
-                     title="Ver resultados no signupanytime">
-                    ↗
-                  </a>
-                )}
-              </div>
-              <table style={{ borderCollapse: "collapse", fontSize: "var(--fs-12)", width: "100%" }}>
-                <tbody>
-                  {top.map((p, i) => (
-                    <tr key={i} style={{ borderBottom: i < top.length - 1 ? "1px solid var(--border-light)" : "none" }}>
-                      <td style={{ padding: "2px 5px 2px 0", color: "var(--text-3)", fontVariantNumeric: "tabular-nums", textAlign: "right", minWidth: 18 }}>{i + 1}</td>
-                      <td style={{ padding: "2px 4px" }}>{flagOf(p.pais)}</td>
-                      <td style={{ padding: "2px 0", flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 140 }}>{p.nome}</td>
-                      <td style={{ padding: "2px 0 2px 8px", fontWeight: 600, fontVariantNumeric: "tabular-nums", textAlign: "right", whiteSpace: "nowrap",
-                                   color: tpColor(p.tp) ?? "var(--text-2)" }}>
-                        {fmtToPar(p.tp)}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          );
-        })}
-        {toShow.length === 0 && (
-          <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "8px 0" }}>
-            Sem escalões Boys disponíveis nesta edição.
-          </div>
-        )}
-      </div>
-    </details>
-  );
-}
 
 // ═══════════════════════════════════════════════════════════════════
 //   ScoutContent — vista principal
@@ -678,20 +429,6 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
     () => computeRanking(data.juniors, data.tournamentById),
     [data.juniors, data.tournamentById],
   );
-
-  // Resultados históricos (edição anterior)
-  const [resultsData, setResultsData] = useState<UskResultsJson | null>(null);
-  useEffect(() => {
-    cachedFetchJson("/data/uskids-results.json")
-      .then(d => setResultsData(d as UskResultsJson))
-      .catch(() => {});
-  }, []);
-
-  const prevTcode = useMemo(() => {
-    const tcode = tournTcode(tournament.id);
-    if (!tcode) return null;
-    return prevEditionTcode(tournament.name || tournament.shortName || "", tcode);
-  }, [tournament]);
 
   // Inscrições futuras por jogador (USKids + FPG) — para a coluna "Próximos".
   const upcoming = useUpcomingByJunior(data);
@@ -983,67 +720,34 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
         </span>
       </div>}
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 10, marginBottom: 14 }}>
-        <KpiBox label="Inscritos" value={String(kpis.totalInscritos)} sub={isFieldOnlySource && kpis.fieldOnlyCount > 0
-          ? kpis.matchedCount + " c/ perfil · " + kpis.fieldOnlyCount + " novos"
-          : "em " + tournament.flights.length + " escal" + (tournament.flights.length === 1 ? "ao" : "oes")} />
-        <KpiBox label="Paises" value={String(kpis.countries)} sub="bandeiras distintas" />
-        <KpiBox label="Tier alto" value={String(kpis.eliteCount)} sub="Elite + Forte Competidor" emphasis={kpis.eliteCount > 0 ? "warn" : undefined} />
-        <KpiBox label="Ja confrontou Manuel" value={String(kpis.withManuelHistory)}
-                sub={kpis.manuelInField ? "vao estar no mesmo torneio" : "Manuel nao inscrito"}
-                emphasis={kpis.withManuelHistory > 0 ? "good" : undefined} />
+      {/* Resumo numa linha (20/10/2026 — antes 4 cartões + barra de dificuldade
+          + faixa do Manuel + avisos, meio ecrã para 5 números). */}
+      <div className="fs-13" style={{ display: "flex", alignItems: "baseline", gap: 6, flexWrap: "wrap", margin: "2px 0 10px", color: "var(--text-2)" }}>
+        <span><b style={{ color: "var(--text)" }}>{kpis.totalInscritos}</b> inscritos</span>
+        <span className="muted">·</span>
+        <span><b style={{ color: "var(--text)" }}>{kpis.countries}</b> países</span>
+        <span className="muted">·</span>
+        <span title="Elite ou Forte"><b style={{ color: "var(--text)" }}>{kpis.eliteCount}</b> de nível alto</span>
+        {manuel && <>
+          <span className="muted">·</span>
+          <span><b style={{ color: "var(--text)" }}>{kpis.withManuelHistory}</b> já jogaram com o Manuel</span>
+        </>}
+        {isFieldOnlySource && kpis.fieldOnlyCount > 0 && <>
+          <span className="muted">·</span>
+          <span className="muted" title="Inscritos sem perfil no nosso sistema: só nome e país — sem nível, forma nem confrontos">{kpis.fieldOnlyCount} sem histórico</span>
+        </>}
+        {kpis.manuelInField && manuel && manuelStats && (
+          <span style={{ display: "inline-flex", gap: 8, alignItems: "baseline", marginLeft: 10 }}>
+            <span style={{ color: "var(--color-good-dark)", fontWeight: 700 }}>
+              ★ Manuel {isFuture ? "inscrito" : "jogou"}{manuelFlightKey ? " no " + (tournament.flights.find((f) => f.flightKey === manuelFlightKey)?.label || "") : ""}
+            </span>
+            {manuelStats.rivalsWithHistory > 0 && (
+              <span className="muted">{manuelStats.rivalsBeatManuelOnAvg} de {manuelStats.rivalsWithHistory} com média melhor que a dele</span>
+            )}
+            <Link to={"/kids2/" + manuel.id} style={{ color: "var(--color-info)", textDecoration: "none" }}>perfil ↗</Link>
+          </span>
+        )}
       </div>
-
-      {flightFilter === "all" && tournament.flights.length > 1 ? (
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 14 }}>
-          {tournament.flights.map(f => {
-            const flightRows = allRows.filter(r => r.flight.flightKey === f.flightKey);
-            return <FieldStrengthPanel key={f.flightKey} rows={flightRows} label={f.label} />;
-          })}
-        </div>
-      ) : (
-        <FieldStrengthPanel rows={rows} />
-      )}
-
-      {kpis.manuelInField && manuel && manuelStats && (
-        <div style={{
-          marginTop: 14, marginBottom: 14, padding: "10px 14px",
-          background: "var(--bg-success-subtle, #ecfdf5)",
-          border: "1px solid var(--border-success, #97c459)",
-          borderRadius: 8, display: "flex", alignItems: "center", gap: 16,
-        }}>
-          <span style={{ fontSize: "var(--fs-18)", flexShrink: 0 }}>{ICON_SWORDS}</span>
-          <div style={{ flex: 1, minWidth: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            <span style={{ fontWeight: 700, color: "var(--color-good-dark)", fontSize: "var(--fs-13)" }}>
-              Manuel inscrito {manuelFlightKey ? "no " + (tournament.flights.find((f) => f.flightKey === manuelFlightKey)?.label || "") : ""}
-            </span>
-            <span style={{ fontSize: "var(--fs-13)", color: "var(--color-good-dark)", marginLeft: 10 }}>
-              {manuelStats.flightFieldSize} inscritos
-              {" "}{ICON_DOT} {manuelStats.rivalsWithHistory} já cruzaram
-              {manuelStats.rivalsWithHistory > 0 && <>{" "}{ICON_DOT} {manuelStats.rivalsBeatManuelOnAvg} com média superior</>}
-            </span>
-          </div>
-          <Link to={"/kids2/" + manuel.id}
-                style={{ fontSize: "var(--fs-12)", padding: "5px 10px", borderRadius: 6,
-                         background: "var(--color-good-dark)", color: "var(--bg)",
-                         textDecoration: "none", fontWeight: 600 }}>
-            Ver perfil do Manuel {ICON_EXTERNAL}
-          </Link>
-        </div>
-      )}
-
-      {isFieldOnlySource && kpis.fieldOnlyCount > 0 && (
-        <div style={{ background: "var(--bg-warn-subtle, var(--bg-warn))", color: "var(--color-warn-dark, var(--color-warn-dark))",
-                      padding: "8px 12px", borderRadius: 6, marginBottom: 12, fontSize: "var(--fs-12)" }}>
-          {kpis.fieldOnlyCount} inscritos sem perfil canonico no nosso sistema (apenas nome + pais).
-          Os scores historicos, tier, wins e diff vs Manuel nao estao disponiveis para estes.
-        </div>
-      )}
-
-      {prevTcode && (
-        <PreviousEditionPanel prevTcode={prevTcode} resultsData={resultsData} />
-      )}
-
 
       {flightFilter === "all" && tournament.flights.length > 1 ? (
         tournament.flights.map((f) => {
@@ -1066,7 +770,7 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
         <ScoutTable
           rows={sorted} manuel={manuel} isFuture={isFuture}
           sortKey={sortKey} sortDir={sortDir} toggleSort={toggleSort}
-          onSelect={onSelect}
+          onSelect={onSelect} hideFlight={flightFilter !== "all"}
           upcoming={upcoming} currentUskTcode={currentUskTcode}
         />
       )}
@@ -1079,19 +783,6 @@ function ScoutContent({ data, tournament, onSelect, tournaments, currentTid, onT
 //   Sub-componentes
 // ═══════════════════════════════════════════════════════════════════
 
-/* Adaptador fino → delega na definição única UiKpiCard (realce por ênfase). */
-function KpiBox({ label, value, sub, emphasis }: {
-  label: string; value: string; sub?: string;
-  emphasis?: "good" | "warn";
-}) {
-  const color = emphasis === "good" ? "var(--color-good-dark)"
-    : emphasis === "warn" ? "var(--color-warn-dark, var(--color-warn-dark))"
-    : undefined;
-  const border = emphasis === "good" ? "var(--color-good)"
-    : emphasis === "warn" ? "var(--color-amber, var(--color-amber))"
-    : undefined;
-  return <UiKpiCard label={label} value={value} sub={sub} color={color} accentBorder={border} />;
-}
 
 function FlightHeader({ flight, isManuelFlight, count }: {
   flight: Flight; isManuelFlight: boolean; count: number;
@@ -1115,6 +806,16 @@ function FlightHeader({ flight, isManuelFlight, count }: {
   );
 }
 
+// Tabela do Scout (redesenhada a 20/10/2026, pedido da Mariana: «mal organizado,
+// visual esquisito»). Modelo único das tabelas (.dtable, sem estilos próprios no
+// cabeçalho), uma linha por jogador, todas da mesma altura. Os confrontos com o
+// Manuel saíram de dentro do nome (chegavam a 5 andares) para um detalhe que
+// abre ao clicar na linha. «Ameaça» e «Tier» juntaram-se numa coluna «Nível»
+// (ponto de cor = ameaça; texto = tier). Sem «Circuitos» nem bordas coloridas.
+const THREAT_DOT: Record<ThreatLevel, string> = {
+  high: "var(--color-danger)", med: "var(--color-amber)", low: "var(--border)", none: "transparent",
+};
+
 function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSelect, hideFlight, upcoming, currentUskTcode }: {
   rows: ScoutRow[]; manuel: Junior | null; isFuture: boolean;
   sortKey: ScoutKey; sortDir: "asc" | "desc"; toggleSort: (k: ScoutKey) => void;
@@ -1123,172 +824,138 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
   upcoming?: Map<string, UpcomingReg[]> | null;
   currentUskTcode?: string | null;
 }) {
+  const [aberto, setAberto] = useState<string | null>(null);
   if (rows.length === 0) {
-    return <div style={{ padding: 20, textAlign: "center", color: "var(--text-3)", fontSize: "var(--fs-13)" }}>
-      Sem jogadores neste escalao.
-    </div>;
+    return <EmptyState size="sm" message="Sem jogadores neste escalão." />;
   }
+  const temHcp = rows.some((r) => r.hcp != null);
+  const temIdade = rows.some((r) => r.age != null);
+  const nCols = 4 + (temIdade ? 1 : 0) + (temHcp ? 1 : 0) + (isFuture ? 0 : 1) + (manuel ? 1 : 0) + 1;
+  const proximos = (row: ScoutRow) => (upcoming?.get(row.junior.id) ?? [])
+    .filter((r) => !(r.circuit === "uskids" && currentUskTcode && r.tournamentId === currentUskTcode));
   return (
-    <div style={{ background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 8, overflowX: "auto" }}>
-      <table className="dtable">
-        <thead style={{ background: "var(--bg-muted)", borderBottom: "1px solid var(--border)" }}>
+    <div style={{ overflowX: "auto", paddingBottom: 6 }}>
+      <table className="dtable" style={{ width: "max-content" }}>
+        <thead>
           <tr>
-            <SortableHdr<ScoutKey> k="country"     sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Pais</SortableHdr>
-            <SortableHdr<ScoutKey> k="name"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={thStyle}>Nome</SortableHdr>
-            <SortableHdr<ScoutKey> k="threat"      sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 92 }} title="Ameaça ao Manuel — combina confronto directo, tier, forma recente e vitórias">{ICON_SWORDS} Ameaça</SortableHdr>
-            <SortableHdr<ScoutKey> k="age"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 50 }}>Idade</SortableHdr>
-            <SortableHdr<ScoutKey> k="tier"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 80 }}>Tier ▲</SortableHdr>
-            <SortableHdr<ScoutKey> k="hcp"         sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 56 }} title="Handicap (PT / Espanha / França)">HCP</SortableHdr>
-            <SortableHdr<ScoutKey> k="wins"        sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, textAlign: "center", width: 48 }}>{ICON_TROPHY}</SortableHdr>
-            <th style={{ ...thStyle, width: 90, textAlign: "center" }} title="Ultimas 3 posicoes (mais recente a esquerda)">Forma</th>
-            {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 60, textAlign: "center" }}>Pos</SortableHdr>}
-            {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ ...thStyle, width: 100, textAlign: "right" }}>vs M (media)</SortableHdr>}
-            {manuel && <th style={{ ...thStyle, width: 56, textAlign: "center" }} title="Confrontos no mesmo flight">{ICON_SWORDS}H2H</th>}
-            <th style={{ ...thStyle, width: 96 }} title="Circuitos onde compete">Circuitos</th>
-            <th style={{ ...thStyle, minWidth: 160 }} title="Outros torneios futuros onde este jogador está inscrito">📅 Próximos</th>
-            <th style={{ ...thStyle, width: 30, textAlign: "center" }} />
+            <SortableHdr<ScoutKey> k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Jogador</SortableHdr>
+            {temIdade && <SortableHdr<ScoutKey> k="age" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Idade</SortableHdr>}
+            {temHcp && <SortableHdr<ScoutKey> k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }} title="Handicap (Portugal / Espanha / França)">HCP</SortableHdr>}
+            <SortableHdr<ScoutKey> k="threat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
+              title="Nível do jogador (Elite, Forte, Sólido…); o ponto é a ameaça para o Manuel — vermelho alta, âmbar média">Nível</SortableHdr>
+            <SortableHdr<ScoutKey> k="wins" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }} title="Vitórias na carreira">Vit.</SortableHdr>
+            <SortableHdr<ScoutKey> k="form" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Últimos 3 lugares (o mais recente primeiro)">Forma</SortableHdr>
+            {!isFuture && <SortableHdr<ScoutKey> k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Lugar</SortableHdr>}
+            {manuel && <SortableHdr<ScoutKey> k="vsM" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}
+              title="Provas em comum: Manuel à frente–atrás, e quantas pancadas o jogador fez a mais (+) ou a menos (−) que o Manuel, em média">vs Manuel</SortableHdr>}
+            <th title="Outros torneios em que está inscrito">Próximos</th>
           </tr>
         </thead>
         <tbody>
           {rows.map((row) => {
-            const clickable = !row.fieldOnly;
+            const id = row.junior.id;
+            const isOpen = aberto === id;
+            const frente = row.sharedTournNames.filter((s) => s.posManuel != null && s.posRival != null && s.posManuel < s.posRival).length;
+            const atras = row.sharedTournNames.filter((s) => s.posManuel != null && s.posRival != null && s.posManuel > s.posRival).length;
+            const regs = proximos(row);
+            const pais = row.junior.country || row.junior.nationality || "";
             return (
-              <tr
-                key={row.junior.id}
-                style={{
-                  borderBottom: "1px solid var(--border-light)",
-                  borderLeft: THREAT_BORDER[row.threatLevel],
-                  cursor: clickable ? "pointer" : "default",
-                  opacity: row.fieldOnly ? 0.6 : 1,
-                }}
-                onClick={clickable ? () => onSelect(row.junior.id) : undefined}
-                title={clickable ? "Abrir perfil em KIDS2 (nova aba)" : "Sem perfil canonico (apenas inscricao)"}
-              >
-                <td style={tdStyle}>
-                  <span style={{ marginRight: 4 }}>{flagOf(row.junior.country || row.junior.nationality || "")}</span>
-                  {row.junior.country || row.junior.nationality || "-"}
-                </td>
-                <td style={{ ...tdStyle, fontWeight: 600, color: "var(--text)" }}>
-                  {row.junior.canonicalName}
-                  {!hideFlight && row.flight && (
-                    <span style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginLeft: 6 }}>{ICON_DOT} {row.flight.label}</span>
-                  )}
-                  {(row.club || row.cidade) && <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 1 }}>{row.club || row.cidade}</div>}
-                  {row.sharedTournNames.length > 0 && (
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 3, marginTop: 4 }}>
-                      {row.sharedTournNames.map((s, i) => (
-                        <span key={i} style={{ fontSize: "var(--fs-9)", padding: "1px 5px", borderRadius: 3,
-                                               background: "var(--bg-info-subtle, #eff6ff)", color: "var(--color-info-dark, var(--color-navy))",
-                                               fontWeight: 700, border: "1px solid var(--color-info)", whiteSpace: "nowrap" }}>
-                          {ICON_SWORDS} {s.name}
-                          {(s.posRival != null || s.posManuel != null) && (() => {
-                            const pr = s.posRival; const pm = s.posManuel;
-                            const mColor = pm != null && pr != null
-                              ? pm < pr ? "var(--color-good-dark, #15803d)"
-                              : pm > pr ? "var(--color-danger-dark, #b91c1c)"
-                              : undefined
-                              : undefined;
-                            return (
-                              <span style={{ fontWeight: 400, marginLeft: 4 }}>
-                                #{pr ?? "?"} vs{" "}
-                                <span style={{ color: mColor, fontWeight: mColor ? 700 : 400 }}>
-                                  MF#{pm ?? "?"}
-                                </span>
-                              </span>
-                            );
-                          })()}
-                        </span>
-                      ))}
-                    </div>
-                  )}
-                </td>
-                <td style={tdStyle}>
-                  <ThreatChip level={row.threatLevel} reasons={row.threatReasons} />
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-2)" }}>{row.age != null ? row.age : "-"}</td>
-                <td style={tdStyle}>
-                  {row.tier ? (() => {
-                    const c = getTierColors(row.tier);
-                    return <span style={{ background: c.bg, color: c.fg, fontSize: "var(--fs-10)", padding: "2px 7px", borderRadius: 10, fontWeight: 700, border: "1px solid " + c.fg }}>{getTierLabel(row.tier)}</span>;
-                  })() : <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>{row.fieldOnly ? "sem dados" : "-"}</span>}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center", color: row.hcp != null ? "var(--text)" : "var(--text-3)", fontWeight: row.hcp != null ? 600 : 400 }}>
-                  {row.hcp != null ? row.hcp.toFixed(1) : "-"}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center", fontWeight: row.wins > 0 ? 700 : 400, color: row.wins > 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
-                  {row.wins || "-"}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center" }}>
-                  <FormDots positions={row.formPositions} />
-                </td>
-                {!isFuture && (
-                  <td style={{ ...tdStyle, textAlign: "center", fontWeight: 700 }}>
-                    {row.result?.pos != null ? "#" + row.result.pos : "-"}
+              <React.Fragment key={id}>
+                <tr onClick={row.fieldOnly ? undefined : () => setAberto(isOpen ? null : id)}
+                    style={{ cursor: row.fieldOnly ? "default" : "pointer", opacity: row.fieldOnly ? 0.6 : 1,
+                             background: isOpen ? "var(--bg-hover)" : undefined }}
+                    title={row.fieldOnly ? "Sem histórico no nosso sistema (só a inscrição)" : "Ver confrontos com o Manuel"}>
+                  <td style={{ whiteSpace: "nowrap" }}>
+                    <span style={{ marginRight: 5 }} title={pais}>{flagOf(pais)}</span>
+                    <span style={{ color: "var(--text)" }}>{row.junior.canonicalName}</span>
+                    {!hideFlight && <span className="muted fs-11"> · {row.flight.label}</span>}
+                    {(row.club || row.cidade) && <span className="muted fs-11"> · {row.club || row.cidade}</span>}
+                    {!row.fieldOnly && (
+                      <a href="#" className="fs-11" style={{ marginLeft: 6, color: "var(--color-info)", textDecoration: "none" }}
+                         title="Abrir o perfil"
+                         onClick={(e) => { e.preventDefault(); e.stopPropagation(); onSelect(id); }}>↗</a>
+                    )}
                   </td>
-                )}
-                {manuel && (
-                  <td style={{ ...tdStyle, textAlign: "right" }}
-                      title={row.sharedTournNames.length > 0 ? "Cruzamentos: " + row.sharedTournNames.map(s => s.name).join(", ") : undefined}>
-                    <div style={{ fontWeight: 700,
-                      color: row.vsMTotal == null ? "var(--text-3)" :
-                             row.vsMTotal > 0 ? "var(--color-danger-dark)" :
-                             row.vsMTotal < 0 ? "var(--medal-gold-strong)" : "var(--text-3)" }}>
-                      {row.vsMTotal == null ? "-" :
-                       row.vsMTotal === 0 ? "0" :
-                       row.vsMTotal > 0 ? "+" + row.vsMTotal.toFixed(1) :
-                       row.vsMTotal.toFixed(1)}
-                    </div>
+                  {temIdade && <td style={{ textAlign: "center" }}>{row.age ?? "–"}</td>}
+                  {temHcp && <td style={{ textAlign: "center" }}>{row.hcp != null ? row.hcp.toFixed(1) : "–"}</td>}
+                  <td style={{ whiteSpace: "nowrap" }}
+                      title={manuel && row.threatLevel !== "none" ? `Ameaça ${THREAT_META[row.threatLevel].label.toLowerCase()} — ${row.threatReasons.join(" · ")}` : undefined}>
+                    <span style={{ display: "inline-block", width: 8, height: 8, borderRadius: "50%", marginRight: 6,
+                                   background: manuel ? THREAT_DOT[row.threatLevel] : "transparent" }} />
+                    {row.tier ? getTierLabel(row.tier) : <span className="muted">{row.fieldOnly ? "sem histórico" : "–"}</span>}
                   </td>
-                )}
-                {manuel && (
-                  <td style={{ ...tdStyle, textAlign: "center", color: "var(--text-3)", fontSize: "var(--fs-11)" }}>
-                    {row.vsMCount > 0
-                      ? row.vsMSameFlight > 0
-                        ? <span style={{ color: "var(--medal-gold-strong)", fontWeight: 700 }}>{row.vsMSameFlight}</span>
-                        : row.vsMCount
-                      : "-"}
-                  </td>
-                )}
-                <td style={tdStyle}>
-                  {row.circuits.length ? (
-                    <span style={{ display: "inline-flex", gap: 3, flexWrap: "wrap" }}>
-                      {row.circuits.map((c) => {
-                        const m = CIRCUIT_CHIP[c];
-                        return (
-                          <span key={c} title={m?.label || c}
-                            style={{ fontSize: "var(--fs-9)", fontWeight: 700, padding: "1px 5px", borderRadius: 4, background: m?.bg || "var(--bg-muted)", color: m?.fg || "var(--text-2)" }}>
-                            {c}
+                  <td style={{ textAlign: "center", fontWeight: row.wins ? 700 : 400 }}>{row.wins || "–"}</td>
+                  <td style={{ whiteSpace: "nowrap" }}>
+                    {row.formPositions.some((p) => p != null)
+                      ? row.formPositions.map((p, i) => (
+                          <span key={i} style={{ marginRight: 6, fontWeight: p != null && p <= 3 ? 700 : 400,
+                                                 color: p != null && p <= 3 ? "var(--text)" : "var(--text-3)" }}>
+                            {p != null ? p + "º" : "–"}
                           </span>
-                        );
-                      })}
-                    </span>
-                  ) : <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>—</span>}
-                </td>
-                <td style={{ ...tdStyle, maxWidth: 240 }}>
-                  {(() => {
-                    const regs = (upcoming?.get(row.junior.id) ?? [])
-                      .filter(r => !(r.circuit === "uskids" && currentUskTcode && r.tournamentId === currentUskTcode));
-                    if (!regs.length) return <span style={{ color: "var(--text-3)", fontSize: "var(--fs-10)" }}>—</span>;
-                    return (
-                      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }} onClick={(e) => e.stopPropagation()}>
-                        {regs.map((r) => (
-                          <a key={r.circuit + ":" + r.tournamentId} href={r.link} target="_blank" rel="noopener noreferrer"
-                            title={`${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`}
-                            style={{
-                              fontSize: "var(--fs-9)", fontWeight: 600, padding: "1px 6px", borderRadius: 10, textDecoration: "none", whiteSpace: "nowrap",
-                              background: "var(--bg-info-subtle, var(--bg-info))", color: "var(--color-info-dark, var(--color-navy))", border: "1px solid var(--border-info, var(--border-info))",
-                            }}>
-                            {r.circuit === "fpg" ? "🇵🇹 " : ""}{shortReg(r.name)} · {fmtRegDate(r.date)}
-                          </a>
-                        ))}
-                      </div>
-                    );
-                  })()}
-                </td>
-                <td style={{ ...tdStyle, textAlign: "center" }}>
-                  {clickable && <span style={{ color: "var(--color-info)", fontSize: "var(--fs-13)" }}>{ICON_EXTERNAL}</span>}
-                </td>
-              </tr>
+                        ))
+                      : <span className="muted">–</span>}
+                  </td>
+                  {!isFuture && <td style={{ textAlign: "center", fontWeight: 700 }}>{row.result?.pos != null ? row.result.pos + "º" : "–"}</td>}
+                  {manuel && (
+                    <td style={{ whiteSpace: "nowrap" }}>
+                      {row.vsMCount > 0 ? (
+                        <>
+                          <span style={{ fontWeight: 700, color: frente > atras ? "var(--color-good-dark)" : atras > frente ? "var(--color-danger-dark)" : "var(--text-2)" }}
+                                title="Manuel à frente – atrás">{frente}–{atras}</span>
+                          {row.vsMTotal != null && (
+                            <span className="muted fs-11" style={{ marginLeft: 6 }}>
+                              {row.vsMTotal > 0 ? "+" : ""}{row.vsMTotal.toFixed(1).replace(".", ",")}
+                            </span>
+                          )}
+                        </>
+                      ) : <span className="muted">–</span>}
+                    </td>
+                  )}
+                  <td title={regs.map((r) => `${r.name}${r.escalao ? " · " + r.escalao : ""} (${fmtRegDate(r.date)})`).join("\n") || undefined}>
+                    {regs.length ? <span>{regs.length} <span className="muted fs-11">· {shortReg(regs[0].name)}{regs.length > 1 ? "…" : ""}</span></span>
+                                 : <span className="muted">–</span>}
+                  </td>
+                </tr>
+                {isOpen && (
+                  <tr>
+                    <td colSpan={nCols} style={{ background: "var(--bg-hover)", padding: "6px 10px 12px 34px" }}>
+                      {row.sharedTournNames.length ? (
+                        <table className="dtable" style={{ width: "auto" }}>
+                          <thead><tr><th>Prova em comum</th><th style={{ textAlign: "center" }}>{row.junior.canonicalName.split(" ")[0]}</th><th style={{ textAlign: "center" }}>Manuel</th></tr></thead>
+                          <tbody>
+                            {row.sharedTournNames.map((s, i) => (
+                              <tr key={i}>
+                                <td>{s.name}</td>
+                                <td style={{ textAlign: "center" }}>{s.posRival != null ? s.posRival + "º" : "–"}</td>
+                                <td style={{ textAlign: "center", fontWeight: 700,
+                                             color: s.posManuel != null && s.posRival != null
+                                               ? (s.posManuel < s.posRival ? "var(--color-good-dark)" : s.posManuel > s.posRival ? "var(--color-danger-dark)" : undefined)
+                                               : undefined }}>
+                                  {s.posManuel != null ? s.posManuel + "º" : "–"}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      ) : <span className="muted fs-12">Ainda não jogou nenhuma prova com o Manuel.</span>}
+                      {regs.length > 0 && (
+                        <div className="fs-12" style={{ marginTop: 8 }}>
+                          <span className="muted">Próximos: </span>
+                          {regs.map((r, i) => (
+                            <span key={r.circuit + ":" + r.tournamentId}>
+                              {i > 0 && <span className="muted"> · </span>}
+                              <a href={r.link} target="_blank" rel="noopener noreferrer" style={{ color: "var(--color-info)", textDecoration: "none" }}>
+                                {r.name}
+                              </a>
+                              <span className="muted"> {fmtRegDate(r.date)}</span>
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
             );
           })}
         </tbody>
@@ -1296,59 +963,6 @@ function ScoutTable({ rows, manuel, isFuture, sortKey, sortDir, toggleSort, onSe
     </div>
   );
 }
-
-function ThreatChip({ level, reasons }: { level: ThreatLevel; reasons: string[] }) {
-  const m = THREAT_META[level];
-  const tip = reasons.length ? reasons.join(" · ") : m.label;
-  if (level === "none") {
-    return <span title={tip} style={{ color: "var(--text-3)", fontSize: "var(--fs-11)" }}>—</span>;
-  }
-  return (
-    <span title={tip}
-          style={{
-            display: "inline-block", background: m.bg, color: m.fg,
-            border: "1px solid " + m.border, borderRadius: 10,
-            fontSize: "var(--fs-10)", fontWeight: 700, padding: "2px 8px", whiteSpace: "nowrap",
-          }}>
-      {m.label}
-    </span>
-  );
-}
-
-function FormDots({ positions }: { positions: Array<number | null> }) {
-  return (
-    <div style={{ display: "inline-flex", gap: 3, alignItems: "center" }}>
-      {positions.map((p, i) => {
-        const color = p == null
-          ? "var(--text-3)"
-          : p <= 3
-            ? "var(--medal-gold-strong)"
-            : p <= 10
-              ? "var(--color-amber, var(--color-amber))"
-              : "var(--text-3)";
-        return (
-          <span key={i}
-                title={p == null ? "-" : "#" + p}
-                style={{
-                  width: 20, height: 20, borderRadius: "999px",
-                  display: "inline-flex", alignItems: "center", justifyContent: "center",
-                  background: p == null ? "var(--bg-muted)" : "var(--bg)",
-                  border: "1px solid " + color,
-                  fontSize: "var(--fs-9)", fontWeight: 700, color,
-                }}>
-            {p == null ? "·" : p > 99 ? "99+" : String(p)}
-          </span>
-        );
-      })}
-    </div>
-  );
-}
-
-const thStyle: React.CSSProperties = {
-  padding: "7px 8px", textAlign: "left", fontSize: "var(--fs-10)", fontWeight: 700,
-  color: "var(--text-2)", textTransform: "uppercase", letterSpacing: 0.3, cursor: "pointer",
-};
-const tdStyle: React.CSSProperties = { padding: "7px 8px", fontSize: "var(--fs-12)", color: "var(--text-2)" };
 
 function fmtDate(iso: string): string {
   const [y, m, d] = iso.split("-");

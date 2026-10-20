@@ -24,6 +24,7 @@ import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
 import { ScoutEmbed } from "../kids2/ScoutView";
+import TabRow from "../../ui/TabRow";
 import { kidsUrl } from "../../ui/KidsLink";
 
 // ─────────────────────────────────────────────────────────────────────
@@ -552,8 +553,8 @@ interface MHSlim {
 // ─────────────────────────────────────────────────────────────────────
 // Main component
 // ─────────────────────────────────────────────────────────────────────
-type TabKey = "players" | "scores" | "scorecards" | "campo" | "previsao" | "scout";
-const VALID_TABS: readonly TabKey[] = ["players", "scores", "scorecards", "campo", "previsao", "scout"];
+type TabKey = "players" | "scores" | "scorecards" | "campo" | "previsao";
+const VALID_TABS: readonly TabKey[] = ["players", "scores", "scorecards", "campo", "previsao"];
 
 export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao = "Boys 12", onSelectPlayer, autoRivals, syncUrl = false }: {
   defaultT?: number;
@@ -575,10 +576,15 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   // Colunas INTL normalizadas (id → dados), ver INTL_COLUMNS.
   const [intlCols, setIntlCols] = useState<Map<string, IntlColData>>(new Map());
   const [searchParams, setSearchParams] = useSearchParams();
-  const [torneioT, setTorneioT] = useState<number>(() => {
-    if (syncUrl) { const t = searchParams.get("t"); if (t && !Number.isNaN(Number(t))) return Number(t); }
-    return defaultT;
-  });
+  // Torneio pedido no link (?t=22876 ou ?t=usk22876 — o link «Scout» da /uskids
+  // usa o prefixo). Entra SEMPRE na lista, mesmo já jogado: antes o Rome Classic
+  // (17/10) abria o Spanish Open sem aviso (20/10/2026).
+  const pedidoT = useRef<number | null>((() => {
+    if (!syncUrl) return null;
+    const n = Number(String(searchParams.get("t") || "").replace(/^usk/i, ""));
+    return Number.isFinite(n) && n !== 0 ? n : null;
+  })());
+  const [torneioT, setTorneioT] = useState<number>(() => pedidoT.current ?? defaultT);
   // Sem ?t= no endereço, abre-se o próximo torneio em que o Manuel está inscrito
   // (o defaultT fixo caía num torneio sem ele — ex. Belgium 2026 em vez do Spanish Open).
   const autoPick = useRef(!(syncUrl && searchParams.get("t")));
@@ -587,10 +593,21 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   );
   // Tab activa: PLAYERS (cross-table de rivais), SCORES (totais por ronda),
   // SCORECARDS (pancadas hole-by-hole top-N) ou CAMPO (anatomia do campo).
+  // «scout» deixou de ser aba (20/10/2026): é a vista «Lista» dos Jogadores.
+  // Links antigos (?tab=scout, ?v=scout da /uskids) abrem a Lista.
   const [activeTab, setActiveTab] = useState<TabKey>(() => {
-    if (syncUrl) { const t = searchParams.get("tab"); if (t && (VALID_TABS as readonly string[]).includes(t)) return t as TabKey; }
+    if (syncUrl) {
+      const t = searchParams.get("tab");
+      if (t === "scout") return "players";
+      if (t && (VALID_TABS as readonly string[]).includes(t)) return t as TabKey;
+    }
     return "players";
   });
+  // Vista dos Jogadores: «lista» (uma linha por inscrito — ScoutEmbed) ou
+  // «grelha» (resultados por torneio — RivaisDashboard). Botão segmentado.
+  const [vistaJog, setVistaJog] = useState<"lista" | "grelha">(() =>
+    syncUrl && searchParams.get("vista") === "grelha" ? "grelha" : "lista",
+  );
 
   // Espelhar torneio/escalão/tab no URL -> cada torneio tem link próprio.
   useEffect(() => {
@@ -600,9 +617,11 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       next.set("t", String(torneioT));
       next.set("esc", escalaoNome);
       next.set("tab", activeTab);
+      next.delete("v");
+      if (activeTab === "players") next.set("vista", vistaJog); else next.delete("vista");
       return next;
     }, { replace: true });
-  }, [syncUrl, torneioT, escalaoNome, activeTab, setSearchParams]);
+  }, [syncUrl, torneioT, escalaoNome, activeTab, vistaJog, setSearchParams]);
 
   // Load field + member history + uskids-results (último é fallback para
   // sintetizar Passados de torneios UP_TORN que acabaram hoje/ontem).
@@ -822,6 +841,9 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           if (mh.torneios[tcode]) candidateTcodes.add(tcode);
         }
       }
+      // (d) O torneio pedido no link entra sempre (ver pedidoT).
+      const pedido = pedidoT.current && pedidoT.current > 0 ? String(pedidoT.current) : null;
+      if (pedido) candidateTcodes.add(pedido);
 
       const pastTcodes: Array<{ tcode: string; iso: string; name: string }> = [];
       for (const tcode of candidateTcodes) {
@@ -840,7 +862,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         const synth = buildSyntheticTorneio(tcode);
         if (!synth) continue;
         const hasEscalao = synth.escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
-        if (!hasEscalao) continue;
+        if (!hasEscalao && tcode !== pedido) continue;
         pastTcodes.push({ tcode, iso, name: synth.name });
       }
       // Ordenar desc (mais recente primeiro)
@@ -854,7 +876,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       for (const { tcode, name } of pastTcodes) {
         const sk = pastSeriesKey(name);
         // Já colapsada nesta lista, OU já presente em "Próximos torneios".
-        if (seenSeries.has(sk) || futureSeries.has(sk)) continue;
+        if ((seenSeries.has(sk) || futureSeries.has(sk)) && tcode !== pedido) continue;
         const synth = buildSyntheticTorneio(tcode);
         if (synth && synth.escaloes.length > 0) {
           seenSeries.add(sk);
@@ -1820,11 +1842,6 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
           onClick={() => setActiveTab("players")}>
           Jogadores
         </button>
-        <button type="button" role="tab" aria-selected={activeTab === "scout"}
-          className={"tab-under" + (activeTab === "scout" ? " active" : "")}
-          onClick={() => setActiveTab("scout")}>
-          🔭 Scout
-        </button>
         <button type="button" role="tab" aria-selected={activeTab === "scores"}
           className={"tab-under" + (activeTab === "scores" ? " active" : "")}
           onClick={() => setActiveTab("scores")}>
@@ -1854,8 +1871,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       }}>
         {(() => {
           const meta: Record<string, { icon: string; title: string; desc: string }> = {
-            players: { icon: "🏌️", title: "Jogadores", desc: "Rivais inscritos e o histórico deles nos circuitos." },
-            scout: { icon: "🔭", title: "Scout", desc: "Ficha individual de cada rival." },
+            players: { icon: "🏌️", title: "Jogadores", desc: vistaJog === "lista" ? "Quem está inscrito, o nível de cada um e como se tem dado com o Manuel." : "Os resultados de cada inscrito nos torneios em comum." },
             scores: { icon: "📊", title: "Scores", desc: "Totais por ronda nas edições passadas." },
             scorecards: { icon: "🗂️", title: "Scorecards", desc: "Pancadas buraco-a-buraco dos finishers." },
             campo: { icon: "⛳", title: "O Campo", desc: "Anatomia do campo e tee do escalão." },
@@ -1868,12 +1884,25 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
               <span style={{ fontSize: "var(--fs-20, 20px)", lineHeight: 1 }}>{m.icon}</span>
               <span style={{ fontWeight: 800, fontSize: "var(--fs-16, 16px)" }}>{m.title}</span>
               <span className="muted fs-12">{m.desc}</span>
+              {activeTab === "players" && (
+                <span style={{ marginLeft: "auto" }}>
+                  <TabRow<"lista" | "grelha"> active={vistaJog} onChange={setVistaJog}
+                    tabs={[{ key: "lista", label: "Lista" }, { key: "grelha", label: "Por torneio" }]} />
+                </span>
+              )}
             </>
           );
         })()}
       </div>
 
-      {activeTab === "players" && (
+      {activeTab === "players" && vistaJog === "lista" && (
+        <ScoutEmbed
+          tid={torneioT > 0 ? "usk" + torneioT : (EXTRA_TID_BY_NEG[torneioT] ?? "")}
+          hideNav
+          escalao={escalaoNome}
+        />
+      )}
+      {activeTab === "players" && vistaJog === "grelha" && (
         dataset
           ? <RivaisDashboard
               onSelectPlayer={onSelectPlayer}
@@ -1909,13 +1938,6 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
       )}
       {activeTab === "previsao" && (
         <PrevisaoTab torneio={futureTorneios.find(x => x.t === torneioT) || null} escalaoNome={escalaoNome} mh={mh} />
-      )}
-      {activeTab === "scout" && (
-        <ScoutEmbed
-          tid={torneioT > 0 ? "usk" + torneioT : (EXTRA_TID_BY_NEG[torneioT] ?? "")}
-          hideNav
-          escalao={escalaoNome}
-        />
       )}
     </div>
   );
