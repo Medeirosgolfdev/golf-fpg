@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 // Components: TabResultados + EscalaoTabs + EscalaoSection (TournamentDetail, com os Draw R{n}).
 import React from "react";
 import { displayName, fmtDate, fmtToPar, isoDate, norm } from "../utils/format";
@@ -17,6 +17,7 @@ import type { TorneioResult, EscalaoResult, ResultsData, GreatgolfData,
 import { sortEscaloes } from "./uskidsTypes";
 import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx } from "./USKIDSPageHelpers";
 import { TournExternalLinks } from "./TabCampoDetalhe";
+import { cachedFetchJson } from "../data/fetchCache";
 import { tournamentFamilyKey, divKey, buildPastEditionFromTournament } from "./circuit/pastEditions";
 import PastEditionsTable, { type PastEdition } from "./circuit/PastEditionsTable";
 import PastEditionsRepeatersTable from "./circuit/PastEditionsRepeatersTable";
@@ -475,13 +476,45 @@ function TabResultados({ data, selectedT, greatgolfData, drawsData }: {
 }) {
   const arMap = React.useContext(ArMapCtx);
   const t = data.resultados.find(r => r.t === selectedT) ?? null;
+  // Edições anteriores que não estão nos resultados (2021–2026, montadas da
+  // cache dos flights — scripts/build-uskids-edicoes-anteriores.js): o índice é
+  // pequeno; cada edição só se carrega quando a prova dela está aberta.
+  const familia = t ? tournamentFamilyKey(t.name) : null;
+  const [indiceEdicoes, setIndiceEdicoes] = useState<{ t: number; name: string }[] | null>(null);
+  useEffect(() => {
+    let vivo = true;
+    cachedFetchJson<{ torneios: { t: number; name: string }[] }>("/data/uskids-edicoes/index.json")
+      .then(d => { if (vivo) setIndiceEdicoes(d?.torneios ?? []); })
+      .catch(() => { if (vivo) setIndiceEdicoes([]); });
+    return () => { vivo = false; };
+  }, []);
+  const [edicoesExtra, setEdicoesExtra] = useState<{ familia: string; lista: TorneioResult[] } | null>(null);
+  useEffect(() => {
+    if (!familia || !indiceEdicoes) return;
+    const temos = new Set(data.resultados.map(r => r.t));
+    const ts = indiceEdicoes.filter(x => !temos.has(x.t) && tournamentFamilyKey(x.name) === familia).map(x => x.t);
+    if (!ts.length) { setEdicoesExtra({ familia, lista: [] }); return; }
+    let vivo = true;
+    Promise.all(ts.map(x => cachedFetchJson<TorneioResult>(`/data/uskids-edicoes/${x}.json`).catch(() => null)))
+      .then(lista => {
+        if (!vivo) return;
+        const ok = lista.filter((x): x is TorneioResult => !!x);
+        // As voltas vêm em jardas (como o uskids-results.json) → metros.
+        for (const ed of ok) for (const esc of ed.escaloes ?? []) for (const rd of esc.rondas ?? []) {
+          const yards = (rd as { yards?: number[] }).yards;
+          if (!rd.metros?.length && yards?.length) rd.metros = yards.map(y => Math.round(y * 0.9144));
+        }
+        setEdicoesExtra({ familia, lista: ok });
+      });
+    return () => { vivo = false; };
+  }, [familia, indiceEdicoes, data.resultados]);
   // O mesmo torneio noutros anos (Rome Classic 2025 ↔ 2026…), pelo nome sem ano.
   const edicoes = useMemo(() => {
-    const k = t ? tournamentFamilyKey(t.name) : null;
-    if (!k) return null;
-    const sib = [...new Map(data.resultados.filter(r => tournamentFamilyKey(r.name) === k).map(r => [r.t, r])).values()];
+    if (!familia) return null;
+    const extra = edicoesExtra?.familia === familia ? edicoesExtra.lista : [];
+    const sib = [...new Map([...data.resultados.filter(r => tournamentFamilyKey(r.name) === familia), ...extra].map(r => [r.t, r])).values()];
     return sib.length >= 2 ? sib : null;
-  }, [data.resultados, t]);
+  }, [data.resultados, familia, edicoesExtra]);
 
 
   if (!data.resultados.length) return (

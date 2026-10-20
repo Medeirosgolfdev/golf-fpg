@@ -574,6 +574,15 @@ nome + último apelido, ou um contém o outro).
 
 ---
 
+### Edições anteriores de todas as provas (2026-10-20)
+
+Pedido da Mariana: «resultados de edições anteriores de todas as provas», 2021–2026.
+- **Alvo** (`scripts/lib/uskids-edicoes.js`): provas = `uskids-results.json` + `uskids_torneios_completos(N)`; edições = torneios do `uskids-member-history-slim` (catálogo ~21 mil) da mesma família (`familyKey` = `tournamentFamilyKey` da página — mudar os dois juntos), de 2021 em diante, já jogados, que ainda não temos. A 20/10: 304 edições.
+- **Fase 1, sem pedidos** (`build-uskids-edicoes-anteriores.js`): monta-as da `data-archive/uskids-rich-flight-cache.json.gz`, que guarda cada flight com todos os jogadores e cartões (validado contra o Rome 2025 e o PGA 2025: iguais). Saída `public/data/uskids-edicoes/{t}.json` + `index.json` (com `faltam`: escalões que a cache não tem). 245 edições / 1 390 escalões logo de início (~11 MB).
+- **Fase 2, à fonte** (`fetch-uskids-edicoes-anteriores.js`, workflow `update-uskids-edicoes.yml` 03:30 UTC): busca os `faltam` com o `fetchTournamentRichData` do rich-players (que agora se pode importar), pausa 350 ms, **pára à primeira recusa** (403/429/503 ou «Too many requests»), orçamento por corrida; se parar a meio de um torneio repõe a cache desse torneio. ~2-3 pedidos por escalão.
+- **Paginação do GetPlayerTeeTimes corrigida** (rich-players): com `t=1` a 1ª página já traz o flight todo — o ciclo seguia pelas páginas vazias com 2 pedidos cada (32 pedidos num flight de 37; agora 2). Pára na página vazia, sem novos, ou com tantos como os `registered` do meta.
+- **Página:** `TabResultados.tsx` lê o `index.json` e carrega só as edições da família da prova aberta; não entram na barra lateral.
+
 ## API Signupanytime
 
 Base: `https://www.signupanytime.com/plugins/links/admin/LinksAJAX.aspx?op={OP}&…`

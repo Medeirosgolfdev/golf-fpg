@@ -1,0 +1,85 @@
+name: USKids Edições anteriores
+# Edições anteriores (2021–2026) das provas USKids para as abas «Edições
+# anteriores»/«Quem repete» da /uskids (pedido da Mariana, 20/10/2026).
+# Cada noite vai buscar um lote dos escalões que a uskids-rich-flight-cache
+# ainda não tem e volta a montar public/data/uskids-edicoes/. Um pedido de cada
+# vez, pausa entre pedidos e PARAGEM À PRIMEIRA RECUSA da fonte (a USKids já nos
+# bloqueou a 12/09) — ver scripts/fetch-uskids-edicoes-anteriores.js.
+on:
+  schedule:
+    # 03:30 UTC, todos os dias — longe do field (07:00), results (16:00),
+    # member-history (16:30) e refresh-all (segunda 09:00).
+    - cron: '30 3 * * *'
+  workflow_dispatch:
+    inputs:
+      max_torneios:
+        description: 'Máx. torneios nesta corrida'
+        required: false
+        default: '40'
+      max_pedidos:
+        description: 'Máx. pedidos à fonte nesta corrida'
+        required: false
+        default: '1500'
+
+# A mesma fila do update-uskids-rich-players: os dois escrevem a
+# uskids-rich-flight-cache.json.gz — nunca ao mesmo tempo.
+concurrency:
+  group: uskids-rich-flight-cache
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  edicoes:
+    name: 📚 Edições anteriores USKids
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Buscar o que falta (lote) e montar as edições
+        id: fetch
+        run: |
+          set +e
+          node scripts/fetch-uskids-edicoes-anteriores.js \
+            --max-torneios "${{ github.event.inputs.max_torneios || '40' }}" \
+            --max-pedidos "${{ github.event.inputs.max_pedidos || '1500' }}"
+          code=$?
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+          [ "$code" = "1" ] && exit 1 || exit 0
+
+      - name: Commit e push (se houve alterações)
+        if: steps.fetch.outputs.exit_code == '0'
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes
+          if git diff --staged --quiet; then echo "Sem alterações."; exit 0; fi
+          # Ficheiros inteiramente deste job (e a fila impede o rich-players de
+          # correr ao mesmo tempo): guardar, pôr por cima do main mais recente e
+          # committar — sem pull --rebase (checkout raso → conflitos falsos,
+          # ver update-federados.yml, 19/10/2026).
+          SAVE=$(mktemp -d)
+          cp data-archive/uskids-rich-flight-cache.json.gz "$SAVE/"
+          cp -r public/data/uskids-edicoes "$SAVE/"
+          MSG="data: edições anteriores USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
+          for i in 1 2 3 4 5; do
+            git fetch --depth=1 origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            cp "$SAVE/uskids-rich-flight-cache.json.gz" data-archive/
+            rm -rf public/data/uskids-edicoes && cp -r "$SAVE/uskids-edicoes" public/data/
+            git add -A data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes
+            if git diff --staged --quiet; then echo "O main já tem isto."; exit 0; fi
+            git commit -m "$MSG"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "✓ publicado"; exit 0; fi
+            echo "Push tentativa $i falhou — retry em $((i * 5))s"
+            sleep $((i * 5))
+          done
+          echo "❌ Push falhou após 5 tentativas"
+          exit 1

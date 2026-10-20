@@ -548,6 +548,7 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
       for (let round = 1; round <= numRounds; round++) {
         let roundHasData = false;
         let firstPageFailed = false;
+        const vistosRonda = new Set();
         for (let p = 1; p <= totalPages; p++) {
           let d;
           try {
@@ -568,8 +569,16 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
             firstPageFailed = true;
             break;
           }
-          if (!d?.flight_players) { await sleep(DELAY_MS); continue; }
+          // Página vazia depois da 1ª = fim do flight (antes seguia até à última).
+          if (!d?.flight_players || !Object.keys(d.flight_players).length) { await sleep(DELAY_MS); break; }
           roundHasData = true;
+          // Com t=1 a 1ª página já traz o flight todo: as seguintes vinham vazias
+          // e cada uma custava 2 pedidos (t=1 + fallback t=0) — 30 de 32 pedidos
+          // inúteis num flight de 37 (20/10/2026). Parar quando a página não traz
+          // ninguém novo NESTA ronda ou já a temos para tantos como os inscritos.
+          const antesPg = vistosRonda.size;
+          for (const pid of Object.keys(d.flight_players)) vistosRonda.add(pid);
+          const paginaSemNovos = vistosRonda.size === antesPg;
 
           for (const [pid, pl] of Object.entries(d.flight_players)) {
             if (!flightData.players[pid]) {
@@ -613,6 +622,8 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
             }
           }
           await sleep(DELAY_MS);
+          const inscritos = Number(meta?.flights?.[fid]?.registered) || memberIds.length || 0;
+          if (paginaSemNovos || (inscritos && vistosRonda.size >= inscritos)) break;
         }
         // Se a ronda actual não respondeu (firstPageFailed) e já tínhamos
         // dados numa ronda anterior, assumir que rondas seguintes não existem
@@ -986,7 +997,13 @@ async function main() {
   process.exit(written === 0 ? 2 : 0);
 }
 
-main().catch(err => {
-  console.error('Erro fatal:', err);
-  process.exit(1);
-});
+// Importável (o fetch-uskids-edicoes-anteriores.js reutiliza o scrape por flight
+// e a cache); corre sozinho só quando chamado directamente.
+if (require.main === module) {
+  main().catch(err => {
+    console.error('Erro fatal:', err);
+    process.exit(1);
+  });
+}
+
+module.exports = { fetchTournamentRichData, loadFlightCache, saveFlightCache, apiGet, API };

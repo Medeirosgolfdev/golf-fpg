@@ -32,6 +32,12 @@ on:
         required: false
         default: '300'
 
+# A mesma fila do update-uskids-edicoes: os dois escrevem a
+# uskids-rich-flight-cache.json.gz — nunca ao mesmo tempo (20/10/2026).
+concurrency:
+  group: uskids-rich-flight-cache
+  cancel-in-progress: false
+
 permissions:
   contents: write
 
