@@ -113,6 +113,9 @@ session-datagolf.txt
 
 # Certificados HTTPS dev (self-signed)
 .certs/
+# Nome temporário dos certificados durante o preview do Claude (o browser do
+# preview não aceita o self-signed) — nunca ao repo, que é público (20/10/2026).
+.certs-tmp-claude/
 src/pages/.fuse_hidden0000000400000001
 src/ui/.fuse_hidden0000000400000002
 public/data/fpg-admissions-draws.backup-1780784225241.json
