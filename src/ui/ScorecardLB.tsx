@@ -111,8 +111,10 @@ export function ScorecardLB({
   // «Clube» que é só o país (USKids, torneios internacionais: IT, GB-ENG…): a
   // bandeira passa para antes do nome e a coluna sai — menos uma coluna (pedido
   // da Mariana, 20/10/2026). Com clubes a sério a coluna fica.
+  // O código pode vir sozinho («IT») ou já com a bandeira à frente («🇮🇹 IT», USKids).
+  const semBandeira = (c?: string | null) => (c || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
   const clubEhPais = (c?: string | null) => {
-    const u = (c || "").trim().toUpperCase();
+    const u = semBandeira(c).toUpperCase();
     return /^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️";
   };
   const clubesSaoPaises = tournament.players.some((p) => p.club) && tournament.players.every((p) => !p.club || clubEhPais(p.club));
@@ -497,7 +499,7 @@ export function ScorecardLB({
         // contrário — é a razão de se olhar para a lista. A linha continua
         // destacada (`_isPortuguese`); as duas coisas somam-se.
         const ccFonte = (p as { _country?: string | null })._country;
-        const cc = (ccFonte && noLink ? ccFonte : null) || (clubesSaoPaises ? p.club : null);
+        const cc = (ccFonte && noLink ? ccFonte : null) || (clubesSaoPaises ? semBandeira(p.club) || null : null);
         const withFlag = cc ? (
           <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
             <span aria-label={cc} title={cc}>{flagOf(cc)}</span>

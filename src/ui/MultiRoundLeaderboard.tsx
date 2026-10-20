@@ -138,8 +138,10 @@ export function MultiRoundLeaderboard({
   const hasAnyFed  = useMemo(() => outros.some(r => r.fed != null && r.fed !== ""), [outros]);
   // «Clube» que é só o país (USKids, internacionais: IT, GB-ENG…): a bandeira vai
   // para antes do nome e a coluna sai — com clubes a sério a coluna fica.
+  // O código pode vir sozinho («IT») ou já com a bandeira à frente («🇮🇹 IT», USKids).
+  const semBandeira = (c?: string | null) => (c || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
   const clubesSaoPaises = useMemo(() => rows.some(r => r.club) && rows.every(r => {
-    const u = (r.club || "").trim().toUpperCase();
+    const u = semBandeira(r.club).toUpperCase();
     return !u || (/^[A-Z]{2,3}(-[A-Z]{2,4})?$/.test(u) && flagOf(u) !== "🏳️");
   }), [rows]);
   const hasAnyClub = useMemo(() => !clubesSaoPaises && outros.some(r => r.club != null && r.club !== ""), [outros, clubesSaoPaises]);
@@ -448,7 +450,7 @@ export function MultiRoundLeaderboard({
                           : showPos ? (mdl || dp) : ""}
                   </td>
                   <td className="lb-name sticky-col-1" style={row.isHighlighted ? undefined : { background: stickyBg }}>
-                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={row.club} style={{ marginRight: 4 }}>{flagOf(row.club)}</span>}
+                    {clubesSaoPaises && row.club && !row.countryFlag && <span title={semBandeira(row.club)} style={{ marginRight: 4 }}>{flagOf(semBandeira(row.club))}</span>}
                     {renderName
                       ? renderName(row)
                       : playersDB
