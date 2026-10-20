@@ -88,7 +88,13 @@ export function ScorecardLB({
   /* hideHCP = «esconder se não houver HCP»: a coluna aparece sempre que os dados
      o trazem (no Draw via-se o HCP e nos resultados da mesma prova não). */
   const anyHcp = tournament.players.some((p) => p.hcpExact != null);
-  const hideHCP_ = (options?.hideHCP ?? false) && !anyHcp;
+  // Colunas sem dados escondem-se sozinhas (20/10/2026, pedido da Mariana):
+  // ESC/FED/CLUBE/HCP/TEE só aparecem se ALGUÉM ALÉM DO MANUEL tiver o dado —
+  // num torneio internacional só o Manuel tem escalão, federado e HCP, e as
+  // colunas ficavam cheias de «–».
+  const outros = tournament.players.filter((p) => !isManuel(p));
+  const temOutros = (f: (p: Player) => boolean) => outros.some(f);
+  const hideHCP_ = ((options?.hideHCP ?? false) && !anyHcp) || !temOutros((p) => p.hcpExact != null);
   // SD: a coluna só aparece se houver CR/Slope (ou SD oficial) para alguém —
   // a mesma regra em todas as secções (14/10/2026; antes umas escondiam-na
   // sempre e outras mostravam-na vazia).
@@ -96,10 +102,13 @@ export function ScorecardLB({
     || (p.roundScores || []).some((rs) => rs.sd != null || ((rs.courseRating ?? 0) > 0 && (rs.slope ?? 0) > 0))
     || (((p as any).courseRating ?? 0) > 0 && ((p as any).slope ?? 0) > 0));
   const hideSD_ = (options?.hideSD ?? false) || !anyRating;
-  const hideEsc = options?.hideEsc ?? false;
-  const hideFed = options?.hideFed ?? false;
-  const hideTee = options?.hideTee ?? false;
-  const hideClub_ = options?.hideClub ?? false;
+  const hideEscOpt = options?.hideEsc ?? false;
+  const hideFed = (options?.hideFed ?? false) || !temOutros((p) => !!displayFed(p.fedCode));
+  // TEE: também quando todos jogam do mesmo tee (já está na linha de
+  // informação por cima da tabela — uma coluna igual em todas as linhas).
+  const hideTee = (options?.hideTee ?? false) || !temOutros((p) => !!p.teeName)
+    || new Set(tournament.players.map((p) => p.teeName || "")).size <= 1;
+  const hideClub_ = (options?.hideClub ?? false) || !temOutros((p) => !!p.club);
   const showAge_ = options?.showAge ?? false;
   const showClass_ = options?.showClass ?? false;
   // Idade do jogador — o mesmo componente do Draw e das Inscrições (BirthCells).
@@ -110,12 +119,6 @@ export function ScorecardLB({
   const startHole_ = options?.startHole ?? 1;
   const nameDecorator_ = options?.nameDecorator;
   const noInfer = options?.noInferBlanks ?? false;
-  // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas
-  // ocultas, mais 1 se IDADE estiver ligada (showAge)
-  const parLabelColSpan =
-    parLabelColSpanProp ??
-    (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
-       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0));
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -233,6 +236,16 @@ export function ScorecardLB({
 
   // Hooks têm de vir ANTES de qualquer return condicional
   const fedBirthdates = useFedBirthdates();
+  // ESC: escalão ou idade — conta quem os tenha, além do Manuel (o escalão da
+  // prova, igual para todos, não conta).
+  const hideEsc = hideEscOpt || !outros.some((p) =>
+    !!resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || !!playerDob(p, { playersDB, fedBirthdates }));
+  // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas
+  // ocultas, mais 1 se IDADE estiver ligada (showAge)
+  const parLabelColSpan =
+    parLabelColSpanProp ??
+    (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
+       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0));
   const filteredPlayers = useMemo(
     () => filterPlayers(rawPlayers, filter, escLookup, playersDB, { tournamentDate: tournament.date, fedBirthdates }),
     [rawPlayers, filter, escLookup, playersDB, tournament.date, fedBirthdates]
