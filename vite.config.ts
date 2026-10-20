@@ -24,11 +24,13 @@ function loadEnvLocal() {
     if (eq < 0) continue
     const k = t.slice(0, eq).trim()
     const v = t.slice(eq + 1).trim()
-    console.log('[env] Linha: k=' + JSON.stringify(k) + ' v=' + JSON.stringify(v.slice(0, 20)))
+    // Só o NOME da variável — nunca o valor (auditoria 20/10/2026: escrevia o
+    // início da sessão DataGolf na consola).
+    console.log('[env] Variável: ' + k)
     if (k && !(k in process.env)) { process.env[k] = v; loaded++ }
   }
   console.log('[env] Carregadas ' + loaded + ' variaveis do .env.local')
-  console.log('[env] DATAGOLF_SESSION = ' + (process.env.DATAGOLF_SESSION ? process.env.DATAGOLF_SESSION.slice(0, 30) + '...' : '(indefinido)'))
+  console.log('[env] DATAGOLF_SESSION ' + (process.env.DATAGOLF_SESSION ? 'definida' : '(indefinida)'))
 }
 loadEnvLocal()
 

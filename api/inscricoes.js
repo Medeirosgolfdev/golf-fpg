@@ -426,8 +426,10 @@ export default async function handler(req, res) {
   try {
     const result = await fetchAdmissionsHTML(ccode, tcode);
 
-    if (raw === "1") {
-      res.setHeader("Content-Type", "text/html; charset=utf-8");
+    // raw=1 é ferramenta de depuração: só no servidor local, e como texto (servir
+    // HTML da FPG no domínio do site seria um risco de XSS) — auditoria 20/10/2026.
+    if (raw === "1" && !process.env.VERCEL) {
+      res.setHeader("Content-Type", "text/plain; charset=utf-8");
       return res.status(result.status || 502).send(result.html || "");
     }
 
@@ -443,7 +445,8 @@ export default async function handler(req, res) {
       : parseAdmissionsTable(result.html);
     console.log("[inscricoes] " + ccode + "/" + tcode + " -> " + jogadores.length + " inscritos (via " + result.via + ")");
 
-    res.setHeader("Cache-Control", "no-cache");
+    // 2 min na CDN (antes no-cache: uma ida à FPG por cada visita).
+    res.setHeader("Cache-Control", "public, max-age=0, s-maxage=120, stale-while-revalidate=600");
     return res.status(200).json({
       ccode, tcode, ...meta,
       totalInscritos: jogadores.length,
@@ -457,7 +460,7 @@ export default async function handler(req, res) {
   } catch (err) {
     console.error("[inscricoes] Erro " + ccode + "/" + tcode + ":", err);
     return res.status(500).json({
-      error: String(err),
+      error: process.env.VERCEL ? "erro ao ler as inscrições da FPG" : String(err),
       ccode, tcode, ...meta, totalInscritos: 0, jogadores: [], lastFetched: null,
     });
   }

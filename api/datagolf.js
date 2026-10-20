@@ -610,11 +610,32 @@ module.exports = async function handler(req, res) {
   const competitionType = url.searchParams.get("competitiontype") || "10";
   const limit  = parseInt(url.searchParams.get("limit") || "200", 10);
 
-  // CORS — permitir que o script de consola do my.fpg.pt envie cookies
-  res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  if (req.method === "OPTIONS") { res.writeHead(200); res.end(); return; }
+  // Segurança (auditoria 20/10/2026): em produção (Vercel define VERCEL=1) as
+  // acções de depuração e de escrita de cookies não existem, o CORS só aceita o
+  // próprio site, e fed/score_id têm de ser números — antes qualquer origem podia
+  // gravar cookies, usar a sessão DataGolf dela e fazer até 8 pedidos à FPG.
+  const emProducao = !!process.env.VERCEL;
+  const origem = req.headers.origin || "";
+  if (!emProducao) {
+    // Local: o script de consola do my.fpg.pt envia as cookies para o servidor local.
+    res.setHeader("Access-Control-Allow-Origin", origem || "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  } else if (/^https:\/\/golf-fpg(-[a-z0-9-]+)?\.vercel\.app$/.test(origem)) {
+    res.setHeader("Access-Control-Allow-Origin", origem);
+    res.setHeader("Vary", "Origin");
+  }
+  if (req.method === "OPTIONS") { res.writeHead(emProducao ? 204 : 200); res.end(); return; }
+  if (emProducao && (action === "save_cookie" || action === "debug_fpg_direct" || action === "force_datagolf")) {
+    res.writeHead(404, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: false, error: "não disponível" }));
+    return;
+  }
+  if ((fed && !/^\d{1,7}$/.test(fed)) || (scoreId && !/^\d{1,12}$/.test(scoreId))) {
+    res.writeHead(400, { "Content-Type": "application/json" });
+    res.end(JSON.stringify({ ok: false, error: "fed= e score_id= têm de ser números" }));
+    return;
+  }
 
   // save_cookie: POST com { host, cookieHeader } — grava .datagolf-cookies.json
   if (action === "save_cookie" && req.method === "POST") {
