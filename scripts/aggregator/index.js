@@ -277,6 +277,15 @@ async function main() {
       sub(`juniors-form.json: ${Object.keys(form.players).length} juniores`);
     }
 
+    // Resumo do Scout (aba «Scout» dos circuitos e da /uskids): nível, vitórias,
+    // HCP, clube e provas em comum com o Manuel — mesmas contas do kids2.
+    {
+      const { buildScout } = require("./util/scout");
+      const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt);
+      require("fs").writeFileSync(path.join(DATA_DIR, "juniors-scout.json"), JSON.stringify(scout));
+      sub(`juniors-scout.json: ${Object.keys(scout.players).length} juniores`);
+    }
+
     // Split juniors-tournaments em N partes para não bater no limite de 100MB
     // do GitHub. Shards escrevem-se compactos (sem indent) — são lidos só por
     // máquinas. Target conservador 75MB para deixar margem.

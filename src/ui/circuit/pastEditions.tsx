@@ -14,7 +14,7 @@
  *     torneio noutros anos), carrega cada uma (lazy, via `entry.loadDivisions`),
  *     casa a divisão e desenha a tabela. É isto que o CircuitShell injecta.
  */
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { CircuitEntry, CircuitDivision } from "./types";
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import { isManuelByName as isM } from "../../constants/manuel";
@@ -22,8 +22,8 @@ import { isRoundInProgress } from "../../data/fpgUtils";
 import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import PastEditionsTable, { type PastEdition } from "./PastEditionsTable";
-import PastEditionsRepeatersTable from "./PastEditionsRepeatersTable";
-import { buildRepeaters, type FieldPlayer } from "./repeaters";
+import Scout from "./Scout";
+import type { FieldPlayer } from "./repeaters";
 
 /** Field de hoje de uma divisão: resultados → inscritos (o 1º que houver). */
 export function divisionField(d: CircuitDivision | null | undefined): FieldPlayer[] {
@@ -209,16 +209,11 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId, m
     return () => { alive = false; };
   }, [editions, division]);
 
-  const rep = useMemo(
-    () => (mode === "repeaters" ? buildRepeaters(field ?? [], state.rows, currentId) : null),
-    [mode, field, state.rows, currentId],
-  );
-
   if (state.loading) return <LoadingState />;
   if (state.err) return <EmptyState size="md" message={"Falhou: " + state.err} />;
+  if (mode === "repeaters") return <Scout field={field ?? []} editions={state.rows} currentId={currentId} />;
   if (!state.rows.length) return <EmptyState size="md" message="Sem edições anteriores com dados." />;
   // "—" é o escalão placeholder das provas Drive sem escalões (Tour/Aquapor) —
   // não faz sentido como título da tabela.
-  if (rep) return <PastEditionsRepeatersTable data={rep} />;
   return <PastEditionsTable editions={state.rows} title={division && division !== "—" ? division : undefined} />;
 }

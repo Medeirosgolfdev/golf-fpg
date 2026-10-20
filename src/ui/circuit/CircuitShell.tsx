@@ -21,6 +21,7 @@ import AdmissionsTab from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import React, { useMemo, useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
+import Scout from "./Scout";
 import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
@@ -571,11 +572,15 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
   if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
   if (pastEditionsTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(pastEditionsTabNode);
-  // ── Tab «Quem repete» (13/10/2026, aba própria a pedido da Mariana): o field
-  // de hoje cruzado com as edições anteriores. Precisa de field e de irmãs.
-  const repeatersTabNode = pastEditionsSiblings && curField.length && cur && curDiv ? {
-    key: "repeaters", label: "Quem repete",
-    content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters" />,
+  // ── Tab «Scout» (20/10/2026; era «Quem repete», 13/10): o field de hoje com
+  // as edições anteriores desta prova E a carreira de cada um (nível, forma,
+  // confrontos com o Manuel, próximas inscrições). Basta haver field — sem
+  // edições anteriores mostra só a carreira.
+  const repeatersTabNode = curField.length && cur && curDiv ? {
+    key: "scout", label: "Scout",
+    content: pastEditionsSiblings
+      ? <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters" />
+      : <Scout field={curField} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
 

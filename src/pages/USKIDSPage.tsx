@@ -350,7 +350,7 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
               </div>
             </button>
             <Link
-              to={`/kids2/next-t?v=scout&t=usk${t.t}`}
+              to={`/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
               target="_blank"
               rel="noreferrer"
               title="Scout — campo de inscritos com tier, idade e confronto vs Manuel (abre KIDS2 em nova aba)"
@@ -977,7 +977,7 @@ export default function USKidsFieldPage() {
                 </div>
               </button>
               <Link
-                to={`/kids2/next-t?v=scout&t=usk${t.t}`}
+                to={`/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
                 target="_blank"
                 rel="noreferrer"
                 title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
@@ -1078,12 +1078,16 @@ export default function USKidsFieldPage() {
               Resultados ↗
             </a>
           )}
+          {/* Scout (20/10/2026): com resultados abre a aba «Scout» do próprio
+              torneio; sem eles (futuro), os inscritos no Kids 2 — mesmo componente. */}
           <Link
-            to={`/kids2/next-t?v=scout&t=usk${t.t}`}
-            target="_blank"
+            to={tab === "resultados" && t.temResultados
+              ? `/uskids?t=${t.t}&tab=resultados&rt=scout`
+              : `/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
+            target={tab === "resultados" && t.temResultados ? undefined : "_blank"}
             rel="noreferrer"
             onClick={e => e.stopPropagation()}
-            title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
+            title="Scout — os jogadores, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
             className="p p-sm td-none"
             style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
             🔭 Scout

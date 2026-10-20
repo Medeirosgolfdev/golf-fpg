@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import RankingsTabs from "./ui/RankingsTabs";
 import "./App.css";
 import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
@@ -47,7 +47,6 @@ const SimuladorPage = lazy(() => import("./pages/SimuladorPage"));
 const CalendarioPage = lazy(() => import("./pages/CalendarioPage"));
 const BJGTAnalysisPage = lazy(() => import("./pages/BJGTAnalysisPage"));
 const KIDS2Page = lazy(() => import("./pages/KIDS2Page"));
-const KIDS2ScoutView = lazy(() => import("./pages/kids2/ScoutView"));
 const KIDS2NextTournaments = lazy(() => import("./pages/kids2/NextTournaments"));
 const KIDS2NextTournamentsGlobal = lazy(() => import("./pages/kids2/NextTournamentsGlobal"));
 const KIDS2RankingPage = lazy(() => import("./pages/kids2/RankingPage"));
@@ -81,6 +80,14 @@ const _earlyData = Promise.all([
   import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
   fetch("/data/course-players.json").then(r => r.ok ? r.json() : null).then(j => (j?.players ?? {}) as CoursePlayersMap).catch(() => ({} as CoursePlayersMap)),
 ]);
+
+/** /kids2/scout/:tid (Scout antigo, 20/10/2026) → a vista Lista dos Próximos
+ *  torneios, que usa o Scout partilhado (ui/circuit/Scout.tsx). */
+function Kids2ScoutRedirect() {
+  const { tid = "" } = useParams<{ tid: string }>();
+  const t = tid.match(/(\d+)$/)?.[1];
+  return <Navigate to={t ? `/kids2/next-t?t=${t}&tab=players&vista=lista` : "/kids2/next-t"} replace />;
+}
 
 /** /england/t/2025_reid-trophy-2025 → /major/reidtrophy/2025; o resto → Reid Trophy 2026. */
 function EnglandRedirect() {
@@ -421,7 +428,7 @@ export default function App() {
                 <Route path="/kids-legacy/next-t" element={<KidsRedirect to="/kids2/next-t" />} />
                 <Route path="/kids2" element={<KIDS2Page />} />
                 <Route path="/kids2/next-t" element={<KIDS2NextTournaments />} />
-                <Route path="/kids2/scout/:tid" element={<KIDS2ScoutView />} />
+                <Route path="/kids2/scout/:tid" element={<Kids2ScoutRedirect />} />
                 {/* Tabela global de inscrições futuras por jogador.
                     ANTES de /kids2/:juniorId senão "inscricoes" seria lido como juniorId. */}
                 <Route path="/kids2/inscricoes" element={<KIDS2NextTournamentsGlobal />} />

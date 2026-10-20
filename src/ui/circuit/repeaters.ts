@@ -4,7 +4,7 @@
  * «Quem repete» genérico (13/10/2026): dos jogadores do field de HOJE (resultados,
  * inscritos ou draw da divisão aberta), quem já jogou edições anteriores da mesma
  * prova e onde ficou em cada uma. Cálculo puro — a tabela é o
- * `PastEditionsRepeatersTable`. A FPG tem a sua versão própria, com HCP, forma
+ * `Scout.tsx` (aba «Scout», ex-«Quem repete»). A FPG tem a sua versão própria, com HCP, forma
  * WHS e previsão (`pages/fpg/PastEditionsRepeaters.tsx`); aqui só se usa o que
  * todas as fontes têm: posição, total e ±par de cada edição.
  */

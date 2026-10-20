@@ -16,14 +16,16 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
-import { normPaisDisplay } from "../../utils/flagUtils";
+import { normPaisDisplay, flag as flagOf } from "../../utils/flagUtils";
 import { fmtToPar, displayName } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
 import PrevisaoTab from "./PrevisaoTab";
-import { ScoutEmbed } from "../kids2/ScoutView";
+import Scout from "../../ui/circuit/Scout";
+import { KidsLinkCtx } from "../../ui/KidsLink";
+import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import TabRow from "../../ui/TabRow";
 import { kidsUrl } from "../../ui/KidsLink";
 
@@ -94,36 +96,7 @@ const MIN_FIELD_HITS = 3;
 // Máximo de colunas (para não rebentar a UI) — prioridade aos mais recentes
 const MAX_COLUMNS = 20;
 
-// Tids "extra" vindos de autoRivals (não estão no member-history-slim).
-// Para cada um: nome, abreviado, rondas, par, mês/ano para ordenação.
-// Estes são WJGC, EOWAGR, Doral — torneios importantes mas hospedados noutros datasets.
-interface ExtraTidDef { tid: string; name: string; short: string; rounds: number; par: number; sortDate: string }
-const EXTRA_TIDS: ExtraTidDef[] = [
-  // WJGC (Villa Padierna, Espanha)
-  { tid: "wjgc25_b1011", name: "WJGC 2025 B10-11", short: "WJGC '25", rounds: 3, par: 71, sortDate: "2025-02-25" },
-  { tid: "wjgc26",       name: "WJGC 2026 B10-11", short: "WJGC '26", rounds: 3, par: 72, sortDate: "2026-02-25" },
-  { tid: "wjgc26_1213",  name: "WJGC 2026 B12-13", short: "WJGC '26 B12-13", rounds: 3, par: 72, sortDate: "2026-02-25" },
-  // EOWAGR (Aragon Open, Espanha)
-  { tid: "eowagr25",     name: "EOWAGR 2025",      short: "EU Open '25", rounds: 3, par: 72, sortDate: "2025-08-15" },
-  // Doral (First Tee Miami, USA)
-  { tid: "doral24_b1011",name: "Doral 2024 B10-11",short: "Doral '24", rounds: 2, par: 71, sortDate: "2024-12-15" },
-  { tid: "doral25_b1011",name: "Doral 2025 B10-11",short: "Doral '25", rounds: 2, par: 71, sortDate: "2025-12-15" },
-  { tid: "doral25_b1213",name: "Doral 2025 B12-13",short: "Doral '25 B12-13", rounds: 2, par: 71, sortDate: "2025-12-15" },
-];
 
-// EXTRA_TIDS são tids string (ex: "wjgc26"). Para os encaixar na lista do
-// dropdown (que usa FieldTorneio.t: number) atribuímos IDs negativos estáveis.
-// Mapeamento: tid string -> tcode negativo. Reverso usado em dataset useMemo.
-const EXTRA_NEG_IDS: Record<string, number> = (() => {
-  const m: Record<string, number> = {};
-  EXTRA_TIDS.forEach((def, i) => { m[def.tid] = -(i + 1); });
-  return m;
-})();
-const EXTRA_TID_BY_NEG: Record<number, string> = (() => {
-  const m: Record<number, string> = {};
-  for (const [tid, neg] of Object.entries(EXTRA_NEG_IDS)) m[neg] = tid;
-  return m;
-})();
 
 /** Extrai escalao a partir do nome do EXTRA_TID (ex: "WJGC 2026 B10-11" → "Boys 10-11"). */
 /** Parse "Boys 12" → [12, 12]; "Boys 10-11" → [10, 11]; "U14"/"Boys U14" →
@@ -565,6 +538,8 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
   syncUrl?: boolean;
 }) {
   const [field, setField] = useState<FieldData | null>(null);
+  // Nome → junior do kids2, para o Scout (ui/circuit/Scout.tsx) cruzar os inscritos.
+  const { kidsMap } = useKidsLinkMap();
   const [mh, setMh] = useState<MHSlim | null>(null);
   // uskids-results.json — para sintetizar Passados quando o member-history
   // ainda não foi regenerado (torneio acabou hoje/ontem).
@@ -603,7 +578,7 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
     }
     return "players";
   });
-  // Vista dos Jogadores: «lista» (uma linha por inscrito — ScoutEmbed) ou
+  // Vista dos Jogadores: «lista» (uma linha por inscrito — ui/circuit/Scout.tsx) ou
   // «grelha» (resultados por torneio — RivaisDashboard). Botão segmentado.
   const [vistaJog, setVistaJog] = useState<"lista" | "grelha">(() =>
     syncUrl && searchParams.get("vista") === "grelha" ? "grelha" : "lista",
@@ -1895,13 +1870,13 @@ export default function FieldRivaisDashboard({ defaultT = 21131, defaultEscalao 
         })()}
       </div>
 
-      {activeTab === "players" && vistaJog === "lista" && (
-        <ScoutEmbed
-          tid={torneioT > 0 ? "usk" + torneioT : (EXTRA_TID_BY_NEG[torneioT] ?? "")}
-          hideNav
-          escalao={escalaoNome}
-        />
-      )}
+      {activeTab === "players" && vistaJog === "lista" && (() => {
+        // O mesmo Scout dos torneios (ui/circuit/Scout.tsx) — os inscritos deste
+        // escalão com a carreira de cada um (20/10/2026; era o ScoutView do kids2).
+        const esc = futureTorneios.find(x => x.t === torneioT)?.escaloes.find(e => e.nome === escalaoNome);
+        const scoutField = (esc?.jogadores ?? []).map(j => ({ name: j.nome, club: j.pais ? flagOf(j.pais) : null }));
+        return <KidsLinkCtx.Provider value={kidsMap}><Scout field={scoutField} tCode={torneioT > 0 ? torneioT : null} /></KidsLinkCtx.Provider>;
+      })()}
       {activeTab === "players" && vistaJog === "grelha" && (
         dataset
           ? <RivaisDashboard

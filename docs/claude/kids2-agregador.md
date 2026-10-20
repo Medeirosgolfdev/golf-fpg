@@ -212,3 +212,17 @@ As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só 
 - **Cartões:** o buraco a buraco é uma imagem PNG; do cartão só se lê par, CR, Slope, percurso e tee (`membership-card-api.golf.de/…/details`).
 - **Workflow** `update-dgv.yml` (Sex/Sáb/Dom 19:30 UTC + Seg 06:00): janela de −21 a +7 dias; a pedido com `ids` ou `from_days`. Guarda anti-encolhimento por nº de jogadores com voltas; exit 2 = nada mudou.
 - Ainda **não** está na `/major` (só kids2). Mapa de links: secção «DGV — Alemanha» em `docs/links-conhecidos.html`.
+
+## Resumos leves para as páginas dos circuitos (2026-10-20)
+
+As páginas dos circuitos não podem carregar o canónico (~180 MB). O agregador
+escreve dois resumos, carregados só quando se abre a aba **Scout** (`src/ui/circuit/Scout.tsx`,
+ex-«Quem repete» — CircuitShell, /uskids e Kids 2 «Próximos torneios»):
+- `juniors-form.json` (`util/form.js`) — últimos torneios e confrontos com o Manuel no mesmo escalão.
+- `juniors-scout.json` (`util/scout.js`, ~2,3 MB) — nível (tier), vitórias, top-3, HCP, data de nascimento,
+  clube, país e provas em comum com o Manuel `[data, torneio, lugar, lugar do Manuel, pancadas − Manuel]`.
+
+As contas são as do kids2, **no mesmo ficheiro**: `src/pages/kids2/juniorCalc.ts` (tipos, tier, vitórias,
+confrontos, peso dos torneios) não tem imports, e o Node carrega-o directamente (como o `whsCalc.ts`).
+O `data.ts` e o `tournWeight.ts` re-exportam daqui. Nada de `enum`/`namespace` nem imports nesse ficheiro.
+Os dois resumos são ficheiros gerados — em conflito de git, regenerar (`node scripts/aggregator/index.js`).

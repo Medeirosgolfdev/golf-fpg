@@ -20,8 +20,7 @@ import { TournExternalLinks } from "./TabCampoDetalhe";
 import { cachedFetchJson } from "../data/fetchCache";
 import { tournamentFamilyKey, divKey, buildPastEditionFromTournament } from "./circuit/pastEditions";
 import PastEditionsTable, { type PastEdition } from "./circuit/PastEditionsTable";
-import PastEditionsRepeatersTable from "./circuit/PastEditionsRepeatersTable";
-import { buildRepeaters } from "./circuit/repeaters";
+import Scout from "./circuit/Scout";
 
 // ─────────────────────────────────────────────
 // ADAPTER: escalaoToTournament
@@ -291,15 +290,14 @@ function EscalaoSection({ escalao: e, torneio: t, arMap, drawsData, edicoes }: {
 
   // «Edições anteriores» e «Quem repete», como nas outras secções.
   const extraTabs = useMemo(() => {
-    if (!edicoes) return undefined;
     const tabs: { key: string; label: string; content: React.ReactNode }[] = [];
-    const rows = uskidsPastEditions(e, edicoes, arMap);
+    const rows = edicoes ? uskidsPastEditions(e, edicoes, arMap) : [];
     if (rows.length >= 2) tabs.push({ key: "past-editions", label: "Edições anteriores", content: <PastEditionsTable editions={rows} title={e.nome} /> });
-    const rep = uskidsRepeaterEditions(e, t, edicoes, arMap);
-    if (rep.length) {
-      const field = tournament.players.filter(p => p.name).map(p => ({ name: p.name, club: p.club || null }));
-      tabs.push({ key: "repeaters", label: "Quem repete", content: <PastEditionsRepeatersTable data={buildRepeaters(field, rep, String(t.t))} /> });
-    }
+    // «Scout» (20/10/2026; era «Quem repete»): o field com as edições anteriores
+    // (escalão de onde cada um vem — idade − anos) e a carreira de cada um.
+    const rep = edicoes ? uskidsRepeaterEditions(e, t, edicoes, arMap) : [];
+    const field = tournament.players.filter(p => p.name).map(p => ({ name: p.name, club: p.club || null }));
+    if (field.length) tabs.push({ key: "scout", label: "Scout", content: <Scout field={field} editions={rep} currentId={String(t.t)} tCode={t.t} /> });
     return tabs.length ? tabs : undefined;
   }, [edicoes, e, arMap, tournament, t]);
 
