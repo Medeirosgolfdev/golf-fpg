@@ -61,7 +61,7 @@ jobs:
 
       - name: Checkout leve (só scripts)
         if: steps.creds.outputs.ok == '1'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           sparse-checkout: scripts
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -87,7 +87,7 @@ jobs:
 
       - name: Checkout completo
         if: steps.check.outputs.found == '1'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
