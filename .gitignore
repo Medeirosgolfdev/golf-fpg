@@ -105,6 +105,19 @@ probe6.mts
 # segredos locais
 .env.local
 .env
+# Padrões genéricos de segredos — o repositório é PÚBLICO (auditoria 20/10/2026:
+# já entraram uma chave privada, cookies e um .env.local por nomes que não
+# estavam listados). Nenhum ficheiro seguido apanha estes padrões.
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+*cookies*.json
+*session*.json
+*-cookie*.json
 
 # sessões DataGolf guardadas por scripts legados — o repositório é público
 scripts/_archive/dados-temporarios/scoring-session.json
