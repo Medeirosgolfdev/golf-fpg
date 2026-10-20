@@ -32,6 +32,7 @@ import {
   nameCell, countryCell, num, type RankingCol, type RankingPageConfig,
 } from "../ui/ranking/RankingPage";
 import { buildEgrEntries } from "./egr/egrCircuit";
+import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 
 const EGR_SITE = "https://www.europeangolfrankings.com";
 const PLAYER_EVENTS_URL = "/data/egr/egr-player-events.json";
@@ -97,6 +98,10 @@ const CFG: RankingPageConfig<EgrRanking, Parameters<typeof buildEgrEntries>[0][n
     sourceColors: { egr: "#1e40af" },
     sourceLabels: { egr: "EGR" },
     filters: { search: true, year: true, escalao: true, sex: true, intl: true, toggles: ["pt", "top10", "veteranos"] },
+    // «Edições anteriores» (20/10/2026): a mesma prova noutros anos, pelo nome sem
+    // ano — a regra da França/Espanha/Global Junior — e do MESMO sexo (rapazes e
+    // raparigas são eventos separados com o mesmo nome).
+    editionKey: (e) => { const k = tournamentFamilyKey(e.name); return k ? `${k}|${e.sex ?? ""}` : null; },
   },
   rankingLabel: "🏅 Ranking de jogadores",
   loadingRanking: "A carregar o ranking EGR…",

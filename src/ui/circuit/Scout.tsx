@@ -66,14 +66,28 @@ function useProximas(): Map<string, Proxima[]> | null {
   return m;
 }
 
+/** Coluna própria de uma página (ex.: FPG — saída, HCP oficial, forma WHS,
+ *  previsão), calculada pelo nome do jogador. */
+export interface ScoutExtraCol {
+  key: string;
+  label: React.ReactNode;
+  title?: string;
+  cell: (name: string) => React.ReactNode;
+  sort?: (name: string) => number | string | null;
+  dir?: "asc" | "desc";
+}
+
 interface Linha {
-  key: string; name: string; club: string | null; isManuel: boolean;
+  key: string; name: string; club: string | null; country: string | null; isManuel: boolean;
   sc?: JuniorScout; fm?: JuniorForm; rep?: RepeaterRow;
   idade: number | null; threat: ThreatInfo; frente: number; atras: number; vsMMedia: number | null;
   proximas: Proxima[];
 }
 
-export default function Scout({ field, editions = [], currentId, tCode }: {
+export default function Scout({
+  field, editions = [], currentId, tCode,
+  colsAntes = [], colsDepois = [], detalheExtra, resumoExtra, rodape, semHcp, ordemInicial,
+}: {
   /** Jogadores de hoje (resultados → inscritos → draw). */
   field: FieldPlayer[];
   /** Edições desta prova (pode incluir a de hoje — sai por `currentId`). */
@@ -81,6 +95,18 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
   currentId?: string | null;
   /** tcode USKids da prova de hoje — sai dos «Próximos». */
   tCode?: number | null;
+  /** Colunas próprias da página: antes do Jogador (ex.: saída, tee) e depois do «Último». */
+  colsAntes?: ScoutExtraCol[];
+  colsDepois?: ScoutExtraCol[];
+  /** Bloco extra no detalhe de cada jogador (ex.: FPG — voltas aqui, forma WHS, previsão). */
+  detalheExtra?: (name: string) => React.ReactNode | null;
+  /** Mais texto na linha de resumo, e uma nota no fim da tabela. */
+  resumoExtra?: React.ReactNode;
+  rodape?: React.ReactNode;
+  /** Esconde o HCP do resumo kids2 (a página traz o seu, ex.: o índice FPG). */
+  semHcp?: boolean;
+  /** Ordenação inicial (default: ameaça quando o Manuel está no field). */
+  ordemInicial?: { key: string; dir: "asc" | "desc" };
 }) {
   const kidsMap = useContext(KidsLinkCtx);
   const [form, setForm] = useState<FormFile | null>(null);
@@ -122,7 +148,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
             tier: sc?.t ?? null, recentPos: fm?.r[0]?.[3] ?? null, wins: sc?.w ?? 0,
           });
       out.push({
-        key: k, name: p.name, club: p.club ?? sc?.c ?? null, isManuel, sc, fm, rep: rr,
+        key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, fm, rep: rr,
         idade: idade(sc?.d), threat, frente, atras, vsMMedia,
         proximas: (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
       });
@@ -130,9 +156,13 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
     return out;
   }, [field, form, scout, rep, kidsMap, proximas, tCode]);
 
-  const { sortKey, sortDir, toggleSort } = useSort<string>(manuelNoField ? "nivel" : "tier", manuelNoField ? "desc" : "asc", {
+  const extras = useMemo(() => [...colsAntes, ...colsDepois], [colsAntes, colsDepois]);
+  const { sortKey, sortDir, toggleSort } = useSort<string>(
+    ordemInicial?.key ?? (manuelNoField ? "nivel" : "tier"),
+    ordemInicial?.dir ?? (manuelNoField ? "desc" : "asc"), {
     name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", vit: "desc", forma: "asc", ult: "desc",
     n: "desc", best: "asc", vsm: "desc", prox: "desc",
+    ...Object.fromEntries(extras.map((c) => [c.key, c.dir ?? "asc"])),
   });
   const ordenadas = useMemo(() => {
     const val = (l: Linha): number | string | null => {
@@ -149,7 +179,10 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
         case "best": return l.rep?.bestPos ?? null;
         case "vsm": return l.sc?.m?.length ? l.frente - l.atras : null;
         case "prox": return l.proximas.length || null;
-        default: return l.rep?.byEd[sortKey]?.pos ?? null;
+        default: {
+          const ex = extras.find((c) => c.key === sortKey);
+          return ex ? (ex.sort ? ex.sort(l.name) : null) : l.rep?.byEd[sortKey]?.pos ?? null;
+        }
       }
     };
     const dir = sortDir === "asc" ? 1 : -1;
@@ -162,7 +195,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
       const c = typeof va === "string" ? va.localeCompare(String(vb)) : (va as number) - (vb as number);
       return c * dir || a.name.localeCompare(b.name);
     });
-  }, [linhas, sortKey, sortDir]);
+  }, [linhas, sortKey, sortDir, extras]);
 
   if (!form || !scout || !proximas) return <LoadingState />;
   if (!field.length) return <EmptyState size="md" message="Ainda não há jogadores conhecidos nesta prova." />;
@@ -172,13 +205,13 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
   const edsTodas = rep.editions;
   const eds = edsTodas.filter((e) => rep.rows.some((r) => r.byEd[e.id]));
   const rivais = linhas.filter((l) => !l.isManuel);
-  const paises = new Set(rivais.map((l) => l.sc?.p || clubFlagPrefix(l.club)).filter(Boolean)).size;
+  const paises = new Set(rivais.map((l) => l.country || l.sc?.p || clubFlagPrefix(l.club)).filter(Boolean)).size;
   const altos = rivais.filter((l) => l.sc?.t === "elite" || l.sc?.t === "strong").length;
   const comManuel = rivais.filter((l) => l.sc?.m?.length).length;
   const repetem = rivais.filter((l) => l.rep).length;
   const tem = {
     idade: linhas.some((l) => l.idade != null),
-    hcp: linhas.some((l) => l.sc?.h != null),
+    hcp: !semHcp && linhas.some((l) => l.sc?.h != null),
     vit: linhas.some((l) => l.sc?.w),
     forma: linhas.some((l) => l.fm?.r.length),
     vsm: linhas.some((l) => l.sc?.m?.length),
@@ -186,7 +219,10 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nCols = 6 + Object.values(tem).filter(Boolean).length + (eds.length ? 2 + eds.length : 0);
+  const nCols = 6 + Object.values(tem).filter(Boolean).length + (eds.length ? 2 + eds.length : 0) + extras.length;
+  const extraHdr = (c: ScoutExtraCol) => c.sort
+    ? <SortableHdr key={c.key} k={c.key} {...hp} title={c.title}>{c.label}</SortableHdr>
+    : <th key={c.key} title={c.title}>{c.label}</th>;
 
   return (
     <div>
@@ -197,11 +233,13 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
         <span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{comManuel}</b> já jogaram com o Manuel</span>
         {edsTodas.length > 0 && <><span className="muted">·</span><span><b style={{ color: "var(--text)" }}>{repetem}</b> já jogaram esta prova ({edsTodas.length} edi{edsTodas.length === 1 ? "ção anterior" : "ções anteriores"})</span></>}
         {manuelNoField && <span style={{ color: "var(--color-good-dark)", fontWeight: 700, marginLeft: 8 }}>★ Manuel no field</span>}
+        {resumoExtra}
       </div>
       <div style={{ overflowX: "auto", paddingBottom: 6 }}>
         <table className="sc-lb sc-lb-airy" style={{ fontVariantNumeric: "tabular-nums", width: "max-content" }}>
           <thead>
             <tr>
+              {colsAntes.map(extraHdr)}
               <SortableHdr k="name" {...hp} style={{ textAlign: "left" }}>Jogador</SortableHdr>
               {tem.idade && <SortableHdr k="idade" {...hp}>Idade</SortableHdr>}
               {tem.hcp && <SortableHdr k="hcp" {...hp} title="Handicap (Portugal / Espanha / França)">HCP</SortableHdr>}
@@ -210,6 +248,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
               {tem.vit && <SortableHdr k="vit" {...hp} title="Vitórias na carreira">Vit.</SortableHdr>}
               {tem.forma && <SortableHdr k="forma" {...hp} title={`±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses)`}>Forma</SortableHdr>}
               {tem.forma && <SortableHdr k="ult" {...hp} title="Último torneio: lugar / jogadores do escalão">Último</SortableHdr>}
+              {colsDepois.map(extraHdr)}
               {eds.length > 0 && <SortableHdr k="n" {...hp} title="Quantas edições anteriores desta prova jogou">Aqui</SortableHdr>}
               {eds.length > 0 && <SortableHdr k="best" {...hp} title="Melhor lugar numa edição anterior desta prova">Melhor</SortableHdr>}
               {tem.vsm && <SortableHdr k="vsm" {...hp} title="Todas as provas em comum com o Manuel: Manuel à frente – atrás, e pancadas dele a mais (+) ou a menos (−) que o Manuel, em média">vs Manuel</SortableHdr>}
@@ -225,18 +264,22 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
           <tbody>
             {ordenadas.map((l) => {
               const isOpen = aberto === l.key;
-              const bandeira = clubFlagPrefix(l.club) || (l.sc?.p ? flag(l.sc.p) + " " : "");
+              // Bandeira: a do clube, senão o país que a prova publica, senão o do kids2.
+              const paisFlag = l.country ? flag(l.country) : "";
+              const bandeira = clubFlagPrefix(l.club) || (paisFlag && paisFlag !== "🏳️" ? paisFlag + " " : "") || (l.sc?.p ? flag(l.sc.p) + " " : "");
               // Clube sem a bandeira do início (quando o «clube» é só a bandeira, fica vazio).
               const clube = (l.club || "").replace(/^[\u{1F1E6}-\u{1F1FF}\u{1F3F4}][\u{1F1E6}-\u{1F1FF}\u{E0000}-\u{E007F}]*\s*/u, "").trim();
               const fmd = formaMedia(l.fm);
               const ult = l.fm?.r[0];
-              const temDetalhe = !!(l.sc?.m?.length || l.proximas.length);
+              const detExtra = detalheExtra?.(l.name) ?? null;
+              const temDetalhe = !!(l.sc?.m?.length || l.proximas.length || detExtra);
               return (
                 <React.Fragment key={l.key}>
                   <tr className={l.isManuel ? "row-manuel" : undefined}
                       onClick={temDetalhe ? () => setAberto(isOpen ? null : l.key) : undefined}
                       style={{ cursor: temDetalhe ? "pointer" : undefined, background: isOpen ? "var(--bg-hover)" : undefined }}
-                      title={temDetalhe ? "Ver provas em comum com o Manuel e próximas inscrições" : undefined}>
+                      title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
+                    {colsAntes.map((c) => <td key={c.key} className="mono">{c.cell(l.name)}</td>)}
                     <td style={{ textAlign: "left", whiteSpace: "nowrap" }} className={l.isManuel ? "fw-700" : undefined}>
                       {bandeira}{l.name} <KidsLink nome={l.name} />
                       {clube && <span className="muted fs-11"> · {clube}</span>}
@@ -261,6 +304,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
                         {ult ? <>{ult[3] ? `${ult[3]}º/${ult[4]}` : fmtToPar(ult[1])} <span className="muted fs-10">{shortDateSlash(ult[0])}</span></> : "–"}
                       </td>
                     )}
+                    {colsDepois.map((c) => <td key={c.key} className="mono">{c.cell(l.name)}</td>)}
                     {eds.length > 0 && (
                       <td className="mono" title={l.rep?.avgToPar != null ? `Média ${fmtToPar(l.rep.avgToPar)} nas edições que acabou` : undefined}>
                         {l.rep ? `${l.rep.n}×` : "–"}
@@ -299,6 +343,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
                   {isOpen && (
                     <tr>
                       <td colSpan={nCols} style={{ textAlign: "left", background: "var(--bg-hover)", padding: "6px 10px 12px 28px" }}>
+                        {detExtra && <div style={{ marginBottom: 8 }}>{detExtra}</div>}
                         {l.sc?.m?.length ? (
                           <table className="sc-lb" style={{ width: "max-content", marginBottom: 6 }}>
                             <thead><tr><th style={{ textAlign: "left" }}>Prova em comum com o Manuel</th><th>Data</th><th>{l.name.split(" ")[0]}</th><th>Manuel</th><th title="Pancadas dele − Manuel">±</th></tr></thead>
@@ -334,6 +379,7 @@ export default function Scout({ field, editions = [], currentId, tCode }: {
           </tbody>
         </table>
       </div>
+      {rodape}
     </div>
   );
 }

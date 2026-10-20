@@ -37,6 +37,7 @@ import {
   nameCell, countryCell, num, type RankingCol, type RankingPageConfig,
 } from "../ui/ranking/RankingPage";
 import { buildWagrEntries, wagrEventUrl, wagrPlayerUrl, WAGR_SITE } from "./wagr/wagrCircuit";
+import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 
 /**
  * Nº de shards do rollup jogador→eventos.
@@ -121,6 +122,10 @@ const CFG: RankingPageConfig<WagrRanking, Parameters<typeof buildWagrEntries>[0]
     // Os anos anteriores continuam a um clique nas pills, e os deep-links
     // /wagr/evt/{id} de qualquer ano continuam a abrir.
     filters: { search: true, year: true, escalao: true, sex: true, intl: true, defaultYear: "current", toggles: ["pt", "top10"] },
+    // «Edições anteriores» (20/10/2026): a mesma prova noutros anos, pelo nome sem
+    // ano — a regra da França/Espanha/Global Junior — e do MESMO sexo (rapazes e
+    // raparigas são eventos separados com o mesmo nome).
+    editionKey: (e) => { const k = tournamentFamilyKey(e.name); return k ? `${k}|${e.sex ?? ""}` : null; },
   },
   rankingLabel: "🏅 Ranking mundial",
   loadingRanking: "A carregar o ranking mundial…",

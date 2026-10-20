@@ -455,7 +455,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ...(curDiv?.extraSections ?? []).map(x => ({ key: x.key, label: x.label })),
   ], [sections, curDiv]);
   const [section, setSection] = useState<string | null>(null);
-  const curSection: string | null = section && sectionTabs.some(t => t.key === section) ? section : sectionTabs[0]?.key ?? null;
   useEffect(() => { setSection(null); }, [curDiv?.key]);
 
   const toggle = (t: CircuitToggle) => setToggles(prev => {
@@ -583,6 +582,14 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       : <Scout field={curField} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
+  // Provas sem voltas (só totais — EGR, WAGR, GJGL…): a barra é a de secções, e
+  // as abas extra (Época, Edições anteriores, Scout) entram nela também
+  // (20/10/2026 — antes ficavam de fora e estas provas não as tinham).
+  const extrasSemVoltas = curDiv && !curDiv.renderFull
+    ? [seasonTabNode, pastEditionsTabNode, repeatersTabNode].filter((x): x is NonNullable<typeof x> => !!x)
+    : [];
+  const abasSecao = [...sectionTabs, ...extrasSemVoltas.map(x => ({ key: x.key, label: x.label }))];
+  const curSection: string | null = section && abasSecao.some(t => t.key === section) ? section : abasSecao[0]?.key ?? null;
 
   // ── Stats para o header rico (estilo FPGPage) ───────────────────────
   const headerStats = (() => {
@@ -892,9 +899,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                 ) : (
                   <>
                     {/* Sem rondas: barra de secção (Resultados custom / Inscritos / Draw) */}
-                    {sectionTabs.length > 1 && (
+                    {abasSecao.length > 1 && (
                       <div className="tab-bar" style={{ marginBottom: 8 }}>
-                        {sectionTabs.map(t => (
+                        {abasSecao.map(t => (
                           <button
                             key={t.key}
                             className={`tab-under${curSection === t.key ? " active" : ""}`}
@@ -914,6 +921,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                       <MatchplayView data={curDiv.matchplay} />
                     )}
                     {curDiv.extraSections?.find(x => x.key === curSection)?.content}
+                    {extrasSemVoltas.find(x => x.key === curSection)?.content}
                   </>
                 ))}
               </>

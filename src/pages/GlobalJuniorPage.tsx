@@ -198,16 +198,18 @@ const dataUrl = (slug: string) => `/data/gjgl/gjgl_${slug}.json`;
 
 /** Divisão GJGL sem buraco a buraco → o Resumo comum (TotalsResumo). O par de
  *  uma volta tira-se de quem tem total e ±par numéricos. */
-function GjglTotals({ div }: { div: GjglDivision }) {
+function gjglTotais(div: GjglDivision) {
   const ref = div.players.find((p) => typeof p.toPar === "number" && p.total != null && (p.rounds || []).some((r) => r?.gross));
   const nR = ref ? (ref.rounds || []).filter((r) => r?.gross).length : 0;
   const parPerRound = ref && nR ? Math.round((ref.total! - (ref.toPar as number)) / nR) : null;
-  return (
-    <TotalsResumo parPerRound={parPerRound}
-      players={div.players.map((p) => ({ name: p.name, country: p.country, club: p.club ?? null,
-        hcp: p.hcp ?? null, birthYear: p.birthYearEst ?? null, pos: p.pos,
-        rounds: (p.rounds || []).map((r) => r?.gross ?? null), total: p.total }))} />
-  );
+  const players = div.players.map((p) => ({ name: p.name, country: p.country, club: p.club ?? null,
+    hcp: p.hcp ?? null, birthYear: p.birthYearEst ?? null, pos: p.pos,
+    rounds: (p.rounds || []).map((r) => r?.gross ?? null), total: p.total }));
+  return { players, parPerRound };
+}
+function GjglTotals({ div }: { div: GjglDivision }) {
+  const { players, parPerRound } = gjglTotais(div);
+  return <TotalsResumo parPerRound={parPerRound} players={players} />;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -245,6 +247,7 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
           hasManuel,
           // Resumo comum das fontes só com totais (14/10/2026).
           customResults: <GjglTotals div={div} />,
+          totals: gjglTotais(div),
         };
       });
     })

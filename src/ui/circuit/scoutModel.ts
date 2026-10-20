@@ -26,9 +26,11 @@ export interface JuniorScout {
 export interface ScoutFile { players: Record<string, JuniorScout> }
 
 export const N_FORMA = 5;
-/** ±par médio por 18 buracos nos últimos torneios (9 buracos contam metade). */
+/** ±par médio por 18 buracos nos últimos torneios (9 buracos contam metade).
+ *  Torneios com menos de 9 buracos ficam de fora: levados a 18 explodiam
+ *  (+248 numa volta de 1 buraco, 20/10/2026). */
 export function formaMedia(f: JuniorForm | undefined): number | null {
-  const r = f?.r.slice(0, N_FORMA) ?? [];
+  const r = (f?.r ?? []).filter((x) => x[2] >= 9).slice(0, N_FORMA);
   if (!r.length) return null;
   return Math.round((r.reduce((s, x) => s + (x[1] * 18) / x[2], 0) / r.length) * 10) / 10;
 }

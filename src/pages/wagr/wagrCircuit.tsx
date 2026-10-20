@@ -78,9 +78,15 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
       notice={<div className="notice" style={{ marginBottom: 8 }} title="O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.">
         ⚠ Só os classificados que pontuaram no WAGR ({players.length}) — não é o campo completo.</div>}
       extra={[{ header: "PTS", title: "Pontos WAGR ganhos no evento", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–") }]}
-      players={players.map((p) => ({ name: p.name, country: p.country, pos: p.posNum,
-        rounds: [p.r1, p.r2, p.r3, p.r4], total: p.total, points: p.points }))} />,
+      players={totaisWagr(players)} />,
+    totals: { players: totaisWagr(players), parPerRound: null },
   }];
+}
+
+/** Jogadores de um evento WAGR no formato da tabela de totais (e do `totals`). */
+function totaisWagr(players: { name: string; country?: string | null; posNum?: number | null; r1?: number | null; r2?: number | null; r3?: number | null; r4?: number | null; total?: number | null; points?: number | null }[]) {
+  return players.map((p) => ({ name: p.name, country: p.country, pos: p.posNum,
+    rounds: [p.r1 ?? null, p.r2 ?? null, p.r3 ?? null, p.r4 ?? null], total: p.total, points: p.points }));
 }
 
 /* ── Constrói as CircuitEntry a partir do índice de eventos ─────── */

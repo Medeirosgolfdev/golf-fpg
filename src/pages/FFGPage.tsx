@@ -922,11 +922,14 @@ function lgpidfDraws(data: LGPIDFTournament): FpgDraw[] {
 
 /** Par 72 assumido (18 buracos — standard nos Grand Prix Jeunes franceses):
  *  o PDF de resultados não traz o par. */
+function lgpidfTotais(data: LGPIDFTournament) {
+  return data.players.map((p) => ({ name: normalizeName(p.name), country: p.country ?? null, club: p.club ?? null,
+    hcp: p.hcp ?? null, pos: p.pos ?? null, rounds: [p.r1 ?? null, p.r2 ?? null].slice(0, data.rounds || 2), total: p.total ?? null }));
+}
 function LGPIDFTotals({ data }: { data: LGPIDFTournament }) {
   return (
     <TotalsResumo parPerRound={72} tournamentDate={data.dateStart ?? undefined}
-      players={data.players.map((p) => ({ name: normalizeName(p.name), country: p.country ?? null, club: p.club ?? null,
-        hcp: p.hcp ?? null, pos: p.pos ?? null, rounds: [p.r1 ?? null, p.r2 ?? null].slice(0, data.rounds || 2), total: p.total ?? null }))}
+      players={lgpidfTotais(data)}
       notice={<span className="muted fs-10">* ±Par com par 72 assumido — o PDF de resultados não traz o par do campo.</span>} />
   );
 }
@@ -1380,6 +1383,7 @@ function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament): CircuitEnt
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
       customResults: data.players.length ? <LGPIDFTotals data={data} /> : undefined,
+      totals: data.players.length ? { players: lgpidfTotais(data), parPerRound: 72 } : undefined,
       admissions: lgpidfAdmissions(data),
       roundDraws: lgpidfDraws(data).map((draw, i) => ({
         round: i + 1,

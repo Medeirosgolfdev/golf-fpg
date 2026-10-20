@@ -16,6 +16,7 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../../data/f
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
+import type { TotalsPlayer } from "./TotalsResumo";
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
@@ -75,6 +76,10 @@ export interface CircuitDivision {
    * Se `results` existir, tem precedência sobre `customResults`.
    */
   customResults?: React.ReactNode;
+  /** Os jogadores do `customResults` quando é uma tabela só de totais (EGR,
+   *  WAGR, GJGL, LGPIDF — 20/10/2026): com isto o Scout conhece o field e as
+   *  «Edições anteriores» têm com que fazer as colunas de cada ano. */
+  totals?: { players: TotalsPlayer[]; parPerRound: number | null };
   /** Inscrições, no formato da FPG — desenhadas pelo AdmissionsTab partilhado
    *  (o mesmo da FPG/Drive). Cada jogador pode trazer dob/país/escalão/tee. */
   admissions?: FpgAdmissions;

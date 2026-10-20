@@ -30,6 +30,8 @@ export function divisionField(d: CircuitDivision | null | undefined): FieldPlaye
   if (!d) return [];
   const res = d.results?.players?.filter((p) => p.name);
   if (res?.length) return res.map((p) => ({ name: p.name, club: p.club || null }));
+  const tot = d.totals?.players?.filter((p) => p.name);
+  if (tot?.length) return tot.map((p) => ({ name: p.name, club: p.club || null, country: p.country || null }));
   const ins = d.admissions?.players?.filter((p) => p.status !== "desistente");
   if (ins?.length) return ins.map((p) => ({ name: p.nome, club: p.clube || p.country || null }));
   return [];
@@ -152,6 +154,43 @@ export function buildPastEditionFromTournament(
   };
 }
 
+/** `PastEdition` de uma divisão só com totais (EGR, WAGR, GJGL, LGPIDF —
+ *  `CircuitDivision.totals`, 20/10/2026). Sem cartões: cada volta conta como
+ *  completa quando tem gross. */
+export function buildPastEditionFromTotals(
+  t: NonNullable<CircuitDivision["totals"]>,
+  meta: { id: string; year: number; division: string; course?: string | null; url?: string | null; label?: string | null },
+): PastEdition | null {
+  const par = t.parPerRound;
+  const players = t.players
+    .filter((p) => p.name && (p.total != null || p.rounds.some((r) => r != null)))
+    .map((p) => {
+      const rounds = p.rounds.filter((r, i, a) => r != null || a.slice(i).some((x) => x != null));
+      const jogadas = rounds.filter((r) => r != null).length;
+      return {
+        pos: typeof p.pos === "number" ? p.pos : null,
+        name: p.name,
+        club: p.club || null,
+        total: typeof p.total === "number" ? p.total : null,
+        toPar: typeof p.total === "number" && par != null && jogadas ? p.total - par * jogadas : null,
+        rounds,
+        holesPlayed: jogadas * 18,
+        fullRounds: jogadas,
+        isManuel: isM(p.name),
+        isPt: /portugal/i.test(String(p.country || "")) || /^(pt|prt|por)$/i.test(String(p.country || "")),
+      };
+    })
+    .sort((a, b) => (b.fullRounds - a.fullRounds) || ((a.total ?? 9e9) - (b.total ?? 9e9)));
+  if (!players.length) return null;
+  return {
+    id: meta.id, year: meta.year, label: meta.label ?? null, division: meta.division,
+    course: meta.course ?? null, url: meta.url ?? null,
+    nRounds: Math.max(1, ...players.map((p) => p.rounds.length)),
+    parPerRound: par,
+    players,
+  };
+}
+
 /** Carrega as divisões de uma entrada (eager `divisions` ou lazy `loadDivisions`). */
 async function entryDivisions(e: CircuitEntry): Promise<CircuitDivision[]> {
   if (e.divisions) return e.divisions;
@@ -185,6 +224,14 @@ export function CircuitPastEditionsTab({ editions, division, field, currentId, m
         const rows: { ed: PastEdition; stamp: string }[] = [];
         for (const { e, divs } of loaded) {
           const dv = matchDivision(divs, division);
+          if (!dv?.results && dv?.totals) {
+            const edT = buildPastEditionFromTotals(dv.totals, {
+              id: e.id, year: e.year ?? 0, label: e.name || null,
+              division: dv.tabLabel || dv.escalao || division, course: e.course || null, url: e.sourceUrl || null,
+            });
+            if (edT) rows.push({ ed: edT, stamp: e.dateStart || String(e.year ?? 0) });
+            continue;
+          }
           if (!dv?.results) continue;
           const ed = buildPastEditionFromTournament(dv.results, {
             id: e.id,

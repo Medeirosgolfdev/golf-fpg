@@ -74,6 +74,9 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     loadHcpMap(),
   ]);
   const players = (ev?.players || []).map((p) => ({ ...p, _hcp: hcpMap.get(normLoose(p.name)) ?? null }));
+  const totais = players.map((p) => ({ name: p.name, country: p.country, club: p.club, hcp: p._hcp ?? null,
+    pos: p.posNum, rounds: [p.r1, p.r2, p.r3, p.r4], total: p.total }));
+  const par = ev?.par ?? e.par ?? null;
   return [{
     key: "main",
     escalao: e.ageGroup || "—",
@@ -81,9 +84,8 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     sex: (e.sex || undefined) as CircuitSex | undefined,
     hasManuel: e.hasManuel,
     // Resumo comum das fontes só com totais (14/10/2026).
-    customResults: <TotalsResumo parPerRound={ev?.par ?? e.par ?? null} tournamentDate={e.startDate || undefined}
-      players={players.map((p) => ({ name: p.name, country: p.country, club: p.club, hcp: p._hcp ?? null,
-        pos: p.posNum, rounds: [p.r1, p.r2, p.r3, p.r4], total: p.total }))} />,
+    customResults: <TotalsResumo parPerRound={par} tournamentDate={e.startDate || undefined} players={totais} />,
+    totals: { players: totais, parPerRound: par },
   }];
 }
 

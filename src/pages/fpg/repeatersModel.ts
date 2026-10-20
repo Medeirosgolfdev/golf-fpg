@@ -294,6 +294,9 @@ export interface BuildRepeatersInput {
   nRounds?: number;
   /** Par de uma volta (default: o do primeiro jogador que o traga). */
   parPerRound?: number | null;
+  /** Também quem nunca jogou esta prova (aba «Scout», 20/10/2026): sem
+   *  edições, a previsão sai da forma ou do índice. Default: só repetentes. */
+  todos?: boolean;
 }
 
 /**
@@ -303,7 +306,7 @@ export interface BuildRepeatersInput {
 export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
   const { current, previous, fedInfo } = input;
   const field = currentField(current);
-  if (!field.length || !previous.length) return [];
+  if (!field.length || (!previous.length && !input.todos)) return [];
 
   const nRounds = input.nRounds
     || Math.max(1, ...previous.map((p) => Math.max(1, ...(p.t.players || []).map((x) => (x.roundScores || []).length || 1))));
@@ -359,8 +362,8 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
 
   const out: Repeater[] = [];
   for (const f of field) {
-    const editions = hist.get(keyOf(f.fed, f.name));
-    if (!editions?.length) continue;
+    const editions = hist.get(keyOf(f.fed, f.name)) ?? [];
+    if (!editions.length && !input.todos) continue;
     editions.sort((a, b) => b.year - a.year);
 
     const info = fedInfo(f.fed);
@@ -371,7 +374,7 @@ export function buildRepeaters(input: BuildRepeatersInput): Repeater[] {
     // O índice "de então" é o da edição mais recente que traga um.
     const hcpThen = editions.find((e) => e.hcpThen != null)?.hcpThen ?? null;
     const toPars = editions.map((e) => e.toPar).filter((x): x is number => x != null);
-    const medianaSD = medianaPorEdicao.get(editions[0].id) ?? null;
+    const medianaSD = editions[0] ? medianaPorEdicao.get(editions[0].id) ?? null : null;
 
     // Tee de hoje → CR/Slope. Do draw quando existe; senão o tee que ele jogou.
     const teeNow = f.tee || editions[0]?.rounds[0]?.tee || null;

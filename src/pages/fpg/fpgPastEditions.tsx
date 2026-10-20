@@ -19,7 +19,8 @@ import type { CircuitEntry, CircuitDivision } from "../../ui/circuit/types";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
-import PastEditionsRepeaters from "./PastEditionsRepeaters";
+import FpgScout from "./FpgScout";
+import { currentField } from "./repeatersModel";
 
 /**
  * Aliases CURADOS de edições que mudaram de nome/rótulo entre anos. A heurística
@@ -146,9 +147,10 @@ export function buildFpgEditionsIndex(pool: Tournament[]): Map<string, CircuitEn
 }
 
 /**
- * Devolve o(s) extraTab(s) "Edições anteriores" para o torneio aberto, ou
- * `undefined` quando não há ≥2 edições. Passar directamente ao `extraTabs` do
- * TournamentDetail (aparece no fim da barra, nunca é o tab auto-seleccionado).
+ * Devolve os extraTabs da prova aberta: «Edições anteriores» (com ≥2 edições) e
+ * «Scout» (sempre que houver field — 20/10/2026, era o painel «Quem repete» no
+ * topo das Edições). Passar directamente ao `extraTabs` do TournamentDetail
+ * (aparecem no fim da barra, nunca são o tab auto-seleccionado).
  */
 export function fpgPastEditionsTabs(
   index: Map<string, CircuitEntry[]>,
@@ -157,36 +159,36 @@ export function fpgPastEditionsTabs(
 ): { key: string; label: string; content: React.ReactNode }[] | undefined {
   if (!current) return undefined;
   const k = editionKey(current);
-  if (!k) return undefined;
-  const entries = index.get(k);
-  if (!entries || entries.length < 2) return undefined;
+  const entries = (k && index.get(k)) || [];
   const division = current.escalao || "—";
   // Edições ANTERIORES (as outras, mais recente primeiro) com resultados — é
-  // sobre elas que o painel "Quem repete" cruza o field de hoje.
+  // sobre elas que o Scout cruza o field de hoje.
   const curId = `${current.ccode}-${current.tcode}`;
   const previous = entries
     .filter((e) => e.id !== curId && e.divisions?.[0]?.results)
     .map((e) => ({ id: e.id, year: e.year ?? 0, t: e.divisions![0].results as Tournament }))
     .sort((a, b) => b.year - a.year);
-  return [{
+  const tabs: { key: string; label: string; content: React.ReactNode }[] = [];
+  // ⚠ Cada bloco no seu error boundary. A tab é carregada com a página (que
+  // é lazy), por isso um erro aqui dentro derrubava a /FPG INTEIRA e deixava o
+  // ecrã em branco (aconteceu a 2026-09-02).
+  if (entries.length >= 2) tabs.push({
     key: "past-editions",
     label: "Edições anteriores",
-    // ⚠ Cada bloco no seu error boundary. A tab é carregada com a página (que
-    // é lazy), por isso um erro aqui dentro — no painel ou no carregamento das
-    // edições — derrubava a /FPG INTEIRA e deixava o ecrã em branco, sem
-    // sequer dizer o que falhou. Aconteceu a 2026-09-02 com um módulo em cache
-    // no dev server a apontar para um ficheiro renomeado.
     content: (
-      <>
-        {playersDB && previous.length ? (
-          <SectionErrorBoundary label="Quem repete">
-            <PastEditionsRepeaters current={current} previous={previous} playersDB={playersDB} />
-          </SectionErrorBoundary>
-        ) : null}
-        <SectionErrorBoundary label="Edições anteriores">
-          <CircuitPastEditionsTab editions={entries} division={division} />
-        </SectionErrorBoundary>
-      </>
+      <SectionErrorBoundary label="Edições anteriores">
+        <CircuitPastEditionsTab editions={entries} division={division} />
+      </SectionErrorBoundary>
     ),
-  }];
+  });
+  if (playersDB && currentField(current).length) tabs.push({
+    key: "scout",
+    label: "Scout",
+    content: (
+      <SectionErrorBoundary label="Scout">
+        <FpgScout current={current} previous={previous} playersDB={playersDB} />
+      </SectionErrorBoundary>
+    ),
+  });
+  return tabs.length ? tabs : undefined;
 }
