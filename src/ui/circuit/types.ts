@@ -220,6 +220,10 @@ export interface CircuitEntry {
   /** Carregamento lazy das divisões — chamado pelo shell na selecção (com cache). */
   loadDivisions?: () => Promise<CircuitDivision[]>;
 
+  /** Divisão que abre por omissão (antes da do Manuel e da 1.ª) — a /uskids
+   *  abre os torneios por disputar na grelha «Todos». */
+  defaultDivKey?: string;
+
   /** True se o Manuel jogou alguma divisão (marcador ★ na sidebar + filtro Manuel). */
   hasManuel?: boolean;
   /** True se há ≥1 jogador português (filtro PT da toolbar). Para páginas lazy
@@ -356,6 +360,25 @@ export interface CircuitConfig {
   seasonKey?: (entry: CircuitEntry) => string | null;
   /** Rótulo da tab "Época" (default "Época"). */
   seasonTabLabel?: string;
+
+  /** Escalão correspondente noutra edição, para «Edições anteriores» — substitui
+   *  o `matchDivision` partilhado (a /uskids não aceita o ±1 ano dele). */
+  matchDivision?: (divisions: CircuitDivision[], label: string) => CircuitDivision | null;
+  /** Escalões de uma edição anterior que entram no «Scout» (cada um uma coluna).
+   *  Ausente = o mesmo escalão (`matchDivision`). A /uskids usa o escalão em que
+   *  cada miúdo jogou ENTÃO (idade de hoje − anos de diferença). */
+  scoutDivisions?: (cur: CircuitEntry, division: string, edition: CircuitEntry, divisions: CircuitDivision[]) => CircuitDivision[];
+  /** Código USKids do torneio aberto — o Scout tira-o das «próximas inscrições». */
+  scoutTCode?: (entry: CircuitEntry) => number | null;
+  /** Parâmetro do URL das abas do detalhe (default "tab"; a /uskids usa "rt",
+   *  porque o «tab» é dela — Torneios/Resultados/Rivais). */
+  tabParam?: string;
+  /** Ordem da barra lateral: "desc" (mais recente primeiro, default) ou "asc"
+   *  (o mais próximo primeiro — torneios por disputar). */
+  sidebarOrder?: "asc" | "desc";
+  /** Com grouping "month-year": os anos anteriores ao corrente num bloco por
+   *  ano em vez de um por mês. */
+  olderYearsByYear?: boolean;
 
   /** Mensagem de loading. */
   loadingMessage?: string;

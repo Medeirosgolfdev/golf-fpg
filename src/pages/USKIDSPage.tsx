@@ -7,13 +7,11 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import SectionErrorBoundary from "../ui/SectionErrorBoundary";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtDate, monthLabel, fmtToPar } from "../utils/format";
-import EmptyState from "../ui/EmptyState";
+import { isoDate, fmtDate, fmtToPar } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
-import TabResultados from "../ui/TabResultados";
 import TabRow from "../ui/TabRow";
-import TabCampoDetalhe, { KidsLink } from "../ui/TabCampoDetalhe";
+import { KidsLink } from "../ui/TabCampoDetalhe";
 import { KidsLinkCtx } from "../ui/KidsLink";
 import { useKidsLinkMap } from "../hooks/useKidsLinkMap";
 import TorneioRivaisDetalhe from "../ui/TorneioRivaisDetalhe";
@@ -29,7 +27,14 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { escalaoManuelParaData, isManuelByName as isManuel } from "../constants/manuel";
 import TabelaGlobal from "../ui/TabelaGlobal";
 import MasterDetail from "../ui/MasterDetail";
-import type { UskidsDrawsData } from "../ui/uskidsTypes"; // pairings (Draw R{n})
+import type { UskidsDrawsData, Torneio as UskTorneio, TorneioResult as UskTorneioResult } from "../ui/uskidsTypes"; // pairings (Draw R{n})
+import CircuitShell from "../ui/circuit/CircuitShell";
+import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
+import type { CircuitDivision, CircuitEntry } from "../ui/circuit/types";
+import {
+  uskidsDivisions, resultadosDivKey, uskidsCircuitLinks, edicaoEntry,
+  USKIDS_CONFIG_CAMPO, USKIDS_CONFIG_RESULTADOS, type EdicoesIndex,
+} from "./uskids/uskidsCircuit";
 
 
 
@@ -255,7 +260,7 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
 /* ════════════════════════════════════════════════════════════════
    TabRivais — componente principal
    ════════════════════════════════════════════════════════════════ */
-function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSelectedT, autoRivals, showTabela, setShowTabela, futureTorneios }: {
+function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSelectedT, autoRivals, showTabela, setShowTabela, futureTorneios, abrirScout }: {
   resultados: TorneioResult[];
   fieldData: FieldData | null;
   torneiosComManuel: TorneioComManuel[];
@@ -265,6 +270,8 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
   showTabela: boolean;
   setShowTabela: (v: boolean) => void;
   futureTorneios?: TorneioComManuel[];
+  /** Abre a aba «Scout» do torneio (Torneios ou Resultados). */
+  abrirScout: (t: number) => void;
 }) {
   const kidsMap = useMemo(() => {
     const m = new Map<string, string>();
@@ -330,8 +337,7 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
       {torneiosComManuel.map(t => {
         const isFuture = isoDate(t.date_inicio) > today;
         const resT = resultados.find(r => r.t === t.t);
-        // Scout view (/kids2/next-t?v=scout&t=usk{tcode}) — field intel: lista de inscritos com
-        // tier, idade e confronto vs Manuel; abre em nova aba (KIDS2).
+        // 🔭 → a aba «Scout» do próprio torneio (20/10/2026; antes abria o Kids 2).
         return (
           <div key={t.t}
             className="course-item"
@@ -349,19 +355,17 @@ function TabRivais({ resultados, fieldData, torneiosComManuel, selectedT, setSel
                 }
               </div>
             </button>
-            <Link
-              to={`/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
-              target="_blank"
-              rel="noreferrer"
-              title="Scout — campo de inscritos com tier, idade e confronto vs Manuel (abre KIDS2 em nova aba)"
-              onClick={(e) => e.stopPropagation()}
+            <button
+              type="button"
+              title="Scout — os inscritos, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
+              onClick={(e) => { e.stopPropagation(); abrirScout(t.t); }}
               style={{
                 display:"flex", alignItems:"center", justifyContent:"center",
-                padding:"0 14px", borderLeft:"1px solid var(--border)",
-                color:"var(--color-info)", textDecoration:"none", fontSize: "var(--fs-18)",
+                padding:"0 14px", border:0, borderLeft:"1px solid var(--border)", background:"transparent", cursor:"pointer",
+                color:"var(--color-info)", fontSize: "var(--fs-18)",
               }}>
               🔭
-            </Link>
+            </button>
           </div>
         );
       })}
@@ -444,6 +448,9 @@ export default function USKidsFieldPage() {
   const [resultsData, setResultsData] = useState<ResultsData | null>(null);
   const [drawsData,   setDrawsData]   = useState<UskidsDrawsData | null>(null);
   const [autoRivals,  setAutoRivals]  = useState<AutoRivalPlayer[]>([]);
+  // Edições anteriores fora dos resultados (public/data/uskids-edicoes/): só o
+  // índice; cada edição carrega quando a prova dela pede as edições.
+  const [indiceEdicoes, setIndiceEdicoes] = useState<EdicoesIndex["torneios"] | null>(null);
   const [erro,        setErro]        = useState<string | null>(null);
   const [tab, setTabState] = useState<Tab>(() => {
     if (paramTab && VALID_TABS.includes(paramTab)) return paramTab;
@@ -458,8 +465,6 @@ export default function USKidsFieldPage() {
   // Ocultar torneios com campo pequeno (< 60 jogadores) na tab Resultados
   const [filterSmallField, setFilterSmallField] = useState(false);
   const MIN_FIELD = 60;
-  // Pesquisa por nome/campo na sidebar (tabs Torneios + Resultados)
-  const [search, setSearch] = useState("");
   // Torneio pedido por link (?t= na primeira carga — ex.: os "próximos torneios"
   // do kids2). Fica sempre visível, seja qual for a categoria.
   const [tLigado] = useState<number | null>(() => {
@@ -640,6 +645,16 @@ export default function USKidsFieldPage() {
       });
     });
 
+    cachedFetchJson<EdicoesIndex>("/data/uskids-edicoes/index.json")
+      .then(d => {
+        setIndiceEdicoes(d?.torneios ?? []);
+        upsertFileMeta({ path: "/data/uskids-edicoes/index.json", status: "loaded", count: d?.torneios?.length, group: "edicoes" });
+      })
+      .catch(e => {
+        setIndiceEdicoes([]);
+        upsertFileMeta({ path: "/data/uskids-edicoes/index.json", status: "error", error: String(e), group: "edicoes" });
+      });
+
     // Carregar auto-rivals com carregamento progressivo em duas fases:
     // Fase 1 (rápida): dados essenciais → página já funciona
     // Fase 2 (background): member history ficheiro a ficheiro → enriquece progressivamente
@@ -816,33 +831,31 @@ export default function USKidsFieldPage() {
   }, [allTorneios, torneiosResultados]);
 
   // ── Lista da barra lateral ─────────────────────────────────────────────
-  // Calculada ANTES dos early returns, porque o efeito que alinha a selecção
-  // com a lista é um hook. Primeiro sem o filtro de categoria — as contagens dos
-  // chips saem daqui, para mostrarem também quantos estão escondidos.
-  const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
-  // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
-  // (= soma de participantes na última ronda de cada escalão).
-  const fieldFilter = (t: TorneioEntry) =>
-    !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
-  // Pesquisa por nome do torneio ou campo (case/acentos-insensível).
-  const qSearch = normNameAuto(search);
-  const searchFilter = (t: TorneioEntry) =>
-    !qSearch || normNameAuto(t.name).includes(qSearch) || normNameAuto(t.campo ?? "").includes(qSearch);
-  // Resultados: só o que já se jogou (ou está a decorrer) — os torneios por
-  // disputar obrigavam a um scroll enorme até ao dia de hoje (13/10/2026).
-  const hojeIso = new Date().toISOString().slice(0, 10);
-  const jaJogado = (t: TorneioEntry) => t.temResultados || (!!t.date && isoDate(t.date) <= hojeIso);
-  const listaSemCategoria = (tab === "campo"
-    ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
-    : allTorneios.filter(t => jaJogado(t) && manuelFilter(t) && fieldFilter(t))
-  ).filter(searchFilter);
+  // Primeiro sem o filtro de categoria — as contagens dos chips saem daqui,
+  // para mostrarem também quantos estão escondidos. A pesquisa é a do shell.
+  const listaSemCategoria = useMemo(() => {
+    if (tab === "rivais") return [];
+    const manuelFilter = (t: TorneioEntry) => !filterManuel || t.manuelJogou;
+    // Filtro de campo pequeno: só na tab Resultados. Usa totalInscritos
+    // (= soma de participantes na última ronda de cada escalão).
+    const fieldFilter = (t: TorneioEntry) =>
+      !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
+    // Resultados: só o que já se jogou (ou está a decorrer) — os torneios por
+    // disputar obrigavam a um scroll enorme até ao dia de hoje (13/10/2026).
+    const hojeIso = new Date().toISOString().slice(0, 10);
+    const jaJogado = (t: TorneioEntry) => t.temResultados || (!!t.date && isoDate(t.date) <= hojeIso);
+    return tab === "campo"
+      ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
+      : allTorneios.filter(t => jaJogado(t) && manuelFilter(t) && fieldFilter(t));
+  }, [allTorneios, tab, filterManuel, filterSmallField]);
   // Torneios e Resultados (os mesmos filtros nas duas — 13/10/2026; sem tipo
-  // conhecido nunca se esconde) e só com o ★ Manuel DESLIGADO: ligado, a lista é "os torneios do Manuel" e nenhuma
-  // categoria os pode esconder (uma escolha antiga de chips escondia o Spanish
-  // Open). Sem tipo conhecido, pedido por link ou seguido (uskids-seguir-diario.json)
-  // nunca se esconde.
-  const catFilter = (t: TorneioEntry) =>
-    tab === "rivais" || filterManuel || t.tipo == null || t.t === tLigado || !!t.seguido || catVisiveis.has(t.tipo);
+  // conhecido nunca se esconde) e só com o ★ Manuel DESLIGADO: ligado, a lista é
+  // "os torneios do Manuel" e nenhuma categoria os pode esconder (uma escolha
+  // antiga de chips escondia o Spanish Open). Sem tipo conhecido, pedido por
+  // link ou seguido (uskids-seguir-diario.json) nunca se esconde.
+  const listaVisivel = useMemo(() => listaSemCategoria.filter(t =>
+    filterManuel || t.tipo == null || t.t === tLigado || !!t.seguido || catVisiveis.has(t.tipo)),
+  [listaSemCategoria, filterManuel, tLigado, catVisiveis]);
   // Os chips saem dos DADOS, não da lista fixa: um tipo que a USKids venha a
   // usar e que não está em CATEGORIAS aparece sozinho, como "Tipo N".
   const ordemCat = (tipo: number) => { const i = CATEGORIAS.findIndex(c => c.tipo === tipo); return i < 0 ? 99 : i; };
@@ -852,10 +865,75 @@ export default function USKidsFieldPage() {
   const mostrarChips = tab !== "rivais" && !filterManuel
     && (contagemCat.length > 1 || contagemCat.some(c => !catVisiveis.has(c.tipo)));
 
+  // ── CircuitShell: entradas e divisões ──────────────────────────────────
+  // Um carregador por torneio, refeito só quando os dados mudam (o shell guarda
+  // as divisões enquanto o carregador for o mesmo — os resultados e os draws
+  // chegam depois dos inscritos).
+  const loaders = useMemo(() => {
+    const campoPorT = new Map(torneiosCampo.map(t => [t.t, t]));
+    const resPorT = new Map(torneiosResultados.map(t => [t.t, t]));
+    const m = new Map<number, () => Promise<CircuitDivision[]>>();
+    for (const t of new Set([...campoPorT.keys(), ...resPorT.keys()])) {
+      let feito: CircuitDivision[] | null = null;
+      m.set(t, () => Promise.resolve(feito ??= uskidsDivisions(
+        (campoPorT.get(t) ?? null) as unknown as UskTorneio | null,
+        (resPorT.get(t) ?? null) as unknown as UskTorneioResult | null,
+        drawsData)));
+    }
+    return m;
+  }, [torneiosCampo, torneiosResultados, drawsData]);
+  // Link para o Scout (rt=scout): nos Torneios abre no escalão do Manuel, não
+  // na grelha «Todos» (que não tem Scout).
+  const pedeScout = searchParams.get("rt") === "scout";
+  const entradas = useMemo(() => {
+    const campoPorT = new Map(torneiosCampo.map(t => [t.t, t]));
+    const resPorT = new Map(torneiosResultados.map(t => [t.t, t]));
+    const m = new Map<number, CircuitEntry>();
+    for (const t of allTorneios) {
+      const iso = isoDate(t.date);
+      const res = (resPorT.get(t.t) ?? null) as unknown as UskTorneioResult | null;
+      const campoT = campoPorT.get(t.t);
+      const escM = campoT?.escaloes.find(e => e.nome === t.escalaoManuel);
+      m.set(t.t, {
+        id: String(t.t), tcode: String(t.t), name: t.name,
+        year: parseInt(iso.slice(0, 4), 10) || null,
+        dateStart: iso || undefined, dateEnd: t.dateFim ? isoDate(t.dateFim) : undefined,
+        course: t.campo,
+        links: uskidsCircuitLinks(t.t, campoT?.url_uskids),
+        hasManuel: !!t.manuelJogou, hasResults: t.temResultados,
+        playerCount: t.totalInscritos ?? t.inscritos, roundsCount: t.rondas,
+        defaultDivKey: tab !== "campo" ? resultadosDivKey(res)
+          : !pedeScout ? "todos"
+          : resultadosDivKey(res) ?? (escM ? `g${escM.age_group}` : undefined),
+        loadDivisions: loaders.get(t.t),
+      });
+    }
+    return m;
+  }, [allTorneios, torneiosCampo, torneiosResultados, loaders, tab, pedeScout]);
+  const shellEntries = useMemo(
+    () => listaVisivel.map(t => entradas.get(t.t)).filter((e): e is CircuitEntry => !!e),
+    [listaVisivel, entradas]);
+  // «Edições anteriores»/«Scout»: todos os resultados (de qualquer filtro) e as
+  // edições de public/data/uskids-edicoes/ que não estão nos resultados.
+  const edicoesPool = useMemo(() => {
+    const pool: CircuitEntry[] = [];
+    const temos = new Set<number>();
+    for (const r of torneiosResultados) {
+      temos.add(r.t);
+      const iso = isoDate(r.date_inicio);
+      pool.push(entradas.get(r.t) ?? {
+        id: String(r.t), tcode: String(r.t), name: r.name, year: parseInt(iso.slice(0, 4), 10) || null,
+        dateStart: iso || undefined, loadDivisions: loaders.get(r.t),
+      });
+    }
+    for (const x of indiceEdicoes ?? []) if (!temos.has(x.t)) pool.push(edicaoEntry(x));
+    return pool;
+  }, [torneiosResultados, indiceEdicoes, entradas, loaders]);
+
   // O detalhe é sempre um torneio que está na lista. Se o seleccionado deixou de
   // estar — mudou um filtro, ou o ?t= guardado é de um torneio que já acabou —
   // abre-se o primeiro visível: os do Manuel primeiro, depois o mais próximo.
-  const chaveVisiveis = tab !== "rivais" ? listaSemCategoria.filter(catFilter).map(t => t.t).join(",") : "";
+  const chaveVisiveis = listaVisivel.map(t => t.t).join(",");
   useEffect(() => {
     // Só depois de os resultados chegarem — antes disso um torneio já jogado
     // ainda não «tem resultados» e a selecção saltava para outro.
@@ -906,13 +984,25 @@ export default function USKidsFieldPage() {
     }
   };
 
+  // 🔭 dos Rivais: a aba «Scout» do torneio — Resultados se já tem, senão Torneios.
+  // Um só setSearchParams (as actualizações funcionais não se acumulam).
+  const abrirScout = (t: number) => {
+    const novaTab: Tab = torneiosResultados.some(r => r.t === t) ? "resultados" : "campo";
+    setShowRivaisTabela(false);
+    setTabState(novaTab);
+    setSelectedTState(t);
+    setSearchParams(prev => {
+      const n = new URLSearchParams(prev);
+      n.set("t", String(t)); n.set("tab", novaTab); n.set("rt", "scout");
+      return n;
+    }, { replace: true });
+  };
+
   const TABS: { id: Tab; label: string; badge: number | null }[] = [
     { id:"campo",      label:"⛳ Torneios",   badge: fieldData.torneios.length },
     { id:"resultados", label:"🏆 Resultados", badge: nResultados },
     { id:"rivais",     label:"🤝 Rivais",     badge: nRivais },
   ];
-
-  const selectedFieldTorneio = fieldData.torneios.find(t => t.t === selectedT) ?? null;
 
   // ── Render functions para o sidebar — extraídas dos IIFEs para melhor legibilidade ──
 
@@ -976,18 +1066,16 @@ export default function USKidsFieldPage() {
                   )}
                 </div>
               </button>
-              <Link
-                to={`/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
-                target="_blank"
-                rel="noreferrer"
-                title="Scout — campo de inscritos com tier vs Manuel (KIDS2, nova aba)"
-                onClick={(e) => e.stopPropagation()}
+              <button
+                type="button"
+                title="Scout — os inscritos, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
+                onClick={(e) => { e.stopPropagation(); abrirScout(t.t); }}
                 style={{
-                  display:"flex", alignItems:"center", justifyContent:"center",
-                  padding:"0 10px", color:"var(--color-info)", textDecoration:"none", fontSize: "var(--fs-14)",
+                  display:"flex", alignItems:"center", justifyContent:"center", border:0, background:"transparent", cursor:"pointer",
+                  padding:"0 10px", color:"var(--color-info)", fontSize: "var(--fs-14)",
                 }}>
                 🔭
-              </Link>
+              </button>
             </div>
           );
         })}
@@ -995,176 +1083,174 @@ export default function USKidsFieldPage() {
     );
   };
 
-  const renderSidebarTorneios = () => {
-    const activeList = listaSemCategoria.filter(catFilter);
-
-    const buildMonthMap = (list: TorneioEntry[]) => {
-      const monthMap: Record<string, TorneioEntry[]> = {};
-      const currentYear = new Date().getFullYear().toString();
-      for (const t of list) {
-        const iso = isoDate(t.date);
-        const yr = iso ? iso.substring(0, 4) : "?";
-        const mo = iso ? iso.substring(0, 7) : "?";
-        const key = (yr === currentYear || yr === "?") ? mo : yr;
-        if (!monthMap[key]) monthMap[key] = [];
-        monthMap[key].push(t);
-      }
-      return monthMap;
-    };
-    const monthMap = buildMonthMap(activeList);
-
-    const today = new Date().toISOString().substring(0, 7);
-    const currentYear = new Date().getFullYear().toString();
-
-    const sortKeys = (map: Record<string, TorneioEntry[]>, reverse?: boolean) => {
-      const allKeys = Object.keys(map);
-      const futureKeys = allKeys.filter(k => k >= today || (k.length === 4 && k > currentYear)).sort();
-      const pastKeys   = allKeys.filter(k => k <  today && !(k.length === 4 && k > currentYear)).sort();
-      if (reverse) return [...pastKeys, ...futureKeys];
-      return [...futureKeys, ...pastKeys];
-    };
-
-    // Torneios: futuros primeiro (asc). Resultados: mais RECENTES primeiro (desc)
-    // — para o "último torneio" ficar no topo, alinhado com o default de selecção.
-    const mainKeys = tab === "resultados"
-      ? Object.keys(monthMap).sort().reverse()
-      : sortKeys(monthMap);
-
-    const renderItem = (t: TorneioEntry, dimmed?: boolean) => {
-      const active = t.t === selectedT;
-      const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
-      const reg = torneioRegiao(t.name);
-      const isEuro = reg === "EURO";
-      const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
-      const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
-      const manuelPos: number | null = t.manuelPos ?? null;
-      const manuelScore: number | null = t.manuelScore ?? null;
-      const nPaises: number = t.nPaises ?? 0;
-      const extraPills = (
-        <>
-          <span className="p p-sm p-muted" title="Código do torneio (t=) USKids / signupanytime">t={t.t}</span>
-          {reg && (
-            <span className="p p-sm p-tourn" style={{
-              background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
-              color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
-              borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
-            }}>{reg}</span>
-          )}
-          {isInvit && (
-            <span className="p p-sm p-tourn" style={{
-              background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
-            }}>INVIT</span>
-          )}
-          {t.tipo != null && t.tipo !== 8 && (
-            <span className="p p-sm p-muted" title="Categoria USKids">{labelCategoria(t.tipo)}</span>
-          )}
-          {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
-          {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
-          {t.manuelJogou && <ManuelPill />}
-          {t.manuelJogou && manuelPos != null && (
-            <span className="p p-sm p-tourn" style={{
-              background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
-              color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
-              borderColor: "transparent",
-            }}>
-              {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
-              {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
-            </span>
-          )}
-          {t.urlResultados && (
-            <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
-              onClick={e => e.stopPropagation()}
-              className="p p-sm p-muted td-none">
-              Resultados ↗
-            </a>
-          )}
-          {/* Scout (20/10/2026): com resultados abre a aba «Scout» do próprio
-              torneio; sem eles (futuro), os inscritos no Kids 2 — mesmo componente. */}
-          <Link
-            to={tab === "resultados" && t.temResultados
-              ? `/uskids?t=${t.t}&tab=resultados&rt=scout`
-              : `/kids2/next-t?t=${t.t}&tab=players&vista=lista`}
-            target={tab === "resultados" && t.temResultados ? undefined : "_blank"}
-            rel="noreferrer"
+  // ── Item da barra lateral (TournSidebarItem — o mesmo de sempre; o shell só
+  // dá o `active` e o `onSelect`) ──────────────────────────────────────────
+  const renderItem = (t: TorneioEntry, active: boolean, onSelect: () => void) => {
+    const temConteudo = tab === "resultados" ? t.temResultados : t.temCampo;
+    const reg = torneioRegiao(t.name);
+    const isEuro = reg === "EURO";
+    const isInvit = !!REGIONAL_CHAMPIONSHIPS[t.t];
+    const pct = t.maximo ? Math.min(100, Math.round(((t.inscritos ?? 0) / t.maximo) * 100)) : 0;
+    const manuelPos: number | null = t.manuelPos ?? null;
+    const manuelScore: number | null = t.manuelScore ?? null;
+    const nPaises: number = t.nPaises ?? 0;
+    const extraPills = (
+      <>
+        <span className="p p-sm p-muted" title="Código do torneio (t=) USKids / signupanytime">t={t.t}</span>
+        {reg && (
+          <span className="p p-sm p-tourn" style={{
+            background: isEuro ? "var(--bg-info)" : "var(--bg-warn-orange)",
+            color: isEuro ? "var(--color-info)" : "var(--color-orange-deep)",
+            borderColor: isEuro ? "var(--border-info)" : "var(--color-amber)",
+          }}>{reg}</span>
+        )}
+        {isInvit && (
+          <span className="p p-sm p-tourn" style={{
+            background:"var(--bg-pink)", color:"var(--color-purple)", borderColor:"var(--border-purple)",
+          }}>INVIT</span>
+        )}
+        {t.tipo != null && t.tipo !== 8 && (
+          <span className="p p-sm p-muted" title="Categoria USKids">{labelCategoria(t.tipo)}</span>
+        )}
+        {t.escalaoManuel && <span className="p p-sm p-muted">{t.escalaoManuel}</span>}
+        {nPaises > 1 && <span className="p p-sm p-muted">{nPaises} países</span>}
+        {t.manuelJogou && <ManuelPill />}
+        {t.manuelJogou && manuelPos != null && (
+          <span className="p p-sm p-tourn" style={{
+            background: manuelPos === 1 ? "var(--bg-warn-strong)" : manuelPos <= 3 ? "var(--bg-info-strong)" : "var(--bg-muted)",
+            color: manuelPos === 1 ? "var(--color-warn-dark)" : manuelPos <= 3 ? "var(--color-navy)" : "var(--text-2)",
+            borderColor: "transparent",
+          }}>
+            {manuelPos === 1 ? "🥇" : manuelPos === 2 ? "🥈" : manuelPos === 3 ? "🥉" : `#${manuelPos}`}
+            {manuelScore != null && ` (${fmtToPar(manuelScore)})`}
+          </span>
+        )}
+        {t.urlResultados && (
+          <a href={t.urlResultados} target="_blank" rel="noopener noreferrer"
             onClick={e => e.stopPropagation()}
-            title="Scout — os jogadores, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
-            className="p p-sm td-none"
-            style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
-            🔭 Scout
-          </Link>
-        </>
-      );
-      const tData: SidebarItemTournament = {
-        name: t.name.replace(/\s*\d{4}$/, ""),
-        campo: t.campo ? t.campo.split(",")[0] : undefined,
-        date: isoDate(t.date) || t.date,
-        playerCount: t.totalInscritos ?? t.inscritos,
-        rounds: t.rondas,
-        players: [],
-        series: "tour",
-      };
-      const uskidsFooter = (!dimmed && t.temCampo) ? (
-        <>
-          {t.maximo != null && t.maximo > 0 && (
-            <div className="mb-4">
-              <div className="fs-11 c-text-2" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-                <span className="fw-600">{t.escalaoManuel}</span>
-                <span>
-                  {t.inscritos}/{t.maximo}
-                  {(t.vagas ?? 0) > 0
-                    ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
-                    : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
-                </span>
-              </div>
-              <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-                <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
-              </div>
-            </div>
-          )}
-          {(t.totalMaximo ?? 0) > 0 && (
-            <div className="fs-11 c-text-3" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
-              <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
-              {t.fee && <span>${t.fee.toFixed(0)}</span>}
-            </div>
-          )}
-        </>
-      ) : null;
-      return (
-        <div key={t.t} style={{ opacity: dimmed ? 0.55 : (temConteudo ? 1 : 0.45) }}>
-          <TournSidebarItem
-            t={tData}
-            isActive={active}
-            onClick={() => { setSelectedT(t.t); md.onSelect(); }}
-            accentColor={t.manuelJogou ? SIDEBAR_ACCENT.pja : SIDEBAR_ACCENT.tour}
-            extraPills={extraPills}
-            footer={uskidsFooter}
-          />
-        </div>
-      );
+            className="p p-sm p-muted td-none">
+            Resultados ↗
+          </a>
+        )}
+        {/* Scout (20/10/2026): a aba «Scout» do próprio torneio — com os
+            resultados, ou com os inscritos nos torneios por disputar. */}
+        <Link
+          to={`/uskids?t=${t.t}&tab=${tab}&rt=scout`}
+          onClick={e => { e.stopPropagation(); onSelect(); }}
+          title="Scout — os jogadores, o nível de cada um, as edições anteriores e os confrontos com o Manuel"
+          className="p p-sm td-none"
+          style={{ background:"var(--bg-info-subtle)", color:"var(--color-info-dark, #1e3a8a)", borderColor:"var(--border-info, #93c5fd)" }}>
+          🔭 Scout
+        </Link>
+      </>
+    );
+    const tData: SidebarItemTournament = {
+      name: t.name.replace(/\s*\d{4}$/, ""),
+      campo: t.campo ? t.campo.split(",")[0] : undefined,
+      date: isoDate(t.date) || t.date,
+      playerCount: t.totalInscritos ?? t.inscritos,
+      rounds: t.rondas,
+      players: [],
+      series: "tour",
     };
-
-    const renderGroup = (gmap: Record<string, TorneioEntry[]>, keys: string[], dimmed?: boolean) =>
-      keys.map(key => {
-        // Resultados: dentro do mês, mais recente primeiro (gmap está asc por data).
-        const items = tab === "resultados" ? [...gmap[key]].reverse() : gmap[key];
-        return (
-          <div key={key}>
-            <div className="sidebar-section-title-dark">{monthLabel(key)}</div>
-            {items.map(t => renderItem(t, dimmed))}
+    const uskidsFooter = t.temCampo ? (
+      <>
+        {t.maximo != null && t.maximo > 0 && (
+          <div className="mb-4">
+            <div className="fs-11 c-text-2" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+              <span className="fw-600">{t.escalaoManuel}</span>
+              <span>
+                {t.inscritos}/{t.maximo}
+                {(t.vagas ?? 0) > 0
+                  ? <span style={{ color:"var(--color-success)", marginLeft:4 }}>{t.vagas} vagas</span>
+                  : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
+              </span>
+            </div>
+            <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
+              <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+            </div>
           </div>
-        );
-      });
-
-    if (!mainKeys.length) {
-      return (
-        <div className="muted fs-12" style={{ padding:"20px 14px", textAlign:"center" }}>
-          {search ? `Sem torneios para "${search}"`
-            : listaSemCategoria.length ? "Todos os torneios estão escondidos pelas categorias" : "Sem torneios"}
-        </div>
-      );
-    }
-    return <>{renderGroup(monthMap, mainKeys)}</>;
+        )}
+        {(t.totalMaximo ?? 0) > 0 && (
+          <div className="fs-11 c-text-3" style={{ display:"flex", justifyContent:"space-between", marginBottom:3 }}>
+            <span>Total: {t.totalInscritos}/{t.totalMaximo}</span>
+            {t.fee && <span>${t.fee.toFixed(0)}</span>}
+          </div>
+        )}
+      </>
+    ) : null;
+    return (
+      <div style={{ opacity: temConteudo ? 1 : 0.45 }}>
+        <TournSidebarItem
+          t={tData}
+          isActive={active}
+          onClick={onSelect}
+          accentColor={t.manuelJogou ? SIDEBAR_ACCENT.pja : SIDEBAR_ACCENT.tour}
+          extraPills={extraPills}
+          footer={uskidsFooter}
+        />
+      </div>
+    );
   };
+  const porId = new Map(allTorneios.map(t => [String(t.t), t]));
+
+  // ── Barra: a mesma nas três vistas (nas do shell entra pelo slot) ─────
+  const lead = (<>
+    <ToolbarTitle>🏌️ USKids</ToolbarTitle>
+    <DataSourcesChip sources={fileMeta} />
+    <ToolbarSep />
+    {/* Vistas: o mesmo interruptor segmentado do resto do site. */}
+    <TabRow active={tab} onChange={handleTabChange} style={{ flexShrink:0 }}
+      tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
+    {tab !== "rivais" && (<>
+      <ToolbarSep />
+      <button
+        className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
+        onClick={() => setFilterManuel(v => !v)}
+        style={filterManuel
+          ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
+          : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+        ★ Manuel
+      </button>
+      {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
+          não se confundirem com o ★ Manuel. */}
+      {mostrarChips && (<>
+        <ToolbarSep />
+        {contagemCat.map(c => {
+          const on = catVisiveis.has(c.tipo);
+          return (
+            <button key={c.tipo}
+              className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
+              onClick={() => alternarCategoria(c.tipo)}
+              aria-pressed={on}
+              title={on ? "Clicar para esconder" : `${c.n} escondidos — clicar para mostrar`}
+              style={on
+                ? { flexShrink:0, background:"var(--bg-info)", borderColor:"var(--border-info)", color:"var(--color-info)" }
+                : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-3)", borderColor:"var(--border)", textDecoration:"line-through" }}>
+              {c.label} <span className="fs-10" style={{ opacity:.7 }}>{c.n}</span>
+            </button>
+          );
+        })}
+      </>)}
+    </>)}
+    {tab === "resultados" && (
+      <button
+        className={"tourn-tab tourn-tab-sm" + (filterSmallField ? " active" : "")}
+        onClick={() => setFilterSmallField(v => !v)}
+        title={`Ocultar torneios com menos de ${MIN_FIELD} jogadores`}
+        style={filterSmallField
+          ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
+          : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
+        Campo ≥{MIN_FIELD}
+      </button>
+    )}
+  </>);
+  const trail = (
+    <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
+      className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
+      Histórico ↗
+    </a>
+  );
 
   return (
     <ArMapCtx.Provider value={arMapCtxValue}>
@@ -1172,140 +1258,63 @@ export default function USKidsFieldPage() {
     <DataSourcesProvider tournaments={[]}>
     <div className="tourn-layout" style={{ height:"calc(100vh - 52px)" }}>
 
-      {/* ── TOOLBAR ── */}
-      <Toolbar>
-        <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
-        <ToolbarTitle>🏌️ USKids</ToolbarTitle>
-        <DataSourcesChip sources={fileMeta} />
-        <ToolbarSep />
-        {/* Vistas: o mesmo interruptor segmentado do resto do site. */}
-        <TabRow active={tab} onChange={handleTabChange} style={{ flexShrink:0 }}
-          tabs={TABS.map(tb => ({ key: tb.id, label: tb.label, count: tb.badge ?? undefined }))} />
-        {tab !== "rivais" && (<>
-          <ToolbarSep />
-          <button
-            className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : "")}
-            onClick={() => setFilterManuel(v => !v)}
-            style={filterManuel
-              ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
-              : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-            ★ Manuel
-          </button>
-          {/* Categorias: vigiam-se todas, a lista mostra só as ligadas. Azul, para
-              não se confundirem com o ★ Manuel. */}
-          {mostrarChips && (<>
-            <ToolbarSep />
-            {contagemCat.map(c => {
-              const on = catVisiveis.has(c.tipo);
-              return (
-                <button key={c.tipo}
-                  className={"tourn-tab tourn-tab-sm" + (on ? " active" : "")}
-                  onClick={() => alternarCategoria(c.tipo)}
-                  aria-pressed={on}
-                  title={on ? "Clicar para esconder" : `${c.n} escondidos — clicar para mostrar`}
-                  style={on
-                    ? { flexShrink:0, background:"var(--bg-info)", borderColor:"var(--border-info)", color:"var(--color-info)" }
-                    : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-3)", borderColor:"var(--border)", textDecoration:"line-through" }}>
-                  {c.label} <span className="fs-10" style={{ opacity:.7 }}>{c.n}</span>
-                </button>
-              );
-            })}
-          </>)}
-        </>)}
-        {tab === "resultados" && (
-          <button
-            className={"tourn-tab tourn-tab-sm" + (filterSmallField ? " active" : "")}
-            onClick={() => setFilterSmallField(v => !v)}
-            title={`Ocultar torneios com menos de ${MIN_FIELD} jogadores`}
-            style={filterSmallField
-              ? { flexShrink:0, background:"var(--bg-success-subtle)", borderColor:"var(--color-good)", color:"var(--color-good-dark)" }
-              : { flexShrink:0, background:"var(--bg-muted)", color:"var(--text-2)", borderColor:"var(--border)" }}>
-            Campo ≥{MIN_FIELD}
-          </button>
-        )}
-        <div style={{ flex:1, minWidth:8 }} />
-        <a href="https://uskids-golf.vercel.app/" target="_blank" rel="noopener noreferrer"
-          className="fs-11 fw-600" style={{ flexShrink:0, color:"var(--accent)", border:"1px solid var(--accent)", borderRadius:5, padding:"3px 8px", textDecoration:"none", whiteSpace:"nowrap", display:"inline-flex", alignItems:"center", gap:3 }}>
-          Histórico ↗
-        </a>
-        <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
-      </Toolbar>
-
-      {/* ── MASTER-DETAIL ── */}
-      <MasterDetail md={md} sidebar={<>
-
-        {/* Pesquisa por nome de torneio (Torneios + Resultados) */}
-        {tab !== "rivais" && (
-          <div style={{ padding:"8px 10px", borderBottom:"1px solid var(--border-light)", position:"relative" }}>
-            <input
-              type="text"
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-              placeholder="🔍 Procurar torneio…"
-              className="fs-13"
-              style={{ width:"100%", padding:"6px 26px 6px 10px", borderRadius:6,
-                border:"1px solid var(--border)", background:"var(--bg-input, var(--bg-card))",
-                color:"var(--text)", outline:"none", boxSizing:"border-box" }}
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                title="Limpar"
-                style={{ position:"absolute", right:16, top:"50%", transform:"translateY(-50%)",
-                  background:"transparent", border:0, cursor:"pointer", color:"var(--text-3)", fontSize:"var(--fs-14)", lineHeight:1 }}>
-                ✕
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* Lista de torneios agrupada por mês — OU lista de rivais */}
-        <div style={{ overflowY:"auto", flex:1 }}>
-          {tab === "rivais" ? renderSidebarRivais() : renderSidebarTorneios()}
-        </div>
-
-        <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
-          signupanytime.com · actualização diária
-        </div>
-      </>}>
-
-        {tab === "campo" && (
-          selectedFieldTorneio
-            ? <TabCampoDetalhe torneio={selectedFieldTorneio as any /* Torneio local ≠ Torneio do uskidsTypes */} />
-            : <EmptyState message="Selecciona um torneio na barra lateral" icon="⛳" />
-        )}
-
-        {tab === "resultados" && resultsData && (
-          <TabResultados greatgolfData={null}
-            data={resultsData}
-            drawsData={drawsData}
-            selectedT={selectedT}
+      {/* Torneios e Resultados: o CircuitShell, como as outras páginas de
+          circuito (20/10/2026). Os controlos da página entram na barra dele. */}
+      {tab !== "rivais" && (
+        <CircuitToolbarSlotCtx.Provider value={{ lead, trail, hideTitle: true }}>
+          <CircuitShell
+            entries={shellEntries}
+            config={tab === "campo" ? USKIDS_CONFIG_CAMPO : USKIDS_CONFIG_RESULTADOS}
+            loading={tab === "resultados" && !resultsData}
+            pastEditionsPool={edicoesPool}
+            selectedId={selectedT != null ? String(selectedT) : undefined}
+            onSelectEntry={(e) => setSelectedT(parseInt(e.id, 10) || null)}
+            renderSidebarItem={(e, { active, onSelect }) => {
+              const t = porId.get(e.id);
+              return t ? renderItem(t, active, onSelect) : null;
+            }}
           />
-        )}
-        {tab === "resultados" && !resultsData && (
-          <LoadingState message="A carregar resultados…" size="md" icon="🏆" />
-        )}
+        </CircuitToolbarSlotCtx.Provider>
+      )}
 
-        {tab === "rivais" && !resultsData && (
-          <LoadingState message="A carregar rivais…" size="md" icon="🤝" />
-        )}
-        {tab === "rivais" && resultsData && (
-          <SectionErrorBoundary label="TabRivais">
-            <TabRivais
-              resultados={resultsData.resultados}
-              fieldData={fieldData}
-              torneiosComManuel={torneiosComManuel}
-              selectedT={selectedT}
-              setSelectedT={setSelectedT}
-              autoRivals={autoRivals}
-              showTabela={showRivaisTabela}
-              setShowTabela={setShowRivaisTabela}
-              futureTorneios={torneiosComManuel.filter(t => isoDate(t.date_inicio) > new Date().toISOString().slice(0, 10))}
-            />
-          </SectionErrorBoundary>
-        )}
+      {/* Rivais: vista própria (não é página de circuito). */}
+      {tab === "rivais" && (<>
+        <Toolbar>
+          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
+          {lead}
+          <div style={{ flex:1, minWidth:8 }} />
+          {trail}
+          <span className="chip" style={{ flexShrink:0 }}>{allTorneios.length} torn.</span>
+        </Toolbar>
+        <MasterDetail md={md} sidebar={<>
+          <div style={{ overflowY:"auto", flex:1 }}>
+            {renderSidebarRivais()}
+          </div>
+          <div className="muted fs-10" style={{ padding:"8px 12px", borderTop:"1px solid var(--border-light)" }}>
+            signupanytime.com · actualização diária
+          </div>
+        </>}>
+          {!resultsData ? (
+            <LoadingState message="A carregar rivais…" size="md" icon="🤝" />
+          ) : (
+            <SectionErrorBoundary label="TabRivais">
+              <TabRivais
+                resultados={resultsData.resultados}
+                fieldData={fieldData}
+                torneiosComManuel={torneiosComManuel}
+                selectedT={selectedT}
+                setSelectedT={setSelectedT}
+                autoRivals={autoRivals}
+                showTabela={showRivaisTabela}
+                setShowTabela={setShowRivaisTabela}
+                futureTorneios={torneiosComManuel.filter(t => isoDate(t.date_inicio) > new Date().toISOString().slice(0, 10))}
+                abrirScout={abrirScout}
+              />
+            </SectionErrorBoundary>
+          )}
+        </MasterDetail>
+      </>)}
 
-      </MasterDetail>
     {/* ← fecha tourn-layout */}
     </div>
     </DataSourcesProvider>

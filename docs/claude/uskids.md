@@ -10,7 +10,7 @@
 node scripts/fetch-uskids-results.js
 ```
 Output: `public/data/uskids-results.json`
-`--only t1,t2` corre só esses tcodes (acrescentar edições sem gastar pedidos com o resto — a fonte tem rate limit). Edições anteriores de um torneio entram nos `HISTORICOS` com os `age_groups` do torneio de hoje; servem as abas «Edições anteriores»/«Quem repete» da /uskids (`TabResultados.tsx`; o «Quem repete» compara com o escalão do ano anterior — idade − anos de diferença).
+`--only t1,t2` corre só esses tcodes (acrescentar edições sem gastar pedidos com o resto — a fonte tem rate limit). Edições anteriores de um torneio entram nos `HISTORICOS` com os `age_groups` do torneio de hoje; servem as abas «Edições anteriores»/«Scout» da /uskids (do CircuitShell desde 20/10/2026 — `src/pages/uskids/uskidsCircuit.tsx`; o «Scout» compara com o escalão do ano anterior — idade − anos de diferença, `scoutEscaloes`).
 
 **fetch-uskids-member-history.js** — Histórico completo de carreira USKids de cada jogador nos flights configurados. Matching memberID→nome por strokes fingerprinting. Grava em adição: cada jogador guardado e cada "já visto" vai logo para `data-archive/uskids-member-diario.jsonl` (reposto no início da corrida seguinte, apagado no fim de uma corrida completa) — seguro interromper em qualquer ponto. Torneios vivos com a mesma assinatura (inscritos por escalão + acabou/aberto) usam o guardado: 1 GetMeta em vez de ~30-40 pedidos. Uma corrida sem novidades leva ~7 s.
 ```bash
@@ -581,7 +581,7 @@ Pedido da Mariana: «resultados de edições anteriores de todas as provas», 20
 - **Fase 1, sem pedidos** (`build-uskids-edicoes-anteriores.js`): monta-as da `data-archive/uskids-rich-flight-cache.json.gz`, que guarda cada flight com todos os jogadores e cartões (validado contra o Rome 2025 e o PGA 2025: iguais). Saída `public/data/uskids-edicoes/{t}.json` + `index.json` (com `faltam`: escalões que a cache não tem). 245 edições / 1 390 escalões logo de início (~11 MB).
 - **Fase 2, à fonte** (`fetch-uskids-edicoes-anteriores.js`, workflow `update-uskids-edicoes.yml` 03:30 UTC): busca os `faltam` com o `fetchTournamentRichData` do rich-players (que agora se pode importar), pausa 350 ms, **pára à primeira recusa** (403/429/503 ou «Too many requests»), orçamento por corrida; se parar a meio de um torneio repõe a cache desse torneio. ~2-3 pedidos por escalão.
 - **Paginação do GetPlayerTeeTimes corrigida** (rich-players): com `t=1` a 1ª página já traz o flight todo — o ciclo seguia pelas páginas vazias com 2 pedidos cada (32 pedidos num flight de 37; agora 2). Pára na página vazia, sem novos, ou com tantos como os `registered` do meta.
-- **Página:** `TabResultados.tsx` lê o `index.json` e carrega só as edições da família da prova aberta; não entram na barra lateral.
+- **Página:** a `USKIDSPage` lê o `index.json` e põe cada edição no `pastEditionsPool` do CircuitShell (`edicaoEntry`); o ficheiro só carrega quando a prova dela está aberta e pede as edições; não entram na barra lateral.
 
 ## API Signupanytime
 
@@ -658,3 +658,11 @@ Em Playwright: intercettar `GetMeta` via `page.on('response')` é mais fiável d
 ### Regionais USA (em LINKS_EXTRA / REGIONAL_CHAMPIONSHIPS)
 
 20895, 21004, 21133 (Jekyll Island), 21620 (Texas), 22037 (Palmer Kids), 21471 (Hawaii), 21628 (Tennessee), 21629 (Wisconsin), 21631 (Nevada), 21650 (Northwest), 21722 (Arkansas), 21845 (Florida Spring), 21846 (N. California), 21847 (Arizona), 21848 (N. Carolina), 22059 (Illinois), 22062 (Georgia), 22080 (Oklahoma), 22088 (Ohio), 22090 (Missouri), 22099 (Texas Spring), 22121 (Washington), 22122 (Virginia).
+
+## A página /uskids no CircuitShell (2026-10-20)
+
+Pedido da Mariana: tudo o que é página de circuito vive no `CircuitShell`. A /uskids foi a última.
+- **Torneios e Resultados = o mesmo shell** (`src/pages/uskids/uskidsCircuit.tsx` = adaptador; a `USKIDSPage` faz as entradas e os filtros). Um torneio = uma `CircuitEntry` (`id` = `t`); escalões = divisões, juntos pelo `age_group` (resultados + inscritos). Torneios = por disputar, o mais próximo primeiro (`sidebarOrder: "asc"`); Resultados = jogados, o mais recente primeiro; anos anteriores num bloco por ano (`olderYearsByYear`).
+- **Escalão com resultados** → `renderFull` = `TournamentDetail` (`tabParam="rt"`, Draw R{n}, notas `_nota`) com «Edições anteriores» e «Scout» do shell. **Só inscritos** → Inscrições (`AdmissionsTab`, desinscritos marcados) + Draw + Edições + Scout na barra de secções. **Por disputar** → 1.ª pílula «Todos» = a grelha `TabCampoDetalhe` (abre por omissão; com `rt=scout` abre o escalão do Manuel).
+- **Opções novas do shell** (servem qualquer página): `matchDivision` (a /uskids casa só nome ou sexo+idade, sem ±1), `scoutDivisions` (escalão de onde cada um vem), `scoutTCode`, `tabParam`, `sidebarOrder`, `olderYearsByYear`, `CircuitEntry.defaultDivKey`; a cache de divisões recarrega quando a página entrega outro `loadDivisions` (resultados/draws chegam depois dos inscritos).
+- **Rivais** continua vista própria. Os links antigos `?t=…&tab=campo|resultados|rivais&rt=…` funcionam. O `TabResultados.tsx` saiu.

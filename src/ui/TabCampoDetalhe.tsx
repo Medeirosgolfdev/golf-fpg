@@ -68,35 +68,31 @@ export function KidsLink({ nome }: { nome: string }) {
   );
 }
 
-/** Fila de links externos de um torneio USKids (Inscritos + Resultados no
- *  signupanytime, USKids ↗ e extras de LINKS_EXTRA). Partilhada entre o
- *  detalhe da tab Torneios e o fallback para torneios já sem field data. */
-export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: string | null }) {
+/** Links oficiais de um torneio USKids (inscritos, resultados, página USKids e
+ *  os extra de LINKS_EXTRA) — os mesmos no TournExternalLinks e no cabeçalho do
+ *  CircuitShell (/uskids, 20/10/2026). */
+export function uskidsLinks(t: number, urlUskids?: string | null): { label: string; url: string }[] {
   const extras = LINKS_EXTRA[t] ?? [];
   const uskidsUrl = urlUskids
     ?? extras.find(l => l.label === "USKids ↗")?.url
     ?? REGIONAL_CHAMPIONSHIPS[t]?.urlUSKids;
+  return [
+    { url:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t}`, label:"📋 Inscritos" },
+    { url:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`, label:"🏆 Resultados ↗" },
+    ...(uskidsUrl ? [{ url: uskidsUrl, label: "USKids ↗" }] : []),
+    ...extras.filter(l => l.label !== "USKids ↗"),
+  ];
+}
+
+/** Links oficiais do torneio (signupanytime + USKids + extra) — usados no
+ *  detalhe da tab Torneios e o fallback para torneios já sem field data. */
+export function TournExternalLinks({ t, urlUskids }: { t: number; urlUskids?: string | null }) {
   // Mesmo botão dos links oficiais das outras secções (.tourn-ext-link), à
   // direita do título (14/10/2026).
   return (
     <div style={{ display:"flex", gap:4, flexWrap:"wrap", alignItems:"center" }}>
-      {[
-        { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=field&fmt=nohead&ax=2739&t=${t}`, label:"📋 Inscritos" },
-        { href:`https://www.signupanytime.com/plugins/links/front/linksviews.aspx?v=results&fmt=nohead&ax=1129&t=${t}`, label:"🏆 Resultados ↗" },
-      ].map(l => (
-        <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-          className="tourn-ext-link">
-          {l.label}
-        </a>
-      ))}
-      {uskidsUrl && (
-        <a href={uskidsUrl} target="_blank" rel="noopener noreferrer"
-          className="tourn-ext-link">
-          USKids ↗
-        </a>
-      )}
-      {extras.filter(l => l.label !== "USKids ↗").map((l, i) => (
-        <a key={i} href={l.url} target="_blank" rel="noopener noreferrer"
+      {uskidsLinks(t, urlUskids).map(l => (
+        <a key={l.url + l.label} href={l.url} target="_blank" rel="noopener noreferrer"
           className="tourn-ext-link">
           {l.label}
         </a>

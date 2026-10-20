@@ -371,11 +371,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const cur = useMemo(() => {
     const byId = wantId ? visible.find(e => e.id === wantId) ?? entries.find(e => e.id === wantId) : null;
     if (byId) return byId;
-    // Default: o torneio mais RECENTE por data (= topo da sidebar). Antes era
-    // "primeiro com Manuel, senão primeiro na ordem crua de entries", que podia
-    // aterrar num torneio antigo qualquer conforme a ordem de build das fontes.
-    return [...visible].sort(entriesByDateDesc)[0] ?? null;
-  }, [wantId, visible, entries]);
+    // Default: o torneio do topo da sidebar — o mais RECENTE por data (ou o mais
+    // próximo, com `sidebarOrder: "asc"`). Antes era "primeiro com Manuel, senão
+    // primeiro na ordem crua de entries", que podia aterrar num torneio antigo
+    // qualquer conforme a ordem de build das fontes.
+    const sorted = [...visible].sort(entriesByDateDesc);
+    return (config.sidebarOrder === "asc" ? sorted[sorted.length - 1] : sorted[0]) ?? null;
+  }, [wantId, visible, entries, config.sidebarOrder]);
 
   // Deep-link automático do torneio seleccionado por default. Ao aterrar na página
   // base (ex: /rfeg sem id), o `cur` cai no default mas o URL ficava em /rfeg — sem
@@ -400,22 +402,27 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const curInfoItem = infoView ? config.specialItems?.find(si => si.key === infoView) : undefined;
 
   // ── Carregamento (lazy) das divisões do torneio seleccionado ────────
-  const [divCache, setDivCache] = useState<Record<string, CircuitDivision[]>>({});
+  // A cache guarda o carregador que a encheu: quando a página entrega outro
+  // (os dados mudaram — ex.: na /uskids os resultados e os draws chegam depois
+  // dos inscritos), recarrega-se.
+  const [divCache, setDivCache] = useState<Record<string, { src: unknown; divs: CircuitDivision[] }>>({});
   const [loadingId, setLoadingId] = useState<string | null>(null);
   const curId = cur?.id ?? null;
+  const curLoader = cur?.loadDivisions;
 
   useEffect(() => {
-    if (!cur || cur.divisions || divCache[cur.id] || !cur.loadDivisions) return;
+    if (!cur || cur.divisions || !cur.loadDivisions || divCache[cur.id]?.src === cur.loadDivisions) return;
     let alive = true;
+    const src = cur.loadDivisions;
     setLoadingId(cur.id);
-    cur.loadDivisions()
-      .then(divs => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: divs })); })
-      .catch(() => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: [] })); })
+    src()
+      .then(divs => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: { src, divs } })); })
+      .catch(() => { if (alive) setDivCache(prev => ({ ...prev, [cur.id]: { src, divs: [] } })); })
       .finally(() => { if (alive) setLoadingId(id => (id === cur.id ? null : id)); });
     return () => { alive = false; };
-  }, [curId]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [curId, curLoader]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const curDivisions: CircuitDivision[] = cur ? (cur.divisions ?? divCache[cur.id] ?? []) : [];
+  const curDivisions: CircuitDivision[] = cur ? (cur.divisions ?? divCache[cur.id]?.divs ?? []) : [];
   const divsLoading = !!cur && curDivisions.length === 0 && loadingId === cur.id;
 
   // ── Divisão (escalão) activa ────────────────────────────────────────
@@ -432,7 +439,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     if (!cur || curDivisions.length === 0) return null;
     const byKey = effDivKey ? curDivisions.find(d => d.key === effDivKey) : null;
     if (byKey) return byKey;
-    return curDivisions.find(d => d.hasManuel) ?? curDivisions[0] ?? null;
+    const byDefault = cur.defaultDivKey ? curDivisions.find(d => d.key === cur.defaultDivKey) : null;
+    return byDefault ?? curDivisions.find(d => d.hasManuel) ?? curDivisions[0] ?? null;
   }, [cur, curDivisions, effDivKey]);
   // Reset divisão ao mudar de torneio (só no modo interno).
   useEffect(() => { if (!divControlled) setDivKey(null); }, [curId, divControlled]);
@@ -454,8 +462,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     ...sections.map(s => ({ key: s as string, label: sectionLabel(s) })),
     ...(curDiv?.extraSections ?? []).map(x => ({ key: x.key, label: x.label })),
   ], [sections, curDiv]);
-  const [section, setSection] = useState<string | null>(null);
-  useEffect(() => { setSection(null); }, [curDiv?.key]);
 
   const toggle = (t: CircuitToggle) => setToggles(prev => {
     const n = new Set(prev); n.has(t) ? n.delete(t) : n.add(t); return n;
@@ -506,14 +512,21 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // nas divisões com `renderFull` (TournamentDetail) como nas que ficam no
   // IntlTournView do shell. `replace` para não encher o histórico.
   const [searchParams, setSearchParams] = useSearchParams();
-  const tabParam = searchParams.get("tab") || undefined;
+  const tabParamName = config.tabParam ?? "tab";
+  const tabParam = searchParams.get(tabParamName) || undefined;
   const setTabParam = useCallback((k: string) => {
     setSearchParams((prev) => {
       const next = new URLSearchParams(prev);
-      next.set("tab", k);
+      next.set(tabParamName, k);
       return next;
     }, { replace: true });
-  }, [setSearchParams]);
+  }, [setSearchParams, tabParamName]);
+  // Barra de secções (provas sem voltas): a aba também vive no URL — um link
+  // «…&tab=scout» abre o Scout. Ao mudar de escalão volta à primeira, salvo se
+  // o URL pedir outra que exista.
+  const [section, setSectionState] = useState<string | null>(() => tabParam ?? null);
+  const setSection = (k: string) => { setSectionState(k); setTabParam(k); };
+  useEffect(() => { setSectionState(tabParam ?? null); }, [curDiv?.key, tabParam]);
 
   // ── Tab "Edições anteriores" (embutida, keyed por config.editionKey) ──────
   // O shell tem TODAS as entradas (todos os anos) em memória, cada uma com o
@@ -521,7 +534,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // entregá-las ao componente partilhado. Só se mostra com ≥2 edições (uma só
   // não tem com que comparar). Construída aqui uma vez e entregue às duas vias:
   // trailing-tab (IntlTournView) e argumento de `renderFull` (TournamentDetail).
-  const { editionKey, seasonKey, pastEditionsTab: pastEditionsTabConfig } = config;
+  const { editionKey, seasonKey, pastEditionsTab: pastEditionsTabConfig, matchDivision: matchDiv, scoutDivisions, scoutTCode } = config;
   const curDivLabel = curDiv ? (curDiv.tabLabel || curDiv.escalao || "") : "";
   // ⚠ `siblings` MEMOIZADO: sem isto o array era recriado a cada render e o
   // useEffect do CircuitPastEditionsTab (dep em `editions`) recarregava em loop.
@@ -542,7 +555,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
     if (!curDiv || !cur) return null;
     if (pastEditionsSiblings) {
       return { key: "past-editions", label: "Edições anteriores",
-        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} /> };
+        content: <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} match={matchDiv} /> };
     }
     // Fallback: hook de baixo nível `pastEditionsTab` (legado; só usado quando
     // uma página não fornece `editionKey`).
@@ -566,7 +579,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const seasonTabNode = (() => {
     if (!curDiv || !cur || !seasonSiblings) return null;
     return { key: "season", label: config.seasonTabLabel ?? "Época",
-      content: <CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} /> };
+      content: <CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} match={matchDiv} /> };
   })();
   // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
   if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
@@ -575,11 +588,16 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   // as edições anteriores desta prova E a carreira de cada um (nível, forma,
   // confrontos com o Manuel, próximas inscrições). Basta haver field — sem
   // edições anteriores mostra só a carreira.
+  const scoutMatch = useMemo(() => (cur && scoutDivisions
+    ? (ed: CircuitEntry, divs: CircuitDivision[]) => scoutDivisions(cur, curDivLabel, ed, divs)
+    : undefined), [cur, curDivLabel, scoutDivisions]);
+  const tCodeScout = cur && scoutTCode ? scoutTCode(cur) : null;
   const repeatersTabNode = curField.length && cur && curDiv ? {
     key: "scout", label: "Scout",
     content: pastEditionsSiblings
-      ? <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters" />
-      : <Scout field={curField} />,
+      ? <CircuitPastEditionsTab editions={pastEditionsSiblings} division={curDivLabel} field={curField} currentId={cur.id} mode="repeaters"
+          match={matchDiv} scoutMatch={scoutMatch} tCode={tCodeScout} />
+      : <Scout field={curField} tCode={tCodeScout} />,
   } : null;
   if (repeatersTabNode && !curDiv?.renderFull) trailingTabs.push(repeatersTabNode);
   // Provas sem voltas (só totais — EGR, WAGR, GJGL…): a barra é a de secções, e
@@ -767,7 +785,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 6 }}>
                     {curDivisions.map(d => {
                       const active = d.key === curDiv.key;
-                      const nP = d.results?.players.length ?? 0;
+                      // Sem resultados, os inscritos (torneios por disputar — /uskids).
+                      const nP = d.results?.players.length
+                        ?? d.admissions?.players?.filter(p => p.status !== "desistente").length ?? 0;
                       const nAces = d.results ? tournamentAces(d.results.players).length : 0;
                       return (
                         <button
@@ -954,16 +974,20 @@ function CircuitSidebar({
   // vez de por ano. `bk` ordena os blocos (desc); `label` é o cabeçalho ("Mai
   // 2026"). Nos restantes modos o bucket é o ano (comportamento original).
   const monthMode = config.grouping === "month-year";
+  const olderByYear = !!config.olderYearsByYear;
+  const asc = config.sidebarOrder === "asc";
   const bucketOf = useCallback((e: CircuitEntry): { bk: string; label: string } => {
     if (monthMode) {
       const dk = entryDateKey(e); // YYYYMMDD ("00000000" = sem data)
       if (dk === "00000000") return { bk: "0000-00", label: "Sem data" };
+      // Anos anteriores ao corrente num bloco por ano (`olderYearsByYear`).
+      if (olderByYear && dk.slice(0, 4) < String(new Date().getFullYear())) return { bk: dk.slice(0, 4), label: dk.slice(0, 4) };
       const ym = `${dk.slice(0, 4)}-${dk.slice(4, 6)}`;
       return { bk: ym, label: monthLabel(ym) };
     }
     const y = e.year;
     return { bk: y == null ? "0000" : String(y), label: y == null ? "Sem data" : String(y) };
-  }, [monthMode]);
+  }, [monthMode, olderByYear]);
 
   const groups = useMemo(() => {
     const byL1 = new Map<string, CircuitEntry[]>();
@@ -994,11 +1018,14 @@ function CircuitSidebar({
         byBucket.get(bk)!.items.push(e);
       }
       const buckets = [...byBucket.entries()]
-        .sort((a, b) => b[0].localeCompare(a[0]))
-        .map(([bk, v]) => ({ bk, label: v.label, items: v.items.sort(entriesByDateDesc) }));
+        .sort((a, b) => (asc ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0])))
+        .map(([bk, v]) => {
+          const items = v.items.sort(entriesByDateDesc);
+          return { bk, label: v.label, items: asc ? items.reverse() : items };
+        });
       return { key: k, buckets };
     });
-  }, [entries, l1Mode, config.seriesOrder, bucketOf]);
+  }, [entries, l1Mode, config.seriesOrder, bucketOf, asc]);
 
   return (
     <>
