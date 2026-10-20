@@ -21,13 +21,13 @@ import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
-import { isManuelByName } from "../../constants/manuel";
+import { isManuelByName, MANUEL_FED } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
 import {
   computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL,
-  type FormFile, type JuniorForm, type JuniorScout, type ScoutFile, type ThreatInfo,
+  type FormFile, type JuniorForm, type JuniorScout, type ScoutComManuel, type ScoutFile, type ThreatInfo,
 } from "./scoutModel";
 
 interface UskFieldFile {
@@ -82,11 +82,23 @@ interface Linha {
   sc?: JuniorScout; fm?: JuniorForm; rep?: RepeaterRow;
   idade: number | null; threat: ThreatInfo; frente: number; atras: number; vsMMedia: number | null;
   proximas: Proxima[];
+  fed: string | null;
+}
+
+/** É o Manuel? Pelo federado quando o field o traz (o pai, 54907, também se
+ *  chama «Manuel Medeiros»), senão pelo nome. */
+const eManuel = (p: FieldPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
+
+/** Provas em comum com o Manuel, juntas por dia: as da página (ex.: FPG — todos
+ *  os torneios, de clube incluídos) e as do Kids 2. */
+function juntarComManuel(a: ScoutComManuel[] = [], b: ScoutComManuel[] = []): ScoutComManuel[] {
+  const dias = new Set(a.map((x) => x[0]));
+  return [...a, ...b.filter((x) => !dias.has(x[0]))].sort((x, y) => (x[0] < y[0] ? 1 : x[0] > y[0] ? -1 : 0));
 }
 
 export default function Scout({
   field, editions = [], currentId, tCode,
-  colsAntes = [], colsDepois = [], detalheExtra, resumoExtra, rodape, semHcp, ordemInicial,
+  colsAntes = [], colsDepois = [], detalheExtra, resumoExtra, rodape, semHcp, ordemInicial, provasComManuel,
 }: {
   /** Jogadores de hoje (resultados → inscritos → draw). */
   field: FieldPlayer[];
@@ -107,6 +119,9 @@ export default function Scout({
   semHcp?: boolean;
   /** Ordenação inicial (default: ameaça quando o Manuel está no field). */
   ordemInicial?: { key: string; dir: "asc" | "desc" };
+  /** Provas em comum com o Manuel que a página conhece e o Kids 2 não (FPG:
+   *  torneios de clube, Drive…) — juntam-se às do juniors-scout.json. */
+  provasComManuel?: (p: FieldPlayer) => ScoutComManuel[] | null | undefined;
 }) {
   const kidsMap = useContext(KidsLinkCtx);
   const [form, setForm] = useState<FormFile | null>(null);
@@ -121,7 +136,7 @@ export default function Scout({
   }, []);
 
   const rep = useMemo(() => buildRepeaters(field, editions, currentId), [field, editions, currentId]);
-  const manuelNoField = field.some((p) => isManuelByName(p.name));
+  const manuelNoField = field.some(eManuel);
 
   const linhas = useMemo<Linha[]>(() => {
     if (!form || !scout) return [];
@@ -130,16 +145,25 @@ export default function Scout({
     const out: Linha[] = [];
     for (const p of field) {
       const k = normName(p.name);
-      if (!k || vistos.has(k)) continue;
-      vistos.add(k);
-      const id = kidsMap.get(k)?.id;
-      const sc = id ? scout.players[id] : undefined;
+      if (!k || vistos.has(p.fed || k)) continue;
+      vistos.add(p.fed || k);
+      // A ficha do Kids 2 só vale se o federado bater (o pai do Manuel tem o
+      // nome de uma das variantes do filho).
+      const kid = kidsMap.get(k);
+      const outraPessoa = !!(p.fed && kid?.fed && kid.fed !== p.fed);
+      const id = kid && !outraPessoa ? kid.id : undefined;
+      const scBase = id ? scout.players[id] : undefined;
       const fm = id ? form.players[id] : undefined;
       const rr = repByName.get(k);
-      const isManuel = isManuelByName(p.name);
+      const isManuel = eManuel(p);
+      const extraM = !isManuel ? provasComManuel?.(p) : null;
+      const sc = extraM?.length ? { ...scBase, m: juntarComManuel(extraM, scBase?.m) } : scBase;
       const m = sc?.m ?? [];
-      const frente = m.filter((x) => x[2] != null && x[3] != null && x[3] < x[2]).length;
-      const atras = m.filter((x) => x[2] != null && x[3] != null && x[3] > x[2]).length;
+      // Rival à frente / atrás: pelo lugar quando há os dois, senão pelas pancadas.
+      const naFrente = (x: ScoutComManuel) => (x[2] != null && x[3] != null ? x[2] < x[3] : x[4] < 0);
+      const atrasDele = (x: ScoutComManuel) => (x[2] != null && x[3] != null ? x[2] > x[3] : x[4] > 0);
+      const frente = m.filter(atrasDele).length;
+      const atras = m.filter(naFrente).length;
       const vsMMedia = m.length ? m.reduce((s, x) => s + x[4], 0) / m.length : null;
       const threat = isManuel
         ? { score: -99, level: "none" as const, reasons: [] }
@@ -150,11 +174,13 @@ export default function Scout({
       out.push({
         key: k, name: p.name, club: p.club ?? sc?.c ?? null, country: p.country ?? null, isManuel, sc, fm, rep: rr,
         idade: idade(sc?.d), threat, frente, atras, vsMMedia,
-        proximas: (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
+        // As inscrições USKids são por nome: um homónimo (outro federado) não as herda.
+        proximas: outraPessoa ? [] : (proximas?.get(k) ?? []).filter((x) => x.t !== tCode),
+        fed: p.fed ?? null,
       });
     }
     return out;
-  }, [field, form, scout, rep, kidsMap, proximas, tCode]);
+  }, [field, form, scout, rep, kidsMap, proximas, tCode, provasComManuel]);
 
   const extras = useMemo(() => [...colsAntes, ...colsDepois], [colsAntes, colsDepois]);
   const { sortKey, sortDir, toggleSort } = useSort<string>(
@@ -322,7 +348,7 @@ export default function Scout({
                       title={temDetalhe ? "Ver o detalhe: provas em comum com o Manuel e próximas inscrições" : undefined}>
                     {colsAntes.map(extraTd(l))}
                     <td style={{ textAlign: "left", whiteSpace: "nowrap" }} className={l.isManuel ? "fw-700" : undefined}>
-                      {bandeira}{l.name} <KidsLink nome={l.name} />
+                      {bandeira}{l.name} <KidsLink nome={l.name} fed={l.fed} />
                       {mostraClube && <span className="muted fs-11"> · {clube}</span>}
                     </td>
                     {tem.idade && <td style={SEP}>{l.idade ?? "–"}</td>}

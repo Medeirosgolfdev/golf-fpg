@@ -12,7 +12,9 @@ import { vetKey } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import type { PastEdition } from "./PastEditionsTable";
 
-export interface FieldPlayer { name: string; club?: string | null; country?: string | null }
+/** Jogador do field. O `fed` (FPG), quando há, identifica-o melhor do que o
+ *  nome — «Manuel Medeiros» é também o nome do pai (54907). */
+export interface FieldPlayer { name: string; club?: string | null; country?: string | null; fed?: string | null }
 
 export interface RepeaterCell {
   pos: number | null;

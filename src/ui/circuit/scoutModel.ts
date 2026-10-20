@@ -15,13 +15,16 @@ import { getTierLabel, type TierKey } from "../../pages/kids2/juniorCalc";
 export interface JuniorForm { r: [string, number, number, number | null, number][]; m?: [number, number] }
 export interface FormFile { players: Record<string, JuniorForm> }
 
+/** Uma prova em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
+export type ScoutComManuel = [string, string, number | null, number | null, number];
+
 /** juniors-scout.json (scripts/aggregator/util/scout.js). */
 export interface JuniorScout {
   /** Torneios na carreira. */
   n?: number;
   t?: TierKey; w?: number; t3?: number; h?: number; d?: string; c?: string; p?: string;
   /** Provas em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
-  m?: [string, string, number | null, number | null, number][];
+  m?: ScoutComManuel[];
   /** Confrontos no mesmo flight. */
   mf?: number;
 }

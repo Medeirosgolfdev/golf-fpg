@@ -11,7 +11,7 @@
  * Fontes, todas já servidas ao browser: `playersDB` (índice, escalão, clube,
  * sexo), `player-stats.json` (forma WHS) e `master-courses.json` (CR/Slope).
  */
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { Tournament } from "../../data/fpgTypes";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { TeeDot } from "../../ui/tournamentPrimitives";
@@ -22,6 +22,8 @@ import { loadMasterData } from "../../data/loader";
 import { loadPlayerStats, type PlayerStatsDb } from "../../data/playerStatsTypes";
 import LoadingState from "../../ui/LoadingState";
 import Scout, { type ScoutExtraCol } from "../../ui/circuit/Scout";
+import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
+import type { FieldPlayer } from "../../ui/circuit/repeaters";
 import {
   buildRepeaters, currentField, masterTeeRatings,
   type Repeater, type FedInfo, type PlayerForm,
@@ -42,10 +44,12 @@ function FormaCell({ f }: { f: PlayerForm | null }) {
   );
 }
 
-export default function FpgScout({ current, previous, playersDB }: {
+export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
   current: Tournament;
   previous: { id: string; year: number; t: Tournament }[];
   playersDB: PlayersDB;
+  /** Provas FPG em comum com o Manuel, por federado (`buildFpgManuelH2H`). */
+  h2hManuel?: Map<string, ScoutComManuel[]>;
 }) {
   // CR/Slope oficiais de todos os tees do campo + forma de cada jogador.
   // Lazy (só ao abrir a tab) e por cache — se a app já os carregou, é grátis.
@@ -82,7 +86,8 @@ export default function FpgScout({ current, previous, playersDB }: {
   }, [current, previous, playersDB, masterRatings, stats]);
 
   const porNome = useMemo(() => new Map(rows.map((r) => [normName(r.name), r])), [rows]);
-  const field = useMemo(() => currentField(current).map((f) => ({ name: f.name, club: porNome.get(normName(f.name))?.club ?? null })), [current, porNome]);
+  const field = useMemo(() => currentField(current).map((f) => ({ name: f.name, fed: f.fed, club: porNome.get(normName(f.name))?.club ?? null })), [current, porNome]);
+  const provasComManuel = useCallback((p: FieldPlayer) => (p.fed ? h2hManuel?.get(p.fed) : null), [h2hManuel]);
 
   const extras = useMemo(() => {
     const R = (name: string): Repeater | undefined => porNome.get(normName(name));
@@ -199,6 +204,7 @@ export default function FpgScout({ current, previous, playersDB }: {
   return (
     <Scout
       field={field}
+      provasComManuel={provasComManuel}
       colsAntes={extras.antes}
       colsDepois={extras.depois}
       detalheExtra={detalhe}

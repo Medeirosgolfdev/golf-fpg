@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildFpgEditionsIndex } from "../fpgPastEditions";
+import { buildFpgEditionsIndex, buildFpgManuelH2H } from "../fpgPastEditions";
 import type { Tournament } from "../../../data/fpgTypes";
 
 const t = (ccode: string, tcode: string, name: string, date: string, escalao?: string): Tournament =>
@@ -129,4 +129,26 @@ describe("buildFpgEditionsIndex — o nome da etapa do Torre pode mudar", () => 
       expect(groups[0]).toHaveLength(2);
     });
   }
+});
+
+describe("buildFpgManuelH2H — provas FPG em comum com o Manuel, pelo federado", () => {
+  const torneio = (tcode: string, date: string, players: object[]) =>
+    ({ ccode: "007", tcode, name: `T${tcode}`, date, players } as unknown as Tournament);
+  it("conta pelo fed (o pai, 54907, não é o Manuel) e ignora sem cartão", () => {
+    const pool = [
+      torneio("1", "2026-09-12", [
+        { name: "Manuel Goulartt Medeiros", fed: "52884", grossTotal: 80, pos: 2 },
+        { name: "Manuel Medeiros", fed: "54907", grossTotal: 95, pos: 9 },
+        { name: "Mateus Penucho", fed: "52393", grossTotal: 78, pos: 1 },
+      ]),
+      torneio("2", "03/10/2026", [
+        { name: "Manuel Goulartt Medeiros", fed: "52884", grossTotal: 76 },
+        { name: "Mateus Penucho", fed: "52393", grossTotal: 999 },
+      ]),
+    ];
+    const h = buildFpgManuelH2H(pool);
+    expect(h.get("52393")).toEqual([["2026-09-12", "T1", 1, 2, -2]]);
+    expect(h.get("54907")).toEqual([["2026-09-12", "T1", 9, 2, 15]]);
+    expect(h.has("52884")).toBe(false);
+  });
 });

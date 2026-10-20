@@ -26,7 +26,7 @@ import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
-import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../Toolbar";
+import { Toolbar, ToolbarTitle, ToolbarSep } from "../Toolbar";
 import { CircuitToolbarSlotCtx } from "./toolbarSlot";
 import DetailHeader from "../DetailHeader";
 import TournamentWeather from "../TournamentWeather";
@@ -642,7 +642,21 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Lista" />
           {slot.lead}
           {!slot.hideTitle && <ToolbarTitle>{config.title}</ToolbarTitle>}
-          {cur?.course && <ToolbarMeta>📍 {cur.course}</ToolbarMeta>}
+          {/* Toggles rápidos (★ Manuel…) logo à frente, a seguir aos controlos
+              da página — no fim da barra ficavam fora do ecrã (20/10/2026). O
+              campo do torneio já está no cabeçalho do detalhe, não se repete aqui. */}
+          {enabledToggles.map(t => (
+            <button
+              key={t}
+              type="button"
+              title={TOGGLE_DEF[t].title}
+              className={`tourn-tab tourn-tab-sm${toggles.has(t) ? " active" : ""}`}
+              onClick={() => toggle(t)}
+              style={{ flexShrink: 0 }}
+            >
+              {TOGGLE_DEF[t].label}
+            </button>
+          ))}
 
           {flt.search && (
             <input
@@ -736,19 +750,6 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               {config.specialItems.map(si => <option key={si.key} value={si.key}>{si.label}</option>)}
             </select>
           )}
-
-          {/* Toggles rápidos */}
-          {enabledToggles.map(t => (
-            <button
-              key={t}
-              type="button"
-              title={TOGGLE_DEF[t].title}
-              className={`tourn-tab tourn-tab-sm${toggles.has(t) ? " active" : ""}`}
-              onClick={() => toggle(t)}
-            >
-              {TOGGLE_DEF[t].label}
-            </button>
-          ))}
 
           {hasActiveFilters && (
             <button type="button" className="tourn-tab tourn-tab-sm" onClick={clearFilters} title="Limpar filtros">✕</button>

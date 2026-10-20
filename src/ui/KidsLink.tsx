@@ -10,6 +10,7 @@ export interface KidsLinkEntry {
   n: string;            // nome display
   memberId?: string;    // memberId USKids (fallback de hash)
   id?: string;          // juniorId canónico kids2 → link directo /kids2/{id} (sem ambiguidade)
+  fed?: string;         // federado FPG da ficha — desfaz homónimos (Manuel pai × filho)
 }
 
 /**
@@ -31,10 +32,10 @@ export function kidsUrl(opts: { id?: string | null; memberId?: string | null; fe
 export const KidsLinkCtx = React.createContext<Map<string, KidsLinkEntry>>(new Map());
 
 /** Componente ↗ — só aparece se o jogador existir no mapa */
-export function KidsLink({ nome }: { nome: string }) {
+export function KidsLink({ nome, fed }: { nome: string; /** Federado FPG da linha: com ele, um homónimo (o pai do Manuel) não liga à ficha errada. */ fed?: string | null }) {
   const map = React.useContext(KidsLinkCtx);
   const entry = map.get(normName(nome));
-  if (!entry) return null;
+  if (!entry || (fed && entry.fed && entry.fed !== fed)) return null;
   // Preferir o link canónico /kids2/{id} (inequívoco). Sem id, cair no hash
   // retro-compatível (memberId ou nome), que o KIDS2Page resolve.
   const to = kidsUrl({ id: entry.id, memberId: entry.memberId, name: entry.n });

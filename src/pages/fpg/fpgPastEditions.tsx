@@ -21,6 +21,8 @@ import SectionErrorBoundary from "../../ui/SectionErrorBoundary";
 import { tournamentFamilyKey, CircuitPastEditionsTab } from "../../ui/circuit/pastEditions";
 import FpgScout from "./FpgScout";
 import { currentField } from "./repeatersModel";
+import { MANUEL_FED } from "../../constants/manuel";
+import type { ScoutComManuel } from "../../ui/circuit/scoutModel";
 
 /**
  * Aliases CURADOS de edições que mudaram de nome/rótulo entre anos. A heurística
@@ -125,6 +127,61 @@ function toEntry(t: Tournament): CircuitEntry {
   };
 }
 
+/** "AAAA-MM-DD" a partir de ISO ou DD/MM/AAAA (as datas da FPG). */
+function diaIso(s: string | null | undefined): string {
+  const v = String(s || "");
+  const iso = /^(\d{4})-(\d{2})-(\d{2})/.exec(v);
+  if (iso) return `${iso[1]}-${iso[2]}-${iso[3]}`;
+  const dmy = /^(\d{1,2})\/(\d{1,2})\/(\d{4})/.exec(v);
+  return dmy ? `${dmy[3]}-${dmy[2].padStart(2, "0")}-${dmy[1].padStart(2, "0")}` : v;
+}
+
+/**
+ * Provas FPG em comum com o Manuel, por federado (20/10/2026 — o Scout só via
+ * as do Kids 2, que não tem os torneios de clube nem o Drive: o Mateus Penucho
+ * aparecia com 3 confrontos). Pelo FEDERADO, nunca pelo nome (o pai, 54907,
+ * também é «Manuel Medeiros»). Conta quando os dois têm gross válido com o mesmo
+ * número de voltas: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel].
+ */
+export function buildFpgManuelH2H(pool: Tournament[]): Map<string, ScoutComManuel[]> {
+  const porId = new Map<string, Tournament>();
+  for (const t of pool) {
+    const id = `${t.ccode}-${t.tcode}`;
+    const prev = porId.get(id);
+    if (!prev || (t.players?.length ?? 0) > (prev.players?.length ?? 0)) porId.set(id, t);
+  }
+  type P = NonNullable<Tournament["players"]>[number];
+  const fedDe = (p: P) => String(p.fed || p.fedCode || "");
+  const gross = (p: P) => (typeof p.grossTotal === "number" && p.grossTotal > 0 && p.grossTotal < 900 ? p.grossTotal : null);
+  const voltas = (p: P) => (p.roundScores || []).filter((r) => (r.gross || 0) > 0 && (r.gross || 0) < 900).length || 1;
+  const lugar = (p: P) => {
+    const n = typeof p.pos === "number" ? p.pos : parseInt(String(p.pos ?? "").replace(/\D/g, ""), 10);
+    return n > 0 ? n : null;
+  };
+  const out = new Map<string, ScoutComManuel[]>();
+  for (const t of porId.values()) {
+    const ps = t.players || [];
+    const m = ps.find((p) => fedDe(p) === MANUEL_FED);
+    const gM = m ? gross(m) : null;
+    if (!m || gM == null) continue;
+    const vM = voltas(m);
+    const dia = diaIso(t.date);
+    for (const p of ps) {
+      const f = fedDe(p);
+      const g = gross(p);
+      if (!f || f === MANUEL_FED || g == null || voltas(p) !== vM) continue;
+      if (p.nholes && m.nholes && p.nholes !== m.nholes) continue;
+      const arr = out.get(f) ?? [];
+      arr.push([dia, t.name, lugar(p), lugar(m), g - gM]);
+      out.set(f, arr);
+    }
+  }
+  return out;
+}
+
+/** O h2h com o Manuel de cada índice (calculado junto, sobre o mesmo pool). */
+const H2H_DO_INDICE = new WeakMap<Map<string, CircuitEntry[]>, Map<string, ScoutComManuel[]>>();
+
 /**
  * Índice `editionKey → CircuitEntry[]` construído UMA vez sobre o pool de
  * torneios (memoizar no componente). Dedup por `ccode-tcode`, preferindo a
@@ -143,6 +200,7 @@ export function buildFpgEditionsIndex(pool: Tournament[]): Map<string, CircuitEn
   }
   const out = new Map<string, CircuitEntry[]>();
   for (const [k, m] of byKey) out.set(k, [...m.values()].map(toEntry));
+  H2H_DO_INDICE.set(out, buildFpgManuelH2H(pool));
   return out;
 }
 
@@ -186,7 +244,7 @@ export function fpgPastEditionsTabs(
     label: "Scout",
     content: (
       <SectionErrorBoundary label="Scout">
-        <FpgScout current={current} previous={previous} playersDB={playersDB} />
+        <FpgScout current={current} previous={previous} playersDB={playersDB} h2hManuel={H2H_DO_INDICE.get(index)} />
       </SectionErrorBoundary>
     ),
   });

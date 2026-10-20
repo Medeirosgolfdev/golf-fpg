@@ -22,7 +22,7 @@ interface RosterJunior {
   id: string;
   canonicalName: string;
   aliases?: string[];
-  sources?: { uskids?: { memberId?: string } };
+  sources?: { uskids?: { memberId?: string }; fpg?: { fed?: string } };
 }
 
 export function useKidsLinkMap() {
@@ -39,7 +39,7 @@ export function useKidsLinkMap() {
   const kidsMap = useMemo(() => {
     const m = new Map<string, KidsLinkEntry>();
     for (const j of roster) {
-      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.sources?.uskids?.memberId, id: j.id };
+      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.sources?.uskids?.memberId, id: j.id, fed: j.sources?.fpg?.fed };
       // Nome canónico + aliases → mesma chave normName que o KidsLink usa no
       // lookup. Primeiro-a-entrar ganha em caso de homónimos (igual ao
       // juniorByNormName do kids2).
@@ -55,7 +55,7 @@ export function useKidsLinkMap() {
     // colidirem com um nome real nem com a variante de outro jogador.
     const variantes = new Map<string, KidsLinkEntry | null>();
     for (const j of roster) {
-      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.sources?.uskids?.memberId, id: j.id };
+      const entry: KidsLinkEntry = { n: j.canonicalName, memberId: j.sources?.uskids?.memberId, id: j.id, fed: j.sources?.fpg?.fed };
       const toks = normName(j.canonicalName).split(" ").filter(Boolean);
       for (let i = 1; i < toks.length - 1; i++) {
         const vk = [...toks.slice(0, i), ...toks.slice(i + 1)].join(" ");
