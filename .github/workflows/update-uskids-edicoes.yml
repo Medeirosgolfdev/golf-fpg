@@ -15,7 +15,7 @@ on:
       max_torneios:
         description: 'Máx. torneios nesta corrida'
         required: false
-        default: '40'
+        default: '80'
       max_pedidos:
         description: 'Máx. pedidos à fonte nesta corrida'
         required: false
@@ -48,7 +48,7 @@ jobs:
         run: |
           set +e
           node scripts/fetch-uskids-edicoes-anteriores.js \
-            --max-torneios "${{ github.event.inputs.max_torneios || '40' }}" \
+            --max-torneios "${{ github.event.inputs.max_torneios || '80' }}" \
             --max-pedidos "${{ github.event.inputs.max_pedidos || '1500' }}"
           code=$?
           echo "exit_code=$code" >> "$GITHUB_OUTPUT"
