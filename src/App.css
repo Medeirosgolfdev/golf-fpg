@@ -4504,6 +4504,14 @@ table td.lb-col-divider {
 .mp-hole-chip.mp-dn { background: var(--medal-bronze-bg); color: var(--medal-bronze-strong); }
 .mp-hole-chip.mp-as { color: var(--text-3); }
 
+/* Faixa de aviso do match play de clubes (/FPG/clubes: tabs Grupos e Match Play) */
+.mp-banner {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+  padding: 10px 16px; border-bottom: 1px solid var(--border);
+  background: var(--accent-light); font-size: var(--fs-12); color: var(--text-2);
+}
+.mp-banner-icon { font-size: var(--fs-16); }
+
 /* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
 .est-value { font-style: italic; color: var(--color-danger); }
 
