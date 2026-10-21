@@ -11,7 +11,7 @@
 > 2026-07-09. Continuam a ser lidos pela
 > `/major` e pelo agregador.
 
-Se um ficheiro destes for acrescentado à mão: copiar o JSON para `public/data/`, registar em `dataRegistry.ts` e garantir que o adapter do agregador (`scripts/aggregator/sources/wjgc.js`) o lê → `node scripts/aggregator/index.js` (o `KIDSdataLoader` já não tem lista de ficheiros; lê o canónico).
+Se um ficheiro destes for acrescentado à mão: copiar o JSON para `public/data/` e garantir que o adapter do agregador (`scripts/aggregator/sources/wjgc.js`) o lê → `node scripts/aggregator/index.js` (o `KIDSdataLoader` já não tem lista de ficheiros; lê o canónico).
 
 **scrape-golfgenius.js** — Doral (First Tee Miami). v2: fix coluna "total", B8-9 suporta 9H back-9.
 ```bash

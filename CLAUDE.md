@@ -51,7 +51,7 @@ dados · Node 24 nos workflows.
 ```
 src/
   pages/          # páginas lazy-loaded (ver "Páginas")
-  data/           # loaders, tipos, registos de dados (KIDSdataLoader, dataRegistry, playerDataLoader, …)
+  data/           # loaders e tipos (KIDSdataLoader, playerDataLoader, courses, fetchCache, …)
   ui/             # componentes partilhados (NavBar, PillBadge, CircuitShell, ScorecardLeaderboard, …)
   utils/          # whsCalc, format, scoreDisplay, mathUtils, colors, teeColors, teeGroups, flagUtils, …
   constants/      # manuel.ts, config.ts, drivePoints.ts, …

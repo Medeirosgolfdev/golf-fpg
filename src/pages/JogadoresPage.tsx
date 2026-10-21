@@ -325,7 +325,7 @@ export default function JogadoresPage() {
   /* Proveniência dos dados (DataSourcesChip — padrão FPG/Drive/KIDS2). */
   const dataSources = useMemo<DataSource[]>(() => [
     { path: "/data/federados.json", status: federadosError ? "error" : federados ? "loaded" : "loading", count: federados?.length, error: federadosError ?? undefined },
-    { path: "/data/player-stats.json", status: Object.keys(statsDb).length > 0 ? "loaded" : "loading", count: Object.keys(statsDb).length || undefined },
+    { path: "/player-stats.json", status: Object.keys(statsDb).length > 0 ? "loaded" : "loading", count: Object.keys(statsDb).length || undefined },
     { path: "/data/federados-pp.json", status: ppMap.size > 0 ? "loaded" : "loading", count: ppMap.size || undefined },
   ], [federados, federadosError, statsDb, ppMap]);
 

@@ -161,7 +161,6 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
     "/data/pull-torneios003.json",
     "/data/drive-data-2026-04.json",
     "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-11.json",
     "/data/drive-data-2025-02.json",
   ];
   const allTournaments: Tournament[] = [];
@@ -509,7 +508,6 @@ export async function loadRichAroeiraIIAnalise(currentTournament: Tournament): P
     "/data/pull-torneios003.json",
     "/data/drive-data-2026-04.json",
     "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-11.json",
     "/data/drive-data-2025-02.json",
   ];
   const allTournaments: Tournament[] = [currentTournament];

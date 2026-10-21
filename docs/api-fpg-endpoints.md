@@ -529,8 +529,8 @@ const [sc] = await getScorecard(rondas[0].id);
 const par_array = [sc.par_1, sc.par_2, ..., sc.par_18];
 ```
 
-Cache em memória (session-scoped) + leitura preferencial de
-`public/data/fpg-whs.json` (gerado pelo console script — instantâneo).
+Cache em memória (session-scoped). (A leitura de um `public/data/fpg-whs.json`
+saiu a 21/10/2026 — o ficheiro nunca existiu e dava 404.)
 
 ---
 
@@ -642,8 +642,6 @@ funcionou consistentemente.
 - **`public/data/federados-inativos.json`** (41 MB, 43.054 inactivos)
 - **`public/data/federados-inativos-stats.json`** (~25 KB, agregados)
 - **`public/data/federados-inativos-jovens.json`** (~2.7 MB, Sub-10 a Sub-21)
-- **`public/data/fpg-whs.json`** (gerado pelo console script — usar como cache
-  local de rondas dos 396 jogadores)
 - **`api/.datagolf-cookies.json`** (gerado pelo Playwright — gitignored)
 
 ### Configuração

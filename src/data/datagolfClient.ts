@@ -89,31 +89,6 @@ export interface Scorecard {
 /* ── Cache em memória (session-scoped) ──────────────────────── */
 const _cache = new Map<string, unknown>();
 
-/* ── Cache em ficheiro: public/data/fpg-whs.json ───────────────
-   Gerado pelo console script `console-fpg-whs-scrape.js` que o user
-   corre no browser quando quer refresh. Se existir, é preferido à API
-   live para os jogadores que contém (instantâneo, sem round-trip).
-   Formato: { generated, players: { [fed]: { rounds, scorecards } } } */
-let _fpgWhsFile: null | "loaded" | "failed" | Promise<unknown> = null;
-let _fpgWhsData: Record<string, { rounds: unknown[]; scorecards?: Record<string, unknown> }> = {};
-
-async function tryLoadWhsFile(): Promise<void> {
-  if (_fpgWhsFile === "loaded" || _fpgWhsFile === "failed") return;
-  if (_fpgWhsFile) { await _fpgWhsFile; return; }
-  _fpgWhsFile = (async () => {
-    try {
-      const r = await fetch("/data/fpg-whs.json");
-      if (!r.ok) throw new Error("sem cache batch");
-      const json = await r.json();
-      _fpgWhsData = json.players || {};
-      _fpgWhsFile = "loaded";
-    } catch {
-      _fpgWhsFile = "failed";
-    }
-  })();
-  await _fpgWhsFile;
-}
-
 async function call<T>(endpoint: string, cacheKey: string): Promise<T> {
   if (_cache.has(cacheKey)) return _cache.get(cacheKey) as T;
   const res = await fetch(endpoint);
@@ -126,16 +101,9 @@ async function call<T>(endpoint: string, cacheKey: string): Promise<T> {
 
 /* ── API ────────────────────────────────────────────────────── */
 
-/** Lista todas as rondas WHS registadas de um jogador.
- *  Se houver cache batch em `/data/fpg-whs.json` (gerado pelo script
- *  de consola `console-fpg-whs-scrape.js`), usa-a — é instantânea.
- *  Caso contrário faz chamada live ao proxy `/api/datagolf`. */
+/** Lista todas as rondas WHS registadas de um jogador (live, pelo proxy `/api/datagolf`). */
 export async function getPlayerHistory(fed: string | number): Promise<WhsRound[]> {
-  await tryLoadWhsFile();
   const fedKey = String(fed);
-  if (_fpgWhsData[fedKey]?.rounds) {
-    return _fpgWhsData[fedKey].rounds as WhsRound[];
-  }
   return call<WhsRound[]>(
     `/api/datagolf?action=whs&fed=${encodeURIComponent(fedKey)}`,
     `whs:${fed}`,

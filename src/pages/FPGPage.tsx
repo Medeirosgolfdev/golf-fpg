@@ -1297,17 +1297,14 @@ function Content() {
     return () => { alive = false; };
   }, [navMode, pjaExtraTournaments.length]);
 
-  // ── Loader Clubes (D1 — só quando activado, para dados parciais de 2026) ────
+  // ── Loader Clubes (só quando activado) ────
   useEffect(() => {
     if (!(navMode === "torneios" && (seriesFilter === "clubes" || seriesFilter === "")) || clubesLoaded) return;
     let alive = true;
     setClubesLoading(true);
 
     // Ficheiros combinados (sub14 + sub18 no mesmo JSON) — escalão lido de t.escalao
-    // Ficheiros D1 têm só um escalão (determinado pelo nome)
     const CLUBES_FILES: { url: string; escFallback: string | null; year: string }[] = [
-      { url: "/data/clubes_sub_14_D1.json",    escFallback: "sub14", year: "2026" },
-      { url: "/data/clubes_sub_18_D1.json",    escFallback: "sub18", year: "2026" },
       { url: "/data/clubes_sub_14&18_2026.json", escFallback: null,  year: "2026" },
       { url: "/data/clubes_sub_14&18_2025.json", escFallback: null,  year: "2025" },
       { url: "/data/clubes_sub_14&18_2024.json", escFallback: null,  year: "2024" },

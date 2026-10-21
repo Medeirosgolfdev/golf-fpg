@@ -710,10 +710,11 @@ era na verdade "cookie ausente".
    - `scripts/console-fpg-whs-scrape.js` — colar na consola de `my.fpg.pt`
      ou `scoring.datagolf.pt` (gémeos)
    - Scrape bulk dos feds colados (ex.: os do `players.json`); descarrega
-     `fpg-whs-YYYY-MM-DD.json`, a renomear à mão para `public/data/fpg-whs.json`
+     `fpg-whs-YYYY-MM-DD.json`
    - Ainda útil quando queres snapshot datado sem configurar pipeline
-   - App usa como cache local (datagolfClient.ts lê primeiro este ficheiro
-     antes de ir ao proxy live)
+   - A app **já não** lê um `public/data/fpg-whs.json` (21/10/2026: o ficheiro
+     nunca existiu e cada sessão dava um 404); o `datagolfClient.ts` vai sempre
+     ao proxy live
 
 ### Proxy `api/datagolf.js` — arquitectura actualizada 2026-04-14/15
 
@@ -971,5 +972,4 @@ Implementação canónica: `scripts/console-fpg-whs-scrape.js`.
 - `data-archive/federados-inativos.json` (~42 MB, 42.636 inactivos — `FedStat=7`; fora do deploy)
 - `public/data/federados-inativos-stats.json` (~25 KB, agregados)
 - `public/data/federados-inativos-jovens.json` (~2.7 MB, Sub-10 a Sub-21)
-- `public/data/fpg-whs.json` — cache OPCIONAL (hoje não existe em disco); o `datagolfClient.ts` usa-a se existir
 - `api/.datagolf-cookies.json` (cookies capturadas no browser / pelo `run-cookie-refresh.bat`; ⚠ está no git, é committado com os refrescos)

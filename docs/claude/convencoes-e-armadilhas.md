@@ -215,7 +215,6 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 | `USKIDSPage.tsx` | Resultados USKids com links cruzados para Kids |
 | `FPGPage.tsx` | Dados da federação portuguesa |
 | `rivalData.ts` | Dados estáticos: pars/SI/metros de campos, FIELD_2025, FIELD_CARDS, TIER |
-| `dataRegistry.ts` | Registo central de paths e interfaces de todos os JSON |
 | `tokens.css` | Design tokens (fonte única de verdade para cores) |
 | `colors.ts` | Espelho JS dos tokens |
 | `App.css` | Todas as classes de componentes |
