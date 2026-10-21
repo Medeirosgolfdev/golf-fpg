@@ -45,7 +45,7 @@
 "use strict";
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -426,7 +426,7 @@ for (const lic of allLics) {
   nRows += rows.length;
 }
 
-writeAtomic(OUT, JSON.stringify({
+writeJsonGuarded(OUT, {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-spain-player-tournaments.js",
   totalPlayers: Object.keys(byLicencia).length,
@@ -435,7 +435,7 @@ writeAtomic(OUT, JSON.stringify({
   tournaments: tourns,
   byLicencia,
   counts,
-}));
+}, { spaces: 0, failOnRefuse: true });
 
 console.log(`Gémeos RFEGolf↔LGS extra (por roster): ${extraTwins.size}`);
 console.log(`Linhas FCG (Catalunha): ${nFcg}`);

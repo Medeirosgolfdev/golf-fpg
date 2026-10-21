@@ -12,7 +12,7 @@
  */
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "../public/data/rfegolf-resultats");
@@ -483,7 +483,7 @@ const out = {
   tournaments,
 };
 
-writeAtomic(OUT, JSON.stringify(out, null, 2), "utf-8");
+writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
 console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}), skipped=${skipped}`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);

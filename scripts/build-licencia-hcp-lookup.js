@@ -14,7 +14,7 @@
  */
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const NC_ROOT = path.resolve(__dirname, "../public/data/nextcaddy");
@@ -96,6 +96,6 @@ const out = {
   lookup,
 };
 
-writeAtomic(OUT, JSON.stringify(out, null, 2), "utf-8");
+writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
 console.log(`Built licencia-hcp-lookup: ${out.total} licenças (NC ${ncCount} + RFEGolf ${rfegCount} torneios)`);
 console.log(`  -> ${OUT}`);

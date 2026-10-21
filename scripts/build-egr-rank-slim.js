@@ -16,7 +16,7 @@
  * Corre no update-egr.yml a seguir ao scrape do ranking.
  */
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const { countryToIso2 } = require("./aggregator/util/names");
 
@@ -65,7 +65,7 @@ function main() {
     byName,
   };
   const file = path.join(DATA, "egr-rank-slim.json");
-  writeAtomic(file, JSON.stringify(out));
+  writeJsonGuarded(file, out, { spaces: 0, failOnRefuse: true });
   const kb = Math.round(fs.statSync(file).size / 1024);
   console.log(`egr-rank-slim.json: ${n} juniores (<=U${MAX_AGE}) · ${Object.keys(byName).length} nomes únicos · ${kb} KB → ${file}`);
 }

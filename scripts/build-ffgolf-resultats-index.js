@@ -29,7 +29,7 @@
  * regionais, regionais ganham a 19), com as restantes registadas em `ligues`.
  */
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "../public/data/ffgolf-resultats");
@@ -246,7 +246,7 @@ const out = {
   tournaments: canonical,
 };
 
-writeAtomic(OUT, JSON.stringify(out, null, 2), "utf-8");
+writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
 console.log(`OK: ${OUT}`);
 console.log(`   ${canonical.length} torneios juvenis · ${droppedDup} duplicados de liga + ${droppedRepub} re-publicações removidos · ${skippedNonJuvenil} não-juvenis filtrados · ${canonical.reduce((s, t) => s + t.totalPlayers, 0)} jogadores`);
 const byYear = {};

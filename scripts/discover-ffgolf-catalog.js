@@ -26,7 +26,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const FFGOLF_BASE = "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats";
@@ -195,21 +195,13 @@ async function getGgIdsForTournament(page, section, year, slug) {
     (b.year - a.year) || String(a.section).localeCompare(b.section) || String(a.slug).localeCompare(b.slug));
   const years = [...new Set([...(existing.years || []), ...args.years])].sort();
 
-  writeAtomic(
-    outPath,
-    JSON.stringify(
-      {
+  writeJsonGuarded(outPath, {
         generated_at: new Date().toISOString(),
         years,
         total: tournaments.length,
         with_gg: tournaments.filter((c) => c.gg_page).length,
         tournaments,
-      },
-      null,
-      2
-    ),
-    "utf-8"
-  );
+      }, { spaces: 2, failOnRefuse: true });
   console.log(`\n✅ ${catalog.length} descobertos (${nNew} novos, ${nUpd} actualizados) → catálogo com ${tournaments.length} torneios em ${outPath}`);
   console.log(`   ${tournaments.filter((c) => c.gg_page).length} com GolfGenius ID`);
   if (nKept) console.log(`   🔒 ${nKept} gg_page preservados (descoberta veio vazia — id antigo mantido)`);

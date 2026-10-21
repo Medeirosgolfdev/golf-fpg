@@ -30,7 +30,7 @@
 "use strict";
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const REPO = path.resolve(__dirname, "..");
@@ -242,7 +242,7 @@ function build() {
     torneios: torneios,
   };
 
-  writeAtomic(OUT_FILE, JSON.stringify(out, null, 0));
+  writeJsonGuarded(OUT_FILE, out, { spaces: 0, failOnRefuse: true });
   const kb = (fs.statSync(OUT_FILE).size / 1024).toFixed(1);
   console.log("[build] wrote", path.relative(REPO, OUT_FILE), "—", kb, "KB");
   console.log("[build] stats: games=" + totalGames, "categories=" + totalCategories, "entries=" + totalEntries, "uniqueLicenses=" + uniqueLicenses.size, "dobMatched=" + dobMatched + " (" + out.dobMatchedPct + "%)");

@@ -27,7 +27,7 @@
 "use strict";
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const { listGgTournaments, buildNameMaps, matchGgName } = require("./lib/ffgolf-gg");
 const { ffgEscalaoCanonico, ffgEscalaoMaisNovo } = require("./lib/ffg-escalao.cjs");
@@ -355,11 +355,11 @@ for (const gg of ggTourns) {
 
 console.log(`GolfGenius: ${ggTourns.length} torneios — ${nGgCounted} contados, ${nGgTwins} gémeos do portal (ignorados), ${nGgMatched} jogadores matched, ${nGgUnmatched} sem match`);
 
-writeAtomic(OUT_TWINS, JSON.stringify({
+writeJsonGuarded(OUT_TWINS, {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-france-players.js",
   twins,
-}, null, 2));
+}, { spaces: 2, failOnRefuse: true });
 console.log(`${OUT_TWINS} escrito (${Object.keys(twins).length} gémeos).`);
 
 // Output: byLicense → record + byName (normalizado, 1º vence) → record
@@ -397,7 +397,7 @@ const out = {
   byName,
   byLicense,
 };
-writeAtomic(OUT, JSON.stringify(out));
+writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 console.log(`Categoria resolvida para ${players.size - nSemCat}/${players.size} jogadores (${nSemCat} sem sinal de idade em nenhuma prova).`);
 console.log(`${OUT} escrito (${(fs.statSync(OUT).size / 1024).toFixed(1)} KB).`);
 
@@ -422,7 +422,7 @@ for (const t of tourns) {
   delete t.trnId; // já está no `id` (`ffgres:{trnId}`)
 }
 
-writeAtomic(OUT_TOURNS, JSON.stringify({
+writeJsonGuarded(OUT_TOURNS, {
   generatedAt: new Date().toISOString(),
   source: "scripts/build-france-players.js",
   totalPlayers: Object.keys(tournsByLicense).length,
@@ -433,6 +433,6 @@ writeAtomic(OUT_TOURNS, JSON.stringify({
   series: serieLabels,
   tournaments: tourns,
   byLicense: tournsByLicense,
-}));
+}, { spaces: 0, failOnRefuse: true });
 console.log(`${OUT_TOURNS} escrito (${(fs.statSync(OUT_TOURNS).size / 1024).toFixed(1)} KB) — ${nApps} participações, ${tourns.length} torneios${nNoLink ? `, ${nNoLink} sem página na /ffg` : ""}.`);
 if (nMismatch) console.warn(`  ⚠ ${nMismatch} jogadores com nº de participações ≠ tot — a lista expansível não vai bater com a coluna 📊 Tot`);

@@ -13,7 +13,7 @@
  */
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "../public/data/rfegolf-resultats");
@@ -208,7 +208,7 @@ const out = {
   lookup,
 };
 
-writeAtomic(OUT, JSON.stringify(out, null, 0));
+writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 const sizeMB = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
 console.log(`Lookup built: ${Object.keys(lookup).length} licencias from ${processed} comps -> ${OUT} (${sizeMB} MB)`);
 

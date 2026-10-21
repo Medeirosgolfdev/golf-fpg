@@ -15,7 +15,7 @@
  */
 "use strict";
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const REPO = path.resolve(__dirname, "..");
 const RFEG_DIR = path.join(REPO, "public", "data", "rfegolf-resultats");
@@ -86,5 +86,5 @@ for (const f of fs.readdirSync(RFEG_DIR).filter((x) => /^\d+\.json$/.test(x))) {
 }
 
 const out = { generatedAt: new Date().toISOString(), source: "scripts/build-lgs-twins.js", count: n, twins, lgsSuppressed };
-writeAtomic(OUT, JSON.stringify(out, null, 0));
+writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 console.log(`build-lgs-twins: ${n} gémeos RFEGolf<->LGS -> ${path.relative(REPO, OUT)}`);

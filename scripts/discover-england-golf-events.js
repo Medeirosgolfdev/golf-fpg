@@ -35,7 +35,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const DIRECTORY_URL =
@@ -201,7 +201,7 @@ async function discover() {
     );
   }
   if (args.json) {
-    writeAtomic(args.json, JSON.stringify(events, null, 2), "utf-8");
+    writeJsonGuarded(args.json, events, { spaces: 2, failOnRefuse: true });
     console.log("\nlista completa -> " + args.json);
   }
   process.exit(missing.length ? 0 : 2);

@@ -15,7 +15,7 @@
  *   node scripts/build-gjgl-index.js
  */
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const DATA_DIR = path.join(__dirname, "..", "public", "data");
@@ -78,7 +78,7 @@ function main() {
   }
 
   const out = { generated_at: new Date().toISOString(), tournaments };
-  writeAtomic(OUT, JSON.stringify(out));
+  writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
   console.log(`gjgl-index.json escrito: ${ok} torneios → ${OUT}`);
 }
 

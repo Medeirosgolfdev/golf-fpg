@@ -4,7 +4,7 @@
  * Output: public/data/spain-players.json
  */
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const IN = path.resolve(__dirname, "../public/data/licencia-dob-lookup.json");
 const HCP_IN = path.resolve(__dirname, "../public/data/licencia-hcp-lookup.json");
@@ -218,6 +218,6 @@ const out = {
   dupPlayers,
   byName, byLicencia,
 };
-writeAtomic(OUT, JSON.stringify(out, null, 0));
+writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
 console.log(`Built: ${out.total} entries → ${OUT} (${size} MB)`);

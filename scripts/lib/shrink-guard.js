@@ -15,6 +15,8 @@
  *   });
  *   if (!r.written) process.exit(2);    // ou 1, consoante o script
  *
+ *   // ou, num builder: { failOnRefuse: true } → exit 1 + anotação ::error::
+ *
  * A escrita é sempre atómica com fsync (lib/atomic-write.js da raiz).
  * Ficheiro anterior ausente ou ilegível → grava (não há com que comparar).
  */
@@ -73,6 +75,11 @@ function writeJsonGuarded(filePath, data, opts = {}) {
     const unit = count ? "" : " bytes";
     const reason = `${label}: ${prev}${unit} em disco → ${next}${unit} novos (perda > ${Math.round(maxDrop * 100)}%). Não gravado — usar --force se for intencional.`;
     (log.error || log.log).call(log, `[shrink-guard] ${reason}`);
+    // failOnRefuse: o script termina com exit 1 (erro) e o GitHub mostra a anotação.
+    if (opts.failOnRefuse) {
+      (log.log || log.error).call(log, `::error::${reason}`);
+      process.exitCode = 1;
+    }
     return { written: false, prev, next, reason };
   }
   fs.mkdirSync(path.dirname(filePath), { recursive: true });

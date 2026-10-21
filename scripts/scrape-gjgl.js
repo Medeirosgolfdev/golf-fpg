@@ -54,7 +54,7 @@
  *   node scripts/scrape-gjgl.js --concurrency 4          # paralelismo (default 3)
  */
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -734,7 +734,7 @@ async function main() {
         }
       }
       if (changed) {
-        writeAtomic(CATALOG_PATH, JSON.stringify(catalog, null, 2));
+        writeJsonGuarded(CATALOG_PATH, catalog, { spaces: 2, failOnRefuse: true });
         console.log("Catalog updated with " + Object.keys(tidMap).length + " tournamentids.");
       }
     }
