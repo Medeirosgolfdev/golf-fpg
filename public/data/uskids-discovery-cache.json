@@ -1,28 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22769,
-      "name": "Azata Golf",
-      "date_inicio": "9/20/2026",
-      "date_fim": "9/20/2026",
-      "rondas": 1,
-      "campo": "Azata Golf",
-      "fee_18": "61.00",
-      "tour": "Andalusia (ES) Tour",
-      "type": 5
-    },
-    {
-      "t": 23602,
-      "name": "OPEN.9 Golf Eichenried",
-      "date_inicio": "9/20/2026",
-      "date_fim": "9/20/2026",
-      "rondas": 1,
-      "campo": "OPEN.9 Golf Eichenried",
-      "fee_18": "51.00",
-      "tour": "Munich (DE) Tour",
-      "type": 5
-    },
-    {
       "t": 23089,
       "name": "Australian Challenge 2026",
       "date_inicio": "9/21/2026",
@@ -2124,6 +2102,17 @@
       "type": 5
     },
     {
+      "t": 23832,
+      "name": "Club de Golf La Hacienda (Tour Championship)",
+      "date_inicio": "2/28/2027",
+      "date_fim": "2/28/2027",
+      "rondas": 1,
+      "campo": "Club de Golf La Hacienda",
+      "fee_18": "45.00",
+      "tour": "Mexico City (MX) Tour",
+      "type": 6
+    },
+    {
       "t": 23816,
       "name": "Club Campestre de Puebla (Tour Championship)",
       "date_inicio": "3/6/2027",
@@ -2190,19 +2179,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-20T12:41:36.381Z",
-  "varredura_max_t": 23825,
+  "gerado_em": "2026-10-21T12:48:09.299Z",
+  "varredura_max_t": 23832,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 41,
-    "novos": 0,
+    "pedidos": 48,
+    "novos": 1,
     "buracos_revistos": 1,
-    "catalogo": 1519,
+    "catalogo": 1526,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23825,
-  "fronteira_avancou_em": "2026-10-17",
-  "dias_sem_descoberta": 3,
-  "dias_sem_avanco": 3,
-  "ultima_descoberta": "2026-10-17"
+  "fronteira_max_t_visto": 23832,
+  "fronteira_avancou_em": "2026-10-21",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-10-21"
 }
