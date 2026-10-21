@@ -27,6 +27,7 @@
  * Exit codes: 0 = gravou algo, 2 = nada novo, 1 = erro.
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { scrapeEdition, GG } = require("./scrape-fsga.js");
 const { discoverDivisions } = require("./scrape-golfgenius-node.js");
@@ -246,7 +247,7 @@ function needsFetch(outPath) {
       const kept = preserveTeesheet(outPath, ffg);
       if (kept.draws || kept.hcps) console.log(`     tee sheet preservado: ${kept.draws} ronda(s) de draw, ${kept.hcps} hcp(s)`);
       const tmp = outPath + ".tmp";
-      fs.writeFileSync(tmp, JSON.stringify(ffg, null, 2), "utf8");
+      writeAtomic(tmp, JSON.stringify(ffg, null, 2), "utf8");
       fs.renameSync(tmp, outPath);
       saved++;
       console.log(`   💾 ${t.year}_${t.slug}: ${ffg.players.length} jogadores${ffg.course.par.length ? " (par OK)" : ""}`);

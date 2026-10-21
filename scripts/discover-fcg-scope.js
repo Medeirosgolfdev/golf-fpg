@@ -22,6 +22,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const http = require("http");
 const https = require("https");
@@ -334,7 +335,7 @@ async function main() {
     }
   }
 
-  fs.writeFileSync(SCOPE_OUT, JSON.stringify(out, null, 2));
+  writeAtomic(SCOPE_OUT, JSON.stringify(out, null, 2));
   console.log(`[disc] wrote ${path.relative(REPO, SCOPE_OUT)} ─ ${final.length} tournaments, ${totalGames} games, ${out.totalImaster} imaster IDs, ${out.totalInscritos} inscritos`);
 }
 

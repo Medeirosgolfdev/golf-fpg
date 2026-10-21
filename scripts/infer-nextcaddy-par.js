@@ -17,6 +17,7 @@
  */
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const NC_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
@@ -167,7 +168,7 @@ for (const file of files) {
     const realTotal = j.course.par.reduce((a, b) => a + (b || 0), 0);
     if (j.course.parTotal !== realTotal) {
       j.course.parTotal = realTotal;
-      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      if (!DRY) writeAtomic(fpath, JSON.stringify(j, null, 2));
       updated++;
     } else {
       skipped++;
@@ -205,7 +206,7 @@ for (const file of files) {
       j.course.parConfidence = "high";
       if (j.course.si === undefined) j.course.si = null;
       if (j.course.meters === undefined) j.course.meters = null;
-      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      if (!DRY) writeAtomic(fpath, JSON.stringify(j, null, 2));
       updated++;
       continue;
     }
@@ -259,7 +260,7 @@ for (const file of files) {
       j.course.parConfidence = pt.confidence; // total-high | total-low
       if (j.course.si === undefined) j.course.si = null;
       if (j.course.meters === undefined) j.course.meters = null;
-      if (!DRY) fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+      if (!DRY) writeAtomic(fpath, JSON.stringify(j, null, 2));
       updated++;
       totalOnly++;
     } else {
@@ -288,7 +289,7 @@ for (const file of files) {
   if (j.course.meters === undefined) j.course.meters = null;
 
   if (!DRY) {
-    fs.writeFileSync(fpath, JSON.stringify(j, null, 2));
+    writeAtomic(fpath, JSON.stringify(j, null, 2));
   }
   updated++;
   if (result.confidence !== "high") {

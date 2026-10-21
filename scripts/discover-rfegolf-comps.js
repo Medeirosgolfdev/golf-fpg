@@ -22,6 +22,7 @@
  */
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const https = require("https");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
@@ -205,7 +206,7 @@ async function main() {
             processed, total: ids.length,
             tournaments: results.filter(function (r) { return r.juvenil; }).sort(function (a, b) { return a.compId - b.compId; }),
           };
-          fs.writeFileSync(outFile + ".partial", JSON.stringify(partial, null, 2));
+          writeAtomic(outFile + ".partial", JSON.stringify(partial, null, 2));
         } catch (e) { /* ignore */ }
       }
       await new Promise(function (r) { setTimeout(r, 50); });

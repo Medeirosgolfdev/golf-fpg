@@ -17,6 +17,7 @@
  *   node scripts/build-course-players.js
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const ALIAS = require("./lib/course-aliases.cjs");
 
@@ -190,7 +191,7 @@ function main() {
     links: totalLinks,
     players,
   };
-  fs.writeFileSync(outPath, JSON.stringify(out));
+  writeAtomic(outPath, JSON.stringify(out));
   if (preservados) console.log(`Preservadas ${preservados} ligações de jogadores já não seguidos`);
   console.log(`Jogadores escaneados: ${scanned}`);
   console.log(`Campos PT com jogadores: ${Object.keys(players).length}`);

@@ -36,6 +36,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const REPO = path.resolve(__dirname, "..");
@@ -683,7 +684,7 @@ async function runPool(items, workerFn, concurrency) {
   // truncado a meio — se a escrita for interrompida, o ficheiro original fica
   // intacto e o .tmp é apenas descartado na próxima corrida.
   const tmp = OUT_FILE + ".tmp";
-  fs.writeFileSync(tmp, JSON.stringify(output, null, 2));
+  writeAtomic(tmp, JSON.stringify(output, null, 2));
   fs.renameSync(tmp, OUT_FILE);
   console.log(`[classif] \u2713 Gravado ${OUT_FILE}`);
   process.exit(0);

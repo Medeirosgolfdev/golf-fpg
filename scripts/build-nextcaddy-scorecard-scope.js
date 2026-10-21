@@ -26,6 +26,7 @@
  *   node scripts/build-nextcaddy-scorecard-scope.js --include 65641,71639 # força incluir estes no topo
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const DIR = path.resolve(__dirname, "../public/data/nextcaddy");
@@ -84,7 +85,7 @@ function main() {
   const picked = limit > 0 ? rows.slice(0, limit) : rows;
   const totMiss = picked.reduce((a, b) => a + b.missing, 0);
 
-  fs.writeFileSync(out, JSON.stringify({
+  writeAtomic(out, JSON.stringify({
     note: "nextcaddy tours com leaderboard+inscribedId mas roundScores em falta (gap desc)",
     totalBackfillable: rows.length,
     selected: picked.length,

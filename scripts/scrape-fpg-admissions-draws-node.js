@@ -47,6 +47,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { parseAdmissions, parseAdmissionsPt, parseDraw } = require("./fpg-admissions-draw-parser.js");
 const { lisbonCivilDayStr } = require("../lib/helpers");
@@ -987,7 +988,7 @@ async function buildAutoExtendedScope(manual, sinceDate = null) {
 
   // Escrita atómica (temp + rename) — evita truncate em interrupção.
   const _tmp = OUT_FILE + ".tmp";
-  fs.writeFileSync(_tmp, JSON.stringify(output, null, 2));
+  writeAtomic(_tmp, JSON.stringify(output, null, 2));
   fs.renameSync(_tmp, OUT_FILE);
   console.log(`[adm-draws] ✓ Gravado ${OUT_FILE}  (${tournaments.length} torneios, ${improved} melhorados)`);
   console.log(`[adm-draws] ✓ Backup em ${BACKUP_FILE}`);

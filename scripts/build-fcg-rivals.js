@@ -30,6 +30,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const REPO = path.resolve(__dirname, "..");
@@ -241,7 +242,7 @@ function build() {
     torneios: torneios,
   };
 
-  fs.writeFileSync(OUT_FILE, JSON.stringify(out, null, 0));
+  writeAtomic(OUT_FILE, JSON.stringify(out, null, 0));
   const kb = (fs.statSync(OUT_FILE).size / 1024).toFixed(1);
   console.log("[build] wrote", path.relative(REPO, OUT_FILE), "—", kb, "KB");
   console.log("[build] stats: games=" + totalGames, "categories=" + totalCategories, "entries=" + totalEntries, "uniqueLicenses=" + uniqueLicenses.size, "dobMatched=" + dobMatched + " (" + out.dobMatchedPct + "%)");

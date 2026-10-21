@@ -37,6 +37,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const ROOT = path.resolve(__dirname, "..");
 
@@ -151,7 +152,7 @@ for (const rel of (alvos.length ? alvos : ALVOS_POR_DEFEITO)) {
   totalOk += ok; totalFalha += falha;
   console.log(`  ${rel}`);
   console.log(`      ${ok} enriquecidos · ${jaTinha} ja tinham · ${falha} sem correspondencia unica`);
-  if (!DRY && ok > 0) fs.writeFileSync(abs, JSON.stringify(j, null, 2) + "\n");
+  if (!DRY && ok > 0) writeAtomic(abs, JSON.stringify(j, null, 2) + "\n");
 }
 
 console.log("");

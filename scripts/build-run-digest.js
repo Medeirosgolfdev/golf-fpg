@@ -29,6 +29,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { execFileSync } = require("child_process");
 
@@ -408,7 +409,7 @@ function main() {
     ? path.resolve(REPO, OUT)
     : path.join(PENDING_DIR, `${stamp}--${SOURCE}.json`);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
-  fs.writeFileSync(outPath, JSON.stringify(digest, null, 2) + "\n");
+  writeAtomic(outPath, JSON.stringify(digest, null, 2) + "\n");
   console.log(`[digest] escrito ${path.relative(REPO, outPath)}`);
 }
 

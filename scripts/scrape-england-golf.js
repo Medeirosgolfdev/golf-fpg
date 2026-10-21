@@ -39,6 +39,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const GG_DEFAULT = "https://www.golfgenius.com";
@@ -1381,7 +1382,7 @@ function parseArgs(argv) {
           continue;
         }
         const tmp = outPath + ".tmp";
-        fs.writeFileSync(tmp, JSON.stringify(f.data, null, 2), "utf-8");
+        writeAtomic(tmp, JSON.stringify(f.data, null, 2), "utf-8");
         fs.renameSync(tmp, outPath);
         console.log("   gravado " + f.filename + " (" + f.data.players.length + " jogadores, par=" + f.data.parTotal + ")");
         totalFiles++;

@@ -54,6 +54,7 @@
  *   node scripts/scrape-gjgl.js --concurrency 4          # paralelismo (default 3)
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -733,7 +734,7 @@ async function main() {
         }
       }
       if (changed) {
-        fs.writeFileSync(CATALOG_PATH, JSON.stringify(catalog, null, 2));
+        writeAtomic(CATALOG_PATH, JSON.stringify(catalog, null, 2));
         console.log("Catalog updated with " + Object.keys(tidMap).length + " tournamentids.");
       }
     }

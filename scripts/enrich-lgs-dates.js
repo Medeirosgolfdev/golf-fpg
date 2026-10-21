@@ -4,6 +4,7 @@
  * para popular meta.year e meta.dateIso.
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const https = require("https");
 
@@ -59,7 +60,7 @@ async function enrich(file) {
     if (year || dateIso) {
       d.meta.year = year;
       d.meta.dateIso = dateIso;
-      fs.writeFileSync(fp, JSON.stringify(d, null, 2));
+      writeAtomic(fp, JSON.stringify(d, null, 2));
       return { ok: true, year, dateIso };
     }
     return { ok: false };

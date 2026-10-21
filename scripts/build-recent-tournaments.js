@@ -28,6 +28,7 @@
  *   node scripts/build-recent-tournaments.js --all-origins # inclui Indiv/EDS/…
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const ROOT = path.join(__dirname, "..");
@@ -355,7 +356,7 @@ function main() {
     tournaments: out,
   };
 
-  fs.writeFileSync(outPath, JSON.stringify(doc) + "\n");
+  writeAtomic(outPath, JSON.stringify(doc) + "\n");
   const sizeMB = (fs.statSync(outPath).size / 1e6).toFixed(1);
 
   // ── Scope de scrape: torneios com >5 nossos AINDA por scrapear ──────────
@@ -370,7 +371,7 @@ function main() {
     .sort((a, b) => b.nOurs - a.nOurs)
     .map((t) => ({ tclub: String(t.ccode).padStart(3, "0"), tcode: String(t.tcode), name: t.name, nOurs: t.nOurs }));
   const scopePath = path.join(DATA_DIR, "recent-tournaments-scrape-scope.json");
-  fs.writeFileSync(scopePath, JSON.stringify(scrapeScope, null, 1) + "\n");
+  writeAtomic(scopePath, JSON.stringify(scrapeScope, null, 1) + "\n");
 
   console.log(`Jogadores lidos: ${scanned} (parseErr ${parseErr})`);
   console.log(`Torneios reconstruídos (desde ${SINCE}, ≥${MIN_OURS} nossos): ${out.length}`);

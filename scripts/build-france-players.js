@@ -27,6 +27,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { listGgTournaments, buildNameMaps, matchGgName } = require("./lib/ffgolf-gg");
 const { ffgEscalaoCanonico, ffgEscalaoMaisNovo } = require("./lib/ffg-escalao.cjs");
@@ -354,7 +355,7 @@ for (const gg of ggTourns) {
 
 console.log(`GolfGenius: ${ggTourns.length} torneios — ${nGgCounted} contados, ${nGgTwins} gémeos do portal (ignorados), ${nGgMatched} jogadores matched, ${nGgUnmatched} sem match`);
 
-fs.writeFileSync(OUT_TWINS, JSON.stringify({
+writeAtomic(OUT_TWINS, JSON.stringify({
   generatedAt: new Date().toISOString(),
   source: "scripts/build-france-players.js",
   twins,
@@ -396,7 +397,7 @@ const out = {
   byName,
   byLicense,
 };
-fs.writeFileSync(OUT, JSON.stringify(out));
+writeAtomic(OUT, JSON.stringify(out));
 console.log(`Categoria resolvida para ${players.size - nSemCat}/${players.size} jogadores (${nSemCat} sem sinal de idade em nenhuma prova).`);
 console.log(`${OUT} escrito (${(fs.statSync(OUT).size / 1024).toFixed(1)} KB).`);
 
@@ -421,7 +422,7 @@ for (const t of tourns) {
   delete t.trnId; // já está no `id` (`ffgres:{trnId}`)
 }
 
-fs.writeFileSync(OUT_TOURNS, JSON.stringify({
+writeAtomic(OUT_TOURNS, JSON.stringify({
   generatedAt: new Date().toISOString(),
   source: "scripts/build-france-players.js",
   totalPlayers: Object.keys(tournsByLicense).length,

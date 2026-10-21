@@ -35,6 +35,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const DIRECTORY_URL =
@@ -200,7 +201,7 @@ async function discover() {
     );
   }
   if (args.json) {
-    fs.writeFileSync(args.json, JSON.stringify(events, null, 2), "utf-8");
+    writeAtomic(args.json, JSON.stringify(events, null, 2), "utf-8");
     console.log("\nlista completa -> " + args.json);
   }
   process.exit(missing.length ? 0 : 2);

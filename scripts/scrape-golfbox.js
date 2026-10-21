@@ -25,6 +25,7 @@
  */
 'use strict';
 const fs = require('fs');
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require('path');
 const https = require('https');
 
@@ -48,7 +49,7 @@ function slugify(s) {
 
 function writeJsonAtomic(filePath, data) {
   const tmp = filePath + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify(data, null, 2), 'utf8');
+  writeAtomic(tmp, JSON.stringify(data, null, 2), 'utf8');
   fs.renameSync(tmp, filePath);
 }
 

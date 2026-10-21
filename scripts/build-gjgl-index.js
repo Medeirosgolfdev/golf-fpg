@@ -15,6 +15,7 @@
  *   node scripts/build-gjgl-index.js
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const DATA_DIR = path.join(__dirname, "..", "public", "data");
@@ -77,7 +78,7 @@ function main() {
   }
 
   const out = { generated_at: new Date().toISOString(), tournaments };
-  fs.writeFileSync(OUT, JSON.stringify(out));
+  writeAtomic(OUT, JSON.stringify(out));
   console.log(`gjgl-index.json escrito: ${ok} torneios → ${OUT}`);
 }
 

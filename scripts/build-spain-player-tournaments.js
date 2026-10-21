@@ -45,6 +45,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
@@ -425,7 +426,7 @@ for (const lic of allLics) {
   nRows += rows.length;
 }
 
-fs.writeFileSync(OUT, JSON.stringify({
+writeAtomic(OUT, JSON.stringify({
   generatedAt: new Date().toISOString(),
   source: "scripts/build-spain-player-tournaments.js",
   totalPlayers: Object.keys(byLicencia).length,

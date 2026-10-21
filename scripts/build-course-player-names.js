@@ -29,6 +29,7 @@
  *   node scripts/build-course-player-names.js
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const DATA = path.join(__dirname, "..", "public", "data");
@@ -161,7 +162,7 @@ function main() {
   };
 
   const outPath = path.join(DATA, "course-player-names.json");
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 0) + "\n");
+  writeAtomic(outPath, JSON.stringify(out, null, 0) + "\n");
 
   console.log(`Códigos referenciados: ${codes.size}`);
   console.log(`Resolvidos: ${Object.keys(ordered).length} | Não resolvidos: ${unresolved.length}`);

@@ -14,6 +14,7 @@
  */
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const https = require("https");
 
@@ -187,7 +188,7 @@ async function main() {
         if (!r.ok) { fail++; continue; }
         existing.horarios = r.rounds;
         existing.horariosScrapedAt = new Date().toISOString();
-        fs.writeFileSync(outFile, JSON.stringify(existing, null, 2), "utf-8");
+        writeAtomic(outFile, JSON.stringify(existing, null, 2), "utf-8");
         ok++;
         if (r.rounds.length > 0 && r.rounds.some(rd => rd.players.length > 0)) withData++;
         const sample = r.rounds.length > 0 ? `${r.rounds.length} rondas, ${r.rounds[0].players.length} jog R1` : "vazio";

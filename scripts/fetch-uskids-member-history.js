@@ -32,6 +32,7 @@
  */
 
 const fs   = require('fs');
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require('path');
 const { chromium } = require('playwright');
 const { mergeTournamentMaps } = require('./lib/uskids-merge-guard');
@@ -261,7 +262,7 @@ function loadSkipped() {
 }
 function saveSkipped(jogadores) {
   const tmp = SKIPPED_PATH + '.tmp';
-  fs.writeFileSync(tmp, JSON.stringify({ versao: SKIPPED_VERSAO, gerado_em: new Date().toISOString(), jogadores }));
+  writeAtomic(tmp, JSON.stringify({ versao: SKIPPED_VERSAO, gerado_em: new Date().toISOString(), jogadores }));
   fs.renameSync(tmp, SKIPPED_PATH);
 }
 
@@ -416,7 +417,7 @@ function loadFlightCache() {
 function saveFlightCache(fc) {
   try {
     fc.gerado_em = new Date().toISOString();
-    fs.writeFileSync(FLIGHT_CACHE, JSON.stringify(fc));
+    writeAtomic(FLIGHT_CACHE, JSON.stringify(fc));
     console.log(`  💾 flight-cache gravada: ${Object.keys(fc.torneios || {}).length} torneios`);
   } catch (e) {
     console.warn(`  ⚠️ falha ao gravar flight-cache: ${e.message}`);

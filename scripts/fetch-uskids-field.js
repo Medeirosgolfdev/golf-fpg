@@ -11,6 +11,7 @@
  */
 
 const fs   = require('fs');
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require('path');
 const { chromium } = require('playwright');
 const { extrairAncoras, fundirAncoras, aplicarDatasInscricao } = require('./lib/uskids-reg-dates');
@@ -485,7 +486,7 @@ async function descobrirTorneios() {
   cache.dias_sem_avanco     = idade(cache.fronteira_avancou_em);
 
   fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
+  writeAtomic(CACHE_PATH, JSON.stringify(cache, null, 2), 'utf8');
   cat.gerado_em = cache.gerado_em;
   gravarCatalogo(cat);
 
@@ -722,7 +723,7 @@ async function main() {
     try { ancoras = JSON.parse(fs.readFileSync(ANCHORS, 'utf8')).ancoras || []; } catch {}
     ancoras = fundirAncoras(ancoras, extrairAncoras(resultados));
     const st = aplicarDatasInscricao(resultados, ancoras);
-    fs.writeFileSync(ANCHORS, JSON.stringify({
+    writeAtomic(ANCHORS, JSON.stringify({
       gerado_em: new Date().toISOString(), total: ancoras.length, ancoras,
     }, null, 2), 'utf8');
     console.log(`
@@ -763,7 +764,7 @@ async function main() {
     for (const t of final) for (const e of (t.escaloes || [])) { escNovo++; jogNovo += (e.jogadores || []).length; }
     const novo = { esc: escNovo, jog: jogNovo };
 
-    fs.writeFileSync(OUTPUT, JSON.stringify({
+    writeAtomic(OUTPUT, JSON.stringify({
       // Um --only não é um run completo: o cabeçalho continua o do último run
       // inteiro (é o que o canário lê); a data de cada torneio vive no próprio.
       gerado_em: only ? (anterior.gerado_em || new Date().toISOString()) : new Date().toISOString(),

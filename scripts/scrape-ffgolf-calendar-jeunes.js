@@ -34,6 +34,7 @@
  * Exit codes: 0 = novidade (portal gravado OU catálogo GG alterado), 2 = nada novo, 1 = erro.
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const main = require("./scrape-ffgolf-resultats.js"); // httpRequest/parseDetailsHtml/enrichWithLinks
 
@@ -137,7 +138,7 @@ function loadCatalog() {
 }
 function saveCatalog(cat) {
   const wrap = Array.isArray(cat.wrap) ? cat.list : { ...cat.wrap, tournaments: cat.list, total: cat.list.length, with_gg: cat.list.filter((c) => c.gg_page).length, updated_at: new Date().toISOString() };
-  fs.writeFileSync(CATALOG_PATH, JSON.stringify(wrap, null, 2), "utf-8");
+  writeAtomic(CATALOG_PATH, JSON.stringify(wrap, null, 2), "utf-8");
 }
 /** Adiciona/actualiza uma entrada GG sem apagar as existentes. Devolve true se mudou. */
 function upsertCatalogGG(cat, { year, section, slug, title, ggKind, ggId }) {
@@ -215,7 +216,7 @@ function upsertCatalogGG(cat, { year, section, slug, title, ggKind, ggId }) {
         date: (d.start_date || "").slice(0, 10).split("-").reverse().join("/"),
         details, typeCompetition: TYPE_GP_JEUNES, ligue,
       });
-      fs.writeFileSync(outPath, JSON.stringify(record, null, 2), "utf-8");
+      writeAtomic(outPath, JSON.stringify(record, null, 2), "utf-8");
       savedPortal++;
       console.log(`💾 portal  ${TYPE_GP_JEUNES}-${ligue}-${sink.trnId}  ${(d.name || "").trim().slice(0, 40)}  (${nPlayers} jog)`);
     } catch (e) {

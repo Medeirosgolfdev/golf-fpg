@@ -17,6 +17,7 @@
  *   - lgsId em `lgsSuppressed`  → versão rfegolf/mitarjeta é mais rica; remove lgs{id}
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
@@ -429,6 +430,6 @@ for (const lgsId of Object.keys(twinsData.lgsSuppressed || {})) {
 
 out.total = Object.keys(out.torneios).length;
 out.dedupedPlayers = 0;
-fs.writeFileSync(OUT, JSON.stringify(out));
+writeAtomic(OUT, JSON.stringify(out));
 const size = (fs.statSync(OUT).size / 1024 / 1024).toFixed(2);
 console.log("Built rfegolf-rivals: LGS " + lgsKept + "/" + (lgsKept + lgsSkipped) + " (-" + lgsSuppressedRemoved + " suppressed), NC " + ncKept + " files (" + ncEntriesAdded + " cats), RFEG " + rfKept + " files (" + rfTwinned + " twins skipped) -> " + out.total + " torneios -> " + OUT + " (" + size + " MB)");

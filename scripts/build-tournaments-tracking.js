@@ -2,6 +2,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const REPO = path.resolve(__dirname, "..");
@@ -242,7 +243,7 @@ function main() {
     tournaments,
   };
 
-  fs.writeFileSync(OUT_FILE, JSON.stringify(output, null, 2));
+  writeAtomic(OUT_FILE, JSON.stringify(output, null, 2));
   console.log("[tracking] Gravado " + path.relative(REPO, OUT_FILE));
   console.log("[tracking] Resumo:");
   Object.entries(summary).forEach(([k, v]) => { if (v > 0) console.log("   " + k.padEnd(20) + " " + v); });

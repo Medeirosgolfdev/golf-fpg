@@ -26,6 +26,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const FFGOLF_BASE = "https://www.ffgolf.org/golf-amateur/jeunes/calendrier-resultats";
@@ -194,7 +195,7 @@ async function getGgIdsForTournament(page, section, year, slug) {
     (b.year - a.year) || String(a.section).localeCompare(b.section) || String(a.slug).localeCompare(b.slug));
   const years = [...new Set([...(existing.years || []), ...args.years])].sort();
 
-  fs.writeFileSync(
+  writeAtomic(
     outPath,
     JSON.stringify(
       {

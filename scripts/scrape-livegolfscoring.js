@@ -21,6 +21,7 @@
  */
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const https = require("https");
 const { lgsCountryToIso } = require("./lib/lgs-country.js");
@@ -693,7 +694,7 @@ async function main() {
               }
             }
           } catch { /* ficheiro anterior ilegível — segue com o novo */ }
-          fs.writeFileSync(out, JSON.stringify(result, null, pretty ? 2 : 0));
+          writeAtomic(out, JSON.stringify(result, null, pretty ? 2 : 0));
           ok++;
           const nP = result.rounds.reduce((a, r) => a + (r.players?.length || 0), 0);
           const mt = result.course ? `, ${result.course.metersTotal}m` : "";

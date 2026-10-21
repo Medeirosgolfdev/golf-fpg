@@ -34,6 +34,7 @@
 "use strict";
 
 const fs   = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { loadCookieHeader } = require("./lib/cookies");
 const { lisbonCivilDayStr } = require("../lib/helpers");
@@ -419,7 +420,7 @@ async function main() {
   }
 
   console.log(`→ A gravar ${outPath}...`);
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
+  writeAtomic(outPath, JSON.stringify(out, null, 2), "utf8");
   const sizeKb = (fs.statSync(outPath).size / 1024).toFixed(0);
   console.log(`✓ Gravado: ${outPath} (${sizeKb} KB)`);
   process.exit(0);

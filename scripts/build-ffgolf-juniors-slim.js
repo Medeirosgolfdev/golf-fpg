@@ -9,6 +9,7 @@
  * Output ~150-300 KB consolidando ~600 séries × ~30 jogadores cada.
  */
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..", "public", "data");
@@ -192,7 +193,7 @@ for (const t of tournaments) {
   }
 }
 
-fs.writeFileSync(OUT, JSON.stringify(out, null, 0));
+writeAtomic(OUT, JSON.stringify(out, null, 0));
 const sizeKb = Math.round(fs.statSync(OUT).size / 1024);
 console.log(`[ffgolf-slim] processed=${processed} errors=${errors} series-kept=${kept}`);
 console.log(`[ffgolf-slim] tournaments saved: ${out.tournaments.length}`);

@@ -38,6 +38,7 @@
  */
 "use strict";
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const os = require("os");
 const { execFileSync } = require("child_process");
@@ -51,7 +52,7 @@ const USER = process.env.DRAW_MAIL_USER || "";
 const PASS = process.env.DRAW_MAIL_PASS || "";
 if (!USER || !PASS) {
   console.log("[mail] DRAW_MAIL_USER/DRAW_MAIL_PASS não definidos — nada a fazer.");
-  fs.writeFileSync(RESULT, JSON.stringify({ candidates: 0, inserted: [], failed: [], summary: "sem credenciais" }));
+  writeAtomic(RESULT, JSON.stringify({ candidates: 0, inserted: [], failed: [], summary: "sem credenciais" }));
   process.exit(2);
 }
 const SENDERS = (process.env.DRAW_MAIL_SENDERS || USER)
@@ -105,7 +106,7 @@ const isDrawPdf = (att, subject) =>
 
     console.log(`[mail] candidatos novos: ${candidates.length}${candidates.length ? " — " + candidates.map(c => `"${c.subject}" (${c.date})`).join(" · ") : ""}`);
     if (CHECK_ONLY || candidates.length === 0) {
-      fs.writeFileSync(RESULT, JSON.stringify({ candidates: candidates.length, inserted: [], failed: [], summary: "check-only" }));
+      writeAtomic(RESULT, JSON.stringify({ candidates: candidates.length, inserted: [], failed: [], summary: "check-only" }));
       process.exit(candidates.length ? 0 : 2);
     }
 
@@ -141,14 +142,14 @@ const isDrawPdf = (att, subject) =>
 
     // memória do que já foi visto (committada pelo workflow no MESMO commit
     // que os dados — se o push falhar, nada fica marcado e repete-se)
-    fs.writeFileSync(PROCESSED + ".tmp", JSON.stringify(processed.slice(-200), null, 2));
+    writeAtomic(PROCESSED + ".tmp", JSON.stringify(processed.slice(-200), null, 2));
     fs.renameSync(PROCESSED + ".tmp", PROCESSED);
 
     const summary = [
       ...inserted.map((c) => `✅ "${c.subject}": ${c.results.filter(r => r.ok).map(r => `${r.file} → ${r.placeholder}`).join(", ")}`),
       ...failed.map((c) => `❌ "${c.subject}": ${c.results.map(r => `${r.file} — ${String(r.out).trim().split("\n").pop()}`).join("; ")} (tratar manualmente)`),
     ].join("\n");
-    fs.writeFileSync(RESULT, JSON.stringify({ candidates: candidates.length, inserted, failed, summary }, null, 2));
+    writeAtomic(RESULT, JSON.stringify({ candidates: candidates.length, inserted, failed, summary }, null, 2));
     console.log("[mail] sumário:\n" + summary);
     process.exit(inserted.length ? 0 : failed.length ? 3 : 2);
   } finally {

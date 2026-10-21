@@ -34,6 +34,7 @@
 "use strict";
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const https = require("https");
 
@@ -373,7 +374,7 @@ async function main() {
     }
     try {
       const out = await scrapeGame(gameId);
-      fs.writeFileSync(outFile, JSON.stringify(out, null, 2));
+      writeAtomic(outFile, JSON.stringify(out, null, 2));
       const kb = (fs.statSync(outFile).size / 1024).toFixed(1);
       console.log("[fcg] " + gameId + " ─ wrote " + path.relative(REPO, outFile) + " (" + kb + " KB)");
       okCount++;

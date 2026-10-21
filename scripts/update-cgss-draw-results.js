@@ -56,6 +56,7 @@ const { loadCookieHeader } = require("./lib/cookies");
 const { Sessao, criarSessaoLista } = require("./lib/fpg-session");
 const { lisbonCivilDayStr } = require("../lib/helpers.js");
 const { spliceDrawTcode } = require("./lib/draw-splice");
+const atomic = require("./lib/atomic-write");
 
 const REPO = path.resolve(__dirname, "..");
 const ADM = path.join(REPO, "public", "data", "fpg-admissions-draws.json");
@@ -509,10 +510,9 @@ async function scrapeTournament(host, tcode) {
   };
 }
 
+// Atómico COM fsync (o tmp+rename sem fsync podia deixar o ficheiro truncado).
 function writeAtomic(file, obj) {
-  const tmp = file + ".tmp";
-  fs.writeFileSync(tmp, JSON.stringify(obj, null, 2));
-  fs.renameSync(tmp, file);
+  atomic.writeJsonAtomic(file, obj);
 }
 
 /* ══ Main ════════════════════════════════════════════════════════════════ */
@@ -640,9 +640,7 @@ function writeAtomic(file, obj) {
       const alvo = esperado.tournaments.find(t => String(t.ccode) === CCODE && String(t.tcode) === PLACEHOLDER);
       alvo.tcode = scraped.tcode; alvo.drawOnly = false;
       if (JSON.stringify(JSON.parse(splice)) !== JSON.stringify(esperado)) throw new Error("splice divergiu do esperado");
-      const tmp = CGSS + ".tmp";
-      fs.writeFileSync(tmp, splice);
-      fs.renameSync(tmp, CGSS);
+      atomic.writeAtomic(CGSS, splice, "utf-8");
     } else {
       // Só aqui se re-serializa: houve duplicado a remover (o `total` muda) ou
       // o ficheiro não tem a forma esperada. O diff fica feio, mas é correcto.

@@ -35,6 +35,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
 const { preserveTeesheet } = require("./lib/ffgolf-teesheet-preserve.js");
@@ -1451,7 +1452,7 @@ function parseArgs(argv) {
         // Atomic write: escrever para .tmp e renomear no fim. Evita ficheiros truncados
         // se o processo for interrompido (Ctrl+C) durante a escrita.
         const tmpPath = outPath + ".tmp";
-        fs.writeFileSync(tmpPath, JSON.stringify(result, null, 2), "utf-8");
+        writeAtomic(tmpPath, JSON.stringify(result, null, 2), "utf-8");
         fs.renameSync(tmpPath, outPath);
         console.log("   gravado " + outPath + " (" + result.players.length + " jogadores, " + (hasMeters ? "metros OK" : "sem metros") + ")");
         ok++;

@@ -28,6 +28,7 @@
  */
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 
 // Reusar funções do scraper principal (que agora exporta as funções via module.exports)
@@ -174,7 +175,7 @@ console.log(`   Max: ${maxArg === Infinity ? "∞" : maxArg}`);
                 summary.totalSkipped++;
                 continue;
               }
-              fs.writeFileSync(outPath, JSON.stringify(enriched, null, 2), "utf-8");
+              writeAtomic(outPath, JSON.stringify(enriched, null, 2), "utf-8");
               const totalPlayers = details.series.reduce((s, x) => s + x.players.length, 0);
               const trnDate = t.date || "—";
               console.log(`   💾 [${tag}] ${trnDate} ${t.name.slice(0, 45)}: ${details.series.length}s/${totalPlayers}j`);

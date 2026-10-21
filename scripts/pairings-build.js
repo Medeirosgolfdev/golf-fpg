@@ -13,6 +13,7 @@
 // SKIP_CCODES = {"982"} — FPG reatribuiu este ccode (era Madeira → agora Açores)
 
 const fs = require("fs");
+const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { lisbonCivilDayStr } = require("../lib/helpers");
 
@@ -886,7 +887,7 @@ function main() {
   };
 
   const outPath = path.join(DATA, "manuel-pairings.json");
-  fs.writeFileSync(outPath, JSON.stringify(out, null, 2), "utf8");
+  writeAtomic(outPath, JSON.stringify(out, null, 2), "utf8");
   console.log(`[pairings-build] escrito: ${outPath}`);
   console.log(`  FPG: ${fpgPairings.length}/${manuelRondasTotal} rondas (${Math.round(100*fpgPairings.length/manuelRondasTotal)}%), ${fpgTorneiosComDraw.size}/${manuelTorneiosTotal.size} torneios`);
   console.log(`  USKids: ${uskidsTotal}/${uskidsRondasEsperadas} rondas (${Math.round(100*uskidsTotal/uskidsRondasEsperadas)}%), ${cobertura.uskids.torneiosComDraw}/${uskidsTorneiosEsperados.size} torneios`);
