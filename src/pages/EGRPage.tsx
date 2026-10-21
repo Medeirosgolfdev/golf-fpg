@@ -136,7 +136,7 @@ function EGRList({ ranking }: { ranking: EgrRanking }) {
         siteLabel="europeangolfrankings.com" siteTitle="Ranking cross-circuito europeu. Sem data de nascimento (só escalão actual)." />}
       rowKey={(p) => p.id} playerHref={(p) => `/egr/jogador/${p.id}`}
       defaultSort="points" defaultDir="desc"
-      sexOptions={[["", "M + F"], ["M", "♂ Rapazes"], ["F", "♀ Raparigas"]]}
+      sexOptions={[["", "M + F"], ["M", "Rapazes"], ["F", "Raparigas"]]}
       ageGroupOf={(p) => p.ageGroup} isPt={(p) => p.country === "Portugal"} />
   );
 }
@@ -173,7 +173,7 @@ function EGRDetail({ ranking, id }: { ranking: EgrRanking; id: string }) {
         { label: "País", value: player.country || "—" },
         ...(player.birthYear ? [{ label: "Nascimento", value: String(player.birthYear), title: "Ano de nascimento via GolfBox (o EGR não expõe DOB)" }] : []),
         ...(club ? [{ label: "Clube", value: club }] : []),
-        { label: "Ranking EGR", value: player.egrRankSex != null ? `#${player.egrRankSex} ${player.sex === "F" ? "♀" : "♂"}` : "—" },
+        { label: "Ranking EGR", value: player.egrRankSex != null ? <>#{player.egrRankSex} <SexBadge sex={player.sex === "F" ? "F" : "M"} /></> : "—" },
         { label: "Pontos", value: num(player.egrPoints, 0) },
         { label: "Média", value: num(player.avgScore) },
         { label: "Média vs CR", value: num(player.avgToCR), title: "Média do score menos o CR do campo (nível normalizado)" },

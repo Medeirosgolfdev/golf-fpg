@@ -70,7 +70,6 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
   return [{
     key: "main",
     escalao: e.eventType || "—",
-    tabLabel: e.eventType ? `${e.eventType}${e.sex === "F" ? " ♀" : e.sex === "M" ? " ♂" : ""}` : undefined,
     sex: (e.sex || undefined) as CircuitSex | undefined,
     // Resumo comum das fontes só com totais (14/10/2026). O WAGR não publica o
     // par do campo (sem ±par) e só traz quem pontuou.

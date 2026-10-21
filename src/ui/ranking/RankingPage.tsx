@@ -12,6 +12,7 @@
  */
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import SexBadge from "../SexBadge";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { gf, flagOrEmpty } from "../../utils/flagUtils";
 import { norm } from "../../utils/format";
@@ -279,14 +280,14 @@ export function RankingList<P extends RankedPlayer>({ players, title, meta, cols
   );
 }
 
-/** Meta da toolbar: totais ♂/♀, extras e o link do site oficial. */
+/** Meta da toolbar: totais por sexo, extras e o link do site oficial. */
 export function RankingMeta({ totalMen, totalWomen, extra, site, siteLabel, siteTitle }: {
   totalMen: number; totalWomen: number; extra?: React.ReactNode; site: string; siteLabel: string; siteTitle?: string;
 }) {
   return (
     <>
       <ToolbarSep />
-      <ToolbarMeta>{totalMen.toLocaleString("pt")} ♂ · {totalWomen.toLocaleString("pt")} ♀</ToolbarMeta>
+      <ToolbarMeta>{totalMen.toLocaleString("pt")} <SexBadge sex="M" /> · {totalWomen.toLocaleString("pt")} <SexBadge sex="F" /></ToolbarMeta>
       {extra && <><ToolbarSep /><ToolbarMeta>{extra}</ToolbarMeta></>}
       <ToolbarSep />
       <ToolbarMeta><a href={site} target="_blank" rel="noopener noreferrer" title={siteTitle}>{siteLabel} ↗</a></ToolbarMeta>
@@ -330,7 +331,7 @@ export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, ev
   /** Mensagem quando o jogador não está no ranking (e nada mais se mostra). */
   notFound?: string;
   header?: React.ReactNode;
-  stats?: { label: string; value: string; title?: string }[];
+  stats?: { label: string; value: React.ReactNode; title?: string }[];
   eventsTitle?: string;
   /** null enquanto carrega. */
   events?: unknown[] | null;
@@ -355,7 +356,7 @@ export function RankingDetail({ backTo, notFound, header, stats, eventsTitle, ev
   );
 }
 
-function Stat({ label, value, title }: { label: string; value: string; title?: string }) {
+function Stat({ label, value, title }: { label: string; value: React.ReactNode; title?: string }) {
   return (
     <div title={title} style={{ display: "flex", flexDirection: "column" }}>
       <span style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>{label}</span>
