@@ -219,7 +219,8 @@ const DELAY_ORDEM = 1200; // nomesPelaOrdem: páginas de flight_players de todas
 // Regra do projecto: um pedido de cada vez e parar à primeira recusa. Antes
 // o script continuava a pedir depois do 429 (5.000 erros seguidos).
 let recusado = false;
-const ehRecusa = (err) => /HTTP 429|Too many requests/i.test(String(err?.message || err));
+// 403/503 também são recusa (mesma regra do lib/uskids-recusa.js).
+const ehRecusa = (err) => /HTTP (403|429|503)|Too many requests|recusa da fonte/i.test(String(err?.message || err));
 
 // ── Jogadores já vistos e deixados de fora (raparigas / fora das regras) ──
 // Sem isto, cada corrida voltava a pedir o histórico de TODOS os que ficaram
@@ -589,7 +590,7 @@ function writeSharded(cacheObj) {
     const outPath = path.join(DIR, `uskids-member-history-${nnn}.json`);
     // Sem indentação — ficheiros de cache, não precisam de ser human-readable.
     const str = JSON.stringify({ gerado_em: geradoEm, torneios, jogadores: slice });
-    fs.writeFileSync(outPath, str, 'utf8');
+    writeAtomic(outPath, str, 'utf8');
     written.push({ path: outPath, size: Buffer.byteLength(str, 'utf8') });
     slice = {};
     sliceSize = 0;
