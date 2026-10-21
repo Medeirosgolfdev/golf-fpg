@@ -8,7 +8,7 @@
 import { displayName, ageAtDate, todayIso } from "../../utils/format";
 import { flag } from "../../utils/flagUtils";
 import { formatPlayerName } from "../../utils/playerUtils";
-import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "../fpgTypes";
+import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
@@ -452,14 +452,17 @@ export function ncToFPGTournament(
  * Converte RFEGolf microsite results (PDF parsed) em FPGTournament. Sem hbh,
  * apenas totais por ronda — IntlTournView mostra "Resumo" mas as tabs Rn
  * mostram só totais. Útil para uniformidade visual. */
+/** Regras do RFEGolf (PDF) que esperam decisão: par 4 por buraco (a fonte não tem par). */
+const RFEGOLF_OPTS = { inventedPar: PAR_INVENTADO };
+
 export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGTournament | null {
   const results = (detail.results || []).filter(r => r.players && r.players.length > 0);
   if (results.length === 0) return null;
   // Concatenar todos os groups de resultados (categorias)
   const allRows = results.flatMap(g => g.players.map(p => ({ ...p, _label: g.label })));
   const nRounds = Math.max(...results.map(r => r.nRounds || 0), 1);
-  const par18 = new Array(18).fill(4);  // RFEGolf não expõe par
-  const parTotal = par18.reduce((a, b) => a + b, 0);
+  // RFEGolf não expõe par → par inventado (opção explícita, decisão pendente).
+  const par18 = parOrInvented(null, 18, RFEGOLF_OPTS.inventedPar);
 
   const norm = normEs;
   const lookupByName: Record<string, DobLookupEntry> = {};
@@ -477,7 +480,7 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
   }
 
   const dateRef = detail.meta.dateStart || null;
-  const players: FPGPlayer[] = allRows.map((p, idx) => {
+  const players: IntlPlayerIn[] = allRows.map((p, idx): IntlPlayerIn => {
     const nm = norm(p.name || "");
     const ins = insByName[nm];
     const e = lookupByName[nm];
@@ -485,56 +488,42 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
     // Escalão ES: preferir a categoria oficial do inscrito (Alevín/Infantil/…),
     // senão calcular pela DOB à data do torneio.
     const subN = escaloEsForPlayer(ins?.catEdad, dobStr, dateRef);
-    const hcpExact = (typeof ins?.hcp === "number") ? ins.hcp : null;
-    const roundScores: FPGRoundScore[] = (p.rounds || [])
-      .map((g, i) => ({
-        round: i + 1,
-        gross: g,
-        scores: [],
-        pars: par18,
-        si: [],
-        meters: [],
-        teeName: undefined,
-      }))
-      .filter(r => r.gross != null && r.gross > 0);
-    const incomplete = roundScores.length < nRounds;
+    const rounds: IntlRoundIn[] = (p.rounds || [])
+      .map((g, i) => ({ round: i + 1, gross: g, scores: [] }))
+      .filter((r) => r.gross != null && r.gross > 0);
     return {
-      scoreId: `rfeg-${detail.compId}-${idx}`,
+      id: `rfeg-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: formatPlayerName(p.name || ""),
       club: ins?.club ? displayName(ins.club) : (e?.club ? displayName(e.club) : "—"),
-      fed: ins?.licencia || e?.licencia || undefined,
-      fedCode: ins?.licencia || e?.licencia || undefined,
-      grossTotal: p.total ?? null,
+      total: p.total ?? null,
       toPar: p.toPar ?? null,
-      escalao: subN,
-      hcpExact,
-      dob: ins?.dob || e?.dob || undefined,
-      nholes: 18,
-      parTotal,
+      rounds,
       scores: [],
-      par: par18,
-      si: [],
-      meters: [],
-      roundScores,
-      _wd: incomplete,
-      _roundsPlayed: roundScores.length,
-    } as FPGPlayer;
+      isPortuguese: null,
+      extra: {
+        fed: ins?.licencia || e?.licencia || undefined,
+        fedCode: ins?.licencia || e?.licencia || undefined,
+        escalao: subN,
+        // HCP do inscrito (null quando não há — tal como vinha).
+        hcpExact: (typeof ins?.hcp === "number") ? ins.hcp : null,
+        dob: ins?.dob || e?.dob || undefined,
+      },
+    };
   });
 
-  return {
-    name: detail.meta.name || `RFEGolf ${detail.compId}`,
-    tcode: String(detail.compId),
-    date: detail.meta.dateStart || "",
-    campo: detail.meta.course || "",
-    rounds: nRounds,
-    playerCount: players.length,
+  return buildFPGTournament(
+    { name: detail.meta.name || `RFEGolf ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: nRounds },
+    { par: par18, si: [], meters: [], holes: 18 },
     players,
-    // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
-    // hole-by-hole (scores/par/si/meters vazios). Marca para o IntlTournView NÃO
-    // mostrar a tab "📋 Scorecards" (grelha vazia contra par-72 falso = parece partido).
-    _noHbh: true,
-  } as FPGTournament;
+    {
+      keepNoRounds: true, raw: true, ...RFEGOLF_OPTS,
+      // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
+      // hole-by-hole (scores/par/si/meters vazios). Marca para o IntlTournView NÃO
+      // mostrar a tab "📋 Scorecards" (grelha vazia contra par-72 falso = parece partido).
+      extra: { _noHbh: true },
+    },
+  );
 }
 
 /* ── mitarjetaToFPGTournament ───────────────────────────────────
