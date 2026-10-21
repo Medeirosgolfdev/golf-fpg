@@ -562,15 +562,3 @@ async function _buildAutoRivalsInternal(
   onUpdate?.(players);
   return players;
 }
-
-// ═════════════════════════════════════════════════════════════════════
-// Stubs para process* — alguns componentes podem ainda importar; devolvem
-// [] silenciosamente. Manter para compat até refactor completo.
-// ═════════════════════════════════════════════════════════════════════
-
-export function mergeInto(_map: Map<string, AutoRivalPlayer>, _players: AutoRivalPlayer[], _forceTids?: ReadonlySet<string>): void {}
-export function processWjgc(_data: unknown, _tid: string): AutoRivalPlayer[] { return []; }
-export function processManuelOverrides(): AutoRivalPlayer[] { return []; }
-export function processUskidsCompleto(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processMemberHistory(_data: unknown): AutoRivalPlayer[] { return []; }
-export function processFpgJuniorTourns(_data: unknown): AutoRivalPlayer[] { return []; }
