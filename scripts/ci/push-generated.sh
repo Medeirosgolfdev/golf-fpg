@@ -30,7 +30,7 @@
 #
 # Uso:
 #   bash scripts/ci/push-generated.sh -m "mensagem" \
-#        [-f família]... (agregador|major|tracking|ffgolf — ver family()) \
+#        [-f família]... (agregador|major|tracking|ffgolf|pairings|simulador) \
 #        [-g 'pathspec-gerado']... [-r 'comando de regeneração']... \
 #        [-o 'pathspec-ours']... [-n tentativas] [-b branch] \
 #        -- pathspec [pathspec...]
@@ -60,6 +60,8 @@ usage() { sed -n '2,40p' "$0" >&2; exit 64; }
 #   -f major     → catálogo MAJOR
 #   -f tracking  → fpg-tournaments-tracking.json
 #   -f ffgolf    → derivados FFG (índice, slim, roster FR)
+#   -f pairings  → manuel-pairings.json (/draws)
+#   -f simulador → simulador-players.json (/simulador)
 family() {
   case "$1" in
     agregador)
@@ -80,6 +82,14 @@ family() {
       REGEN+=('node scripts/build-ffgolf-resultats-index.js'
               'node scripts/build-ffgolf-juniors-slim.js'
               'node scripts/build-france-players.js') ;;
+    simulador)
+      # Escrito pelo update-drive e pelo update-federados (Drive + cadastro).
+      GEN+=('public/data/simulador-players.json')
+      REGEN+=('node scripts/build-simulador-players.js') ;;
+    pairings)
+      # Se falhar, fica a versão do main (nada se perde) — não trava o push dos resultados.
+      GEN+=('public/data/manuel-pairings.json')
+      REGEN+=('node scripts/pairings-build.js || echo "::warning::pairings-build falhou — manuel-pairings.json fica como no main"') ;;
     *) echo "push-generated: família desconhecida: $1" >&2; exit 64 ;;
   esac
 }
@@ -100,12 +110,12 @@ while [ $# -gt 0 ]; do
 done
 
 [ -n "$MSG" ] || { echo "push-generated: falta -m" >&2; exit 64; }
-[ ${#PATHS[@]} -gt 0 ] || { echo "push-generated: faltam pathspecs depois de --" >&2; exit 64; }
 if [ ${#GEN[@]} -gt 0 ] && [ ${#REGEN[@]} -eq 0 ]; then
   echo "push-generated: -g sem -r — os gerados ficariam perdidos" >&2; exit 64
 fi
 # Os gerados entram sempre no commit (são regenerados sobre o main mais recente).
 [ ${#GEN[@]} -gt 0 ] && PATHS+=("${GEN[@]}")
+[ ${#PATHS[@]} -gt 0 ] || { echo "push-generated: faltam pathspecs depois de --" >&2; exit 64; }
 
 out() { [ -n "${GITHUB_OUTPUT:-}" ] && echo "$1" >> "$GITHUB_OUTPUT"; return 0; }
 
@@ -148,7 +158,9 @@ while IFS= read -r f; do
   [ -n "$f" ] || continue
   mkdir -p "$SAVE/ours/$(dirname "$f")" "$SAVE/base/$(dirname "$f")"
   cp "$f" "$SAVE/ours/$f"
-  git cat-file -e "$BASE:$f" 2>/dev/null && git show "$BASE:$f" > "$SAVE/base/$f"
+  # a base só serve para a fusão a 3 — os -o e os gerados nunca se fundem
+  if in_list "$f" "$OURS_FILES" || in_list "$f" "$GEN_FILES"; then continue; fi
+  if git cat-file -e "$BASE:$f" 2>/dev/null; then git show "$BASE:$f" > "$SAVE/base/$f"; fi
 done <<< "$CHANGED"
 
 blob() { git rev-parse --verify -q "$1:$2" 2>/dev/null || echo "-"; }
@@ -221,7 +233,9 @@ for i in $(seq 1 "$TRIES"); do
   if [ "$HEAD_REMOTE" != "$BASE" ] && [ ${#REGEN[@]} -gt 0 ]; then
     for cmd in "${REGEN[@]}"; do
       echo "  ⟳ $cmd"
-      if ! bash -c "$cmd"; then echo "❌ Regeneração falhou: $cmd"; exit 1; fi
+      bash -c "$cmd"; rc=$?
+      # exit 2 = «nada a mudar» (convenção dos scripts do repo), não é erro
+      if [ "$rc" != 0 ] && [ "$rc" != 2 ]; then echo "❌ Regeneração falhou (exit $rc): $cmd"; exit 1; fi
     done
   fi
 

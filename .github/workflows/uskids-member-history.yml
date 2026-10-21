@@ -16,14 +16,14 @@ permissions:
 jobs:
   historico:
     name: 📋 Histórico de Jogadores
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v5
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-node@v5
         with: { node-version: '24', cache: 'npm' }
       - run: npm ci
@@ -38,39 +38,11 @@ jobs:
       - run: node scripts/split-member-history.js --from-chunks --target-mb=70
       - run: node scripts/build-member-history-slim.js
       - name: Commit se houve alterações
+        # Glob entre aspas: é o git a fazer o matching, por isso as deletions de
+        # chunks antigos (003-046, etc.) entram também. -o: os ficheiros deste run
+        # ganham (era o merge -X ours de antes); a fila uskids-member-history impede
+        # os dois workflows de correrem ao mesmo tempo.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          # IMPORTANTE: o glob TEM de estar entre aspas. Sem aspas, o bash
-          # expande-o antes do git ver e só passa os ficheiros que ainda
-          # existem no disco — as deletions de chunks antigos (003-046, etc.)
-          # são silenciosamente ignoradas. Com aspas, é o git a fazer o
-          # pathspec matching, que inclui o índice e apanha as deletions.
-          git add -A 'data-archive/uskids-member-history-*.json'
-          git add public/data/uskids-member-history-slim.json
-          git diff --cached --quiet && exit 0
-          # Committar ANTES de qualquer merge: com alterações staged mas ainda
-          # não committed, um fast-forward de origin/main que toque nos mesmos
-          # ficheiros aborta ("local changes would be overwritten") e o
-          # -X ours nem chega a aplicar-se — aconteceu a 2026-07-29 quando o
-          # refresh-all fez push a meio deste run.
-          git commit -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          # Push robusto: fetch + merge -X ours (os ficheiros gerados neste run
-          # ganham a conflitos) + retry, para sobreviver a pushes concorrentes
-          # de outros workflows. Merge em vez de rebase: num rebase o -X ours
-          # inverte de sentido e os conflitos nos JSON gerados encravavam.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git fetch origin main
-            if git merge origin/main --no-edit --strategy-option=ours && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git merge --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
+          bash scripts/ci/push-generated.sh -m "data: histórico USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" \
+            -o 'data-archive/uskids-member-history-*.json' -o public/data/uskids-member-history-slim.json \
+            -- 'data-archive/uskids-member-history-*.json' public/data/uskids-member-history-slim.json

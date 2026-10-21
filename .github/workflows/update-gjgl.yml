@@ -97,30 +97,5 @@ jobs:
       - name: Commit e push
         if: steps.changes.outputs.real_changes == '1'
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data
-
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m "data: GJGL scrape + rebuild juniors ${DATE}"
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ GJGL + juniores canónicos actualizados"
+          bash scripts/ci/push-generated.sh -m "data: GJGL scrape + rebuild juniors $(date +'%Y-%m-%d %H:%M')" \
+            -f agregador -- public/data

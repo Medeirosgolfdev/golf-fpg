@@ -44,6 +44,13 @@ permissions:
   contents: write
   issues: write   # aviso imediato de scorecards novos (resumo por email)
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -157,7 +164,7 @@ jobs:
       # ── Aviso imediato: scorecards novos dos nossos federados ──────────
       # Corre ANTES do commit de propósito: o resumo lê o diff da ÁRVORE DE
       # TRABALHO, que é exactamente o que este run produziu. Depois do commit
-      # o `git pull --rebase` do push traria commits de outros workflows e o
+      # o push (reset ao main mais recente) traria commits de outros workflows e o
       # diff deixaria de ser só nosso.
       # Nunca falha o workflow (os scripts engolem os próprios erros) — os
       # dados é que interessam, o email é extra.
@@ -185,85 +192,33 @@ jobs:
         # preencheu PCC em falta — senão o PCC ficava no runner e perdia-se.
         if: steps.scrape.outputs.exit_code == '0' || steps.pcc.outputs.filled == '1' || steps.sd.outputs.filled == '1'
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Diagnóstico: listar ficheiros modificados antes do git add.
-          # Útil para debug se "Nada em staging" voltar a acontecer.
-          CHANGED_BEFORE=$(git status --porcelain 2>/dev/null | wc -l)
-          echo "ℹ️  ${CHANGED_BEFORE} ficheiros modificados no working copy antes do git add"
-
+          # Diagnóstico: o que mudou na árvore (se "nada a publicar" aparecer com
+          # ficheiros modificados, falta um path na lista abaixo).
+          echo "ℹ️  $(git status --porcelain | wc -l) ficheiros modificados no working copy"
+          git status --porcelain | head -50
           # Paths gerados pelo fluxo fpg-scrape-node.js + pipeline.js:
           #   - output/{fed}/*                → fpg-scrape-node.js + pipeline (render)
           #   - public/data/{fed}/analysis/   → só o Manuel (render estático)
           #   - public/data/players.json      → pipeline.js (sync step)
           #   - public/data/cross-data.json   → make-scorecards-ui.js (tabela
           #     global CROSS_DATA, 1 cópia partilhada por todas as fichas desde
-          #     2026-09-06). SEM isto a tabela ficava no runner e o site servia
-          #     escalões/índices congelados no dia da migração.
+          #     2026-09-06). SEM isto a tabela ficava no runner.
           #   - public/player-stats.json      → enrich-players.js  ⚠ SEM /data/
           #   - public/data/hcp-history.json  → enrich-players.js (evolução de HCP)
-          #   - public/analise-percurso-juniores.html → build-analise-percurso.js
-          #   - public/data/away-courses.json → extract-courses.js (disabled no pipeline normal)
-          #   - public/data/master-courses.json → idem
+          #   - public/analise-percurso-juniores.html → build-analise-percurso.js +
+          #     build-percurso-path.js — GERADO: regenera-se se o main avançar
+          #   - public/data/away-courses.json / master-courses.json → extract-courses.js
           #   - players.json (raiz)           → pipeline.js (sync step)
-          #
           # Bug histórico (2026-04-22): o path era "public/data/player-stats.json",
           # mas enrich-players.js escreve "public/player-stats.json" (sem /data/).
-          # Resultado: o workflow detectava novos scorecards mas nunca commitava.
-          git add output/ \
-                  public/data/*/analysis/ \
-                  public/data/players.json \
-                  public/data/cross-data.json \
-                  public/player-stats.json \
-                  public/data/hcp-history.json \
-                  public/analise-percurso-juniores.html \
-                  public/data/away-courses.json \
-                  public/data/master-courses.json \
-                  public/data/course-player-names.json \
-                  public/data/course-players.json \
-                  public/data/recent-tournaments.json \
-                  public/data/recent-tournaments-scrape-scope.json \
-                  public/data/classificacoes.json \
-                  public/data/pull-torneios*.json \
-                  public/data/drive-data-*.json \
-                  public/data/aquapor-data-*.json \
-                  public/data/jovens_*.json \
-                  players.json 2>/dev/null || true
-
-          if git diff --staged --quiet; then
-            echo "⚠  Nada em staging — sem commit."
-            if [ "${CHANGED_BEFORE}" -gt 0 ]; then
-              echo ""
-              echo "❗ Mas havia ${CHANGED_BEFORE} ficheiros modificados. Lista (primeiros 50):"
-              git status --porcelain 2>/dev/null | head -50
-              echo ""
-              echo "Paths fora do scope do git add. Adicionar à lista acima se for recorrente."
-            fi
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          CHANGED=$(git diff --staged --name-only | wc -l)
-          git commit -m "data: update FPG WHS+scorecards ${DATE} (${CHANGED} ficheiros)"
-          # Rebase em cima de qualquer commit que tenha entrado entretanto.
-          # --autostash lida com quaisquer ficheiros unstaged que tenham ficado
-          # para trás do git add (stashes automaticamente e repõe após o pull).
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
+          bash scripts/ci/push-generated.sh -m "data: update FPG WHS+scorecards $(date +'%Y-%m-%d %H:%M')" \
+            -g public/analise-percurso-juniores.html \
+            -r 'node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js' \
+            -- output/ 'public/data/*/analysis/' public/data/players.json \
+               public/data/cross-data.json public/player-stats.json public/data/hcp-history.json \
+               public/data/away-courses.json public/data/master-courses.json \
+               public/data/course-player-names.json public/data/course-players.json \
+               public/data/recent-tournaments.json public/data/recent-tournaments-scrape-scope.json \
+               public/data/classificacoes.json 'public/data/pull-torneios*.json' \
+               'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
+               'public/data/jovens_*.json' players.json

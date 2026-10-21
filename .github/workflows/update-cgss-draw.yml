@@ -57,6 +57,13 @@ permissions:
   contents: write
   issues: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-cgss-draw:
     runs-on: ubuntu-latest
@@ -229,33 +236,12 @@ jobs:
 
       - name: Commit e push (se houve resultados)
         if: steps.scrape.outputs.updated == '1'
+        # -f pairings: o manuel-pairings.json é regenerado se o main avançar.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/pull-torneios*.json public/data/cgss-draws-manual.json \
-                  public/data/pja-draws-manual.json public/data/fpg-admissions-draws.json \
-                  public/data/manuel-pairings.json
-
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          git commit -m "data: resultados de torneio draw-only (placeholder → tcode real)"
-
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
-            if git push; then PUSH_OK=1; break; fi
-            echo "Push tentativa $i falhou — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: resultados de torneio draw-only (placeholder → tcode real)" \
+            -f pairings \
+            -- 'public/data/pull-torneios*.json' public/data/cgss-draws-manual.json \
+               public/data/pja-draws-manual.json public/data/fpg-admissions-draws.json
 
       - name: Aviso por email (issue criada e fechada — como o daily-digest)
         if: steps.scrape.outputs.updated == '1'

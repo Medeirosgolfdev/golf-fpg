@@ -57,7 +57,7 @@ permissions:
 
 jobs:
   update-england:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     concurrency:
       group: update-england
@@ -69,8 +69,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
-          fetch-depth: 0
-
+          fetch-depth: 1
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
@@ -148,66 +147,8 @@ jobs:
 
       - name: Commit e push (se houve alterações)
         if: steps.scrape.outputs.exit_code == '0'
+        # Os agregados do kids2 regeneram-se por cima do main (nunca se fundem) —
+        # política do CLAUDE.md, «Conflitos de git nos ficheiros GERADOS».
         run: |
-          set +e
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data
-
-          if git diff --staged --quiet; then
-            echo "ℹ️  Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
-          git commit -m "data: England Golf scrape + rebuild juniors ${DATE}"
-
-          # Ficheiros GERADOS (não-fonte). Um push concorrente de outro workflow
-          # regenera-os no mesmo instante → conflito no rebase. Fundir à mão só
-          # produz JSON inválido; a política do repo (CLAUDE.md, "Conflitos de git
-          # nos ficheiros GERADOS") é REGENERAR. Por isso: se os ÚNICOS conflitos
-          # forem estes, aceitamos qualquer lado e reconstruímos a seguir.
-          GEN_FILES="public/data/juniors.json public/data/juniors-tournaments.json public/data/juniors-tournaments-00.json public/data/juniors-tournaments-01.json public/data/juniors-tournaments-02.json public/data/juniors-tournaments-03.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json"
-
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git fetch origin "${GITHUB_REF_NAME}"
-
-            git rebase "origin/${GITHUB_REF_NAME}"
-            if [ $? -ne 0 ]; then
-              CONFLICTED=$(git diff --name-only --diff-filter=U)
-              UNEXPECTED=$(printf '%s\n' $CONFLICTED | grep -vxF -f <(printf '%s\n' $GEN_FILES))
-              if [ -n "$UNEXPECTED" ]; then
-                echo "Conflito inesperado em ficheiros não-gerados:"
-                echo "$UNEXPECTED"
-                git rebase --abort 2>/dev/null || true
-                echo "❌ Rebase com conflitos que não sabemos resolver automaticamente"
-                exit 1
-              fi
-              git checkout --theirs -- $CONFLICTED
-              git add -- $CONFLICTED
-              GIT_EDITOR=true git rebase --continue
-              if [ $? -ne 0 ]; then
-                git rebase --abort 2>/dev/null || true
-                echo "Rebase --continue falhou — retry em $((i * 5))s"
-                sleep $((i * 5))
-                continue
-              fi
-              node scripts/aggregator/index.js || { echo "❌ agregador falhou"; exit 1; }
-              git add public/data
-              git diff --staged --quiet || git commit --amend --no-edit
-            fi
-
-            if git push; then
-              PUSH_OK=1
-              break
-            fi
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ England Golf + juniores canónicos actualizados"
+          bash scripts/ci/push-generated.sh -m "data: England Golf scrape + rebuild juniors $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -f agregador -- public/data

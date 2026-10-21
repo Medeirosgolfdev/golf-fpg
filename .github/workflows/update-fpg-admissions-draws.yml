@@ -54,6 +54,13 @@ on:
 permissions:
   contents: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-fpg-admissions-draws:
     runs-on: ubuntu-latest
@@ -152,64 +159,8 @@ jobs:
 
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || steps.pairings.outputs.pairings_changed == 'true' || github.event.inputs.force_commit == 'true'
+        # tracking e pairings são gerados por mais do que um workflow: regeneram-se
+        # por cima do main mais recente em vez de se fundirem.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/fpg-admissions-draws.json public/data/fpg-tournaments-tracking.json public/data/manuel-pairings.json
-
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          git commit -m "data: update FPG admissions+draws ${DATE}"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # O fpg-tournaments-tracking.json é REGENERADO por inteiro por mais
-          # do que um workflow → um rebase nunca resolve conflitos nele sozinho.
-          # Estratégia: se o rebase conflitar no tracking, resolver com a nossa
-          # versão e REGENERAR o ficheiro sobre o estado pós-pull (o script é
-          # determinístico: lê public/data/ e reescreve tudo), amendando o commit.
-          TRACKING="public/data/fpg-tournaments-tracking.json"
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if ! git pull --rebase --autostash origin ${GITHUB_REF_NAME}; then
-              # Conflito de rebase. Se for só no tracking, resolver e continuar.
-              if git diff --name-only --diff-filter=U | grep -qx "$TRACKING" \
-                 && [ "$(git diff --name-only --diff-filter=U | wc -l)" = "1" ]; then
-                echo "Conflito no tracking — a resolver com regeneração"
-                git checkout --theirs "$TRACKING"
-                git add "$TRACKING"
-                if ! GIT_EDITOR=true git rebase --continue; then
-                  git rebase --abort 2>/dev/null || true
-                  echo "Rebase não recuperou na tentativa $i — retry em $((i * 5))s"
-                  sleep $((i * 5))
-                  continue
-                fi
-              else
-                git rebase --abort 2>/dev/null || true
-                echo "Conflito fora do tracking na tentativa $i — retry em $((i * 5))s"
-                sleep $((i * 5))
-                continue
-              fi
-            fi
-            # Pós-pull: regenerar o tracking com TODOS os dados (nossos + dos
-            # pushes concorrentes que acabámos de integrar) e amendar se mudou.
-            node scripts/build-tournaments-tracking.js
-            if ! git diff --quiet -- "$TRACKING"; then
-              git add "$TRACKING"
-              git commit --amend --no-edit
-            fi
-            if git push; then
-              PUSH_OK=1
-              break
-            fi
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: update FPG admissions+draws $(date +'%Y-%m-%d %H:%M')" \
+            -f tracking -f pairings -- public/data/fpg-admissions-draws.json

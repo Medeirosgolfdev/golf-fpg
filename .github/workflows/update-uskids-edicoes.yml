@@ -56,30 +56,8 @@ jobs:
 
       - name: Commit e push (se houve alterações)
         if: steps.fetch.outputs.exit_code == '0'
+        # Ficheiros inteiramente deste job e da mesma fila (-o: a versão nossa ganha).
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes
-          if git diff --staged --quiet; then echo "Sem alterações."; exit 0; fi
-          # Ficheiros inteiramente deste job (e a fila impede o rich-players de
-          # correr ao mesmo tempo): guardar, pôr por cima do main mais recente e
-          # committar — sem pull --rebase (checkout raso → conflitos falsos,
-          # ver update-federados.yml, 19/10/2026).
-          SAVE=$(mktemp -d)
-          cp data-archive/uskids-rich-flight-cache.json.gz "$SAVE/"
-          cp -r public/data/uskids-edicoes "$SAVE/"
-          MSG="data: edições anteriores USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          for i in 1 2 3 4 5; do
-            git fetch --depth=1 origin "${GITHUB_REF_NAME}"
-            git reset --hard FETCH_HEAD
-            cp "$SAVE/uskids-rich-flight-cache.json.gz" data-archive/
-            rm -rf public/data/uskids-edicoes && cp -r "$SAVE/uskids-edicoes" public/data/
-            git add -A data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes
-            if git diff --staged --quiet; then echo "O main já tem isto."; exit 0; fi
-            git commit -m "$MSG"
-            if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "✓ publicado"; exit 0; fi
-            echo "Push tentativa $i falhou — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          echo "❌ Push falhou após 5 tentativas"
-          exit 1
+          bash scripts/ci/push-generated.sh -m "data: edições anteriores USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" \
+            -o data-archive/uskids-rich-flight-cache.json.gz -o public/data/uskids-edicoes \
+            -- data-archive/uskids-rich-flight-cache.json.gz public/data/uskids-edicoes

@@ -93,7 +93,7 @@ jobs:
 
       # pdfplumber é o motor principal do extract-cgss-draws.py (lê os grupos
       # pelas coordenadas); o pdftotext fica como recurso.
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         if: steps.check.outputs.found == '1'
         with:
           python-version: '3.12'
@@ -138,22 +138,9 @@ jobs:
       - name: Commit e push (dados + memória de processados, atómico)
         if: steps.process.outcome == 'success' && (steps.process.outputs.code == '0' || steps.process.outputs.code == '3')
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/cgss-draws-manual.json public/data/pull-torneios001.json scripts/draw-mail-processed.json
-          if git diff --staged --quiet; then
-            echo "Nada em staging — sem commit."
-            exit 0
-          fi
-          git commit -m "data: draw CGSS via email (inbox cloud)"
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
-            if git push; then PUSH_OK=1; break; fi
-            sleep $((i * 5))
-          done
-          [ "$PUSH_OK" = "1" ] || { echo "❌ Push falhou"; exit 1; }
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: draw CGSS via email (inbox cloud)" \
+            -- public/data/cgss-draws-manual.json public/data/pull-torneios001.json \
+               scripts/draw-mail-processed.json
 
       - name: Aviso por email (issue criada e fechada)
         if: steps.process.outcome == 'success' && (steps.process.outputs.code == '0' || steps.process.outputs.code == '3')

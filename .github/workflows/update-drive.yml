@@ -37,6 +37,13 @@ on:
 permissions:
   contents: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-drive:
     runs-on: ubuntu-latest
@@ -158,38 +165,10 @@ jobs:
 
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || (steps.rankings.outcome == 'success' && steps.rankings.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
+        # -f simulador: o simulador-players.json também é escrito pelo
+        # update-federados → regenera-se por cima do main se este avançar.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/drive-data-*.json public/data/aquapor-data-*.json
-          git add public/data/drive-rankings.json public/data/drive-rankings-check.json 2>/dev/null || true
-          git add public/data/simulador-players.json 2>/dev/null || true
-
-          # Dupla verificação: só commitar se o git diff realmente mostra alterações
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          CHANGED=$(git diff --staged --name-only | wc -l)
-          git commit -m "data: update DRIVE/AQUAPOR ${DATE} (${CHANGED} ficheiros)"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
+          bash scripts/ci/push-generated.sh -m "data: update DRIVE/AQUAPOR $(date +'%Y-%m-%d %H:%M')" \
+            -f simulador \
+            -- 'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
+               public/data/drive-rankings.json public/data/drive-rankings-check.json

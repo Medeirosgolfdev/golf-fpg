@@ -54,6 +54,13 @@ on:
 permissions:
   contents: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-spain:
     runs-on: ubuntu-latest
@@ -65,8 +72,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
-          fetch-depth: 0
-
+          fetch-depth: 1
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
@@ -269,52 +275,14 @@ jobs:
 
       - name: Commit e push (se houver mudanças)
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/rfegolf-resultats/ \
-                  public/data/rfegolf-livegolfscoring/ \
-                  public/data/nextcaddy/ \
-                  public/data/fcg/ \
-                  public/data/rfegolf-resultats-index.json \
-                  public/data/licencia-dob-lookup.json \
-                  public/data/licencia-hcp-lookup.json \
-                  public/data/spain-players.json \
-                  public/data/rfegolf-rivals.json \
-                  public/data/fcg-rivals.json \
-                  public/data/spain-player-tournaments.json \
-                  public/data/rfegolf-lgs-twins.json \
-                  scripts/fcg-scope.json \
-                  scripts/nextcaddy-scope-all.json \
-                  scripts/rfegolf-scope.json 2>/dev/null || true
-
-          if git diff --staged --quiet; then
-            echo "ℹ️  Nenhuma alteração — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
-          git commit -m "data: update Espanha (RFEG + LGS + NC + FCG) ${DATE}"
-          # Rebase contra main caso outro workflow tenha commitado entretanto.
-          git fetch origin main
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: update Espanha (RFEG + LGS + NC + FCG) $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ \
+               public/data/nextcaddy/ public/data/fcg/ public/data/rfegolf-resultats-index.json \
+               public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
+               public/data/spain-players.json public/data/rfegolf-rivals.json \
+               public/data/fcg-rivals.json public/data/spain-player-tournaments.json \
+               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json \
+               scripts/nextcaddy-scope-all.json scripts/rfegolf-scope.json
 
       # ── Verificação final: falhar ALTO se algum scraper falhou ──
       # Os scrapers correm com continue-on-error para que a falha de um portal
