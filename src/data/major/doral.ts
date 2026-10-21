@@ -10,7 +10,7 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos.
  * Tirado da DORALPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
-import { gf, normPaisDisplay } from "../../utils/flagUtils";
+import { intlCountryCell } from "../intlCommon";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 
@@ -231,7 +231,7 @@ export function doralEntryToTournament(entry: DoralEntry): FPGTournament {
     { par: entry.par, si: entry.metres, meters: entry.metres, course: entry.course, courseRating: entry.cr, slope: entry.slope },
     entry.players.map((p): IntlPlayerIn => ({
       id: p.id, name: p.name, pos: p.pos,
-      club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+      club: p.country ? intlCountryCell(p.country) : "",
       country: p.country, total: p.total, toPar: p.toPar, rounds: p.rounds,
     })),
   );

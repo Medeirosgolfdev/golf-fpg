@@ -241,8 +241,6 @@ export interface NCDetail {
   scoreTypes?: Record<string, { scoreTypeKey?: string; players?: { playerName?: string; holeNumber?: number }[] }>;
 }
 
-export interface DobLookupEntry { name: string | null; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia?: string | null }
-
 /* livegolfscoring.es format — fonte primária dos resultados/scorecards RFEGolf */
 export interface LgsPlayer {
   memberId?: string | null;
@@ -283,20 +281,5 @@ export interface LgsHorarioRound {
   groups: { teeTime: string | null; startHole: number | null; players: string[] }[];
 }
 
-export type DobLookup = Record<string, DobLookupEntry>;
-
-export interface DobLookupFile {
-  generatedAt: string;
-  totalLicencias: number;
-  lookup: DobLookup;
-}
-
-/** Lookup global de HCP por licença (gerado por build-licencia-hcp-lookup.js).
- *  Usado para preencher HCP em falta nos players (cross-reference entre torneios). */
-export interface HcpLookupEntry { hcp: number; source: string; tourneyId?: number; dateIso?: string | null }
-export type HcpLookup = Record<string, HcpLookupEntry>;
-export interface HcpLookupFile {
-  generatedAt: string;
-  total: number;
-  lookup: HcpLookup;
-}
+/** Lookups por licença — os mesmos do golfdirecto (fcgAdapter); vivem em intlCommon. */
+export type { DobLookupEntry, DobLookup, DobLookupFile, HcpLookupEntry, HcpLookup, HcpLookupFile } from "../intlCommon";

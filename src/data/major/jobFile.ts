@@ -14,7 +14,8 @@
  * Tirado da MajorPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { isManuelByName as isM } from "../../constants/manuel";
-import { gf, normPaisDisplay, isPtCountry } from "../../utils/flagUtils";
+import { isPtCountry } from "../../utils/flagUtils";
+import { intlCountryCell } from "../intlCommon";
 import { ageAtDate } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { buildEvoMap, type EvoEntry } from "../../hooks/useEvoComparison";
@@ -168,7 +169,7 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       id: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
-      club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+      club: p.country ? intlCountryCell(p.country) : "",
       country: p.country,
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
@@ -271,7 +272,7 @@ export function jobDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players:
   const estByName = indexByName(players, key, (p) => (p.hcpEstimated || p.birthYearEst || p.countryEstimated
     ? { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null }
     : undefined), "last");
-  const countryByName = indexByName(players, key, (p) => (p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim() : undefined), "last");
+  const countryByName = indexByName(players, key, (p) => (p.country ? intlCountryCell(p.country).trim() : undefined), "last");
   // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
   const ptByName = indexByName(players, key, (p) => (p.country && isPtCountry(p.country) ? true : undefined), "last");
   // Escalão real de cada jogador (os «Overall …» juntam todos — não contam).

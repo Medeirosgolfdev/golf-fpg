@@ -7,16 +7,12 @@
  */
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { normEs } from "./text";
-import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookupEntry, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
+import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
+import { dobLookupByName } from "../intlCommon";
 
 export function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup, fedByName?: Map<string, FedByNameEntry>, golfbox?: Map<string, GolfboxEntry[]>): RFEGDetail {
   const norm = normEs;
-  const lookupByName: Record<string, DobLookupEntry> = {};
-  if (dobLookup) {
-    for (const e of Object.values(dobLookup)) {
-      if (e.name) lookupByName[norm(e.name)] = e;
-    }
-  }
+  const lookupByName = dobLookupByName(dobLookup, norm);
   // Anexar hcpLookup ao detail para o adapter LGS-FPG poder usar
   void hcpLookup; // injectado depois via adaptLgs e flag detail._hcpLookup
 

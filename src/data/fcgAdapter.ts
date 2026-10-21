@@ -18,7 +18,8 @@
 import { displayName as displayCase } from "../utils/format";
 
 // Os mesmos lookups por licença das outras fontes de Espanha.
-import type { DobLookup, HcpLookup } from "./rfeg/types";
+import type { DobLookup, HcpLookup } from "./intlCommon";
+import { holesOf } from "./intlCommon";
 import type { Tournament as FPGTournament } from "./fpgTypes";
 import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
 
@@ -163,7 +164,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
     for (const p of c.players) {
       if (p.scorecard && p.scorecard.gameTee && Array.isArray(p.scorecard.gameTee.par1_18)) {
         coursePar = p.scorecard.gameTee.par1_18.filter((x): x is number => typeof x === "number");
-        if (coursePar.length === 18 || coursePar.length === 9) break;
+        if (holesOf(coursePar)) break;
       }
     }
     if (coursePar) break;
@@ -314,7 +315,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       if (p.scorecard && p.scorecard.gameTee) {
         const t = p.scorecard.gameTee;
         const pp = (t.par1_18 || []).filter((x): x is number => typeof x === "number");
-        if (pp.length === 18 || pp.length === 9) {
+        if (holesOf(pp)) {
           par18 = pp;
           si18 = (t.hcp1_18 || []).filter((x): x is number => typeof x === "number");
           meters18 = (t.meters1_18 || []).filter((x): x is number => typeof x === "number");

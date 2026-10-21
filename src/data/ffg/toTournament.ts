@@ -6,7 +6,8 @@
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { isPT } from "../../utils/ptPlayers";
-import { gf, normPaisDisplay } from "../../utils/flagUtils";
+import { normPaisDisplay } from "../../utils/flagUtils";
+import { intlCountryCell } from "../intlCommon";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
@@ -127,7 +128,7 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
       id: p.license || `${data.trnId}-${p._serieId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: ffgPlayerName(p),
-      club: `${playerCountry ? `${gf(playerCountry)} ` : ""}${clubText}`.trim(),
+      club: playerCountry ? intlCountryCell(playerCountry, clubText).trim() : clubText,
       total: p.total,
       toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * numRounds) : null,
       hcp: p.hcp,
@@ -177,7 +178,7 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
       // Position: usar p.pos se válido, senão idx+1
       pos: (typeof p.pos === "number" && p.pos > 0) ? p.pos : (idx + 1),
       name: normalizeName(p.name),
-      club: p.country ? `${gf(p.country)} ${p.club || normPaisDisplay(p.country)}` : p.club,
+      club: p.country ? intlCountryCell(p.country, p.club || normPaisDisplay(p.country)) : p.club,
       total: p.total,
       toPar: p.toPar,
       hcp: p.hcp,

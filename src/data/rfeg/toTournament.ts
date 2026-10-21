@@ -14,7 +14,8 @@ import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, ty
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
-import type { RFEGPlayer, RFEGDetail, DobLookupEntry, DobLookup } from "./types";
+import type { RFEGPlayer, RFEGDetail, DobLookup } from "./types";
+import { dobLookupByName, holesOf } from "../intlCommon";
 
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
@@ -51,14 +52,13 @@ export function lgsToFPGTournament(
   golfbox?: Map<string, GolfboxEntry[]>,
 ): FPGTournament {
   const norm = normEs;
-  const lookupByName: Record<string, DobLookupEntry> = {};
-  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+  const lookupByName = dobLookupByName(dobLookup, norm);
 
   // Nº de buracos do campo (9 ou 18). Benjamín/Alevín (sub-10/12) jogam 9 buracos;
   // tudo o resto 18. Detecta-se pelo par[] que o scraper produz. 18 buracos = path
   // original intocado.
   const rawPar = lgs.rounds[0]?.par;
-  const courseHoles: number = rawPar && rawPar.length === 9 ? 9 : 18;
+  const courseHoles: number = holesOf(rawPar) ?? 18;
   const par = parOrInvented(rawPar, courseHoles, LGS_OPTS.inventedPar);
   const parTotal = par.reduce((a, b) => a + b, 0);
   const numRounds = lgs.rounds.length;
@@ -328,9 +328,8 @@ export function ncToFPGTournament(
   // course.par/scores têm length 9. Detetar 9 vs 18 em vez de assumir 18 — assumir
   // 18 dropava TODOS os cartões de 9 (filtro scores.length===18) e mostrava par-72
   // fake. par18/si18/meters18 mantêm o nome mas guardam 9 OU 18 valores conforme o campo.
-  const holeCount = (detail.coursePar && (detail.coursePar.length === 9 || detail.coursePar.length === 18))
-    ? detail.coursePar.length
-    : (players.some((p) => (p.rounds || []).some((r) => {
+  const holeCount = holesOf(detail.coursePar)
+    ?? (players.some((p) => (p.rounds || []).some((r) => {
         const s = (r as { scores?: number[] }).scores;
         return Array.isArray(s) && s.length === 9;
       })) ? 9 : 18);
@@ -352,8 +351,7 @@ export function ncToFPGTournament(
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
 
   const norm = normEs;
-  const lookupByName: Record<string, DobLookupEntry> = {};
-  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+  const lookupByName = dobLookupByName(dobLookup, norm);
 
   // Para Espanha: clube irrelevante. Mapeamos:
   //  - escalao = Sub-N derivado da idade (pill colorido global, sortable)
@@ -465,8 +463,7 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
   const par18 = parOrInvented(null, 18, RFEGOLF_OPTS.inventedPar);
 
   const norm = normEs;
-  const lookupByName: Record<string, DobLookupEntry> = {};
-  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+  const lookupByName = dobLookupByName(dobLookup, norm);
 
   // Inscritos do PRÓPRIO torneio: têm HCP + DOB + licença exactos e casam ~100%
   // por nome com a tabela de resultados (que vem do PDF, só com o nome). Fonte
@@ -537,7 +534,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
   if (!group) return null;
 
   // Par/SI/metros REAIS (9 ou 18 buracos). Vazios → sem placeholder.
-  const valid = (a?: number[] | null) => Array.isArray(a) && (a.length === 18 || a.length === 9);
+  const valid = (a?: number[] | null) => holesOf(a) != null;
   const par = valid(detail.coursePar) ? (detail.coursePar as number[]) : [];
   const si = valid(detail._rfegCourseSi) ? (detail._rfegCourseSi as number[]) : [];
   const meters = valid(detail._rfegCourseMeters) ? (detail._rfegCourseMeters as number[]) : [];
@@ -554,8 +551,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
   const slope = group.slope ?? undefined;
 
   const norm = normEs;
-  const lookupByName: Record<string, DobLookupEntry> = {};
-  if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) lookupByName[norm(e.name)] = e;
+  const lookupByName = dobLookupByName(dobLookup, norm);
 
   const dateRef = detail.meta.dateStart || null;
 

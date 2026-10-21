@@ -122,7 +122,7 @@ Armadilhas medidas (todas com caso real):
 ### Onde está o código de Espanha (21/10/2026)
 
 A `RFEGPage` só desenha. Os dados vivem em `src/data/rfeg/`: `types.ts` (formatos
-das fontes e dos lookups por licença — `DobLookup`/`HcpLookup` são os mesmos do
+das fontes e dos lookups por licença — `DobLookup`/`HcpLookup` vivem em `src/data/intlCommon.ts`, partilhados com o
 `fcgAdapter`), `text.ts` (`normEs`, `esDateToIso`), `escalao.ts` (`ageToSubN`,
 `escaloEsForPlayer`…), `flags.ts` (`rfegPlayerFlag`, overrides de nacionalidade),
 `adapters.ts` (`adaptLgs`, `adaptNextCaddy`), `toTournament.ts` (LGS/NextCaddy/
