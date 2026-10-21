@@ -27,6 +27,10 @@
  *   node scripts/scrape-nextcaddy.js --discover --comite 1     # só Infantil y Juvenil
  *   node scripts/scrape-nextcaddy.js --discover --club AM00    # só RFGA
  *   node scripts/scrape-nextcaddy.js --scope scripts/nextcaddy-scope.json
+ *
+ * Exit: 0 gravou · 2 nada de novo (ou descoberta vazia/muito menor que o scope
+ * em disco — scope anterior preservado) · 1 erro (todos os torneios falharam).
+ * --force: grava mesmo a encolher (scope ou torneio).
  */
 
 const fs = require("fs");
@@ -34,6 +38,15 @@ const path = require("path");
 const https = require("https");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/nextcaddy");
+const { writeJsonAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
+
+// Jogadores de um torneio (classificação + inscritos) — medida da guarda
+// anti-encolhimento: uma resposta degradada não esmaga um torneio bom.
+function contarTour(r) {
+  const lb = new Set((r && r.leaderboard || []).flatMap((c) => c.players || []).map((p) => p.inscribedId || p.licencia || p.name)).size;
+  return lb + ((r && r.inscritos) || []).length;
+}
 
 /* ─── existingIsComplete — decide se um ficheiro já em disco deve ser saltado ──
  * Com --skip-existing, NÃO basta o ficheiro existir: um torneio descoberto
@@ -823,13 +836,20 @@ async function main() {
       tours = tours.filter((t) => re.test(t.name || ""));
       console.log(`  Filter "${filterArg}": ${before} → ${tours.length} tours`);
     }
-    fs.writeFileSync(out, JSON.stringify({
+    // Guarda: 0 tours ou menos de metade do scope em disco = resposta
+    // degradada → preservar o scope anterior (o scrape a seguir usa-o).
+    const g = writeJsonGuarded(out, {
       generatedAt: new Date().toISOString(),
       source: clubArg ? `/competiciones-club/${clubArg}` : "/competiciones-comite",
       comite: comiteArg, year: yearArg, years: yearsArg, club: clubArg, provincia: provinciaArg,
       filter: filterArg,
       total: tours.length, tours,
-    }, null, 2));
+    }, { count: (d) => (d.tours || []).length, maxDrop: 0.5, label: path.basename(out) });
+    if (!g.written || !tours.length) {
+      if (g.written) console.log("  0 tours descobertos.");
+      process.exitCode = 2;
+      return;
+    }
     console.log(`  ${tours.length} tours saved to ${out}`);
     for (const t of tours.slice(0, 15)) {
       console.log(`    ${t.tourId}: ${t.name.slice(0, 70)}${t.date ? " · " + t.date : ""}${t.rounds ? " · " + t.rounds + "R" : ""}${t.clubCode ? " · " + t.clubCode : ""}`);
@@ -936,14 +956,15 @@ async function main() {
           // Só reescreve se ganhou cartões (senão era só churn de timestamp).
           if (appliedCount > 0) {
             r.scrapedAt = new Date().toISOString();
-            fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
+            writeJsonAtomic(outFile, r);
           }
           const statsStr = Object.entries(scStats).map(([k, v]) => `${k}=${v}`).join(" ");
           console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações" : ""}${statsStr ? ` [${statsStr}]` : ""}, ${elapsed}s)`);
           ok++; continue;
         }
         r = await scrapeTour(tid, { scorecards: fetchScorecards, discoveredDate: scopeDateById.get(tid) });
-        fs.writeFileSync(outFile, JSON.stringify(r, null, 2));
+        const g = writeJsonGuarded(outFile, r, { count: contarTour, maxDrop: 0.3, label: `nextcaddy/${tid}.json` });
+        if (!g.written) { skipped++; continue; }
         const allLbPlayers = (r.leaderboard || []).flatMap((t) => t.players || []);
         const uniqueLb = new Set(allLbPlayers.map((p) => p.inscribedId || p.licencia || p.name)).size;
         const uniqueSc = new Set(allLbPlayers.filter((p) => p.roundScores && p.roundScores.length).map((p) => p.inscribedId || p.licencia || p.name)).size;
@@ -963,6 +984,8 @@ async function main() {
   }
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log(`\nDone: ok=${ok} fail=${fail} skipped=${skipped}`);
+  if (fail > 0 && ok === 0) process.exitCode = 1;
+  else if (ok === 0) process.exitCode = 2;
 }
 
 if (require.main === module) {

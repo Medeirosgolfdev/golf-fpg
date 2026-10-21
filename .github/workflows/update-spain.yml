@@ -136,7 +136,7 @@ jobs:
         id: disc_nc
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
-        run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json
+        run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json || [ $? -eq 2 ]
 
       # Descobre CompIds RFEGolf NOVOS numa janela recente e une-os ao scope
       # curado (--merge nunca remove). Sem este passo o scope ficava congelado
@@ -147,7 +147,7 @@ jobs:
         id: disc_rfeg
         if: env.DO_DISCOVERY == 'true' && env.RFEGOLF_MODE == 'scope'
         continue-on-error: true
-        run: node scripts/discover-rfegolf-comps.js --range 15500-17200 --concurrency 6 --merge
+        run: node scripts/discover-rfegolf-comps.js --range 15500-17200 --concurrency 6 --merge || [ $? -eq 2 ]
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)
@@ -156,14 +156,14 @@ jobs:
         run: |
           if [ "$RFEGOLF_MODE" = "range" ]; then
             echo "Modo range: --range $RFEGOLF_RANGE --filter juvenil --concurrency 15"
-            node scripts/scrape-rfegolf-node.js --range "$RFEGOLF_RANGE" --filter juvenil --concurrency 15 $SKIP_FLAG
+            node scripts/scrape-rfegolf-node.js --range "$RFEGOLF_RANGE" --filter juvenil --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
           else
             if [ -f scripts/rfegolf-scope.json ]; then
               echo "Modo scope: scripts/rfegolf-scope.json"
-              node scripts/scrape-rfegolf-node.js --scope scripts/rfegolf-scope.json --concurrency 15 $SKIP_FLAG
+              node scripts/scrape-rfegolf-node.js --scope scripts/rfegolf-scope.json --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
             else
               echo "Sem scope file — a usar range default 13500-17000"
-              node scripts/scrape-rfegolf-node.js --range 13500-17000 --filter juvenil --concurrency 15 $SKIP_FLAG
+              node scripts/scrape-rfegolf-node.js --range 13500-17000 --filter juvenil --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
             fi
           fi
 
@@ -181,7 +181,7 @@ jobs:
             SCOPE_FILE="scripts/nextcaddy-scope.json"
           fi
           echo "Scope: $SCOPE_FILE"
-          node scripts/scrape-nextcaddy.js --scope "$SCOPE_FILE" --concurrency 8 $SKIP_FLAG
+          node scripts/scrape-nextcaddy.js --scope "$SCOPE_FILE" --concurrency 8 $SKIP_FLAG || [ $? -eq 2 ]
 
       - name: Scrape NextCaddy horários (tee times)
         id: nc_horarios
@@ -201,7 +201,7 @@ jobs:
           # auto-cura ao longo das semanas; o patch só regrava ficheiros que
           # ganharam dados (sem churn).
           node scripts/build-nextcaddy-scorecard-scope.js --junior --limit 80 --out scripts/nextcaddy-scorecard-batch.json
-          node scripts/scrape-nextcaddy.js --patch-scorecards --scope scripts/nextcaddy-scorecard-batch.json --concurrency 2
+          node scripts/scrape-nextcaddy.js --patch-scorecards --scope scripts/nextcaddy-scorecard-batch.json --concurrency 2 || [ $? -eq 2 ]
 
       - name: Scrape FCG (golfdirecto.com)
         id: fcg

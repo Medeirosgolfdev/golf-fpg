@@ -28,6 +28,7 @@
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/rfegolf-resultats");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
@@ -765,7 +766,16 @@ async function main() {
           }
           if (!keep) { skipped++; continue; }
         }
-        fs.writeFileSync(outFile, JSON.stringify(result, null, pretty ? 2 : 0));
+        // Nunca esmagar um {cid}.json bom com {ok:false} (a fonte às vezes
+        // falha) nem com uma versão com muito menos jogadores (--force grava).
+        const anterior = lerAnterior(outFile);
+        if (!result.ok && anterior && anterior.ok) {
+          failCount++; failures.push({ cid, error: result.error });
+          console.log("  [" + (idx + 1) + "/" + comps.length + "] " + cid + ": FAIL: " + result.error + " — mantém-se o ficheiro bom em disco");
+          continue;
+        }
+        const g = writeJsonGuarded(outFile, result, { count: contarComp, maxDrop: 0.5, spaces: pretty ? 2 : 0, label: "rfegolf-resultats/" + cid + ".json" });
+        if (!g.written) { skipped++; continue; }
         if (result.ok) okCount++;
         else { failCount++; failures.push({ cid, error: result.error }); }
         const palCount = result.palmares ? result.palmares.length : 0;
@@ -787,6 +797,21 @@ async function main() {
 
   console.log("\nDone: ok=" + okCount + " fail=" + failCount + " skipped=" + skipped);
   if (failures.length > 0 && failures.length <= 20) console.log("Failures:", failures);
+  // Exit: 0 gravou · 2 nada de novo · 1 tudo falhou.
+  if (failCount > 0 && okCount === 0) process.exitCode = 1;
+  else if (okCount === 0) process.exitCode = 2;
+}
+
+function lerAnterior(file) {
+  try { return fs.existsSync(file) ? JSON.parse(fs.readFileSync(file, "utf8")) : null; } catch (e) { return null; }
+}
+
+// Jogadores de um comp (inscritos admitidos + resultados) — medida da guarda.
+function contarComp(r) {
+  if (!r || !r.ok) return 0;
+  const adm = (r.inscritos && r.inscritos.counts && r.inscritos.counts.admitidos) || 0;
+  const res = (r.results || []).reduce(function (a, b) { return a + ((b.players || []).length); }, 0);
+  return adm + res;
 }
 
 main().catch(function (e) { console.error(e); process.exit(1); });

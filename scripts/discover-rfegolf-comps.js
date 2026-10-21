@@ -16,11 +16,15 @@
  *   { generatedAt, total, byYear, byCategory, tournaments: [{ compId, name, year, category, sex }] }
  *
  * Tempo estimado: ~10-30 min para range completo (concurrency 5).
+ *
+ * Exit: 0 gravou · 2 nada de novo (--merge sem compIds novos, ou o scope novo
+ * perdia >10% dos torneios face ao do disco — preservado; --force grava) · 1 erro.
  */
 
 const fs = require("fs");
 const path = require("path");
 const https = require("https");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
 
@@ -230,7 +234,11 @@ async function main() {
       mergedCount = byId.size - before;
       tournaments = Array.from(byId.values()).sort(function (a, b) { return a.compId - b.compId; });
     } catch (e) {
-      console.warn("--merge: falha a ler scope existente (" + e.message + ") — a escrever só os novos.");
+      // Antes: «a escrever só os novos» = esmagar ~400 comps curados com a
+      // janela desta corrida. Scope ilegível é erro: repor do git.
+      console.error("--merge: scope existente ilegível (" + e.message + ") — nada gravado; repor " + outFile + " do git.");
+      process.exitCode = 1;
+      return;
     }
   }
 
@@ -253,7 +261,9 @@ async function main() {
     byCategory,
     tournaments,
   };
-  fs.writeFileSync(outFile, JSON.stringify(scope, null, 2));
+  const g = writeJsonGuarded(outFile, scope, { count: function (d) { return (d.tournaments || []).length; }, maxDrop: 0.1, label: path.basename(outFile) });
+  if (!g.written) { process.exitCode = 2; return; }
+  if (merge && mergedCount === 0) process.exitCode = 2;
   console.log("\nDone. " + tournaments.length + " juvenile tournaments saved to " + outFile +
     (merge ? " (merge: +" + mergedCount + " novos)" : ""));
   console.log("byYear:", byYear);
