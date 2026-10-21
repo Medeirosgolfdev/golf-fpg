@@ -729,7 +729,7 @@ export default function DrawTab({
               <button key={o.l} type="button" onClick={() => setOmFilter(o.k)}
                 className="p p-sm" style={{
                   cursor: "pointer",
-                  background: active ? "var(--accent)" : "var(--bg-1)",
+                  background: active ? "var(--accent)" : "var(--bg-card)",
                   color: active ? "#fff" : "var(--text-1)",
                   borderColor: active ? "var(--accent)" : "var(--border)",
                   fontWeight: active ? 700 : 400,

@@ -561,7 +561,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
               <div className="fs-12" style={{ padding: "8px 12px 0", display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                 {live.status === "loading" && <span className="muted">⏳ a verificar inscrições na FPG…</span>}
                 {liveActive && (
-                  <span className="fw-600" style={{ color: "var(--color-ok, #16a34a)" }}>
+                  <span className="fw-600" style={{ color: "var(--color-good)" }}>
                     🟢 live FPG
                     {live.fetchedAt ? ` · ${new Date(live.fetchedAt).toLocaleTimeString("pt-PT", { hour: "2-digit", minute: "2-digit" })}` : ""}
                     {` · ${live.players.length} inscritos`}
@@ -571,7 +571,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                   (admissionsDiff.novos.length > 0 || admissionsDiff.saidos.length > 0) ? (
                     <span className="fw-600">
                       {admissionsDiff.novos.length > 0 && (
-                        <span style={{ color: "var(--color-ok, #16a34a)" }}>
+                        <span style={{ color: "var(--color-good)" }}>
                           +{admissionsDiff.novos.length} novos: {admissionsDiff.novos.map(p => p.nome).join(", ")}
                         </span>
                       )}

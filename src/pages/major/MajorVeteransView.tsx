@@ -148,7 +148,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
       title={srcLabel(s)}
       style={{
         display: "inline-block", padding: "0 6px", marginRight: 4, marginBottom: 2, borderRadius: 999,
-        background: sourceColors[s] ?? "var(--surface-2, #e5e7eb)", color: sourceColors[s] ? "#fff" : "var(--text)",
+        background: sourceColors[s] ?? "var(--bg-neutral)", color: sourceColors[s] ? "#fff" : "var(--text)",
         fontWeight: 600, whiteSpace: "nowrap",
       }}
     >{srcLabel(s)}</span>

@@ -52,7 +52,7 @@ export default function HcpSparkline({ points, width = 80, height = 20, playerNa
   const last = sorted[sorted.length - 1];
   const first = sorted[0];
   const delta = last.hcpExact - first.hcpExact;
-  const trendColor = delta < 0 ? "var(--success, var(--color-good))" : delta > 0 ? "var(--danger, var(--color-danger))" : "var(--text-3, #6b7280)";
+  const trendColor = delta < 0 ? "var(--color-good)" : delta > 0 ? "var(--danger, var(--color-danger))" : "var(--text-3, #6b7280)";
 
   return (
     <>
@@ -122,7 +122,7 @@ function HcpHistoryModal({
       <div
         onClick={(e) => e.stopPropagation()}
         style={{
-          background: "var(--bg-default, #fff)",
+          background: "var(--bg-card)",
           borderRadius: 8,
           maxWidth: 600,
           width: "100%",

@@ -176,7 +176,7 @@ export default function SantoDaSerraPanel({ tournaments }: { tournaments: Tourna
   return (
     <section style={{ margin: "16px 12px 28px", border: "1px solid var(--border)", borderRadius: 8, overflow: "hidden" }}>
       <header style={{
-        padding: "10px 14px", background: "var(--bg-card-strong, var(--bg-muted))",
+        padding: "10px 14px", background: "var(--bg-muted)",
         borderBottom: "1px solid var(--border)",
         display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap",
       }}>

@@ -392,8 +392,8 @@ function MatchPlayResultsTable({
                     <div style={{ overflowX: "auto" }}>
                       <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                         <thead>
-                          <tr style={{ background: "var(--bg-2)" }}>
-                            <th style={{ ...cLbl, background: "var(--bg-2)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
+                          <tr style={{ background: "var(--bg-header)" }}>
+                            <th style={{ ...cLbl, background: "var(--bg-header)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
                             {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
                             <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Out</th>
                             {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}

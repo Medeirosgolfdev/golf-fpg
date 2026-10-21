@@ -159,7 +159,7 @@ export function AllRoundsScorecardLB({
           if (rd == null) return [];
           const first = ri === firstRi;
           const bg = first ? playerBg
-            : playerBg ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)" : "var(--bg-muted-alt,rgba(0,0,0,.02))";
+            : playerBg ? "color-mix(in srgb,var(--bg-muted) 60%,transparent)" : "var(--bg-stripe)";
           const bTop = first && playerIdx > 0 ? "2px solid var(--border)" : undefined;
           return [{
             key: `${row.key}:${ri}`, fedCode: row.fed,
