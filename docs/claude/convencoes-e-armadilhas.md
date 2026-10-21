@@ -224,7 +224,11 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 
 **Referências estáticas a dados fora de componentes React ficam stale** — `const manuel = D_BASE.find(x => x.isM)` fora de um componente referencia dados pré-merge. Fazer lookup dentro do componente via state.
 
-**FPGPage — torneio resolvido pela URL, não por displayList[selected]** — o detalhe usa `cur = displayList[selected]`, mas o `selected` é sincronizado a partir do URL (`urlTkey` → `displayList.findIndex(matchesT)`, num `useEffect`). Razão: durante load async, `tournaments`/`jovensTournaments`/`clubesTournaments` chegam em batches e cada um re-calcula o `displayList` useMemo (sort por data desc). Sem tie-breaker estável entre items com a mesma data, `displayList[selected]` aponta a torneios diferentes entre re-renders → user vê "A carregar..." preso ou outro torneio. Adicionalmente, o `handleClick` da sidebar precisa de chamar `navigate()` directamente; sem isso, o guard anti-loop do `state→URL` skipa quando `params.tkey != novo cur.tcode/ccode`, deixando o user preso na URL antiga. **Source of truth = URL**. Não tentar fixar via useState/useEffect/selectedKey complexos — leva a regressões em cascata. Resolvido 2026-04-27.
+**FPGPage — o torneio aberto sai só do URL** — `/FPG/torneio/{ccode}-{tcode}` → `resolveFpgTkey` sobre as entradas do CircuitShell da vista aberta → `selectedId`/`selectedDivKey`; a sidebar navega (`onSelectEntry`/`onSelectDivision`). Os dados chegam em lotes (jovens e drives antes dos pull-torneios): enquanto falta algum, um deep-link por resolver deixa o shell «a carregar» com um id sentinela (`tkeyPending`) — sem isso o shell abria o torneio por omissão e reescrevia o URL. O `selected`/`cur = displayList[selected]` e os efeitos URL↔estado (com o `skipNextStateUrlRef` anti-loop) saíram no passo 8 (21/10/2026): **não os voltar a pôr** — duas fontes de verdade deram ping-pong entre torneios e deep-links perdidos (2026-04). Estrutura completa em [paginas.md](paginas.md#a-fpg-por-dentro-21102026-depois-dos-passos-18).
+
+**Ficheiros que podem não existir: nunca sondar** — a /FPG e a /drive pediam `pull-torneios007…` até dois 404 seguidos e todos os meses de `drive-data`/`aquapor-data`. Hoje leem o `fpg-files-index.json` (gerado no build, `scripts/build-fpg-files-index.js`) e pedem só o que lá está. Uma série nova de ficheiros numerados → acrescentá-la ao gerador, não a um ciclo de tentativas.
+
+**Clubes em match play — «líder» e nº de jogadores** — o ficheiro do Regional de Clubes 2026 traz `playerCount: 0` e cartões de só alguns jogadores (3 de 34 no Dia 1). `clubesIndividualTournament` conta quem jogou (draws dos dois dias + confrontos, por federado; 37) e marca em `_noStrokeRankRounds` as voltas em match play ou com cartões de só parte do campo — o `ManuelResultPills` não diz «líder» nelas.
 
 ### Dados
 
@@ -295,6 +299,11 @@ testes «skipped».
   `tokens.css`; nada de fallbacks com hex (`var(--x, #fff)`).
 - `scripts/data-paths.test.js` — falha se o site pedir um `/data/…` fixo que não
   exista em `public/` (dá 404 em produção). Ficheiro que pode faltar: não o
-  pedir, ou gerá-lo vazio (como o `ffgolf-lgpidf-index.json`).
+  pedir, ou gerá-lo vazio (como o `ffgolf-lgpidf-index.json`). Os gerados no
+  build (`fpg-files-index.json`) vão em `GERADOS_NO_BUILD`, com o gerador no
+  `prebuild`.
+- `src/data/__tests__/fpgFilesIndex.test.ts` — a /FPG só pede os pull-torneios
+  do índice (zero 404); `src/pages/fpg/__tests__/fpgDeepLinks.test.ts` — os
+  deep-links 007-11011 (Sub 14) e 059-10685 (Clubes) com os dados reais.
 - `scripts/compact-deploy-json.test.js` — a compactação dos JSON no deploy
   (ver [deploy.md](deploy.md)).

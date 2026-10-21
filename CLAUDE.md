@@ -315,8 +315,10 @@ tornam o JSON inválido e a `/major` fica sem torneios nenhuns.
 - **USKids vs resto na `/uskids`:** a tab Resultados só lê `uskids-results.json`
   e os `uskids_torneios_completos(N).json`; Doral, WJGC, QDL, etc. só entram nos
   rivais. Este erro já voltou várias vezes.
-- **FPGPage: a fonte de verdade é o URL** — o torneio seleccionado sai do `tkey`;
-  a sidebar tem de chamar `navigate()`.
+- **FPGPage: a fonte de verdade é o URL** — o torneio aberto sai do `tkey`
+  (`resolveFpgTkey` → CircuitShell); a sidebar navega. Nada de `selected`/efeitos
+  URL↔estado. Ficheiros numerados/mensais lêem-se pelo `fpg-files-index.json`
+  (gerado no build), nunca sondando até dar 404. → [paginas.md](docs/claude/paginas.md)
 - **Marco Simone 2026 Boys 11:** o site mostra o score oficial com penalidade
   (R1 = 91), não o jogado (`applyResultOverrides` na `USKIDSPage`).
 - **Dados USKids:** `lengths[]` são jardas (×0,9144); `strokes[]` tem sempre 18

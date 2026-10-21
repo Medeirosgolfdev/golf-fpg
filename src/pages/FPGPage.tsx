@@ -2,16 +2,20 @@
 /**
  * FPGPage.tsx — /FPG: torneios da federação portuguesa
  *
- * Vistas: Torneios (Todos / Jovens / Clubes / STO / PJA), Ranking PJA,
- * Ranking Sub-12 e Classificações. O torneio seleccionado sai do URL (`tkey`).
+ * Vistas: Torneios (Todos / Jovens / Clubes / STO / PJA — todas pelo
+ * CircuitShell), Ranking PJA, Ranking Sub-12 e Classificações (PJARankingView)
+ * e o painel de inscrições. O torneio aberto sai só do URL (`tkey` →
+ * resolveFpgTkey → shell); não há estado do torneio na página.
  *
- * Dados e contas fora da página:
+ * Dados e contas fora da página (mapa em docs/claude/paginas.md):
  *   - src/data/fpgPageLoader.ts     — loaders (hooks) e listas derivadas
+ *   - src/data/fpgFilesIndex.ts     — que pull-torneios/drive/aquapor existem
+ *   - src/pages/fpg/fpgCircuitData.ts — torneios → entradas do CircuitShell
  *   - src/data/fpgRankingsLoader.ts — Ranking Sub-12 e Classificações
  *   - src/data/clubesFormats.ts     — formatos de equipa e match play dos Clubes
  *   - src/pages/fpg/fpgClubes.tsx   — abas «Grupos» e «Match Play» dos Clubes
  */
-import { useEffect, useState, useMemo, useRef, useCallback } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
 import { SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge";
@@ -53,7 +57,7 @@ import { clubesLeadingTabs, CLUBES_DEFAULT_TAB } from "./fpg/fpgClubes";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig, CircuitEntry } from "../ui/circuit/types";
 import {
-  buildFpgEntries, buildJovensEntries, buildClubesEntries, fpgRepDivision, resolveFpgTkey,
+  buildFpgEntries, buildJovensEntries, buildClubesEntries, fpgRepDivision, resolveFpgTkey, fpgMemberKey,
   FPG_CONFIG, CLUBES_CONFIG,
 } from "./fpg/fpgCircuitData";
 
@@ -77,11 +81,6 @@ function Content() {
   const navigate = useNavigate();
   const params   = useParams<{ filter?: string; sub?: string; tkey?: string }>();
 
-  // Deep-link de torneio (`/FPG/torneio/{ccode}-{tcode}`) — prioritário sobre
-  // os filtros de série. Quando presente, fazemos auto-select do torneio no
-  // useEffect mais abaixo, assim que o displayList/jovensTournaments carregar.
-  const urlTkey = params.tkey || null;
-
   // Resolver filtro inicial pela URL. Dois formatos válidos para inscrições:
   //   /FPG/jovens/inscritosCN  (canónico, nested)
   //   /FPG/inscritosCN         (atalho top-level — também funciona)
@@ -95,16 +94,6 @@ function Content() {
   // ou os atalhos /FPG/inscritosCN e /FPG/inscritos. Fica fora do CircuitShell.
   const showInscricoes = !params.tkey && (isInscritosShortcut
     || (startSeries === "jovens" && INSCRITOS_SHORTCUTS.has(urlSub)));
-  // selected=-1 inicial (independente de haver ou não params.tkey):
-  // - Com deep-link: URL→state encontra o match e chama setSelected(idx).
-  // - Sem deep-link (utilizador entra em /FPG): `cur = displayList[-1] = undefined`
-  //   → o render mostra "Selecciona um torneio" em vez de auto-seleccionar
-  //   o primeiro torneio (que ficaria em branco se não tiver scorecards).
-  // Sem esta guarda, selected=0 fazia o render mostrar displayList[0] (torneio
-  // aleatório, dependendo de qual ficheiro pull-torneios carregou primeiro)
-  // enquanto pjaExtra ou jovens ainda carregam — dando a ilusão de "várias
-  // páginas a piscar".
-  const [selected, setSelected] = useState<number>(-1);
   // Link antigo de Clubes (`/FPG/clubes?ct={ccode}-{tcode}`) → o URL canónico
   // do torneio (ver clubesCtRedirect). O <Navigate> vai no fim do render.
   const ctRedirect = clubesCtRedirect(urlSeg, location.search);
@@ -189,12 +178,6 @@ function Content() {
     [jovensTournaments, tournaments]
   );
 
-  // Anti-loop: quando o URL→state aplica actualizações de estado, levanta este
-  // flag para que o state→URL a seguir SALTE uma navegação. Sem isto o
-  // state→URL pode disparar com estado "stale" enquanto o URL→state ainda está
-  // a sincronizar, e navegar para URL errada (ping-pong entre dois torneios).
-  const skipNextStateUrlRef = useRef(false);
-
   /** Lista que alimenta o tab "Todos": pull-torneios + clubes + jovens, UMA
    *  entrada por torneio (ver dedupDisplayTournaments). Drive Tour + Aquapor
    *  NÃO entram — vivem na /drive; pjaExtraTournaments só serve o Ranking PJA. */
@@ -202,108 +185,6 @@ function Content() {
     () => buildDisplayList(dedupDisplayTournaments(tournaments, jovensTournaments)),
     [tournaments, jovensTournaments]
   );
-  const cur = displayList[selected];
-
-  // ── Deep-link: sync URL (:tkey) → estado ────────────────────────────────
-  // Ao carregar com `/FPG/torneio/{ccode}-{tcode}` (ou ao navegar para uma URL
-  // desse formato), procurar o torneio em displayList e alinhar `selected`
-  // (alimenta `cur`, usado no state→URL). A vista em si (Todos/Jovens/STO/PJA)
-  // resolve o grupo e o escalão pelo URL no CircuitShell (`shellSel`).
-  //
-  // ⚠ Regra «não arrastar para Jovens»: NÃO forçar setSeriesFilter("jovens")
-  // aqui — antes fazia-se e clicar num torneio Nacional Jovens a partir do tab
-  // "Todos" arrastava o utilizador para o tab "Jovens". O "Todos" já mostra os
-  // mesmos torneios com escalão-tabs no detalhe. Um deep-link externo
-  // (`/FPG/torneio/...`) abre em Todos; vindo de Jovens, fica em Jovens (o
-  // effect do urlSeg não mexe na série quando há :tkey).
-  useEffect(() => {
-    if (!urlTkey || displayList.length === 0) return;
-    const parsed = parseTournKey(urlTkey);
-    if (!parsed) return;
-    const { ccode, tcode } = parsed;
-    const matchesT = (t: Tournament) =>
-      t.ccode === ccode && (
-        t.tcode === tcode ||
-        // Torneios sintéticos (multi-dia) guardam tcode como "10935+10936" — match contém
-        (t.tcode || "").split("+").includes(tcode)
-      );
-    const idx = displayList.findIndex(matchesT);
-    if (import.meta.env.DEV) console.log("[URL→state]", { urlTkey, idx, selected, seriesFilter });
-    if (idx >= 0 && idx !== selected) {
-      setSelected(idx);
-      // URL é a fonte de verdade; o state→URL não deve reagir a este alinhamento.
-      skipNextStateUrlRef.current = true;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, displayList]);
-
-  // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
-  // Quando o utilizador clica num torneio na sidebar, actualizar a URL para
-  // reflectir a selecção (`/FPG/torneio/{ccode}-{tcode}` com `replace: true`
-  // para não poluir o histórico do browser).
-  //
-  // IMPORTANTE: deps=[cur, navMode] APENAS. Não incluir `seriesFilter` nem
-  // `showInscricoes` — se incluídos, clicar num tab (ex: "SSerra" →
-  // navega para `/FPG/sto`) dispara este effect e sobrepõe a URL com
-  // `/FPG/torneio/...` (o `cur` do displayList não muda com troca de tab).
-  // O effect apenas deve disparar quando o TORNEIO muda de facto.
-  //
-  // Skip explícito (lido via closure, não por deps):
-  //   - Painel de inscrições (`showInscricoes`) — URL dedicada
-  //   - Vista Clubes — o CircuitShell é que escreve o URL do torneio
-  //
-  // Não há loop: o useEffect URL→estado acima só muda `selected` se
-  // `idx !== selected`, por isso navegar para a URL actual é no-op.
-  useEffect(() => {
-    if (showInscricoes) return;
-    if (seriesFilter === "clubes") return;
-    // Nas tabs Ranking PJA / Ranking Sub-12 a selecção de torneio não é visível
-    // e a URL deve manter-se em /FPG/rankingPJA ou /FPG/rankingSub12. Guarda
-    // dupla:
-    //  (a) navMode actual (o tab pickado no state)
-    //  (b) urlSeg actual (a URL pode já estar numa rota de ranking mesmo antes
-    //      do URL→state effect ter sincronizado o navMode — ex: load inicial
-    //      em /FPG/rankingPJA)
-    // Sem esta guarda, cada mudança em `cur` (que acontece quando o displayList
-    // carrega) sobrescreve a URL para /FPG/torneio/... e empurra o utilizador
-    // para fora do ranking.
-    if (navMode !== "torneios") return;
-    // urlSeg é sempre lowercase (.toLowerCase() em params.filter) — comparar em lowercase.
-    if (urlSeg === "rankingpja" || urlSeg === "rankingsub12" || urlSeg === "classificacoes") return;
-    // Guarda anti-loop: se o URL→state acabou de actualizar o estado, saltar
-    // esta execução — o próximo render terá estado consistente e a URL coincidirá.
-    if (skipNextStateUrlRef.current) {
-      skipNextStateUrlRef.current = false;
-      if (import.meta.env.DEV) console.log("[state→URL] SKIPPED (URL→state in flight)");
-      return;
-    }
-    const t: Tournament | undefined = cur;
-    if (!t || !t.ccode || !t.tcode) return;
-    const target = tournamentUrl("FPG", t.ccode, t.tcode);
-    // Guarda anti-race: se o URL actual já é `/FPG/torneio/{tkey}` E esse
-    // tkey NÃO corresponde ao `cur`, significa que URL→state ainda não
-    // encontrou o torneio no displayList (provavelmente pjaExtraTournaments
-    // ou jovensTournaments ainda não carregou). NÃO navegar — ficaria preso
-    // a redireccionar para o displayList[0] e o deep-link perder-se-ia.
-    // Aceitar também tcode sintético "A+B" quando o params.tkey é "A".
-    if (params.tkey) {
-      const parsed = parseTournKey(params.tkey);
-      if (parsed) {
-        const curCcode = t.ccode || "";
-        const curTcodes = String(t.tcode || "").split("+");
-        const matches = curCcode === parsed.ccode && (curTcodes.includes(parsed.tcode) || String(t.tcode) === parsed.tcode);
-        if (!matches) {
-          if (import.meta.env.DEV) console.log("[state→URL] SKIPPED — urlTkey", params.tkey, "não bate com cur", `${curCcode}-${t.tcode}`, "(aguardar URL→state)");
-          return;
-        }
-      }
-    }
-    if (import.meta.env.DEV) console.log("[state→URL]", { from: location.pathname, target, seriesFilter, tcode: t.tcode });
-    if (target && location.pathname !== target) {
-      navigate(target, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cur, navMode]);
 
   /** Índice de "edições anteriores" (clube + família do nome → edições noutros
    *  anos). Construído uma vez sobre TODOS os torneios carregados; a tab só
@@ -348,9 +229,8 @@ function Content() {
   const allEventGroups = useMemo(
     // Drive/Aquapor NÃO aparecem na sidebar da /FPG (têm a página /drive). E os
     // torneios de clubes em MATCH PLAY vivem na vista /FPG/clubes (um deep-link
-    // para eles passa para lá) — não fazem sentido na lista strokeplay "Todos" (têm 0
-    // jogadores e só um draw). Filtra-se na VISTA (não em `displayList`) para os
-    // deep-links continuarem a resolver.
+    // para eles passa para lá — ver tkeyToClubes) — não fazem sentido na lista
+    // strokeplay "Todos".
     () => buildEventGroups(
       displayList.filter(t =>
         !isDriveOrAquapor(t) && !isClubesMatchPlay(t)),
@@ -655,16 +535,12 @@ function Content() {
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
    *  - Grupo (entries.length > 1): nome simplificado + pill "N escalões" +
-   *    pills agregados de todas as entradas; clique vai à entrada activa
-   *    se `cur` já pertence ao grupo, senão vai à primeira entrada. */
+   *    pills agregados de todas as entradas. */
   function renderSidebarItem(g: EventGroup, opts: { onClick: () => void; href?: string; isActive: boolean }) {
     const isMulti = g.entries.length > 1;
-    // Entrada activa dentro do grupo (ou a primeira, se nenhuma está activa) —
-    // é dela que sai o campo/tcode/players do `tData`.
-    const activeEntryIdx = cur
-      ? g.entries.findIndex(e => e.ccode === cur.ccode && e.tcode === cur.tcode)
-      : -1;
-    const activeEntry = activeEntryIdx >= 0 ? g.entries[activeEntryIdx] : g.entries[0];
+    // Escalão aberto no URL dentro do grupo (ou o primeiro) — é dele que sai o
+    // campo/tcode/players do `tData`.
+    const activeEntry = g.entries.find(e => fpgMemberKey(e) === shellSel.divKey) ?? g.entries[0];
 
     // Pill dinâmico (REGIONAL, NACIONAL, etc.) agregando todos os tcodes do grupo.
     const allTcodes = g.entries.flatMap(e => (e.tcode || "").split("+"));

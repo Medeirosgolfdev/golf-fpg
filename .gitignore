@@ -171,3 +171,7 @@ data-archive/uskids-member-diario.jsonl
 # e os ficheiros trazem aniversários, viagens e férias da família.
 /public/c/
 .cal-secret
+
+# Índice dos pull-torneios/drive-data/aquapor-data — gerado no predev/prebuild
+# (scripts/build-fpg-files-index.js); o Vercel gera-o em cada deploy.
+/public/data/fpg-files-index.json

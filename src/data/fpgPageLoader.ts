@@ -31,7 +31,8 @@ import {
   type FpgTournamentData, type FpgAdmissionsDrawsFile,
 } from "./nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic, inferEscalao, stripEscalaoSuffix } from "./featuredTournaments";
-import { DATA_MAX, dataUrl, yearMatchesFilter, type DriveData, type FileMeta, type TournPill } from "../pages/fpg/constants";
+import { loadFpgFilesIndex, fpgFileUrls, pullTorneiosIndexOf } from "./fpgFilesIndex";
+import { yearMatchesFilter, type DriveData, type FileMeta, type TournPill } from "../pages/fpg/constants";
 import { isDriveOrAquapor, isHiddenNonManuelDrive, tournamentHasManuel, matchesTournamentSearch } from "./fpgUtils";
 import { isClubesMatchPlay } from "./clubesFormats";
 
@@ -194,47 +195,41 @@ export function useFpgPlayersDB(): { playersDB: PlayersDB; escLookup: EscLookup 
 
 /* ── pull-torneios ────────────────────────────────────────────────────── */
 
-/** Lê os pull-torneios{000…}.json em lotes paralelos de 10, até dois ficheiros
- *  em falta seguidos. Cada lote chega a `onBatch` (a sidebar enche-se aos
- *  poucos). Os links de tournament-links.json entram em `links`. */
+/** Lê os pull-torneios{000…}.json que o índice (`fpg-files-index.json`) diz
+ *  existirem, em lotes paralelos de 10 — nada de sondar nomes até dar 404. Cada
+ *  lote chega a `onBatch` (a sidebar enche-se aos poucos). Os links de
+ *  tournament-links.json entram em `links`. */
 export async function loadPullTorneios(
   onBatch: (tournaments: Tournament[], meta: FileMeta[]) => void,
   isAlive: () => boolean,
 ): Promise<{ tournaments: Tournament[]; meta: FileMeta[] } | null> {
-  const externalLinks = (await cachedFetchJson<Record<string, Record<string, string>>>("/data/tournament-links.json")
-    .catch(() => null)) ?? {};
+  const [externalLinks, filesIndex] = await Promise.all([
+    cachedFetchJson<Record<string, Record<string, string>>>("/data/tournament-links.json").catch(() => null),
+    loadFpgFilesIndex(),
+  ]);
+  const urls = fpgFileUrls(filesIndex, "pull-torneios");
   const allT: Tournament[] = [];
   const meta: FileMeta[] = [];
   const PARALLEL_BATCH = 10;
-  let stopAt = DATA_MAX;
-  for (let start = 0; start < stopAt; start += PARALLEL_BATCH) {
+  for (let start = 0; start < urls.length; start += PARALLEL_BATCH) {
     if (!isAlive()) return null;
-    const batchEnd = Math.min(start + PARALLEL_BATCH, stopAt);
-    const batch = await Promise.all(
-      Array.from({ length: batchEnd - start }, (_, k) => start + k).map(async (i) => {
-        const url = dataUrl(i);
-        try {
-          const resp = await fetch(url);
-          if (!resp.ok) return { i, url, d: null as DriveData | null, parseErr: null as string | null };
-          const d = await resp.json() as DriveData;
-          return { i, url, d, parseErr: null };
-        } catch (e) {
-          return { i, url, d: null, parseErr: String(e).slice(0, 120) };
-        }
-      })
-    );
-    let consecutiveMisses = 0;
-    let hitStop = false;
-    for (const { i, url, d, parseErr } of batch) {
+    const batch = await Promise.all(urls.slice(start, start + PARALLEL_BATCH).map(async (url) => {
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) return { url, d: null as DriveData | null, err: `HTTP ${resp.status}` };
+        return { url, d: await resp.json() as DriveData, err: null };
+      } catch (e) {
+        return { url, d: null, err: String(e).slice(0, 120) };
+      }
+    }));
+    for (const { url, d, err } of batch) {
       if (!d) {
-        if (parseErr) console.warn(`[FPGPage] Falhou a parsear ${url}: ${parseErr} — a continuar`);
-        consecutiveMisses++;
-        if (consecutiveMisses >= 2) { stopAt = i; hitStop = true; break; }
+        console.warn(`[FPGPage] Falhou ${url}: ${err} — a continuar`);
         continue;
       }
-      consecutiveMisses = 0;
+      const i = pullTorneiosIndexOf(url);
       const normalised = (d.tournaments || []).map(t => {
-        const extLinks = externalLinks[String(t.tcode)];
+        const extLinks = externalLinks?.[String(t.tcode)];
         return { ...t, _sourceFile: url, _sourceIndex: i,
           players: t.players.map(normalizePlayer),
           ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}) };
@@ -243,7 +238,6 @@ export async function loadPullTorneios(
       meta.push({ file: url, index: i, lastUpdated: d.lastUpdated, source: d.source, count: normalised.length });
     }
     if (isAlive()) onBatch([...allT], [...meta]);
-    if (hitStop) break;
   }
   return { tournaments: allT, meta };
 }
@@ -312,7 +306,6 @@ export interface FpgMainData {
   tournaments: Tournament[];
   fileMeta: FileMeta[];
   loading: boolean;
-  loadingMsg: string;
   error: string | null;
   clubesTournaments: Tournament[];
   clubesLoaded: boolean;
@@ -328,7 +321,6 @@ export function useFpgMainData(): FpgMainData {
   const [tournaments, setTournaments] = useState<Tournament[]>([]);
   const [fileMeta, setFileMeta] = useState<FileMeta[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
   const [error, setError] = useState<string | null>(null);
   const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
   const [clubesLoaded, setClubesLoaded] = useState(false);
@@ -356,10 +348,9 @@ export function useFpgMainData(): FpgMainData {
         const pulled = await loadPullTorneios((ts, meta) => {
           setTournaments(ts);
           setFileMeta(meta);
-          setLoadingMsg(`A carregar... ${meta.length} ficheiro(s) · ${ts.length} torneios`);
         }, () => alive);
         if (!pulled || !alive) return;
-        if (pulled.tournaments.length === 0) setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
+        if (pulled.tournaments.length === 0) setError("Sem torneios: nenhum pull-torneios*.json no índice /data/fpg-files-index.json");
         const [{ idx }, clubes] = await Promise.all([admP, clubesP]);
         if (alive) {
           setTournaments([...pulled.tournaments.map(t => enrichAdmDraws(t, idx)), ...clubes]);
@@ -373,7 +364,7 @@ export function useFpgMainData(): FpgMainData {
     return () => { alive = false; };
   }, []);
 
-  return { tournaments, fileMeta, loading, loadingMsg, error, clubesTournaments, clubesLoaded, clubesMeta };
+  return { tournaments, fileMeta, loading, error, clubesTournaments, clubesLoaded, clubesMeta };
 }
 
 /* ── Jovens ───────────────────────────────────────────────────────────── */
@@ -554,19 +545,10 @@ export function useFpgJovensData(): FpgJovensData {
 
 /* ── PJA (Drive Tour + Aquapor mensais) ───────────────────────────────── */
 
-/** drive-data/aquapor-data de todos os meses desde `startYear` até ao actual,
- *  em paralelo (muitos meses não existem — falham em silêncio). */
-async function loadMonthly(prefix: string, startYear: number): Promise<Tournament[]> {
-  const now = new Date();
-  const curYear = now.getFullYear();
-  const curMonth = now.getMonth() + 1;
-  const urls: string[] = [];
-  for (let y = startYear; y <= curYear; y++) {
-    const endMonth = (y === curYear) ? curMonth : 12;
-    for (let m = 1; m <= endMonth; m++) {
-      urls.push(`/data/${prefix}-${y}-${String(m).padStart(2, "0")}.json`);
-    }
-  }
+/** drive-data/aquapor-data desde `startYear`, em paralelo — só os meses que o
+ *  índice (`fpg-files-index.json`) diz existirem. */
+async function loadMonthly(prefix: "drive-data" | "aquapor-data", startYear: number): Promise<Tournament[]> {
+  const urls = fpgFileUrls(await loadFpgFilesIndex(), prefix, startYear);
   const results = await Promise.all(urls.map(async (url) => {
     try {
       const r = await fetch(url);

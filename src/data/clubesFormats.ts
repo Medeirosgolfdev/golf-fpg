@@ -14,6 +14,7 @@ import type { FpgDraw, FpgDrawFlight } from "./nacional2026Loader";
 import type { MatchPlayData, MpDia, MpMatch, MpRow } from "./clubesMatchplayTypes";
 import type { CategoriaCfg } from "../ui/ClubesCategoriasView";
 import { isManuel } from "../constants/manuel";
+import { normName } from "../utils/normName";
 
 export interface ClubesTeamFormat {
   bestNByRound?: number[];
@@ -279,17 +280,69 @@ export function matchPlayDia1Draw(mp: MatchPlayData): FpgDraw | undefined {
   return { name: `Draw — ${dia1.modalidade ?? "R1"}`, date: dia1.date, totalJogadores: total, groups: flights };
 }
 
+/** Quem jogou cada dia de um match play: o draw desse dia (`dia1`/`dia2`) mais
+ *  os jogadores dos confrontos desse dia, em todas as categorias. A chave é o
+ *  federado; sem ele, o federado que o mesmo nome tem noutro registo (o draw
+ *  do Dia 2 traz «António Spínola» sem fed), senão o nome normalizado. */
+export function matchPlayFieldByDay(mp: MatchPlayData): Map<number, Set<string>> {
+  const regs: { dia: number; name?: string; fed?: string }[] = [];
+  ([[1, mp.dia1], [2, mp.dia2]] as const).forEach(([dia, draw]) => {
+    for (const groups of Object.values(draw?.groups ?? {}))
+      for (const g of groups) for (const p of g.players) regs.push({ dia, name: p.name, fed: p.fed });
+  });
+  for (const cat of mp.categories)
+    for (const dia of cat.dias)
+      for (const m of dia.matches ?? [])
+        for (const p of Object.values(m.players ?? {})) regs.push({ dia: dia.dia, name: p.name, fed: p.fed });
+  const fedByName = new Map<string, string>();
+  for (const r of regs) if (r.fed && r.name) fedByName.set(normName(r.name), r.fed);
+  const out = new Map<number, Set<string>>();
+  for (const r of regs) {
+    const nm = r.name ? normName(r.name) : "";
+    const key = r.fed ?? fedByName.get(nm) ?? (nm ? `n:${nm}` : null);
+    if (!key) continue;
+    if (!out.has(r.dia)) out.set(r.dia, new Set());
+    out.get(r.dia)!.add(key);
+  }
+  return out;
+}
+
+/** Nº de jogadores de um match play: todos os que jogaram (os 3 clubes × as
+ *  categorias, nos dois dias), cada um uma vez. */
+export function matchPlayPlayerCount(mp: MatchPlayData): number {
+  const all = new Set<string>();
+  for (const s of matchPlayFieldByDay(mp).values()) for (const k of s) all.add(k);
+  return all.size;
+}
+
 /** O torneio de clubes como o tab Individual o mostra: num match play com
- *  cartões, os jogadores saem dos confrontos e o Dia 1 entra como "Draw R1". */
+ *  cartões, os jogadores saem dos confrontos e o Dia 1 entra como "Draw R1".
+ *  `playerCount` passa a ser o de quem jogou os confrontos (o ficheiro traz 0).
+ *  `_noStrokeRankRounds`: as voltas sem classificação por pancadas — dia em
+ *  match play, ou com cartões de só parte do campo (no Regional 2026 há 3
+ *  cartões de 34 jogadores no Dia 1); aí não se diz «líder» a ninguém. */
 export function clubesIndividualTournament(t: Tournament): Tournament {
   const mp = clubesFormatOf(t)?.matchPlay ? t.matchPlayResults : undefined;
   const mpPlayers = mp ? matchPlayToPlayers(mp) : [];
   const draw1 = mp ? matchPlayDia1Draw(mp) : undefined;
   const existing: Record<string, FpgDraw> = t._draws ?? {};
-  return {
+  const out: Tournament = {
     ...t,
     ...(mpPlayers.length > 0 ? { players: mpPlayers } : {}),
     _draws: draw1 ? { "1": draw1, ...existing } : existing,
+  };
+  if (!mp) return out;
+  const field = matchPlayFieldByDay(mp);
+  const noRank = [...field.keys()].filter(dia => {
+    const draw = dia === 1 ? mp.dia1 : dia === 2 ? mp.dia2 : undefined;
+    const matchPlayDay = /match/i.test(draw?.modalidade ?? "match");
+    const cards = mpPlayers.filter(p => p.roundScores?.some(r => r.round === dia)).length;
+    return matchPlayDay || cards < field.get(dia)!.size;
+  }).sort((a, b) => a - b);
+  return {
+    ...out,
+    playerCount: matchPlayPlayerCount(mp) || t.playerCount,
+    ...(noRank.length ? { _noStrokeRankRounds: noRank } : {}),
   };
 }
 

@@ -148,7 +148,7 @@ export function buildClubesEntries(clubes: FPGTournament[]): CircuitEntry[] {
       dateStart: t.date,
       memberIds: [key],
       escalao,
-      playerCount: t.playerCount || results.players.length,
+      playerCount: results.playerCount || results.players.length,
       divisionCount: 1,
       hasManuel,
       divisions: [{

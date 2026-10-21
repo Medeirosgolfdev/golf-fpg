@@ -4,18 +4,11 @@
  * Reusável por outras páginas que precisem de:
  *  - Filtrar torneios por ano (PRE_2020_KEY, yearMatchesFilter)
  *  - Reconhecer torneios PJA pelo tcode (TOURN_PILLS)
- *  - Carregar pull-torneios*.json (DATA_BASE_URL, dataUrl, FileMeta, DriveData)
+ *  - Tipos dos pull-torneios*.json (FileMeta, DriveData); a lista dos ficheiros
+ *    vem de src/data/fpgFilesIndex.ts
  */
 import type { Tournament } from "../../data/fpgTypes";
 import { PJA_TCODES } from "../../../ranking-pja/pja-rules.mjs";
-
-/* ─────────────────────────────────────────────
-   CONFIGURAÇÃO
-   ───────────────────────────────────────────── */
-const DATA_BASE_URL = "/data/pull-torneios";   // prefixo dos ficheiros
-const DATA_EXT      = ".json";                  // extensão
-const DATA_DIGITS   = 3;                        // 000, 001, 002 ...
-export const DATA_MAX      = 50;                       // segurança: parar após N ficheiros
 
 export type TournPill = "REGIONAL" | "NACIONAL" | "INTL" | "PJA" | "SSERRA";
 
@@ -55,11 +48,6 @@ export const TOURNAMENT_EXTRA_LINKS: Record<string, Array<{ label: string; url: 
   ],
 };
 
-
-/** Constrói o URL de um índice: 0 → /data/pull-torneios000.json */
-export function dataUrl(idx: number): string {
-  return DATA_BASE_URL + String(idx).padStart(DATA_DIGITS, "0") + DATA_EXT;
-}
 
 export interface FileMeta {
   file: string; index: number;

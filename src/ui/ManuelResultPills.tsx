@@ -26,7 +26,10 @@ export default function ManuelResultPills({ tournament, label }: { tournament: T
       .map((p) => (p.roundScores || []).find((x) => x.round === rs.round))
       .filter((x): x is NonNullable<typeof x> => !!x && completa(x))
       .map((x) => x.gross as number));
-    const diff = Number.isFinite(leader) ? gross - leader : null;
+    // Volta sem classificação por pancadas (match play, cartões de só parte do
+    // campo): o «líder» seria só o melhor dos poucos cartões que há.
+    const ranked = !tournament._noStrokeRankRounds?.includes(rs.round);
+    const diff = ranked && Number.isFinite(leader) ? gross - leader : null;
     return { round: rs.round, gross, toPar, diff };
   });
   if (!pills.length) return null;

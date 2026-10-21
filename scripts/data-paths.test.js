@@ -29,9 +29,22 @@ function caminhos() {
   return out;
 }
 
+/** Gerados no predev/prebuild (fora do git): numa cópia acabada de clonar ainda
+ *  não existem. Verifica-se antes que o gerador corre no prebuild. */
+const GERADOS_NO_BUILD = {
+  "/data/fpg-files-index.json": "build-fpg-files-index.js",
+};
+
 describe("caminhos /data/ do site", () => {
   it("existem em public/", () => {
-    const emFalta = [...caminhos()].filter(([u]) => !fs.existsSync(path.join(ROOT, "public", u))).map(([u, f]) => `${u} (${f})`);
+    const emFalta = [...caminhos()]
+      .filter(([u]) => !(u in GERADOS_NO_BUILD) && !fs.existsSync(path.join(ROOT, "public", u)))
+      .map(([u, f]) => `${u} (${f})`);
     expect(emFalta).toEqual([]);
+  });
+
+  it("os gerados no build têm o gerador no prebuild", () => {
+    const { prebuild } = JSON.parse(fs.readFileSync(path.join(ROOT, "package.json"), "utf8")).scripts;
+    for (const script of Object.values(GERADOS_NO_BUILD)) expect(prebuild).toContain(script);
   });
 });

@@ -44,6 +44,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import MasterDetail from "../ui/MasterDetail";
+import { loadFpgFilesIndex, fpgFileUrls } from "../data/fpgFilesIndex";
 
 import type {
   Tournament,
@@ -908,50 +909,42 @@ function DriveContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, selectedDriveId, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
 
-  // Carrega todos os ficheiros mensais: {prefix}-YYYY-MM.json
-  // Itera startYear → ano corrente, todos os meses; ignora silenciosamente os que não existem (404)
-  // Retorna tornedos com `_sourceFile` preenchido + meta de cada ficheiro.
-  // startYear por prefixo (primeiro ficheiro que existe):
-  //   drive-data   → 2021 (2021-09)
-  //   aquapor-data → 2024 (2024-02)
-  // Evita dezenas de fetches a ficheiros que sabemos não existirem.
-  async function loadAllFiles(prefix: string, forceAqapor = false, startYear = 2021): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
+  // Carrega os ficheiros mensais {prefix}-YYYY-MM.json que o índice
+  // (`fpg-files-index.json`, gerado no build) diz existirem — sem sondar meses
+  // às cegas (cada mês em falta era um 404).
+  // Retorna torneios com `_sourceFile` preenchido + meta de cada ficheiro.
+  async function loadAllFiles(prefix: "drive-data" | "aquapor-data", forceAqapor = false): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
     const all: Tournament[] = [];
     const meta: DataSource[] = [];
-    const now = new Date();
-    const curYear  = now.getFullYear();
-    const curMonth = now.getMonth() + 1;
-    for (let year = startYear; year <= curYear; year++) {
-      for (let month = 1; month <= 12; month++) {
-        if (year === curYear && month > curMonth) break;
-        const mm  = String(month).padStart(2, "0");
-        const url = `/data/${prefix}-${year}-${mm}.json`;
-        try {
-          const r = await fetch(url);
-          if (!r.ok) continue;   // mês sem ficheiro → saltar (não regista 404 para não poluir o painel)
-          // Em dev, Vite faz fallback para index.html quando o ficheiro não existe
-          // (r.ok=true mas body é HTML, não JSON). Verificar Content-Type antes
-          // de parsear, senão r.json() rebenta com "unexpected character at line 1".
-          const ct = r.headers.get("content-type") || "";
-          if (!ct.includes("json")) continue;
-          const d = await r.json();
-          const tourns: Tournament[] = (d.tournaments || []).map((t: any) => {
-            const base = forceAqapor ? { ...t, series: "aquapor" as const } : t;
-            return { ...normalizeTournament(base), _sourceFile: url } as Tournament;
-          });
-          all.push(...tourns);
-          meta.push({
-            path: url,
-            status: "loaded",
-            count: tourns.length,
-            source: d.source,
-            lastUpdated: d.lastUpdated,
-            group: prefix,
-          });
-        } catch (e) {
-          meta.push({ path: url, status: "error", error: String(e), group: prefix });
-        }
+    const urls = fpgFileUrls(await loadFpgFilesIndex(), prefix);
+    const lidos = await Promise.all(urls.map(async (url) => {
+      try {
+        const r = await fetch(url);
+        if (!r.ok) return { url, error: `HTTP ${r.status}` };
+        // Em dev, o Vite responde index.html a um ficheiro que não existe
+        // (r.ok=true mas HTML): verificar o Content-Type antes de parsear.
+        const ct = r.headers.get("content-type") || "";
+        if (!ct.includes("json")) return { url, error: "não é JSON" };
+        return { url, d: await r.json() };
+      } catch (e) {
+        return { url, error: String(e) };
       }
+    }));
+    for (const { url, d, error } of lidos) {
+      if (!d) { meta.push({ path: url, status: "error", error, group: prefix }); continue; }
+      const tourns: Tournament[] = (d.tournaments || []).map((t: any) => {
+        const base = forceAqapor ? { ...t, series: "aquapor" as const } : t;
+        return { ...normalizeTournament(base), _sourceFile: url } as Tournament;
+      });
+      all.push(...tourns);
+      meta.push({
+        path: url,
+        status: "loaded",
+        count: tourns.length,
+        source: d.source,
+        lastUpdated: d.lastUpdated,
+        group: prefix,
+      });
     }
     return { tournaments: all, meta };
   }
@@ -960,8 +953,8 @@ function DriveContent() {
 
   useEffect(() => {
     Promise.all([
-      loadAllFiles("drive-data", false, 2021),
-      loadAllFiles("aquapor-data", true, 2024),
+      loadAllFiles("drive-data", false),
+      loadAllFiles("aquapor-data", true),
       loadPlayers().catch(() => ({})),
     ]).then(([driveR, aqR, pp]) => {
       const driveTourns = driveR.tournaments;

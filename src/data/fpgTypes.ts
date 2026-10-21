@@ -102,6 +102,10 @@ export interface Tournament extends BaseTournament {
   _jovensYear?: string;
   /** Clubes em match play 3-way: confrontos e pontos (ver clubesMatchplayTypes). */
   matchPlayResults?: MatchPlayData;
+  /** Voltas sem classificação por pancadas (match play, ou cartões de só parte
+   *  do campo — `clubesIndividualTournament`): o resumo do Manuel não diz
+   *  «líder» nem «+N do líder» nelas. */
+  _noStrokeRankRounds?: number[];
   /** Torneio manual (pull-torneios003.json) e a sua origem ("PJA", …). */
   _manual?: boolean;
   _origin?: string;
