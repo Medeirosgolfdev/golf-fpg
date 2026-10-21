@@ -229,6 +229,9 @@ export interface CircuitEntry {
   /** True se há ≥1 jogador português (filtro PT da toolbar). Para páginas lazy
    *  deve vir do índice; para páginas eager o shell calcula das divisões. */
   hasPt?: boolean;
+  /** True se houve hole-in-one (marcador 🕳️ na sidebar). Para páginas lazy
+   *  deve vir do índice; para páginas eager o shell calcula das divisões. */
+  hasAce?: boolean;
   /** True se há leaderboard publicado (≥1 classificado). Alimenta o toggle
    *  "Com resultados". `undefined` = desconhecido → nunca escondido pelo filtro. */
   hasResults?: boolean;

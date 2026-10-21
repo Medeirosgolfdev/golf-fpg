@@ -33,6 +33,7 @@ function caminhos() {
  *  não existem. Verifica-se antes que o gerador corre no prebuild. */
 const GERADOS_NO_BUILD = {
   "/data/fpg-files-index.json": "build-fpg-files-index.js",
+  "/data/ffg-list-index.json": "build-ffg-list-index.js",
 };
 
 describe("caminhos /data/ do site", () => {

@@ -43,6 +43,21 @@ inferidos), `ffgEntries.ts` (`loadFfgSources`, `buildFfgEntries`,
 pelos `FfgRenderers` que a página passa) e o hook `useFfgData.ts`. Testes:
 `src/data/__tests__/ffgConverters.test.ts`.
 
+**Lista lazy (21/10/2026):** a /ffg já não descarrega no arranque os ficheiros
+GolfGenius do catálogo nem os LGPIDF (eram ~5,8 MB de 7,3 MB; agora o arranque
+pede 4 ficheiros, ~1,5 MB, quase tudo o `ffgolf-resultats-index.json`). A lista
+GG/LGPIDF sai de `public/data/ffg-list-index.json`, **gerado no predev/prebuild**
+por `scripts/build-ffg-list-index.js` (fora do git, como o `fpg-files-index.json`
+— o Vercel gera-o em cada deploy, por isso nenhum workflow o regenera). O
+script empacota `src/data/ffg/listIndex.ts` com o esbuild do Vite e corre as
+mesmas funções do browser (`ggGroups` — gémeos, match play, fusão dos escalões
+do CFJ em `gg:evt:…` —, `visibleLgpidf`, `ggGroupEntry`/`lgpidfEntry`); o
+`entryListMeta` (`src/ui/circuit/entryState.ts`) guarda o que a sidebar e os
+filtros leem (★ `hasManuel`, PT `hasPt`, 🕳️ `hasAce`, `escalao`, `sex`…) e
+**lança** se uma divisão trouxer um escalão/sexo que os metadados não cobrem.
+Cada ficheiro só se pede ao abrir o torneio (`ffgListLoadDivisions`). Teste:
+`src/data/__tests__/ffgListIndex.test.ts` (entrada lazy = eager).
+
 ### Torneios+resultados por jogador — `ffgolf-player-tournaments.json` (2026-07-23)
 
 Clicar numa linha da `/ffg/info/joueurs` expande a lista de **todos os torneios

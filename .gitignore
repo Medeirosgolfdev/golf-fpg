@@ -175,3 +175,7 @@ data-archive/uskids-member-diario.jsonl
 # Índice dos pull-torneios/drive-data/aquapor-data — gerado no predev/prebuild
 # (scripts/build-fpg-files-index.js); o Vercel gera-o em cada deploy.
 /public/data/fpg-files-index.json
+
+# Lista da /ffg (GolfGenius + LGPIDF) — gerada no predev/prebuild
+# (scripts/build-ffg-list-index.js); o Vercel gera-a em cada deploy.
+/public/data/ffg-list-index.json

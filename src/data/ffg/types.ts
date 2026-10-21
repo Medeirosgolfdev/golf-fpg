@@ -6,6 +6,7 @@
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import type { MatchplayFile } from "../../ui/circuit/matchplayTypes";
+import type { CircuitEntry } from "../../ui/circuit/types";
 
 /* ── Tipos do ficheiro novo (1 torneio = 1 ficheiro) ──────────── */
 export interface CourseInfo {
@@ -374,4 +375,24 @@ export interface FFGCategoriesData {
     matches?: Record<string, { trous: number; Garcons: number; Filles: number }>;
     _status?: string;
   };
+}
+
+/* ── Índice da lista da /ffg (GolfGenius + LGPIDF), gerado no build ── */
+/** Uma entrada da lista sem as divisões: o que a sidebar e os filtros leem
+ *  (incluindo `hasPt`/`hasAce`/`escalao`, calculados das divisões no build). */
+export type FfgListMeta = Omit<CircuitEntry, "divisions" | "loadDivisions">;
+/** Um torneio GolfGenius (1 ou vários escalões fundidos) ou LGPIDF: os metadados
+ *  e o que é preciso para carregar o detalhe quando se abre. */
+export interface FfgListItem {
+  entry: FfgListMeta;
+  /** GolfGenius: os escalões (um ficheiro `ffgolf/{year}_{slug}.json` de public/data cada). */
+  gg?: CatalogEntry[];
+  /** LGPIDF: o torneio (ficheiro `ffgolf/{file}` de public/data). */
+  lgpidf?: LGPIDFIndexEntry;
+}
+/** `/data/ffg-list-index.json` — gerado por `scripts/build-ffg-list-index.js`
+ *  no predev/prebuild (fora do git). */
+export interface FfgListIndex {
+  _gerado: string;
+  items: FfgListItem[];
 }

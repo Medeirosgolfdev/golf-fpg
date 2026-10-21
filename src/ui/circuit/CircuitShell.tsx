@@ -41,10 +41,11 @@ import { useKidsLinkMap } from "../../hooks/useKidsLinkMap";
 import { isManuelByName } from "../../constants/manuel";
 import { tournamentAces } from "../../utils/aces";
 import MatchplayView from "./MatchplayView";
+import { entryManuelState, entryPtState, entryHasAce } from "./entryState";
 import EmptyState from "../EmptyState";
 import { normName, vetKey } from "../../utils/normName";
 import { monthLabel, fmtDateRangePt } from "../../utils/format";
-import type { Tournament as FPGTournament, Player as FPGPlayer } from "../../data/fpgTypes";
+import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import MasterDetail from "../MasterDetail";
 import type {
   CircuitEntry, CircuitConfig, CircuitDivision, CircuitToggle,
@@ -53,24 +54,6 @@ import type {
 
 // ── Helpers ─────────────────────────────────────────────────────────── //
 
-/** Português? via flag do adaptador (_isPortuguese) ou nome do Manuel. */
-function isPt(p: FPGPlayer): boolean {
-  return !!p._isPortuguese || isManuelByName(p.name);
-}
-
-/** O Manuel jogou neste torneio? metadata (`hasManuel`) ou divisões eager.
- *  `undefined` = desconhecido (lazy sem metadata) → não filtra (mantém visível). */
-function entryManuelState(e: CircuitEntry): boolean | undefined {
-  if (e.hasManuel != null) return e.hasManuel;
-  if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isManuelByName(p.name)));
-  return undefined;
-}
-/** Há portugueses neste torneio? metadata (`hasPt`) ou divisões eager. */
-function entryPtState(e: CircuitEntry): boolean | undefined {
-  if (e.hasPt != null) return e.hasPt;
-  if (e.divisions) return e.divisions.some(d => !!d.results?.players.some(p => isPt(p)));
-  return undefined;
-}
 /** Ligas de um entry (lista multi-liga quando existe, senão a principal). */
 function entryLigas(e: CircuitEntry): string[] {
   return e.ligas?.length ? e.ligas : e.liga ? [e.liga] : [];
@@ -113,13 +96,6 @@ function LigaPills({ entry, config, max, style }: {
     </>
   );
 }
-/** Houve hole-in-one neste torneio? Só calculável com divisões eager carregadas
- *  (páginas lazy só mostram o marcador depois de abrir o torneio, nos tabs). */
-function entryHasAce(e: CircuitEntry): boolean {
-  if (!e.divisions) return false;
-  return e.divisions.some(d => !!d.results && tournamentAces(d.results.players).length > 0);
-}
-
 const TOGGLE_DEF: Record<CircuitToggle, { label: string; title: string }> = {
   manuel:      { label: "★ Manuel",      title: "Só o Manuel" },
   pt:          { label: "🇵🇹 PT",        title: "Só jogadores portugueses" },

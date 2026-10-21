@@ -6,6 +6,11 @@
  *     os escalões do MESMO campeonato juntam-se numa entrada `gg:evt:…`
  *   - `lgpidf` (PDFs Paris-Île-de-France): inscritos, horários, totais e mapa
  *
+ * GolfGenius e LGPIDF também são LAZY desde 21/10/2026: a lista sai do índice
+ * `/data/ffg-list-index.json`, gerado no build (`scripts/build-ffg-list-index.js`
+ * → `listIndex.ts`) com estas mesmas funções; cada ficheiro só se pede quando o
+ * torneio se abre (`ffgListLoadDivisions`).
+ *
  * O que se desenha (DrawTab, totais LGPIDF, mapa do campo) entra pelos
  * `FfgRenderers` que a página passa; o resto é dados.
  *
@@ -18,7 +23,7 @@ import type { CircuitEntry, CircuitDivision, CircuitLink } from "../../ui/circui
 import type { FpgDraw } from "../nacional2026Loader";
 import type {
   FFGTournament, FFGDrawRound, Catalog, CatalogEntry, LGPIDFTournament, LGPIDFIndex, LGPIDFIndexEntry,
-  FFGResTournament, FFGResIndex, FFGResIndexEntry, FFGSerieCourse, FFGCategoriesData,
+  FFGResTournament, FFGResIndex, FFGResIndexEntry, FFGSerieCourse, FFGCategoriesData, FfgListIndex, FfgListItem,
 } from "./types";
 import { divisionLabel, ffgEscaloesOfTournament } from "./names";
 import { ffgResToFPGTournament, toFPGTournament, ffgScorecardOptions } from "./toTournament";
@@ -268,45 +273,136 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
   };
 }
 
+/* ── Que torneios GolfGenius / LGPIDF entram na lista (decidido no build) ── */
+
+/** Torneios LGPIDF da lista: os que têm ficheiro e não duplicam um FFG
+ *  Officiel (mesma data + ≥2 palavras do nome). */
+export function visibleLgpidf(
+  ffgResIndex: FFGResIndex | null, lgpidfIndex: LGPIDFIndex | null, lgpidfData: Map<string, LGPIDFTournament>,
+): { meta: LGPIDFIndexEntry; data: LGPIDFTournament }[] {
+  if (!lgpidfIndex) return [];
+  const matched = new Set<string>();
+  if (ffgResIndex) {
+    for (const fe of ffgResIndex.tournaments) {
+      if (!fe.dateIso) continue;
+      for (const le of lgpidfIndex.tournaments) {
+        const lg = lgpidfData.get(`${le.year}_${le.slug}`);
+        if (!lg || lg.dateStart !== fe.dateIso) continue;
+        const fw = fe.name.toLowerCase().split(/[\s-]+/);
+        const lw = lg.tournament.toLowerCase().split(/[\s-]+/);
+        if (fw.filter((w) => w.length > 3 && lw.includes(w)).length >= 2) matched.add(`${le.year}_${le.slug}`);
+      }
+    }
+  }
+  const out: { meta: LGPIDFIndexEntry; data: LGPIDFTournament }[] = [];
+  for (const meta of lgpidfIndex.tournaments) {
+    const key = `${meta.year}_${meta.slug}`;
+    if (matched.has(key)) continue;
+    const data = lgpidfData.get(key);
+    if (data) out.push({ meta, data });
+  }
+  return out;
+}
+
+/** Torneios GolfGenius da lista, agrupados: cada grupo é UMA entrada (1 escalão
+ *  → `ggEntry`; vários escalões do mesmo campeonato → `ggMergedEntry`). */
+export function ggGroups(
+  ggCatalog: Catalog | null, ggData: Map<string, FFGTournament>, ggTwins: Set<string>,
+): { meta: CatalogEntry; data: FFGTournament }[][] {
+  if (!ggCatalog) return [];
+  // Rede de segurança: uma página GolfGenius que aloja as duas divisões
+  // (Filles + Garçons) tem slugs distintos a apontar ao MESMO gg_page e o
+  // seu leaderboard é combinado — os dois ficheiros ficam idênticos. Dedup
+  // por gg_page para não mostrar o mesmo evento duas vezes (o nome exibido
+  // vem do próprio GG, que é o título combinado real, não do slug).
+  const seenGgPage = new Set<string>();
+  const ggPairs: { meta: CatalogEntry; data: FFGTournament }[] = [];
+  for (const meta of ggCatalog.tournaments) {
+    if (!meta.gg_page) continue;
+    // Eventos não-franceses que o catálogo GG arrastou (Sage Valley/EUA,
+    // World Junior Girls/Canadá) — mesma lista do EXCLUDE_SLUGS do roster.
+    // Não pertencem à página 🇫🇷 France.
+    if (GG_NON_FR_SLUGS.has(meta.slug)) continue;
+    const key = `${meta.year}_${meta.slug}`;
+    if (seenGgPage.has(meta.gg_page)) continue;
+    const data = ggData.get(key);
+    if (!data || !data.players?.length) continue;
+    // Gémeo do portal: por regra escondemos a versão GG (o portal traz
+    // licenças + leaderboard mais rico). EXCEPÇÃO: quando a versão GG tem
+    // match play (bracket knockout) mantemo-la SEMPRE — o portal só publica
+    // o stroke play da qualificação e não representa os confrontos, logo a
+    // GG é a única fonte do match play (caso CFJ U12 Garçons 2026, que o
+    // build-france-players marcou como gémeo e desaparecia da lista).
+    const hasMatchplay = !!data.matchplay?.flights?.length;
+    if (ggTwins.has(key) && !hasMatchplay) continue; // o portal já mostra este evento
+    seenGgPage.add(meta.gg_page);
+    ggPairs.push({ meta, data });
+  }
+  // Fundir escalões do MESMO campeonato numa entrada com abas de escalão
+  // (CFJ 2026 = U12 Garçons/Filles + Benjamins/Benjamines, 4 leagues GG mas 1
+  // evento). Chave: família do nome + ano + CLUBE. Usa-se o clube (nome antes
+  // do parêntesis) e não o percurso exato — o mesmo evento joga percursos
+  // diferentes por escalão E o GG nomeia-os de forma inconsistente ("Golf du
+  // Gouverneur (Montaplan)" vs "(Montaplan CFJ 2026)" vs "(Le Breuil …)").
+  // Só funde quando há campo (para nunca fundir por engano); sem campo, solo.
+  const clubKey = (c: string) => c.toLowerCase().replace(/\s*\(.*$/, "").replace(/\s+/g, " ").trim();
+  const byEvent = new Map<string, { meta: CatalogEntry; data: FFGTournament }[]>();
+  for (const pr of ggPairs) {
+    const course = pr.data.course?.name || "";
+    const gkey = course
+      ? `${ffgEventFamilyKey(pr.meta)}|${pr.meta.year}|${clubKey(course)}`
+      : `__solo__|${pr.meta.year}_${pr.meta.slug}`;
+    if (!byEvent.has(gkey)) byEvent.set(gkey, []);
+    byEvent.get(gkey)!.push(pr);
+  }
+  return [...byEvent.values()];
+}
+
+/** Entrada completa (com divisões) de um grupo GolfGenius. */
+export function ggGroupEntry(members: { meta: CatalogEntry; data: FFGTournament }[], R: FfgRenderers): CircuitEntry {
+  return members.length > 1 ? ggMergedEntry(members, R) : ggEntry(members[0].meta, members[0].data, R);
+}
+
+/** Divisões de um item do índice da lista — os ficheiros só se pedem quando
+ *  o torneio se abre, e constroem-se com as mesmas funções do build. */
+export async function ffgListLoadDivisions(item: FfgListItem, R: FfgRenderers): Promise<CircuitDivision[]> {
+  if (item.lgpidf) {
+    const meta = item.lgpidf;
+    const data = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${meta.file}`);
+    return data ? lgpidfEntry(meta, data, R).divisions ?? [] : [];
+  }
+  const members = await Promise.all((item.gg ?? []).map(async (meta) => ({
+    meta, data: await cachedFetchJson<FFGTournament>(`/data/ffgolf/${meta.year}_${meta.slug}.json`),
+  })));
+  const ok = members.filter((m): m is { meta: CatalogEntry; data: FFGTournament } => !!m.data);
+  return ok.length ? ggGroupEntry(ok, R).divisions ?? [] : [];
+}
+
 /* ── Fontes + lista completa ── */
 
-/** Tudo o que a lista da /ffg precisa (os ficheiros pequenos carregam já; o
- *  detalhe do portal é lazy). */
+/** Tudo o que a lista da /ffg precisa. O detalhe de cada torneio (portal,
+ *  GolfGenius, LGPIDF) só carrega ao seleccioná-lo. */
 export interface FfgSources {
   ffgResIndex: FFGResIndex | null;
-  lgpidfIndex: LGPIDFIndex | null;
-  lgpidfData: Map<string, LGPIDFTournament>;
   /** Índice opcional Manuel/PT por trnId (scripts/build-ffgolf-manuel-index.js)
    *  — permite o filtro Manuel/PT na LISTA sem carregar os ~1600 ficheiros. */
   manuelIdx: Record<string, { m?: boolean; pt?: boolean }>;
-  ggCatalog: Catalog | null;
-  ggData: Map<string, FFGTournament>;
-  ggTwins: Set<string>;
+  /** GolfGenius + LGPIDF já decididos e resumidos no build
+   *  (`scripts/build-ffg-list-index.js`). */
+  listIndex: FfgListIndex | null;
   categories: FFGCategoriesData | null;
 }
 
 export const EMPTY_FFG_SOURCES: FfgSources = {
-  ffgResIndex: null, lgpidfIndex: null, lgpidfData: new Map(), manuelIdx: {},
-  ggCatalog: null, ggData: new Map(), ggTwins: new Set(), categories: null,
+  ffgResIndex: null, manuelIdx: {}, listIndex: null, categories: null,
 };
 
 /** Lê as fontes (cada uma opcional, menos o índice do portal). */
 export async function loadFfgSources(): Promise<FfgSources> {
-  const out: FfgSources = { ...EMPTY_FFG_SOURCES, lgpidfData: new Map(), ggData: new Map(), ggTwins: new Set() };
+  const out: FfgSources = { ...EMPTY_FFG_SOURCES };
   invalidateCache("/data/ffgolf-resultats-index.json");
   // FFG-Resultats: só o ÍNDICE (lazy — o detalhe carrega ao seleccionar).
   out.ffgResIndex = await cachedFetchJson<FFGResIndex>("/data/ffgolf-resultats-index.json");
-
-  // LGPIDF (PDFs Paris-Île-de-France) — eager (pequeno; permite dedup + Manuel).
-  try {
-    const lgIdx = await cachedFetchJson<LGPIDFIndex>("/data/ffgolf-lgpidf-index.json");
-    if (lgIdx) {
-      out.lgpidfIndex = lgIdx;
-      await Promise.all(lgIdx.tournaments.map(async (t) => {
-        try { const td = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${t.file}`); if (td) out.lgpidfData.set(`${t.year}_${t.slug}`, td); } catch { /* skip */ }
-      }));
-    }
-  } catch { /* lgpidf opcional */ }
 
   // Índice Manuel/PT (opcional) — alimenta o filtro da lista em modo lazy.
   try {
@@ -314,58 +410,19 @@ export async function loadFfgSources(): Promise<FfgSources> {
     if (mi?.tournaments) out.manuelIdx = mi.tournaments;
   } catch { /* opcional */ }
 
-  // Catálogo GolfGenius — torneios FFG hospedados no GG. A maioria é gémea
-  // de um evento do portal (entra por ffgres); os que NÃO têm gémeo só
-  // existem aqui e, sem este bloco, não apareciam em lado nenhum.
-  try {
-    const cat = await cachedFetchJson<Catalog>("/data/ffgolf-catalog.json");
-    if (cat) {
-      out.ggCatalog = cat;
-      await Promise.all(
-        cat.tournaments.filter((t) => t.gg_page).map(async (t) => {
-          try {
-            const td = await cachedFetchJson<FFGTournament>(`/data/ffgolf/${t.year}_${t.slug}.json`);
-            if (td) out.ggData.set(`${t.year}_${t.slug}`, td);
-          } catch { /* ficheiro em falta é normal */ }
-        }),
-      );
-    }
-  } catch { /* catálogo opcional */ }
-
-  // Gémeos GG ↔ portal: quando o mesmo evento existe nos dois sítios, o
-  // portal ganha (tem licenças) e a versão GG é escondida.
-  try {
-    const tw = await cachedFetchJson<{ twins: Record<string, unknown> }>("/data/ffgolf-gg-twins.json");
-    if (tw?.twins) out.ggTwins = new Set(Object.keys(tw.twins));
-  } catch { /* opcional */ }
+  // GolfGenius (torneios FFG hospedados no GG sem gémeo no portal — ou com
+  // match play) e LGPIDF (PDFs Paris-Île-de-France): o índice gerado no build
+  // traz a lista já filtrada, fundida e com o que a sidebar e os filtros leem.
+  try { out.listIndex = await cachedFetchJson<FfgListIndex>("/data/ffg-list-index.json"); } catch { /* opcional */ }
 
   // Catégories d'âge (Vademecum).
   try { out.categories = await cachedFetchJson<FFGCategoriesData>("/data/ffg-categories-age.json"); } catch { /* opcional */ }
   return out;
 }
 
-/** LGPIDF que duplicam um FFG Officiel (mesma data + ≥2 palavras do nome) —
- *  escondidos da lista. */
-export function matchedLgpidfKeys(src: FfgSources): Set<string> {
-  const set = new Set<string>();
-  const { ffgResIndex, lgpidfIndex, lgpidfData } = src;
-  if (!ffgResIndex || !lgpidfIndex) return set;
-  for (const fe of ffgResIndex.tournaments) {
-    if (!fe.dateIso) continue;
-    for (const le of lgpidfIndex.tournaments) {
-      const lg = lgpidfData.get(`${le.year}_${le.slug}`);
-      if (!lg || lg.dateStart !== fe.dateIso) continue;
-      const fw = fe.name.toLowerCase().split(/[\s-]+/);
-      const lw = lg.tournament.toLowerCase().split(/[\s-]+/);
-      if (fw.filter((w) => w.length > 3 && lw.includes(w)).length >= 2) set.add(`${le.year}_${le.slug}`);
-    }
-  }
-  return set;
-}
-
 /** A lista completa da /ffg. */
-export function buildFfgEntries(src: FfgSources, matchedLgKeys: Set<string>, R: FfgRenderers): CircuitEntry[] {
-  const { ffgResIndex, lgpidfIndex, lgpidfData, manuelIdx, ggCatalog, ggData, ggTwins } = src;
+export function buildFfgEntries(src: FfgSources, R: FfgRenderers): CircuitEntry[] {
+  const { ffgResIndex, manuelIdx, listIndex } = src;
   const out: CircuitEntry[] = [];
   if (ffgResIndex) {
     const seen = new Set<string>();
@@ -376,64 +433,8 @@ export function buildFfgEntries(src: FfgSources, matchedLgKeys: Set<string>, R: 
       out.push(ffgResEntry(meta, mi?.m, mi?.pt));
     }
   }
-  if (lgpidfIndex) {
-    for (const meta of lgpidfIndex.tournaments) {
-      const key = `${meta.year}_${meta.slug}`;
-      if (matchedLgKeys.has(key)) continue;
-      const data = lgpidfData.get(key);
-      if (!data) continue;
-      out.push(lgpidfEntry(meta, data, R));
-    }
-  }
-  if (ggCatalog) {
-    // Rede de segurança: uma página GolfGenius que aloja as duas divisões
-    // (Filles + Garçons) tem slugs distintos a apontar ao MESMO gg_page e o
-    // seu leaderboard é combinado — os dois ficheiros ficam idênticos. Dedup
-    // por gg_page para não mostrar o mesmo evento duas vezes (o nome exibido
-    // vem do próprio GG, que é o título combinado real, não do slug).
-    const seenGgPage = new Set<string>();
-    const ggPairs: { meta: CatalogEntry; data: FFGTournament }[] = [];
-    for (const meta of ggCatalog.tournaments) {
-      if (!meta.gg_page) continue;
-      // Eventos não-franceses que o catálogo GG arrastou (Sage Valley/EUA,
-      // World Junior Girls/Canadá) — mesma lista do EXCLUDE_SLUGS do roster.
-      // Não pertencem à página 🇫🇷 France.
-      if (GG_NON_FR_SLUGS.has(meta.slug)) continue;
-      const key = `${meta.year}_${meta.slug}`;
-      if (seenGgPage.has(meta.gg_page)) continue;
-      const data = ggData.get(key);
-      if (!data || !data.players?.length) continue;
-      // Gémeo do portal: por regra escondemos a versão GG (o portal traz
-      // licenças + leaderboard mais rico). EXCEPÇÃO: quando a versão GG tem
-      // match play (bracket knockout) mantemo-la SEMPRE — o portal só publica
-      // o stroke play da qualificação e não representa os confrontos, logo a
-      // GG é a única fonte do match play (caso CFJ U12 Garçons 2026, que o
-      // build-france-players marcou como gémeo e desaparecia da lista).
-      const hasMatchplay = !!data.matchplay?.flights?.length;
-      if (ggTwins.has(key) && !hasMatchplay) continue; // o portal já mostra este evento
-      seenGgPage.add(meta.gg_page);
-      ggPairs.push({ meta, data });
-    }
-    // Fundir escalões do MESMO campeonato numa entrada com abas de escalão
-    // (CFJ 2026 = U12 Garçons/Filles + Benjamins/Benjamines, 4 leagues GG mas 1
-    // evento). Chave: família do nome + ano + CLUBE. Usa-se o clube (nome antes
-    // do parêntesis) e não o percurso exato — o mesmo evento joga percursos
-    // diferentes por escalão E o GG nomeia-os de forma inconsistente ("Golf du
-    // Gouverneur (Montaplan)" vs "(Montaplan CFJ 2026)" vs "(Le Breuil …)").
-    // Só funde quando há campo (para nunca fundir por engano); sem campo, solo.
-    const clubKey = (c: string) => c.toLowerCase().replace(/\s*\(.*$/, "").replace(/\s+/g, " ").trim();
-    const byEvent = new Map<string, { meta: CatalogEntry; data: FFGTournament }[]>();
-    for (const pr of ggPairs) {
-      const course = pr.data.course?.name || "";
-      const gkey = course
-        ? `${ffgEventFamilyKey(pr.meta)}|${pr.meta.year}|${clubKey(course)}`
-        : `__solo__|${pr.meta.year}_${pr.meta.slug}`;
-      if (!byEvent.has(gkey)) byEvent.set(gkey, []);
-      byEvent.get(gkey)!.push(pr);
-    }
-    for (const members of byEvent.values()) {
-      out.push(members.length > 1 ? ggMergedEntry(members, R) : ggEntry(members[0].meta, members[0].data, R));
-    }
+  for (const item of listIndex?.items ?? []) {
+    out.push({ ...item.entry, loadDivisions: () => ffgListLoadDivisions(item, R) });
   }
   return out;
 }

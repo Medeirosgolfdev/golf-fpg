@@ -7,7 +7,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { CircuitEntry } from "../../ui/circuit/types";
 import type { FFGCategoriesData } from "./types";
-import { EMPTY_FFG_SOURCES, buildFfgEntries, loadFfgSources, matchedLgpidfKeys, type FfgRenderers, type FfgSources } from "./ffgEntries";
+import { EMPTY_FFG_SOURCES, buildFfgEntries, loadFfgSources, type FfgRenderers, type FfgSources } from "./ffgEntries";
 
 export interface FfgData {
   entries: CircuitEntry[];
@@ -29,9 +29,7 @@ export function useFfgData(R: FfgRenderers): FfgData {
     return () => { alive = false; };
   }, []);
 
-  // Match LGPIDF → FFG por data+nome (esconde os LGPIDF que duplicam um FFG Officiel).
-  const matchedLgKeys = useMemo(() => matchedLgpidfKeys(sources), [sources]);
-  const entries = useMemo(() => buildFfgEntries(sources, matchedLgKeys, R), [sources, matchedLgKeys, R]);
+  const entries = useMemo(() => buildFfgEntries(sources, R), [sources, R]);
 
   return { entries, categories: sources.categories, loading };
 }
