@@ -786,9 +786,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                   <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 6 }}>
                     {curDivisions.map(d => {
                       const active = d.key === curDiv.key;
-                      // Sem resultados, os inscritos (torneios por disputar — /uskids).
+                      // Sem resultados, os inscritos (torneios por disputar — /uskids;
+                      // na FPG/Jovens o torneio vem só com `playerCount` das inscrições).
                       const nP = d.results?.players.length
-                        ?? d.admissions?.players?.filter(p => p.status !== "desistente").length ?? 0;
+                        || d.results?.playerCount
+                        || d.admissions?.players?.filter(p => p.status !== "desistente").length || 0;
                       const nAces = d.results ? tournamentAces(d.results.players).length : 0;
                       return (
                         <button

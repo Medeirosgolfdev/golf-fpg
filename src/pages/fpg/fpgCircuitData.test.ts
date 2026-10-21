@@ -1,7 +1,10 @@
 import { describe, it, expect } from "vitest";
 import type { Tournament, Player } from "../../data/fpgTypes";
-import type { EventGroup } from "../../ui/InscricoesComponents";
-import { buildFpgEntries, buildFpgDivisions, fpgMemberKey, fpgDivLabel, fpgRepDivision } from "./fpgCircuitData";
+import { buildJovensGroups, type EventGroup } from "../../ui/InscricoesComponents";
+import {
+  buildFpgEntries, buildFpgDivisions, buildJovensEntries, fpgMemberKey, fpgDivLabel,
+  fpgRepDivision, resolveFpgTkey,
+} from "./fpgCircuitData";
 import { parseTournKey } from "../../utils/format";
 
 const mkPlayer = (name: string, fedCode?: string): Player =>
@@ -119,5 +122,67 @@ describe("fpgDivLabel", () => {
   });
   it("sem escalao nem sufixo → dd/mm", () => {
     expect(fpgDivLabel(mkT({ ccode: "0", tcode: "1", name: "Circuito Junior", date: "2026-03-08" }), "Circuito Junior")).toBe("08/03");
+  });
+});
+
+// ── Vista Jovens (/FPG/jovens) no CircuitShell ─────────────────────────────
+// Regional de Jovens da Madeira 2026 (clube 007): dois tcodes no mesmo dia,
+// Sub 10&12 (11010) e Sub 14 a 24 (11011) — um evento, dois escalões.
+describe("buildJovensEntries — Regional multi-escalão 007", () => {
+  const sub10 = mkT({
+    ccode: "007", tcode: "11010", date: "2026-04-17", escalao: "Sub 10",
+    name: "Campeonato Regional de Jovens Sub 10&12 2026", campo: "Santo da Serra",
+    players: [mkPlayer("A"), mkPlayer("B")], playerCount: 2,
+  });
+  const sub14 = mkT({
+    ccode: "007", tcode: "11011", date: "2026-04-17", escalao: "Sub 14",
+    name: "Campeonato Regional de Jovens Sub 14 a 24 2026", campo: "Santo da Serra",
+    players: [mkPlayer("C"), MANUEL(), mkPlayer("D")], playerCount: 3,
+  });
+  const groups = buildJovensGroups([sub10, sub14]);
+  const entries = buildJovensEntries(groups);
+
+  it("um evento → uma entrada com uma divisão por tcode (a chave é a do URL)", () => {
+    expect(groups).toHaveLength(1);
+    expect(entries).toHaveLength(1);
+    expect(entries[0].id).toBe(groups[0].key);
+    expect(entries[0].memberIds).toEqual(["007-11010", "007-11011"]);
+    expect(entries[0].divisions!.map(d => d.results)).toEqual([sub10, sub14]);
+    expect(entries[0].year).toBe(2026);
+    expect(entries[0].playerCount).toBe(5);
+    expect(entries[0].hasManuel).toBe(true);
+  });
+  it("/FPG/torneio/007-11011 abre o mesmo evento no escalão Sub 14 a 24", () => {
+    expect(resolveFpgTkey(entries, "007-11011")).toEqual({ id: entries[0].id, divKey: "007-11011" });
+    expect(resolveFpgTkey(entries, "007-11010")).toEqual({ id: entries[0].id, divKey: "007-11010" });
+  });
+  it("a divisão por omissão é a do Manuel", () => {
+    expect(fpgRepDivision(entries[0].divisions!)!.key).toBe("007-11011");
+  });
+});
+
+describe("buildJovensEntries — ano da edição e torneios por disputar", () => {
+  it("o ano vem de _jovensYear (o que agrupa a sidebar), não da data", () => {
+    const t = mkT({ ccode: "000", tcode: "9001", name: "Campeonato Nacional de Jovens", date: "2019-01-05", escalao: "Sub 12", _jovensYear: "2018" } as Partial<Tournament> & { ccode: string; tcode: string; name: string; date: string });
+    const [e] = buildJovensEntries(buildJovensGroups([t]));
+    expect(e.year).toBe(2018);
+  });
+  it("sem jogadores (só inscrições) conta o playerCount", () => {
+    const t = mkT({ ccode: "000", tcode: "10941", name: "Campeonato Nacional de Jovens Sub 12", date: "2026-05-01", escalao: "Sub 12", players: [], playerCount: 19 });
+    const [e] = buildJovensEntries(buildJovensGroups([t]));
+    expect(e.playerCount).toBe(19);
+  });
+});
+
+describe("resolveFpgTkey", () => {
+  const t = mkT({ ccode: "000", tcode: "10935+10936", name: "Nacional", date: "2026-05-01", escalao: "Sub 12" });
+  const entries = buildFpgEntries([mkGroup({ key: "g1", date: "2026-05-01", name: "Nacional", entries: [t] })]);
+  it("tcode sintético A+B: o URL leva só um dos tcodes", () => {
+    expect(resolveFpgTkey(entries, "000-10936")).toEqual({ id: "g1", divKey: "000-10935+10936" });
+  });
+  it("sem tkey, tkey inválido ou de outro clube → vazio", () => {
+    expect(resolveFpgTkey(entries, undefined)).toEqual({});
+    expect(resolveFpgTkey(entries, "lixo")).toEqual({});
+    expect(resolveFpgTkey(entries, "007-10935")).toEqual({});
   });
 });

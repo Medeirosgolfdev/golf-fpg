@@ -1,8 +1,9 @@
 /**
  * src/pages/fpg/fpgCircuitData.ts
  *
- * Adaptador FPG → CircuitShell para as vistas "Todos" / "Santo da Serra" / "PJA"
- * da FPGPage (o separador "Torneios", excl. Clubes/Jovens, que têm UI própria).
+ * Adaptador FPG → CircuitShell para as vistas "Todos" / "Jovens" / "Santo da
+ * Serra" / "PJA" da FPGPage (o separador "Torneios", excl. Clubes, que tem UI
+ * própria).
  *
  * Converte os `EventGroup` da FPG (um evento = N escalões, cada escalão é um
  * `Tournament` com o seu ccode/tcode) no contrato `CircuitEntry[]` que o
@@ -18,9 +19,10 @@
  * (sem React) e testável isoladamente.
  */
 import type { Tournament as FPGTournament } from "../../data/fpgTypes";
-import type { EventGroup } from "../../ui/InscricoesComponents";
+import type { EventGroup, JovensGroup } from "../../ui/InscricoesComponents";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import { tournamentHasManuel } from "../../data/fpgUtils";
+import { parseTournKey } from "../../utils/format";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
 export function fpgMemberKey(t: FPGTournament): string {
@@ -100,6 +102,46 @@ export function buildFpgEntries(groups: EventGroup[]): CircuitEntry[] {
       divisions,
     };
   });
+}
+
+/** Entradas da vista Jovens (/FPG/jovens). Iguais às de `buildFpgEntries`
+ *  (um evento = uma entrada, um escalão = uma divisão e um tcode no URL), com
+ *  duas diferenças:
+ *   - o ano é o da edição (`JovensGroup.year`, vindo de `_jovensYear`), que é o
+ *     que agrupa a sidebar — não o da data;
+ *   - a contagem de jogadores usa `playerCount` quando os `players` ainda estão
+ *     vazios (torneios por disputar, só com inscrições). */
+export function buildJovensEntries(groups: JovensGroup[]): CircuitEntry[] {
+  return buildFpgEntries(groups).map((e, i) => {
+    const g = groups[i];
+    const y = parseInt(g.year, 10);
+    return {
+      ...e,
+      year: Number.isFinite(y) ? y : e.year,
+      playerCount: g.entries.reduce((s, t) => s + (t.players.length || t.playerCount || 0), 0),
+    };
+  });
+}
+
+/** Deep-link `/FPG/torneio/{ccode}-{tcode}` → (entrada, escalão) do shell. Um
+ *  membro pode ter tcode sintético "A+B" (multi-dia); o URL canónico usa só o
+ *  1º tcode, por isso o match parte o "+". Sem `tkey` ou sem match → ambos
+ *  `undefined` (o shell aplica o seu default). */
+export function resolveFpgTkey(entries: CircuitEntry[], tkey: string | null | undefined): { id?: string; divKey?: string } {
+  if (!tkey) return {};
+  const parsed = parseTournKey(tkey);
+  if (!parsed) return {};
+  const matches = (memberKey: string) => {
+    const mp = parseTournKey(memberKey);
+    if (!mp || String(mp.ccode) !== String(parsed.ccode)) return false;
+    const mt = String(mp.tcode ?? "");
+    return mt === String(parsed.tcode) || mt.split("+").includes(String(parsed.tcode));
+  };
+  for (const e of entries) {
+    const d = e.divisions?.find(dv => matches(dv.key));
+    if (d) return { id: e.id, divKey: d.key };
+  }
+  return {};
 }
 
 /** Divisão representativa de um grupo (para o URL default): a do Manuel, senão

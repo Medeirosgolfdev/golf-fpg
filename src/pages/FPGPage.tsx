@@ -62,7 +62,7 @@ import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { fpgMatchplayTabs, useFpgMatchplay, type FpgMatchplayData } from "./fpg/fpgMatchplay";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig } from "../ui/circuit/types";
-import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
+import { buildFpgEntries, buildJovensEntries, fpgRepDivision, resolveFpgTkey, FPG_CONFIG } from "./fpg/fpgCircuitData";
 import MasterDetail from "../ui/MasterDetail";
 
 /** Junta o tab do Match Play (Taça da Federação) e o da Ordem de Mérito (CGSS)
@@ -109,8 +109,10 @@ function Content() {
   const startSeries: SeriesKey = isInscritosShortcut
     ? "jovens"
     : (URL_TO_FILTER[urlSeg] ?? "");
-  const startInscritos = isInscritosShortcut
-    || (startSeries === "jovens" && INSCRITOS_SHORTCUTS.has(urlSub));
+  // Painel de inscrições (InscricoesPanel) — sai só do URL: /FPG/jovens/inscritosCN
+  // ou os atalhos /FPG/inscritosCN e /FPG/inscritos. Fica fora do CircuitShell.
+  const showInscricoes = !params.tkey && (isInscritosShortcut
+    || (startSeries === "jovens" && INSCRITOS_SHORTCUTS.has(urlSub)));
   // selected=-1 inicial (independente de haver ou não params.tkey):
   // - Com deep-link: URL→state encontra o match e chama setSelected(idx).
   // - Sem deep-link (utilizador entra em /FPG): `cur = displayList[-1] = undefined`
@@ -130,7 +132,7 @@ function Content() {
     URL_TO_NAV[urlSeg] ?? "torneios"
   );
   const [seriesFilter, setSeriesFilter] = useState<"" | "circuit" | "santo" | "clubes" | "jovens">(
-    (startInscritos || urlSeg === "jovens") ? "jovens" : ""
+    (showInscricoes || urlSeg === "jovens") ? "jovens" : ""
   );
   const [yearFilter, setYearFilter]    = useState<string | null>(() => searchParams.get("year"));
   const [filterManuel, setFilterManuel] = useState(() => searchParams.get("manuel") !== "0");
@@ -149,7 +151,6 @@ function Content() {
   const { pjaExtraTournaments, pjaExtraReady, pjaMembers, pjaPdfSnapshot } = useFpgPjaExtra();
   // Jovens: arrancam no mount, para aparecerem também em "Todos".
   const { jovensTournaments, jovensLoaded, jovensMeta, admissionsMeta } = useFpgJovensData();
-  const jovensLoading = !jovensLoaded;
   // Ranking Sub-12 e Classificações: ficheiros pré-construídos, lidos ao abrir o tab.
   const { tournaments: sub12Tournaments, loading: sub12Loading } = useLazyRanking(SUB12_RANKING_URL, navMode === "ranking-sub12");
   const { tournaments: classifTournaments, loading: classifLoading } = useLazyRanking(CLASSIFICACOES_URL, navMode === "classificacoes");
@@ -172,13 +173,6 @@ function Content() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [yearFilter, filterManuel, searchQuery]);
-
-  // ── Estado Jovens ─────────────────────────────────────────────────────────
-  const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
-  const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
-  const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
-  // /FPG/jovens sem sub-segmento → abre na lista de torneios (a Análise foi
-  // migrada para /titulos em 2026-05-04).
 
   // ── Sync URL→seriesFilter quando o utilizador navega entre /FPG, /FPG/jovens,
   //     /FPG/sto, /FPG/clubes, /FPG/pja sem remontar a página.
@@ -203,11 +197,6 @@ function Content() {
       : (URL_TO_FILTER[urlSeg] ?? "");
     if (targetSeries !== seriesFilter) {
       setSeriesFilter(targetSeries);
-    }
-    // Se voltou para /FPG puro (sem segmento) a partir de /FPG/jovens, limpar
-    // também as views jovens-específicas que podem ter ficado activas.
-    if (urlSeg === "") {
-      if (jovensShowInscricoes) setJovensShowInscricoes(false);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlSeg, urlSub, isInscritosShortcut, params.tkey]);
@@ -264,38 +253,17 @@ function Content() {
   }, [seriesFilter, clubesLoaded, clubesList, searchParams]);
 
   // Tab JOVENS: Nacionais Jovens + sintéticos + torneios juvenis de outras
-  // fontes (pelo nome), com os filtros da página. Para torneios pré-jogo o Manuel
-  // só aparece nas inscrições/draws — `tournamentHasManuel` cobre-os.
+  // fontes (pelo nome). Ano, ★Manuel e pesquisa são os do CircuitShell (como em
+  // Todos/STO/PJA), por isso aqui só saem Drive/Aquapor e clubes em match play.
   const jovensGroups = useMemo(
-    () => buildJovensGroups(selectJovens(jovensCandidates(jovensTournaments, tournaments), { filterManuel, yearFilter, searchTerm })),
-    [jovensTournaments, tournaments, filterManuel, yearFilter, searchTerm]
+    () => buildJovensGroups(selectJovens(jovensCandidates(jovensTournaments, tournaments), { filterManuel: false, yearFilter: null, searchTerm: "" })),
+    [jovensTournaments, tournaments]
   );
 
-  const jovensByYear = useMemo(() => {
-    const m: Record<string, JovensGroup[]> = {};
-    for (const g of jovensGroups) {
-      if (!m[g.year]) m[g.year] = [];
-      m[g.year].push(g);
-    }
-    return m;
-  }, [jovensGroups]);
-  const jovensYears = useMemo(() => Object.keys(jovensByYear).sort().reverse(), [jovensByYear]);
-  // Quando jovensGroupKey é null (estado inicial em /FPG/jovens, sem deep-link)
-  // NÃO fazer fallback para jovensGroups[0]. Senão o auto-select escolhe sempre
-  // o grupo mais futuro (Nacional 2026-05-01 > Regional 2026-04-17), faz
-  // state→URL navegar para essa URL, e o utilizador é "atirado" para o Nacional
-  // ao abrir Jovens. Com null, render mostra "Selecciona um torneio" e a URL
-  // fica /FPG/jovens limpa até o utilizador escolher.
-  const curJovensGroup = jovensGroupKey
-    ? (jovensGroups.find(g => g.key === jovensGroupKey) ?? null)
-    : null;
-  const curJovens = curJovensGroup?.entries[jovensEscIdx] ?? curJovensGroup?.entries[0] ?? null;
-
-  // Anti-loop: quando URL→state ou escIdx-sync aplicam actualizações de estado,
-  // levantam este flag para que o state→URL a seguir SALTE uma navegação. Sem
-  // isto o state→URL pode disparar com estado "stale" (old groupKey/escIdx)
-  // enquanto URL→state ainda está a sincronizar, e navegar para URL errada,
-  // criando ping-pong entre dois torneios. Ver logs do 2026-04-19.
+  // Anti-loop: quando o URL→state aplica actualizações de estado, levanta este
+  // flag para que o state→URL a seguir SALTE uma navegação. Sem isto o
+  // state→URL pode disparar com estado "stale" enquanto o URL→state ainda está
+  // a sincronizar, e navegar para URL errada (ping-pong entre dois torneios).
   const skipNextStateUrlRef = useRef(false);
 
   /** Lista que alimenta o tab "Todos": pull-torneios + clubes + jovens, UMA
@@ -309,20 +277,16 @@ function Content() {
 
   // ── Deep-link: sync URL (:tkey) → estado ────────────────────────────────
   // Ao carregar com `/FPG/torneio/{ccode}-{tcode}` (ou ao navegar para uma URL
-  // desse formato), procurar o torneio em displayList E em jovensTournaments
-  // e fazer DUAS actualizações em paralelo:
-  //   - se estiver em displayList → setSelected (alimenta `cur` para vistas
-  //     "Todos"/"Circuito"/"Santo")
-  //   - se estiver em jovensTournaments → setSeriesFilter("jovens") +
-  //     setJovensGroupKey (alimenta `curJovens` para a vista "Jovens")
+  // desse formato), procurar o torneio em displayList e alinhar `selected`
+  // (alimenta `cur`, usado no state→URL). A vista em si (Todos/Jovens/STO/PJA)
+  // resolve o grupo e o escalão pelo URL no CircuitShell (`shellSel`).
   //
-  // ⚠ Bug anterior: fazia early-return depois do setSelected, deixando
-  // jovensGroupKey por sincronizar. Como displayList contém os torneios de
-  // jovens (fundidos no `displayList` useMemo), o early-return triggava SEMPRE
-  // para deep-links de jovens, e o jovensGroupKey ficava preso ao default
-  // (null → fallback para jovensGroups[0] → Nacional 2026-05-01) mesmo com a
-  // URL a apontar para outro torneio (ex: Regional 007-11010). O state→URL
-  // depois reverteia a URL para o do default, criando o "loop" Nacional↔Regional.
+  // ⚠ Regra «não arrastar para Jovens»: NÃO forçar setSeriesFilter("jovens")
+  // aqui — antes fazia-se e clicar num torneio Nacional Jovens a partir do tab
+  // "Todos" arrastava o utilizador para o tab "Jovens". O "Todos" já mostra os
+  // mesmos torneios com escalão-tabs no detalhe. Um deep-link externo
+  // (`/FPG/torneio/...`) abre em Todos; vindo de Jovens, fica em Jovens (o
+  // effect do urlSeg não mexe na série quando há :tkey).
   useEffect(() => {
     if (!urlTkey || displayList.length === 0) return;
     const parsed = parseTournKey(urlTkey);
@@ -335,87 +299,34 @@ function Content() {
         (t.tcode || "").split("+").includes(tcode)
       );
     const idx = displayList.findIndex(matchesT);
-    if (import.meta.env.DEV) console.log("[URL→state]", { urlTkey, idx, selected, seriesFilter, jovensGroupKey, jovensEscIdx });
-
-    let anyUpdate = false;
-    if (idx >= 0 && idx !== selected) { setSelected(idx); anyUpdate = true; }
-
-    // Se também é um torneio de Jovens E o utilizador JÁ ESTÁ na vista Jovens,
-    // sincronizar o grupo seleccionado para refrescar os tabs de escalão.
-    //
-    // ⚠ NÃO forçar setSeriesFilter("jovens") aqui — antes fazia-se e causava
-    // um bug: clicar num torneio Nacional Jovens a partir do tab "Todos"
-    // arrastava o utilizador de volta para o tab "Jovens". O "Todos" já
-    // mostra os mesmos torneios com escalão-tabs no detalhe, por isso não
-    // há razão para mudar de tab. Para deep-links externos (`/FPG/torneio/...`)
-    // o utilizador fica em Todos por default, o que é aceitável.
-    //
-    // ⚠ NÃO pôr jovensGroups em deps — quando jovensGroups muda referência
-    // (ex: toggle filterManuel), URL→state re-fire-ava e competia com
-    // state→URL, causando loops entre torneios. O sync de jovensEscIdx é
-    // deixado ao useEffect dedicado abaixo.
-    const jovT = jovensTournaments.find(matchesT);
-    if (jovT && seriesFilter === "jovens") {
-      // Usar `entries.some(...)` em vez de construir a key: as keys agora
-      // incluem um discriminator (tcode) para suportar Phase 3 Jaccard split.
-      const grp = jovensGroups.find(g => g.entries.some(e => e.ccode === jovT.ccode && e.tcode === jovT.tcode));
-      if (grp && jovensGroupKey !== grp.key) { setJovensGroupKey(grp.key); anyUpdate = true; }
-      if (jovensShowInscricoes) { setJovensShowInscricoes(false); anyUpdate = true; }
-      // Se o torneio pedido pela URL é histórico/sem Manuel, o filtro
-      // filterManuel (default=true) escondê-lo-ia da sidebar e da view.
-      // Auto-desactiva para que o deep-link funcione sempre.
-      const tHasManuel = tournamentHasManuel(jovT);
-      if (filterManuel && !tHasManuel) { setFilterManuel(false); anyUpdate = true; }
-    }
-
-    // Se actualizámos alguma coisa, sinalizar ao state→URL para não navegar
-    // no próximo ciclo (URL é a fonte de verdade; estado está-se a alinhar).
-    if (anyUpdate) skipNextStateUrlRef.current = true;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, displayList, jovensTournaments]);
-
-  // ── Sync jovensEscIdx com o tcode exacto pedido na URL ──
-  // Quando urlTkey aponta para um torneio de Jovens numa posição do grupo
-  // diferente de entries[0] (ex: /FPG/torneio/007-11011 = Sub 14/24, posição 1),
-  // sincroniza jovensEscIdx. Separado do effect principal para evitar que deps
-  // de jovensGroups causem loops (ver comentário acima).
-  useEffect(() => {
-    if (!urlTkey || !jovensGroupKey) return;
-    const parsed = parseTournKey(urlTkey);
-    if (!parsed) return;
-    const curGroup = jovensGroups.find(g => g.key === jovensGroupKey);
-    if (!curGroup) return;
-    const escIdx = curGroup.entries.findIndex(
-      e => e.ccode === parsed.ccode && e.tcode === parsed.tcode
-    );
-    if (escIdx >= 0 && escIdx !== jovensEscIdx) {
-      setJovensEscIdx(escIdx);
-      // Guarda anti-loop: a alteração de escIdx é consequência da URL, não
-      // uma decisão nova do utilizador — o state→URL não deve reagir.
+    if (import.meta.env.DEV) console.log("[URL→state]", { urlTkey, idx, selected, seriesFilter });
+    if (idx >= 0 && idx !== selected) {
+      setSelected(idx);
+      // URL é a fonte de verdade; o state→URL não deve reagir a este alinhamento.
       skipNextStateUrlRef.current = true;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, jovensGroupKey, jovensGroups]);
+  }, [urlTkey, displayList]);
 
   // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
   // Quando o utilizador clica num torneio na sidebar, actualizar a URL para
   // reflectir a selecção (`/FPG/torneio/{ccode}-{tcode}` com `replace: true`
   // para não poluir o histórico do browser).
   //
-  // IMPORTANTE: deps=[cur, curJovens] APENAS. Não incluir `seriesFilter` nem
-  // `jovensShowInscricoes` — se incluídos, clicar num tab (ex: "SSerra" →
+  // IMPORTANTE: deps=[cur, navMode] APENAS. Não incluir `seriesFilter` nem
+  // `showInscricoes` — se incluídos, clicar num tab (ex: "SSerra" →
   // navega para `/FPG/sto`) dispara este effect e sobrepõe a URL com
   // `/FPG/torneio/...` (o `cur` do displayList não muda com troca de tab).
   // O effect apenas deve disparar quando o TORNEIO muda de facto.
   //
   // Skip explícito (lido via closure, não por deps):
-  //   - Painel de inscrições (`jovensShowInscricoes`) — URL dedicada
+  //   - Painel de inscrições (`showInscricoes`) — URL dedicada
   //   - Vista Clubes — a URL `/FPG/clubes` não conflita e a selecção é local
   //
   // Não há loop: o useEffect URL→estado acima só muda `selected` se
   // `idx !== selected`, por isso navegar para a URL actual é no-op.
   useEffect(() => {
-    if (jovensShowInscricoes) return;
+    if (showInscricoes) return;
     if (seriesFilter === "clubes") return;
     // Nas tabs Ranking PJA / Ranking Sub-12 a selecção de torneio não é visível
     // e a URL deve manter-se em /FPG/rankingPJA ou /FPG/rankingSub12. Guarda
@@ -430,17 +341,14 @@ function Content() {
     if (navMode !== "torneios") return;
     // urlSeg é sempre lowercase (.toLowerCase() em params.filter) — comparar em lowercase.
     if (urlSeg === "rankingpja" || urlSeg === "rankingsub12" || urlSeg === "classificacoes") return;
-    // Guarda anti-loop: se URL→state ou escIdx-sync acabaram de actualizar
-    // estado, esse estado pode ainda não reflectir TUDO (ex: escIdx actualizado
-    // mas groupKey acabou de mudar e entries[escIdx] aponta noutro lado). Saltar
-    // esta execução — próximo render terá estado consistente e a URL coincidirá.
+    // Guarda anti-loop: se o URL→state acabou de actualizar o estado, saltar
+    // esta execução — o próximo render terá estado consistente e a URL coincidirá.
     if (skipNextStateUrlRef.current) {
       skipNextStateUrlRef.current = false;
       if (import.meta.env.DEV) console.log("[state→URL] SKIPPED (URL→state in flight)");
       return;
     }
-    const t: Tournament | null =
-      seriesFilter === "jovens" ? curJovens : cur;
+    const t: Tournament | undefined = cur;
     if (!t || !t.ccode || !t.tcode) return;
     const target = tournamentUrl("FPG", t.ccode, t.tcode);
     // Guarda anti-race: se o URL actual já é `/FPG/torneio/{tkey}` E esse
@@ -461,12 +369,12 @@ function Content() {
         }
       }
     }
-    if (import.meta.env.DEV) console.log("[state→URL]", { from: location.pathname, target, seriesFilter, source: seriesFilter === "jovens" ? "curJovens" : "cur", tcode: t.tcode });
+    if (import.meta.env.DEV) console.log("[state→URL]", { from: location.pathname, target, seriesFilter, tcode: t.tcode });
     if (target && location.pathname !== target) {
       navigate(target, { replace: true });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cur, curJovens, navMode]);
+  }, [cur, navMode]);
 
   /** Índice de "edições anteriores" (clube + família do nome → edições noutros
    *  anos). Construído uma vez sobre TODOS os torneios carregados; a tab só
@@ -598,15 +506,18 @@ function Content() {
   );
   const santoEventGroups = useMemo(() => buildEventGroups(santoList), [santoList]);
 
-  // ── Vista de Torneios via CircuitShell (Todos / Santo da Serra / PJA) ──
-  // As três vistas de torneios usam o shell partilhado (mesmo componente de
-  // /rfeg, /drive, /major, …). Não afecta Clubes / Jovens / rankings (que têm
-  // UI própria mais abaixo). O detalhe é delegado ao TournamentDetail da FPG.
-  const shellGroups = seriesFilter === "santo" ? santoEventGroups
+  // ── Vista de Torneios via CircuitShell (Todos / Jovens / Santo da Serra / PJA) ──
+  // As vistas de torneios usam o shell partilhado (mesmo componente de /rfeg,
+  // /drive, /major, …). Não afecta Clubes / rankings (que têm UI própria mais
+  // abaixo). O detalhe é delegado ao TournamentDetail da FPG.
+  const isJovensView = seriesFilter === "jovens";
+  const shellGroups: EventGroup[] = isJovensView ? jovensGroups
+    : seriesFilter === "santo" ? santoEventGroups
     : seriesFilter === "" ? allEventGroups
     : pjaEventGroups;
   const shellEntries = useMemo(() => {
-    const ents = buildFpgEntries(shellGroups);
+    // Jovens: ano da edição e contagem de inscritos nos torneios por disputar.
+    const ents = isJovensView ? buildJovensEntries(jovensGroups) : buildFpgEntries(shellGroups);
     // Anexa o render do detalhe (delegado ao TournamentDetail da FPG, que tem
     // escLookup/playersDB em runtime) — mesmo padrão do DrivePage. As tabs
     // "Edições anteriores" vêm do índice próprio da FPG (fpgPastEditionsTabs),
@@ -619,28 +530,10 @@ function Content() {
       );
     }
     return ents;
-  }, [shellGroups, escLookup, playersDB, editionsIndex, matchplayData]);
+  }, [isJovensView, jovensGroups, shellGroups, escLookup, playersDB, editionsIndex, matchplayData]);
 
-  // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão). Um membro pode ter
-  // tcode sintético "A+B" (multi-dia); o URL canónico usa só o 1º tcode, por isso
-  // o match parte o "+".
-  const shellSel = useMemo(() => {
-    const empty = { id: undefined as string | undefined, divKey: undefined as string | undefined };
-    if (!params.tkey) return empty;
-    const parsed = parseTournKey(params.tkey);
-    if (!parsed) return empty;
-    const matches = (memberKey: string) => {
-      const mp = parseTournKey(memberKey);
-      if (!mp || String(mp.ccode) !== String(parsed.ccode)) return false;
-      const mt = String(mp.tcode ?? "");
-      return mt === String(parsed.tcode) || mt.split("+").includes(String(parsed.tcode));
-    };
-    for (const e of shellEntries) {
-      const d = e.divisions?.find(dv => matches(dv.key));
-      if (d) return { id: e.id, divKey: d.key };
-    }
-    return empty;
-  }, [params.tkey, shellEntries]);
+  // Deep-link /FPG/torneio/{ccode}-{tcode} → (grupo, escalão) — ver resolveFpgTkey.
+  const shellSel = useMemo(() => resolveFpgTkey(shellEntries, params.tkey), [params.tkey, shellEntries]);
 
   // Um drive/Aquapor pedido em /FPG/torneio/ (vem nos drive-data mensais, não
   // entra no shell) → reencaminhar para a DrivePage, onde ele vive.
@@ -687,13 +580,16 @@ function Content() {
     ...FPG_CONFIG,
     grouping: seriesFilter === "" ? "month-year" : "year",
     title: seriesFilter === "santo" ? "⛳ Santo da Serra"
-      : seriesFilter === "" ? "🇵🇹 FPG — Todos" : "🏆 PJA",
+      : seriesFilter === "" ? "🇵🇹 FPG — Todos"
+      : isJovensView ? "🏆 Jovens" : "🏆 PJA",
   };
   const shellView = (
     <CircuitShell
       entries={shellEntries}
       config={shellConfig}
-      loading={loading || tkeyPending}
+      // Jovens: os ficheiros jovens_*.json chegam à parte — sem esta espera o
+      // shell abria um juvenil dos pull-torneios e reescrevia o URL.
+      loading={loading || tkeyPending || (isJovensView && !jovensLoaded)}
       selectedId={shellSel.id ?? (tkeyPending ? "__tkey-pending__" : undefined)}
       selectedDivKey={shellSel.divKey}
       onSelectEntry={(e) => {
@@ -704,7 +600,8 @@ function Content() {
       // Paridade total da sidebar: reusa o MESMO TournSidebarItem do render
       // clássico (pills NACIONAL/JUNIOR/9H/SSerra/Clube, 🔗 por-tcode, FileBadge
       // da fonte, contagem de inscritos), mas com click/href do shell.
-      // O grupo vem por id (= EventGroup.key).
+      // O grupo vem por id (= EventGroup.key). Jovens tem item próprio (região,
+      // dd/mm, REGIONAL + escalões).
       renderSidebarItem={(entry, { active, onSelect }) => {
         const g = shellGroups.find(gr => gr.key === entry.id);
         if (!g) return null;
@@ -718,16 +615,62 @@ function Content() {
           const s = sp.toString();
           href = s ? `${path}?${s}` : path;
         }
-        return renderSidebarItem(g, { onClick: onSelect, href, isActive: active });
+        const jg = isJovensView ? jovensGroups.find(gr => gr.key === entry.id) : undefined;
+        return jg
+          ? renderJovensSidebarItem(jg, { onClick: onSelect, href, isActive: active })
+          : renderSidebarItem(g, { onClick: onSelect, href, isActive: active });
       }}
     />
   );
 
-  // Vistas de torneios servidas pelo CircuitShell (Todos/Santo/PJA). O shell traz
-  // a sua própria pesquisa + toggle de sidebar, por isso os equivalentes da
-  // toolbar exterior são escondidos aqui (evita chrome duplicado). Clubes/Jovens
-  // (master-detail próprio) e os modos Ranking/Classificações mantêm-nos.
-  const shellTorneios = navMode === "torneios" && seriesFilter !== "clubes" && seriesFilter !== "jovens";
+  // Vistas de torneios servidas pelo CircuitShell (Todos/Jovens/Santo/PJA). O
+  // shell traz a sua própria pesquisa + toggle de sidebar, por isso os
+  // equivalentes da toolbar exterior são escondidos aqui (evita chrome
+  // duplicado). Clubes (master-detail próprio), o painel de inscrições e os
+  // modos Ranking/Classificações mantêm-nos.
+  const shellTorneios = navMode === "torneios" && seriesFilter !== "clubes" && !showInscricoes;
+
+  /** Item de sidebar da vista Jovens: nome do evento, ★Manuel (também pré-jogo),
+   *  «N jog» somado dos escalões, pill REGIONAL + um EscPill por escalão e, no
+   *  rodapé, a região/organização (pelo ccode) e a data dd/mm (o ano está no
+   *  cabeçalho de secção). Sem ClubePill nem data automática do item. */
+  function renderJovensSidebarItem(g: JovensGroup, opts: { onClick: () => void; href?: string; isActive: boolean }) {
+    const t0 = g.entries[0];
+    const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
+    const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
+    const ddmm = g.date ? fmtDateShort(g.date) : "";
+    const sidebarT: SidebarItemTournament = {
+      ...t0,
+      name: g.name,
+      playerCount: totalJog,
+      escalao: null,
+      ccode: "",        // sem ClubePill automático
+      date: undefined,  // sem data automática
+      _manuelInscrito: g.entries.some(tournamentHasManuel),
+    };
+    return (
+      <TournSidebarItem
+        key={g.key}
+        t={sidebarT}
+        isActive={opts.isActive}
+        onClick={opts.onClick}
+        href={opts.href}
+        accentColor={SIDEBAR_ACCENT.tour}
+        extraPills={
+          <span className="inline-flex flex-wrap gap-3 mt-2">
+            {g.isRegional && !g.isNacional && <PillBadge pill="REGIONAL" />}
+            {g.entries.map(e => <EscPill key={e.tcode} esc={e.escalao ?? ""} />)}
+          </span>
+        }
+        footer={
+          <div className="flex-center gap-6 mt-3">
+            {regionLabel && <span className="region-pill">{regionLabel}</span>}
+            <span className="fs-11 c-muted">{ddmm}</span>
+          </div>
+        }
+      />
+    );
+  }
 
   /** Renderiza item de sidebar para uma EventGroup.
    *  - Singleton (entries.length === 1): comportamento idêntico ao anterior.
@@ -798,17 +741,18 @@ function Content() {
 
   // Controlos da barra — na barra do CircuitShell (Torneios) ou na própria (outros modos).
   const fpgLead = (<>
-          {/* Toggle exterior escondido nas vistas do shell (o shell tem o seu). */}
-          {!shellTorneios && <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />}
+          {/* Toggle exterior escondido nas vistas do shell (o shell tem o seu) e
+              no painel de inscrições (não tem sidebar). */}
+          {!shellTorneios && !showInscricoes && <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />}
           <ToolbarTitle>🏌️ FPG</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
           {/* Pesquisa exterior: nos modos Ranking/Classificações filtra jogadores;
-              em Clubes/Jovens filtra a lista. Nas vistas do shell (Torneios) é o
+              em Clubes filtra a lista. Nas vistas do shell (Torneios) é o
               shell que pesquisa, por isso esconde-se aqui. */}
           {!loading && !shellTorneios && (<>
             <ToolbarSep />
             {/* Search unificado — mesmo local e tamanho em todos os modos.
-                Filtra jogadores em Ranking PJA, a lista em Clubes/Jovens, etc.
+                Filtra jogadores em Ranking PJA, a lista em Clubes, etc.
                 O valor é partilhado (searchQuery). */}
             <div className="toolbar-search">
               <span aria-hidden="true" className="toolbar-search-icon">🔎</span>
@@ -882,7 +826,6 @@ function Content() {
                       if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
                         e.preventDefault();
                         setSeriesFilter(key);
-                        setJovensShowInscricoes(false);
                         // Preserva a query (ex.: ?manuel=0); remove `tab` (é por-torneio).
                         const _sp = new URLSearchParams(location.search);
                         _sp.delete("tab");
@@ -899,9 +842,9 @@ function Content() {
             </>)}
             {/* Pills de ano + ★Manuel exteriores: nas vistas do shell (Torneios)
                 o CircuitShell já os tem, por isso escondem-se aqui para um
-                cabeçalho limpo (estilo /ffg). Clubes/Jovens mantêm-nos (filtram
+                cabeçalho limpo (estilo /ffg). Clubes mantém-nos (filtram
                 a lista master-detail própria). */}
-            {!shellTorneios && navMode === "torneios" && availYears.length > 1 && (<>
+            {navMode === "torneios" && seriesFilter === "clubes" && availYears.length > 1 && (<>
               <ToolbarSep />
               {availYears.map(y => (
                 <button key={y}
@@ -930,14 +873,10 @@ function Content() {
             {loading
               ? <span className="muted fs-11 shrink-0"  style={{ fontStyle: "italic" }}>{loadingMsg}</span>
               : <>
-                  {/* Contadores exteriores só nos modos SEM shell (Clubes/Jovens)
-                      — nas vistas do shell o próprio CircuitShell mostra a
-                      contagem, e estes dependiam dos filtros de ano/Manuel que
-                      foram escondidos. */}
-                  {!shellTorneios && navMode === "torneios" && (() => {
-                    const count = seriesFilter === "clubes"  ? clubesList.length
-                                : seriesFilter === "jovens"  ? jovensGroups.length
-                                : 0;
+                  {/* Contador exterior só em Clubes (sem shell) — nas vistas do
+                      shell o próprio CircuitShell mostra a contagem. */}
+                  {navMode === "torneios" && seriesFilter === "clubes" && (() => {
+                    const count = clubesList.length;
                     return <span className="chip shrink-0" title={searchTerm ? `Com filtro "${searchQuery}"` : undefined}>
                       {count} torneio{count !== 1 ? "s" : ""}{searchTerm ? " ✓" : ""}
                     </span>;
@@ -1192,159 +1131,14 @@ function Content() {
         </MasterDetail>
       )}
 
-      {/* Master-detail Jovens */}
-      {navMode === "torneios" && seriesFilter === "jovens" && (
-        <MasterDetail md={md} sidebar={<>
-            {jovensLoading && <LoadingState size="sm" message="A carregar…" />}
-            {jovensLoaded && jovensGroups.length === 0 && !jovensLoading && (
-              <div className="muted fs-11 u-pad-italic">Ficheiro não encontrado (ainda)</div>
-            )}
-            {/* A entrada "📊 Análise" foi REMOVIDA de /FPG/jovens em 2026-05-04
-                — a análise agora vive exclusivamente na página dedicada /titulos
-                (acessível via tab "🏆 Títulos" da NavBar de topo). */}
-            {/* Entrada "📋 Inscrições 2026" DESACTIVADA 2026-04-27 — inscrições do
-                Nacional Sub-12 fecharam, todos 19 inscritos confirmados (sem reservas).
-                A rota /FPG/jovens/inscritosCN, o InscricoesPanel e o jovensShowInscricoes
-                state mantêm-se intactos no código para reactivação rápida em próximas
-                edições — basta voltar a `true` o flag abaixo. */}
-            {false && (
-            <a
-              href="/FPG/jovens/inscritosCN"
-              onClick={e => {
-                if (!e.ctrlKey && !e.metaKey && !e.shiftKey && e.button === 0) {
-                  e.preventDefault();
-                  setJovensShowInscricoes(true);
-                  setJovensGroupKey(null);
-                  md.onSelect();
-                  navigate("/FPG/jovens/inscritosCN");
-                }
-              }}
-              className={`course-item${jovensShowInscricoes ? " active" : ""}`}
-              style={{
-                borderLeft: `4px solid ${SIDEBAR_ACCENT.tour}`, borderRadius: "0 6px 6px 0",
-              }}
-            >
-              <div className="fw-700 fs-12">
-                📋 Inscrições 2026
-              </div>
-              <div className="muted fs-11" >Campeonatos Nacionais de Jovens</div>
-            </a>
-            )}
-            {jovensYears.map(yr => (
-              <React.Fragment key={yr}>
-                <div className="sidebar-section-title-dark">🏆 {yr}</div>
-                {jovensByYear[yr].map(g => {
-                  const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
-                  const t0 = g.entries[0];
-                  // Mapa ccode → nome de região/organização
-                  const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
-                  // Data só dd/mm (ano já está no cabeçalho de secção)
-                  const ddmm = g.date ? fmtDateShort(g.date) : "";
-                  // Manuel detection: procurar em TODAS as entries do grupo (o grupo
-                  // pode ter Sub 10 e Sub 14 do mesmo Regional — Manuel está só numa).
-                  const groupHasManuel = g.entries.some(e => tournamentHasManuel(e));
-                  const sidebarT: SidebarItemTournament = {
-                    ...t0,
-                    name: g.name,
-                    playerCount: totalJog,
-                    escalao: null,
-                    ccode: "",     // sem ClubePill automático
-                    date: undefined,  // sem data automática
-                    _manuelInscrito: groupHasManuel,
-                  };
-                  return (
-                    <TournSidebarItem
-                      key={g.key}
-                      t={sidebarT}
-                      isActive={jovensGroupKey === g.key}
-                      onClick={() => {
-                        setJovensGroupKey(g.key); setJovensEscIdx(0); setJovensShowInscricoes(false); md.onSelect();
-                        // Navegar imediatamente para a URL do torneio escolhido.
-                        // Sem isto, o state→URL effect skipa pelo guard anti-race
-                        // (params.tkey != curJovens novo) e o user fica preso na URL
-                        // antiga (ex: 007-10551?tab=draw:2). Mesmo padrão usado em
-                        // renderSidebarItem da sidebar principal. Para tcodes sintéticos
-                        // "A+B", parseTournKey aceita o primeiro tcode no URL.
-                        const t0 = g.entries[0];
-                        const firstTcode = (t0?.tcode || "").split("+")[0];
-                        if (t0?.ccode && firstTcode) {
-                          const target = tournamentUrl("FPG", t0.ccode, firstTcode);
-                          if (target && location.pathname !== target) {
-                            navigate(target, { replace: true });
-                          }
-                        } else if (/\/inscritos/i.test(location.pathname)) {
-                          // Fallback: torneio sem ccode/tcode válido → sair de /inscritos
-                          navigate("/FPG/jovens");
-                        }
-                      }}
-                      accentColor={SIDEBAR_ACCENT.tour}
-                      extraPills={
-                        <span className="flex-wrap" style={{ display: "inline-flex", gap: 3, marginTop: 2 }}>
-                          {g.isRegional && !g.isNacional && <PillBadge pill="REGIONAL" />}
-                          {g.entries.map(e => (
-                            <EscPill key={e.tcode} esc={e.escalao ?? ""} />
-                          ))}
-                        </span>
-                      }
-                      footer={
-                        <div className="mt-3" style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                          {regionLabel && (
-                            <span className="region-pill">{regionLabel}</span>
-                          )}
-                          <span className="fs-11 c-muted">{ddmm}</span>
-                        </div>
-                      }
-                    />
-                  );
-                })}
-              </React.Fragment>
-            ))}
-        </>}>
-            {jovensShowInscricoes ? (
-              <InscricoesPanel />
-            ) : curJovensGroup ? (
-              <>
-                {/* Tabs por escalão — fundo com a cor do escalão (tokens --esc-subN-*).
-                    Quando o grupo tem tanto M como F, border da cor do sexo (azul/rosa).
-                    Se o grupo tem só um sexo, sem border (não é preciso distinguir). */}
-                {curJovensGroup.entries.length > 1 && (
-                  <div style={{ display: "flex", gap: 4, padding: "8px 12px 0", flexWrap: "wrap",
-                    borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)" }}>
-                    {curJovensGroup.entries.map((e, ri) => {
-                      const active = jovensEscIdx === ri;
-                      // Estilo default (.tourn-tab / .active) — SEM cores do escalão
-                      // (ver memória "Sem cores nos botões de escalão"). Os pills
-                      // na sidebar continuam coloridos; só aqui nos botões é default.
-                      // Label: _tabLabel (override p/ torneios combinados "Sub 10 e 12"
-                      // ou "Sub 14 a 24") → escalao → fallback "Esc N".
-                      const label = e._tabLabel ?? e.escalao ?? "Esc " + (ri + 1);
-                      return (
-                        <button key={e.tcode + "_" + ri}
-                          className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}
-                          onClick={() => setJovensEscIdx(ri)}
-                          style={{ marginBottom: 6 }}>
-                          {label}
-                          <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>
-                            ({(e.playerCount || e.players.length)} jog)
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                )}
-                {curJovens
-                  ? <TournamentDetail tournament={curJovens} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, curJovens, playersDB, matchplayData)} />
-                  : <div className="center-msg muted">Selecciona um torneio</div>
-                }
-              </>
-            ) : (
-              !jovensLoading && (
-                jovensLoaded
-                  ? <div className="center-msg muted">Selecciona um torneio</div>
-                  : <LoadingState size="sm" message="A carregar…" />
-              )
-            )}
-        </MasterDetail>
+      {/* Painel de inscrições dos Nacionais de Jovens — /FPG/jovens/inscritosCN,
+          /FPG/inscritosCN, /FPG/inscritos. Fora do CircuitShell. A entrada na
+          sidebar foi desligada a 2026-04-27 (inscrições do Nacional Sub-12
+          fechadas); as rotas e o InscricoesPanel ficam para próximas edições. */}
+      {navMode === "torneios" && showInscricoes && (
+        <div className="fpg-pane-scroll">
+          <InscricoesPanel />
+        </div>
       )}
 
       {/* Ranking Sub-12 (e abaixo) — média dos 8 melhores SD oficiais de cada
