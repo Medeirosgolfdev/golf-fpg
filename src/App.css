@@ -4626,3 +4626,29 @@ table td.lb-col-divider {
    sítio, número logo a seguir, em todas as tabelas de torneio. */
 .sc-lb td.lb-pos, .sc-lb th.lb-pos { text-align: left; padding-left: 6px; }
 .sc-lb td.lb-pos input[type="checkbox"] { margin: 0 6px 0 0; vertical-align: middle; }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   Páginas de circuito (FFG, RFEG, BJGT, Doral, GJGL) — o que eram
+   style={{}} nas páginas até 21/10/2026. Os valores são os de então.
+   ═══════════════════════════════════════════════════════════════════════ */
+.mt-16 { margin-top: 16px; }
+.ml-1  { margin-left: 1px; }
+.fs-9  { font-size: var(--fs-9); }
+.p-4-8 { padding: 4px 8px; }
+.bg-success-subtle { background: var(--bg-success-subtle); }
+/* Cabeçalho centrado numa .dtable (o .dtable th alinha à esquerda). */
+.dtable th.th-c { text-align: center; }
+/* Link do cabeçalho em cor de destaque, também no hover. */
+.tourn-ext-link.link-accent, .tourn-ext-link.link-accent:hover { color: var(--accent); }
+/* Botões de volta (R1 · N jog) do draw da /rfeg — mesmo tamanho também no telemóvel. */
+.chip.chip-round { cursor: pointer; font-size: var(--fs-12); padding: 3px 10px; }
+/* BJGT — linha «vs Par» da dificuldade por buraco: a cor ganha à .meta-row da tabela. */
+.sc-table-modern .meta-row td.c-danger { color: var(--color-danger); }
+.sc-table-modern .meta-row td.c-good { color: var(--color-good); }
+/* Vistas informativas (Catégories d'âge / Categorías de edad). */
+.info-pending { padding: 16px; background: var(--bg-muted); border-radius: 6px; margin-top: 8px; }
+.info-pre { padding: 12px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; font-size: var(--fs-11); overflow: auto; }
+.info-pre.info-pre-muted { background: var(--bg-muted); font-size: var(--fs-12); }
+.rfeg-es-notice { margin-top: 12px; padding: 10px 12px; background: var(--bg-muted); border: 1px solid var(--border); border-radius: 6px; font-size: var(--fs-12); }
+/* Doral — nº de edições na coluna «Ant.» da evolução. */
+.evo-ed-count { font-size: var(--fs-9); font-weight: 700; background: var(--bg-muted); color: var(--text-2); border-radius: 8px; padding: 0 5px; line-height: 14px; }

@@ -351,6 +351,44 @@
   --source-ejt:    #155e9c;   /* azul-escuro Estónia (Estonian Junior Tour) */
   --source-egr:    #1e40af;   /* azul (European Golf Rankings) */
 
+  /* ── 11c. Fontes das páginas de circuito (/major, /ffg, /rfeg) ────────
+     Pill «Fonte» da sidebar do CircuitShell e «Internacionalizações».
+     ≠ das cores kids2 (11b) de propósito: são as que as páginas usavam.
+     Espelhadas em colors.ts (C.major, C.majorSrc, C.ffgSrc, C.rfegSrc) —
+     o shell decide o texto preto/branco pelo hex. */
+  --color-major: #b8860b;   /* ouro-escuro — cabeçalho da /major */
+  --major-src-doral: #c8102e;
+  --major-src-bjgt: #1a7f5a;
+  --major-src-eowagr: #0a4d8c;
+  --major-src-job: #e8731c;
+  --major-src-fm: #1a5276;
+  --major-src-fsga: #d97706;
+  --major-src-uajt: #111827;
+  --major-src-mexnacional: #006341;
+  --major-src-icopa: #b45309;
+  --major-src-interzonas: #0f766e;
+  --major-src-avtrophy: #a51931;
+  --major-src-ebtc2: #2a7ab0;
+  --major-src-egtc: #b5179e;
+  --major-src-elg: #7b2cbf;
+  --major-src-eatc: #166534;
+  --major-src-eatc2: #4d7c0f;
+  --major-src-eym: #0891b2;
+  --major-src-ejo: #0072ce;
+  --major-src-ejt: #155e9c;
+  --major-src-fcg: #1d4ed8;
+  --major-src-jwgc: #9333ea;
+  --major-src-coc: #0e7490;
+  --major-src-uaworlds: #7c2d12;
+  --major-src-reidtrophy: #384d9f;
+  --major-src-optimist: #d4a017;
+  --major-src-evianjc: #0b3d91;
+  --major-src-faldomadeira: #1b5e20;
+  --ffg-src-lgpidf: #3b5a8c;
+  --ffg-src-gg: #1f7a4d;
+  --rfeg-src-livegolfscoring: #00aa55;
+  --rfeg-src-golfdirecto: #0066cc;
+
 
   /* ── 12. Borders ───────────────────────────────────────────── */
   --border:               #bcc5ad;

@@ -22,6 +22,7 @@ import ExtLink from "../ui/ExternalLink";
 import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
 import { isManuelByName as isM } from "../constants/manuel";
 import { displayName } from "../utils/format";
+import { C } from "../utils/colors";
 import { formatPlayerName } from "../utils/playerUtils";
 import DrawTab from "../ui/DrawTab";
 import type { Player as FPGPlayer } from "./FPGPage";
@@ -68,14 +69,13 @@ function DrawSaidaView({ detail, entry, onlyRound }: {
   return (
     <div>
       {onlyRound == null && horarios.length > 1 && (
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap", marginBottom: 12 }}>
+        <div className="d-flex gap-4 flex-wrap mb-12">
           {horarios.map(r => (
             <button
               key={r.round}
               type="button"
-              className={`chip ${activeRound === r.round ? "active" : ""}`}
+              className={`chip chip-round ${activeRound === r.round ? "active" : ""}`}
               onClick={() => setActiveRound(r.round)}
-              style={{ cursor: "pointer", fontSize: "var(--fs-12)", padding: "3px 10px" }}
             >
               R{r.round} · {r.players.length} jog
             </button>
@@ -217,8 +217,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
             </span>
             <ExtLink
               href="https://rfegolf.es/"
-              className="tourn-ext-link"
-              style={{ marginLeft: 8 }}
+              className="tourn-ext-link ml-8"
             >
               🔗 rfegolf.es
             </ExtLink>
@@ -226,7 +225,7 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         }
       />
 
-      <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-muted, #fff7e6)", border: "1px solid var(--border, var(--color-rfeg-yellow))", borderRadius: 6, fontSize: "var(--fs-12)" }}>
+      <div className="rfeg-es-notice">
         <strong>⚠ Espanha não tem federação única.</strong> A RFEG (federação
         nacional) coexiste com 17 federações autonómicas (Andalucía, Madrid,
         Catalunya, Valencia, ...). Os resultados aparecem dispersos por três
@@ -235,11 +234,11 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         <code>nextcaddy.com</code> (circuitos regionais Andaluzia/Madrid).
       </div>
 
-      <div style={{ overflowX: "auto", marginTop: 16 }}>
+      <div className="scroll-x mt-16">
         <table className="dtable">
           <thead>
             <tr>
-              <th style={{ textAlign: "left" }}>Categoría RFEG</th>
+              <th>Categoría RFEG</th>
               <th>Sub-N moderno</th>
               <th>Idade</th>
               <th>Millésime ({refYear})</th>
@@ -263,26 +262,26 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
                   <td>
                     <span className={c.pillClass || "p p-sm"}>{c.name}</span>
                   </td>
-                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
+                  <td className="ta-c mono">
                     <strong>{c.subN}</strong>
                   </td>
-                  <td style={{ textAlign: "center" }}>{c.age}</td>
-                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
+                  <td className="ta-c">{c.age}</td>
+                  <td className="ta-c mono">
                     {c.millesime}
                   </td>
-                  <td style={{ textAlign: "center", fontFamily: "var(--font-mono)" }}>
+                  <td className="ta-c mono">
                     {c.intl}
                   </td>
-                  <td style={{ textAlign: "center" }}>{c.fpg}</td>
-                  <td style={{ textAlign: "center", color: "var(--text-2)" }}>
+                  <td className="ta-c">{c.fpg}</td>
+                  <td className="ta-c c-text-2">
                     {c.ffg}
                   </td>
-                  <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
+                  <td className="r mono">
                     {total > 0 ? (
                       <span title={`${trad} como "${traditionalKey}" + ${sub} como "${subRfeg}"`}>
                         {total}
                         {trad > 0 && sub > 0 && (
-                          <span className="muted" style={{ fontSize: "var(--fs-10)" }}>
+                          <span className="muted fs-10">
                             {" "}({trad}+{sub})
                           </span>
                         )}
@@ -298,20 +297,13 @@ function RFEGCategoriesView({ catCounts }: { catCounts: Record<string, number> }
         </table>
       </div>
 
-      <div style={{ marginTop: 24 }}>
-        <h3 style={{ marginBottom: 8 }}>📐 Critério de cálculo do escalão</h3>
+      <div className="mt-24">
+        <h3 className="mb-8">📐 Critério de cálculo do escalão</h3>
         <p className="fs-12">
           Tal como na FPG, o escalão é determinado pelo <strong>ano civil</strong>
           {" "}(year-based), não pela idade exacta na data do torneio. A fórmula é:
         </p>
-        <pre style={{
-          padding: 12,
-          background: "var(--bg-muted, #f5f5f5)",
-          border: "1px solid var(--border)",
-          borderRadius: 4,
-          fontSize: "var(--fs-12)",
-          overflow: "auto",
-        }}>
+        <pre className="info-pre info-pre-muted">
           {`escalão = ano_torneio − ano_nascimento
 
 p.ex. jogador nascido em 2014, em 2026:
@@ -319,13 +311,13 @@ p.ex. jogador nascido em 2014, em 2026:
         </pre>
       </div>
 
-      <div style={{ marginTop: 24 }}>
-        <h3 style={{ marginBottom: 8 }}>🗂️ Nomenclatura dupla</h3>
+      <div className="mt-24">
+        <h3 className="mb-8">🗂️ Nomenclatura dupla</h3>
         <p className="fs-12">
           Nos torneios scrapados aparecem <em>simultaneamente</em> as duas
           nomenclaturas:
         </p>
-        <ul style={{ fontSize: "var(--fs-12)", marginTop: 8 }}>
+        <ul className="fs-12 mt-8">
           <li>
             <strong>Tradicional</strong> — nomes históricos (Benjamín, Alevín,
             Infantil, Cadete, Junior, Juvenil). Usados sobretudo nos campeonatos
@@ -339,7 +331,7 @@ p.ex. jogador nascido em 2014, em 2026:
             Masculino", etc.
           </li>
         </ul>
-        <p className="muted fs-11" style={{ marginTop: 8 }}>
+        <p className="muted fs-11 mt-8">
           A coluna <strong>Torneios no índice</strong> soma ocorrências das duas
           nomenclaturas. Em algumas categorias (p.ex. Sub-21/Juvenil) os
           critérios de idade variam ligeiramente entre torneios — verificar
@@ -347,9 +339,9 @@ p.ex. jogador nascido em 2014, em 2026:
         </p>
       </div>
 
-      <div className="muted fs-11" style={{ marginTop: 24 }}>
+      <div className="muted fs-11 mt-24">
         <strong>Notas:</strong>
-        <ul style={{ marginTop: 4 }}>
+        <ul className="mt-4">
           <li>
             <em>Benjamín</em> abrange tipicamente 7-10 anos (raramente &lt;7,
             depende do clube/comité). O critério é só o limite superior.
@@ -384,7 +376,7 @@ function NCHighlights({ rows, hasPdf }: { rows: NCHighlightRow[]; hasPdf?: boole
   );
   return (
     <div>
-      <p className="muted" style={{ fontSize: "var(--fs-13)", margin: "0 0 8px" }}>
+      <p className="muted fs-13 mb-8">
         {hasPdf
           ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
           : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}
@@ -395,7 +387,7 @@ function NCHighlights({ rows, hasPdf }: { rows: NCHighlightRow[]; hasPdf?: boole
           <tbody>
             {sorted.map((r, i) => (
               <tr key={i} className={isM(r.name) ? "row-manuel" : undefined}>
-                <td className="lb-name fw-700" style={{ textAlign: "left" }}>{r.name}{isM(r.name) && <> <ManuelPill /></>}</td>
+                <td className="lb-name fw-700 ta-left">{r.name}{isM(r.name) && <> <ManuelPill /></>}</td>
                 <td>{r.ace || "—"}</td>
                 <td>{r.eagle || "—"}</td>
                 <td>{r.birdie || "—"}</td>
@@ -456,7 +448,7 @@ function NCResultsLeaderboard({ players }: { players: RFEGPlayer[] }) {
       sortName: p._name || "",
       fedCode: p.licencia ?? undefined,
       nameContent: (
-        <span className="tourn-pname" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+        <span className="tourn-pname inline-flex items-center gap-4">
           {p._name || "—"}
           {(p.sexo === "M" || p.sexo === "F") && <SexBadge sex={p.sexo} />}
           {manuel && <ManuelPill />}
@@ -550,7 +542,7 @@ const RFEG_CONFIG: CircuitConfig = {
   title: "🇪🇸 España",
   color: "var(--color-rfeg-red)",
   grouping: "year",
-  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: "#00aa55", golfdirecto: "#0066cc", nextcaddy: "var(--color-rfeg-yellow)" },
+  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },
   veteranoThreshold: 3,

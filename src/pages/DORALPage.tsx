@@ -7,7 +7,6 @@
  * (ficheiros, metadados por escalão, normalização e conversão para o formato
  * FPG) vivem em src/data/major/doral.ts desde 21/10/2026.
  */
-import { SC } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import type { ScorecardOptions } from "./FPGPage";
 import EvoBadge from "../ui/EvoBadge";
@@ -127,9 +126,9 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
         const tooltip = ev.history.map((h) => `${h.year}: ${h.total} (${h.category}${h.pos != null ? ` #${h.pos}` : ""})`).join("\n");
         const nEditions = ev.history.length;
         return (
-          <span title={tooltip} style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+          <span title={tooltip} className="inline-flex items-center gap-4">
             <span>{ev.otherValue}</span>
-            {nEditions > 1 && <span style={{ fontSize: "var(--fs-9)", fontWeight: 700, background: "var(--bg-muted, #eee)", color: "var(--text-2, #666)", borderRadius: 8, padding: "0 5px", lineHeight: "14px" }}>{nEditions}×</span>}
+            {nEditions > 1 && <span className="evo-ed-count">{nEditions}×</span>}
           </span>
         );
       },
@@ -141,11 +140,11 @@ export function doralMajorDivision(entry: DoralEntry, evo: Map<string, EvoEntryD
         if (!ev) return <span className="c-muted">–</span>;
         const value = ev.deltaIsComparable ? ev.deltaGross : ev.delta;
         const sign = value > 0 ? "+" : "";
-        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted" style={{ fontSize: "var(--fs-9)", marginLeft: 1 }}>/r</span>;
+        const suffix = ev.deltaIsComparable ? "" : <span className="c-muted fs-9 ml-1">/r</span>;
         const tooltip = ev.deltaIsComparable
           ? `Δ vs ${ev.prevYear} (gross ${ev.otherValue}, mesmo escalão e nº de rondas)`
           : `Δ média strokes-vs-par por ronda · ${ev.prevYear}: ${ev.refAvgVsPar.toFixed(1)} vs hoje ${ev.curAvgVsPar.toFixed(1)}`;
-        return <span title={tooltip} style={{ color: value < 0 ? "var(--good-dark)" : value > 0 ? SC.danger : "var(--text-3)" }}>{sign}{value}{suffix}</span>;
+        return <span title={tooltip} className={value < 0 ? "c-good-dark" : value > 0 ? "c-danger" : "c-text-3"}>{sign}{value}{suffix}</span>;
       },
     },
     {

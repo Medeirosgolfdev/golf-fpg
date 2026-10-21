@@ -32,6 +32,7 @@ import type { FFGCategoriesData, LGPIDFTournament } from "../data/ffg/types";
 import { lgpidfTotais } from "../data/ffg/lgpidf";
 import type { FfgRenderers } from "../data/ffg/ffgEntries";
 import { useFfgData } from "../data/ffg/useFfgData";
+import { C } from "../utils/colors";
 
 /* ── CategoriesView (Catégories d'âge FFG — info no body) ─────── */
 function CategoriesView({ data }: { data: FFGCategoriesData }) {
@@ -42,21 +43,21 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
         sub={
           <>
             <span className="muted">Federação Francesa de Golf — categorias oficiais por idade</span>
-            <ExtLink href={data._source} className="tourn-ext-link" style={{ marginLeft: 8 }}>
+            <ExtLink href={data._source} className="tourn-ext-link ml-8">
               🔗 Página oficial
             </ExtLink>
-            <ExtLink href={data._vademecumUrl} className="tourn-ext-link" style={{ marginLeft: 8, color: "var(--accent, #2563eb)" }}>
+            <ExtLink href={data._vademecumUrl} className="tourn-ext-link ml-8 link-accent">
               📄 Vademecum FFG (PDF, 388 págs)
             </ExtLink>
           </>
         }
       />
 
-      <div style={{ overflowX: "auto", marginTop: 16 }}>
+      <div className="scroll-x mt-16">
         <table className="dtable">
           <thead>
             <tr>
-              <th style={{ textAlign: "left" }}>Catégorie FR</th>
+              <th>Catégorie FR</th>
               <th>Millésime (ano nasc.)</th>
               <th>Idade</th>
               <th>Catégorie Internationale</th>
@@ -67,11 +68,11 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             {data.categories.map((c) => (
               <tr key={c.name}>
                 <td><strong>{c.name}</strong></td>
-                <td style={{ textAlign: "center" }}>{c.millesime}</td>
-                <td style={{ textAlign: "center" }}>{c.age}</td>
-                <td style={{ textAlign: "center" }}>{c.intl}</td>
-                <td style={{ textAlign: "center" }}>
-                  <span className="chip" style={{ fontWeight: 600 }}>{c.subIntl}</span>
+                <td className="ta-c">{c.millesime}</td>
+                <td className="ta-c">{c.age}</td>
+                <td className="ta-c">{c.intl}</td>
+                <td className="ta-c">
+                  <span className="chip fw-600">{c.subIntl}</span>
                 </td>
               </tr>
             ))}
@@ -79,8 +80,8 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
         </table>
       </div>
 
-      <div style={{ marginTop: 24 }}>
-        <h3 style={{ marginBottom: 8 }}>📏 Distâncias máximas por categoria</h3>
+      <div className="mt-24">
+        <h3 className="mb-8">📏 Distâncias máximas por categoria</h3>
         <p className="muted">
           Definidas no <em>Cahier des charges des Grands Prix Jeunes</em> (Vademecum FFG, secção 1.2.x).
         </p>
@@ -89,11 +90,11 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             <table className="dtable">
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left" }}>Categoria</th>
-                  <th style={{ textAlign: "left" }}>FFG</th>
-                  <th style={{ textAlign: "center" }}>#Trous</th>
-                  <th style={{ textAlign: "right" }}>Garçons (m)</th>
-                  <th style={{ textAlign: "right" }}>Filles (m)</th>
+                  <th>Categoria</th>
+                  <th>FFG</th>
+                  <th className="th-c">#Trous</th>
+                  <th className="r">Garçons (m)</th>
+                  <th className="r">Filles (m)</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,11 +112,11 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
                     <tr key={uCode}>
                       <td><strong>{uCode}</strong></td>
                       <td className="muted">{ffgLabel}</td>
-                      <td style={{ textAlign: "center" }}>{m?.trous ?? "—"}</td>
-                      <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
+                      <td className="ta-c">{m?.trous ?? "—"}</td>
+                      <td className="r mono">
                         {m?.Garcons ? m.Garcons.toLocaleString("pt-PT") : "—"}
                       </td>
-                      <td style={{ textAlign: "right", fontFamily: "var(--font-mono)" }}>
+                      <td className="r mono">
                         {m?.Filles ? m.Filles.toLocaleString("pt-PT") : "—"}
                       </td>
                     </tr>
@@ -132,18 +133,11 @@ function CategoriesView({ data }: { data: FFGCategoriesData }) {
             </div>
           </>
         ) : (
-          <div style={{ padding: 16, background: "var(--bg-muted, #f5f5f5)", borderRadius: 6, marginTop: 8 }}>
+          <div className="info-pending">
             <p className="fs-12">
               <strong>Distâncias ainda não extraídas.</strong> Para popular esta tabela:
             </p>
-            <pre style={{
-              padding: 12,
-              background: "var(--bg-card, #fff)",
-              border: "1px solid var(--border)",
-              borderRadius: 4,
-              fontSize: "var(--fs-11)",
-              overflow: "auto",
-            }}>
+            <pre className="info-pre">
 {`# 1. Descarregar o Vademecum (PDF ~88MB)
 Invoke-WebRequest "${data._vademecumUrl}" \`
   -OutFile public\\data\\Vademecum2024.pdf
@@ -159,9 +153,9 @@ node scripts/parse-vademecum-distances.js`}
         )}
       </div>
 
-      <div className="muted fs-11 mt-16" style={{ marginTop: 24 }}>
+      <div className="muted fs-11 mt-24">
         <strong>Notas:</strong>
-        <ul style={{ marginTop: 4 }}>
+        <ul className="mt-4">
           <li>O Vademecum FFG é actualizado anualmente (este link aponta para 2024).</li>
           <li>O <em>Cahier des charges</em> contém também regulamentos sobre tees, formato de competição, etc.</li>
           <li>A categoria <strong>Poucet(te)</strong> não tem equivalente directo PT — é a faixa 9-10 anos.</li>
@@ -189,8 +183,8 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
             <div className="muted fs-10 mb-8">
               <ExtLink href={pdf.pdfUrl}>📄 {pdf.pdfFilename}</ExtLink> · {pdf.holes.length} buracos · Total: {total.toLocaleString("pt-PT")} {pdf.holes[0]?.unit || ""}
             </div>
-            <div style={{ overflowX: "auto" }}>
-              <table className="dtable-sm" style={{ textAlign: "center" }}>
+            <div className="scroll-x">
+              <table className="dtable-sm ta-c">
                 <thead>
                   <tr>
                     <th>Buraco</th>
@@ -206,7 +200,7 @@ function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
                   </tr>
                   <tr>
                     <td>Lado</td>
-                    {pdf.holes.map((h) => <td key={h.hole} style={{ fontSize: "var(--fs-10)" }}>{h.entrySide.slice(0, 1)}</td>)}
+                    {pdf.holes.map((h) => <td key={h.hole} className="fs-10">{h.entrySide.slice(0, 1)}</td>)}
                     <td>—</td>
                   </tr>
                 </tbody>
@@ -280,7 +274,7 @@ function FFGShellContent() {
       // 1265 entradas do portal — presente mas invisível. A fonte continua
       // legível na pill de cada linha e filtrável no dropdown "Fonte".
       grouping: "year",
-      sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: "#3b5a8c", gg: "#1f7a4d" },
+      sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: C.ffgSrc.lgpidf, gg: C.ffgSrc.gg },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF", gg: "GolfGenius" },
       ligaLabels: FFG_LIGUE_LABELS,
       filters: { search: true, year: true, escalao: true, sex: true, source: true, liga: true, intl: true, toggles: ["manuel", "pt", "top10", "results"] },

@@ -9,6 +9,8 @@
 
 - **Todas as cores passam por `tokens.css`** — nunca hardcodar hex nos componentes.
 - `colors.ts` espelha os tokens para uso em JS/TS (recharts, arrays de dados). Alterar primeiro em `tokens.css`, depois actualizar `colors.ts`.
+- Cores das fontes das páginas de circuito (pill «Fonte» da sidebar do CircuitShell, «Internacionalizações»): `tokens.css` §11c (`--color-major`, `--major-src-*`, `--ffg-src-*`, `--rfeg-src-*`) e `C.major`/`C.majorSrc`/`C.ffgSrc`/`C.rfegSrc` no `colors.ts`. As páginas usam o **hex do `C`**, não `var()`: o shell escolhe o texto preto/branco da pill pelo hex (`fgFor`) e com `var()` dava sempre branco (o Optimist, dourado, tem texto preto). `scripts/circuit-source-colors.test.js` parte se `tokens.css` e `colors.ts` divergirem (21/10/2026).
+- Páginas de circuito (FFG, RFEG, BJGT, Doral, GJGL) sem `style={{}}` desde 21/10/2026: as classes estão no fim do `App.css` («Páginas de circuito»). Ao trocar um inline por classe, atenção à especificidade — um inline ganha a tudo, a classe não: `.dtable th` alinha à esquerda (daí `.dtable th.th-c`), `.sc-table-modern .meta-row td` impõe a cor (daí `.sc-table-modern .meta-row td.c-danger`), e o `.chip` encolhe no telemóvel (daí `.chip.chip-round` com tamanho).
 - **Excepção intencional:** `OverlayExport.tsx` usa cores hardcoded porque `html-to-image` não suporta CSS custom properties — documentado com comentário no cabeçalho.
 - `--pill-intl-bg: #00FF00` (verde néon, usado por `.p-intl`) é **intencional** — não "corrigir".
 - `src/design-system.html` documenta visualmente todas as classes CSS.
@@ -48,7 +50,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
   - Match play: `ui/circuit/MatchplayView` (formato `MatchplayFile`) — brackets ETC/FFG/Taça da Federação e o 3-way dos Clubes (`sides`, `playerRefs`, `pendingNote`, prop `roundPicker`; adaptador `data/clubesMatchplayAdapter.ts`). Classificação de equipas por pontos (categoria × dia): `ui/circuit/TeamPointsStandings` (21/10/2026).
 - Datas/idades/bandeiras em `utils/`: `dateParts`, `ageAtDate`, `birthYearOf`, `todayIso`, `fmtDateRangePt`, `shortDateSlash` (`format.ts`); `flagOrEmpty`, `clubFlagPrefix`, `isPtCountry` (`flagUtils.ts`); `normLoose`/`normName` (`normName.ts`).
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.
-- `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (alias de C de colors.ts).
+- `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (cores semânticas em `var(--…)`, definidas no próprio `scoreDisplay.ts` — não é o `C` de colors.ts).
 - `mathUtils.ts`: `zTier()` (único sítio dos níveis por z-score; a Tabela global tinha limiares próprios até 21/10/2026), `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
 - `format.ts`: `fmtToPar()` (usar em vez de `fmtTp2`/`fmtTP2` locais), `sortArrow()`, `MONTHS_PT` (abrev.), `MONTHS_PT_FULL` (lowercase), `MONTHS_PT_LONG` (Title Case), `MONTH_MAP`.
 - `constants/manuel.ts`: `MANUEL_FED`, `MANUEL_BIRTH_YEAR`, `isManuel()`, `escalaoManuelParaData()`, `MANUEL_KNOWN_TIDS`.

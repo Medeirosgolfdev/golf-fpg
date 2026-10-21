@@ -11,7 +11,7 @@
  * vivem em src/data/major/bluegolf.ts desde 21/10/2026.
  */
 import React from "react";
-import { scClass, SC } from "../utils/scoreDisplay";
+import { scClass } from "../utils/scoreDisplay";
 import { isManuelByName as isM } from "../constants/manuel";
 import { fmtToPar, fmtSign, fmtSignParen as fmtSub } from "../utils/format";
 import type { ScorecardOptions } from "./FPGPage";
@@ -60,12 +60,12 @@ function HoleDiff({ data, ri, mn }: { data: TData; ri: number | "all"; mn?: stri
             {par.slice(0,9).map((p,i) => <td key={i}>{p}</td>)}<td className="col-out fw-600">{parF9}</td>
             {par.slice(9).map((p,i) => <td key={i+9}>{p}</td>)}<td className="col-in fw-600">{parB9}</td><td className="col-total">{parTotal}</td></tr>
           <tr><td className="row-label fw-700">Média</td>
-            {avgs.map((h,i) => <React.Fragment key={i}><td className="fw-600" style={{ color: h.diff > 0.7 ? SC.danger : h.diff < 0.2 ? SC.good : "var(--text-2)" }}>{h.avg.toFixed(1)}</td>{i === 8 && <td className="col-out"></td>}</React.Fragment>)}
+            {avgs.map((h,i) => <React.Fragment key={i}><td className={`fw-600 ${h.diff > 0.7 ? "c-danger" : h.diff < 0.2 ? "c-good" : "c-text-2"}`}>{h.avg.toFixed(1)}</td>{i === 8 && <td className="col-out"></td>}</React.Fragment>)}
             <td className="col-in"></td><td className="col-total fw-700">{avgs.reduce((a,h) => a + h.avg, 0).toFixed(1)}</td></tr>
           <tr className="meta-row sep-row"><td className="row-label c-muted fs-10">vs Par</td>
-            {avgs.map((h,i) => <React.Fragment key={i}><td className="fs-10 fw-600" style={{ color: h.diff > 0.7 ? SC.danger : h.diff < 0.2 ? SC.good : "var(--text-muted)" }}>{fmtSign(h.diff, 1)}</td>{i === 8 && <td className="col-out"></td>}</React.Fragment>)}
+            {avgs.map((h,i) => <React.Fragment key={i}><td className={`fs-10 fw-600 ${h.diff > 0.7 ? "c-danger" : h.diff < 0.2 ? "c-good" : "c-muted"}`}>{fmtSign(h.diff, 1)}</td>{i === 8 && <td className="col-out"></td>}</React.Fragment>)}
             <td className="col-in"></td><td className="col-total"></td></tr>
-          {mr?.scores && <tr style={{ background: "var(--bg-success-subtle)" }}><td className="row-label fw-700">🇵🇹 Manuel</td>
+          {mr?.scores && <tr className="bg-success-subtle"><td className="row-label fw-700">🇵🇹 Manuel</td>
             {mr.scores.slice(0,9).map((sc,i) => <td key={i}><span className={`sc-score ${scClass(sc, par[i])}`}>{sc}</span></td>)}
             <td className="col-out fw-700">{mr.f9}<span className={`sc-topar ${(mr.f9!-parF9)<0?"sc-under":(mr.f9!-parF9)>0?"sc-over":""}`}>{fmtSign(mr.f9!-parF9)}</span></td>
             {mr.scores.slice(9).map((sc,i) => <td key={i+9}><span className={`sc-score ${scClass(sc, par[9+i])}`}>{sc}</span></td>)}
@@ -105,28 +105,28 @@ function ManuelDay({ data, ri }: { data: TData; ri: number }) {
     <div className="card">
       <div className="h-md">🇵🇹 Análise Manuel — R{ri + 1}</div>
       <div className="muted fs-10 mb-8">Gross: {r.gross} ({fmtToPar(r.gross-parTotal)}) · F9: {r.f9} {fmtSub(r.f9!-parF9)} · B9: {r.b9} {fmtSub(r.b9!-parB9)} · Média field: {fieldAvg.toFixed(1)}</div>
-      <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
-        {eagles.length > 0 && <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
-        <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800" style={{ color: SC.good }}>🐦 {birdies.length}</span><span className="fs-10 c-text-3"> {birdies.map(h => "H"+h.h).join(", ")}</span></div>
-        <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800 c-text-2">⛳ {pars.length} pars</span></div>
-        <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800 c-text-2">📦 {bogeys.length}</span><span className="fs-10 c-text-3"> {bogeys.map(h => "H"+h.h).join(", ")}</span></div>
-        {doubles.length > 0 && <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">💥 {doubles.length} dbl</span><span className="fs-10 c-text-3"> {doubles.map(h => "H"+h.h).join(", ")}</span></div>}
-        {worse.length > 0 && <div className="card-detail br" style={{ padding: "4px 8px" }}><span className="fw-800 c-warn-dark">🔥 {worse.length} triple+</span><span className="fs-10 c-text-3"> {worse.map(h => "H"+h.h+"(+"+h.diff+")").join(", ")}</span></div>}
+      <div className="grid-auto-fill mb-8 gap-6">
+        {eagles.length > 0 && <div className="card-detail br p-4-8"><span className="fw-800 c-good">🦅 {eagles.length}</span><span className="fs-10 c-text-3"> {eagles.map(h => "H"+h.h).join(", ")}</span></div>}
+        <div className="card-detail br p-4-8"><span className="fw-800 c-good">🐦 {birdies.length}</span><span className="fs-10 c-text-3"> {birdies.map(h => "H"+h.h).join(", ")}</span></div>
+        <div className="card-detail br p-4-8"><span className="fw-800 c-text-2">⛳ {pars.length} pars</span></div>
+        <div className="card-detail br p-4-8"><span className="fw-800 c-text-2">📦 {bogeys.length}</span><span className="fs-10 c-text-3"> {bogeys.map(h => "H"+h.h).join(", ")}</span></div>
+        {doubles.length > 0 && <div className="card-detail br p-4-8"><span className="fw-800 c-warn-dark">💥 {doubles.length} dbl</span><span className="fs-10 c-text-3"> {doubles.map(h => "H"+h.h).join(", ")}</span></div>}
+        {worse.length > 0 && <div className="card-detail br p-4-8"><span className="fw-800 c-warn-dark">🔥 {worse.length} triple+</span><span className="fs-10 c-text-3"> {worse.map(h => "H"+h.h+"(+"+h.diff+")").join(", ")}</span></div>}
       </div>
       <div className="muted fs-10 mb-4 fw-700">Performance por tipo de buraco</div>
-      <div className="grid-auto-fill mb-8" style={{ gap: 6 }}>
+      <div className="grid-auto-fill mb-8 gap-6">
         {[{ label: "Par 3", d: p3 },{ label: "Par 4", d: p4 },{ label: "Par 5", d: p5 }].map(({ label, d }) => (
-          <div key={label} className="card-detail br" style={{ padding: "4px 8px" }}>
+          <div key={label} className="card-detail br p-4-8">
             <div className="fw-700 fs-11">{label} ({d.n})</div>
-            <div className="fs-10">{d.scores.join(", ")} → <span className="fw-700" style={{ color: d.total < 0 ? SC.good : d.total > 0 ? SC.danger : undefined }}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {d.avg > 0 ? "+" : ""}{d.avg.toFixed(2)})</span></div>
+            <div className="fs-10">{d.scores.join(", ")} → <span className={d.total < 0 ? "fw-700 c-good" : d.total > 0 ? "fw-700 c-danger" : "fw-700"}>{d.total > 0 ? "+"+d.total : d.total === 0 ? "E" : d.total}</span><span className="c-text-3"> (avg {d.avg > 0 ? "+" : ""}{d.avg.toFixed(2)})</span></div>
           </div>
         ))}
       </div>
       {prevR?.scores && vsPrev && <>
         <div className="muted fs-10 mb-4 fw-700">vs R{ri} (anterior: {prevR.gross})</div>
-        <div className="gap-12 flex-wrap" style={{ display: "flex" }}>
+        <div className="gap-12 flex-wrap d-flex">
           {worseVP.length > 0 && <div className="fs-10"><span className="fw-700 c-warn-dark">Pior (+{worseVP.reduce((s,h) => s+h.delta, 0)}):</span> {worseVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
-          {betterVP.length > 0 && <div className="fs-10"><span className="fw-700" style={{ color: SC.good }}>Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
+          {betterVP.length > 0 && <div className="fs-10"><span className="fw-700 c-good">Melhor ({betterVP.reduce((s,h) => s+h.delta, 0)}):</span> {betterVP.map(h => `H${h.h} ${h.prev}→${h.gross}`).join(", ")}</div>}
         </div>
       </>}
     </div>

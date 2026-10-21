@@ -331,7 +331,7 @@ export default function GlobalJuniorPage() {
   );
 
   if (catalogError) {
-    return <div className="center-msg" style={{ padding: 24 }}>Erro a carregar catálogo: {catalogError}</div>;
+    return <div className="center-msg p-24">Erro a carregar catálogo: {catalogError}</div>;
   }
   if (!catalog || index === undefined) {
     return <LoadingState message="A carregar catálogo GJGL…" />;

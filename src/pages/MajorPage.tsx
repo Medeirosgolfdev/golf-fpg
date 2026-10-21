@@ -30,6 +30,7 @@ import { TournamentDetail } from "./fpg/TournamentDetail";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "../ui/tournamentPrimitives";
 import { KidsLink } from "../ui/KidsLink";
 import MajorVeteransView from "./major/MajorVeteransView";
+import { C } from "../utils/colors";
 import type { TDef } from "../data/major/bluegolf";
 import type { DoralEntry } from "../data/major/doral";
 import { JOB_DIV_LABELS, JOB_DRAW_HIDE_COLS, jobFileDivisions, jobScorecardOptions } from "../data/major/jobFile";
@@ -163,10 +164,10 @@ function ggJobDivisions({ def, file: f, files, matchplay }: MajorJobData): Circu
 const MAJOR_CONFIG: CircuitConfig = {
   routeBase: "/major",
   title: "🎖️ MAJOR",
-  color: "#b8860b",
-  textColor: "#fff",
+  color: C.major,
+  textColor: C.white,
   grouping: "year",
-  sourceColors: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f", optimist: "#d4a017", evianjc: "#0b3d91", faldomadeira: "#1b5e20" },
+  sourceColors: C.majorSrc,
   sourceLabels: { doral: "DORAL", bjgt: "BJGT", eowagr: "EU", job: "JOB", fm: "FM", fsga: "FSGA", uajt: "UA", mexnacional: "MÉX", icopa: "Bobby Díaz", interzonas: "Interzonas", avtrophy: "BEL U14", ebtc2: "ETC Boys", egtc: "ETC Girls", elg: "ETC Ladies", eatc: "ETC Men", eatc2: "ETC Men 2", eym: "Young Masters", ejo: "EST Jr Open", ejt: "EST Jr Tour", fcg: "FCG", jwgc: "JWGC", coc: "CoC", uaworlds: "UA Worlds", reidtrophy: "Reid Trophy", optimist: "Optimist", evianjc: "Evian JC", faldomadeira: "Faldo Madeira" },
   filters: { search: true, year: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "regressados", "subiram"] },
   // Identidade de torneio entre anos = a FONTE (coc, fsga, uajt, bjgt, doral…).
