@@ -44,6 +44,13 @@ permissions:
   contents: write
   issues: write   # aviso imediato de scorecards novos (resumo por email)
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -106,7 +113,11 @@ jobs:
           EXIT=$?
           set -e
           if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
-          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-pcc falhou — segue sem preencher."; fi
+          # Falha real: segue (o resto do run publica-se) mas o job acaba vermelho no fim.
+          if [ "$EXIT" != "0" ] && [ "$EXIT" != "2" ]; then
+            echo "::error::backfill-pcc falhou (exit $EXIT) — segue sem preencher."
+            echo "failed=1" >> $GITHUB_OUTPUT
+          fi
           exit 0
 
       # SD OFICIAL em cada volta dos torneios, lido do WHS acabado de descarregar
@@ -121,7 +132,10 @@ jobs:
           EXIT=$?
           set -e
           if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
-          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-sd falhou — segue sem preencher."; fi
+          if [ "$EXIT" != "0" ] && [ "$EXIT" != "2" ]; then
+            echo "::error::backfill-sd falhou (exit $EXIT) — segue sem preencher."
+            echo "failed=1" >> $GITHUB_OUTPUT
+          fi
           exit 0
 
       # Reconstruir os índices que dependem das rondas dos jogadores:
@@ -129,25 +143,39 @@ jobs:
       #  - course-player-names.json (nº federado → nome real)           ← build-course-player-names
       #  - course-players.json      (quem jogou cada campo PT do master)← build-course-players
       # Corre sempre (mesmo sem scorecards novos) porque players.json /
-      # federados podem ter mudado. Falhas individuais não abortam o run.
+      # federados podem ter mudado. Uma falha num builder não impede os outros
+      # nem o commit do que correu bem, mas fica registada e o job acaba
+      # VERMELHO no fim (passo «Falhar se algum passo falhou»). Exit 2 = sem
+      # mudanças / guarda anti-encolhimento recusou (não é erro).
       - name: Reconstruir índices de campos e jogadores
+        id: indices
         run: |
-          node scripts/extract-courses.js --force || echo "extract-courses: sem novidades ou aviso"
-          node scripts/build-course-player-names.js || echo "build-course-player-names: aviso"
-          node scripts/build-course-players.js || echo "build-course-players: aviso"
+          set +e
+          FAILED=""
+          corre() {
+            node "$@"; local rc=$?
+            if [ "$rc" != 0 ] && [ "$rc" != 2 ]; then
+              echo "::error::$1 falhou (exit $rc)"; FAILED="$FAILED $(basename "$1" .js)"
+            fi
+          }
+          corre scripts/extract-courses.js --force
+          corre scripts/build-course-player-names.js
+          corre scripts/build-course-players.js
           # Torneios recentes reconstruídos das voltas dos nossos jogadores
           # (public/data/recent-tournaments.json → página /torneios-recentes)
-          node scripts/build-recent-tournaments.js || echo "build-recent-tournaments: aviso"
+          corre scripts/build-recent-tournaments.js
           # Calendário dos jogadores de referência, só juniores
           # (public/data/classificacoes.json → /FPG/classificacoes)
-          node scripts/build-classificacoes.js || echo "build-classificacoes: aviso"
+          corre scripts/build-classificacoes.js
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
-          node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
+          corre scripts/build-analise-percurso.js
           # Mesma página, bloco `const PATH` — percurso de torneios até scratch
           # dos 18 rapazes da coorte, com o detalhe por jogador que a tabela
           # mostra ao expandir uma linha (exit 2 = sem mudanças)
-          node scripts/build-percurso-path.js || echo "build-percurso-path: sem novidades ou aviso"
+          corre scripts/build-percurso-path.js
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          exit 0
 
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
@@ -157,7 +185,7 @@ jobs:
       # ── Aviso imediato: scorecards novos dos nossos federados ──────────
       # Corre ANTES do commit de propósito: o resumo lê o diff da ÁRVORE DE
       # TRABALHO, que é exactamente o que este run produziu. Depois do commit
-      # o `git pull --rebase` do push traria commits de outros workflows e o
+      # o push (reset ao main mais recente) traria commits de outros workflows e o
       # diff deixaria de ser só nosso.
       # Nunca falha o workflow (os scripts engolem os próprios erros) — os
       # dados é que interessam, o email é extra.
@@ -185,85 +213,43 @@ jobs:
         # preencheu PCC em falta — senão o PCC ficava no runner e perdia-se.
         if: steps.scrape.outputs.exit_code == '0' || steps.pcc.outputs.filled == '1' || steps.sd.outputs.filled == '1'
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          # Diagnóstico: listar ficheiros modificados antes do git add.
-          # Útil para debug se "Nada em staging" voltar a acontecer.
-          CHANGED_BEFORE=$(git status --porcelain 2>/dev/null | wc -l)
-          echo "ℹ️  ${CHANGED_BEFORE} ficheiros modificados no working copy antes do git add"
-
+          # Diagnóstico: o que mudou na árvore (se "nada a publicar" aparecer com
+          # ficheiros modificados, falta um path na lista abaixo).
+          echo "ℹ️  $(git status --porcelain | wc -l) ficheiros modificados no working copy"
+          git status --porcelain | head -50
           # Paths gerados pelo fluxo fpg-scrape-node.js + pipeline.js:
           #   - output/{fed}/*                → fpg-scrape-node.js + pipeline (render)
           #   - public/data/{fed}/analysis/   → só o Manuel (render estático)
           #   - public/data/players.json      → pipeline.js (sync step)
           #   - public/data/cross-data.json   → make-scorecards-ui.js (tabela
           #     global CROSS_DATA, 1 cópia partilhada por todas as fichas desde
-          #     2026-09-06). SEM isto a tabela ficava no runner e o site servia
-          #     escalões/índices congelados no dia da migração.
+          #     2026-09-06). SEM isto a tabela ficava no runner.
           #   - public/player-stats.json      → enrich-players.js  ⚠ SEM /data/
           #   - public/data/hcp-history.json  → enrich-players.js (evolução de HCP)
-          #   - public/analise-percurso-juniores.html → build-analise-percurso.js
-          #   - public/data/away-courses.json → extract-courses.js (disabled no pipeline normal)
-          #   - public/data/master-courses.json → idem
+          #   - public/analise-percurso-juniores.html → build-analise-percurso.js +
+          #     build-percurso-path.js — GERADO: regenera-se se o main avançar
+          #   - public/data/away-courses.json / master-courses.json → extract-courses.js
           #   - players.json (raiz)           → pipeline.js (sync step)
-          #
           # Bug histórico (2026-04-22): o path era "public/data/player-stats.json",
           # mas enrich-players.js escreve "public/player-stats.json" (sem /data/).
-          # Resultado: o workflow detectava novos scorecards mas nunca commitava.
-          git add output/ \
-                  public/data/*/analysis/ \
-                  public/data/players.json \
-                  public/data/cross-data.json \
-                  public/player-stats.json \
-                  public/data/hcp-history.json \
-                  public/analise-percurso-juniores.html \
-                  public/data/away-courses.json \
-                  public/data/master-courses.json \
-                  public/data/course-player-names.json \
-                  public/data/course-players.json \
-                  public/data/recent-tournaments.json \
-                  public/data/recent-tournaments-scrape-scope.json \
-                  public/data/classificacoes.json \
-                  public/data/pull-torneios*.json \
-                  public/data/drive-data-*.json \
-                  public/data/aquapor-data-*.json \
-                  public/data/jovens_*.json \
-                  players.json 2>/dev/null || true
+          bash scripts/ci/push-generated.sh -m "data: update FPG WHS+scorecards $(date +'%Y-%m-%d %H:%M')" \
+            -g public/analise-percurso-juniores.html \
+            -r 'node scripts/build-analise-percurso.js' -r 'node scripts/build-percurso-path.js' \
+            -- output/ 'public/data/*/analysis/' public/data/players.json \
+               public/data/cross-data.json public/player-stats.json public/data/hcp-history.json \
+               public/data/away-courses.json public/data/master-courses.json \
+               public/data/course-player-names.json public/data/course-players.json \
+               public/data/recent-tournaments.json public/data/recent-tournaments-scrape-scope.json \
+               public/data/classificacoes.json 'public/data/pull-torneios*.json' \
+               'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
+               'public/data/jovens_*.json' players.json
 
-          if git diff --staged --quiet; then
-            echo "⚠  Nada em staging — sem commit."
-            if [ "${CHANGED_BEFORE}" -gt 0 ]; then
-              echo ""
-              echo "❗ Mas havia ${CHANGED_BEFORE} ficheiros modificados. Lista (primeiros 50):"
-              git status --porcelain 2>/dev/null | head -50
-              echo ""
-              echo "Paths fora do scope do git add. Adicionar à lista acima se for recorrente."
-            fi
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          CHANGED=$(git diff --staged --name-only | wc -l)
-          git commit -m "data: update FPG WHS+scorecards ${DATE} (${CHANGED} ficheiros)"
-          # Rebase em cima de qualquer commit que tenha entrado entretanto.
-          # --autostash lida com quaisquer ficheiros unstaged que tenham ficado
-          # para trás do git add (stashes automaticamente e repõe após o pull).
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
+      # ── Falhas que não podiam travar o commit, mas não podem ficar verdes ──
+      # Os builders e os backfills correm todos e o que correu bem é publicado;
+      # só depois o job fica vermelho se algum falhou (o GitHub manda email).
+      - name: Falhar se algum passo falhou
+        if: always() && (steps.indices.outputs.failed != '' || steps.pcc.outputs.failed == '1' || steps.sd.outputs.failed == '1')
+        run: |
+          echo "❌ Falharam:${{ steps.indices.outputs.failed }} pcc=${{ steps.pcc.outputs.failed }} sd=${{ steps.sd.outputs.failed }}"
+          echo "O que correu bem já foi publicado. Ver os ::error:: nos passos acima."
+          exit 1

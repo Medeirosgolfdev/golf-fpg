@@ -54,10 +54,22 @@ on:
 permissions:
   contents: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-spain:
     runs-on: ubuntu-latest
-    timeout-minutes: 240   # 4h — pipeline pesada (4 portais + scorecards + builds)
+    # Cada passo tem o seu timeout-minutes (D8, auditoria 20/10/2026): a 28/09 e
+    # 05/10 o NextCaddy ficou pendurado ~200 min e o job foi cancelado às 4h SEM
+    # commit — perdeu-se o run inteiro. Agora um portal pendurado expira sozinho
+    # (o passo fica «failure», os outros seguem, o commit acontece e a
+    # verificação final põe o job vermelho). Run normal: ~20-50 min.
+    timeout-minutes: 300
 
     steps:
       - name: Checkout
@@ -65,8 +77,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           ref: main
-          fetch-depth: 0
-
+          fetch-depth: 1
       - name: Setup Node.js
         uses: actions/setup-node@v5
         with:
@@ -121,6 +132,7 @@ jobs:
         id: disc_fcg
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
+        timeout-minutes: 10
         run: |
           set +e
           node scripts/discover-fcg-scope.js --years "$FCG_YEARS"
@@ -136,6 +148,7 @@ jobs:
         id: disc_nc
         if: env.DO_DISCOVERY == 'true'
         continue-on-error: true
+        timeout-minutes: 15
         run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json || [ $? -eq 2 ]
 
       # Descobre CompIds RFEGolf NOVOS numa janela recente e une-os ao scope
@@ -147,12 +160,14 @@ jobs:
         id: disc_rfeg
         if: env.DO_DISCOVERY == 'true' && env.RFEGOLF_MODE == 'scope'
         continue-on-error: true
+        timeout-minutes: 30
         run: node scripts/discover-rfegolf-comps.js --range 15500-17200 --concurrency 6 --merge || [ $? -eq 2 ]
 
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
       - name: Scrape RFEGolf (Campeonatos Nacionais)
         id: rfegolf
         continue-on-error: true
+        timeout-minutes: 30
         run: |
           if [ "$RFEGOLF_MODE" = "range" ]; then
             echo "Modo range: --range $RFEGOLF_RANGE --filter juvenil --concurrency 15"
@@ -170,11 +185,13 @@ jobs:
       - name: Scrape livegolfscoring (scorecards hbh)
         id: lgs
         continue-on-error: true
+        timeout-minutes: 30
         run: node scripts/scrape-livegolfscoring.js --seasons "2025,2026" --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG || [ $? -eq 2 ]
 
       - name: Scrape NextCaddy (leaderboards)
         id: nextcaddy
         continue-on-error: true
+        timeout-minutes: 30
         run: |
           SCOPE_FILE="scripts/nextcaddy-scope-all.json"
           if [ ! -f "$SCOPE_FILE" ]; then
@@ -186,11 +203,13 @@ jobs:
       - name: Scrape NextCaddy horários (tee times)
         id: nc_horarios
         continue-on-error: true
+        timeout-minutes: 30
         run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG || [ $? -eq 2 ]
 
       - name: Scrape NextCaddy scorecards (backfill incremental)
         id: nc_scorecards
         continue-on-error: true
+        timeout-minutes: 45
         run: |
           # NextCaddy-only JUVENIL: torneios com leaderboard mas sem cartões
           # hole-by-hole (o passo de leaderboards acima não passa --scorecards).
@@ -206,6 +225,7 @@ jobs:
       - name: Scrape FCG (golfdirecto.com)
         id: fcg
         continue-on-error: true
+        timeout-minutes: 30
         run: |
           if [ ! -f scripts/fcg-scope.json ]; then
             echo "fcg-scope.json não existe — a saltar (discovery FCG falhou?)"
@@ -226,95 +246,69 @@ jobs:
       - name: Enrich LGS dates
         id: enrich_lgs
         continue-on-error: true
+        timeout-minutes: 15
         run: node scripts/enrich-lgs-dates.js || [ $? -eq 2 ]
 
       - name: Enrich LGS stats (metros + SI por buraco)
         id: enrich_lgs_stats
         continue-on-error: true
+        timeout-minutes: 20
         run: node scripts/enrich-lgs-stats.js --concurrency 6 || [ $? -eq 2 ]
 
       - name: Inferir par NextCaddy (fallback)
         id: infer_par
         continue-on-error: true
+        timeout-minutes: 10
         run: node scripts/infer-nextcaddy-par.js
 
       - name: Build rfegolf-resultats-index.json
+        timeout-minutes: 10
         run: node scripts/build-rfegolf-index.js
 
       - name: Build licencia-dob-lookup.json
+        timeout-minutes: 10
         run: node scripts/build-licencia-dob-lookup.js
 
       - name: Build licencia-hcp-lookup.json
+        timeout-minutes: 10
         run: node scripts/build-licencia-hcp-lookup.js
 
       # Os gémeos têm de existir ANTES do rivals: build-rfegolf-rivals.js usa
       # rfegolf-lgs-twins.json para não duplicar torneios RFEGolf↔LGS.
       - name: Build mapa de gémeos RFEGolf<->LGS
+        timeout-minutes: 10
         run: node scripts/build-lgs-twins.js
 
       - name: Build fcg-rivals.json
+        timeout-minutes: 10
         run: node scripts/build-fcg-rivals.js
 
       # ⚠ ORDEM: os torneios por jogador precisam dos gémeos + fcg-rivals, e o
       # spain-players.json precisa DELES (usa os `counts` para a coluna 📊 Tot —
       # o número da tabela tem de ser o nº de linhas do painel expansível).
       - name: Build spain-player-tournaments.json (torneios por jogador)
+        timeout-minutes: 10
         run: node scripts/build-spain-player-tournaments.js
 
       - name: Build spain-players.json
+        timeout-minutes: 10
         run: node scripts/build-spain-players-export.js
 
       - name: Build rfegolf-rivals.json
+        timeout-minutes: 10
         run: node scripts/build-rfegolf-rivals.js
 
       - name: Commit e push (se houver mudanças)
+        timeout-minutes: 20
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/rfegolf-resultats/ \
-                  public/data/rfegolf-livegolfscoring/ \
-                  public/data/nextcaddy/ \
-                  public/data/fcg/ \
-                  public/data/rfegolf-resultats-index.json \
-                  public/data/licencia-dob-lookup.json \
-                  public/data/licencia-hcp-lookup.json \
-                  public/data/spain-players.json \
-                  public/data/rfegolf-rivals.json \
-                  public/data/fcg-rivals.json \
-                  public/data/spain-player-tournaments.json \
-                  public/data/rfegolf-lgs-twins.json \
-                  scripts/fcg-scope.json \
-                  scripts/nextcaddy-scope-all.json \
-                  scripts/rfegolf-scope.json 2>/dev/null || true
-
-          if git diff --staged --quiet; then
-            echo "ℹ️  Nenhuma alteração — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date -u +'%Y-%m-%d %H:%M UTC')
-          git commit -m "data: update Espanha (RFEG + LGS + NC + FCG) ${DATE}"
-          # Rebase contra main caso outro workflow tenha commitado entretanto.
-          git fetch origin main
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: update Espanha (RFEG + LGS + NC + FCG) $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ \
+               public/data/nextcaddy/ public/data/fcg/ public/data/rfegolf-resultats-index.json \
+               public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
+               public/data/spain-players.json public/data/rfegolf-rivals.json \
+               public/data/fcg-rivals.json public/data/spain-player-tournaments.json \
+               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json \
+               scripts/nextcaddy-scope-all.json scripts/rfegolf-scope.json
 
       # ── Verificação final: falhar ALTO se algum scraper falhou ──
       # Os scrapers correm com continue-on-error para que a falha de um portal
@@ -332,9 +326,14 @@ jobs:
           [ "${{ steps.lgs.outcome }}"         = "failure" ] && FAILED="$FAILED livegolfscoring"
           [ "${{ steps.nextcaddy.outcome }}"   = "failure" ] && FAILED="$FAILED NextCaddy"
           [ "${{ steps.nc_horarios.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-horarios"
+          [ "${{ steps.nc_scorecards.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-scorecards"
           [ "${{ steps.fcg.outcome }}"         = "failure" ] && FAILED="$FAILED FCG"
           [ "${{ steps.enrich_lgs.outcome }}"  = "failure" ] && FAILED="$FAILED enrich-LGS"
+          [ "${{ steps.enrich_lgs_stats.outcome }}" = "failure" ] && FAILED="$FAILED enrich-LGS-stats"
           [ "${{ steps.infer_par.outcome }}"   = "failure" ] && FAILED="$FAILED infer-par-NC"
+          # Os builds e o commit não têm continue-on-error: se falharem o job já
+          # está vermelho; aqui só se diz qual foi.
+          [ "${{ job.status }}" = "failure" ] && FAILED="$FAILED (build/commit — ver passo vermelho)"
           if [ -n "$FAILED" ]; then
             echo "❌ Scrapers falhados:$FAILED"
             echo "Os dados dos scrapers que correram bem JÁ foram commitados."

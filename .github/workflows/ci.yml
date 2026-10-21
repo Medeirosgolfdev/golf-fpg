@@ -1,0 +1,80 @@
+name: CI (testes + build)
+
+# Testes e build em cada push/PR que mexa em CÓDIGO (auditoria 20/10/2026).
+# Até aqui o único sítio onde o build corria era o Vercel — um erro de tipos
+# só se via com o site já a falhar o deploy.
+#
+# Os commits de dados dos workflows NÃO disparam isto: são feitos com o
+# GITHUB_TOKEN, e o GitHub não dispara workflows a partir deles (regra
+# anti-recursão); e os paths abaixo deixam de fora public/data, output/ e
+# data-archive/. Os JSON de scope dos scrapers (scripts/*.json) também ficam de fora.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'api/**'
+      - 'lib/**'
+      - 'scripts/**'
+      - '!scripts/**/*.json'
+      - 'shared/**'
+      - 'ranking-pja/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'vitest.config.ts'
+      - 'tsconfig*.json'
+      - 'index.html'
+      - 'vercel.json'
+      - '.github/workflows/ci.yml'
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'api/**'
+      - 'lib/**'
+      - 'scripts/**'
+      - '!scripts/**/*.json'
+      - 'shared/**'
+      - 'ranking-pja/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'vitest.config.ts'
+      - 'tsconfig*.json'
+      - 'index.html'
+      - 'vercel.json'
+      - '.github/workflows/ci.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Um push novo no mesmo ramo torna o anterior irrelevante → cancela-o.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Testes (vitest)
+        run: npm test
+
+      - name: Build (tsc + vite)
+        run: npm run build

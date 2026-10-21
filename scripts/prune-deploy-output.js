@@ -31,6 +31,31 @@ const OUTPUT = path.join(process.cwd(), "output");
 const LIXO_POR_FED = ["whs.json", "whs-list.json", "scorecards.json", "summary.json", "scorecards"];
 /* Caches do pipeline, à raiz do output/. */
 const LIXO_RAIZ = ["extract-courses-cache.json", "cross-stats-cache.json"];
+/* Ficheiros de public/data que a app NUNCA pede (auditoria 20/10/2026, R2) —
+ * confirmado com grep em src/ e api/: o nome não aparece (a não ser nos rótulos
+ * do DataSources.tsx). São entradas/caches de scripts e workflows, por isso
+ * ficam em public/data no repo (mudar-lhes o caminho obrigava a mexer nos
+ * scrapers e no agregador); só saem do deployment. Se a app passar a pedir
+ * um destes, TIRÁ-LO daqui — senão dá 404 em produção e funciona em local. */
+const LIXO_DATA = [
+  "ffgolf-juniors-slim.json",          // 12,5 MB — entrada do agregador (sources/ffgolf.js)
+  "uskids-field-sizes.json",           // 6,8 MB — agregador (sources/uskids.js)
+  /^england_.*\.json$/,                // ~11 MB, 36 ficheiros — agregador; a /england foi arquivada a 13/10
+  "england-golf-catalog.json",         // catálogo do scrape-england-golf
+  "gg_ffgolf_all.json",                // scrape-golfgenius-generic
+  "worldjrgirls_2024.json",            // scrape-junior-orange-bowl
+  "t_de_tournaments_do_uskids.json",   // agregador
+  "uskids-player-scoring-stats.json",  // build-player-scoring-stats
+  "uskids-tcode-catalog.json",         // cache do fetch-uskids-field
+  "uskids-pid-anchors.json",           // cache do fetch-uskids-field
+  "fpg-draws.json",                    // legado dos scrapers de draws
+  "nacional-2026-forma.json",          // build-forma-data / build-form-report
+  "juniors-overrides.json",            // entrada do agregador
+  "drive-rankings.json",               // scrape/verify-drive-rankings (a app tem os pontos em constants/)
+  "drive-rankings-check.json",         // relatório do verify-drive-rankings
+  "fpg-tournaments-tracking.json",     // scope do update-classif
+  "recent-tournaments-scrape-scope.json", // scope do update-classif
+];
 
 let bytes = 0, n = 0;
 const tamanho = (p) => {
@@ -56,6 +81,12 @@ if (fs.existsSync(OUTPUT)) {
     for (const alvo of LIXO_POR_FED) apagar(path.join(OUTPUT, d, alvo));
   }
   for (const f of LIXO_RAIZ) apagar(path.join(OUTPUT, f));
+  const DATA = path.join(OUTPUT, "data");
+  if (fs.existsSync(DATA)) {
+    for (const f of fs.readdirSync(DATA)) {
+      if (LIXO_DATA.some((a) => (a instanceof RegExp ? a.test(f) : a === f))) apagar(path.join(DATA, f));
+    }
+  }
 }
 
 console.log(`🧹 prune-deploy-output: ${n} ficheiros/pastas removidos do deployment (${(bytes / 1048576).toFixed(1)} MB)`);

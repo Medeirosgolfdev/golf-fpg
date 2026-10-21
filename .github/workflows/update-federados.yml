@@ -53,6 +53,13 @@ permissions:
   contents: write
   issues: write   # resumo por email de cada run (issue → notificação do GitHub)
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-federados:
     runs-on: ubuntu-latest
@@ -101,7 +108,7 @@ jobs:
       # ── Resumo por email deste run ─────────────────────────────────────
       # Corre ANTES do commit de propósito: o resumo lê o diff da ÁRVORE DE
       # TRABALHO (federados.json novo vs. o do HEAD), que é exactamente o que
-      # este run produziu. Depois do commit o `git pull --rebase` do push traz
+      # este run produziu. Depois do commit o push (reset ao main mais recente) traz
       # commits de outros workflows e o diff deixaria de ser só nosso.
       # `--only-players` limita o âmbito aos nossos federados + cadastro FPG
       # (o bloco do federados.json corre antes desse filtro) — aqui não há mais
@@ -134,49 +141,9 @@ jobs:
 
       - name: Commit e push (se houve alterações)
         if: steps.scrape.outputs.exit_code == '0' && github.event.inputs.check_only != 'true'
+        # O federados.json é inteiramente deste job (-o: a versão nossa ganha);
+        # o simulador-players.json também é escrito pelo update-drive → regenera-se.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/federados.json
-          git add public/data/simulador-players.json 2>/dev/null || true
-
-          # Dupla verificação: só commitar se o git diff mostra alterações
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          MSG="data: refresh federados.json ${DATE}"
-          # Os ficheiros são inteiramente gerados por este job: guardá-los e,
-          # em cada tentativa, pô-los por cima do main mais recente.
-          # Não usar pull --rebase: o checkout é raso (depth 1) e, se o main
-          # avançou durante o scrape, o git fica sem base comum e dá o
-          # federados.json inteiro como conflito (19/10/2026).
-          SAVE=$(mktemp -d)
-          FILES=$(git diff --staged --name-only)
-          for f in $FILES; do mkdir -p "$SAVE/$(dirname "$f")"; cp "$f" "$SAVE/$f"; done
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git fetch --depth=1 origin ${GITHUB_REF_NAME}
-            git reset --hard FETCH_HEAD
-            for f in $FILES; do cp "$SAVE/$f" "$f"; git add "$f"; done
-            if git diff --staged --quiet; then
-              echo "O main já tem estes dados — sem commit."
-              PUSH_OK=1
-              break
-            fi
-            git commit -m "$MSG"
-            if git push origin HEAD:${GITHUB_REF_NAME}; then
-              PUSH_OK=1
-              break
-            fi
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ federados.json actualizado"
+          bash scripts/ci/push-generated.sh -m "data: refresh federados.json $(date +'%Y-%m-%d %H:%M')" \
+            -o public/data/federados.json -f simulador \
+            -- public/data/federados.json

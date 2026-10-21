@@ -203,3 +203,78 @@ segunda corrida.
   torneio, pelos `filePath` do `rfegolf-resultats-index.json`
   (`RFEGPage.tsx`, `cachedFetchJson`) — não podem ir para o `data-archive/`
   sem mudar a RFEGPage.
+
+## Auditoria de 20/10/2026 — o que mudou no deploy
+
+### Ignored Build Step — `scripts/ci/vercel-ignore.js` (R4)
+
+`vercel.json` → `"ignoreCommand": "node scripts/ci/vercel-ignore.js"`. Convenção
+do Vercel: **exit 0 = não fazer deploy**, exit 1 = fazer. Salta só quando TODOS
+os ficheiros mudados desde o último deploy (`VERCEL_GIT_PREVIOUS_SHA`) estão em
+`data-archive/`, `docs/`, `.github/`, `.claude/`, `scripts/**/*.test.js`,
+`scripts/_archive/`, `scripts/ci/`, `scripts/*.json` (scopes dos scrapers) ou são
+`.md` fora do `public/`. Tudo o resto faz deploy — `public/`, `src/`, `api/`,
+`lib/`, `output/{fed}/` (a app lê `/{fed}/analysis/data.json`), `ranking-pja/`
+e `shared/` (importados pelo `src`), `package*.json`, configs.
+Na dúvida faz deploy: sem base, base fora do clone raso do Vercel (nunca se
+compara só `HEAD^`: num push com vários commits o Vercel só constrói o último),
+ou erro.
+
+- Simular sobre o histórico: `node scripts/ci/vercel-ignore.js --simular "7 days ago"`
+  — medido a 21/10: **17 de 174** commits da semana deixavam de gerar deployment
+  (retratos do Analytics, cache/fichas USKids rich em `data-archive/`, CI, docs).
+  Os outros ~90% são dados que o site mostra e têm mesmo de publicar.
+- Testes: `scripts/ci/vercel-ignore.test.js`. Se a app passar a ler algo de uma
+  pasta da lista (ex.: `docs/`), tirá-la da lista.
+
+### Fora do deploy: o que a app não pede (R2)
+
+Confirmado com grep em `src/` e `api/` (o nome não aparece, a não ser nos
+rótulos do `DataSources.tsx`):
+
+- **`prune-deploy-output.js` → `LIXO_DATA`**: 50 ficheiros de `public/data`
+  (37 MB) que são entrada/cache de scripts e workflows e por isso ficam onde
+  estão no repo — `ffgolf-juniors-slim.json` (12,5 MB, agregador),
+  `uskids-field-sizes.json` (6,8), `england_*.json` (34 ficheiros, ~11 MB; a
+  `/england` foi arquivada a 13/10 e o agregador lê-os), `england-golf-catalog`,
+  `gg_ffgolf_all`, `worldjrgirls_2024`, `t_de_tournaments_do_uskids`,
+  `uskids-player-scoring-stats`, `uskids-tcode-catalog`, `uskids-pid-anchors`,
+  `fpg-draws`, `nacional-2026-forma`, `juniors-overrides`, `drive-rankings`,
+  `drive-rankings-check`, `fpg-tournaments-tracking`,
+  `recent-tournaments-scrape-scope`. ⚠ Se a app passar a pedir um destes,
+  tirá-lo da lista (senão 404 em produção e funciona em local).
+- **Movidos para `data-archive/`** (nenhum script activo os lê):
+  `federados-es.json` (3,6 MB), `holiday-classic/`, `england/` (dados da página
+  arquivada) — 8,3 MB.
+- **Ficheiros de design** (`.ai`, `.psd`, `design-glen.pdf`) de `public/Logos/`
+  e `public/logos para outras nupcias/` → **`design/`** (fora do `public/`,
+  46 MB). A galeria (`build-logos-gallery.js`) já os ignorava.
+
+Total: ~92 MB a menos por deployment.
+
+### Proposta para chegar a ~1 GB (R1 — NÃO aplicada)
+
+Medido a 21/10: `public/` 1,31 GB (`data/` 1,21 GB, `Logos/` 88 MB) +
+207 fichas `output/{fed}/analysis/data.json` (73 MB) ≈ 1,4 GB antes do R2.
+
+1. **Minificar os JSON no deploy** (o maior ganho, sem mexer no repo nem nos
+   scrapers): no `prune-deploy-output.js`, regravar cada `output/data/**/*.json`
+   com `JSON.stringify(JSON.parse(x))`. Medido sobre `public/data`:
+   **1200 MB → 694 MB (−506 MB)** — `ffgolf-resultats/` 174→57, `nextcaddy/`
+   147→68, `pull-torneios*` 90→21, `rfegolf-livegolfscoring/` 39→13,
+   `uskids_torneios_completos*` 36→13, `juniors.json` 52→30, `egr/` 86→64,
+   `uskids-results` 23→6. Custo: ~1–2 min a mais no build do Vercel; o JSON
+   servido é o mesmo (o browser já recebe gzip/brotli, por isso o ganho é de
+   armazenamento, não de transferência). Cuidado: ficheiros com BOM e os que
+   não são JSON válido ficam como estão.
+2. **`public/Logos/` (88 MB)**: imagens grandes de alta resolução; converter
+   para WebP/AVIF ou mover as que a app não usa (a galeria é uma página de
+   consulta) para `design/`.
+3. **`egr/` (86 MB)** e **`wagr/` (51 MB)**: fichas por jogador/evento de todo o
+   ranking; a app só mostra os nossos — cortar o deploy às fichas de quem
+   aparece nas páginas (como o `prune-player-scope.js` faz para a FPG).
+4. **Agrupar deploys**: mesmo com o R4, ~155 commits/semana publicam. Opção:
+   desligar o deploy automático por commit de dados (`git.deploymentEnabled`
+   por branch não chega — teria de ser um Deploy Hook chamado no fim de cada
+   workflow com «no máximo 1 deploy a cada N min»). Reduz o Deployment
+   Storage e os builds, à custa de minutos de atraso nos dados.

@@ -57,6 +57,13 @@ permissions:
   contents: write
   issues: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-cgss-draw:
     runs-on: ubuntu-latest
@@ -209,6 +216,10 @@ jobs:
             IFS=':' read -r CC TC PULL TEM QUER <<< "$SPEC"
             echo "── $CC/$TC: $TEM volta(s) guardada(s), o draw tem $QUER — a reler ──"
             node scripts/scrape-classif-node.js --tclub "$CC" --tcode "$TC" --out "public/data/pull-torneios$PULL.json"
+            CODE=$?
+            if [ "$CODE" != "0" ] && [ "$CODE" != "2" ] && [ "$CODE" != "3" ]; then
+              echo "❌ $CC/$TC: scrape-classif falhou (exit $CODE)"; FAILED=1
+            fi
             AGORA=$(node -e "const d=JSON.parse(require('fs').readFileSync('public/data/pull-torneios$PULL.json','utf8'));const t=d.tournaments.find(x=>String(x.ccode)==='$CC'&&String(x.tcode)==='$TC');console.log(t?Math.max(0,...t.players.map(p=>(p.roundScores||[]).filter(r=>Number(r.gross)>0&&Number(r.gross)<900).length)):0)")
             if [ "$AGORA" -gt "$TEM" ]; then echo "✓ $CC/$TC: agora com $AGORA volta(s)."; UPDATED=1
             else echo "ℹ️  $CC/$TC: a FPG ainda não publicou a volta seguinte."; fi
@@ -223,39 +234,19 @@ jobs:
       # O /draws lê o manuel-pairings.json, que é GERADO — sem isto o torneio
       # ficava lá com o tcode placeholder e sem scores.
       - name: Regenerar pairings
+        id: pairings
         if: steps.scrape.outputs.updated == '1'
         continue-on-error: true
         run: node scripts/pairings-build.js
 
       - name: Commit e push (se houve resultados)
         if: steps.scrape.outputs.updated == '1'
+        # -f pairings: o manuel-pairings.json é regenerado se o main avançar.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git add public/data/pull-torneios*.json public/data/cgss-draws-manual.json \
-                  public/data/pja-draws-manual.json public/data/fpg-admissions-draws.json \
-                  public/data/manuel-pairings.json
-
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          git commit -m "data: resultados de torneio draw-only (placeholder → tcode real)"
-
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            git pull --rebase --autostash origin ${GITHUB_REF_NAME} || { git rebase --abort 2>/dev/null || true; sleep $((i * 5)); continue; }
-            if git push; then PUSH_OK=1; break; fi
-            echo "Push tentativa $i falhou — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito"
+          bash scripts/ci/push-generated.sh -m "data: resultados de torneio draw-only (placeholder → tcode real)" \
+            -f pairings \
+            -- 'public/data/pull-torneios*.json' public/data/cgss-draws-manual.json \
+               public/data/pja-draws-manual.json public/data/fpg-admissions-draws.json
 
       - name: Aviso por email (issue criada e fechada — como o daily-digest)
         if: steps.scrape.outputs.updated == '1'
@@ -268,8 +259,8 @@ jobs:
             --body "@Medeirosgolfdev — o workflow apanhou os resultados dos pendentes (${{ steps.pending.outputs.list }}), re-chaveou o(s) placeholder(s) para o(s) tcode(s) reais e reconciliou os fedCodes dos draws. Ver em https://golf-fpg.vercel.app/FPG. Esta issue fecha-se sozinha — serve só para a notificação por email.")
           gh issue close "$URL" --comment "Notificação entregue."
 
-      - name: Falhar o job se algum pendente deu erro real
-        if: steps.scrape.outputs.failed == '1'
+      - name: Falhar o job se algum pendente (ou os pairings) deu erro real
+        if: always() && (steps.scrape.outputs.failed == '1' || steps.pairings.outcome == 'failure')
         run: |
-          echo "❌ Pelo menos um placeholder falhou com erro real (ver logs acima)."
+          echo "❌ Erro real: placeholder(s) failed=${{ steps.scrape.outputs.failed }} · pairings-build=${{ steps.pairings.outcome }} (ver logs acima)."
           exit 1

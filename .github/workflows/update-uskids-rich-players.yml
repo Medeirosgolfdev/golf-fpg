@@ -47,7 +47,7 @@ jobs:
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
@@ -92,55 +92,26 @@ jobs:
       - name: Commit se houve alterações
         # Corre em exit 0 (progresso) E exit 2 (sem novos players): mesmo sem
         # ficheiros novos, a cache aquecida da Fase 2 pode ter avançado e deve
-        # ser committada. O guard `git diff --cached --quiet` no-opa se nada mudou.
+        # ser committada. O push-generated no-opa se nada mudou.
         if: steps.scrape.outputs.exit_code != '1'
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
           # DOIS commits+pushes separados: as fichas dos jogadores primeiro, a
           # cache depois. Antes era um commit só — a 17 e 24 Ago 2026 o push foi
           # rejeitado (a cache passou os 100 MB do GitHub) e levou atrás as
           # fichas do run: 10h de scrape deitadas fora. Separados, um problema
           # na cache já não custa os dados novos.
-          commit_push () {
-            msg="$1"; shift
-            # Um `git add` POR path: com vários de uma vez, um pathspec que não
-            # existe (o run-summary num run vazio, o .json legado já migrado)
-            # aborta o add INTEIRO e o commit no-opava em silêncio.
-            # Glob entre aspas — sem aspas, o bash expande antes do git ver e
-            # silenciosamente perde deletions (ver uskids-member-history.yml).
-            for pathspec in "$@"; do
-              git add -A "$pathspec" 2>/dev/null || true
-            done
-            if git diff --cached --quiet; then
-              echo "· nada a committar em: $*"
-              return 0
-            fi
-            git commit -m "$msg"
-            for i in 1 2 3 4 5; do
-              if git pull --rebase --autostash origin "${GITHUB_REF_NAME}" && git push; then
-                return 0
-              fi
-              git rebase --abort 2>/dev/null || true
-              echo "Push tentativa $i falhou — retry em $((i * 5))s"
-              sleep $((i * 5))
-            done
-            echo "❌ Push falhou após 5 tentativas: $msg"
-            return 1
-          }
-
+          # ⚠ O 1.º push faz reset --hard ao main: a cache (fora dos pathspecs
+          # dele) é guardada antes e reposta a seguir.
           STAMP="$(date -u '+%Y-%m-%d %H:%M UTC')"
           FAILED=0
-
-          commit_push "data: USKids rich players [$STAMP]" \
-            'data-archive/uskids-rich-players/' \
-            data-archive/uskids-rich-run-summary.json || FAILED=1
-
-          # A cache é gzipada (~8 MB). O path .json legado vai na mesma lista
-          # para o commit registar a sua remoção na migração.
-          commit_push "data: USKids rich flight cache [$STAMP]" \
-            data-archive/uskids-rich-flight-cache.json.gz \
-            data-archive/uskids-rich-flight-cache.json || FAILED=1
-
+          KEEP=$(mktemp -d)
+          cp -p data-archive/uskids-rich-flight-cache.json.gz "$KEEP/" 2>/dev/null || true
+          bash scripts/ci/push-generated.sh -m "data: USKids rich players [$STAMP]" \
+            -- 'data-archive/uskids-rich-players/' data-archive/uskids-rich-run-summary.json || FAILED=1
+          [ -f "$KEEP/uskids-rich-flight-cache.json.gz" ] && cp -p "$KEEP/uskids-rich-flight-cache.json.gz" data-archive/
+          # A cache é gzipada (~36 MB). O path .json legado vai na lista para o
+          # commit registar a sua remoção se ainda existir.
+          bash scripts/ci/push-generated.sh -m "data: USKids rich flight cache [$STAMP]" \
+            -o data-archive/uskids-rich-flight-cache.json.gz \
+            -- data-archive/uskids-rich-flight-cache.json.gz data-archive/uskids-rich-flight-cache.json || FAILED=1
           exit $FAILED

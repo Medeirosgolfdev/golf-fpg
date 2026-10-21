@@ -123,22 +123,10 @@ jobs:
 
       - name: Commit
         if: steps.snap.outputs.exit_code == '0' && inputs.dry_run != 'true'
+        # Push à prova de concorrência — ver scripts/ci/push-generated.sh.
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data-archive/analytics
-          if git diff --staged --quiet; then
-            echo "Nada para committar."
-            exit 0
-          fi
-          git commit -m "data: retrato do Web Analytics $(date -u +'%Y-%m-%d %H:%M UTC')"
-          # Outros workflows committam ao mesmo tempo — rebase antes de empurrar.
-          for i in 1 2 3; do
-            git pull --rebase --autostash && git push && exit 0
-            echo "push falhou (tentativa $i), a repetir..."
-            sleep 10
-          done
-          exit 1
+          bash scripts/ci/push-generated.sh -m "data: retrato do Web Analytics $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -- data-archive/analytics
 
       - name: Resumo
         if: always()

@@ -46,6 +46,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     concurrency:
       group: build-major-catalog
       cancel-in-progress: false
@@ -79,17 +80,4 @@ jobs:
       - name: Commit catalog
         if: steps.diff.outputs.changed == 'true'
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data/major-catalog.json public/data/major-veterans.json
-          git commit -m "build: rebuild MAJOR catalog"
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin main && git push; then
-              echo "Push OK (tentativa $i)"
-              exit 0
-            fi
-            echo "Push falhou (tentativa $i) — outro workflow fez push, a refazer rebase..."
-            sleep 5
-          done
-          echo "Push falhou após 5 tentativas"
-          exit 1
+          bash scripts/ci/push-generated.sh -m "build: rebuild MAJOR catalog" -f major --

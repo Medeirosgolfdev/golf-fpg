@@ -37,6 +37,13 @@ on:
 permissions:
   contents: write
 
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   update-drive:
     runs-on: ubuntu-latest
@@ -121,7 +128,11 @@ jobs:
       - name: É dia de rankings?
         id: rkday
         run: |
-          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%u)" = "7" ]; then
+          # Domingo — ou segunda até às 08:00 UTC: o cron de domingo às 21:00 chega
+          # a correr depois da meia-noite com o atraso do GitHub (12/10/2026 às
+          # 00:02) e assim saltava os rankings da semana.
+          DOW=$(date -u +%u); HOUR=$(date -u +%H)
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$DOW" = "7" ] || { [ "$DOW" = "1" ] && [ "$HOUR" -lt 8 ]; }; then
             echo "run=yes" >> $GITHUB_OUTPUT
           else
             echo "run=no" >> $GITHUB_OUTPUT
@@ -136,60 +147,58 @@ jobs:
           node scripts/scrape-drive-rankings.js --details
           EXIT_CODE=$?
           echo "exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
-          if [ "$EXIT_CODE" = "1" ]; then
-            echo "⚠ scrape de rankings falhou (cookies?) — continua sem actualizar rankings"
+          if [ "$EXIT_CODE" != "0" ] && [ "$EXIT_CODE" != "2" ]; then
+            echo "::error::scrape de rankings falhou (exit $EXIT_CODE; cookies?) — os dados do Drive publicam-se na mesma e o job acaba vermelho no fim"
           fi
           exit 0
         env:
           FPG_ADMISSIONS_COOKIES: ${{ secrets.FPG_ADMISSIONS_COOKIES }}
 
+      # Exit 1 do verify = há rankings divergentes. Há divergências crónicas
+      # conhecidas (6 a 18/10/2026, tabela de pontos da Challenge Final), por
+      # isso o que fica VERMELHO é PIORAR: mais divergentes do que no relatório
+      # anterior (o do HEAD), ou o verify rebentar. Continua a correr antes do
+      # commit, para o relatório novo ser publicado.
       - name: Verificar rankings calculados vs oficiais
+        id: verify
         if: steps.rkday.outputs.run == 'yes'
         run: |
           set +e
+          ANTES=$(git show HEAD:public/data/drive-rankings-check.json 2>/dev/null \
+            | node -e 'let s="";process.stdin.on("data",d=>s+=d).on("end",()=>{try{console.log(JSON.parse(s).summary.divergent||0)}catch{console.log(0)}})')
           node scripts/verify-drive-rankings.js
           EXIT_CODE=$?
-          if [ "$EXIT_CODE" = "1" ]; then
-            echo "⚠⚠ DIVERGÊNCIAS entre rankings calculados e oficiais — ver relatório acima e public/data/drive-rankings-check.json"
-          elif [ "$EXIT_CODE" = "0" ]; then
+          DEPOIS=$(node -e 'try{console.log(require("./public/data/drive-rankings-check.json").summary.divergent||0)}catch{console.log(0)}')
+          echo "Divergentes: antes=${ANTES:-0} agora=$DEPOIS"
+          if [ "$EXIT_CODE" = "0" ]; then
             echo "✓ Rankings calculados = oficiais"
+          elif [ "$EXIT_CODE" = "1" ] && [ "$DEPOIS" -le "${ANTES:-0}" ]; then
+            echo "::warning::$DEPOIS rankings com divergências (eram ${ANTES:-0}) — conhecidas, não pioraram. Ver public/data/drive-rankings-check.json"
+          elif [ "$EXIT_CODE" = "1" ]; then
+            echo "::error::Divergências subiram de ${ANTES:-0} para $DEPOIS — ver public/data/drive-rankings-check.json"
+            echo "failed=1" >> $GITHUB_OUTPUT
+          elif [ "$EXIT_CODE" != "2" ]; then
+            echo "::error::verify-drive-rankings rebentou (exit $EXIT_CODE)"
+            echo "failed=1" >> $GITHUB_OUTPUT
           fi
           exit 0
 
       - name: Commit e push (se houver novos dados)
         if: steps.scrape.outputs.exit_code == '0' || (steps.rankings.outcome == 'success' && steps.rankings.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
+        # -f simulador: o simulador-players.json também é escrito pelo
+        # update-federados → regenera-se por cima do main se este avançar.
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          bash scripts/ci/push-generated.sh -m "data: update DRIVE/AQUAPOR $(date +'%Y-%m-%d %H:%M')" \
+            -f simulador \
+            -- 'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
+               public/data/drive-rankings.json public/data/drive-rankings-check.json
 
-          git add public/data/drive-data-*.json public/data/aquapor-data-*.json
-          git add public/data/drive-rankings.json public/data/drive-rankings-check.json 2>/dev/null || true
-          git add public/data/simulador-players.json 2>/dev/null || true
-
-          # Dupla verificação: só commitar se o git diff realmente mostra alterações
-          if git diff --staged --quiet; then
-            echo "Nenhuma alteração em staging — sem commit."
-            exit 0
-          fi
-
-          DATE=$(date +'%Y-%m-%d %H:%M')
-          CHANGED=$(git diff --staged --name-only | wc -l)
-          git commit -m "data: update DRIVE/AQUAPOR ${DATE} (${CHANGED} ficheiros)"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
-          echo "✓ Commit feito — ${CHANGED} ficheiros actualizados"
+      # Falhas que não podiam travar o commit dos dados do Drive, mas não podem
+      # ficar verdes: rankings oficiais que não se leram, divergências que
+      # pioraram, verify que rebentou.
+      - name: Falhar se rankings/verificação falharam
+        if: always() && ((steps.rankings.outputs.exit_code != '' && steps.rankings.outputs.exit_code != '0' && steps.rankings.outputs.exit_code != '2') || steps.verify.outputs.failed == '1')
+        run: |
+          echo "❌ Rankings Drive: scrape exit=${{ steps.rankings.outputs.exit_code }} · verificação failed=${{ steps.verify.outputs.failed }}"
+          echo "Os dados do Drive/Aquapor já foram publicados — ver os ::error:: acima."
+          exit 1

@@ -5,17 +5,24 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+# Uma corrida de cada vez deste workflow: a seguinte espera (não cancela a
+# que está a correr). Entre workflows diferentes quem resolve é o
+# scripts/ci/push-generated.sh — ver docs/claude/workflows.md, «Push dos dados».
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
 jobs:
   resultados:
     name: 🏆 Resultados
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v5
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
           ref: main
-          fetch-depth: 0
+          fetch-depth: 1
       - uses: actions/setup-node@v5
         with: { node-version: '24', cache: 'npm' }
       - run: npm ci
@@ -31,28 +38,6 @@ jobs:
 
       - name: Commit
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add public/data/uskids-results.json public/data/uskids-draws.json
-          git diff --cached --quiet && exit 0
-          git fetch origin main
-          git merge origin/main --no-edit --strategy-option=ours
-          git add public/data/uskids-results.json public/data/uskids-draws.json
-          git commit -m "data: resultados + draws USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]"
-          # Push robusto: retry com pull --rebase em cada tentativa.
-          # Em runs manuais (sem o cron offset) podemos colidir com outro
-          # workflow a fazer push em paralelo → non-fast-forward.
-          PUSH_OK=0
-          for i in 1 2 3 4 5; do
-            if git pull --rebase --autostash origin ${GITHUB_REF_NAME} && git push; then
-              PUSH_OK=1
-              break
-            fi
-            git rebase --abort 2>/dev/null || true
-            echo "Push tentativa $i falhou (provável push concorrente) — retry em $((i * 5))s"
-            sleep $((i * 5))
-          done
-          if [ "$PUSH_OK" != "1" ]; then
-            echo "❌ Push falhou após 5 tentativas"
-            exit 1
-          fi
+          bash scripts/ci/push-generated.sh -m "data: resultados + draws USKids [$(date -u '+%Y-%m-%d %H:%M UTC')]" \
+            -o public/data/uskids-results.json -o public/data/uskids-draws.json \
+            -- public/data/uskids-results.json public/data/uskids-draws.json
