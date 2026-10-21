@@ -113,7 +113,7 @@ export function buildFPGTournament(
       const rmeters = rc === c ? meters : full(rc.meters, rc.par.length);
       return {
         round: r.round ?? ri + 1,
-        gross: r.gross ?? 0,
+        gross: raw ? r.gross : (r.gross ?? 0),
         scores: raw ? r.scores : (r.scores ?? []).map((x) => x ?? 0),
         pars: rc.par,
         si: raw ? rc.si : (rsi ?? []),

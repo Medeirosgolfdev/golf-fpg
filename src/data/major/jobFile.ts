@@ -18,10 +18,11 @@ import { gf, normPaisDisplay, isPtCountry } from "../../utils/flagUtils";
 import { ageAtDate } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { buildEvoMap, type EvoEntry } from "../../hooks/useEvoComparison";
-import type { Tournament as FPGTournament, Player as FPGPlayer, ScorecardOptions } from "../fpgTypes";
+import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import type { FpgDraw } from "../nacional2026Loader";
 import { playedParTotal } from "../fpgUtils";
 import { intlScorecardOptions } from "../intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
   // Cartão de tee POR RONDA (provas que mudam de campo ou de marcação a cada
@@ -103,8 +104,8 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
   // A linha de metros no scorecard só aparece quando há teeName.
   const teeName = meters18 ? (div.teeName || "Tee") : undefined;
 
-  const fpg: FPGPlayer[] = players.map((p) => {
-    const rounds = (p.rounds || []).map((r, ri) => {
+  const fpg: IntlPlayerIn[] = players.map((p): IntlPlayerIn => {
+    const rounds = (p.rounds || []).map((r) => {
       // Preferir a soma dos scores quando a ronda está completa (mais fiável que
       // o `gross` do leaderboard, que pode divergir em ficheiros antigos).
       const sc = r.scores || [];
@@ -148,7 +149,10 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       const roundSlope = !nineHole && sl != null ? sl : undefined;
       const rMeters = rMeters18 ? sliceFor(rMeters18, r.startingHole) : metersForRound(r.startingHole);
       const rTee = rMeters.length ? (r.teeName || div.teeName || "Tee") : teeName;
-      return { round: ri + 1, gross, scores, pars: roundPars, si: rSi18 ? sliceFor(rSi18, r.startingHole) : siForRound(r.startingHole), meters: rMeters, teeName: rTee, courseRating: roundCR, slope: roundSlope, startHole: r.startingHole };
+      return {
+        gross, scores, startHole: r.startingHole,
+        card: { par: roundPars, si: rSi18 ? sliceFor(rSi18, r.startingHole) : siForRound(r.startingHole), meters: rMeters, teeName: rTee, courseRating: roundCR, slope: roundSlope },
+      };
     });
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
     // `total` agregado (null). Reconstruir o gross/to-par acumulado das rondas
@@ -157,45 +161,51 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
     const grossTotal = p.total ?? (rounds.length ? playedGross : null);
     // Par acumulado somado RONDA A RONDA (só os buracos jogados) — `parTotal ×
     // nº de rondas` dava −50 a quem estava a meio da última volta.
-    const playedPar = rounds.reduce((s, r) => s + playedParTotal(r, parTotal), 0);
+    const playedPar = rounds.reduce((s, r) => s + playedParTotal({ gross: r.gross, scores: r.scores, pars: r.card.par }, parTotal), 0);
     const toPar = p.toPar ?? (rounds.length ? playedGross - playedPar : null);
     return {
-      scoreId: p.detailId || p.name,
+      id: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,
       name: p.name,
       club: p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}` : "",
+      country: p.country,
       // HCP exacto (ex: GolfBox) → SD por Adjusted Gross Score (Net Double
       // Bogey) em vez de gross cru. Sem HCP, o computeSD cai no gross cru.
-      hcpExact: p.hcp ?? undefined,
-      _hcpEst: p.hcp != null && p.hcpEstimated ? true : undefined,
-      _hcpNote: p.hcpEstimated ? p.estNote ?? null : undefined,
-      // Idade À DATA DO TORNEIO quando há DOB completa + data (GolfBox traz as
-      // duas) — um miúdo nascido a 22/10/2007 num torneio de Julho de 2026 tem
-      // 18 anos, não 19. Fallback year-based (ano − birthYear) sem DOB/data.
-      _age: (p.dob && date ? ageAtDate(p.dob, date) : null)
-        ?? (year && p.birthYear ? year - p.birthYear : null),
-      // DOB completa quando a fonte a traz (GolfBox via GetPlayers `entries`) —
-      // alimenta o tooltip da coluna IDADE e as colunas Nasc./Idade do Resumo
-      // (o AccumulatedLB lê `(p as any).dob`).
-      dob: p.dob ?? undefined,
-      // Ano e estimativas (Faldo Madeira) — as mesmas colunas Nasc./Idade do
-      // Draw, com as estimativas a vermelho (16/10/2026).
-      birthYear: p.birthYear ?? undefined,
-      birthYearEst: p.birthYearEst ?? undefined,
-      ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}),
-      estNote: p.estNote ?? undefined,
-      grossTotal,
+      hcp: p.hcp,
+      total: grossTotal,
       toPar,
-      nholes: holes,
-      parTotal,
+      rounds,
       scores: p.rounds?.[0]?.scores,
-      par,
-      roundScores: rounds,
-      _roundsPlayed: rounds.length || p.roundGross.length,
-      _isPortuguese: isPtCountry(p.country),
-    } as FPGPlayer;
+      roundsPlayed: rounds.length || p.roundGross.length,
+      // Sem marca de WD: o TournamentDetail decide pelas voltas.
+      wd: null,
+      extra: {
+        _hcpEst: p.hcp != null && p.hcpEstimated ? true : undefined,
+        _hcpNote: p.hcpEstimated ? p.estNote ?? null : undefined,
+        // Idade À DATA DO TORNEIO quando há DOB completa + data (GolfBox traz as
+        // duas) — um miúdo nascido a 22/10/2007 num torneio de Julho de 2026 tem
+        // 18 anos, não 19. Fallback year-based (ano − birthYear) sem DOB/data.
+        _age: (p.dob && date ? ageAtDate(p.dob, date) : null)
+          ?? (year && p.birthYear ? year - p.birthYear : null),
+        // DOB completa quando a fonte a traz (GolfBox via GetPlayers `entries`) —
+        // alimenta o tooltip da coluna IDADE e as colunas Nasc./Idade do Resumo
+        // (o AccumulatedLB lê `(p as any).dob`).
+        dob: p.dob ?? undefined,
+        // Ano e estimativas (Faldo Madeira) — as mesmas colunas Nasc./Idade do
+        // Draw, com as estimativas a vermelho (16/10/2026).
+        birthYear: p.birthYear ?? undefined,
+        birthYearEst: p.birthYearEst ?? undefined,
+        ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}),
+        estNote: p.estNote ?? undefined,
+      },
+    };
   });
-  return { name, tcode: `job-${name}`, date: date || "", campo: "", rounds: nR, playerCount: fpg.length, players: fpg };
+  return buildFPGTournament(
+    { name, tcode: `job-${name}`, date: date || "", campo: "", rounds: nR },
+    { par, holes, parTotal },
+    fpg,
+    { keepNoRounds: true, raw: true },
+  );
 }
 
 
