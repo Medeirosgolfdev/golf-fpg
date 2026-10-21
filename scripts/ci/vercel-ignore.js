@@ -14,7 +14,8 @@
  * Na dúvida — sem git, sem base, erro — faz deploy.
  *
  * Base da comparação: VERCEL_GIT_PREVIOUS_SHA (o commit do último deploy deste
- * branch) quando existe no clone; senão HEAD^. Comparar só HEAD^..HEAD não
+ * branch); se ela vier mas não estiver no clone (raso), faz deploy; sem ela
+ * (1.º deploy, corrida à mão), HEAD^. Comparar só HEAD^..HEAD não
  * chega: num push com vários commits o Vercel só constrói o último, e um commit
  * anterior com public/ ficava por publicar.
  *
@@ -64,8 +65,11 @@ function main() {
 
   const prev = process.env.VERCEL_GIT_PREVIOUS_SHA;
   let base = null;
-  if (prev && existe(prev)) base = prev;
-  else if (existe("HEAD^")) base = "HEAD^";
+  if (prev) {
+    // O clone do Vercel é raso: se o último deploy ficou para lá dele, não se
+    // sabe o que mudou entretanto → deploy (nunca adivinhar com HEAD^).
+    if (existe(prev)) base = prev;
+  } else if (existe("HEAD^")) base = "HEAD^";
   if (!base) { console.log("vercel-ignore: sem base para comparar → deploy"); process.exit(1); }
 
   const fs = ficheirosMudados(base);
