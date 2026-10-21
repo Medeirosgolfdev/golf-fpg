@@ -225,6 +225,11 @@ goto :status_done
 :status_done
 
 REM ── Email via Gmail SMTP ─────────────────────────────────────────
+REM DESLIGADO a 21/10/2026 a pedido da Mariana ("nao preciso de email"): a
+REM App Password do Gmail foi revogada a 14/10 e o aviso chega pelo WhatsApp.
+REM Para voltar a ligar: correr com ENVIAR_EMAIL=1 (e uma App Password nova
+REM em api\.email-config.json).
+if not "%ENVIAR_EMAIL%" == "1" goto :email_off
 if not exist api\.email-config.json goto :email_skipped
 echo [%date% %time%] A enviar email: !SUBJECT! >> "%LOGFILE%"
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts\send-email.ps1 -Subject "!SUBJECT!" -Body "!BODY!" >> "%LOGFILE%" 2>&1
@@ -232,6 +237,9 @@ echo      send-email.ps1 exit=!errorlevel! >> "%LOGFILE%"
 goto :email_done
 :email_skipped
 echo [%date% %time%] Email nao configurado api\.email-config.json em falta - skip >> "%LOGFILE%"
+goto :email_done
+:email_off
+echo [%date% %time%] Email desligado - aviso so por WhatsApp >> "%LOGFILE%"
 :email_done
 
 REM ── WhatsApp via CallMeBot ───────────────────────────────────────
