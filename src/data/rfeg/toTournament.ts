@@ -10,6 +10,7 @@ import { flag } from "../../utils/flagUtils";
 import { formatPlayerName } from "../../utils/playerUtils";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
@@ -572,7 +573,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
 
   const dateRef = detail.meta.dateStart || null;
 
-  const players: FPGPlayer[] = group.players.map((p, idx) => {
+  const players: IntlPlayerIn[] = group.players.map((p, idx): IntlPlayerIn => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
     const age = ageAtDate(dob, dateRef ?? todayIso());
@@ -583,7 +584,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
     const club = (p.club || e?.club || "").toString();
     const sex: "M" | "F" | null = (p.sexo === "M" ? "M" : p.sexo === "F" ? "F" : (e?.sex === "M" ? "M" : e?.sex === "F" ? "F" : null));
 
-    const roundScores: FPGRoundScore[] = (p.rounds || [])
+    const rounds: IntlRoundIn[] = (p.rounds || [])
       .map((gross, i) => {
         const rn = i + 1;
         const sc = (p.holeScores && p.holeScores[String(rn)]) || [];
@@ -591,56 +592,41 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
           round: rn,
           gross: (gross != null && gross > 0) ? gross : (sc.reduce((a, b) => a + b, 0) || 0),
           scores: sc.length === nHoles ? sc : [],
-          pars: par,
-          si,
-          meters,
-          courseRating,
-          slope,
           startHole,
-          teeName: meters.length ? "Camp." : undefined,
         };
       })
       .filter((r) => r.gross > 0);
 
     return {
-      scoreId: `mitarjeta-${detail.compId}-${idx}`,
+      id: `mitarjeta-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: formatPlayerName(p.name || ""),
       club: club ? displayName(club) : "—",
-      fed: p.licencia || e?.licencia || undefined,
-      fedCode: p.licencia || e?.licencia || undefined,
-      grossTotal: p.total ?? null,
+      total: p.total ?? null,
       toPar: p.toPar ?? null,
-      hcpExact: p.hcp ?? undefined,
-      escalao: escLabel || undefined,
-      courseRating,
-      slope,
-      startHole,
-      _sex: sex,
-      _age: age,
-      teeName: meters.length ? "Camp." : undefined,
-      nholes: nHoles,
-      parTotal: parTotal || undefined,
-      scores: roundScores[0]?.scores || [],
-      par,
-      si,
-      meters,
-      roundScores,
+      hcp: p.hcp,
+      rounds,
+      scores: rounds[0]?.scores || [],
       // Torneio AO VIVO: não marcar WD por terem jogado menos rondas que o total
       // (apagaria o total). WD real virá quando o mitarjeta o indicar.
-      _wd: false,
-      _roundsPlayed: roundScores.length,
-    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
+      wd: false,
+      isPortuguese: null,
+      extra: {
+        fed: p.licencia || e?.licencia || undefined,
+        fedCode: p.licencia || e?.licencia || undefined,
+        escalao: escLabel || undefined,
+        startHole,
+        _sex: sex,
+        _age: age,
+      },
+    };
   });
 
-  return {
-    name: detail.meta.name || `RFEGolf ${detail.compId}`,
-    tcode: String(detail.compId),
-    date: detail.meta.dateStart || "",
-    campo: detail.meta.course || "",
-    rounds: nRounds,
-    playerCount: players.length,
+  return buildFPGTournament(
+    { name: detail.meta.name || `RFEGolf ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: nRounds },
+    { par, si, meters, teeName: meters.length ? "Camp." : undefined, courseRating, slope, holes: nHoles, parTotal: parTotal || null },
     players,
-  };
+    { keepNoRounds: true, raw: true },
+  );
 }
 
