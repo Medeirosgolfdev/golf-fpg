@@ -7,8 +7,9 @@
  */
 import { isPT } from "../../utils/ptPlayers";
 import { gf, normPaisDisplay } from "../../utils/flagUtils";
-import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "../fpgTypes";
+import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
+import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { normalizeName, ffgPlayerName, ffgCountry } from "./names";
 import type { FFGTournament, CatalogEntry, FFGResTournament, FFGResSerie } from "./types";
 
@@ -108,56 +109,41 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
   // Sem teeName, o teeMetersMap não é populado e a linha "m" por buraco fica vazia.
   // Com distâncias da série, o nome diz que o tee é MISTO (ex.: «… — misto: Azuis + Vermelhas»).
   const ffgTeeName = serieCourse?.tee || (ggC as any)?.name || "Tees";
-  const players: FPGPlayer[] = sorted.map((p, idx) => {
-    const rounds: FPGRoundScore[] = [];
-    if (p.scoresR1 && p.scoresR1.length === 18 && p.t1 != null) {
-      rounds.push({ round: 1, gross: p.t1, scores: p.scoresR1, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
-    }
-    if (p.scoresR2 && p.scoresR2.length === 18 && p.t2 != null) {
-      rounds.push({ round: 2, gross: p.t2, scores: p.scoresR2, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
-    }
-    if (p.scoresR3 && p.scoresR3.length === 18 && p.t3 != null) {
-      rounds.push({ round: 3, gross: p.t3, scores: p.scoresR3, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
-    }
-    if (p.scoresR4 && p.scoresR4.length === 18 && p.t4 != null) {
-      rounds.push({ round: 4, gross: p.t4, scores: p.scoresR4, pars: par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined });
-    }
-    const incomplete = rounds.length < numRounds;
+  const cards = [
+    (p: FFGResSerie["players"][number]) => [p.scoresR1, p.t1] as const,
+    (p: FFGResSerie["players"][number]) => [p.scoresR2, p.t2] as const,
+    (p: FFGResSerie["players"][number]) => [p.scoresR3, p.t3] as const,
+    (p: FFGResSerie["players"][number]) => [p.scoresR4, p.t4] as const,
+  ];
+  const players: IntlPlayerIn[] = sorted.map((p, idx) => {
+    const rounds: IntlRoundIn[] = [];
+    cards.forEach((card, i) => {
+      const [scores, gross] = card(p);
+      if (scores && scores.length === 18 && gross != null) rounds.push({ round: i + 1, gross, scores });
+    });
     const playerCountry = ffgCountry(p); // país REAL ou null — nunca "FRA" inventado
     const clubText = (p.club && p.club.trim()) ? p.club.trim() : (playerCountry ? normPaisDisplay(playerCountry) : "");
-    const flagPrefix = playerCountry ? `${gf(playerCountry)} ` : "";
     return {
-      scoreId: p.license || `${data.trnId}-${p._serieId}-${idx}`,
+      id: p.license || `${data.trnId}-${p._serieId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: ffgPlayerName(p),
-      club: `${flagPrefix}${clubText}`.trim(),
-      grossTotal: p.total,
+      club: `${playerCountry ? `${gf(playerCountry)} ` : ""}${clubText}`.trim(),
+      total: p.total,
       toPar: p.total != null && parTotal > 0 ? p.total - (parTotal * numRounds) : null,
-      hcpExact: p.hcp ?? undefined,
-      nholes: par.length || 18,
-      parTotal,
+      hcp: p.hcp,
+      rounds,
       scores: rounds[0]?.scores || [],
-      par,
-      si: ggSi,
-      meters: ggMeters,
-      teeName: ggMeters.length ? ffgTeeName : undefined,
-      roundScores: rounds,
-      _wd: incomplete,
-      _roundsPlayed: rounds.length,
       // Marca conterrâneos para o ScorecardLB/AccumulatedLB aplicar .row-portuguese.
-      _isPortuguese: isPT((p as any).nationality, (p as any).flag, p.name),
-    } as FPGPlayer;
+      isPortuguese: isPT(p.nationality, p.flag, p.name),
+    };
   });
 
-  return {
-    name: data.name,
-    tcode: data.trnId,
-    date: data.date,
-    campo: courseName,
-    rounds: numRounds,
-    playerCount: players.length,
+  return buildFPGTournament(
+    { name: data.name, tcode: data.trnId, date: data.date, campo: courseName, rounds: numRounds },
+    { par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined, holes: par.length || 18, parTotal },
     players,
-  };
+    { keepNoRounds: true, raw: true },
+  );
 }
 
 /* ── Adaptador FFG → FPGTournament (para reusar IntlTournView) ── */
@@ -179,52 +165,30 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
   const ggTeeName = t.course.tee || null;
   const hasMeters = !!ggTeeName
     && Array.isArray(t.course.meters) && t.course.meters.length === t.course.par.length;
-  const players: FPGPlayer[] = sorted.map((p, idx) => {
-    const roundScores: FPGRoundScore[] = p.rounds.map((r) => ({
-      round: r.round,
-      gross: r.gross,
-      scores: r.scores,
-      pars: t.course.par,
-      si: t.course.si,
-      meters: t.course.meters,
-      teeName: hasMeters ? ggTeeName : undefined,
-    }));
-    const incomplete = p.rounds.length < t.rounds;
-    // Position: usar p.pos se válido, senão idx+1
-    const pos = (typeof p.pos === "number" && p.pos > 0) ? p.pos : (idx + 1);
-    return {
-      scoreId: p.id,
-      pos,
+  return buildFPGTournament(
+    { name: `${t.year} // ${shortTitle(t)}`, tcode: `${t.year}_${t.slug}`, date: t.dateStart || "", campo: t.course.name, rounds: t.rounds },
+    {
+      par: t.course.par, si: t.course.si, meters: t.course.meters,
+      teeName: hasMeters ? ggTeeName ?? undefined : undefined,
+      holes: t.course.par.length, parTotal: t.course.parTotal,
+    },
+    sorted.map((p, idx): IntlPlayerIn => ({
+      id: p.id,
+      // Position: usar p.pos se válido, senão idx+1
+      pos: (typeof p.pos === "number" && p.pos > 0) ? p.pos : (idx + 1),
       name: normalizeName(p.name),
       club: p.country ? `${gf(p.country)} ${p.club || normPaisDisplay(p.country)}` : p.club,
-      grossTotal: p.total,
+      total: p.total,
       toPar: p.toPar,
-      hcpExact: p.hcp ?? undefined,
-      nholes: t.course.par.length,
-      parTotal: t.course.parTotal,
-      scores: p.rounds[0]?.scores,
-      par: t.course.par,
-      si: t.course.si,
-      meters: t.course.meters,
-      teeName: hasMeters ? ggTeeName : undefined,
-      roundScores,
-      _wd: incomplete,
-      _roundsPlayed: p.rounds.length,
+      hcp: p.hcp,
+      rounds: p.rounds.map((r) => ({ round: r.round, gross: r.gross, scores: r.scores })),
       // Marca conterrâneos (.row-portuguese) — o caminho FFG-resultats já o
       // fazia; sem isto os torneios GolfGenius não destacavam PT (o GG publica
       // country null, mas a excepção por nome — Ricardo Castro Ferreira — pega).
-      _isPortuguese: isPT(p.country, null, p.name),
-    } as FPGPlayer;
-  });
-  return {
-    name: `${t.year} // ${shortTitle(t)}`,
-    tcode: `${t.year}_${t.slug}`,
-    date: t.dateStart || "",
-    campo: t.course.name,
-    rounds: t.rounds,
-    playerCount: players.length,
-    players,
-  };
+      isPortuguese: isPT(p.country, null, p.name),
+    })),
+    { keepNoRounds: true, raw: true },
+  );
 }
 
 export function ffgScorecardOptions(): ScorecardOptions {

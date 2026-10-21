@@ -1,10 +1,13 @@
 /**
  * buildFPGTournament — monta o `Tournament` que o TournamentDetail lê a partir
- * dos dados de uma fonte de fora da FPG (BlueGolf, GolfGenius, GJGL, …). Cada
- * página só traduz a sua fonte para `IntlPlayerIn` (nome, voltas, país…); as
- * regras comuns vivem aqui: roundScores por volta, SI/metros só quando cobrem
- * todos os buracos, ±par pelas voltas jogadas, WD por voltas em falta e o
- * destaque PT pelo país.
+ * dos dados de uma fonte de fora da FPG (BlueGolf, GolfGenius, GJGL, FFG,
+ * Espanha, MAJOR…). Cada fonte só traduz os seus dados para `IntlPlayerIn`
+ * (nome, voltas, país…); as regras comuns vivem aqui: roundScores por volta,
+ * SI/metros só quando cobrem todos os buracos, ±par pelas voltas jogadas, WD
+ * por voltas em falta e o destaque PT pelo país.
+ *
+ * O que muda de fonte para fonte entra por opção explícita (`IntlBuildOptions`)
+ * ou pelo campo do jogador/volta — nunca por uma cópia do construtor.
  */
 import type { Tournament, Player, RoundScore } from "./fpgTypes";
 import { isPtCountry } from "../utils/flagUtils";
@@ -19,11 +22,26 @@ export interface IntlCourse {
   slope?: number;
   /** Nome do percurso (linha de stats). */
   course?: string;
+  /** Nº de buracos (por omissão o tamanho do par, ou 18). */
+  holes?: number;
+  /** Par total (por omissão a soma do par; null = sem par total). */
+  parTotal?: number | null;
 }
 
 export interface IntlRoundIn {
   gross: number | null;
   scores?: (number | null)[] | null;
+  /** Nº da volta (por omissão, a posição + 1). */
+  round?: number;
+  /** Cartão do campo desta volta, por cima do do jogador/torneio (provas que
+   *  mudam de campo ou de marcação a cada volta, tee por volta, CR só em 18
+   *  buracos…). Não se chama `course` porque há fontes com `course` (texto)
+   *  nas voltas. */
+  card?: Partial<IntlCourse>;
+  /** Buraco de saída (1 ou 10 nas divisões de 9 buracos e nos shotguns). */
+  startHole?: number;
+  /** Campos próprios da volta (ex.: `_emCurso`/`_holesPlayed` de uma volta a decorrer). */
+  extra?: Record<string, unknown>;
 }
 
 export interface IntlPlayerIn {
@@ -38,12 +56,34 @@ export interface IntlPlayerIn {
   /** ±par da fonte (null = sem ±par); omitido, total − par × voltas jogadas. */
   toPar?: number | null;
   rounds: IntlRoundIn[];
-  /** Não terminou; por omissão, quem tem menos voltas que o torneio. */
-  wd?: boolean;
+  /** Não terminou; por omissão, quem tem menos voltas que o torneio. null = sem marca. */
+  wd?: boolean | null;
   hcp?: number | null;
   /** Campo próprio do jogador (ex.: tee por sexo), por cima do do torneio. */
   course?: Partial<IntlCourse>;
-  /** Campos próprios da página (_classYear, _hcpEst, …). */
+  /** Destaque PT quando a regra da fonte não é a do país (null = sem marca). */
+  isPortuguese?: boolean | null;
+  /** Cartão da 1.ª linha (por omissão o da 1.ª volta). */
+  scores?: (number | null)[] | null;
+  /** Voltas jogadas (por omissão, o nº de voltas). */
+  roundsPlayed?: number;
+  /** Campos próprios da página (_classYear, _hcpEst, fed, escalão…). */
+  extra?: Record<string, unknown>;
+}
+
+export interface IntlBuildOptions {
+  /** Inclui quem não tem voltas (inscrito sem cartão, WD antes de jogar). Por omissão sai. */
+  keepNoRounds?: boolean;
+  /** Os dados vão tal como a fonte os dá: SI/metros/cartões sem a regra
+   *  «só quando cobrem todos os buracos», sem null → 0 e sem os valores por
+   *  omissão de posição, clube e total. */
+  raw?: boolean;
+  /** Par INVENTADO por buraco quando a fonte não traz um par válido (o tamanho
+   *  do par ≠ nº de buracos). Sem esta opção o par fica como vem (vazio = sem
+   *  linha de PAR). ⚠ Decisão pendente da Mariana — hoje LGS, NextCaddy,
+   *  RFEGolf (PDF) e golfdirecto inventam 4 por buraco. */
+  inventedPar?: number;
+  /** Campos do próprio torneio (`_openRound`, `_noHbh`, …). */
   extra?: Record<string, unknown>;
 }
 
@@ -54,50 +94,62 @@ export function buildFPGTournament(
   meta: { name: string; tcode: string; date?: string; campo?: string; rounds?: number },
   course: IntlCourse,
   players: IntlPlayerIn[],
+  opts: IntlBuildOptions = {},
 ): Tournament {
-  const withRounds = players.filter((p) => p.rounds.length > 0);
-  const nR = meta.rounds ?? Math.max(0, ...withRounds.map((p) => p.rounds.length));
-  const out: Player[] = withRounds.map((p) => {
+  const { raw = false } = opts;
+  const kept = opts.keepNoRounds ? players : players.filter((p) => p.rounds.length > 0);
+  const nR = meta.rounds ?? Math.max(0, ...kept.map((p) => p.rounds.length));
+  const out: Player[] = kept.map((p) => {
     const c: IntlCourse = { ...course, ...p.course, par: p.course?.par ?? course.par };
+    const holes = c.holes ?? (c.par.length || 18);
+    if (opts.inventedPar != null && c.par.length !== holes) c.par = new Array(holes).fill(opts.inventedPar);
     const n = c.par.length;
-    const parTotal = c.par.reduce((a, b) => a + b, 0);
+    const parSum = c.par.reduce((a, b) => a + b, 0);
+    const parTotal = c.parTotal === null ? undefined : (c.parTotal ?? parSum);
     const si = full(c.si, n), meters = full(c.meters, n);
-    const roundScores: RoundScore[] = p.rounds.map((r, ri) => ({
-      round: ri + 1,
-      gross: r.gross ?? 0,
-      scores: (r.scores ?? []).map((x) => x ?? 0),
-      pars: c.par,
-      si: si ?? [],
-      meters: meters ?? [],
-      teeName: c.teeName,
-      courseRating: c.courseRating,
-      slope: c.slope,
-    }) as RoundScore);
+    const roundScores: RoundScore[] = p.rounds.map((r, ri) => {
+      const rc: IntlCourse = r.card ? { ...c, ...r.card, par: r.card.par ?? c.par } : c;
+      const rsi = rc === c ? si : full(rc.si, rc.par.length);
+      const rmeters = rc === c ? meters : full(rc.meters, rc.par.length);
+      return {
+        round: r.round ?? ri + 1,
+        gross: r.gross ?? 0,
+        scores: raw ? r.scores : (r.scores ?? []).map((x) => x ?? 0),
+        pars: rc.par,
+        si: raw ? rc.si : (rsi ?? []),
+        meters: raw ? rc.meters : (rmeters ?? []),
+        teeName: rc.teeName,
+        courseRating: rc.courseRating,
+        slope: rc.slope,
+        ...(r.startHole !== undefined ? { startHole: r.startHole } : {}),
+        ...r.extra,
+      } as RoundScore;
+    });
     const played = p.rounds.length;
     const toPar = p.toPar !== undefined ? p.toPar
-      : p.total != null && parTotal > 0 ? p.total - parTotal * played : null;
+      : p.total != null && parSum > 0 ? p.total - parSum * played : null;
     return {
       scoreId: p.id,
-      pos: p.pos ?? null,
+      pos: raw ? p.pos : (p.pos ?? null),
       name: p.name,
-      club: p.club ?? "",
-      grossTotal: p.total ?? null,
+      club: raw ? p.club : (p.club ?? ""),
+      grossTotal: raw ? p.total : (p.total ?? null),
       toPar,
-      nholes: n || 18,
+      nholes: c.holes ?? (n || 18),
       parTotal,
-      scores: roundScores[0]?.scores,
+      scores: p.scores !== undefined ? p.scores : roundScores[0]?.scores,
       par: c.par,
-      si,
-      meters,
+      si: raw ? c.si : si,
+      meters: raw ? c.meters : meters,
       teeName: c.teeName,
       course: c.course,
       courseRating: c.courseRating,
       slope: c.slope,
       hcpExact: p.hcp ?? undefined,
       roundScores,
-      _wd: p.wd ?? played < nR,
-      _roundsPlayed: played,
-      _isPortuguese: isPtCountry(p.country),
+      _wd: p.wd === null ? undefined : (p.wd ?? played < nR),
+      _roundsPlayed: p.roundsPlayed ?? played,
+      _isPortuguese: p.isPortuguese === null ? undefined : (p.isPortuguese ?? isPtCountry(p.country)),
       ...p.extra,
     } as unknown as Player;
   });
@@ -109,5 +161,6 @@ export function buildFPGTournament(
     rounds: nR,
     playerCount: out.length,
     players: out,
+    ...opts.extra,
   } as Tournament;
 }
