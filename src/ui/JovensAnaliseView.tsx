@@ -137,7 +137,7 @@ function PodiumCell({ ch, isChampion }: { ch: Champion | null; isChampion: boole
       <td style={{
         padding: "8px",
         textAlign: "center", verticalAlign: "middle",
-        background: "var(--bg-muted-subtle, rgba(0,0,0,0.02))",
+        background: "var(--bg-stripe)",
         ...yearBorder,
       }}>
         {isChampion && (

@@ -9,6 +9,8 @@
  * ficheiros (para o chip das fontes).
  */
 import { cachedFetchJson } from "./fetchCache";
+import { isManuelByName } from "../constants/manuel";
+import { todayIso } from "../utils/format";
 import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
 import type { DataSource } from "../ui/DataSources";
 import type { ResultsData, RondaJogador, TorneioResult } from "../ui/uskidsTypes";
@@ -39,7 +41,7 @@ export function loadUskidsResults(onFile?: (s: DataSource) => void): Promise<Res
 
 function carregar(): Promise<ResultsData> {
   // Cache diária: o browser só volta a pedir o ficheiro gerado uma vez por dia.
-  const daily = new Date().toISOString().slice(0, 10);
+  const daily = todayIso();
   const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
     `/data/uskids_torneios_completos(${i + 1}).json`
   );
@@ -235,9 +237,7 @@ function applyResultOverrides(resultados: TorneioResult[]): void {
       if (!rd) continue;
       const lb = rd.leaderboard ?? rd.jogadores ?? [];
       // Não duplicar se já existir
-      const existing = lb.find(j =>
-        j.nome.toLowerCase().includes("medeiros") && j.nome.toLowerCase().includes("manuel")
-      );
+      const existing = lb.find(j => isManuelByName(j.nome));
       // Já vem nos dados (a USKids passou a publicá-lo): só se junta a nota.
       if (existing && ovRd.jogador._nota) existing._nota = ovRd.jogador._nota;
       if (!existing) {

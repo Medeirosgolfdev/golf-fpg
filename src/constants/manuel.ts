@@ -80,6 +80,8 @@ export function isManuelByName(name: string): boolean {
 
 /**
  * Detector universal — testa fed code, nome ou USKids memberID.
+ * Quando o registo traz o federado FPG, é ele que decide: o pai (54907) também
+ * se chama «Manuel Medeiros» e o nome dava-o como o Manuel.
  */
 export function isManuel(p: {
   name?: string;
@@ -92,7 +94,7 @@ export function isManuel(p: {
 }): boolean {
   if (p.isM) return true;
   const fed = p.fed || p.fedCode;
-  if (fed && String(fed) === MANUEL_FED) return true;
+  if (fed) return String(fed) === MANUEL_FED;
   const mid = p.memberId ?? p.uskidsMid;
   if (mid != null && isManuelUskidsMid(mid)) return true;
   const name = p.name || p.n;

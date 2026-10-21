@@ -5,36 +5,25 @@
  * Elimina fetches duplicados (ex: players.json carregado em DrivePage, BJGTPage, etc.)
  *
  * Uso:
- *   const { players, simCourses, calUnlocked } = useAppContext();
+ *   const { players, calUnlocked } = useAppContext();
+ *
+ * Os campos (simCourses, tournamentCourses) NÃO estão aqui: carregam-se só nas
+ * páginas que os usam — `CoursesGate` + `useCourses()` (CoursesContext.tsx).
  */
 
 import { createContext, useContext } from "react";
-import type { MasterData, PlayersDb, Course } from "../data/types";
+import type { PlayersDb } from "../data/types";
 import type { MelhoriasJson } from "../data/melhoriasTypes";
 
 // ── Tipos ──────────────────────────────────────────────────────────
 
-interface AppStats {
-  courses: number;
-  tees: number;
-  players: number;
-}
-
 export interface AppContextValue {
-  /** Dados de campos FPG (master-courses.json) */
-  masterData: MasterData;
   /** Base de dados de jogadores (players.json) */
   players: PlayersDb;
-  /** Campos reais: FPG + away + extra (com dedup por courseKey), SEM torneios.
-      Esta é a lista usada em todo o lado (Simulador, Comparar, Jogadores). */
-  simCourses: Course[];
-  /** Entradas que são nomes de torneio/organização (não campos). Usadas só na
-      CamposPage sob o separador de origem "Torneios". */
-  tournamentCourses: Course[];
   /** Dados de melhorias dos jogadores */
   melhorias: MelhoriasJson;
-  /** Estatísticas de topo (campos, tees, jogadores) */
-  stats: AppStats;
+  /** Nº de jogadores do players.json (estatística de topo da NavBar) */
+  playerCount: number;
   /** Se o utilizador desbloqueou as secções com password */
   calUnlocked: boolean;
 }

@@ -4,7 +4,7 @@ import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import LoadingState from "../ui/LoadingState";
 import { useSearchParams, Link } from "react-router-dom";
-import { isoDate, fmtToPar } from "../utils/format";
+import { isoDate, fmtToPar, todayIso } from "../utils/format";
 import { TournSidebarItem, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import { SIDEBAR_ACCENT, ManuelPill } from "../ui/PillBadge";
 import TabRow from "../ui/TabRow";
@@ -256,7 +256,7 @@ export default function USKidsFieldPage() {
 
   useEffect(() => {
     // Cache diário: só re-faz fetch uma vez por dia (usa HTTP cache nos restantes pedidos da sessão)
-    const daily = new Date().toISOString().slice(0, 10); // "2026-04-03"
+    const daily = todayIso(); // "2026-04-03"
 
     fetch(`/data/uskids-field.json?v=${daily}`)
       .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
@@ -488,7 +488,7 @@ export default function USKidsFieldPage() {
   // Tabela global (todos os jogadores × todos os torneios do Manuel): vista do
   // menu ⓘ Info do shell, nas duas vistas (era a 1.ª entrada dos Rivais).
   const [configCampo, configResultados] = useMemo(() => {
-    const hoje = new Date().toISOString().slice(0, 10);
+    const hoje = todayIso();
     const futureCols = torneiosComManuel
       .filter(t => isoDate(t.date_inicio) > hoje)
       .map(t => ({ tid: `usk${t.t}`, short: t.name.replace(/\s*\d{4}$/, "").slice(0, 12), escalao: t.escalaoManuel ?? "", url: undefined }));
@@ -528,7 +528,7 @@ export default function USKidsFieldPage() {
       !(filterSmallField && tab === "resultados") || (t.totalInscritos ?? 0) >= MIN_FIELD;
     // Resultados: só o que já se jogou (ou está a decorrer) — os torneios por
     // disputar obrigavam a um scroll enorme até ao dia de hoje (13/10/2026).
-    const hojeIso = new Date().toISOString().slice(0, 10);
+    const hojeIso = todayIso();
     const jaJogado = (t: TorneioEntry) => t.temResultados || (!!t.date && isoDate(t.date) <= hojeIso);
     return tab === "campo"
       ? allTorneios.filter(t => !t.terminado && manuelFilter(t))
@@ -638,7 +638,7 @@ export default function USKidsFieldPage() {
     if (selectedT != null && selectedT === tLigado && filterManuel && allTorneios.some(t => t.t === selectedT)) {
       setFilterManuel(false); return;
     }
-    const hoje = new Date().toISOString().slice(0, 10);
+    const hoje = todayIso();
     const vis = allTorneios.filter(t => ids.has(t.t))
       .sort((a, b) => isoDate(a.date).localeCompare(isoDate(b.date)));
     // Resultados: o mais recente jogado; Torneios: os do Manuel, depois o mais próximo.

@@ -379,7 +379,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
                   {ladder.map(l => (
-                    <span key={l.pos} className="p p-sm" style={{ background: "var(--bg-1)", borderColor: "var(--accent)" }}>
+                    <span key={l.pos} className="p p-sm" style={{ background: "var(--bg-card)", borderColor: "var(--accent)" }}>
                       {l.pos} <strong style={{ color: "var(--accent)" }}>{l.pts}</strong>
                     </span>
                   ))}
@@ -431,7 +431,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                   })}
                   {futuras.map(c => (
                     <th key={c.name} title={`${c.name} — ${shortDateSlash(c.date ?? undefined)} — por jogar`}
-                      style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }}>
+                      style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
                       <span style={{ display: "inline-flex", flexDirection: "column", alignItems: "center", gap: 3, lineHeight: 1.15, maxWidth: EV_COL_W - 8 }}>
                         <span style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "100%" }}>{shortEv(c.name)}</span>
                         <span className="fs-11 p-muted">{shortDateSlash(c.date ?? undefined)}</span>
@@ -471,7 +471,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
                         const falta = AUSENCIAS[c.name]?.[p.fed];
                         return (
                           <td key={c.name} className="fs-11" title={falta ? `Não joga: ${falta}` : undefined}
-                            style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-1)" }}>
+                            style={{ textAlign: "center", width: EV_COL_W, minWidth: EV_COL_W, maxWidth: EV_COL_W, background: "var(--bg-card)" }}>
                             {falta && <span className="p-muted" style={{ fontStyle: "italic" }}>não joga</span>}
                           </td>
                         );
@@ -490,7 +490,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
           {/* Provas nomeadas no regulamento ainda por jogar até ao fecho (o
               Carnaval conta mas não é nomeado; os juniores de 9 buracos não contam). */}
           {missing.length > 0 && (
-            <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-1)", border: "1px solid var(--border)", borderRadius: 8 }}>
+            <div style={{ marginTop: 12, padding: "10px 12px", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8 }}>
               <div className="fs-12" style={{ marginBottom: 6 }}>
                 📅 <strong>Provas que faltam até ao fecho</strong> — {missing.length}
                 {" "}({jaContam} das provas nomeadas no regulamento já contam):
@@ -570,7 +570,7 @@ export function OmRankingTab({ tournament, level }: { tournament: Tournament | n
             const byFed = new Map(proj.map(x => [x.fed, x]));
             const semHipotese = proj.filter(x => !x.aindaChega).length;
             return (
-              <div style={{ marginTop: 10, padding: "10px 12px", background: "var(--bg-1)", border: "1px solid var(--border)", borderRadius: 8 }}>
+              <div style={{ marginTop: 10, padding: "10px 12px", background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 8 }}>
                 <div className="fs-12" style={{ marginBottom: 6 }}>
                   🧮 <strong>Ainda por distribuir</strong> — <strong style={{ color: "var(--accent)" }}>{jogo.total} pontos</strong> a quem ganhar todas as {missing.length} provas que faltam
                   {" "}({jogo.porNivel.map(n => `${n.provas}× ${LEVEL_LABEL[n.level].replace(" (Major)", "")} a ${n.porProva}`).join(" · ")}).

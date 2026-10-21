@@ -284,10 +284,13 @@ export function dateParts(s: string | null | undefined): { y: number; m: number;
   return dmy ? { y: +dmy[3], m: +dmy[2], d: +dmy[1] } : null;
 }
 
-/** Data de hoje em ISO local ("YYYY-MM-DD"). */
-export function todayIso(): string {
-  const t = new Date();
-  return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
+const _diaLisboa = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Lisbon", year: "numeric", month: "2-digit", day: "2-digit" });
+
+/** Data de hoje ("YYYY-MM-DD") em Portugal (Europe/Lisbon — a Madeira tem a mesma hora).
+ *  Usar SEMPRE isto para «hoje»: `new Date().toISOString().slice(0, 10)` é o dia em
+ *  UTC e entre a meia-noite e a 1 h de Lisboa (hora de verão) ainda dá ontem. */
+export function todayIso(now: Date = new Date()): string {
+  return _diaLisboa.format(now);
 }
 
 /** Idade (anos completos) de quem nasceu em `dob` à data `date` — os dois em

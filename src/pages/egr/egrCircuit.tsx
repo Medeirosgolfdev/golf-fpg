@@ -80,7 +80,6 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
   return [{
     key: "main",
     escalao: e.ageGroup || "—",
-    tabLabel: e.ageGroup ? `${e.ageGroup}${e.sex ? (e.sex === "F" ? " ♀" : " ♂") : ""}` : undefined,
     sex: (e.sex || undefined) as CircuitSex | undefined,
     hasManuel: e.hasManuel,
     // Resumo comum das fontes só com totais (14/10/2026).

@@ -9,8 +9,9 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import type { CanonicalData, Junior, Tournament, RankingEntry } from "../data";
-import { computeTier, computeRanking, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
+import type { CanonicalData, Junior, Tournament } from "../data";
+import { computeTier, getTierLabel, getTierColors, hasRealConfrontWithManuel } from "../data";
+import { useScoutRanking } from "../useScoutRanking";
 import { computeDobInfo, escalaoIntl, type DobInfo } from "../dobInfo";
 import { getTournWeight } from "../tournWeight";
 import { flag as flagOf } from "../../../utils/flagUtils";
@@ -108,17 +109,14 @@ export default function HeroIdentity({ data, junior }: Props) {
   // ageDiff só faz sentido para juniors com DOB conhecida (known/range/inferred)
   const ageDiff = !isManuel && dobInfo.dobIso ? compareAgeToManuel(dobInfo.dobIso, dobInfo.state) : null;
 
-  // Ranking percentil — memoizado (O(n) sobre todos os juniors, só recalcula se data mudar)
-  const ranking = useMemo<Map<string, RankingEntry>>(
-    () => computeRanking(data.juniors, data.tournamentById),
-    [data.juniors, data.tournamentById],
-  );
+  // Ranking percentil por coorte — calculado pelo agregador (juniors-scout.json).
+  const ranking = useScoutRanking();
 
   // Tier badge ("Elite", "Forte Competidor", etc.) só faz sentido para juniors
   // que realmente confrontaram o Manuel em mesmo escalão. Para juniors que
   // partilham só torneios em escalões diferentes (ex: Manuel B11 vs Rafael B12
   // no mesmo Venice Open), o tier seria enganador — escondemos.
-  const tier = (!isManuel && hasRealConfrontWithManuel(junior, data.manuel, data.tournamentById))
+  const tier = (ranking && !isManuel && hasRealConfrontWithManuel(junior, data.manuel, data.tournamentById))
     ? computeTier(junior, data.tournamentById, ranking)
     : null;
 

@@ -229,7 +229,7 @@ export default function TopClubesPanel({
       <header
         style={{
           padding: "10px 14px",
-          background: "var(--bg-card-strong, var(--bg-muted))",
+          background: "var(--bg-muted)",
           borderBottom: "1px solid var(--border)",
           display: "flex",
           alignItems: "center",

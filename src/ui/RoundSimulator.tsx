@@ -2,7 +2,7 @@
 import { useParams } from "react-router-dom";
 import type { RoundData, PlayerPageData, HcpInfo } from "../data/playerDataLoader";
 import type {} from "../data/types";
-import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import { norm } from "../utils/format";
 import {
   whsQtyCalc, hiAdjustment, addRoundToPool, historicExceptionalAdj, topRanks, topIds,
@@ -129,7 +129,7 @@ export function RoundSimulator({
     valid: boolean;
   };
 
-  const { simCourses: courses } = useAppContext();
+  const { simCourses: courses } = useCourses();
   const { fedId: urlFedId } = useParams<{ fedId?: string }>();
   const currentHI = hcp.current;
   const nextIdRef = useRef(1);

@@ -9,7 +9,6 @@ import React, { useMemo, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import {
   useJuniorsCanonical,
-  computeRanking,
   computeCareerScore,
   getTierLabel,
   getTierColors,
@@ -27,7 +26,8 @@ import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import Kids2SubNav from "./Kids2SubNav";
-import { MANUEL_FED, MANUEL_BIRTH_YEAR } from "../../constants/manuel";
+import { MANUEL_BIRTH_YEAR, isManuel } from "../../constants/manuel";
+import { useScoutRanking } from "./useScoutRanking";
 
 // ── Constantes ────────────────────────────────────────────────────────────────
 
@@ -260,14 +260,11 @@ export default function RankingPage() {
   const [q, setQ] = useState("");
 
   const status = useJuniorsCanonical();
-
-  const rankingMap = useMemo(() => {
-    if (status.kind !== "ready") return new Map<string, RankingEntry>();
-    return computeRanking(status.data.juniors, status.data.tournamentById);
-  }, [status]);
+  // Ranking por coorte — calculado pelo agregador (juniors-scout.json, campo `r`).
+  const rankingMap = useScoutRanking();
 
   const cohort = useMemo((): CohortRow[] => {
-    if (status.kind !== "ready") return [];
+    if (status.kind !== "ready" || !rankingMap) return [];
     const { juniors, tournamentById } = status.data;
     const rows: CohortRow[] = [];
     const seenNames = new Set<string>();
@@ -285,7 +282,7 @@ export default function RankingPage() {
         wins: countWins(j, tournamentById),
         top3: countTop3(j, tournamentById),
         journey: buildJourney(j, tournamentById),
-        isManuel: j.id === "u630106" || (j.sources as any)?.fpg?.fedCode === MANUEL_FED,
+        isManuel: isManuel({ fed: j.sources.fpg?.fed, memberId: j.sources.uskids?.memberId }),
       });
     }
     return rows;
@@ -381,9 +378,9 @@ export default function RankingPage() {
         )}
 
         {/* estados */}
-        {status.kind === "loading" && <LoadingState />}
+        {(status.kind === "loading" || (status.kind === "ready" && !rankingMap)) && <LoadingState />}
         {status.kind === "error" && <EmptyState icon="⚠️" message={status.error} />}
-        {status.kind === "ready" && cohort.length === 0 && (
+        {status.kind === "ready" && rankingMap && cohort.length === 0 && (
           <EmptyState icon="🏌️" message={`Sem jogadores ranqueados na coorte ${year}.`} />
         )}
         {status.kind === "ready" && cohort.length > 0 && sorted.length === 0 && (

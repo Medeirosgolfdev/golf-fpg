@@ -4,6 +4,7 @@ import DetailHeader from "../ui/DetailHeader";
 import Counter from "../ui/Counter";
 import type { Course, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import { sortTees, filterTees } from "../utils/teeUtils";
 import { SDTable, MultiTeeSDTable, type HolesMode } from "../ui/ScoreTable";
 import { fmtCR, fmtToPar, titleCase } from "../utils/format";
@@ -973,7 +974,8 @@ export function SimuladorView({ course, sexFilter, setSexFilter }: {
   sexFilter: SexFilter;
   setSexFilter: (s: SexFilter) => void;
 }) {
-  const { simCourses: courses, players } = useAppContext();
+  const { players } = useAppContext();
+  const { simCourses: courses } = useCourses();
   const [, setSearchParams] = useSearchParams();
   const init = useMemo(readInitialSimState, []);
   const [holesMode, setHolesMode] = useState<HolesMode>(init.holes);

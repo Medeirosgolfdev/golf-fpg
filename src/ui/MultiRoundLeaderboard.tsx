@@ -1,7 +1,7 @@
 ﻿// @refresh reset
 import { MultiRoundRow, PlayerFilter, EMPTY_FILTER, ExtraColumn } from "./multiRoundTypes";
 import { useCompareSelection } from "./useCompareSelection";
-import { fmtHcp, medal, fmtDobPt, birthYearOf, ageAtDate } from "../utils/format";
+import { fmtHcp, medal, fmtDobPt, birthYearOf, ageAtDate, todayIso } from "../utils/format";
 import { RowsFilterBar, filterRows, buildSexByName } from "./PlayerFilterBar";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { useSort } from "../hooks/useSort";
@@ -302,8 +302,8 @@ export function MultiRoundLeaderboard({
       case "age": {
         // Idade real à data do torneio (não o ano) — dois jogadores do mesmo
         // ano podem ter idades diferentes consoante já fizeram anos.
-        const aa = ageAtDate(dobOf(a), tournamentDate ?? new Date().toISOString().slice(0, 10));
-        const ab = ageAtDate(dobOf(b), tournamentDate ?? new Date().toISOString().slice(0, 10));
+        const aa = ageAtDate(dobOf(a), tournamentDate ?? todayIso());
+        const ab = ageAtDate(dobOf(b), tournamentDate ?? todayIso());
         if (aa == null && ab == null) return 0;
         if (aa == null) return 1;   // sem data → sempre no fim
         if (ab == null) return -1;

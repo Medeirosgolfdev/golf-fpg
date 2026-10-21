@@ -11,7 +11,7 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import type { Player } from "../../data/types";
-import { useAppContext } from "../../context/AppContext";
+import { useCourses } from "../../context/CoursesContext";
 import type { PlayerPageData } from "../../data/playerDataLoader";
 import { usePlayerData } from "../../data/usePlayerData";
 import { loadFederados, type FederadoRaw, type MergedPlayer } from "../../data/federadosLoader";
@@ -39,7 +39,7 @@ const DrawsPage = lazy(() => import("../DrawsPage"));
 
 export default function PlayerDetail({ fedId, selected, onMetaLoaded }: { fedId: string; selected: { fed: string } & Player; onMetaLoaded?: (meta: PlayerPageData["META"]) => void }) {
   const { data: rawData, loading, error } = usePlayerData(fedId);
-  const { simCourses } = useAppContext();
+  const { simCourses } = useCourses();
   // Ligar dados JOGADOS ao tee do campo quando a ronda não os traz (típico de
   // torneios internacionais — a FPG tem o score mas não as jardas, e o SI vem
   // sequencial/falso). Liga ao tee real do campo em simCourses e preenche:

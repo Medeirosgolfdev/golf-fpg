@@ -588,8 +588,8 @@ export interface RankingEntry {
   percentile: number;
   /** Tier derivado do percentil. */
   tier: TierKey;
-  /** Career score bruto (debug/tooltip). */
-  score: number;
+  /** Career score bruto (debug/tooltip) — só no cálculo; o juniors-scout.json não o grava. */
+  score?: number;
   /** Ano de nascimento inferido. */
   birthYear: number;
   /** Sexo da coorte ("M" | "F" | "unknown"). */
@@ -652,19 +652,41 @@ export function computeRanking(
     const n = cohort.length;
     for (let i = 0; i < n; i++) {
       const { id, score } = cohort[i];
-      const rank = i + 1;
-      // percentil 100 = melhor; n=1 → único na coorte → 100
-      const percentile = n === 1 ? 100 : Math.round(((n - rank) / (n - 1)) * 100);
-      let tier: TierKey;
-      if (percentile >= 90) tier = "elite";
-      else if (percentile >= 70) tier = "strong";
-      else if (percentile >= 45) tier = "solid";
-      else if (percentile >= 20) tier = "developing";
-      else tier = "beginner";
-      result.set(id, { percentile, tier, score, birthYear, sex, rank, cohortSize: n });
+      result.set(id, { ...rankingAt(i + 1, n, birthYear, sex), score });
     }
   }
   return result;
+}
+
+/** Percentil e tier de quem está na posição `rank` de uma coorte de `n`. */
+function rankingAt(rank: number, n: number, birthYear: number, sex: string): RankingEntry {
+  // percentil 100 = melhor; n=1 → único na coorte → 100
+  const percentile = n === 1 ? 100 : Math.round(((n - rank) / (n - 1)) * 100);
+  let tier: TierKey;
+  if (percentile >= 90) tier = "elite";
+  else if (percentile >= 70) tier = "strong";
+  else if (percentile >= 45) tier = "solid";
+  else if (percentile >= 20) tier = "developing";
+  else tier = "beginner";
+  return { percentile, tier, birthYear, sex, rank, cohortSize: n };
+}
+
+/** Entrada de ranking compacta, gravada no juniors-scout.json (campo `r`):
+ *  [ano de nascimento, sexo, posição na coorte]. Percentil, tier e tamanho da
+ *  coorte reconstroem-se no `decodeRanking` (contando as entradas da coorte). */
+export type RankingRow = [number, string, number];
+
+export function encodeRankingEntry(e: RankingEntry): RankingRow {
+  return [e.birthYear, e.sex, e.rank];
+}
+
+export function decodeRanking(rows: Iterable<[string, RankingRow]>): Map<string, RankingEntry> {
+  const list = [...rows];
+  const sizes = new Map<string, number>();
+  for (const [, [y, sx]] of list) sizes.set(`${y}_${sx}`, (sizes.get(`${y}_${sx}`) ?? 0) + 1);
+  const out = new Map<string, RankingEntry>();
+  for (const [id, [y, sx, rank]] of list) out.set(id, rankingAt(rank, sizes.get(`${y}_${sx}`)!, y, sx));
+  return out;
 }
 
 /**

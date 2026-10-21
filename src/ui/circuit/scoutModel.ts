@@ -8,7 +8,7 @@
  * agregador (juniors-scout.json e juniors-form.json), nunca dos ~180 MB do kids2.
  * O modelo de ameaça veio do kids2/ScoutView.tsx sem mudar a lógica.
  */
-import { getTierLabel, type TierKey } from "../../pages/kids2/juniorCalc";
+import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
 /** juniors-form.json — últimos torneios [data, ±par, buracos, lugar, field] e
  *  confrontos com o Manuel no mesmo escalão [à frente, atrás]. */
@@ -27,6 +27,8 @@ export interface JuniorScout {
   m?: ScoutComManuel[];
   /** Confrontos no mesmo flight. */
   mf?: number;
+  /** Ranking da coorte (ano × sexo), compacto — `decodeRanking` do juniorCalc. */
+  r?: RankingRow;
 }
 export interface ScoutFile { players: Record<string, JuniorScout> }
 

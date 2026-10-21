@@ -21,8 +21,8 @@
 
 import type { Tournament } from "./fpgTypes";
 import { fmtToPar } from "../utils/format";
+import { MANUEL_FED, isManuel as isManuelPlayer } from "../constants/manuel";
 
-const MANUEL_FED = "52884";
 const SUB12_NACIONAL_2026_TCODE = "10941"; // Campeonato Nacional de Jovens Sub 12 H
 
 /* ── Helpers de normalização ─────────────────────────────────── */
@@ -161,7 +161,6 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
     "/data/pull-torneios003.json",
     "/data/drive-data-2026-04.json",
     "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-11.json",
     "/data/drive-data-2025-02.json",
   ];
   const allTournaments: Tournament[] = [];
@@ -201,7 +200,7 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
 
   // Manuel history
   const manuelHistory = allRounds
-    .filter(r => r.fedCode === MANUEL_FED || normName(r.name).includes("manuel goulartt medeiros"))
+    .filter(r => isManuelPlayer({ fed: r.fedCode ?? undefined, name: r.name }))
     .sort((a, b) => a.date.localeCompare(b.date));
 
   // Top 21: jogadores do torneio actual, com histórico anterior
@@ -361,7 +360,7 @@ function buildHoleStats(
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });
-  const manuelRounds = valid.filter(r => r.fedCode === MANUEL_FED || normName(r.name).includes("manuel goulartt medeiros"));
+  const manuelRounds = valid.filter(r => isManuelPlayer({ fed: r.fedCode ?? undefined, name: r.name }));
 
   for (let h = 0; h < 18; h++) {
     const par = parRef[h] ?? 4;
@@ -509,7 +508,6 @@ export async function loadRichAroeiraIIAnalise(currentTournament: Tournament): P
     "/data/pull-torneios003.json",
     "/data/drive-data-2026-04.json",
     "/data/drive-data-2026-03.json",
-    "/data/drive-data-2025-11.json",
     "/data/drive-data-2025-02.json",
   ];
   const allTournaments: Tournament[] = [currentTournament];
@@ -1030,7 +1028,7 @@ export function buildHoleDials(
     if (!r.pars || r.pars.length !== 18) return true;
     return r.pars.join(",") === parKey;
   });
-  const isManuel = (r: PlayerRoundOnCourse) => r.fedCode === MANUEL_FED || normName(r.name).includes("manuel goulartt medeiros");
+  const isManuel = (r: PlayerRoundOnCourse) => isManuelPlayer({ fed: r.fedCode ?? undefined, name: r.name });
   const isSub12 = (r: PlayerRoundOnCourse) => isManuel(r) || (r.fedCode != null && sub12FedSet.has(r.fedCode));
   const minOrNull = (a: number[]) => a.length ? Math.min(...a) : null;
   const maxOrNull = (a: number[]) => a.length ? Math.max(...a) : null;

@@ -392,8 +392,8 @@ function MatchPlayResultsTable({
                     <div style={{ overflowX: "auto" }}>
                       <table style={{ borderCollapse: "collapse", width: "max-content", minWidth: "100%", fontSize: "var(--fs-11)" }}>
                         <thead>
-                          <tr style={{ background: "var(--bg-2)" }}>
-                            <th style={{ ...cLbl, background: "var(--bg-2)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
+                          <tr style={{ background: "var(--bg-header)" }}>
+                            <th style={{ ...cLbl, background: "var(--bg-header)", fontWeight: 700, color: "var(--text-2)" }}>Buraco</th>
                             {f9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
                             <th style={{ ...cSum, borderLeft: "2px solid var(--border)" }}>Out</th>
                             {b9.map(i => <th key={i} style={cSc}>{i + 1}</th>)}
@@ -1297,17 +1297,14 @@ function Content() {
     return () => { alive = false; };
   }, [navMode, pjaExtraTournaments.length]);
 
-  // ── Loader Clubes (D1 — só quando activado, para dados parciais de 2026) ────
+  // ── Loader Clubes (só quando activado) ────
   useEffect(() => {
     if (!(navMode === "torneios" && (seriesFilter === "clubes" || seriesFilter === "")) || clubesLoaded) return;
     let alive = true;
     setClubesLoading(true);
 
     // Ficheiros combinados (sub14 + sub18 no mesmo JSON) — escalão lido de t.escalao
-    // Ficheiros D1 têm só um escalão (determinado pelo nome)
     const CLUBES_FILES: { url: string; escFallback: string | null; year: string }[] = [
-      { url: "/data/clubes_sub_14_D1.json",    escFallback: "sub14", year: "2026" },
-      { url: "/data/clubes_sub_18_D1.json",    escFallback: "sub18", year: "2026" },
       { url: "/data/clubes_sub_14&18_2026.json", escFallback: null,  year: "2026" },
       { url: "/data/clubes_sub_14&18_2025.json", escFallback: null,  year: "2025" },
       { url: "/data/clubes_sub_14&18_2024.json", escFallback: null,  year: "2024" },
@@ -1564,7 +1561,7 @@ function Content() {
         if (!mp) return false;
         return mp.categories.some(cat => cat.dias.some(dia =>
           (dia.matches ?? []).some(m => Object.values(m.players ?? {}).some(
-            (p: any) => p.fed === "52884" || isManuel({ name: p.name ?? "" } as any)
+            (p: { fed?: string; name?: string }) => isManuel({ fed: p.fed, name: p.name })
           ))
         ));
       })())

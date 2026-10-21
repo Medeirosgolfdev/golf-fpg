@@ -242,6 +242,5 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | spain-player-tournaments.json | RFEG | build-spain-player-tournaments.js | ✗ | RFEGPage — torneios+resultados de cada jogador (painel expansível) |
 | england_{slug}.json | England Golf | scrape-england-golf.js | ✓ (com teeColour/metersPlayed[18] por ronda) | EnglandGolfPage |
 | england-golf-catalog.json | England Golf | manual | ✗ | EnglandGolfPage (sidebar) |
-| torneio-greatgolf.json | Greatgolf | — | — | ⚠ ficheiro inexistente — só referido em dataRegistry e `ui/DataSources.tsx` |
-| rivals-intl.json | — | — | ✗ | ⚠ ficheiro inexistente — só registado em dataRegistry |
-| tournament-links.json | — | — | ✗ | FPGPage, `ui/DataSources.tsx` (registado em dataRegistry) |
+| torneio-greatgolf.json | Greatgolf | — | — | ⚠ ficheiro inexistente — só referido em `ui/DataSources.tsx` |
+| tournament-links.json | — | — | ✗ | FPGPage, `ui/DataSources.tsx` |

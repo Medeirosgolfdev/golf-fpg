@@ -9,7 +9,7 @@
 import { useEffect, useState, type ReactNode } from "react";
 import type { MergedPlayer } from "../../data/federadosLoader";
 import { getPlayerHistory, getScorecard, type WhsRound, type Scorecard } from "../../data/datagolfClient";
-import { FILE_PLAYER_DATA } from "../../data/dataRegistry";
+import { playerDataUrl } from "../../data/playerDataLoader";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { gf } from "../../utils/flagUtils";
 import { canonicalCourseName } from "../../utils/courseAliases";
@@ -132,7 +132,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         // cachedFetchJson: partilha cache com o resto da app (a "vista
         // federado" de um Nosso já descarregou este data.json) e devolve
         // null em 404 (federado sem análise local — o caso normal aqui).
-        const json = await cachedFetchJson<{ HOLES?: Record<string, unknown> }>(FILE_PLAYER_DATA(fed));
+        const json = await cachedFetchJson<{ HOLES?: Record<string, unknown> }>(playerDataUrl(fed));
         if (!json) return;
         // HOLES keys are scoreId strings; DATA[].rounds[].scoreId too
         const ids = new Set<number>();

@@ -375,6 +375,11 @@
   --good-dark:     var(--color-good-dark);
   --line:          var(--border);
 
+  /* Superfícies que o código usava sem token (auditoria 20/10/2026). */
+  --bg-stripe:      rgba(0, 0, 0, 0.02);   /* zebra muito suave de linhas de tabela */
+  --bg-neutral:     #e5e7eb;               /* superfície cinzenta neutra */
+  --color-notice:   #5b8ff9;               /* realce azul de notas (rotação de buracos) */
+
 
   /* ── 14. Tamanhos · Raios · Sombras ────────────────────────── */
   --topbar-h:    56px;
@@ -418,6 +423,7 @@
   --fs-14:  14px;   /* corpo base */
   --fs-15:  15px;
   --fs-16:  16px;
+  --fs-17:  17px;
   --fs-18:  18px;
   --fs-20:  20px;
   --fs-22:  22px;

@@ -16,6 +16,7 @@
 import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
@@ -47,7 +48,8 @@ import MasterDetail from "../ui/MasterDetail";
 const CompararPlayersView = lazy(() => import("./CompararPage"));
 
 export default function JogadoresPage() {
-  const { players, simCourses: courses } = useAppContext();
+  const { players } = useAppContext();
+  const { simCourses: courses } = useCourses();
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const navigate = useNavigate();
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);
@@ -323,7 +325,7 @@ export default function JogadoresPage() {
   /* Proveniência dos dados (DataSourcesChip — padrão FPG/Drive/KIDS2). */
   const dataSources = useMemo<DataSource[]>(() => [
     { path: "/data/federados.json", status: federadosError ? "error" : federados ? "loaded" : "loading", count: federados?.length, error: federadosError ?? undefined },
-    { path: "/data/player-stats.json", status: Object.keys(statsDb).length > 0 ? "loaded" : "loading", count: Object.keys(statsDb).length || undefined },
+    { path: "/player-stats.json", status: Object.keys(statsDb).length > 0 ? "loaded" : "loading", count: Object.keys(statsDb).length || undefined },
     { path: "/data/federados-pp.json", status: ppMap.size > 0 ? "loaded" : "loading", count: ppMap.size || undefined },
   ], [federados, federadosError, statsDb, ppMap]);
 

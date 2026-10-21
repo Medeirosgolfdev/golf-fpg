@@ -2,21 +2,13 @@ import { lazy, Suspense, useEffect, useMemo, useState } from "react";
 import { Routes, Route, Navigate, useLocation, useParams } from "react-router-dom";
 import RankingsTabs from "./ui/RankingsTabs";
 import "./App.css";
-import { loadMasterData, loadPlayers, loadAwayCourses } from "./data/loader";
-import { initCourseColorCache, teeGroupHex } from "./utils/teeColors";
-import { extractAwayCourses } from "./data/melhoriasLoader";
-import { getExtraCourses } from "./data/extraCourses";
-import type { Course, MasterData, PlayersDb, CoursePlayerRound } from "./data/types";
-
-/** course-players.json — _players dos campos PT do master (quem jogou + scores). */
-type CoursePlayersMap = Record<string, Record<string, CoursePlayerRound[]>>;
+import { loadPlayers, loadMelhorias } from "./data/loader";
+import type { PlayersDb } from "./data/types";
 import { deepFixMojibake } from "./utils/fixEncoding";
 import { isCalUnlocked, CAL_UNLOCK_EVENT } from "./utils/authConstants";
-import { norm } from "./utils/format";
-import { canonicalCourseName } from "./utils/courseAliases";
-import { isTournamentCourse } from "./constants/tournamentCourses";
 import type { MelhoriasJson } from "./data/melhoriasTypes";
 import { AppContext } from "./context/AppContext";
+import { CoursesGate } from "./context/CoursesContext";
 import NavBar from "./ui/NavBar";
 import PasswordGate from "./ui/PasswordGate";
 import LoadingState from "./ui/LoadingState";
@@ -70,16 +62,13 @@ const OmCgssPage = lazy(() => import("./pages/OmCgssPage"));
 type Status =
   | { kind: "loading" }
   | { kind: "error"; message: string }
-  | { kind: "ready"; data: MasterData; players: PlayersDb; awayCourses: Course[]; melhorias: MelhoriasJson; coursePlayers: CoursePlayersMap };
+  | { kind: "ready"; players: PlayersDb; melhorias: MelhoriasJson };
 
-/* ── Start fetching data at module level (before React mounts) ── */
-const _earlyData = Promise.all([
-  loadMasterData(),
-  loadPlayers(),
-  loadAwayCourses(),
-  import("../melhorias.json").then(m => m.default as unknown as MelhoriasJson).catch(() => ({} as MelhoriasJson)),
-  fetch("/data/course-players.json").then(r => r.ok ? r.json() : null).then(j => (j?.players ?? {}) as CoursePlayersMap).catch(() => ({} as CoursePlayersMap)),
-]);
+/* ── Start fetching data at module level (before React mounts) ──
+   Só o que todas as páginas usam (players.json + melhorias). Os campos
+   (master/away/course-players, ~13 MB) carregam-se nas páginas que os usam —
+   <CoursesGate> (src/context/CoursesContext.tsx). */
+const _earlyData = Promise.all([loadPlayers(), loadMelhorias()]);
 
 /** /kids2/scout/:tid (Scout antigo, 20/10/2026) → a aba Scout dos Próximos
  *  torneios, que usa o Scout partilhado (ui/circuit/Scout.tsx). */
@@ -111,11 +100,10 @@ export default function App() {
   useEffect(() => {
     let alive = true;
     _earlyData
-      .then(([data, players, awayCourses, melhorias, coursePlayers]) => {
+      .then(([players, melhorias]) => {
         if (!alive) return;
         deepFixMojibake(players);
-        initCourseColorCache([...data.courses, ...awayCourses]);
-        setStatus({ kind: "ready", data, players, awayCourses, melhorias, coursePlayers });
+        setStatus({ kind: "ready", players, melhorias });
       })
       .catch((e) => alive && setStatus({ kind: "error", message: e?.message ?? String(e) }));
     return () => { alive = false; };
@@ -123,240 +111,18 @@ export default function App() {
 
   const playerCount = status.kind === "ready" ? Object.keys(status.players).length : 0;
 
-  /* Campos FPG + Away (pipeline + melhorias + manuais) */
-  const allCourses: Course[] = useMemo(() => {
-    if (status.kind !== "ready") return [];
-    const fpg = status.data.courses;
-    const pipelineAway = status.awayCourses;
-    const melhoriasAway = extractAwayCourses(status.melhorias);
-    const extra = getExtraCourses();
-
-    // ── helpers ──────────────────────────────────────────────────────────
-
-    /** Chave de deduplicação de tee: nome + sexo + DISTÂNCIA.
-     *  Colapsa as variantes de CR/Slope do MESMO tee físico (o pipeline cria um
-     *  tee por cada rating histórico de scorecard, o que inflacionava campos
-     *  muito jogados — Aroeira, Ribagolfe… — para dezenas de tees iguais). */
-    function teeKey(t: Course["master"]["tees"][0]): string {
-      const sex = t.sex ?? "";
-      const dist = t.distances?.total ?? "";
-      return `${t.teeName.trim().toLowerCase()}|${sex}|${dist}`;
-    }
-
-    /** Qualidade de um tee: mais buracos e distância; em empate, preferir o que
-     *  TEM rating (CR), para o tee colapsado manter o rating oficial. */
-    function teeScore(t: Course["master"]["tees"][0]): number {
-      const holes = t.distances?.holesCount ?? 0;
-      const total = t.distances?.total ?? 0;
-      const hasCR = t.ratings?.holes18?.courseRating != null ? 1 : 0;
-      return holes * 100000 + total * 10 + hasCR;
-    }
-
-    /** Remove tees duplicados e em branco de uma lista */
-    function dedupTees(tees: Course["master"]["tees"]): Course["master"]["tees"] {
-      const seen = new Map<string, Course["master"]["tees"][0]>();
-      for (const t of tees) {
-        const k = teeKey(t);
-        const prev = seen.get(k);
-        // Guardar o tee com mais dados; rejeitar tees completamente vazios
-        if (!prev || teeScore(t) > teeScore(prev)) seen.set(k, t);
-      }
-      // Filtragem de tees:
-      //  1) fora os completamente vazios (sem buracos, sem distância, sem CR);
-      //  2) fora os que NÃO têm geometria (metros) MAS apenas duplicam uma marca
-      //     (cor) que JÁ está representada no campo por um tee COM metros.
-      //     É o caso do Glen: a FPG registou a ronda do Manuel pela cor
-      //     "Vermelhas" (só CR/Slope, sem metros), mas essas marcas já existem
-      //     como "Red" com distâncias — logo o "Vermelhas" é ruído redundante.
-      //  Tees sem metros que são o ÚNICO registo da sua marca mantêm-se sempre
-      //  (campos away em que o clube não preencheu os metros não perdem nada).
-      const vals = [...seen.values()];
-      const hasGeom = (t: Course["master"]["tees"][number]) =>
-        (t.distances?.total ?? 0) > 0 || (t.holes ?? []).some((h) => (h.distance ?? 0) > 0);
-      const grp = (t: Course["master"]["tees"][number]) =>
-        teeGroupHex(t.teeName, t.scorecardMeta?.teeColor);
-      const geomGroups = new Set(vals.filter(hasGeom).map(grp));
-      return vals.filter((t) => {
-        const empty =
-          (t.distances?.holesCount ?? 0) === 0 &&
-          (t.distances?.total ?? 0) === 0 &&
-          (t.ratings?.holes18?.courseRating ?? 0) === 0;
-        if (empty) return false;
-        if (!hasGeom(t) && geomGroups.has(grp(t))) return false;
-        return true;
-      });
-    }
-
-    /** Merge de dois campos: mantém o melhor de cada um.
-     *  Se o base é um campo FPG (master-courses, key não começa por "away-"),
-     *  os tees FPG são autoritativos — não fundir tees de scorecards (away).
-     *  Só se fundem os tees quando ambos têm a mesma origem. */
-    function mergeCourses(base: Course, other: Course): Course {
-      const isBaseFPG  = !base.courseKey.startsWith("away-");
-      const isOtherFPG = !other.courseKey.startsWith("away-");
-
-      // Campo FPG + fonte away → manter só tees FPG (dados oficiais)
-      // Campo away + away, ou FPG + FPG → fundir normalmente
-      const combinedTees = (isBaseFPG && !isOtherFPG)
-        ? base.master.tees
-        : [...base.master.tees, ...other.master.tees];
-
-      const mergedTees = dedupTees(combinedTees);
-      const players = { ...(other.master._players ?? {}), ...(base.master._players ?? {}) };
-      return {
-        ...base,
-        master: {
-          ...base.master,
-          tees: mergedTees.length > 0 ? mergedTees : base.master.tees,
-          country: base.master.country || other.master.country,
-          _players: Object.keys(players).length > 0 ? players : undefined,
-        },
-      };
-    }
-
-    // ── build map por courseKey ───────────────────────────────────────────
-    const map = new Map<string, Course>();
-    for (const c of fpg) map.set(c.courseKey, c);
-
-    // Guardar _players do pipeline antes de possível sobrescrita por extra
-    const pipelinePlayers = new Map<string, Record<string, any>>();
-    for (const c of pipelineAway) {
-      if (c.master._players) pipelinePlayers.set(c.courseKey, c.master._players);
-      if (!map.has(c.courseKey)) map.set(c.courseKey, c);
-    }
-    for (const c of melhoriasAway) if (!map.has(c.courseKey)) map.set(c.courseKey, c);
-
-    // Extra (manual) tem precedência de tees sobre pipeline
-    for (const c of extra) map.set(c.courseKey, c);
-
-    // Reaplicar _players do pipeline nas entradas extra/melhorias que não os têm
-    for (const [key, players] of pipelinePlayers) {
-      const existing = map.get(key);
-      if (existing && !existing.master._players) {
-        map.set(key, { ...existing, master: { ...existing.master, _players: players } });
-      }
-    }
-
-    // ── _players dos campos PT (course-players.json) ──────────────────────
-    // O pipeline só constrói _players para campos away; os campos PT do master
-    // ficam sem "quem jogou". Aqui anexamos o course-players.json (gerado por
-    // scripts/build-course-players.js) por courseKey. Feito ANTES do merge para
-    // que se combine com o que já exista.
-    const coursePlayers = status.coursePlayers ?? {};
-    for (const [key, c] of map) {
-      const pp = coursePlayers[key];
-      if (pp && Object.keys(pp).length > 0) {
-        const merged = { ...(c.master._players ?? {}), ...pp };
-        map.set(key, { ...c, master: { ...c.master, _players: merged } });
-      }
-    }
-
-    // ── dedup tees por campo ──────────────────────────────────────────────
-    for (const [key, c] of map) {
-      const clean = dedupTees(c.master.tees);
-      if (clean.length !== c.master.tees.length) {
-        map.set(key, { ...c, master: { ...c.master, tees: clean } });
-      }
-    }
-
-    // ── dedup campos por nome display (mesmo nome = merge) ────────────────
-    const byName = new Map<string, string>(); // norm → courseKey canónico
-    const finalMap = new Map<string, Course>();
-
-    // Ordenar para escolher o campo CANÓNICO de cada nome:
-    //  1) Campos FPG (master, courseKey sem "away-") primeiro — assim os seus
-    //     tees OFICIAIS prevalecem sobre os tees-ruído das entradas away (o
-    //     pipeline cria um tee por cada CR/Slope histórico de scorecard, o que
-    //     inflacionava campos registados como o Aroeira para dezenas de tees).
-    //     O mergeCourses já descarta os tees away quando a base é FPG.
-    //  2) Entre campos da mesma origem, o que tiver mais tees ganha.
-    const ordered = [...map.values()].sort((a, b) => {
-      const aAway = a.courseKey.startsWith("away-") ? 1 : 0;
-      const bAway = b.courseKey.startsWith("away-") ? 1 : 0;
-      if (aAway !== bAway) return aAway - bAway;
-      return b.master.tees.length - a.master.tees.length;
-    });
-
-    for (const c of ordered) {
-      // Comparar pelo nome CANÓNICO (resolve aliases tipo "Golden Palm" →
-      // "Trump Doral - Golden Palm"), para fundir entradas do mesmo campo
-      // físico que vêm com nomes diferentes (pipeline vs extraCourses).
-      const nn = norm(canonicalCourseName(c.master.name) || c.master.name);
-      const canonical = byName.get(nn);
-      if (canonical) {
-        // Já existe um campo com este nome — fazer merge
-        const existing = finalMap.get(canonical)!;
-        finalMap.set(canonical, mergeCourses(existing, c));
-      } else {
-        byName.set(nn, c.courseKey);
-        finalMap.set(c.courseKey, c);
-      }
-    }
-
-    // ── Enriquecimento de SI (stroke index) ───────────────────────────────
-    // O SI é uma propriedade do LAYOUT do campo — igual em todos os tees do
-    // mesmo combo. Alguns tees (curados de PDFs USKids) vêm sem SI mas outros
-    // do mesmo campo têm-no (via scorecards FPG). Copiar o SI dos que têm para
-    // os que não têm (casando por nº de buracos), para o scorecard do campo
-    // ficar tão rico como o do jogador.
-    for (const [key, c] of finalMap) {
-      const tees = c.master.tees;
-      if (tees.length < 2) continue;
-      // SI de referência por nº de buracos
-      const refByN = new Map<number, (number | null)[]>();
-      for (const t of tees) {
-        const n = t.holes?.length ?? 0;
-        if (n && !refByN.has(n) && t.holes!.some(h => h.si != null && h.si > 0)) {
-          refByN.set(n, t.holes!.map(h => h.si ?? null));
-        }
-      }
-      if (refByN.size === 0) continue;
-      let changed = false;
-      const newTees = tees.map(t => {
-        const ref = refByN.get(t.holes?.length ?? 0);
-        if (!ref || !t.holes) return t;
-        if (t.holes.every(h => h.si != null && h.si > 0)) return t;
-        changed = true;
-        return { ...t, holes: t.holes.map((h, i) => (h.si != null && h.si > 0) ? h : { ...h, si: ref[i] ?? h.si }) };
-      });
-      if (changed) finalMap.set(key, { ...c, master: { ...c.master, tees: newTees } });
-    }
-
-    return [...finalMap.values()];
-  }, [status]);
-
-  /* Torneios/organizações que não são campos reais: ficam FORA de `simCourses`
-     (a lista usada em todo o lado — Simulador, Comparar, Jogadores), e são
-     expostos à parte. A CamposPage volta a juntá-los para os mostrar só sob o
-     separador de origem "Torneios". */
-  const tournamentCourses: Course[] = useMemo(
-    () => allCourses.filter((c) => isTournamentCourse(c.courseKey)),
-    [allCourses]
-  );
-  const simCourses: Course[] = useMemo(
-    () => allCourses.filter((c) => !isTournamentCourse(c.courseKey)),
-    [allCourses]
-  );
-
   /* Valor do contexto — só fornecido quando os dados estão prontos.
      MEMOIZADO: sem useMemo, ctxValue era um novo objecto a cada render do
      App, fazendo qualquer useEffect com `players`/`simCourses`/`melhorias`
      nas deps disparar em loop nos consumidores (ex: JogadoresPage URL sync). */
   const ctxValue = useMemo(
     () => status.kind === "ready" ? {
-      masterData: status.data,
       players: status.players,
-      simCourses,
-      tournamentCourses,
       melhorias: status.melhorias,
-      stats: {
-        courses: status.data.meta.stats.courses,
-        tees: status.data.meta.stats.tees,
-        players: playerCount,
-      },
+      playerCount,
       calUnlocked,
     } : null,
-    [status, simCourses, tournamentCourses, playerCount, calUnlocked]
+    [status, playerCount, calUnlocked]
   );
 
   return (
@@ -398,8 +164,8 @@ export default function App() {
           <main className="content">
             <Suspense fallback={<LoadingState message="A carregar…" />}>
               <Routes>
-                <Route path="/campos/:courseKey?" element={<CamposPage />} />
-                <Route path="/jogadores/:fed" element={<JogadoresPage />} />
+                <Route path="/campos/:courseKey?" element={<CoursesGate withPlayers><CamposPage /></CoursesGate>} />
+                <Route path="/jogadores/:fed" element={<CoursesGate><JogadoresPage /></CoursesGate>} />
                 {/* Landing page: lista tipo FPG FederatedsList com tabela ordenável + filtros */}
                 <Route path="/jogadores" element={<JogadoresListPage />} />
                 {/* Utilitário (fora da NavBar): jogadores por ano de nascimento */}
@@ -407,7 +173,7 @@ export default function App() {
                 {/* Utilitário (fora da NavBar): torneios recentes reconstruídos das voltas dos nossos */}
                 <Route path="/torneios-recentes" element={<RecentTournamentsPage />} />
                 <Route path="/torneios-recentes/:key" element={<RecentTournamentsPage />} />
-                <Route path="/simulador" element={<SimuladorPage />} />
+                <Route path="/simulador" element={<CoursesGate><SimuladorPage /></CoursesGate>} />
                 <Route path="/comparar" element={<ComparePage />} />
                 <Route path="/calendario" element={<CalendarioPage />} />
                 <Route path="/drive" element={<DrivePage />} />

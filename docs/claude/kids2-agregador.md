@@ -16,8 +16,8 @@ identidade e o merge das fontes (USKids, WJGC/EOWAGR, Doral, pull-torneios, …)
 resolvem-se em build-time por `scripts/aggregator/` (ver "Agregador de
 juniores"). `uskTournNames` e `uskFieldSizes` saem do canónico. As antigas
 `processWjgc` / `processUskidsCompleto` / `processMemberHistory` /
-`processManuelOverrides` ficam como stubs vazios, só para compatibilidade dos
-testes (os grupos respectivos estão em `describe.skip`); o mapeamento
+`processManuelOverrides` saíram de vez a 21/10/2026 (eram stubs vazios, com 7
+grupos de testes em `describe.skip`); o mapeamento
 ficheiro→tid legado é o `FILE_TO_LEGACY_TID`. `buildAutoRivals()` cacheia em
 `_autoRivalsCache`; `opts.force: true` força o reload.
 
@@ -238,10 +238,22 @@ As páginas dos circuitos não podem carregar o canónico (~180 MB). O agregador
 escreve dois resumos, carregados só quando se abre a aba **Scout** (`src/ui/circuit/Scout.tsx`,
 ex-«Quem repete» — CircuitShell, /uskids e Kids 2 «Próximos torneios»):
 - `juniors-form.json` (`util/form.js`) — últimos torneios e confrontos com o Manuel no mesmo escalão.
-- `juniors-scout.json` (`util/scout.js`, ~2,3 MB) — nível (tier), vitórias, top-3, HCP, data de nascimento,
+- `juniors-scout.json` (`util/scout.js`, ~3 MB) — nível (tier), vitórias, top-3, HCP, data de nascimento,
   clube, país e provas em comum com o Manuel `[data, torneio, lugar, lugar do Manuel, pancadas − Manuel]`.
+  Desde 21/10/2026 também `r: [ano de nascimento, sexo, posição]` — o ranking por coorte do `computeRanking`;
+  a ficha do kids2 (`HeroIdentity`) e a `/kids2/ranking` leem-no com `useScoutRanking()`
+  (`kids2/useScoutRanking.ts`; `decodeRanking` do `juniorCalc.ts` reconstrói percentil, tier e tamanho da
+  coorte) em vez de o recalcular sobre ~38 mil juniores. Por isso o scout leva todos os juniores com ranking.
+
+## Índice das setas ↗ — `juniors-links.json` (21/10/2026)
+
+`util/links.js` escreve `public/data/juniors-links.json` (~1,5 MB, compacto):
+`{ j: [[id, nome canónico, aliases?, memberId USKids?, fed FPG?, licença FFG?], …] }` (0 = falta; zeros do
+fim cortados). É o que lê o `useKidsLinkMap` (setas ↗ do CircuitShell, `ui/ranking/RankingPage` e /uskids) e
+a lista de jogadores da /ffg (`useJuniorsLinks`) — antes descarregavam o `juniors.json` inteiro (~52 MB).
+⚠ O `build-juniors.yml` tem de committar também este ficheiro.
 
 As contas são as do kids2, **no mesmo ficheiro**: `src/pages/kids2/juniorCalc.ts` (tipos, tier, vitórias,
 confrontos, peso dos torneios) não tem imports, e o Node carrega-o directamente (como o `whsCalc.ts`).
 O `data.ts` e o `tournWeight.ts` re-exportam daqui. Nada de `enum`/`namespace` nem imports nesse ficheiro.
-Os dois resumos são ficheiros gerados — em conflito de git, regenerar (`node scripts/aggregator/index.js`).
+Os resumos e o índice são ficheiros gerados — em conflito de git, regenerar (`node scripts/aggregator/index.js`).

@@ -51,7 +51,7 @@ dados · Node 24 nos workflows.
 ```
 src/
   pages/          # páginas lazy-loaded (ver "Páginas")
-  data/           # loaders, tipos, registos de dados (KIDSdataLoader, dataRegistry, playerDataLoader, …)
+  data/           # loaders e tipos (KIDSdataLoader, playerDataLoader, courses, fetchCache, …)
   ui/             # componentes partilhados (NavBar, PillBadge, CircuitShell, ScorecardLeaderboard, …)
   utils/          # whsCalc, format, scoreDisplay, mathUtils, colors, teeColors, teeGroups, flagUtils, …
   constants/      # manuel.ts, config.ts, drivePoints.ts, …
@@ -165,7 +165,16 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **Sexo: sempre `<SexBadge sex="M|F" />`**, nunca os símbolos ♂/♀.
 - **Cores só via `src/tokens.css`**; `colors.ts` espelha-os para JS. Excepções de
   propósito: `OverlayExport.tsx` (o html-to-image não lê variáveis CSS),
-  `--pill-intl-bg: #00FF00` e as cores de tees da FPG em `teeColors.ts`.
+  `--pill-intl-bg: #00FF00` e as cores de tees da FPG em `teeColors.ts`. Um
+  `var(--x)` sem definição faz falhar o `scripts/css-vars.test.js`.
+- **Arranque leve:** o App só espera pelo `players.json` e pelo `melhorias.json`.
+  Os campos (~13 MB) carregam-se nas páginas que os usam — `<CoursesGate>` +
+  `useCourses()` (`src/context/CoursesContext.tsx`); não os voltar a pôr no
+  `AppContext`. As setas ↗ dos circuitos leem o `juniors-links.json` (~1,5 MB),
+  nunca o `juniors.json` (~52 MB).
+- **«Hoje» = `todayIso()`** (`utils/format.ts`, dia em Lisboa), nunca
+  `new Date().toISOString().slice(0, 10)` (dia em UTC). **Níveis por z-score =
+  `zTier`** (`utils/mathUtils.ts`).
 - **Scorecard:** eagle âmbar, birdie vermelho, par branco, bogey azul de cantos rectos.
 - **Tee físico:** um tee é cor + distância; M e F são só ratings diferentes do
   mesmo tee — contar e listar com `physicalTeeGroups`/`physicalTeeKey`.
@@ -281,13 +290,13 @@ isso um `git pull` depois de um push nosso dá conflito quase sempre nestes:
 |---|---|
 | `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
 | `public/analise-percurso-juniores.html` (blocos `const P` e `const PATH`) | `node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js` |
-| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-form.json` · `juniors-scout.json` | `node scripts/aggregator/index.js` |
+| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-form.json` · `juniors-scout.json` · `juniors-links.json` | `node scripts/aggregator/index.js` |
 
 São output de scripts: nenhum dos lados do conflito está certo e fundir à mão só
 produz lixo. Resolução:
 
 ```bash
-git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json
+git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json public/data/juniors-links.json
 node scripts/build-major-catalog.js && node scripts/aggregator/index.js
 git add public/data/major-catalog.json public/data/juniors*.json public/data/tournament-catalog.json && git commit
 ```
@@ -300,7 +309,9 @@ tornam o JSON inválido e a `/major` fica sem torneios nenhuns.
 - **Manuel tem 4 variantes de nome e 2 contas USKids** — detectar com
   `isManuel()`/`isManuelByName()` (`src/constants/manuel.ts`, onde também estão
   os dois memberIDs, em `MANUEL_PLAYER_IDS`) e usar `autoRivals.filter(d => d.isM)`
-  (não `find()`), juntando todas as entradas.
+  (não `find()`), juntando todas as entradas. Nunca reimplementar com
+  `includes("medeiros")`. Quando o registo traz o federado, é ele que decide no
+  `isManuel` — o pai (54907) também se chama «Manuel Medeiros».
 - **USKids vs resto na `/uskids`:** a tab Resultados só lê `uskids-results.json`
   e os `uskids_torneios_completos(N).json`; Doral, WJGC, QDL, etc. só entram nos
   rivais. Este erro já voltou várias vezes.

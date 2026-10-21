@@ -274,7 +274,7 @@ export default function AtletaSearchPanel({
       <div
         style={{
           padding: "12px 16px",
-          background: "var(--bg-card-strong, var(--bg-muted))",
+          background: "var(--bg-muted)",
           border: "1px solid var(--border)",
           borderRadius: 8,
           marginBottom: 12,
@@ -295,7 +295,7 @@ export default function AtletaSearchPanel({
             border: "1px solid var(--border)",
             borderRadius: 6,
             fontSize: "var(--fs-14)",
-            background: "var(--bg-input, var(--bg-card))",
+            background: "var(--bg-card)",
             color: "var(--text-1)",
           }}
           autoFocus
@@ -374,7 +374,7 @@ export default function AtletaSearchPanel({
           <header
             style={{
               padding: "12px 16px",
-              background: "var(--bg-card-strong, var(--bg-muted))",
+              background: "var(--bg-muted)",
               borderBottom: "1px solid var(--border)",
               display: "flex",
               alignItems: "center",

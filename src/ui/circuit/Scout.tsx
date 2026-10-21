@@ -19,9 +19,9 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
-import { isManuelByName, MANUEL_FED } from "../../constants/manuel";
+import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
@@ -44,7 +44,7 @@ function useProximas(): Map<string, Proxima[]> | null {
     let vivo = true;
     cachedFetchJson<UskFieldFile>("/data/uskids-field.json").then((d) => {
       if (!vivo) return;
-      const hoje = new Date().toISOString().slice(0, 10);
+      const hoje = todayIso();
       const out = new Map<string, Proxima[]>();
       for (const t of d?.torneios ?? []) {
         const date = isoDate(t.date_inicio || "");
@@ -86,8 +86,8 @@ interface Linha {
 }
 
 /** É o Manuel? Pelo federado quando o field o traz (o pai, 54907, também se
- *  chama «Manuel Medeiros»), senão pelo nome. */
-const eManuel = (p: FieldPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
+ *  chama «Manuel Medeiros»), senão pelo nome — é o que o isManuel faz. */
+const eManuel = (p: FieldPlayer) => isManuelPlayer({ fed: p.fed ?? undefined, name: p.name });
 
 /** Provas em comum com o Manuel, juntas por dia: as da página (ex.: FPG — todos
  *  os torneios, de clube incluídos) e as do Kids 2. */

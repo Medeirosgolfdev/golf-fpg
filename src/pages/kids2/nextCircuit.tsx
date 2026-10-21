@@ -15,7 +15,7 @@ import { createContext, useContext } from "react";
 import type { AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { FpgAdmissionPlayer, FpgAdmissions } from "../../data/nacional2026Loader";
 import { isManuelByName as isManuel } from "../../constants/manuel";
-import { displayName, isoDate } from "../../utils/format";
+import { displayName, isoDate, todayIso } from "../../utils/format";
 import { tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import type { CircuitConfig, CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
 import type { Torneio as UskTorneio, TorneioResult, UskidsDrawsData } from "../../ui/uskidsTypes";
@@ -93,8 +93,6 @@ export const SERIES = {
 } as const;
 const FAMILIAS = ["WJGC", "Doral", "EOWAGR"] as const;
 
-const hoje = () => new Date().toISOString().slice(0, 10);
-
 function baseEntry(ft: FieldTorneio): Omit<CircuitEntry, "id" | "loadDivisions"> {
   const iso = isoDate(ft.date_inicio || "");
   const escs = comJogadores(ft);
@@ -124,7 +122,7 @@ export function buildNextEntries({ data, results, draws, escRef }: NextSources):
   const campoPorT = new Map(data.field.torneios.map(t => [t.t, t as unknown as UskTorneio]));
   const out: CircuitEntry[] = [];
   const familias = new Map<string, FieldTorneio[]>();
-  const d0 = hoje();
+  const d0 = todayIso();
 
   for (const ft of data.futureTorneios) {
     const fam = FAMILIAS.find(f => ft.name.startsWith(f + " "));
@@ -189,7 +187,7 @@ export function buildNextEntries({ data, results, draws, escRef }: NextSources):
 
 /** Torneio que abre sem ?t=: o próximo em que o Manuel está inscrito. */
 export function defaultEntryId(entries: CircuitEntry[]): string | null {
-  const d0 = hoje();
+  const d0 = todayIso();
   const prox = entries.filter(e => e.series === SERIES.proximos && (e.dateStart ?? "") >= d0)
     .sort((a, b) => (a.dateStart ?? "").localeCompare(b.dateStart ?? ""));
   return (prox.find(e => e.hasManuel) ?? prox[0] ?? entries[0])?.id ?? null;

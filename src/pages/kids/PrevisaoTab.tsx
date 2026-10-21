@@ -15,7 +15,7 @@
  * manuais editáveis (prefixados com o que existir).
  */
 import { useEffect, useMemo, useState } from "react";
-import { useAppContext } from "../../context/AppContext";
+import { useCourses } from "../../context/CoursesContext";
 import { resolveCourseTee, type ResolvedCourse } from "./CourseTab";
 import { calcSD, calcScore, calcCourseHcp, calcPlayingHcp } from "../../utils/whsCalc";
 import { fmtCR, fmtSD, fmtToPar } from "../../utils/format";
@@ -48,10 +48,10 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
   escalaoNome: string;
   mh: MHSlim | null;
 }) {
-  const ctx = useAppContext();
+  const { simCourses } = useCourses();
   const resolved = useMemo<ResolvedCourse | null>(
-    () => resolveCourseTee(torneio as never, escalaoNome, mh as never, ctx.simCourses),
-    [torneio, escalaoNome, mh, ctx.simCourses],
+    () => resolveCourseTee(torneio as never, escalaoNome, mh as never, simCourses),
+    [torneio, escalaoNome, mh, simCourses],
   );
 
   // HI + dados completos do Manuel (default 9.4 até carregar). Editável.
@@ -183,7 +183,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
     <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       {resolved.note && (
         <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-warn-alpha, var(--bg-muted))",
+          padding: "6px 10px", background: "var(--bg-muted)",
           border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
         }}>
           ⚠ {resolved.note}
@@ -201,7 +201,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
 
       {resolved.ratingApprox && (
         <div className="muted fs-11" style={{
-          padding: "6px 10px", background: "var(--bg-warn-alpha, var(--bg-muted))",
+          padding: "6px 10px", background: "var(--bg-muted)",
           border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
         }}>
           ⚠ CR/Slope estimados por interpolação entre os tees com rating oficial — este tee de torneio não tem rating publicado.

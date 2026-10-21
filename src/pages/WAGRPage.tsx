@@ -162,7 +162,7 @@ function WAGRList({ ranking }: { ranking: WagrRanking }) {
       // ⚠ Masculino e feminino são DOIS rankings separados (o wagr.com tem duas
       // páginas). Sem filtro, o #1 aparece duas vezes e a lista fica intercalada —
       // por isso abre em Homens, como o site.
-      sexOptions={[["M", "♂ Homens"], ["F", "♀ Senhoras"], ["", "M + F (dois rankings juntos)"]]} initialSex="M"
+      sexOptions={[["M", "Homens"], ["F", "Senhoras"], ["", "M + F (dois rankings juntos)"]]} initialSex="M"
       isPt={(p) => isPtCountry(p.country)} />
   );
 }
@@ -200,7 +200,7 @@ function WAGRDetail({ ranking, id }: { ranking: WagrRanking; id: string }) {
       </>}
       stats={[
         { label: "País", value: player.country || "—" },
-        { label: "Ranking WAGR", value: player.rank != null ? `#${player.rank} ${player.sex === "F" ? "♀" : "♂"}` : "—" },
+        { label: "Ranking WAGR", value: player.rank != null ? <>#{player.rank} <SexBadge sex={player.sex === "F" ? "F" : "M"} /></> : "—" },
         { label: "Semana anterior", value: player.rankLastWeek != null ? `#${player.rankLastWeek}` : "—" },
         { label: "Pontos médios", value: num(player.pointsAverage) },
         { label: "Divisor", value: num(player.divisor), title: "Nº de eventos sobre o qual a média é calculada" },

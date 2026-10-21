@@ -276,6 +276,15 @@ async function main() {
       sub(`hcp-listas-ligacoes.json: ${out.listas.length} lista(s)`);
     }
 
+    // Índice das setas ↗ dos circuitos (useKidsLinkMap): só id, nome, aliases,
+    // memberId e fed — ~1,4 MB em vez do juniors.json inteiro.
+    {
+      const { buildLinks } = require("./util/links");
+      const links = buildLinks(matchResult.juniors, generatedAt);
+      require("fs").writeFileSync(path.join(DATA_DIR, "juniors-links.json"), JSON.stringify(links));
+      sub(`juniors-links.json: ${links.j.length} juniores`);
+    }
+
     // Forma recente + confrontos com o Manuel (aba «Quem repete» dos circuitos):
     // resumo de ~1 MB para a página não carregar os shards.
     {
