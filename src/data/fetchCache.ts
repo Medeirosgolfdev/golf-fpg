@@ -1,71 +1,61 @@
 /**
  * fetchCache.ts — Cache central de fetch para /data/
  *
- * Garante que cada ficheiro JSON é fetched UMA ÚNICA VEZ por sessão,
- * independentemente de quantas páginas o peçam em simultâneo ou em sequência.
+ * Garante que cada ficheiro JSON é descarregado e convertido UMA ÚNICA VEZ por
+ * sessão, independentemente de quantas páginas o peçam em simultâneo ou em
+ * sequência.
  *
- * Mecanismo: guarda a Promise (não o resultado) — assim dois pedidos
- * concorrentes para o mesmo URL partilham o mesmo in-flight request,
- * sem race condition e sem double-fetch.
+ * Mecanismo: guarda a Promise do objecto JÁ CONVERTIDO — dois pedidos
+ * concorrentes para o mesmo URL partilham o mesmo pedido em curso e o mesmo
+ * objecto (o JSON não é reconvertido a cada chamada). Os consumidores tratam o
+ * resultado como só de leitura.
+ *
+ * Falhas (rede, HTTP ≥ 500, JSON inválido) saem da cache: a chamada seguinte
+ * tenta outra vez. Um 404 fica em cache como `null` (o ficheiro não existe).
  *
  * Regra de cache: URLs sem "?" são sempre cached.
  * URLs com "?" (ex: ?v=Date.now()) contornam a cache — são pedidos
  * explicitamente não-cacheáveis pelo chamador.
  *
  * Uso:
- *   import { cachedFetch, cachedFetchJson } from "../data/fetchCache";
- *
- *   // Versão raw (Response):
- *   const res = await cachedFetch("/data/players.json");
- *
- *   // Versão tipada (JSON parsed):
+ *   import { cachedFetchJson } from "../data/fetchCache";
  *   const data = await cachedFetchJson<MyType>("/data/players.json");
  *   // → lança erro se HTTP não OK; retorna null se ficheiro não existir (404/0)
  */
 
-const _cache = new Map<string, Promise<Response>>();
+const _cache = new Map<string, Promise<unknown>>();
 
-/**
- * fetch com cache de Promise.
- * - URLs sem "?" → cached (partilhados entre páginas)
- * - URLs com "?" → sempre fresh (ex: ?v=Date.now() para bust de cache do browser)
- */
-function cachedFetch(url: string): Promise<Response> {
-  // Não cachear URLs com query string (o chamador quer sempre fresh)
-  if (url.includes("?")) return fetch(url);
-
-  if (!_cache.has(url)) {
-    _cache.set(url, fetch(url));
+async function fetchJson<T>(url: string): Promise<T | null> {
+  const res = await fetch(url);
+  if (!res.ok) {
+    // 404 → ficheiro não existe, retornar null em vez de lançar erro
+    if (res.status === 404 || res.status === 0) return null;
+    throw new Error(`HTTP ${res.status} ao carregar ${url}`);
   }
-  return _cache.get(url)!;
+  let text = await res.text();
+  // Remover null bytes que podem surgir de escrita truncada no Windows
+  if (text.includes("\0")) text = text.replace(/\0+/g, "");
+  return JSON.parse(text) as T;
 }
 
 /**
- * Versão JSON tipada de cachedFetch.
+ * JSON tipado, com cache da Promise do objecto convertido.
  * - Retorna null se o ficheiro não existir (404) — graceful fallback.
- * - Lança erro para falhas de rede reais (status >= 500, etc.).
- * - Nota: a Response só pode ser consumida uma vez pelo browser — esta
- *   função clona-a antes de chamar .json() para que a Promise em cache
- *   possa ser reutilizada.
+ * - Lança erro para falhas de rede reais (status >= 500, etc.) e, nesse caso,
+ *   retira o URL da cache para a próxima chamada tentar outra vez.
  */
-export async function cachedFetchJson<T = unknown>(url: string): Promise<T | null> {
-  try {
-    const res = await cachedFetch(url);
-    // Clonar ANTES de consumir — a Response original fica em cache
-    const clone = res.clone();
-    if (!clone.ok) {
-      // 404 → ficheiro não existe, retornar null em vez de lançar erro
-      if (clone.status === 404 || clone.status === 0) return null;
-      throw new Error(`HTTP ${clone.status} ao carregar ${url}`);
-    }
-    let text = await clone.text();
-    // Remover null bytes que podem surgir de escrita truncada no Windows
-    if (text.includes("\0")) text = text.replace(/\0+/g, "");
-    return JSON.parse(text) as T;
-  } catch (e) {
-    // Erro de rede (sem servidor, CORS, etc.) — propagar
-    throw e;
-  }
+export function cachedFetchJson<T = unknown>(url: string): Promise<T | null> {
+  // Não cachear URLs com query string (o chamador quer sempre fresh)
+  if (url.includes("?")) return fetchJson<T>(url);
+
+  const hit = _cache.get(url);
+  if (hit) return hit as Promise<T | null>;
+  const p = fetchJson<T>(url);
+  _cache.set(url, p);
+  p.catch(() => {
+    if (_cache.get(url) === p) _cache.delete(url);
+  });
+  return p;
 }
 
 /**
