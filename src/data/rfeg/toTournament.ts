@@ -10,7 +10,7 @@ import { flag } from "../../utils/flagUtils";
 import { formatPlayerName } from "../../utils/playerUtils";
 import type { Tournament as FPGTournament, Player as FPGPlayer, RoundScore as FPGRoundScore, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
-import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
+import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
@@ -299,6 +299,9 @@ export function ncDeriveRatings(
   return { M: fit("M"), F: fit("F") };
 }
 
+/** Regras do NextCaddy que esperam decisão: par 4 por buraco quando não há par. */
+const NC_OPTS = { inventedPar: PAR_INVENTADO };
+
 export function ncToFPGTournament(
   detail: RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null },
   dobLookup?: DobLookup,
@@ -336,7 +339,7 @@ export function ncToFPGTournament(
   })();
   const par18 = ncIsPitchAndPutt
     ? new Array(holeCount).fill(3)
-    : ((detail.coursePar && detail.coursePar.length === holeCount) ? detail.coursePar : new Array(holeCount).fill(4));
+    : parOrInvented(detail.coursePar, holeCount, NC_OPTS.inventedPar);
   const parTotal = par18.reduce((a, b) => a + b, 0);
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
 
@@ -354,7 +357,7 @@ export function ncToFPGTournament(
   // NextCaddy não os publica. Alimentam a coluna SD (via computeSD).
   const ncRatings = ncDeriveRatings(players, parTotal, holeCount <= 9);
 
-  const fpgPlayers: FPGPlayer[] = players.map((p, idx) => {
+  const fpgPlayers: IntlPlayerIn[] = players.map((p, idx): IntlPlayerIn => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
     const dob = p.dob || e?.dob || null;
     const age = ageAtDate(dob, dateRef ?? todayIso());
@@ -378,7 +381,7 @@ export function ncToFPGTournament(
     })();
     const playerMetersTotal = playerMeters.reduce((a, b) => a + (b || 0), 0);
     const teeLabel = playerMetersTotal > 0 ? `${playerMetersTotal} m` : (meters18.length ? "Tour" : undefined);
-    const roundScores: FPGRoundScore[] = (p.rounds || [])
+    const roundScores: IntlRoundIn[] = (p.rounds || [])
       // Exigir pelo menos um buraco com golpes > 0: um inscrito que NÃO jogou (WD/
       // DNS) traz o cartão a zeros (18×0), que passava o teste de comprimento e dava
       // gross 0 → ± = 0−72 = −72 na vista de ronda. Rondas a zeros = não jogadas.
@@ -393,15 +396,9 @@ export function ncToFPGTournament(
           round: r.round,
           gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
           scores: (r as any).scores,
-          pars: par18,
-          si: si18,
-          meters: mm,
-          teeName: teeLabel,
-          courseRating: rating?.cr,
-          slope: rating?.slope,
+          card: { meters: mm },
         };
       });
-    const incomplete = roundScores.length < nRounds;
     // Gross/toPar a partir dos CARTÕES reais (soma das rondas), NÃO de `p.total`/
     // `p.toPar`: em torneios Stableford o NextCaddy põe os PONTOS em `p.total`
     // (ex: 18 pts), que apareciam como gross e davam um ± absurdo (18−36 = −18)
@@ -412,43 +409,35 @@ export function ncToFPGTournament(
     const grossTotal = grossSum > 0 ? grossSum : (typeof p.total === "number" ? p.total : null);
     const toPar = grossSum > 0 ? grossSum - parTotal * roundScores.length : (p.toPar ?? null);
     return {
-      scoreId: `nc-${detail.compId}-${idx}`,
+      id: `nc-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
       name: formatPlayerName(p.name || ""),
       club: club ? displayName(club) : "—",
-      fed: p.licencia || undefined,
-      fedCode: p.licencia || undefined,
-      grossTotal,
+      total: grossTotal,
       toPar,
-      hcpExact: p.hcp ?? undefined,
-      courseRating: rating?.cr,
-      slope: rating?.slope,
-      escalao: escLabel,
-      // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
-      _sex: sex,
-      _age: age,
-      teeName: teeLabel,
-      nholes: holeCount,
-      parTotal,
+      hcp: p.hcp,
+      rounds: roundScores,
       scores: roundScores[0]?.scores || [],
-      par: par18,
-      si: si18,
-      meters: playerMeters,
-      roundScores,
-      _wd: incomplete,
-      _roundsPlayed: roundScores.length,
-    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
+      isPortuguese: null,
+      // Metros e CR/Slope do tee deste jogador (o SD sai daqui).
+      course: { meters: playerMeters, teeName: teeLabel, courseRating: rating?.cr, slope: rating?.slope },
+      extra: {
+        fed: p.licencia || undefined,
+        fedCode: p.licencia || undefined,
+        escalao: escLabel,
+        // Fields extra usados pelo nameDecorator (M/F badge) + filtros (sex/age)
+        _sex: sex,
+        _age: age,
+      },
+    };
   });
 
-  return {
-    name: detail.meta.name || `NextCaddy ${detail.compId}`,
-    tcode: String(detail.compId),
-    date: detail.meta.dateStart || "",
-    campo: detail.meta.course || "",
-    rounds: nRounds,
-    playerCount: fpgPlayers.length,
-    players: fpgPlayers,
-  };
+  return buildFPGTournament(
+    { name: detail.meta.name || `NextCaddy ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: nRounds },
+    { par: par18, si: si18, holes: holeCount, parTotal },
+    fpgPlayers,
+    { keepNoRounds: true, raw: true, ...NC_OPTS },
+  );
 }
 
 /* ── rfegolfToFPGTournament ─────────────────────────────────────

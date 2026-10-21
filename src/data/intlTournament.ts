@@ -87,6 +87,18 @@ export interface IntlBuildOptions {
   extra?: Record<string, unknown>;
 }
 
+/** Par INVENTADO por buraco (4) que algumas fontes de Espanha usam quando não
+ *  há par real. ⚠ Decisão pendente da Mariana: cada conversor que o usa
+ *  passa-o explicitamente (`inventedPar: PAR_INVENTADO`) — tirá-lo é uma linha. */
+export const PAR_INVENTADO = 4;
+
+/** O par da fonte quando é válido (um valor por buraco); senão o inventado,
+ *  se o chamador o pedir; senão o que veio (vazio = sem linha de PAR). */
+export function parOrInvented(par: number[] | null | undefined, holes: number, invented?: number): number[] {
+  if (par && par.length === holes) return par;
+  return invented != null ? new Array(holes).fill(invented) : (par ?? []);
+}
+
 const full = (arr: number[] | null | undefined, n: number): number[] | undefined =>
   arr && arr.length >= n && n > 0 ? arr : undefined;
 
@@ -102,7 +114,7 @@ export function buildFPGTournament(
   const out: Player[] = kept.map((p) => {
     const c: IntlCourse = { ...course, ...p.course, par: p.course?.par ?? course.par };
     const holes = c.holes ?? (c.par.length || 18);
-    if (opts.inventedPar != null && c.par.length !== holes) c.par = new Array(holes).fill(opts.inventedPar);
+    c.par = parOrInvented(c.par, holes, opts.inventedPar);
     const n = c.par.length;
     const parSum = c.par.reduce((a, b) => a + b, 0);
     const parTotal = c.parTotal === null ? undefined : (c.parTotal ?? parSum);
