@@ -1,64 +1,54 @@
 /**
  * scripts/aggregator/util/io.js
  *
- * Read/write JSON helpers tolerantes a falha.
+ * Read/write JSON helpers. Input ausente = opcional; input corrupto = erro.
+ * Escrita sempre atómica com fsync.
  */
 
 const fs = require("fs");
 const path = require("path");
-const { warn, fail } = require("./log");
+const { writeAtomic } = require("../../../lib/atomic-write");
 
 const REPO_ROOT = path.resolve(__dirname, "..", "..", "..");
 const DATA_DIR = path.join(REPO_ROOT, "public", "data");
 const ARCHIVE_DIR = path.join(REPO_ROOT, "public", "data-archive");
 
+/**
+ * Input corrupto/truncado. É ERRO (exit 1), nunca reparação silenciosa: antes
+ * o agregador cortava NUL bytes e "fechava" o JSON à força, e um input
+ * truncado a meio virava um canónico com metade dos jogadores.
+ */
+class CorruptInputError extends Error {
+  constructor(filePath, cause) {
+    super(`Input corrupto/ilegível: ${path.relative(REPO_ROOT, filePath)} — ${cause}`);
+    this.name = "CorruptInputError";
+    this.filePath = filePath;
+  }
+}
+
+/**
+ * Lê um JSON de input. Ficheiro AUSENTE → `defaultValue` (as fontes são
+ * opcionais). Ficheiro presente mas ilegível, truncado ou com NUL bytes →
+ * lança `CorruptInputError` (o index.js termina com exit 1).
+ */
 function readJsonSafe(filePath, defaultValue = null) {
   if (!fs.existsSync(filePath)) return defaultValue;
   let raw;
   try {
     raw = fs.readFileSync(filePath, "utf8");
   } catch (err) {
-    warn(`Falhou ler ${path.relative(REPO_ROOT, filePath)}: ${err.message}`);
-    return defaultValue;
+    throw new CorruptInputError(filePath, `falhou ler: ${err.message}`);
   }
-  try { return JSON.parse(raw); } catch (err1) {
-    const firstNul = raw.indexOf("\0");
-    if (firstNul > 0) {
-      try {
-        const fixed = raw.slice(0, firstNul);
-        const out = JSON.parse(fixed);
-        warn(`${path.relative(REPO_ROOT, filePath)}: recuperado cortando NUL bytes (${raw.length - firstNul} bytes truncados)`);
-        return out;
-      } catch (err2) { /* continuar */ }
-    }
-    const recovered = tryReverseClose(raw);
-    if (recovered) {
-      warn(`${path.relative(REPO_ROOT, filePath)}: recuperado por reverse-close (${recovered.lostBytes} bytes truncados)`);
-      return recovered.value;
-    }
-    warn(`Falhou parse de ${path.relative(REPO_ROOT, filePath)}: ${err1.message}`);
-    return defaultValue;
+  if (raw.charCodeAt(0) === 0xfeff) raw = raw.slice(1);
+  const nul = raw.indexOf("\0");
+  if (nul >= 0) {
+    throw new CorruptInputError(filePath, `NUL bytes a partir do byte ${nul} (ficheiro truncado?)`);
   }
-}
-
-function tryReverseClose(raw) {
-  const maxScan = 4000;
-  const start = Math.max(0, raw.length - maxScan);
-  for (let i = raw.length - 1; i >= start; i--) {
-    const c = raw[i];
-    if (c !== "," && c !== "}" && c !== "]") continue;
-    const base = raw.slice(0, c === "," ? i : i + 1);
-    for (let nB = 0; nB <= 4; nB++) {
-      for (let nS = 0; nS <= 2; nS++) {
-        const candidate = base + "}".repeat(nB) + "]".repeat(nS);
-        try {
-          const v = JSON.parse(candidate);
-          return { value: v, lostBytes: raw.length - candidate.length };
-        } catch { /* try next */ }
-      }
-    }
+  try {
+    return JSON.parse(raw);
+  } catch (err) {
+    throw new CorruptInputError(filePath, `JSON inválido (${err.message})`);
   }
-  return null;
 }
 
 function readJsonRequired(filePath) {
@@ -77,9 +67,14 @@ function listFiles(dir, pattern) {
     .sort();
 }
 
-function writeJson(filePath, obj) {
+/**
+ * Escrita atómica com fsync (write → fsync → rename → fsync dir). Os outputs
+ * do agregador somam ~185 MB; um writeFileSync interrompido deixava o
+ * canónico truncado no git.
+ */
+function writeJson(filePath, obj, { spaces = 2 } = {}) {
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, JSON.stringify(obj, null, 2) + "\n", "utf8");
+  writeAtomic(filePath, JSON.stringify(obj, null, spaces) + "\n", "utf-8");
 }
 
 const DATA = {
@@ -138,6 +133,8 @@ module.exports = {
   ARCHIVE_DIR,
   DATA,
   readJsonSafe,
+  CorruptInputError,
+  writeAtomic,
   readJsonRequired,
   writeJson,
   listFiles,

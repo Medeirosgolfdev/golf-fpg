@@ -6,15 +6,59 @@
  * Checks actuais:
  *   - Manuel Medeiros presente + tem sources.fpg + tem dob
  *   - Dmitrii Elchaninov presente + 5 confrontos com Manuel
- *   - Pelo menos 100 juniores resolvidos
- *   - Pelo menos 500 torneios totais
+ *   - Pisos absolutos realistas (MIN_JUNIORS / MIN_TOURNAMENTS) — antes eram
+ *     100/500 contra ~38 672/27 987 reais, ou seja, nunca disparavam
+ *   - Queda face ao canónico em disco ≤ MAX_DROP (10%), salvo --force
  *   - Cada junior com tournamentIds tem pelo menos 1 entrada em tournaments
  */
 
+const fs = require("fs");
 const { fail, ok, sub, warn } = require("../util/log");
 const { normName } = require("../util/names");
 
-function run(result) {
+// Medido a 2026-10-20: 38 672 juniores · 27 987 torneios. Os pisos ficam a
+// ~75% para aguentar limpezas de duplicados legítimas; a queda relativa (10%)
+// é a guarda principal.
+const MIN_JUNIORS = 29000;
+const MIN_TOURNAMENTS = 21000;
+const MAX_DROP = 0.10;
+
+/**
+ * Contagens do canónico que está em disco (antes de gravar o novo).
+ * null se não existir ou estiver ilegível (ex: marcadores de conflito do git).
+ */
+function readPrevious(DATA) {
+  const prev = { juniors: null, tournaments: null };
+  try {
+    if (fs.existsSync(DATA.outJuniors)) {
+      const j = JSON.parse(fs.readFileSync(DATA.outJuniors, "utf8"));
+      if (Array.isArray(j.juniors)) prev.juniors = j.juniors.length;
+    }
+  } catch { /* ilegível → sem comparação */ }
+  try {
+    if (fs.existsSync(DATA.outTournaments)) {
+      const m = JSON.parse(fs.readFileSync(DATA.outTournaments, "utf8"));
+      if (typeof m.totalTournaments === "number") prev.tournaments = m.totalTournaments;
+      else if (Array.isArray(m.tournaments)) prev.tournaments = m.tournaments.length;
+    }
+  } catch { /* idem */ }
+  return prev;
+}
+
+/** Queda relativa: passa se não há anterior, se --force, ou se perdeu ≤ maxDrop. */
+function dropCheck(name, prev, cur, force, maxDrop = MAX_DROP) {
+  if (typeof prev !== "number" || prev <= 0) {
+    return { name, pass: true, detail: `${cur} (sem canónico anterior para comparar)` };
+  }
+  const drop = (prev - cur) / prev;
+  const pct = Math.abs(drop * 100).toFixed(1);
+  const sign = drop > 0 ? "-" : "+";
+  let note = "";
+  if (drop > maxDrop) note = force ? " — aceite por --force" : ` — queda > ${maxDrop * 100}%, usar --force se for intencional`;
+  return { name, pass: drop <= maxDrop || force, detail: `${prev} → ${cur} (${sign}${pct}%)${note}` };
+}
+
+function run(result, { previous = null, force = false } = {}) {
   const { juniors, tournaments } = result;
   const checks = [];
 
@@ -76,19 +120,23 @@ function run(result) {
     soft: true, // warning não bloqueia build
   });
 
-  // 7. Pelo menos 100 juniores
+  // 7. Pisos absolutos (--force passa por cima, ex: corrida --only de debug)
   checks.push({
-    name: "Pelo menos 100 juniores",
-    pass: juniors.length >= 100,
+    name: `Pelo menos ${MIN_JUNIORS} juniores`,
+    pass: juniors.length >= MIN_JUNIORS || force,
     detail: `${juniors.length} juniores`,
   });
 
-  // 8. Pelo menos 500 torneios
+  // 8. Pisos absolutos de torneios
   checks.push({
-    name: "Pelo menos 500 torneios",
-    pass: tournaments.length >= 500,
+    name: `Pelo menos ${MIN_TOURNAMENTS} torneios`,
+    pass: tournaments.length >= MIN_TOURNAMENTS || force,
     detail: `${tournaments.length} torneios`,
   });
+
+  // 8b. Queda face ao canónico em disco
+  checks.push(dropCheck("Juniores não caem mais de 10% face ao disco", previous?.juniors, juniors.length, force));
+  checks.push(dropCheck("Torneios não caem mais de 10% face ao disco", previous?.tournaments, tournaments.length, force));
 
   // 9. Consistência tournamentIds → tournaments
   const tournIdSet = new Set(tournaments.map((t) => t.id));
@@ -126,4 +174,4 @@ function run(result) {
   };
 }
 
-module.exports = { run };
+module.exports = { run, readPrevious, dropCheck, MIN_JUNIORS, MIN_TOURNAMENTS, MAX_DROP };

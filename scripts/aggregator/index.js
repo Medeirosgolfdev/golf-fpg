@@ -17,11 +17,15 @@
  *   node scripts/aggregator/index.js --only=uskids  # só USKids (debug)
  *   node scripts/aggregator/index.js --skip=ffgolf  # excluir uma fonte
  *   node scripts/aggregator/index.js --dry-run      # corre mas não escreve
+ *   node scripts/aggregator/index.js --force        # grava mesmo se encolher >10%
+ *
+ * Exit codes: 0 gravou (ou --dry-run) · 1 erro (input corrupto, sanity
+ * falhado, encolhimento sem --force, crash).
  */
 
 const path = require("path");
 const { SCHEMA_VERSION } = require("./types");
-const { DATA, DATA_DIR, writeJson, readJsonSafe } = require("./util/io");
+const { DATA, DATA_DIR, writeJson, writeAtomic, readJsonSafe, CorruptInputError } = require("./util/io");
 const { info, ok, warn, fail, step, sub, bold, dim } = require("./util/log");
 
 const SOURCES = [
@@ -62,9 +66,10 @@ const SOURCES = [
 ];
 
 function parseArgs(argv) {
-  const args = { only: null, skip: [], dryRun: false };
+  const args = { only: null, skip: [], dryRun: false, force: false };
   for (const a of argv.slice(2)) {
     if (a === "--dry-run") args.dryRun = true;
+    else if (a === "--force") args.force = true;
     else if (a.startsWith("--only=")) args.only = a.slice(7).split(",").map((s) => s.trim());
     else if (a.startsWith("--skip=")) args.skip = a.slice(7).split(",").map((s) => s.trim());
   }
@@ -94,6 +99,9 @@ async function runAdapter(src, opts) {
     sub(`${data.players.length} jogadores · ${data.tournaments.length} torneios · ${ms}ms`);
     return data;
   } catch (err) {
+    // Input corrupto/truncado é fatal: um adapter a cair em silêncio dava um
+    // canónico sem essa fonte inteira.
+    if (err instanceof CorruptInputError) throw err;
     fail(`Adapter ${src.id} falhou: ${err.message}`);
     if (process.env.DEBUG) console.error(err.stack);
     return null;
@@ -229,15 +237,15 @@ async function main() {
   step("Sanity checks");
   try {
     const sc = require("./validate/sanity-check");
-    const result = sc.run(matchResult);
+    const result = sc.run(matchResult, { previous: sc.readPrevious(DATA), force: args.force });
     if (result.passed) {
       ok(`${result.passedCount}/${result.totalCount} checks ok`);
     } else {
       fail(`${result.failedCount} checks falharam:`);
       for (const f of result.failures) fail(`  · ${f}`);
       if (!args.dryRun) {
-        fail("Build abortado por sanity checks. Use --dry-run para inspecionar mesmo assim.");
-        process.exit(2);
+        fail("Build abortado por sanity checks (nada foi gravado). Use --dry-run para inspecionar ou --force se a queda for intencional.");
+        process.exit(1);
       }
     }
   } catch (err) {
@@ -273,7 +281,7 @@ async function main() {
     {
       const { buildForm } = require("./util/form");
       const form = buildForm(matchResult.tournaments, generatedAt);
-      require("fs").writeFileSync(path.join(DATA_DIR, "juniors-form.json"), JSON.stringify(form));
+      writeAtomic(path.join(DATA_DIR, "juniors-form.json"), JSON.stringify(form), "utf-8");
       sub(`juniors-form.json: ${Object.keys(form.players).length} juniores`);
     }
 
@@ -282,7 +290,7 @@ async function main() {
     {
       const { buildScout } = require("./util/scout");
       const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt);
-      require("fs").writeFileSync(path.join(DATA_DIR, "juniors-scout.json"), JSON.stringify(scout));
+      writeAtomic(path.join(DATA_DIR, "juniors-scout.json"), JSON.stringify(scout), "utf-8");
       sub(`juniors-scout.json: ${Object.keys(scout.players).length} juniores`);
     }
 
@@ -330,8 +338,7 @@ async function main() {
     writeJson(DATA.outTournaments, manifest);
     sub(`${path.relative(process.cwd(), DATA.outTournaments)}: manifest com ${parts.length} shards`);
 
-    // Helper para escrever compacto (sem indent)
-    const fs = require("fs");
+    // Shards compactos (sem indent), escrita atómica com fsync.
     for (let i = 0; i < parts.length; i++) {
       const shardPath = path.join(path.dirname(DATA.outTournaments), shardFilenames[i]);
       const payload = {
@@ -342,7 +349,7 @@ async function main() {
         tournaments: parts[i],
       };
       const compact = JSON.stringify(payload); // sem indent — mínimo de bytes
-      fs.writeFileSync(shardPath, compact + "\n", "utf8");
+      writeAtomic(shardPath, compact + "\n", "utf-8");
       const sizeMB = (Buffer.byteLength(compact, "utf8") / 1024 / 1024).toFixed(1);
       sub(`  ${shardFilenames[i]}: ${parts[i].length} torneios · ${sizeMB} MB`);
     }
@@ -447,6 +454,11 @@ function buildCatalog(tournaments) {
 
 if (require.main === module) {
   main().catch((err) => {
+    if (err instanceof CorruptInputError) {
+      fail(err.message);
+      fail("Nada foi gravado. Repor o ficheiro (git checkout / voltar a correr o scraper) e repetir.");
+      process.exit(1);
+    }
     fail("Crash:", err.message);
     console.error(err.stack);
     process.exit(1);
