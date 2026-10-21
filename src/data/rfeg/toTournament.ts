@@ -20,6 +20,13 @@ import type { RFEGPlayer, RFEGDetail, DobLookupEntry, DobLookup } from "./types"
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
  * IntlTournView (mesmo componente que FFGPage usa) para aspecto consistente
  * com FPG/FFG: cabeçalho, tabs R1/R2/Resumo, scorecard global com cores. */
+/** Regras do livegolfscoring que esperam decisão: par 4 por buraco quando não
+ *  há par e «sem cartão» só a partir de 999 (a regra da casa é ≥ 900). */
+export const LGS_OPTS = { inventedPar: PAR_INVENTADO, noCardFrom: 999 };
+/** Volta com cartão no LGS: total > 0 e abaixo do «sem cartão». */
+export const isLgsCard = (total: number | null | undefined): total is number =>
+  total != null && total > 0 && total < LGS_OPTS.noCardFrom;
+
 export function lgsToFPGTournament(
   lgs: {
     id: number;
@@ -52,7 +59,7 @@ export function lgsToFPGTournament(
   // original intocado.
   const rawPar = lgs.rounds[0]?.par;
   const courseHoles: number = rawPar && rawPar.length === 9 ? 9 : 18;
-  const par = rawPar && (rawPar.length === 18 || rawPar.length === 9) ? rawPar : new Array(courseHoles).fill(4);
+  const par = parOrInvented(rawPar, courseHoles, LGS_OPTS.inventedPar);
   const parTotal = par.reduce((a, b) => a + b, 0);
   const numRounds = lgs.rounds.length;
   // Rondas EFECTIVAMENTE jogadas: uma ronda só com SCORES reais conta. Uma ronda
@@ -65,7 +72,7 @@ export function lgsToFPGTournament(
   // entregues ("partialGross") — é o que põe os resultados de hoje na página,
   // em vez de esperar que a volta feche.
   const roundIsPlayed = (r: { players: Array<{ total: number | null; partialGross?: number | null }> }) =>
-    (r.players ?? []).some((p) => (p.total != null && p.total > 0 && p.total < 999)
+    (r.players ?? []).some((p) => (isLgsCard(p.total))
       || (p.partialGross != null && p.partialGross > 0));
   const playedRoundsArr = lgs.rounds.filter(roundIsPlayed);
   const playedRounds = playedRoundsArr.length || numRounds;
@@ -78,7 +85,7 @@ export function lgsToFPGTournament(
   const roundEmCurso = (r: { players: Array<{ total: number | null; partialGross?: number | null }> }) => {
     const ps = r.players ?? [];
     if (!ps.length) return false;
-    const comTotal = ps.filter((p) => p.total != null && p.total > 0 && p.total < 999).length;
+    const comTotal = ps.filter((p) => isLgsCard(p.total)).length;
     if (!comTotal) return false;
     const parciais = ps.filter((p) => p.partialGross != null && p.partialGross > 0).length;
     // Cartões a meio são o sinal directo. O limiar cobre o intervalo em que
@@ -87,7 +94,7 @@ export function lgsToFPGTournament(
     return parciais > 0 || comTotal < ps.length * 0.85;
   };
   const closedRounds = lgs.rounds.filter((r) =>
-    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999) && !roundEmCurso(r)).length;
+    (r.players ?? []).some((p) => isLgsCard(p.total)) && !roundEmCurso(r)).length;
   const sliceH = <T,>(a: T[] | undefined | null): T[] => (a || []).slice(0, courseHoles);
   // teeName com a distância total → o scorecard só desenha a linha de METROS quando
   // o jogador tem teeName (ScorecardLB agrupa metros por tee). Sem isto, os torneios
@@ -96,7 +103,7 @@ export function lgsToFPGTournament(
   const lgsTeeLabel: string | undefined = lgsMetersTotal > 0 ? `${lgsMetersTotal} m` : undefined;
 
   // Agregar por jogador (key = memberId ou nome) com scores hbh por ronda
-  type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: FPGRoundScore[]; country: string | null; region: string | null };
+  type Acc = { name: string; pos: number | null; toPar: number; total: number; rounds: (IntlRoundIn & { round: number; gross: number })[]; country: string | null; region: string | null };
   const agg: Record<string, Acc> = {};
   for (const r of lgs.rounds) {
     for (const p of r.players) {
@@ -111,18 +118,16 @@ export function lgsToFPGTournament(
       // R1/R2 caía como "incompleto" e o top-3 do Resumo saía errado.
       const hasCard = !!(p.scores && p.scores.length === courseHoles);
       const emCurso = p.total == null && p.partialGross != null && p.partialGross > 0;
-      if ((p.total != null && p.total > 0 && p.total < 999) || emCurso) {
+      if ((isLgsCard(p.total)) || emCurso) {
         agg[key].rounds.push({
           round: r.round, gross: emCurso ? (p.partialGross as number) : (p.total as number),
-          scores: hasCard ? (p.scores as number[]) : [], pars: r.par || par,
-          si: sliceH(lgs.course?.si) as number[], meters: sliceH(lgs.course?.meters) as number[], teeName: lgsTeeLabel,
-          courseRating: lgs.course?.courseRating ?? undefined,
-          slope: lgs.course?.slope ?? undefined,
+          scores: hasCard ? (p.scores as number[]) : [],
+          card: { par: r.par || par, teeName: lgsTeeLabel },
           // Volta a meio: o gross é a soma dos buracos ENTREGUES, não uma volta.
           // Fica fora do total do torneio (ver `total` mais abaixo) e o cartão
           // mostra só os buracos jogados.
-          ...(emCurso ? { _emCurso: true, _holesPlayed: p.holesPlayed ?? null } : {}),
-        } as FPGRoundScore);
+          ...(emCurso ? { extra: { _emCurso: true, _holesPlayed: p.holesPlayed ?? null } } : {}),
+        });
       }
     }
   }
@@ -140,7 +145,7 @@ export function lgsToFPGTournament(
         // Só VOLTAS FECHADAS somam para o total do torneio — somar o parcial de
         // quem vai no buraco 12 dava um "total" que não é resultado nenhum.
         agg[key].total = agg[key].rounds
-          .filter((x) => !(x as { _emCurso?: boolean })._emCurso)
+          .filter((x) => !x.extra?._emCurso)
           .reduce((a, b) => a + b.gross, 0);
       }
     }
@@ -156,7 +161,7 @@ export function lgsToFPGTournament(
   const dateRef = lgs.meta.dateIso || lgs.meta.dateRange || null;
   // Lookup HCP global injectado via dobLookup (efetivamente o terceiro arg do adapter).
   // Como esta função foi criada antes de termos hcpLookup, lemos via campo extra.
-  const players: FPGPlayer[] = sortedAcc.map((a, idx) => {
+  const players: IntlPlayerIn[] = sortedAcc.map((a, idx): IntlPlayerIn => {
     const e = lookupByName[norm(a.name)];
     // Português num torneio espanhol: a fonte local não o conhece (sem licença
     // RFEG), mas nós temos a ficha dele na FPG. Só se aplica a quem a BANDEIRA
@@ -175,7 +180,7 @@ export function lgsToFPGTournament(
     const sex: "M" | "F" | null = (e?.sex || ptFed?.sex) === "M" ? "M" : (e?.sex || ptFed?.sex) === "F" ? "F" : null;
     // "Incompleto" (→ WD) mede-se só contra as voltas FECHADAS: quem ainda não
     // saiu para a ronda de hoje não é um desistente.
-    const incomplete = a.rounds.filter((x) => !(x as { _emCurso?: boolean })._emCurso).length < closedRounds;
+    const incomplete = a.rounds.filter((x) => !x.extra?._emCurso).length < closedRounds;
     // HCP via lookup global (LGS não tem HCP no JSON)
     const lic = (e?.licencia || "").toUpperCase();
     // ⚠ `lic && …` devolve a STRING VAZIA quando não há licença — não null.
@@ -193,50 +198,53 @@ export function lgsToFPGTournament(
     const clubLabel = club || a.region || "";
     const flagEmoji = a.country && a.country !== "ES" ? flag(a.country) : "";
     return {
-      scoreId: `lgs-${lgs.id}-${idx}`,
+      id: `lgs-${lgs.id}-${idx}`,
       pos: a.pos ?? idx + 1,
       name: formatPlayerName(a.name),
       club: [flagEmoji, clubLabel].filter(Boolean).join(" ") || "—",
-      _isPortuguese: a.country === "PT",
-      _country: a.country || undefined,
-      fed: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
-      fedCode: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
-      grossTotal: a.total || null,
+      isPortuguese: a.country === "PT",
+      total: a.total || null,
       toPar: a.toPar,
-      hcpExact: hcp != null ? hcp : undefined,
-      escalao: escLabel,
-      dob: dobRef || undefined,
-      _sex: sex,
-      _age: age,
-      nholes: courseHoles,
-      parTotal,
-      courseRating: lgs.course?.courseRating ?? undefined,
-      slope: lgs.course?.slope ?? undefined,
+      hcp,
+      rounds: a.rounds,
       scores: a.rounds[0]?.scores || [],
-      par,
-      si: sliceH(lgs.course?.si),
-      meters: sliceH(lgs.course?.meters),
-      roundScores: a.rounds,
-      _wd: incomplete,
-      _roundsPlayed: a.rounds.length,
-    } as FPGPlayer & { _sex: "M" | "F" | null; _age: number | null };
+      wd: incomplete,
+      extra: {
+        _country: a.country || undefined,
+        fed: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
+        fedCode: e?.licencia || ptFed?.fed || gb?.memberId || undefined,
+        escalao: escLabel,
+        dob: dobRef || undefined,
+        _sex: sex,
+        _age: age,
+      },
+    };
   });
 
-  return {
-    name: lgs.meta.name || `Torneio ${lgs.id}`,
-    tcode: String(lgs.id),
-    date: lgs.meta.dateIso || lgs.meta.dateRange || "",
-    campo: lgs.meta.course || "",
-    // Só as rondas JOGADAS geram abas de resultados (uma R3 ainda por jogar não
-    // cria uma aba "R3" vazia a dizer "sem scorecards"). O draw da R3 aparece à
-    // mesma, como aba "Draw R3" intercalada (ver roundDraws em rfegLoadDivisions).
-    rounds: playedRounds,
-    // Ronda a decorrer (se houver): o acumulado desconta-a ao decidir quem está
-    // incompleto, para não marcar como eliminado quem ainda nem saiu.
-    _openRound: lgs.rounds.find(roundEmCurso)?.round,
-    playerCount: players.length,
+  return buildFPGTournament(
+    {
+      name: lgs.meta.name || `Torneio ${lgs.id}`,
+      tcode: String(lgs.id),
+      date: lgs.meta.dateIso || lgs.meta.dateRange || "",
+      campo: lgs.meta.course || "",
+      // Só as rondas JOGADAS geram abas de resultados (uma R3 ainda por jogar não
+      // cria uma aba "R3" vazia a dizer "sem scorecards"). O draw da R3 aparece à
+      // mesma, como aba "Draw R3" intercalada (ver roundDraws em rfegLoadDivisions).
+      rounds: playedRounds,
+    },
+    {
+      par, si: sliceH(lgs.course?.si) as number[], meters: sliceH(lgs.course?.meters) as number[],
+      courseRating: lgs.course?.courseRating ?? undefined, slope: lgs.course?.slope ?? undefined,
+      holes: courseHoles, parTotal,
+    },
     players,
-  };
+    {
+      keepNoRounds: true, raw: true, inventedPar: LGS_OPTS.inventedPar,
+      // Ronda a decorrer (se houver): o acumulado desconta-a ao decidir quem está
+      // incompleto, para não marcar como eliminado quem ainda nem saiu.
+      extra: { _openRound: lgs.rounds.find(roundEmCurso)?.round },
+    },
+  );
 }
 
 export function lgsScorecardOptions(): ScorecardOptions {
