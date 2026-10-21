@@ -10,6 +10,7 @@
  */
 import { cachedFetchJson } from "./fetchCache";
 import { isManuelByName } from "../constants/manuel";
+import { todayIso } from "../utils/format";
 import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
 import type { DataSource } from "../ui/DataSources";
 import type { ResultsData, RondaJogador, TorneioResult } from "../ui/uskidsTypes";
@@ -40,7 +41,7 @@ export function loadUskidsResults(onFile?: (s: DataSource) => void): Promise<Res
 
 function carregar(): Promise<ResultsData> {
   // Cache diária: o browser só volta a pedir o ficheiro gerado uma vez por dia.
-  const daily = new Date().toISOString().slice(0, 10);
+  const daily = todayIso();
   const historicosUrls = Array.from({ length: TORNEIOS_COMPLETOS_COUNT }, (_, i) =>
     `/data/uskids_torneios_completos(${i + 1}).json`
   );

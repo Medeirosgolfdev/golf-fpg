@@ -15,7 +15,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { cachedFetchJson } from "../../data/fetchCache";
-import { isoDate } from "../../utils/format";
+import { isoDate, todayIso } from "../../utils/format";
 import { normName, type CanonicalData, type Junior } from "./data";
 
 export interface UpcomingReg {
@@ -68,7 +68,7 @@ function buildUpcomingByJunior(
   uskids: UskidsFieldFile | null,
   fpg: FpgAdmFile | null,
 ): Map<string, UpcomingReg[]> {
-  const today = new Date().toISOString().slice(0, 10);
+  const today = todayIso();
   const map = new Map<string, UpcomingReg[]>();
   const add = (jid: string, reg: UpcomingReg) => {
     let arr = map.get(jid);

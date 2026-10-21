@@ -17,7 +17,7 @@ import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdat
 import { isManuelByName } from "../../constants/manuel";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import { normPaisDisplay } from "../../utils/flagUtils";
-import { fmtToPar, displayName } from "../../utils/format";
+import { fmtToPar, displayName, todayIso } from "../../utils/format";
 import { tpColor } from "../../ui/tournamentPrimitives";
 import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
@@ -318,7 +318,7 @@ const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; h
   { id: "belgium26",  tcode: "22480", date_iso: "2026-09-26", name: "Belgium Invitational 2026",  short: "Belgium '26", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/522480/belgium-invitational-2026/field" },
 ];
 // Só torneios ainda não passados (data hoje ou futura)
-const _today = new Date().toISOString().slice(0, 10);
+const _today = todayIso();
 const usToIso = (s: string) => { const [m, d, y] = (s || "").split("/"); return y ? `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}` : ""; };
 
 /** UP_TORN (curados à mão) + os torneios futuros do field em que o Manuel está
@@ -712,7 +712,7 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
 
   const futureTorneios = useMemo<FieldTorneio[]>(() => {
     if (!field && !mh && !uskRes) return [];
-    const today = new Date().toISOString().slice(0, 10);
+    const today = todayIso();
     const out: FieldTorneio[] = [];
     const seenTcodes = new Set<string>();
     // Séries já presentes em "Próximos torneios" — não voltam a aparecer em

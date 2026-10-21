@@ -19,7 +19,7 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../SortableHdr";
 import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
-import { fmtToPar, isoDate, shortDateSlash } from "../../utils/format";
+import { fmtToPar, isoDate, shortDateSlash, todayIso } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
 import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
@@ -44,7 +44,7 @@ function useProximas(): Map<string, Proxima[]> | null {
     let vivo = true;
     cachedFetchJson<UskFieldFile>("/data/uskids-field.json").then((d) => {
       if (!vivo) return;
-      const hoje = new Date().toISOString().slice(0, 10);
+      const hoje = todayIso();
       const out = new Map<string, Proxima[]>();
       for (const t of d?.torneios ?? []) {
         const date = isoDate(t.date_inicio || "");
