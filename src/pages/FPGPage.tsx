@@ -33,21 +33,22 @@ import {
   isManuel,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
-import { PJARankingView } from "../ui/PJARankingView";
+import { PJARankingView, type PjaPdfEntry } from "../ui/PJARankingView";
 import { cachedFetchJson } from "../data/fetchCache";
 import ClubesGruposView from "../ui/ClubesGruposView";
 import ClubesCategoriasView, { type CategoriaCfg } from "../ui/ClubesCategoriasView";
 import TournExtLinks from "../ui/TournExtLinks";
 import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
-import type { Tournament, GrupoEntry } from "../data/fpgTypes";
+import type { Tournament, GrupoEntry, Player } from "../data/fpgTypes";
+import type { MatchPlayData, MpDia, MpMatch, MpRow } from "../data/clubesMatchplayTypes";
 import { buildDisplayList, tournamentHasManuel, isHiddenNonManuelDrive, isDriveOrAquapor } from "../data/fpgUtils";
 import { isDNS } from "../ui/driveUtils";
 // Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
 // Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
 // Admissions + draws (browser scrape + merge) — ver CLAUDE.md
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, type FpgTournamentData } from "../data/nacional2026Loader";
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, type FpgTournamentData, type FpgAdmissionsDrawsFile } from "../data/nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic, inferEscalao, stripEscalaoSuffix } from "../data/featuredTournaments";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
@@ -113,15 +114,12 @@ function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
   };
   if (t.players.length) {
     for (const p of t.players) {
-      add(p.club || "", p.name, p.fedCode ?? null, (p as any).hcpExact ?? (p as any).hcpPlay);
+      add(p.club || "", p.name, p.fedCode ?? null, p.hcpExact ?? p.hcpPlay);
     }
   } else {
     // Pré-jogo: ainda não há scorecards. Usar os inscritos (_admissions.players)
     // para já compor as equipas por clube/categoria (exclui reservas).
-    const adm = (t as any)._admissions?.players as Array<{
-      nome: string; fed?: string; clube?: string; hcp?: number | string; status?: string;
-    }> | undefined;
-    for (const p of adm || []) {
+    for (const p of t._admissions?.players ?? []) {
       if (p.status === "reserva") continue;
       add(p.clube || "", p.nome, p.fed ?? null, p.hcp);
     }
@@ -132,7 +130,7 @@ function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
   // Letras oficiais por clube (do sorteio FPG), se o torneio as trouxer
   // (campo `teamLetters` em CLUBES{ano}.json). Caso contrário, letras
   // alfabéticas por ordem de clube como fallback.
-  const letterMap = (t as any).teamLetters as Record<string, string> | undefined;
+  const letterMap = t.teamLetters;
   return [...byClub.values()]
     .sort((a, b) => a.clube.localeCompare(b.clube, "pt"))
     .map((g, i) => ({ grupo: letterMap?.[g.clube] ?? letra(i), clube: g.clube, jogadores: g.jogadores }))
@@ -190,50 +188,17 @@ const CLUBES_TEAM_FORMAT: Record<string, {
 };
 
 // ── 3-Way Match Play Results ──────────────────────────────────────────────
-interface MpPlayer { name: string; fed?: string; gross?: number | null; toPar?: number | null; scores?: (number | null)[]; }
-interface MpH2H    { w: string; l: string; margin: string | null; half?: boolean; }
-interface MpMatch  {
-  match: number;
-  note?: string;
-  players?: Record<string, MpPlayer>;
-  h2h?: MpH2H[];
-}
-interface MpDia    { dia: number; matches?: MpMatch[]; subtotal: Record<string, number>; }
-interface MpCat    { key: string; label: string; note?: string; dias: MpDia[]; }
-interface MpDrawPlayer { name: string; fed?: string; club: string; tee?: string; }
-interface MpDrawGroup  { teeTime: string; tee?: string; players: MpDrawPlayer[]; }
-interface MatchPlayData {
-  lastUpdated?: string;
-  clubs: { key: string; name: string; shortName: string }[];
-  categories: MpCat[];
-  course?: { nome?: string; tee?: string; par: number[]; parTotal?: number; };
-  dia1?: { date?: string; modalidade?: string; campo?: string; groups: Record<string, MpDrawGroup[]>; };
-  dia2?: { date?: string; modalidade?: string; campo?: string; groups: Record<string, MpDrawGroup[]>; };
-}
-
 const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
 
-/** Uma linha por JOGADOR (não por match): no modo Total um miúdo joga nos dois
- *  dias e aparecia 2× na tabela. Agrega por fed (ou nome) somando os pontos e
- *  juntando os confrontos de cada adversário. */
-interface MpRow {
-  key: string;
-  player: MpPlayer | undefined;
-  pts: number | null;
-  /** Uma entrada POR CONFRONTO JOGADO (não por resultado): quando o jogador
-   *  esteve emparelhado mas o resultado não foi publicado, a entrada fica
-   *  `pending` — assim a linha do dia não desaparece e vê-se o que falta. */
-  byOpp: Map<string, { won: boolean; half: boolean; margin: string | null; pending?: boolean }[]>;
-}
 /** Pontos de um clube num dia. O `subtotal` do ficheiro nem sempre existe (o
  *  Dia 2 do Regional 2026 não o tem) — nesse caso somam-se os pontos dos
  *  próprios confrontos, senão os pontos ficavam de fora do total do clube. */
 function diaPoints(dia: MpDia, clubKey: string): number {
   const fromMatches = (dia.matches ?? []).reduce((s, m) => {
-    const v = (m as unknown as Record<string, unknown>)[clubKey];
+    const v = m[clubKey];
     return s + (typeof v === "number" ? v : 0);
   }, 0);
-  const hasMatchPts = (dia.matches ?? []).some(m => typeof (m as unknown as Record<string, unknown>)[clubKey] === "number");
+  const hasMatchPts = (dia.matches ?? []).some(m => typeof m[clubKey] === "number");
   return hasMatchPts ? fromMatches : (dia.subtotal?.[clubKey] ?? 0);
 }
 
@@ -247,7 +212,7 @@ function playerRows(matches: (MpMatch & { _dia?: number })[], clubKey: string): 
   const idx = new Map<string, MpRow>();
   for (const m of matches) {
     const player = m.players?.[clubKey];
-    const pts = (m as unknown as Record<string, unknown>)[clubKey] as number | null | undefined;
+    const pts = m[clubKey] as number | null | undefined;
     const key = player?.fed ?? (player?.name ? `n:${player.name.toLowerCase()}` : `m:${m._dia}-${m.match}`);
     let row = idx.get(key);
     if (!row) {
@@ -353,7 +318,7 @@ function MatchPlayResultsTable({
   // 2026 só tem 1 dos 4 resultados, e sem isto o total parecia definitivo.
   const pendentes = results.categories.reduce((s, rcat) =>
     s + rcat.dias.filter(diaOf).reduce((ds, dia) => ds + diaPendentes(dia), 0), 0);
-  const places: Record<string, number> | undefined = (results as any).grandTotal?._places;
+  const places = results.grandTotal?._places;
   const sortedClubs = [...clubs].sort((a, b) =>
     places ? (places[a.key] ?? 99) - (places[b.key] ?? 99) : (grand[b.key] ?? 0) - (grand[a.key] ?? 0));
   const maxGrand = Math.max(...clubs.map(cl => grand[cl.key] ?? 0));
@@ -491,7 +456,7 @@ function MatchPlayResultsTable({
                 </div>
                 {results.categories.map((rcat, catIdx) => {
                   // Skip category if this club is not a participant (e.g. CGSS in Senhoras)
-                  const catParticipants: string[] | undefined = (rcat as any).participants;
+                  const catParticipants = rcat.participants;
                   if (catParticipants && !catParticipants.includes(cl.key)) return null;
                   const catLabel = catCfg.find(c => c.key === rcat.key)?.label ?? rcat.key;
                   const visDias = rcat.dias.filter(diaOf);
@@ -655,8 +620,8 @@ function MatchPlayResultsTable({
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 14, padding: "8px 10px", borderBottom: "1px solid var(--border)" }}>
                           {withScores.map(cl => {
                             const player = m.players?.[cl.key];
-                            const pts = m[cl.key as keyof MpMatch] as number | undefined;
-                            const isTop = pts != null && withScores.every(c2 => (m[c2.key as keyof MpMatch] as number ?? 0) <= pts);
+                            const pts = m[cl.key] as number | undefined;
+                            const isTop = pts != null && withScores.every(c2 => ((m[c2.key] as number | undefined) ?? 0) <= pts);
                             return (
                               <div key={cl.key} style={{ display: "flex", alignItems: "center", gap: 6, fontSize: "var(--fs-11)" }}>
                                 <span className="p p-sm p-muted">{cl.shortName}</span>
@@ -794,7 +759,7 @@ function Content() {
   const [pjaMembers, setPjaMembers] = useState<Record<string, string[]>>({});
   // Snapshot do PDF oficial PJA para comparação — se definido, a tabela mostra
   // Δ pts e Δ rondas vs PDF e destaca células com disparidade.
-  const [pjaPdfSnapshot, setPjaPdfSnapshot] = useState<Record<string, Array<{fed:string;name:string;rounds:number;pts:number;pos:number}>>>({});
+  const [pjaPdfSnapshot, setPjaPdfSnapshot] = useState<Record<string, PjaPdfEntry[]>>({});
 
   // ── Estado Clubes ─────────────────────────────────────────────────────────
   const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
@@ -938,12 +903,14 @@ function Content() {
     const pills: Record<string, TournPill> = {};
     for (const playerData of Object.values(melhorias)) {
       if (typeof playerData !== "object" || !playerData) continue;
-      for (const entry of Object.values(playerData as Record<string, any>)) {
-        if (typeof entry !== "object" || !entry || Array.isArray(entry) || !entry.pill) continue;
+      for (const raw of Object.values(playerData)) {
+        if (typeof raw !== "object" || !raw || Array.isArray(raw)) continue;
+        const entry = raw as { pill?: TournPill; links?: Record<string, unknown> };
+        if (!entry.pill) continue;
         // Extrair TODOS os tcodes dos links desta entrada (ex: classificacao_d1 + classificacao_d2)
-        for (const v of Object.values((entry as any).links || {})) {
+        for (const v of Object.values(entry.links || {})) {
           const match = String(v).match(/tcode=(\d+)/);
-          if (match) pills[match[1]] = (entry as any).pill as TournPill;
+          if (match) pills[match[1]] = entry.pill;
         }
       }
     }
@@ -957,13 +924,14 @@ function Content() {
       try {
         // loadPlayers() usa fetchCache — 1 único fetch por sessão mesmo que FPGPage,
         // DrivePage e App.tsx o peçam em simultâneo.
-        const [pdb, linksResp, kidsLinksResp, natResp, kidsTrackedResp] = await Promise.all([
-          loadPlayers().catch(() => ({} as PlayersDB)),
+        const [players, linksResp, kidsLinksResp, natResp, kidsTrackedResp] = await Promise.all([
+          loadPlayers().catch(() => ({})),
           fetch("/data/tournament-links.json").catch(() => null),
           fetch("/data/kids-links.json").catch(() => null),
           fetch("/data/players-nationality.json").catch(() => null),
           fetch("/data/kids-tracked-names.json").catch(() => null),
         ]);
+        const pdb = players as PlayersDB;
         // Merge players-nationality.json no playersDB — para cada federado FPG
         // estrangeiro (Joe Short→GB, Peter Yao→CN, etc.) injecta `country` no
         // entry existente, para o TournPName renderizar 🇬🇧 antes do nome.
@@ -978,13 +946,13 @@ function Content() {
               const cc = byFed[fed];
               if (!cc) continue;
               const inf = info[fed] || {};
-              const entry = (pdb as any)[fed];
+              const entry = pdb[fed];
               if (entry) {
                 if (!entry.country) entry.country = cc;
                 if (!entry.dob && inf.dob) entry.dob = inf.dob;
                 if (!entry.sex && inf.sex) entry.sex = inf.sex;
               } else {
-                (pdb as any)[fed] = {
+                pdb[fed] = {
                   country: cc,
                   ...(inf.dob ? { dob: inf.dob } : {}),
                   ...(inf.sex ? { sex: inf.sex } : {}),
@@ -1003,7 +971,7 @@ function Content() {
             for (const entry of (kl.players || [])) {
               if (!entry.name || !entry.kidsHash) continue;
               const key = "intl:" + entry.name.toLowerCase().replace(/\s+/g, "_");
-              (pdb as any)[key] = {
+              pdb[key] = {
                 name: entry.name,
                 kidsHash: entry.kidsHash,
                 ...(entry.country ? { country: entry.country } : {}),
@@ -1030,9 +998,9 @@ function Content() {
               const memberId = namesMap[normName];
               const m = metaMap[normName] || {};
               const key = "kids:" + normName.replace(/\s+/g, "_");
-              if ((pdb as any)[key]) continue; // já populado por kids-links.json
+              if (pdb[key]) continue; // já populado por kids-links.json
               const displayName = normName.replace(/\b\w/g, c => c.toUpperCase());
-              (pdb as any)[key] = {
+              pdb[key] = {
                 name: displayName,
                 kidsHash: memberId || encodeURIComponent(displayName),
                 ...(m.sex ? { sex: m.sex } : {}),
@@ -1041,7 +1009,7 @@ function Content() {
             }
           } catch { /* ignore */ }
         }
-        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb as PlayersDB); }
+        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
         let externalLinks: Record<string, Record<string, string>> = {};
         if (linksResp?.ok) {
           externalLinks = await linksResp.json().catch(() => ({}));
@@ -1137,7 +1105,7 @@ function Content() {
               const rows = (d.tournaments || []).map(t => ({
                 ...t,
                 series: "clubes" as const,
-                _clubesEsc: resolveEscKeyMain((t as any).escalao, escFallback),
+                _clubesEsc: resolveEscKeyMain(t.escalao, escFallback),
                 _clubesYear: year,
                 _sourceFile: url,
                 players: t.players.map(normalizePlayer),
@@ -1162,7 +1130,6 @@ function Content() {
             // fazem o mesmo enrichment nos seus loaders próprios.
             const admFile = await loadFpgAdmissionsDraws().catch(() => null);
             const admIdx = admFile ? indexFpgAdmissionsDraws(admFile) : new Map<string, FpgTournamentData>();
-            const hasKeys = (o: any) => o && typeof o === "object" && Object.keys(o).length > 0;
             // A FPG reutiliza tcodes: o registo de inscrições/draws só serve se o
             // NOME bater com o do torneio (13/10/2026 — um «Troféu João Sousa» com
             // o ccode:tcode da Final do Drive Challenge recebia os inscritos, o
@@ -1175,10 +1142,10 @@ function Content() {
               // fpg-admissions-draws.json. ⚠ Este ficheiro pode ter o torneio com
               // `draws: {}` vazio (só admissions) — nesse caso NÃO sobrepor os
               // embebidos (era este o bug do regional 2024).
-              if (hasKeys((t as any).draws)) (t as any)._draws = (t as any).draws;
-              else if (hasKeys(ad?.draws)) (t as any)._draws = ad!.draws;
+              if (hasDraws(t.draws)) t._draws = t.draws;
+              else if (hasDraws(ad?.draws)) t._draws = ad!.draws;
               // ADMISSIONS: preferir as do FPG (mais completas), senão embebidas.
-              (t as any)._admissions = ad?.admissions ?? (t as any).admissions;
+              t._admissions = ad?.admissions ?? t.admissions;
               return t;
             };
             const enrichedAllT = allT.map(enrich);
@@ -1236,10 +1203,10 @@ function Content() {
           const ct = r.headers.get("content-type") || "";
           if (!ct.includes("json")) return [];
           const d = await r.json();
-          return (d.tournaments || []).map((t: any) => ({
+          return ((d as DriveData).tournaments || []).map(t => ({
             ...t, _sourceFile: url,
             players: (t.players || []).map(normalizePlayer),
-          })) as Tournament[];
+          }));
         } catch { return []; }
       }));
       if (!alive) return [];
@@ -1260,17 +1227,17 @@ function Content() {
         return out;
       } catch { return {}; }
     };
-    const loadPdfSnapshot = async (): Promise<Record<string, any[]>> => {
+    const loadPdfSnapshot = async (): Promise<Record<string, PjaPdfEntry[]>> => {
       try {
         const r = await fetch("/data/pja-pdf-snapshot.json");
         if (!r.ok) return {};
         const ct = r.headers.get("content-type") || "";
         if (!ct.includes("json")) return {};
         const d = await r.json();
-        const out: Record<string, any[]> = {};
+        const out: Record<string, PjaPdfEntry[]> = {};
         for (const [k, v] of Object.entries(d)) {
           if (k.startsWith("_")) continue;
-          if (Array.isArray(v)) out[k] = v as any[];
+          if (Array.isArray(v)) out[k] = v as PjaPdfEntry[];
         }
         return out;
       } catch { return {}; }
@@ -1333,7 +1300,7 @@ function Content() {
           const d: DriveData = await r.json();
           return (d.tournaments || []).map(t => ({
             ...t,
-            _clubesEsc: resolveEscKey((t as any).escalao, escFallback),
+            _clubesEsc: resolveEscKey(t.escalao, escFallback),
             _clubesYear: year,
             _sourceFile: url,
             players: t.players.map(normalizePlayer),
@@ -1345,24 +1312,23 @@ function Content() {
       if (!alive) return;
       const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
       const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
-      const results = all.slice(0, -1) as any[];
+      const results = all.slice(0, -1) as Tournament[][];
       // Deduplicar por tcode — se o ficheiro D1 e o combined 2026 tiverem o mesmo torneio, fica o combined
       const seen = new Map<string, Tournament>();
       for (const t of results.flat()) {
-        const key = (t as any).tcode;
+        const key = t.tcode;
         const existing = seen.get(key);
         // Preferir o combined (escFallback null) sobre D1 (escFallback não null)
-        if (!existing || (existing as any)._sourceFile?.includes("D1")) {
+        if (!existing || existing._sourceFile?.includes("D1")) {
           // Enriquecer com admissions/draws do fpg-admissions-draws.json se houver match
-          const idxKey = `${t.ccode}-${(t as any).tcode}`;
+          const idxKey = `${t.ccode}-${t.tcode}`;
           const ad = admDrawsIdx.get(idxKey);
-          const hasKeys = (o: any) => o && typeof o === "object" && Object.keys(o).length > 0;
           // DRAWS: preferir embebidos no CLUBES{ano}.json; senão os do
           // fpg-admissions-draws.json (que pode ter `draws: {}` vazio).
-          if (hasKeys((t as any).draws)) (t as any)._draws = (t as any).draws;
-          else if (hasKeys(ad?.draws)) (t as any)._draws = ad!.draws;
-          (t as any)._admissions = ad?.admissions ?? (t as any).admissions;
-          seen.set(key, t as Tournament);
+          if (hasDraws(t.draws)) t._draws = t.draws;
+          else if (hasDraws(ad?.draws)) t._draws = ad!.draws;
+          t._admissions = ad?.admissions ?? t.admissions;
+          seen.set(key, t);
         }
       }
       setClubesTournaments([...seen.values()] as Tournament[]);
@@ -1424,10 +1390,10 @@ function Content() {
             jovensMetaLocal.push({ path: HISTORICO_URL, status: "error", error: `HTTP ${r.status}`, group: "jovens" });
             return [];
           }
-          const d: any = await r.json();
-          const rows = ((d.tournaments || []) as any[])
-            .filter((t: any) => !/de\s+clubes/i.test(t.name || ""))
-            .map((t: any) => ({
+          const d = await r.json() as DriveData;
+          const rows = (d.tournaments || [])
+            .filter(t => !/de\s+clubes/i.test(t.name || ""))
+            .map(t => ({
               ...t,
               _jovensYear: (t.date || "").substring(0, 4),
               _sourceFile: HISTORICO_URL,
@@ -1450,30 +1416,30 @@ function Content() {
       loadFpgAdmissionsDraws().catch(() => null),
     ]).then(all => {
       if (!alive) return;
-      const admLoaded = all[all.length - 1];
+      const admLoaded = all[all.length - 1] as FpgAdmissionsDrawsFile | null;
       setAdmissionsMeta([{
         path: "/data/fpg-admissions-draws.json",
         status: admLoaded ? "loaded" : "error",
-        count: admLoaded ? ((admLoaded as any).tournaments?.length || 0) : undefined,
-        source: (admLoaded as any)?.source,
-        lastUpdated: (admLoaded as any)?.scrapedAt,
+        count: admLoaded ? (admLoaded.tournaments?.length || 0) : undefined,
+        source: admLoaded?.source,
+        lastUpdated: admLoaded?.scrapedAt ?? undefined,
         group: "admissions",
       }]);
       setJovensMeta(jovensMetaLocal);
       const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
       const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
-      const tournaments = (all.slice(0, -1) as any[]).flat() as Tournament[];
+      const tournaments = (all.slice(0, -1) as Tournament[][]).flat();
 
       const seen = new Map<string, Tournament>();
       // 1) Torneios existentes — dedup + enriquecer com admissions/draws quando houver match
       for (const t of tournaments) {
-        const key = t.ccode + "/" + String((t as any).tcode);
+        const key = t.ccode + "/" + String(t.tcode);
         if (seen.has(key)) continue;
-        const idxKey = `${t.ccode}-${(t as any).tcode}`;
+        const idxKey = `${t.ccode}-${t.tcode}`;
         const ad = admDrawsIdx.get(idxKey);
         if (ad) {
-          (t as any)._admissions = ad.admissions;
-          (t as any)._draws = ad.draws;
+          t._admissions = ad.admissions;
+          t._draws = ad.draws;
         }
         seen.set(key, t);
       }
@@ -1526,7 +1492,7 @@ function Content() {
             region: null,
             escalao: inferEscalao(ad.name || ""),
             num: 1,
-            rounds: (ad.admissions as any)?.rounds ?? 1,
+            rounds: (ad.admissions as { rounds?: number } | undefined)?.rounds ?? 1,
             playerCount,
             players: [],
             _jovensYear: year,
@@ -1548,7 +1514,7 @@ function Content() {
   const searchTerm = searchQuery.trim().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
   const matchesSearch = (t: Tournament): boolean => {
     if (!searchTerm) return true;
-    const fields = [t.name, t.campo, (t as any).clube, t.tcode, t.ccode]
+    const fields = [t.name, t.campo, t.clube, t.tcode, t.ccode]
       .map(v => String(v ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, ""));
     return fields.some(f => f.includes(searchTerm));
   };
@@ -1557,7 +1523,7 @@ function Content() {
   const clubesList = useMemo(
     () => clubesTournaments
       .filter(t => !filterManuel || t.players.some(p => isManuel(p)) || (() => {
-        const mp = (t as any).matchPlayResults as MatchPlayData | undefined;
+        const mp = t.matchPlayResults;
         if (!mp) return false;
         return mp.categories.some(cat => cat.dias.some(dia =>
           (dia.matches ?? []).some(m => Object.values(m.players ?? {}).some(
@@ -1565,12 +1531,12 @@ function Content() {
           ))
         ));
       })())
-      .filter(t => yearMatchesFilter((t as any)._clubesYear ?? t.date?.substring(0, 4), yearFilter))
+      .filter(t => yearMatchesFilter(t._clubesYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t))
       .sort((a, b) => {
-        const yCmp = ((b as any)._clubesYear ?? "").localeCompare((a as any)._clubesYear ?? "");
+        const yCmp = (b._clubesYear ?? "").localeCompare(a._clubesYear ?? "");
         if (yCmp !== 0) return yCmp;
-        return ((a as any)._clubesEsc ?? "").localeCompare((b as any)._clubesEsc ?? "");
+        return (a._clubesEsc ?? "").localeCompare(b._clubesEsc ?? "");
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [clubesTournaments, filterManuel, yearFilter, searchTerm]
@@ -1578,7 +1544,7 @@ function Content() {
   const clubesByYear = useMemo(() => {
     const m: Record<string, Tournament[]> = {};
     for (const t of clubesList) {
-      const yr = (t as any)._clubesYear ?? t.date?.substring(0, 4) ?? "?";
+      const yr = t._clubesYear ?? t.date?.substring(0, 4) ?? "?";
       if (!m[yr]) m[yr] = [];
       m[yr].push(t);
     }
@@ -1586,7 +1552,7 @@ function Content() {
   }, [clubesList]);
   const clubesYears = useMemo(() => Object.keys(clubesByYear).sort().reverse(), [clubesByYear]);
   const curClubes = clubesList[clubesSelected] ?? null;
-  const curClubesYear: string = (curClubes as any)?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
+  const curClubesYear: string = curClubes?._clubesYear ?? curClubes?.date?.substring(0, 4) ?? "";
 
   // Deep-link de Clubes: URL `?ct=ccode-tcode` → selecciona o torneio. Corre no
   // arranque (quando a lista carrega) e em navegação back/forward. `clubesSelected`
@@ -1657,10 +1623,10 @@ function Content() {
       if ((hasResults(t) && !hasResults(existing)) || roundCount(t) > roundCount(existing)) {
         dedupMap.set(k, {
           ...t,
-          _admissions: (existing as any)._admissions ?? (t as any)._admissions,
-          _draws: (existing as any)._draws ?? (t as any)._draws,
-          extraLinks: (existing as any).extraLinks ?? (t as any).extraLinks,
-        } as Tournament);
+          _admissions: existing._admissions ?? t._admissions,
+          _draws: existing._draws ?? t._draws,
+          extraLinks: existing.extraLinks ?? t.extraLinks,
+        });
       }
     }
     const combined = [...dedupMap.values()];
@@ -1673,7 +1639,7 @@ function Content() {
       // Clubes match-play vivem em /FPG/clubes (não na lista strokeplay).
       .filter(t => !CLUBES_TEAM_FORMAT[`${t.ccode}-${t.tcode}`]?.matchPlay)
       .filter(t => !filterManuel || tournamentHasManuel(t))
-      .filter(t => yearMatchesFilter((t as any)._jovensYear ?? t.date?.substring(0, 4), yearFilter))
+      .filter(t => yearMatchesFilter(t._jovensYear ?? t.date?.substring(0, 4), yearFilter))
       .filter(t => matchesSearch(t));
     return buildJovensGroups(filtered);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1744,15 +1710,15 @@ function Content() {
       // `extraLinks` (página do clube, regulamento) vem da config FEATURED e só
       // existe no synthetic: sem o enxerto, os links do clube DESAPARECIAM do
       // cabeçalho assim que os primeiros resultados eram scraped.
-      if ((!(ex as any)._admissions && (j as any)._admissions)
-          || (!(ex as any)._draws && (j as any)._draws)
-          || (!(ex as any).extraLinks?.length && (j as any).extraLinks?.length)) {
+      if ((!ex._admissions && j._admissions)
+          || (!ex._draws && j._draws)
+          || (!ex.extraLinks?.length && j.extraLinks?.length)) {
         dedupMap.set(k, {
           ...ex,
-          _admissions: (ex as any)._admissions ?? (j as any)._admissions,
-          _draws: (ex as any)._draws ?? (j as any)._draws,
-          extraLinks: (ex as any).extraLinks?.length ? (ex as any).extraLinks : (j as any).extraLinks,
-        } as Tournament);
+          _admissions: ex._admissions ?? j._admissions,
+          _draws: ex._draws ?? j._draws,
+          extraLinks: ex.extraLinks?.length ? ex.extraLinks : j.extraLinks,
+        });
       }
     }
     // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
@@ -1765,17 +1731,17 @@ function Content() {
     // inscrições/draws de quem os tiver (13/10/2026 — Troféu João Sousa em duplicado).
     const byIdentity = new Map<string, Tournament>();
     for (const t of dedupMap.values()) {
-      const id = `${normTournamentName(t.name)}|${t.date || ""}|${normTournamentName((t as any).campo || "")}`;
+      const id = `${normTournamentName(t.name)}|${t.date || ""}|${normTournamentName(t.campo || "")}`;
       const ex = byIdentity.get(id);
       if (!ex) { byIdentity.set(id, t); continue; }
       const [main, other] = roundCount(t) > roundCount(ex) || (t.players?.length ?? 0) > (ex.players?.length ?? 0) ? [t, ex] : [ex, t];
       byIdentity.set(id, {
         ...main,
-        _admissions: (main as any)._admissions ?? (other as any)._admissions,
-        _draws: hasDraws((main as any)._draws) ? (main as any)._draws : (other as any)._draws,
-        extraLinks: (main as any).extraLinks?.length ? (main as any).extraLinks : (other as any).extraLinks,
+        _admissions: main._admissions ?? other._admissions,
+        _draws: hasDraws(main._draws) ? main._draws : other._draws,
+        extraLinks: main.extraLinks?.length ? main.extraLinks : other.extraLinks,
         _mergedFrom: `${other.ccode}-${other.tcode}`,
-      } as Tournament);
+      });
     }
     const values = [...byIdentity.values()].filter(t => !isHiddenNonManuelDrive(t));
     return buildDisplayList(values);
@@ -1960,7 +1926,7 @@ function Content() {
   const providerTournaments = useMemo(() => {
     const base = [...tournaments, ...jovensTournaments];
     return base.map(t => ({
-      _sourceFile: (t as any)._sourceFile,
+      _sourceFile: t._sourceFile,
       name: t.name,
       date: t.date,
       tcode: t.tcode,
@@ -2043,7 +2009,7 @@ function Content() {
     () => {
       const isPJA = (t: Tournament) => {
         // Torneios manuais marcados explicitamente como PJA
-        if ((t as any)._manual && (t as any)._origin === "PJA") return true;
+        if (t._manual && t._origin === "PJA") return true;
         if (t.ccode === SSERRA_CCODE) return false;
         // Regras partilhadas com a página standalone ranking-pja.vercel.app —
         // fonte única em ranking-pja/pja-rules.mjs (alterar as regras LÁ).
@@ -2249,7 +2215,7 @@ function Content() {
     const keyTcodes = g.entries.map(e => e.tcode).join("+");
 
     const tData: SidebarItemTournament = {
-      ...(activeEntry as any),
+      ...activeEntry,
       name: displayName,
       // Escalão: só mostrar no pill quando é singleton; em grupo o escalão
       // varia por entrada → não cabe num pill único.
@@ -2503,7 +2469,7 @@ function Content() {
                   const progressSuffix = nR > 1 && playedR > 0 && playedR < nR
                     ? ` · R${playedR}/${nR}` : "";
                   const tWithProgress = {
-                    ...(t as any),
+                    ...t,
                     playerCount: t.playerCount || t.players.length,
                     campo: (t.campo || "Oporto") + progressSuffix,
                   } as SidebarItemTournament;
@@ -2535,7 +2501,7 @@ function Content() {
                 // O tab Match Play só existe em provas de match play com dados
                 // (Regional de Clubes 2026) — nos strokeplay não faria sentido.
                 const _fmtTabs = curClubes ? CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`] : undefined;
-                const hasMp = !!_fmtTabs?.matchPlay && !!(curClubes as any)?.matchPlayResults;
+                const hasMp = !!_fmtTabs?.matchPlay && !!curClubes?.matchPlayResults;
                 const views = hasMp
                   ? (["grupos", "matchplay", "individual"] as const)
                   : (["grupos", "individual"] as const);
@@ -2568,7 +2534,7 @@ function Content() {
 
             {clubesView === "matchplay" && curClubes ? (() => {
               const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
-              const _mp = (curClubes as any).matchPlayResults as MatchPlayData | undefined;
+              const _mp = curClubes.matchPlayResults;
               if (!_mp || !_fmt?.categories) {
                 return <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>Sem confrontos publicados.</div>;
               }
@@ -2589,9 +2555,9 @@ function Content() {
               ? curClubes
                   ? (() => {
                       const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
-                      const _mp = _fmt?.matchPlay ? (curClubes as any).matchPlayResults as MatchPlayData | undefined : undefined;
+                      const _mp = _fmt?.matchPlay ? curClubes.matchPlayResults : undefined;
                       const _par = _mp?.course?.par ?? [];
-                      const _meters = (_mp?.course as any)?.meters ?? [];
+                      const _meters = _mp?.course?.meters ?? [];
                       const _tee = _mp?.course?.tee;
                       // Sintetizar jogadores do match play, agrupando todos os dias por jogador
                       // (fedCode como chave → Manuel aparece 1× com R1+R2, não 2×)
@@ -2619,7 +2585,7 @@ function Content() {
                                 }
                               }
                             }
-                            return Array.from(byPlayer.entries()).map(([key, entry]) => {
+                            return Array.from(byPlayer.entries()).map(([key, entry]): Player => {
                               const allGross = entry.rounds.reduce((s, r) => s + r.gross, 0);
                               const allComplete = entry.rounds.every(r => r.nholes >= _par.length);
                               const toPar = allComplete ? allGross - parTot * entry.rounds.length : null;
@@ -2633,10 +2599,11 @@ function Content() {
                                 name: entry.name,
                                 club: entry.club,
                                 fedCode: entry.fed,
-                                pos: null as unknown as number,
+                                pos: null,
                                 grossTotal: allGross,
                                 toPar,
-                                scores: entry.rounds[0]?.scores,
+                                // Os buracos por jogar vêm a null (o ScorecardLB trata-os).
+                                scores: entry.rounds[0]?.scores as number[] | undefined,
                                 par: _par,
                                 nholes,
                                 teeName: _tee,
@@ -2644,7 +2611,7 @@ function Content() {
                                 roundScores: entry.rounds.map(r => ({
                                   round: r.diaNum,
                                   gross: r.gross,
-                                  scores: r.scores,
+                                  scores: r.scores as number[],
                                   pars: _par,
                                   si: [],
                                   meters: _meters,
@@ -2675,13 +2642,14 @@ function Content() {
                         const total = flights.reduce((s, f) => s + f.players.length, 0);
                         return { name: `Draw — ${_dia1.modalidade ?? "R1"}`, date: _dia1.date, totalJogadores: total, groups: flights };
                       })() : undefined;
-                      const _existingDraws: Record<string, FpgDraw> = (curClubes as any)._draws ?? {};
+                      const _existingDraws: Record<string, FpgDraw> = curClubes._draws ?? {};
                       const _draws = _syntheticDraw1 ? { "1": _syntheticDraw1, ..._existingDraws } : _existingDraws;
-                      const _t = {
-                        ...((_mpPlayers.length > 0 ? { ...curClubes, players: _mpPlayers as any } : curClubes) as object),
+                      const _t: Tournament = {
+                        ...curClubes,
+                        ...(_mpPlayers.length > 0 ? { players: _mpPlayers } : {}),
                         _draws,
                       };
-                      return <TournamentDetail tournament={_t as any} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t as any, playersDB, matchplayData)} />;
+                      return <TournamentDetail tournament={_t} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t, playersDB, matchplayData)} />;
                     })()
                   : !clubesLoading && (
                       clubesLoaded
@@ -2697,7 +2665,7 @@ function Content() {
                   // Composição curada (juvenis sub14/sub18) tem prioridade; para
                   // clubes não-juvenis (ex: Mid-Amateur, esc "midam") ou edições
                   // sem composição carregada, auto-constrói as equipas por clube.
-                  const esc = (curClubes as any)?._clubesEsc as string | undefined;
+                  const esc = curClubes._clubesEsc;
                   const gruposData = curClubesYear ? CLUBES_GRUPOS_BY_YEAR[curClubesYear] : null;
                   const curated = (esc === "sub14" || esc === "sub18")
                     ? (gruposData?.[esc] ?? null)
@@ -2712,7 +2680,7 @@ function Content() {
                   // não por pancadas. As vistas de Grupos por strokeplay não se
                   // aplicam; mostra-se nota e remete para Individual / Draw.
                   if (fmt?.matchPlay) {
-                    const mpResults = (curClubes as any).matchPlayResults as MatchPlayData | undefined;
+                    const mpResults = curClubes.matchPlayResults;
                     const banner = (
                       <div className="flex-wrap" style={{
                         display: "flex", alignItems: "center", gap: 8,
@@ -2855,7 +2823,7 @@ function Content() {
                   // pode ter Sub 10 e Sub 14 do mesmo Regional — Manuel está só numa).
                   const groupHasManuel = g.entries.some(e => tournamentHasManuel(e));
                   const sidebarT: SidebarItemTournament = {
-                    ...(t0 as any),
+                    ...t0,
                     name: g.name,
                     playerCount: totalJog,
                     escalao: null,
@@ -2936,7 +2904,7 @@ function Content() {
                       // na sidebar continuam coloridos; só aqui nos botões é default.
                       // Label: _tabLabel (override p/ torneios combinados "Sub 10 e 12"
                       // ou "Sub 14 a 24") → escalao → fallback "Esc N".
-                      const label = (e as any)._tabLabel ?? e.escalao ?? "Esc " + (ri + 1);
+                      const label = e._tabLabel ?? e.escalao ?? "Esc " + (ri + 1);
                       return (
                         <button key={e.tcode + "_" + ri}
                           className={`tourn-tab tourn-tab-sm${active ? " active" : ""}`}

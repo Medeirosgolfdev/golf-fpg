@@ -1,5 +1,7 @@
 import type React from "react";
 import type { BaseRoundScore, BasePlayer, BaseTournament } from "../ui/sharedTypes";
+import type { FpgAdmissions, FpgDraw } from "./nacional2026Loader";
+import type { MatchPlayData } from "./clubesMatchplayTypes";
 
 /**
  * fpgTypes.ts — Tipos partilhados do pipeline FPG
@@ -85,6 +87,26 @@ export interface Tournament extends BaseTournament {
    *  Regional combinado Sub 10/12 ou Sub 14 a 24, o label fica "Sub 10 e 12"
    *  ou "Sub 14 a 24" apenas no botão, mantendo o `escalao` para sorting/pills. */
   _tabLabel?: string;
+  /** Inscrições e draws tal como vêm no JSON do torneio (CLUBES{ano}.json,
+   *  fpg-nacionais-historico.json). O detalhe lê as versões `_admissions`/`_draws`. */
+  admissions?: FpgAdmissions;
+  draws?: Record<string, FpgDraw>;
+  /** Inscrições/draws resolvidos pelo loader (fpg-admissions-draws.json ou os
+   *  embebidos) — é o que o TournamentDetail mostra nas abas Inscrições/Draw. */
+  _admissions?: FpgAdmissions;
+  _draws?: Record<string, FpgDraw>;
+  /** Torneios de clubes: escalão da equipa ("sub14" | "sub18" | "midam") e ano. */
+  _clubesEsc?: string;
+  _clubesYear?: string;
+  /** Torneios de jovens: ano da edição (agrupa a sidebar de /FPG/jovens). */
+  _jovensYear?: string;
+  /** Clubes em match play 3-way: confrontos e pontos (ver clubesMatchplayTypes). */
+  matchPlayResults?: MatchPlayData;
+  /** Torneio manual (pull-torneios003.json) e a sua origem ("PJA", …). */
+  _manual?: boolean;
+  _origin?: string;
+  /** O mesmo torneio com outro ccode-tcode, fundido nesta entrada pelo displayList. */
+  _mergedFrom?: string;
 }
 
 export interface GrupoJogador { nome: string; fed: string | null; hcp: number | string; }

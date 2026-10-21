@@ -91,8 +91,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
 
   // Dados extra (admissions + draws) — injectados no loader Jovens
-  const admissions = (tournament as any)._admissions as import("../../data/nacional2026Loader").FpgAdmissions | undefined;
-  const draws      = (tournament as any)._draws as Record<string, import("../../data/nacional2026Loader").FpgDraw> | undefined;
+  const admissions = tournament._admissions;
+  const draws      = tournament._draws;
 
   // ── Verificação LIVE das inscrições (torneios FEATURED futuros) ──────────
   // Ao abrir o detalhe de um torneio em destaque ainda não jogado, chama
@@ -106,7 +106,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   // Em ambos os casos só enquanto não houver rondas jogadas.
   const featured = FEATURED_TOURNAMENTS.find(
     f => f.ccode === tournament.ccode && f.tcode === String(tournament.tcode));
-  const syntheticAdm = (tournament as any)._sourceFile === "fpg-admissions-draws.json";
+  const syntheticAdm = tournament._sourceFile === "fpg-admissions-draws.json";
   // Inscrições já encerradas no último scrape → não vale a pena ir ao live
   // (a lista não muda mais e a FPG deixa de a servir): evita fetches inúteis.
   const admissionsClosed = /fechad|encerrad/i.test(admissions?.status || "");
