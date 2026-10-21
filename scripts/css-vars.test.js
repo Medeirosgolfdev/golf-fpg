@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
 /**
  * Todas as variáveis CSS usadas (`var(--x)`) têm de estar definidas — em
@@ -10,9 +11,9 @@ import path from "path";
  * Nomes montados em template (`var(--esc-${x}-bg)`) não se conseguem verificar
  * aqui e ficam de fora.
  */
-const SRC = path.resolve(__dirname, "..", "..");
+const SRC = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..", "src");
 
-function ficheiros(dir: string, out: string[] = []): string[] {
+function ficheiros(dir, out = []) {
   for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
     const p = path.join(dir, e.name);
     if (e.isDirectory()) { if (e.name !== "__tests__") ficheiros(p, out); continue; }
@@ -23,8 +24,8 @@ function ficheiros(dir: string, out: string[] = []): string[] {
 
 describe("variáveis CSS", () => {
   it("nenhum var(--x) sem definição", () => {
-    const definidas = new Set<string>();
-    const usadas = new Map<string, string>();
+    const definidas = new Set();
+    const usadas = new Map();
     for (const f of ficheiros(SRC)) {
       const txt = fs.readFileSync(f, "utf8");
       for (const m of txt.matchAll(/(?:^|[\s{;"'`[])(--[a-zA-Z0-9_-]+)["'`\]]?\s*:/g)) definidas.add(m[1]);

@@ -14,6 +14,7 @@ import { cachedFetchJson } from "../../data/fetchCache";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { meanArr } from "../../utils/mathUtils";
 import { normName, extraTidMeta, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
+import { isManuelByName } from "../../constants/manuel";
 import type { RivalPlayer, TournDef, RoundAvg } from "../../ui/bjgtAnalysisTypes";
 import { normPaisDisplay } from "../../utils/flagUtils";
 import { fmtToPar, displayName } from "../../utils/format";
@@ -318,7 +319,6 @@ const UP_TORN: Array<{ id: string; name: string; short?: string; url?: string; h
 ];
 // Só torneios ainda não passados (data hoje ou futura)
 const _today = new Date().toISOString().slice(0, 10);
-const isManuelNome = (n: string) => normName(n).includes("manuel medeiros");
 const usToIso = (s: string) => { const [m, d, y] = (s || "").split("/"); return y ? `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}` : ""; };
 
 /** UP_TORN (curados à mão) + os torneios futuros do field em que o Manuel está
@@ -331,7 +331,7 @@ function buildUpTorn(field: FieldData | null): typeof UP_TORN {
   for (const t of field.torneios) {
     const iso = usToIso(t.date_inicio);
     if (known.has(String(t.t)) || !iso || iso < _today) continue;
-    if (!t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuelNome(j.nome)))) continue;
+    if (!t.escaloes.some(e => (e.jogadores ?? []).some(j => isManuelByName(j.nome)))) continue;
     const m = t.name.match(/^(.+?)\s+(\d{4})$/);
     extra.push({
       id: `usk${t.t}`, tcode: String(t.t), date_iso: iso, name: t.name,
@@ -747,15 +747,8 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
       const candidateTcodes = new Set<string>();
       // (a) tcodes do Manuel via mh
       if (mh) {
-        const manuelAliases = new Set([
-          "manuel medeiros",
-          "manuel francisco medeiros",
-          "manuel goulartt medeiros",
-          "manuel francisco goulartt de medeiros",
-        ]);
         for (const p of Object.values(mh.jogadores)) {
-          const k = normName(p.name);
-          if (!manuelAliases.has(k)) continue;
+          if (!isManuelByName(p.name)) continue;
           for (const tcode of Object.keys(p.torneios)) candidateTcodes.add(tcode);
         }
       }
@@ -1024,20 +1017,18 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
       return null;
     }
 
-    const isManuelName = (n: string) => normName(n).includes("manuel medeiros");
-
     // ── PASSO 1: descobrir tcodes comuns entre os jogadores do escalão ──
     const tcodeCount = new Map<string, number>();
     const fieldMids: Array<{ p: FieldPlayer; mid: string | null; isM: boolean }> = [];
     const manuelMid = findMid("Manuel Medeiros");
 
     // Manuel REF (sempre presente, mesmo se não inscrito neste escalão)
-    if (manuelMid && !esc.jogadores.some(p => isManuelName(p.nome))) {
+    if (manuelMid && !esc.jogadores.some(p => isManuelByName(p.nome))) {
       fieldMids.push({ p: { nome: "Manuel Medeiros", pais: "PT" }, mid: manuelMid, isM: true });
     }
     for (const p of esc.jogadores) {
       const mid = findMid(p.nome);
-      fieldMids.push({ p, mid, isM: isManuelName(p.nome) });
+      fieldMids.push({ p, mid, isM: isManuelByName(p.nome) });
     }
 
     // Contagem

@@ -7,6 +7,7 @@
  */
 import { useMemo } from "react";
 import { flag } from "../utils/flagUtils";
+import { isManuelByName } from "../constants/manuel";
 import EvoBadge from "./EvoBadge";
 import { SC } from "../utils/scoreDisplay";
 import { IntlTournView } from "./IntlTournView";
@@ -125,7 +126,7 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
           </thead>
           <tbody>
             {evo.map((e, idx) => {
-              const isM = e.n.includes("Manuel");
+              const isM = isManuelByName(e.n);
               return (
                 <tr key={idx} style={{ background: isM ? "var(--bg-success-subtle)" : undefined }}>
                   <td className={isM ? "fw-800" : "fw-600"} style={{ whiteSpace: "nowrap" }}>{e.n}</td>

@@ -21,7 +21,7 @@ import EmptyState from "../EmptyState";
 import LoadingState from "../LoadingState";
 import { fmtToPar, isoDate, shortDateSlash } from "../../utils/format";
 import { clubFlagPrefix, flag } from "../../utils/flagUtils";
-import { isManuelByName, MANUEL_FED } from "../../constants/manuel";
+import { isManuel as isManuelPlayer } from "../../constants/manuel";
 import { getTierLabel } from "../../pages/kids2/juniorCalc";
 import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters";
 import type { PastEdition } from "./PastEditionsTable";
@@ -86,8 +86,8 @@ interface Linha {
 }
 
 /** É o Manuel? Pelo federado quando o field o traz (o pai, 54907, também se
- *  chama «Manuel Medeiros»), senão pelo nome. */
-const eManuel = (p: FieldPlayer) => (p.fed ? p.fed === MANUEL_FED : isManuelByName(p.name));
+ *  chama «Manuel Medeiros»), senão pelo nome — é o que o isManuel faz. */
+const eManuel = (p: FieldPlayer) => isManuelPlayer({ fed: p.fed ?? undefined, name: p.name });
 
 /** Provas em comum com o Manuel, juntas por dia: as da página (ex.: FPG — todos
  *  os torneios, de clube incluídos) e as do Kids 2. */

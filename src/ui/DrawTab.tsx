@@ -14,7 +14,7 @@
 import { birthCells } from "./BirthCells";
 import { useMemo, useState } from "react";
 import type { FpgDraw, FpgAdmissions } from "../data/nacional2026Loader";
-import { MANUEL_FED, isManuelByName } from "../constants/manuel";
+import { isManuel } from "../constants/manuel";
 import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill } from "./PillBadge";
@@ -554,7 +554,7 @@ export default function DrawTab({
     return visibleSorted.map((p, i) => {
       // Por fed (FPG) OU por nome: nos draws MAJOR (fmDrawsToFpg) não há fed
       // nenhum (playersDB vazio) e o Manuel ficava sem .row-manuel/estrela.
-      const manuel = p.fed === MANUEL_FED || isManuelByName(p.nome);
+      const manuel = isManuel({ fed: p.fed ?? undefined, name: p.nome });
       // Sem dob mas com o ano (fonte internacional) → idade aproximada (~) no ano da prova.
       const age = ageAtDate(p.dob, effDate || undefined)
         ?? (p.dobYear != null && !p.dob && effDate ? Number(String(effDate).slice(0, 4)) - p.dobYear : null);

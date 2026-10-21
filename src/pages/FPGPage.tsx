@@ -1564,7 +1564,7 @@ function Content() {
         if (!mp) return false;
         return mp.categories.some(cat => cat.dias.some(dia =>
           (dia.matches ?? []).some(m => Object.values(m.players ?? {}).some(
-            (p: any) => p.fed === "52884" || isManuel({ name: p.name ?? "" } as any)
+            (p: { fed?: string; name?: string }) => isManuel({ fed: p.fed, name: p.name })
           ))
         ));
       })())

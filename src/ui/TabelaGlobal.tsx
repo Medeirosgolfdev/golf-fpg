@@ -9,6 +9,7 @@ import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
 import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
 import { zTier } from "../utils/mathUtils";
+import { isManuelByName } from "../constants/manuel";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -319,12 +320,8 @@ function tgNormalizeTid(tid: string): string {
 
 // ── Merge TG_D com autoRivals ──
 function tgMerge(autoRivals: AutoRivalPlayer[]): TGPlayer[] {
-  const ALIASES: Record<string, string> = {
-    "manuel francisco medeiros": "manuel medeiros",
-    "manuel goulartt medeiros":  "manuel medeiros",
-    "manuel f medeiros":         "manuel medeiros",
-  };
-  const resolve = (n: string) => ALIASES[normNameAuto(n)] ?? normNameAuto(n);
+  // As variantes do nome do Manuel juntam-se numa só linha.
+  const resolve = (n: string) => (isManuelByName(n) ? "manuel medeiros" : normNameAuto(n));
 
   // Canonicalizar `co` na origem para que entradas estáticas ("Russian
   // Federation", "United States") dedupem com as canonicalizadas pelo loader
