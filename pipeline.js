@@ -18,6 +18,7 @@
  *   --skip-import         Saltar importação (usar dados já em output/)
  *   --skip-render         Saltar geração de data.json
  *   --sync-players        Apenas sincronizar players.json
+ *   --force               Gravar players.json mesmo com >10% menos jogadores
  *   --all                 Todos os jogadores de players.json
  *   --priority            Só jogadores prioritários
  *
@@ -81,6 +82,7 @@ for (let i = 0; i < args.length; i++) {
   if (a === "--priority")                  { priorityFlag = true; continue; }
   if (a === "--batch")                     { batchFlag = true; continue; }
   if (a === "--update")                    { updateFlag = true; continue; }
+  if (a === "--force")                     { continue; } // passa a guarda anti-encolhimento do players.json
   if (/^\d+$/.test(a))                     { fedCodes.push(a); continue; }
   console.error(`Argumento desconhecido: ${a}`);
   process.exit(1);
@@ -784,20 +786,20 @@ function syncPlayersJson(fedList) {
   }
 
   if (updated > 0) {
-    // Escrita atómica: write→tmp + rename. Evita corrupção se o processo
-    // for interrompido (ou outro processo ler) durante a escrita. Isto
-    // aconteceu várias vezes (truncamentos parciais de players.json) —
-    // a operação rename é atómica em qualquer FS razoável (incluindo NTFS).
-    const writeAtomic = (target, content) => {
-      const tmp = target + ".tmp." + process.pid + "." + Date.now();
-      fs.writeFileSync(tmp, content, "utf-8");
-      fs.renameSync(tmp, target);
-    };
-    const json = JSON.stringify(db, null, 2);
-    writeAtomic(pPath, json);
+    // Escrita atómica COM fsync (lib/atomic-write.js via shrink-guard): o
+    // tmp+rename sem fsync deixou players.json truncado várias vezes em
+    // mounts Windows. Guarda anti-encolhimento: nunca gravar com >10% menos
+    // jogadores do que o ficheiro em disco, salvo --force.
+    const { writeJsonGuarded } = require("./scripts/lib/shrink-guard");
     const publicPath = path.join(process.cwd(), "public", "data", "players.json");
-    fs.mkdirSync(path.dirname(publicPath), { recursive: true });
-    writeAtomic(publicPath, json);
+    const guard = { count: (d) => Object.keys(d || {}).length, maxDrop: 0.1, force: args.includes("--force") };
+    const r1 = writeJsonGuarded(pPath, db, { ...guard, label: "players.json" });
+    const r2 = writeJsonGuarded(publicPath, db, { ...guard, label: "public/data/players.json" });
+    if (!r1.written || !r2.written) {
+      fail("players.json NÃO gravado (guarda anti-encolhimento) — ver mensagem acima");
+      process.exitCode = 1;
+      return;
+    }
     ok(`players.json actualizado (${updated} jogador(es))`);
   } else {
     info("players.json sem alterações");
