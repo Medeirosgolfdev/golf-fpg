@@ -22,7 +22,7 @@ continuam autenticadas.
 | **`build-tournaments-tracking.js`** | ✅ Novo 2026-04-22 | helper (corre dentro do admissions-draws + classif workflows) | — | Cruza fpg-admissions-draws + pull-torneios* + drive-data-* + jovens_* e gera `public/data/fpg-tournaments-tracking.json` com status por torneio (complete/missing_classif/missing_scorecards/future/in_progress). Alimenta o scope dinâmico do `update-classif`. |
 | **`update-ffgolf-resultats.yml`** | ✅ Novo 2026-05-08 | `scripts/scrape-ffgolf-all-jeunes.js` + `build-ffgolf-resultats-index.js` + `build-ffgolf-juniors-slim.js` + `scrape-ffgolf-calendar-jeunes.js` + `build-france-players.js` | Seg 02:00 UTC (1×/semana, madrugada Lisboa) | **Sem secrets** — portal `pages.ffgolf.org/resultats/` é público (bootstrap GET apanha PHPSESSID). Default do cron: `--types 01,03 --since 2025 --skip-existing` (Compétitions Fédérales filtradas por keyword juvenil + GP Jeunes regionais nas 22 ligas, anos 2025-2026, só novos). Output: `public/data/ffgolf-resultats/{type}-{ligue}-{trnId}.json` + `ffgolf-resultats-index.json` + `ffgolf-juniors-slim.json`. workflow_dispatch tem inputs `types`/`since`/`ligues`/`force_rebuild`. |
 | **`update-ffgolf-golfgenius.yml`** | ✅ Novo 2026-05-08 | `scripts/discover-ffgolf-catalog.js --headless` + `scripts/scrape-ffgolf.js` + `scrape-ffgolf-gg-fetch.js` (torneios sem leaderboard no iframe) | Seg 03:00 UTC (1×/semana, 1h depois do anterior) | **Playwright headless** — torneios juvenis FFG hospedados em GolfGenius (Championnats de France, Internationaux U14/U18). Default do cron: `--year <ano corrente>` (varre `public/data/ffgolf-catalog.json` filtrado por ano). Output: `public/data/ffgolf/{year}_{slug}.json`. Depois do scrape corre `build-france-players.js`: os torneios GG contam para o roster via **matching de nome** (`scripts/lib/ffgolf-gg.js` — o GG não publica licenças) com **dedup de gémeos** do portal resultats por overlap de licenças (`ffgolf-gg-twins.json`; 18/21 eventos GG são o MESMO evento publicado nos 2 sítios). workflow_dispatch tem inputs `year`/`slug`/`gg_page` (ad-hoc). Sem secrets. |
-| **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 11 builds (enrich-lgs-dates, enrich-lgs-stats, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-lgs-twins, build-fcg-rivals, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals); descoberta também via `discover-rfegolf-comps.js` e `scrape-nextcaddy.js --discover`, e `build-nextcaddy-scorecard-scope.js` + `scrape-nextcaddy.js --patch-scorecards` | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. Timeout 240 min. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
+| **`update-spain.yml`** | ✅ Novo 2026-05-17 | `scripts/discover-fcg-scope.js` + `scrape-rfegolf-node.js` + `scrape-livegolfscoring.js` + `scrape-nextcaddy.js` (+ horarios) + `scrape-fcg.js` + 11 builds (enrich-lgs-dates, enrich-lgs-stats, infer-nextcaddy-par, build-rfegolf-index, build-licencia-{dob,hcp}-lookup, build-lgs-twins, build-fcg-rivals, build-spain-player-tournaments, build-spain-players-export, build-rfegolf-rivals); descoberta também via `discover-rfegolf-comps.js` e `scrape-nextcaddy.js --discover`, e `build-nextcaddy-scorecard-scope.js` + `scrape-nextcaddy.js --patch-scorecards` | Seg 04:00 UTC (1×/semana, 1h depois do GolfGenius) | **Node puro, sem secrets** — pipeline única que cobre RFEG (microsite + livegolfscoring), NextCaddy (RFGA Andaluzia + FGM Madrid) e FCG (Federació Catalana via golfdirecto.com). Default do cron: discovery + `--skip-existing` em todos os scrapers + builds. workflow_dispatch tem inputs `force_rebuild`/`skip_discovery`/`lgs_range`/`rfegolf_range`/`fcg_years`. **`timeout-minutes` em cada passo** (2026-10-21; job 300 min) — um portal pendurado expira sozinho, o commit acontece e a verificação final põe o job vermelho. Outputs em `public/data/{rfegolf-resultats,rfegolf-livegolfscoring,nextcaddy,fcg}/` + agregados. |
 | **`update-federados.yml`** | ✅ Novo 2026-06-14 (email 2026-08-23) | `scripts/scrape-federados-node.js` (+ `build-run-digest` → email do cadastro; `build-simulador-players.js`) | Quarta 17:00 UTC (1×/semana) | Refresh completo de `public/data/federados.json` (~17,9k activos). Exit code 2 = sem alterações. workflow_dispatch tem inputs `check_only`/`force_commit`. Sessão pública; Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`update-golfgenius.yml`** | ✅ Novo 2026-07-23 | `scripts/scrape-golfgenius-node.js --scope scripts/golfgenius-scope.json` | Diário 22:00 UTC | Eventos GolfGenius do scope (hoje: as 4 edições do Champion of Champions). Sem secrets (GG público a `fetch`). Exit 2 = sem alterações. Quando há novidades regenera o agregador + `major-catalog.json` e committa. `workflow_dispatch` aceita `slug` (só um evento do scope) ou `page_url` ad-hoc. |
 | **`update-england.yml`** | ✅ Novo 2026-08-30 | `scripts/discover-england-golf-events.js` + `scripts/scrape-england-golf.js` | Segunda 05:00 UTC | Torneios juvenis England Golf (GolfGenius) do catálogo, ano corrente. **Playwright** (o GG depende de JS para os dropdowns e scorecards); sem secrets (público). Os campeonatos ingleses jogam-se de Terça a Sexta, por isso à Segunda a semana anterior já fechou. A descoberta corre antes e AVISA (no `$GITHUB_STEP_SUMMARY`) que provas estão fora do catálogo, mas nunca o edita. Exit 2 = sem alterações. Com novidades regenera o agregador de juniores e committa. `workflow_dispatch` aceita `year`/`slug`/`gg_page`/`skip_existing`. |
@@ -44,7 +44,8 @@ continuam autenticadas.
 | **`update-om-cgss-junior.yml`** | ✅ | `scripts/build-om-cgss-junior.js` | Domingo 22:30 UTC | OM CGSS Júnior. Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`cookie-health.yml`** | ✅ | `test-fpg-auth.js` + `test-datagolf-node.js` + `test-fpg-admissions-auth.js` | Quinta 09:00 UTC | Ver "Cookie health". |
 | **`prune-vercel-deployments.yml`** | ✅ | `scripts/prune-vercel-deployments.js` | Segunda 04:00 UTC | Ver "Deployment Storage do Vercel". Secret: `VERCEL_TOKEN`. |
-| **`draw-inbox-email.yml`** | ✅ | `scripts/draw-mail-inbox.js` | De hora a hora (:23) | Secrets: `DRAW_MAIL_USER` + `DRAW_MAIL_PASS`. |
+| **`draw-inbox-email.yml`** | ⚠ secrets por criar | `scripts/draw-mail-inbox.js` | De hora a hora (:23) | Secrets: `DRAW_MAIL_USER` + `DRAW_MAIL_PASS` — **não existem** (21/10/2026): sem eles fica vermelho no run das 07 UTC e em runs manuais, aviso nos outros. |
+| **`ci.yml`** | ✅ Novo 2026-10-21 | `npm ci && npm test && npm run build` | push/PR que mexa em código | Ver «CI» abaixo. |
 | **`build-major-catalog.yml`** | ✅ | `scripts/build-major-catalog.js` | push nos ficheiros MAJOR | Ver "Catálogo + lazy load". |
 | **`scrape-miramar.yml`** | ✅ | `scripts/scrape-classif-node.js` (+ `enrich-intl-players.js`, `validate-data.js`) | só manual | Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 
@@ -72,6 +73,157 @@ zero registos):
 - Os dois passos do `update-spain.yml` traduzem **exit 2 → sucesso**. Resultado
   prático: quando o catgolf está degradado, o scrape usa o scope bom que já lá
   estava e o workflow fica **verde**, em vez de vermelho com dados destruídos.
+
+---
+
+## Push dos dados — `scripts/ci/push-generated.sh` (2026-10-21)
+
+Todos os workflows que fazem commit de dados (32 passos) publicam pelo mesmo
+script. **Workflow novo que committe dados: usar este script, nunca
+`git pull --rebase`.**
+
+```bash
+bash scripts/ci/push-generated.sh -m "data: … $(date -u +'%Y-%m-%d %H:%M UTC')" \
+  -f agregador \                      # famílias de agregados a regenerar (0 ou mais)
+  -o public/data/ficheiro-so-meu.json \  # «a versão deste run ganha» (0 ou mais)
+  -- public/data/pasta/ 'public/data/glob_*.json'   # o que entra no commit
+```
+
+**Porquê:** o `git pull --rebase` partia ~4×/semana. O checkout é raso
+(depth 1) — se o main avançava durante o scrape o git ficava sem base comum e
+dava ficheiros inteiros como conflito — e os agregados (`juniors*.json`,
+catálogos…) mudam em quase todos os runs, por isso conflitavam mesmo com
+histórico.
+
+**O que faz** (o padrão do `update-federados.yml` de 19/10, generalizado):
+1. `git add -A` pathspec a pathspec (globs entre aspas apanham as deletions).
+2. Guarda a versão do run e a da base (o commit do checkout) de cada ficheiro.
+3. Em cada tentativa (até 5): `git fetch --depth=1` + `git reset --hard
+   FETCH_HEAD` e repõe por cima:
+   - ficheiro em que o main não mexeu → fica a versão do run;
+   - o main também mexeu → **fusão a 3** (`git merge-file`; um `.json` fundido
+     tem de continuar válido). Se não der: **falha vermelha** e não publica
+     nada — nunca apaga os dados que outro workflow publicou entretanto;
+   - `-o` → a versão do run ganha sempre (caches, ficheiros só deste workflow;
+     é o antigo `merge -X ours` dos USKids);
+   - gerados (`-f`/`-g`) → **não se repõem: regeneram-se** por cima do main +
+     as fontes do run (regra «Conflitos de git nos ficheiros GERADOS» do
+     CLAUDE.md). Se o main não avançou, ficam como o run os deixou.
+4. commit + `git push origin HEAD:main`; push recusado → volta ao 3.
+
+Escreve `pushed=true|false` em `$GITHUB_OUTPUT`. ⚠ O `reset --hard` deita fora
+alterações tracked FORA dos pathspecs — por isso o `update-uskids-rich-players`
+guarda a cache antes do 1.º push e repõe-na para o 2.º.
+
+| Família (`-f`) | Ficheiros | Regenera com | Usada em |
+|---|---|---|---|
+| `agregador` | `juniors.json`, `juniors-tournaments*.json`, `tournament-catalog.json`, `hcp-listas-ligacoes.json`, `juniors-form.json`, `juniors-scout.json`, `juniors-links.json` | `scripts/aggregator/index.js` | build-juniors, dgv, egr, gjgl, golfbox, golfgenius, england |
+| `major` | `major-catalog.json`, `major-veterans.json` | `build-major-catalog.js` | build-major-catalog, golfbox, golfgenius |
+| `tracking` | `fpg-tournaments-tracking.json` | `build-tournaments-tracking.js` | classif, admissions-draws |
+| `ffgolf` | `ffgolf-resultats-index.json`, `ffgolf-juniors-slim.json`, `france-players.json`, `ffgolf-gg-twins.json`, `ffgolf-player-tournaments.json` | os 3 builders FFG | as 4 FFG |
+| `pairings` | `manuel-pairings.json` | `pairings-build.js` (se falhar fica a do main) | admissions-draws, cgss-draw |
+| `simulador` | `simulador-players.json` | `build-simulador-players.js` | drive, federados |
+| (`-g`/`-r`) | `analise-percurso-juniores.html` | `build-analise-percurso.js` + `build-percurso-path.js` | update-data |
+
+Exit 2 de um regenerador = «nada a mudar» → fica a versão do main, com
+`::warning::`. Exit 1 (o agregador sai 1 quando a sanidade falha) → o push
+falha vermelho e não publica agregados maus.
+
+Teste: `scripts/ci/test-push-generated.sh` (7 cenários contra um origin bare
+local: fusão, regeneração, conflito real, `-o`, no-op, JSON inválido, push
+perdido + retry), corrido pelo `npm test` (`push-generated.test.js`).
+
+### Concorrência (`concurrency`)
+
+Cada workflow tem a sua fila (`group: ${{ github.workflow }}`, sem cancelar):
+duas corridas do MESMO workflow nunca se sobrepõem. Os que partilham ficheiros
+com escrita incremental têm fila comum: `uskids-member-history` (member-history
++ refresh-all) e `uskids-rich-flight-cache` (rich-players + edições).
+
+⚠ **Não há fila comum por família** (agregador, major, FFG…) de propósito: o
+GitHub só guarda UM run pendente por grupo e **cancela o pendente anterior**
+quando chega outro. Com as 7 do agregador num grupo, a cadeia de segunda de
+manhã (England 05:00, GJGL 05:30, EGR e DGV 06:00, todas com atraso do cron)
+cancelava scrapes semanais em silêncio. Entre workflows diferentes quem
+garante a coerência é o push-generated (regenera os agregados sobre o main
+mais recente). Os builders puros (`build-juniors`, `build-major-catalog`) têm
+fila própria — aí cancelar o pendente não perde nada.
+
+### Falhas que ficam vermelhas (2026-10-21)
+
+Regra: um passo que falha a sério não pode travar o commit do que correu bem,
+mas **o job tem de acabar vermelho** (é o que faz o GitHub mandar email).
+Padrão: o passo regista a falha (`::error::` + output `failed`), segue com
+`exit 0`, e um passo final `if: always()` depois do commit sai 1. Exit 2
+continua a ser «nada de novo», nunca erro.
+
+| Workflow | O que passou a ficar vermelho |
+|---|---|
+| `update-data` | os 7 builders de índices (eram `\|\| echo`) e o backfill PCC/SD |
+| `update-classif` | scrape de torneios recentes e backfill-pcc |
+| `update-drive` | scrape dos rankings oficiais; verify **só quando as divergências pioram** face ao relatório anterior (há 6 crónicas, 18/10) |
+| `update-spain` | também NextCaddy-scorecards e enrich-LGS-stats (estavam fora da verificação final) |
+| `update-egr` | qualquer dos 7 passos do scrape |
+| `update-cgss-draw` | releitura de voltas em falta (scrape-classif) e pairings |
+| `draw-inbox-email` | sem `DRAW_MAIL_USER/PASS`: vermelho no run das 07 UTC e em runs manuais |
+
+`update-drive`: o dia de rankings passou a aceitar segunda até às 08:00 UTC —
+o cron de domingo às 21:00 chegou a correr às 00:02 de segunda e saltava-os.
+
+### Disparo pelo Agendador do Windows (2026-10-21)
+
+Os crons do GitHub atrasam 2–6 h (o `daily-digest` das 07:30 correu às 12:52).
+Em dia de torneio é tarde: `scripts/agendador/disparar-workflows.ps1` dispara
+os workflows com `gh workflow run`, à hora certa, a partir do PC. Os crons
+ficam como rede (um run a mais sai logo sem fazer nada).
+
+```powershell
+.\scripts\agendador\disparar-workflows.ps1 -Workflow update-cgss-draw.yml
+.\scripts\agendador\disparar-workflows.ps1 -Conjunto torneio        # admissions-draws + cgss-draw
+.\scripts\agendador\disparar-workflows.ps1 -Conjunto torneio -WhatIf # só mostra
+```
+
+Não dispara se já houver um run do mesmo workflow em fila/a correr criado há
+menos de 45 min. Log em `logs\disparar-workflows.log`. Precisa do `gh`
+autenticado (`gh auth login`) na conta do repo — não mexe em secrets.
+
+**Registar as tarefas (uma vez, no PC que fica ligado — por fazer):**
+
+```powershell
+.\scripts\agendador\registar-tarefas.ps1           # mostra o que vai registar
+.\scripts\agendador\registar-tarefas.ps1 -Aplicar  # regista
+```
+
+| Tarefa | Workflow | Quando (hora local) |
+|---|---|---|
+| «Golf FPG - resultados draw-only» | `update-cgss-draw.yml` | Sex/Sáb/Dom 13:10, de hora a hora até 19:10 · Seg–Qui 14:10 |
+| «Golf FPG - inscricoes e draws» | `update-fpg-admissions-draws.yml` | Sex/Sáb/Dom 21:00 |
+
+Correm como o utilizador, só com sessão iniciada (o `gh` guarda a autenticação
+por utilizador; não fica password nenhuma no Agendador); `StartWhenAvailable`
+apanha a hora perdida se o PC estiver desligado. Remover:
+`Unregister-ScheduledTask -TaskName "<nome>" -Confirm:$false`.
+
+### CI — `ci.yml` (2026-10-21)
+
+`npm ci && npm test && npm run build` em push para `main` e em PR, só quando
+mudam `src/`, `api/`, `lib/`, `scripts/` (sem os `*.json` de scope),
+`shared/`, `ranking-pja/`, `package*.json` ou configs. Os commits de dados
+dos workflows não o disparam (são do `GITHUB_TOKEN` e mexem só em dados).
+
+### Outros acertos (2026-10-21)
+
+- `fetch-depth: 0` → `1` em 12 workflows (nenhum usa histórico; o checkout
+  completo do `update-spain` levava 7,5 min). Só o `daily-digest` precisa
+  (`rev-list --before`) e mantém.
+- `actions/setup-python@v6`; `timeout-minutes` em todos (faltava no
+  build-juniors, build-major-catalog e daily-digest).
+- Os 6 com Playwright (`update-england`, `update-ffgolf-golfgenius`,
+  `uskids-field`, `uskids-results`, `uskids-member-history`,
+  `uskids-refresh-all`) correm em **`ubuntu-24.04` fixo**: o
+  `playwright install --with-deps` só conhece as versões de Ubuntu que a
+  release do Playwright suporta, e o `ubuntu-latest` muda de versão sem aviso.
+  Ao actualizar o Playwright, rever se já suporta a imagem nova.
 
 ---
 
@@ -108,8 +260,8 @@ Consequências deliberadas:
   raso o `rev-list --before` não encontra a base.
 
 O outro modo (default, sem `--since`) lê a **árvore de trabalho** contra o HEAD
-e serve o aviso imediato: corre ANTES do commit, porque depois do push o
-`git pull --rebase` traz commits de outros workflows e o diff deixaria de ser só
+e serve o aviso imediato: corre ANTES do commit, porque o push (reset ao main
+mais recente) traz commits de outros workflows e o diff deixaria de ser só
 daquele run.
 
 ### Avisos imediatos — um email por RUN (2026-08-23)

@@ -43,7 +43,7 @@ Erros de tipo, imports em falta, variáveis não usadas, ou testes falhados inva
 
 React 19 + TypeScript 5.9 + Vite 6 · react-router-dom 6 · recharts 3 ·
 html-to-image (overlays) · vitest · Playwright (só alguns scrapers) · Vercel
-(deploy a cada push no `main`) · 33 workflows GitHub Actions a actualizar os
+(deploy a cada push no `main`, menos os commits que não mexem no site) · ~35 workflows GitHub Actions a actualizar os
 dados · Node 24 nos workflows.
 
 ## Estrutura
@@ -273,13 +273,13 @@ isso um `git pull` depois de um push nosso dá conflito quase sempre nestes:
 |---|---|
 | `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
 | `public/analise-percurso-juniores.html` (blocos `const P` e `const PATH`) | `node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js` |
-| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-form.json` · `juniors-scout.json` | `node scripts/aggregator/index.js` |
+| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-form.json` · `juniors-scout.json` · `juniors-links.json` | `node scripts/aggregator/index.js` |
 
 São output de scripts: nenhum dos lados do conflito está certo e fundir à mão só
 produz lixo. Resolução:
 
 ```bash
-git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json
+git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json public/data/juniors-links.json
 node scripts/build-major-catalog.js && node scripts/aggregator/index.js
 git add public/data/major-catalog.json public/data/juniors*.json public/data/tournament-catalog.json && git commit
 ```
@@ -327,4 +327,8 @@ O `cleanup-players-json.js` aplica estas regras.
   `update-fpg-admissions-draws` Sex/Sáb/Dom 20:00 · `uskids-field` diário 07:00 ·
   `daily-digest` diário 07:30 (resumo por email, via issue) · `build-juniors` e
   `build-major-catalog` em push.
-- Tabela completa dos 33 workflows, com scripts e secrets: [workflows.md](docs/claude/workflows.md).
+- **Workflow que committa dados publica SEMPRE por `scripts/ci/push-generated.sh`**
+  (nunca `git pull --rebase`): repõe o run por cima do main mais recente e
+  REGENERA os agregados (`-f agregador|major|tracking|ffgolf|pairings|simulador`).
+  Falha real fica vermelha depois do commit (exit 2 = nada de novo, não é erro).
+- Tabela completa dos workflows, com scripts e secrets: [workflows.md](docs/claude/workflows.md).
