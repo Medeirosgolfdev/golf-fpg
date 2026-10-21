@@ -198,8 +198,13 @@ node scripts/build-course-players.js      # → public/data/course-players.json
 node scripts/build-course-player-names.js # → public/data/course-player-names.json
 ```
 
-`App.tsx` anexa o `course-players.json` aos campos PT do master por `courseKey`
-em runtime (os campos *away* já trazem `_players` do pipeline). O ficheiro é
+A fusão dos campos (`buildAllCourses` em `src/data/courses.ts`, até 21/10/2026 no
+`App.tsx`) anexa o `course-players.json` aos campos PT do master por `courseKey`
+em runtime (os campos *away* já trazem `_players` do pipeline). Os campos já não
+se carregam no arranque: só as páginas dentro de `<CoursesGate>`
+(`src/context/CoursesContext.tsx`) os pedem — a /campos com `withPlayers` (é a
+única que lê este ficheiro de ~10 MB); /jogadores/:fed, /simulador e as abas
+Campo/Previsão do Kids 2 só com master + away. Ler com `useCourses()`. O ficheiro é
 `{ generated, source, courses, links, players: { [courseKey]: { [fed]: [voltas] } } }`
 e cada volta `{ date, gross, toPar, holes, tee, event, sd }` (`holes` = 9 ou 18;
 as de 18 trazem também `f9`/`f9tp`/`b9`/`b9tp`).

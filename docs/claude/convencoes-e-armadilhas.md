@@ -48,7 +48,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 - Datas/idades/bandeiras em `utils/`: `dateParts`, `ageAtDate`, `birthYearOf`, `todayIso`, `fmtDateRangePt`, `shortDateSlash` (`format.ts`); `flagOrEmpty`, `clubFlagPrefix`, `isPtCountry` (`flagUtils.ts`); `normLoose`/`normName` (`normName.ts`).
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.
 - `scoreDisplay.ts`: `scClass()`, `toParClass()`, `sc3m()`, `tpColorDark()`, `SC` (alias de C de colors.ts).
-- `mathUtils.ts`: `zTier()`, `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
+- `mathUtils.ts`: `zTier()` (único sítio dos níveis por z-score; a Tabela global tinha limiares próprios até 21/10/2026), `getTrend()`, `getAvgZ()`, `linearSlope()`, `toggleArr()`.
 - `format.ts`: `fmtToPar()` (usar em vez de `fmtTp2`/`fmtTP2` locais), `sortArrow()`, `MONTHS_PT` (abrev.), `MONTHS_PT_FULL` (lowercase), `MONTHS_PT_LONG` (Title Case), `MONTH_MAP`.
 - `constants/manuel.ts`: `MANUEL_FED`, `MANUEL_BIRTH_YEAR`, `isManuel()`, `escalaoManuelParaData()`, `MANUEL_KNOWN_TIDS`.
 - `constants/config.ts`: `TORNEIOS_CONFIG` (10 torneios FPG), `TIER_L`, `TR_I` (labels e ícones de tier).
@@ -144,7 +144,8 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 - **Consistência de deduplicação** — hero cards e tabelas de detalhe devem usar a mesma fonte de dados deduplicada (e.g. `confrontosH2H`).
 - **Sem dead code** — nenhum código comentado, funções mortas ou variáveis não usadas nos outputs.
 - **Reescrita completa vs patches** — quando a implementação diverge do design acordado, preferir reescrita limpa de raiz.
-- **Cache de fetches** — `src/data/fetchCache.ts` exporta `cachedFetchJson()` (cache global entre páginas para URLs sem query string) e `invalidateCache()`.
+- **Cache de fetches** — `src/data/fetchCache.ts` exporta `cachedFetchJson()` (cache global entre páginas para URLs sem query string) e `invalidateCache()`. Guarda a Promise do objecto JÁ convertido — todos recebem o mesmo objecto, tratá-lo como só de leitura; uma falha (rede, HTTP ≥ 500, JSON inválido) sai da cache e a chamada seguinte tenta outra vez; um 404 fica como `null` (21/10/2026).
+- **Campos sob pedido** — `src/data/courses.ts` (`loadCourses`: fusão FPG + away + melhorias + manuais, uma vez por sessão) e `src/context/CoursesContext.tsx` (`<CoursesGate withPlayers?>` + `useCourses()`). Só a /campos pede o `course-players.json`. O `AppContext` tem só `players`, `melhorias`, `playerCount` e `calUnlocked`; os totais de campos/tees da NavBar vêm do `master-courses.json` em segundo plano (21/10/2026).
 
 ### Dados
 
@@ -166,7 +167,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 ### Classificação de jogadores
 
 - Pills de tipo (Elite, Top Contender, etc.) aplicam-se apenas a rivais dentro de ±2 escalões de Manuel.
-- Filtro de idade (histórico): o `processMemberHistory` do loader antigo filtrava Boys 9-13; hoje é stub — a identidade e os filtros vêm do agregador canónico.
+- Filtro de idade (histórico): o `processMemberHistory` do loader antigo filtrava Boys 9-13; saiu — a identidade e os filtros vêm do agregador canónico.
 - `MANUEL_BIRTH_YEAR = 2014` — usado para calcular o escalão do Manuel em cada torneio histórico.
 
 ---
@@ -242,9 +243,18 @@ npx vitest            # watch mode
 
 ### Ficheiro de testes: `src/pages/__tests__/KIDSdataLoader.test.ts`
 
-Activos (2026-09-15): `normName` (7 testes — diacríticos, whitespace, case, strings
-vazias) e `co` (10 — código ISO → nome, variantes UK=GB, null). Os grupos do
-loader antigo (`shortenTournName`, `mergeInto`, `processUskidsCompleto`,
-`processMemberHistory`, `processFpgJuniorTourns`, `processWjgc`,
-`processManuelOverrides`) estão em `describe.skip` desde a migração para o
-kids2 — as funções são stubs.
+`normName` (7 testes — diacríticos, whitespace, case, strings vazias) e `co` (10 —
+código ISO → nome, variantes UK=GB, null). Os 7 grupos do loader antigo em
+`describe.skip` e os stubs `process*`/`mergeInto` saíram a 21/10/2026 — já não há
+testes «skipped».
+
+### Guardas automáticas (21/10/2026)
+
+- `scripts/css-vars.test.js` — falha se o `src` usar um `var(--x)` sem definição
+  (em `tokens.css`/`App.css` ou num style inline). Token novo vai para o
+  `tokens.css`; nada de fallbacks com hex (`var(--x, #fff)`).
+- `scripts/data-paths.test.js` — falha se o site pedir um `/data/…` fixo que não
+  exista em `public/` (dá 404 em produção). Ficheiro que pode faltar: não o
+  pedir, ou gerá-lo vazio (como o `ffgolf-lgpidf-index.json`).
+- `scripts/compact-deploy-json.test.js` — a compactação dos JSON no deploy
+  (ver [deploy.md](deploy.md)).
