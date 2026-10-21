@@ -72,7 +72,15 @@ function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], 
 }
 
 // ── 3-Way Match Play Results ──────────────────────────────────────────────
-const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
+const MP_CLUB_COLOR = "var(--color-good-dark)";
+
+/** Região/organização de um torneio de jovens pelo ccode (pill na sidebar de /FPG/jovens). */
+const REGION_LABEL: Record<string, string> = {
+  "000": "Nacional", "988": "Sul", "987": "Norte",
+  "985": "Tejo", "983": "Açores", "982": "Madeira",
+  "051": "Açores", "007": "Madeira", "910": "Norte",
+  "059": "Palheiro", "005": "Açores",
+};
 
 /** Faixa 🆚 no topo das vistas de match play de clubes (tabs Grupos e Match Play). */
 function MatchPlayBanner({ children }: { children: React.ReactNode }) {
@@ -157,7 +165,7 @@ function MatchPlayResultsTable({
 
   const f9 = Array.from({ length: 9 }, (_, i) => i);
   const b9 = Array.from({ length: 9 }, (_, i) => i + 9);
-  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card,white)", zIndex: 1 };
+  const cLbl: React.CSSProperties = { padding: "4px 8px", fontSize: "var(--fs-12)", whiteSpace: "nowrap", position: "sticky", left: 0, background: "var(--bg-card)", zIndex: 1 };
 
   return (
     <div style={{ paddingBottom: 24 }}>
@@ -180,20 +188,11 @@ function MatchPlayResultsTable({
           {sortedClubs.map((cl, rank) => {
             const opps = clubs.filter(c => c.key !== cl.key);
             return (
-              <div key={cl.key} style={{
-                background: "var(--bg-card,#fff)", border: "1px solid var(--border)",
-                borderRadius: 8, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)",
-              }}>
-                <div style={{ background: MP_CLUB_COLOR, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
-                  <div style={{
-                    width: 34, height: 34, background: "rgba(255,255,255,0.2)", borderRadius: 6, flexShrink: 0,
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: "var(--fs-20)", fontWeight: 900,
-                  }}>{rank + 1}</div>
-                  <div style={{ flex: 1, fontSize: "var(--fs-12)", fontWeight: 700, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {cl.name}
-                  </div>
-                  <div style={{ fontSize: "var(--fs-20)", fontWeight: 900, lineHeight: 1, opacity: hasResults ? 1 : 0.35 }}>
+              <div key={cl.key} className="mp-club-card">
+                <div className="mp-club-card-hdr">
+                  <div className="mp-club-rank">{rank + 1}</div>
+                  <div className="mp-club-name">{cl.name}</div>
+                  <div className="mp-club-total" style={{ opacity: hasResults ? 1 : 0.35 }}>
                     {fmtPts(grand[cl.key] ?? 0)}
                   </div>
                 </div>
@@ -358,7 +357,7 @@ function MatchPlayResultsTable({
                         {dias.length > 1 && <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> · Dia {dia.dia}</span>}
                       </div>
 
-                      <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+                      <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
                         {/* Cabeçalho do confronto: os 3 jogadores e o que fizeram */}
                         <div style={{ display: "flex", flexWrap: "wrap", gap: 14, padding: "8px 10px", borderBottom: "1px solid var(--border)" }}>
                           {withScores.map(cl => {
@@ -1151,12 +1150,11 @@ function Content() {
             {/* Search unificado — mesmo local e tamanho em todos os modos.
                 Filtra jogadores em Ranking PJA, a lista em Clubes/Jovens, etc.
                 O valor é partilhado (searchQuery). */}
-            <div style={{ flexShrink: 0, position: "relative", display: "inline-flex", alignItems: "center" }}>
-              <span aria-hidden="true" style={{
-                position: "absolute", left: 8, fontSize: "var(--fs-11)", color: "var(--text-muted)", pointerEvents: "none",
-              }}>🔎</span>
+            <div className="toolbar-search">
+              <span aria-hidden="true" className="toolbar-search-icon">🔎</span>
               <input
                 type="search"
+                className="toolbar-search-input"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder={
@@ -1165,28 +1163,13 @@ function Content() {
                     : "nome, campo, clube..."
                 }
                 aria-label="Pesquisar"
-                style={{
-                  fontSize: "var(--fs-12)",
-                  padding: "4px 22px 4px 24px",
-                  width: 200,
-                  border: "1px solid var(--border)",
-                  borderRadius: 5,
-                  background: "var(--bg-card)",
-                  color: "var(--text)",
-                  outline: "none",
-                }}
               />
               {searchQuery && (
                 <button
                   type="button"
                   aria-label="Limpar pesquisa"
                   onClick={() => setSearchQuery("")}
-                  style={{
-                    position: "absolute", right: 2,
-                    background: "none", border: "none", cursor: "pointer",
-                    color: "var(--text-muted)", fontSize: "var(--fs-14)", padding: "0 4px",
-                    lineHeight: 1,
-                  }}
+                  className="toolbar-search-clear"
                 >×</button>
               )}
             </div>
@@ -1270,11 +1253,8 @@ function Content() {
               ))}
               <ToolbarSep />
               <button
-                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : " tourn-tab-muted")}
-                onClick={() => setFilterManuel(v => !v)}
-                style={filterManuel
-                  ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                  : { flexShrink: 0, whiteSpace: "nowrap" }}>
+                className={"tourn-tab tourn-tab-sm shrink-0 nowrap" + (filterManuel ? " active manuel-on" : " tourn-tab-muted")}
+                onClick={() => setFilterManuel(v => !v)}>
                 ★ Manuel
               </button>
             </>)}
@@ -1284,8 +1264,7 @@ function Content() {
             {!loading && (<>
             {/* Contadores à direita */}
             <ExtLink href="https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T"
-              className="fs-11 fw-600"
-              style={{ flexShrink: 0, cursor: "pointer", color: "var(--accent)", border: "1px solid var(--accent)", borderRadius: 5, padding: "3px 8px", lineHeight: 1.6, textDecoration: "none", whiteSpace: "nowrap", display: "inline-flex", alignItems: "center", gap: 3 }}>
+              className="ext-link-outline fs-11 fw-600">
               FPG Torneios ↗
             </ExtLink>
             {loading
@@ -1394,7 +1373,7 @@ function Content() {
         </>}>
             {/* Tabs Individual / Grupos */}
             <div className="tabbar-under" style={{
-              background: "var(--bg-card,#fff)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
+              background: "var(--bg-card)", position: "sticky", top: 0, zIndex: "var(--z-panel-hdr)",
             }}>
               {(() => {
                 // O tab Match Play só existe em provas de match play com dados
@@ -1420,7 +1399,7 @@ function Content() {
               <div className="flex-wrap" style={{
                 display: "flex", alignItems: "center", gap: 8,
                 padding: "8px 16px", borderBottom: "1px solid var(--border)",
-                background: "var(--bg-muted,#f7f7f7)", fontSize: "var(--fs-12)",
+                background: "var(--bg-muted)", fontSize: "var(--fs-12)",
               }}>
                 <span className="fw-600" style={{ color: "var(--text-muted)" }}>FPG:</span>
                 <TournExtLinks
@@ -1600,12 +1579,6 @@ function Content() {
                   const totalJog = g.entries.reduce((s, e) => s + (e.playerCount || e.players.length), 0);
                   const t0 = g.entries[0];
                   // Mapa ccode → nome de região/organização
-                  const REGION_LABEL: Record<string, string> = {
-                    "000": "Nacional", "988": "Sul", "987": "Norte",
-                    "985": "Tejo", "983": "Açores", "982": "Madeira",
-                    "051": "Açores", "007": "Madeira", "910": "Norte",
-                    "059": "Palheiro", "005": "Açores",
-                  };
                   const regionLabel = REGION_LABEL[t0.ccode ?? ""] ?? t0.ccode ?? "";
                   // Data só dd/mm (ano já está no cabeçalho de secção)
                   const ddmm = g.date ? fmtDateShort(g.date) : "";
@@ -1658,11 +1631,7 @@ function Content() {
                       footer={
                         <div className="mt-3" style={{ display: "flex", alignItems: "center", gap: 6 }}>
                           {regionLabel && (
-                            <span className="fs-10 fw-600" style={{ padding: "1px 6px",
-                              borderRadius: 10, background: "var(--bg-hover)", color: "var(--text-2)",
-                              border: "1px solid var(--border)" }}>
-                              {regionLabel}
-                            </span>
+                            <span className="region-pill">{regionLabel}</span>
                           )}
                           <span className="fs-11 c-muted">{ddmm}</span>
                         </div>

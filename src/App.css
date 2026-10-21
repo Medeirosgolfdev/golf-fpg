@@ -3673,6 +3673,25 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  color: var(--text-2);
  border-color: var(--border);
 }
+/* ★ Manuel ligado (filtro da /FPG) — verde em vez do escuro do .active */
+.tourn-tab.manuel-on {
+ background: var(--bg-success-subtle);
+ border-color: var(--color-good);
+ color: var(--color-good-dark);
+}
+/* Link externo com contorno na toolbar (ex.: «FPG Torneios ↗» na /FPG) */
+.ext-link-outline {
+ flex-shrink: 0; display: inline-flex; align-items: center; gap: 3px;
+ padding: 3px 8px; line-height: 1.6; white-space: nowrap;
+ color: var(--accent); border: 1px solid var(--accent); border-radius: 5px;
+ text-decoration: none; cursor: pointer;
+}
+/* Pill de região/organização (sidebar de /FPG/jovens) */
+.region-pill {
+ padding: 1px 6px; border-radius: 10px;
+ font-size: var(--fs-10); font-weight: 600;
+ background: var(--bg-hover); color: var(--text-2); border: 1px solid var(--border);
+}
 
 /* ─── Restored: escalão pills (gerados dinamicamente via escCls/esc.toLowerCase) ─── */
 .p-sub10 { background: var(--esc-sub10-bg); color: var(--esc-sub10-fg); }
@@ -3762,6 +3781,22 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
   font-size: var(--fs-11); color: var(--text-muted); pointer-events: none;
 }
 .search-wrap { position: relative; flex-shrink: 0; }
+/* Pesquisa da toolbar da /FPG (Clubes/Jovens/rankings): 🔎 à esquerda, × à direita */
+.toolbar-search { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; }
+.toolbar-search-icon {
+  position: absolute; left: 8px; pointer-events: none;
+  font-size: var(--fs-11); color: var(--text-muted);
+}
+.toolbar-search-input {
+  width: 200px; padding: 4px 22px 4px 24px; outline: none;
+  font-size: var(--fs-12); color: var(--text); background: var(--bg-card);
+  border: 1px solid var(--border); border-radius: 5px;
+}
+.toolbar-search-clear {
+  position: absolute; right: 2px; padding: 0 4px; line-height: 1;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); font-size: var(--fs-14);
+}
 .filter-bar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding:6px 0 8px; border-bottom:1px solid var(--border); margin-bottom:8px; }
 .filter-clear-btn {
   font-size: var(--fs-10); padding: 2px 8px; border-radius: 20px;
@@ -4511,6 +4546,27 @@ table td.lb-col-divider {
   background: var(--accent-light); font-size: var(--fs-12); color: var(--text-2);
 }
 .mp-banner-icon { font-size: var(--fs-16); }
+
+/* Cartão de clube nos pontos do match play (/FPG/clubes → Grupos) */
+.mp-club-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.mp-club-card-hdr {
+  background: var(--color-good-dark); color: var(--text-inv);
+  padding: 8px 12px; display: flex; align-items: center; gap: 10px;
+}
+.mp-club-rank {
+  width: 34px; height: 34px; flex-shrink: 0; border-radius: 6px;
+  background: var(--overlay-white-25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: var(--fs-20); font-weight: 900;
+}
+.mp-club-name {
+  flex: 1; min-width: 0; font-size: var(--fs-12); font-weight: 700;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.mp-club-total { font-size: var(--fs-20); font-weight: 900; line-height: 1; }
 
 /* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
 .est-value { font-style: italic; color: var(--color-danger); }
