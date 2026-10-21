@@ -13,7 +13,7 @@
     "build": "tsc --noEmit && node node_modules/vite/bin/vite.js build && node scripts/prune-deploy-output.js",
     "preview": "vite preview",
     "login": "node scripts/login.js",
-    "scrape": "node scripts/golf-all.js",
+    "scrape": "node scripts/fpg-scrape-node.js --all",
     "scorecards": "node scripts/make-scorecards-ui.js",
     "uskids:lookup:build": "node scripts/build-uskids-name-lookup.js",
     "uskids:lookup:apply": "node scripts/apply-lookup-names.js",

@@ -103,15 +103,15 @@ exacto; `campo` e `clube` saem do bloco de meta.
 
 ### Scripts FPG detalhados
 
-**scripts/golf-all.js** — Pipeline completo: login → download WHS → scorecards → data.json → sync players → enrich stats.
+**scripts/fpg-scrape-node.js** — o pipeline actual (é o que o `update-data.yml` corre e o que `npm run scrape` chama desde 2026-10-20): fetch puro, ficha pública primeiro e cookies de recurso; no fim dispara `pipeline.js --skip-import <feds com novidades>`. Exit 0 novidades · 2 nada de novo · 1 erro.
 ```bash
-node scripts/golf-all.js 52884              # primeira vez
-node scripts/golf-all.js --refresh 52884    # novos scorecards
-node scripts/golf-all.js --login 52884      # forçar login
-node scripts/golf-all.js --force 52884      # re-descarregar tudo
-node scripts/golf-all.js --skip-download 52884  # só gerar (dados já existem)
-node scripts/golf-all.js --all              # todos os jogadores
+npm run scrape                                   # = node scripts/fpg-scrape-node.js --all
+node scripts/fpg-scrape-node.js 52884            # um jogador (só rondas novas)
+node scripts/fpg-scrape-node.js --full 52884     # re-descarregar tudo
+node scripts/fpg-scrape-node.js --concurrency 4 --all
 ```
+
+**scripts/golf-all.js** — ⚠ LEGADO, não usar: Playwright + login, e gravava o `players.json` sem escrita atómica nem guarda anti-encolhimento. Até 2026-10-20 era o alvo do `npm run scrape`; ficou só como referência.
 
 **pipeline.js** — Pós-download: import → render → sync → enrich → extract.
 ```bash
@@ -120,8 +120,13 @@ node pipeline.js --batch            # importar fpg-batch-*.json dos Downloads
 node pipeline.js --all              # todos de players.json
 node pipeline.js --skip-import 52884  # só processar
 node pipeline.js --sync-players     # só actualizar players.json
+node pipeline.js --sync-players --force  # gravar mesmo com >10% menos jogadores
 ```
 Output: `data.json`, `players.json`, `player-stats.json`, `away-courses.json`
+
+O `players.json` (raiz e `public/data/`) grava-se com `writeJsonGuarded`
+(escrita atómica com fsync + guarda: recusa perder >10% dos jogadores face ao
+disco, salvo `--force`; nesse caso sai com 1). Antes era tmp+rename sem fsync.
 
 **login.js** (`scripts/login.js`, = `npm run login`) — Abre browser para login manual em `area.my.fpg.pt`. Depois navegar para `scoring.fpg.pt` e pressionar ENTER → guarda `session.json`.
 

@@ -89,7 +89,7 @@ npm run dev       # servidor local Vite
 npm run build     # build de produção
 npm test          # testes (vitest; apanha também scripts/**/*.test.js)
 npm run preview   # preview do build
-npm run scrape    # pipeline completo (golf-all.js)
+npm run scrape    # scrape FPG de todos os seguidos (fpg-scrape-node.js --all → pipeline.js), o mesmo do update-data.yml
 npm run login     # login FPG (gera sessão)
 ```
 

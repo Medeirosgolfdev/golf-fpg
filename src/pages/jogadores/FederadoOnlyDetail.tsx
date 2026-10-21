@@ -448,7 +448,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
 
       <div className="muted fs-10 p-8 ta-c" style={{ marginTop: 8 }}>
         Para análise completa (scorecards hole-by-hole + estatísticas), este jogador pode ser
-        adicionado ao pipeline (<code>node scripts/golf-all.js {f.federation_code}</code>).
+        adicionado ao pipeline (<code>node scripts/fpg-scrape-node.js {f.federation_code}</code>).
       </div>
     </div>
   );
