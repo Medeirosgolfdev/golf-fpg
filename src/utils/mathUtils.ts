@@ -97,12 +97,15 @@ export function linearSlopeXY(pts: { x: number; y: number }[]): number | null {
   return d === 0 ? null : (n * sxy - sx * sy) / d;
 }
 
-/** Classifica score numa escala de performance relativa (z-score vs stats do grupo) */
+/** Classifica score numa escala de performance relativa (z-score vs stats do grupo).
+ *  FONTE ÚNICA dos níveis por z-score (Rivais e Tabela global da /uskids): a
+ *  TabelaGlobal tinha limiares próprios (−1,5/−0,8/0,2/1,0) e o mesmo miúdo
+ *  aparecia com níveis diferentes conforme a tabela (auditoria 20/10/2026). */
 export function zTier(
   score: number | null | undefined,
   stats: { m: number; s: number } | null | undefined
 ): "elite" | "strong" | "solid" | "developing" | "beginner" | null {
-  if (score == null || !stats || stats.s === 0) return null;
+  if (score == null || !stats || !(stats.s > 0)) return null;
   const z = (score - stats.m) / (stats.s || 1);
   if (z <= -1.2) return "elite";
   if (z <= -0.4) return "strong";

@@ -8,6 +8,7 @@ import { uskTournNames, normName as normNameAuto } from "../data/KIDSdataLoader"
 import type { AutoRivalPlayer } from "../data/KIDSdataLoader";
 import type { FieldData } from "./uskidsTypes";
 import { HIDDEN_WHEN_PRESENT } from "../data/tidAliases";
+import { zTier } from "../utils/mathUtils";
 
 // Nota: KidsLink é importado/passado via props para evitar circular dependency
 interface TGTournDef {
@@ -233,17 +234,6 @@ function tgTpColorDark(tp: number | null | undefined): string {
   if (tp === 0) return "var(--text-2)";
   if (tp <= 10) return "var(--color-warn-dark)";
   return "var(--color-danger-dark)";
-}
-
-// ── zTier calculation (simplified) ──
-function tgZTier(playerAvg: number, field: { m: number; s: number }): keyof typeof TG_TIER | null {
-  if (field.s <= 0) return null;
-  const z = (playerAvg - field.m) / field.s;
-  if (z <= -1.5) return "elite";
-  if (z <= -0.8) return "strong";
-  if (z <= 0.2)  return "solid";
-  if (z <= 1.0)  return "developing";
-  return "beginner";
 }
 
 // ── Rank map (simplified z-rank) ──
@@ -705,10 +695,10 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
                       if (hasFixedAvg) {
                         const ms = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {m:number}) => x.m);
                         const ss = fixedAvgs.filter((x: any): x is {m:number;s:number} => x != null).map((x: {s:number}) => x.s);
-                        if (ms.length) ti = tgZTier(playerAvg, { m: ms.reduce((a,b)=>a+b,0)/ms.length, s: ss.reduce((a,b)=>a+b,0)/ss.length });
+                        if (ms.length) ti = zTier(playerAvg, { m: ms.reduce((a,b)=>a+b,0)/ms.length, s: ss.reduce((a,b)=>a+b,0)/ss.length });
                       } else {
                         const ar = autoAvgR[tid];
-                        if (ar) ti = tgZTier(playerAvg, { m: ar.avg, s: ar.std });
+                        if (ar) ti = zTier(playerAvg, { m: ar.avg, s: ar.std });
                       }
                       const st = ti ? TG_TIER[ti] : null;
                       const tpStr = res.tp != null ? tgFmtSign(res.tp) : "—";
