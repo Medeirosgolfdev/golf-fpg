@@ -171,7 +171,7 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
   const year = iso ? parseInt(iso.slice(0, 4), 10) : null;
   let trn = trnLics.get(trnId);
   if (!trn) { trn = { iso, year, lics: new Set() }; trnLics.set(trnId, trn); }
-  // `ffgres:{trnId}` é o entryId da /ffg (ver buildFfgResEntries em FFGPage) —
+  // `ffgres:{trnId}` é o entryId da /ffg (ver ffgResEntry em src/data/ffg/ffgEntries.ts) —
   // dá o link directo /ffg/t/{id} para a leaderboard com scorecards.
   const ti = tournRef(`ffgres:${trnId}`, {
     trnId,

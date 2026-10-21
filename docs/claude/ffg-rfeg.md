@@ -27,7 +27,21 @@ A regra canónica vive em `src/utils/ffgEscalao.ts` (`ffgEscalaoCanonico` +
 `ffgEscalaoMaisNovo`), **espelhada** em `scripts/lib/ffg-escalao.cjs` para o
 build Node — `scripts/ffg-escalao-mirror.test.js` compara as duas sobre os
 labels reais do portal e falha se divergirem (padrão do `lib/course-aliases.cjs`).
-A `FFGPage` reexporta `ffgEscalaoCanonico` (metade da app importa-o de lá).
+Quem o usa importa-o de `src/utils/ffgEscalao.ts` (a `FFGPage` deixou de o
+reexportar a 21/10/2026 — ninguém o lia de lá).
+
+### Onde está o código de França (21/10/2026)
+
+A `FFGPage` só desenha (Catégories d'âge, totais e mapa LGPIDF, DrawTab). Os
+dados vivem em `src/data/ffg/`: `types.ts`, `names.ts` (`normalizeName`,
+`ffgPlayerName`, `ffgCountry`, `divisionLabel`, escalões do filtro),
+`toTournament.ts` (`ffgResToFPGTournament`, `toFPGTournament`), `lgpidf.ts`
+(`lgpidfAdmissions`/`lgpidfDraws`/`lgpidfTotais`), `golfgenius.ts`
+(`ggDrawToFpgDraw`, `buildFfgMatchplay`, chave de evento, sexo/datas/escalão
+inferidos), `ffgEntries.ts` (`loadFfgSources`, `buildFfgEntries`,
+`ffgResLoadDivisions`, entradas GG/`gg:evt:…`/LGPIDF — o que se desenha entra
+pelos `FfgRenderers` que a página passa) e o hook `useFfgData.ts`. Testes:
+`src/data/__tests__/ffgConverters.test.ts`.
 
 ### Torneios+resultados por jogador — `ffgolf-player-tournaments.json` (2026-07-23)
 
