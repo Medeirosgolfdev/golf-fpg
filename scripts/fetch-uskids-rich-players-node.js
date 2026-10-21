@@ -31,12 +31,13 @@
  *   node fetch-uskids-rich-players-node.js --players 630106,591440
  *   node fetch-uskids-rich-players-node.js --since-days 30
  *   node fetch-uskids-rich-players-node.js --force-rebuild   # ignora todos os caches
- *   node fetch-uskids-rich-players-node.js --concurrency 4
+ *   (--concurrency foi retirado a 2026-10-20: um pedido de cada vez, regra da USKids)
  *   node fetch-uskids-rich-players-node.js --limit 10        # smoke test
  *   node fetch-uskids-rich-players-node.js --discovery-only  # só descobre novos mids, não escreve players
  *
  * Exit codes:
  *   0 — escreveu pelo menos 1 ficheiro novo/actualizado (commit)
+ *       (também quando parou numa recusa da fonte e gravou o que já estava completo)
  *   2 — sem novidades (skip commit, NÃO é erro)
  *   1 — erro fatal
  */
@@ -44,6 +45,10 @@
 const fs   = require('fs');
 const path = require('path');
 const zlib = require('zlib');
+const { writeAtomic } = require('../lib/atomic-write');
+const { writeJsonAtomic } = require('./lib/atomic-write');
+
+let _cacheNoDisco = 0; // nº de torneios da cache lida do disco (guarda do save)
 
 // ── Paths ────────────────────────────────────
 const ROOT          = path.join(__dirname, '..');
@@ -136,60 +141,74 @@ function flightNeedsRefetch(dateStr) {
 
 const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
+// ── Recusa da fonte: parar à PRIMEIRA (regra da USKids, docs/claude/uskids.md) ──
+// A USKids já nos bloqueou (12/09/2026). Uma recusa = HTTP 403/429/503 ou
+// «Too many requests» em texto com HTTP 200. À primeira: nenhum pedido mais
+// nesta corrida (nem retries), grava-se o que já está completo e sai-se.
+let RECUSA = null; // motivo, quando a fonte recusou
+const STATUS_RECUSA = new Set([403, 429, 503]);
+
+function ehRecusa(status, txt) {
+  return STATUS_RECUSA.has(Number(status)) || /too many requests/i.test(String(txt || '').slice(0, 200));
+}
+
+function erroRecusa(motivo) {
+  const e = new Error(`recusa da fonte — ${motivo}`);
+  e.recusa = true;
+  return e;
+}
+
+function recusa() { return RECUSA; }
+function _resetRecusa() { RECUSA = null; }
+
 // ── HTTP helpers (Node 18+ fetch) ────────────
-async function apiGet(url, refererTcode = 0) {
+// Um pedido de cada vez (o chamador é sequencial). Retries só para falhas de
+// rede/timeout/5xx que não sejam recusa — NUNCA para 403/429/503.
+async function apiRequest(method, url, refererTcode = 0) {
+  if (RECUSA) throw erroRecusa(RECUSA);
+  const headers = method === 'POST'
+    ? {
+        'User-Agent':     UA,
+        'Accept':         'application/json, text/javascript, */*; q=0.01',
+        'Content-Type':   'application/x-www-form-urlencoded; charset=UTF-8',
+        'Referer':        REFERER(refererTcode),
+        'Origin':         'https://www.signupanytime.com',
+        'X-Requested-With': 'XMLHttpRequest',
+      }
+    : {
+        'User-Agent': UA,
+        'Accept':     'application/json, text/javascript, */*; q=0.01',
+        'Referer':    REFERER(refererTcode),
+      };
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
     const ctl = new AbortController();
     const to  = setTimeout(() => ctl.abort(), TIMEOUT_MS);
     try {
-      const r = await fetch(url, {
-        method: 'GET',
-        headers: {
-          'User-Agent': UA,
-          'Accept':     'application/json, text/javascript, */*; q=0.01',
-          'Referer':    REFERER(refererTcode),
-        },
-        signal: ctl.signal,
-      });
+      const r = await fetch(url, { method, headers, body: method === 'POST' ? '' : undefined, signal: ctl.signal });
+      const txt = await r.text();
       clearTimeout(to);
+      if (ehRecusa(r.status, txt)) {
+        RECUSA = `HTTP ${r.status}: ${txt.slice(0, 60).replace(/\s+/g, ' ')}`;
+        throw erroRecusa(RECUSA);
+      }
       if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return await r.json();
+      return JSON.parse(txt);
     } catch (err) {
       clearTimeout(to);
-      if (attempt === MAX_RETRIES) throw err;
+      // O fetch-uskids-edicoes-anteriores.js embrulha o fetch e lança «recusa
+      // da fonte»/«parado:» — também conta como recusa.
+      if (!err.recusa && /recusa da fonte|^parado:/i.test(String(err.message))) {
+        RECUSA = RECUSA || String(err.message).slice(0, 100);
+        err.recusa = true;
+      }
+      if (err.recusa || attempt === MAX_RETRIES) throw err;
       await sleep(500 * attempt);
     }
   }
 }
 
-async function apiPost(url, refererTcode = 0) {
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    const ctl = new AbortController();
-    const to  = setTimeout(() => ctl.abort(), TIMEOUT_MS);
-    try {
-      const r = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'User-Agent':     UA,
-          'Accept':         'application/json, text/javascript, */*; q=0.01',
-          'Content-Type':   'application/x-www-form-urlencoded; charset=UTF-8',
-          'Referer':        REFERER(refererTcode),
-          'Origin':         'https://www.signupanytime.com',
-          'X-Requested-With': 'XMLHttpRequest',
-        },
-        body: '',
-        signal: ctl.signal,
-      });
-      clearTimeout(to);
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return await r.json();
-    } catch (err) {
-      clearTimeout(to);
-      if (attempt === MAX_RETRIES) throw err;
-      await sleep(500 * attempt);
-    }
-  }
-}
+const apiGet  = (url, refererTcode = 0) => apiRequest('GET', url, refererTcode);
+const apiPost = (url, refererTcode = 0) => apiRequest('POST', url, refererTcode);
 
 // GetPlayerTeeTimes — descoberta 2026-05-12: POST + t=1 (final results, funciona
 // para tcodes encerrados E vivos) + params extra pt=undefined&jbgr={ts}&c=1.
@@ -202,7 +221,9 @@ async function getPlayerTeeTimes(tcode, fid, round, pageNum) {
   try {
     const u0 = `${API}?op=GetPlayerTeeTimes&f=${fid}&r=${round}&p=${pageNum}&t=0&pt=undefined&jbgr=${jbgr}&c=1`;
     d = await apiPost(u0, tcode);
-  } catch {}
+  } catch (err) {
+    if (err.recusa) throw err;
+  }
   return d;
 }
 
@@ -219,21 +240,31 @@ function loadFlightCache() {
     const txt = src === FLIGHT_CACHE ? zlib.gunzipSync(raw).toString('utf8')
                                      : raw.toString('utf8');
     if (src === FLIGHT_CACHE_LEGACY) console.log('  ↻ a migrar flight-cache legada (.json → .json.gz)');
-    return JSON.parse(txt);
+    const fc = JSON.parse(txt);
+    _cacheNoDisco = Object.keys(fc.torneios || {}).length;
+    return fc;
   } catch (e) {
-    console.warn(`  ⚠️ flight-cache ilegível (${e.message}) — vai re-descobrir`);
-    return { gerado_em: null, torneios: {} };
+    // Antes: «vai re-descobrir» = milhares de pedidos à USKids numa corrida
+    // (é exactamente a varredura em massa que nos bloqueou). Agora é erro:
+    // repor a cache do git e voltar a correr.
+    throw new Error(`flight-cache ilegível (${e.message}) — repor ${path.relative(ROOT, src)} do git antes de correr`);
   }
 }
 
 function saveFlightCache(fc) {
   fc.gerado_em = new Date().toISOString();
   fs.mkdirSync(path.dirname(FLIGHT_CACHE), { recursive: true });
-  // tmp+rename: a cache é gravada de 10 em 10 torneios e um run interrompido a
-  // meio da escrita deixaria um .gz truncado (= re-descobrir tudo do zero).
-  const tmp = `${FLIGHT_CACHE}.tmp`;
-  fs.writeFileSync(tmp, zlib.gzipSync(Buffer.from(JSON.stringify(fc), 'utf8')));
-  fs.renameSync(tmp, FLIGHT_CACHE);
+  // Guarda anti-encolhimento: se a cache em disco estava ilegível e começámos
+  // do zero, não esmagar milhares de torneios com meia dúzia (salvo --force).
+  const n = Object.keys(fc.torneios || {}).length;
+  if (_cacheNoDisco > 0 && n < _cacheNoDisco * 0.9 && !process.argv.includes('--force')) {
+    console.warn(`  ⚠️ flight-cache NÃO gravada: ${_cacheNoDisco} torneios em disco → ${n} (usar --force se for intencional)`);
+    return;
+  }
+  // Atómico com fsync: a cache é gravada de 10 em 10 torneios e um run
+  // interrompido a meio da escrita deixaria um .gz truncado.
+  writeAtomic(FLIGHT_CACHE, zlib.gzipSync(Buffer.from(JSON.stringify(fc), 'utf8')));
+  _cacheNoDisco = Math.max(_cacheNoDisco, n);
   if (fs.existsSync(FLIGHT_CACHE_LEGACY)) fs.rmSync(FLIGHT_CACHE_LEGACY);
 }
 
@@ -363,11 +394,13 @@ function findPidForMember(memberPlayerData, flightPlayers) {
 async function discoverNewMids(tcodes, knownMids) {
   const novos = new Set();
   for (const tcode of tcodes) {
+    if (RECUSA) break;
     let meta;
     try {
       meta = await apiGet(`${API}?op=GetMeta&t=${tcode}`, tcode);
     } catch (err) {
       console.warn(`  ⚠️ GetMeta(${tcode}): ${err.message}`);
+      if (err.recusa) break;
       continue;
     }
     await sleep(DELAY_MS);
@@ -377,7 +410,8 @@ async function discoverNewMids(tcodes, knownMids) {
       let tp;
       try {
         tp = await apiGet(`${API}?op=GetTournamentPlayers&t=${tcode}&f=${fid}`, tcode);
-      } catch {
+      } catch (err) {
+        if (err.recusa) break;
         await sleep(DELAY_MS); continue;
       }
       await sleep(DELAY_MS);
@@ -392,13 +426,18 @@ async function discoverNewMids(tcodes, knownMids) {
 }
 
 // ── Phase 1: descobrir tcodes que cada player jogou ──────────────────────
-async function fetchMemberCareers(mids, concurrency = 4) {
-  const careers = new Map();  // mid → { p_age_group_latest, name?, country?, torneios: {tcode: {... raw GetMemberTournamentResults entry ...}} }
+// SEQUENCIAL (um pedido de cada vez — regra da USKids). Antes havia um pool de
+// 4 workers: à primeira recusa os outros 3 já tinham pedidos no ar e seguiam.
+async function fetchMemberCareers(mids, { delayMs = DELAY_HIST } = {}) {
+  const careers = new Map();  // mid → { tcode: {... raw GetMemberTournamentResults entry ...} }
   const arr = Array.from(mids);
   const total = arr.length;
   let done = 0;
+  let parou = null;
 
-  async function processOne(mid) {
+  for (const mid of arr) {
+    if (pastDeadline()) { parou = 'prazo'; break; }
+    if (RECUSA) { parou = 'recusa'; break; }
     try {
       const data = await apiGet(`${API}?op=GetMemberTournamentResults&m=${mid}`, 0);
       if (data && typeof data === 'object' && Object.keys(data).length > 0) {
@@ -406,28 +445,14 @@ async function fetchMemberCareers(mids, concurrency = 4) {
       }
     } catch (err) {
       console.warn(`  ❌ m=${mid}: ${err.message}`);
-    } finally {
-      done++;
-      if (done % 100 === 0) console.log(`  ⌛ careers ${done}/${total}`);
-      await sleep(DELAY_HIST);
+      if (err.recusa) { parou = 'recusa'; break; }
     }
+    done++;
+    if (done % 100 === 0) console.log(`  ⌛ careers ${done}/${total}`);
+    await sleep(delayMs);
   }
-
-  // Worker pool
-  const workers = [];
-  let i = 0;
-  let stoppedEarly = false;
-  for (let w = 0; w < concurrency; w++) {
-    workers.push((async () => {
-      while (i < arr.length) {
-        if (pastDeadline()) { stoppedEarly = true; break; }
-        const mid = arr[i++];
-        await processOne(mid);
-      }
-    })());
-  }
-  await Promise.all(workers);
-  if (stoppedEarly) console.log(`  ⏱️ prazo atingido — ${done}/${total} carreiras (${total - done} adiadas p/ próximo run)`);
+  if (parou === 'prazo') console.log(`  ⏱️ prazo atingido — ${done}/${total} carreiras (${total - done} adiadas p/ próximo run)`);
+  if (parou === 'recusa') console.log(`  ⛔ recusa da fonte (${RECUSA}) — ${done}/${total} carreiras; nenhum pedido mais nesta corrida`);
   return careers;
 }
 
@@ -443,6 +468,10 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
     if (pastDeadline()) {
       saveFlightCache(flightCache);
       console.log(`  ⏱️ prazo atingido — ${done}/${tcodes.length} torneios enriquecidos (cache gravada; resto no próximo run)`);
+      break;
+    }
+    if (RECUSA) {
+      console.log(`  ⛔ recusa da fonte (${RECUSA}) — ${done}/${tcodes.length} torneios; o resto fica para o próximo run`);
       break;
     }
     done++;
@@ -467,6 +496,7 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
       meta = await apiGet(`${API}?op=GetMeta&t=${tcode}`, tcode);
     } catch (err) {
       console.warn(`  ⚠️ GetMeta(${tcode}): ${err.message}`);
+      if (err.recusa) break;
       continue;
     }
     await sleep(DELAY_MS);
@@ -554,6 +584,7 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
           try {
             d = await getPlayerTeeTimes(tcode, fid, round, p);
           } catch (err) {
+            if (err.recusa) break; // sem mais pedidos; o torneio é descartado em baixo
             // Se a 1ª página falha (ex: 500 porque a ronda nem existe), saltar
             // a ronda inteira em vez de espalhar 500s por todas as páginas.
             if (p === 1) {
@@ -638,7 +669,15 @@ async function fetchTournamentRichData(tcodeAgeMap, flightCache, opts = {}) {
         }
       }
 
+      if (RECUSA) break;
       tournData.flights[fid] = flightData;
+    }
+
+    // Recusa a meio deste torneio: um flight a meio ficaria na cache como
+    // completo (e nunca mais seria pedido) → não guardar este torneio.
+    if (RECUSA) {
+      console.log(`  ⛔ recusa da fonte a meio de t=${tcode} — torneio não guardado; nenhum pedido mais nesta corrida`);
+      break;
     }
 
     tournRich.set(String(tcode), tournData);
@@ -801,11 +840,11 @@ function parseArgs(argv) {
     sinceDays:     14,            // re-fetch flight data se torneio ≤ N dias
     forceRebuild:  false,         // ignora caches e re-fetch tudo
     skipExisting:  true,          // não sobrescreve {mid}.json se já existe (e player não tem novos torneios)
-    concurrency:   4,             // workers paralelos em fetchMemberCareers
     limit:         null,          // máx N players (smoke test)
     discoveryOnly: false,         // só descobre novos mids, não escreve players
     forceFetchAll: false,         // re-fetch TODOS os mids do slim (ignora skip-existing)
     maxRuntimeMin: 0,             // prazo de execução em minutos (0 = sem limite)
+    force:         false,         // grava fichas com menos torneios do que as do disco
   };
   for (let i = 0; i < argv.length; i++) {
     const a = argv[i];
@@ -814,7 +853,8 @@ function parseArgs(argv) {
       case '--since-days':   args.sinceDays = parseInt(argv[++i], 10); break;
       case '--force-rebuild': args.forceRebuild = true; break;
       case '--no-skip-existing': args.skipExisting = false; break;
-      case '--concurrency':  args.concurrency = parseInt(argv[++i], 10); break;
+      case '--concurrency':  i++; console.warn('  ⚠️ --concurrency ignorado: a USKids só aceita um pedido de cada vez'); break;
+      case '--force':        args.force = true; break;
       case '--limit':        args.limit = parseInt(argv[++i], 10); break;
       case '--discovery-only': args.discoveryOnly = true; break;
       case '--force-fetch-all': args.forceFetchAll = true; break;
@@ -828,9 +868,11 @@ function parseArgs(argv) {
 }
 
 // ── Output: comparar/escrever {memberID}.json apenas se mudou ────────────
-function writePlayerIfChanged(mid, newData) {
-  fs.mkdirSync(OUT_DIR, { recursive: true });
-  const outPath = path.join(OUT_DIR, `${mid}.json`);
+// Devolve true (gravou), false (igual) ou 'encolhe' (recusado: a ficha nova
+// tem menos torneios do que a do disco — a carreira veio incompleta).
+function writePlayerIfChanged(mid, newData, { force = false, outDir = OUT_DIR } = {}) {
+  fs.mkdirSync(outDir, { recursive: true });
+  const outPath = path.join(outDir, `${mid}.json`);
   // Comparar conteúdo (ignorando lastUpdated) para evitar diffs no git apenas
   // por timestamp.
   let existing = null;
@@ -845,8 +887,14 @@ function writePlayerIfChanged(mid, newData) {
   if (b && JSON.stringify(a) === JSON.stringify(b)) {
     return false; // sem mudanças
   }
+  const antes = Object.keys(existing?.torneios || {}).length;
+  const agora = Object.keys(newData?.torneios || {}).length;
+  if (!force && antes > 0 && agora < antes) {
+    console.warn(`  ⚠️ m=${mid}: ${antes} torneios em disco → ${agora} — ficha NÃO regravada (--force para forçar)`);
+    return 'encolhe';
+  }
 
-  fs.writeFileSync(outPath, JSON.stringify(newData, null, 2), 'utf8');
+  writeJsonAtomic(outPath, newData);
   return true;
 }
 
@@ -859,7 +907,7 @@ async function main() {
   console.log('══════════════════════════════════════');
   console.log('📊  USKids Rich Players (Node-puro)');
   console.log(`    ${new Date().toLocaleString('pt-PT')}`);
-  console.log(`    sinceDays=${args.sinceDays} | concurrency=${args.concurrency} | forceRebuild=${args.forceRebuild}`);
+  console.log(`    sinceDays=${args.sinceDays} | sequencial | forceRebuild=${args.forceRebuild}`);
   if (args.players) console.log(`    players explícitos: ${args.players.size}`);
   if (args.limit)   console.log(`    limit: ${args.limit}`);
   if (args.maxRuntimeMin > 0) console.log(`    ⏱️ prazo: ${args.maxRuntimeMin} min`);
@@ -885,7 +933,7 @@ async function main() {
     console.log(`  ${novos.size} novos memberIDs`);
     if (novos.size) {
       const debugFile = path.join(ROOT, 'data-archive', 'uskids-rich-newmids.json');
-      fs.writeFileSync(debugFile, JSON.stringify([...novos], null, 2));
+      writeJsonAtomic(debugFile, [...novos]);
       console.log(`  💾 ${debugFile}`);
     }
     process.exit(novos.size ? 0 : 2);
@@ -931,7 +979,7 @@ async function main() {
   console.log('\n══════════════════════════════════════');
   console.log('PHASE 1 — GetMemberTournamentResults por player');
   console.log('══════════════════════════════════════');
-  const careers = await fetchMemberCareers(mids, args.concurrency);
+  const careers = await fetchMemberCareers(mids);
   console.log(`  ✅ ${careers.size} carreiras obtidas`);
 
   // 6. Cruzar para mapa tcode → Set(ageGroups)
@@ -962,15 +1010,23 @@ async function main() {
   const resultsFP = loadResultsFingerprints();
   console.log(`  📄 ${resultsFP.size} fingerprints do uskids-results.json`);
 
-  let written = 0, unchanged = 0;
+  let written = 0, unchanged = 0, incompletos = 0, encolhidos = 0;
   for (const [mid, career] of careers) {
-    const playerFile = buildPlayerFile(mid, career, tournRich, resultsFP);
-    if (writePlayerIfChanged(mid, playerFile)) {
-      written++;
-    } else {
-      unchanged++;
+    // Depois de uma recusa (ou do prazo) há torneios da carreira sem dados
+    // ricos: uma ficha montada assim perdia teeMarker/pid/startTime e esmagava
+    // a do disco. Fica para o próximo run (não actualiza o lastUpdated).
+    if ((RECUSA || pastDeadline()) && Object.keys(career).some(t => !tournRich.has(String(t)))) {
+      incompletos++;
+      continue;
     }
+    const playerFile = buildPlayerFile(mid, career, tournRich, resultsFP);
+    const r = writePlayerIfChanged(mid, playerFile, { force: args.force });
+    if (r === true) written++;
+    else if (r === 'encolhe') encolhidos++;
+    else unchanged++;
   }
+  if (incompletos) console.log(`  ⏭️ ${incompletos} jogadores com torneios por enriquecer — ficam para o próximo run`);
+  if (encolhidos) console.log(`  ⚠️ ${encolhidos} fichas não regravadas por terem menos torneios do que as do disco`);
 
   // 9. Resumo + run summary
   const summary = {
@@ -980,13 +1036,15 @@ async function main() {
     tcodesEnriched: tournRich.size,
     filesWritten: written,
     filesUnchanged: unchanged,
+    filesSkippedIncomplete: incompletos,
+    filesRefusedShrink: encolhidos,
+    stoppedByRefusal: RECUSA,
     config: {
       sinceDays: args.sinceDays,
-      concurrency: args.concurrency,
       forceRebuild: args.forceRebuild,
     },
   };
-  fs.writeFileSync(RUN_SUMMARY, JSON.stringify(summary, null, 2));
+  writeJsonAtomic(RUN_SUMMARY, summary);
 
   console.log('\n══════════════════════════════════════');
   console.log(`✅  ${written} ficheiros escritos (${unchanged} sem alterações)`);
@@ -994,6 +1052,7 @@ async function main() {
   console.log(`    Cache:  data-archive/uskids-rich-flight-cache.json.gz`);
   console.log('══════════════════════════════════════');
 
+  if (RECUSA) console.log(`::warning::USKids rich players: a fonte recusou (${RECUSA}) — parei à primeira recusa; o que estava completo ficou gravado.`);
   process.exit(written === 0 ? 2 : 0);
 }
 
@@ -1006,4 +1065,8 @@ if (require.main === module) {
   });
 }
 
-module.exports = { fetchTournamentRichData, loadFlightCache, saveFlightCache, apiGet, API };
+module.exports = {
+  fetchTournamentRichData, loadFlightCache, saveFlightCache, apiGet, API,
+  // testes
+  fetchMemberCareers, discoverNewMids, writePlayerIfChanged, ehRecusa, recusa, _resetRecusa,
+};

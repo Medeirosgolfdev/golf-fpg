@@ -14,10 +14,6 @@ on:
         description: 'Skip players com ficheiro mais recente que N dias (default 14)'
         required: false
         default: '14'
-      concurrency:
-        description: 'Workers paralelos para GetMemberTournamentResults (default 4)'
-        required: false
-        default: '4'
       force_rebuild:
         description: 'Ignorar caches e re-fetch tudo (lento)'
         type: boolean
@@ -62,7 +58,8 @@ jobs:
         id: args
         run: |
           ARGS="--since-days ${{ github.event.inputs.since_days || '14' }}"
-          ARGS="$ARGS --concurrency ${{ github.event.inputs.concurrency || '4' }}"
+          # Sem --concurrency: a USKids só aceita um pedido de cada vez e o
+          # script pára à primeira recusa (403/429/503/«Too many requests»).
           ARGS="$ARGS --max-runtime-min ${{ github.event.inputs.max_runtime_min || '300' }}"
           if [ -n "${{ github.event.inputs.players }}" ]; then
             ARGS="$ARGS --players ${{ github.event.inputs.players }}"
