@@ -29,7 +29,8 @@ name: Draws CGSS por email (inbox cloud)
 #   DRAW_MAIL_USER  — o endereço Gmail
 #   DRAW_MAIL_PASS  — app password do Gmail (não a password normal)
 # Variable opcional: DRAW_MAIL_SENDERS (CSV de remetentes extra, ex. o clube).
-# Sem os secrets, o workflow sai verde sem fazer nada (dá para fazer merge já).
+# Sem os secrets não faz nada e fica VERMELHO uma vez por dia (run das 07 UTC)
+# e em runs manuais; nos outros runs só deixa um aviso (::warning::).
 on:
   workflow_dispatch:
   schedule:
@@ -53,8 +54,18 @@ jobs:
         id: creds
         run: |
           if [ -z "${{ secrets.DRAW_MAIL_USER }}" ] || [ -z "${{ secrets.DRAW_MAIL_PASS }}" ]; then
-            echo "ℹ️  DRAW_MAIL_USER/DRAW_MAIL_PASS não configurados — inbox por email desligada."
             echo "ok=0" >> $GITHUB_OUTPUT
+            # Sem credenciais a inbox está DESLIGADA — antes isto saía verde de
+            # hora a hora e ninguém dava por isso (auditoria 20/10/2026). Fica
+            # vermelho num run manual e no 1.º run do dia (hora 07 UTC); nos
+            # outros só avisa, para não mandar 24 emails de falha por dia.
+            # Para calar: criar os secrets ou desactivar o workflow no GitHub.
+            MSG="DRAW_MAIL_USER/DRAW_MAIL_PASS não configurados — a inbox de draws por email NÃO está a funcionar."
+            if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$(date -u +%H)" = "07" ]; then
+              echo "::error::$MSG"
+              exit 1
+            fi
+            echo "::warning::$MSG"
           else
             echo "ok=1" >> $GITHUB_OUTPUT
           fi

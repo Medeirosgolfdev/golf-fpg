@@ -216,6 +216,10 @@ jobs:
             IFS=':' read -r CC TC PULL TEM QUER <<< "$SPEC"
             echo "── $CC/$TC: $TEM volta(s) guardada(s), o draw tem $QUER — a reler ──"
             node scripts/scrape-classif-node.js --tclub "$CC" --tcode "$TC" --out "public/data/pull-torneios$PULL.json"
+            CODE=$?
+            if [ "$CODE" != "0" ] && [ "$CODE" != "2" ] && [ "$CODE" != "3" ]; then
+              echo "❌ $CC/$TC: scrape-classif falhou (exit $CODE)"; FAILED=1
+            fi
             AGORA=$(node -e "const d=JSON.parse(require('fs').readFileSync('public/data/pull-torneios$PULL.json','utf8'));const t=d.tournaments.find(x=>String(x.ccode)==='$CC'&&String(x.tcode)==='$TC');console.log(t?Math.max(0,...t.players.map(p=>(p.roundScores||[]).filter(r=>Number(r.gross)>0&&Number(r.gross)<900).length)):0)")
             if [ "$AGORA" -gt "$TEM" ]; then echo "✓ $CC/$TC: agora com $AGORA volta(s)."; UPDATED=1
             else echo "ℹ️  $CC/$TC: a FPG ainda não publicou a volta seguinte."; fi
@@ -230,6 +234,7 @@ jobs:
       # O /draws lê o manuel-pairings.json, que é GERADO — sem isto o torneio
       # ficava lá com o tcode placeholder e sem scores.
       - name: Regenerar pairings
+        id: pairings
         if: steps.scrape.outputs.updated == '1'
         continue-on-error: true
         run: node scripts/pairings-build.js
@@ -254,8 +259,8 @@ jobs:
             --body "@Medeirosgolfdev — o workflow apanhou os resultados dos pendentes (${{ steps.pending.outputs.list }}), re-chaveou o(s) placeholder(s) para o(s) tcode(s) reais e reconciliou os fedCodes dos draws. Ver em https://golf-fpg.vercel.app/FPG. Esta issue fecha-se sozinha — serve só para a notificação por email.")
           gh issue close "$URL" --comment "Notificação entregue."
 
-      - name: Falhar o job se algum pendente deu erro real
-        if: steps.scrape.outputs.failed == '1'
+      - name: Falhar o job se algum pendente (ou os pairings) deu erro real
+        if: always() && (steps.scrape.outputs.failed == '1' || steps.pairings.outcome == 'failure')
         run: |
-          echo "❌ Pelo menos um placeholder falhou com erro real (ver logs acima)."
+          echo "❌ Erro real: placeholder(s) failed=${{ steps.scrape.outputs.failed }} · pairings-build=${{ steps.pairings.outcome }} (ver logs acima)."
           exit 1

@@ -113,7 +113,11 @@ jobs:
           EXIT=$?
           set -e
           if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
-          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-pcc falhou — segue sem preencher."; fi
+          # Falha real: segue (o resto do run publica-se) mas o job acaba vermelho no fim.
+          if [ "$EXIT" != "0" ] && [ "$EXIT" != "2" ]; then
+            echo "::error::backfill-pcc falhou (exit $EXIT) — segue sem preencher."
+            echo "failed=1" >> $GITHUB_OUTPUT
+          fi
           exit 0
 
       # SD OFICIAL em cada volta dos torneios, lido do WHS acabado de descarregar
@@ -128,7 +132,10 @@ jobs:
           EXIT=$?
           set -e
           if [ "$EXIT" = "0" ]; then echo "filled=1" >> $GITHUB_OUTPUT; else echo "filled=0" >> $GITHUB_OUTPUT; fi
-          if [ "$EXIT" = "1" ]; then echo "⚠  backfill-sd falhou — segue sem preencher."; fi
+          if [ "$EXIT" != "0" ] && [ "$EXIT" != "2" ]; then
+            echo "::error::backfill-sd falhou (exit $EXIT) — segue sem preencher."
+            echo "failed=1" >> $GITHUB_OUTPUT
+          fi
           exit 0
 
       # Reconstruir os índices que dependem das rondas dos jogadores:
@@ -136,25 +143,39 @@ jobs:
       #  - course-player-names.json (nº federado → nome real)           ← build-course-player-names
       #  - course-players.json      (quem jogou cada campo PT do master)← build-course-players
       # Corre sempre (mesmo sem scorecards novos) porque players.json /
-      # federados podem ter mudado. Falhas individuais não abortam o run.
+      # federados podem ter mudado. Uma falha num builder não impede os outros
+      # nem o commit do que correu bem, mas fica registada e o job acaba
+      # VERMELHO no fim (passo «Falhar se algum passo falhou»). Exit 2 = sem
+      # mudanças / guarda anti-encolhimento recusou (não é erro).
       - name: Reconstruir índices de campos e jogadores
+        id: indices
         run: |
-          node scripts/extract-courses.js --force || echo "extract-courses: sem novidades ou aviso"
-          node scripts/build-course-player-names.js || echo "build-course-player-names: aviso"
-          node scripts/build-course-players.js || echo "build-course-players: aviso"
+          set +e
+          FAILED=""
+          corre() {
+            node "$@"; local rc=$?
+            if [ "$rc" != 0 ] && [ "$rc" != 2 ]; then
+              echo "::error::$1 falhou (exit $rc)"; FAILED="$FAILED $(basename "$1" .js)"
+            fi
+          }
+          corre scripts/extract-courses.js --force
+          corre scripts/build-course-player-names.js
+          corre scripts/build-course-players.js
           # Torneios recentes reconstruídos das voltas dos nossos jogadores
           # (public/data/recent-tournaments.json → página /torneios-recentes)
-          node scripts/build-recent-tournaments.js || echo "build-recent-tournaments: aviso"
+          corre scripts/build-recent-tournaments.js
           # Calendário dos jogadores de referência, só juniores
           # (public/data/classificacoes.json → /FPG/classificacoes)
-          node scripts/build-classificacoes.js || echo "build-classificacoes: aviso"
+          corre scripts/build-classificacoes.js
           # Página estática /analise-percurso-juniores.html — regenera o bloco
           # de dados `const P` a partir de output/{fed}/whs.json (exit 2 = sem mudanças)
-          node scripts/build-analise-percurso.js || echo "build-analise-percurso: sem novidades ou aviso"
+          corre scripts/build-analise-percurso.js
           # Mesma página, bloco `const PATH` — percurso de torneios até scratch
           # dos 18 rapazes da coorte, com o detalhe por jogador que a tabela
           # mostra ao expandir uma linha (exit 2 = sem mudanças)
-          node scripts/build-percurso-path.js || echo "build-percurso-path: sem novidades ou aviso"
+          corre scripts/build-percurso-path.js
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          exit 0
 
       # Nota: o `fpg-scrape-node.js` já dispara `pipeline.js --skip-import <feds_com_novidades>`
       # automaticamente no fim quando há scorecards novos. Não é preciso passo extra aqui.
@@ -213,7 +234,7 @@ jobs:
           # mas enrich-players.js escreve "public/player-stats.json" (sem /data/).
           bash scripts/ci/push-generated.sh -m "data: update FPG WHS+scorecards $(date +'%Y-%m-%d %H:%M')" \
             -g public/analise-percurso-juniores.html \
-            -r 'node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js' \
+            -r 'node scripts/build-analise-percurso.js' -r 'node scripts/build-percurso-path.js' \
             -- output/ 'public/data/*/analysis/' public/data/players.json \
                public/data/cross-data.json public/player-stats.json public/data/hcp-history.json \
                public/data/away-courses.json public/data/master-courses.json \
@@ -222,3 +243,13 @@ jobs:
                public/data/classificacoes.json 'public/data/pull-torneios*.json' \
                'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
                'public/data/jovens_*.json' players.json
+
+      # ── Falhas que não podiam travar o commit, mas não podem ficar verdes ──
+      # Os builders e os backfills correm todos e o que correu bem é publicado;
+      # só depois o job fica vermelho se algum falhou (o GitHub manda email).
+      - name: Falhar se algum passo falhou
+        if: always() && (steps.indices.outputs.failed != '' || steps.pcc.outputs.failed == '1' || steps.sd.outputs.failed == '1')
+        run: |
+          echo "❌ Falharam:${{ steps.indices.outputs.failed }} pcc=${{ steps.pcc.outputs.failed }} sd=${{ steps.sd.outputs.failed }}"
+          echo "O que correu bem já foi publicado. Ver os ::error:: nos passos acima."
+          exit 1

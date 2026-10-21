@@ -236,6 +236,8 @@ for i in $(seq 1 "$TRIES"); do
       bash -c "$cmd"; rc=$?
       # exit 2 = «nada a mudar» (convenção dos scripts do repo), não é erro
       if [ "$rc" != 0 ] && [ "$rc" != 2 ]; then echo "❌ Regeneração falhou (exit $rc): $cmd"; exit 1; fi
+      # (o agregador também sai 2 quando a sanidade recusa gravar: fica a versão do main, que é coerente)
+      [ "$rc" = 2 ] && echo "::warning::$cmd saiu 2 (nada a mudar ou gravação recusada) — os gerados ficam como no main"
     done
   fi
 

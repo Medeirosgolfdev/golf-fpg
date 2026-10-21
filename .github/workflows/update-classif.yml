@@ -133,7 +133,9 @@ jobs:
             --out "$OUT_RECENT" --concurrency 2
           EC=$?
           echo "exit_code=$EC" >> $GITHUB_OUTPUT
-          if [ "$EC" = "1" ]; then echo "⚠ scrape de recentes falhou (não aborta o workflow)"; fi
+          # Falha real não aborta (o passo principal ainda se publica), mas o
+          # job acaba vermelho no fim — passo «Falhar se algum passo falhou».
+          if [ "$EC" != "0" ] && [ "$EC" != "2" ]; then echo "::error::scrape de recentes falhou (exit $EC)"; fi
           exit 0
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
@@ -145,8 +147,16 @@ jobs:
       # ClassifLST não o publica a tempo: a FPG só o calcula ao fim do dia.
       - name: Preencher PCC dos torneios acabados de scrapar
         if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
+        id: pcc
         run: |
-          node scripts/backfill-pcc.js --apply || echo "backfill-pcc: sem novidades ou aviso"
+          set +e
+          node scripts/backfill-pcc.js --apply
+          EC=$?
+          # 2 = nada a preencher (não é erro); falha real → vermelho no fim.
+          if [ "$EC" != "0" ] && [ "$EC" != "2" ]; then
+            echo "::error::backfill-pcc falhou (exit $EC)"; echo "failed=1" >> $GITHUB_OUTPUT
+          fi
+          exit 0
 
       - name: Regenerar tracking (após novos dados de classif)
         if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0')
@@ -164,3 +174,11 @@ jobs:
             -f tracking \
             -- "$OUT" 'public/data/pull-torneios*.json' \
                'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json'
+
+      # Falhas que não travaram o commit não podem ficar verdes.
+      - name: Falhar se algum passo falhou
+        if: always() && (steps.pcc.outputs.failed == '1' || (steps.scrape_recent.outputs.exit_code != '' && steps.scrape_recent.outputs.exit_code != '0' && steps.scrape_recent.outputs.exit_code != '2'))
+        run: |
+          echo "❌ Falhou: scrape de recentes (exit ${{ steps.scrape_recent.outputs.exit_code }}) / backfill-pcc (${{ steps.pcc.outputs.failed }})"
+          echo "O que correu bem já foi publicado — ver os ::error:: acima."
+          exit 1

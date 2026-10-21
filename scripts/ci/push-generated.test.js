@@ -5,14 +5,19 @@
 import { describe, it, expect } from "vitest";
 import { spawnSync } from "child_process";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const temBash = spawnSync("bash", ["--version"]).status === 0;
+// No Windows o "bash" do PATH pode ser o do WSL (System32), que não vê os
+// caminhos do Windows — usar o Git Bash; sem ele, o teste é saltado.
+const GIT_BASH = "C:\\Program Files\\Git\\bin\\bash.exe";
+const BASH = process.platform === "win32" ? (fs.existsSync(GIT_BASH) ? GIT_BASH : null) : "bash";
+const temBash = !!BASH && spawnSync(BASH, ["--version"]).status === 0;
 
 describe.skipIf(!temBash)("push-generated.sh", () => {
   it("passa os cenários de push concorrente", () => {
-    const r = spawnSync("bash", [path.join(dir, "test-push-generated.sh")], {
+    const r = spawnSync(BASH, [path.join(dir, "test-push-generated.sh")], {
       encoding: "utf8",
       env: { ...process.env, GIT_TERMINAL_PROMPT: "0", GITHUB_OUTPUT: "", GITHUB_REF_NAME: "main" },
     });
