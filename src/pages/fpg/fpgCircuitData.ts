@@ -1,9 +1,8 @@
 /**
  * src/pages/fpg/fpgCircuitData.ts
  *
- * Adaptador FPG → CircuitShell para as vistas "Todos" / "Jovens" / "Santo da
- * Serra" / "PJA" da FPGPage (o separador "Torneios", excl. Clubes, que tem UI
- * própria).
+ * Adaptador FPG → CircuitShell para as vistas "Todos" / "Jovens" / "Clubes" /
+ * "Santo da Serra" / "PJA" da FPGPage (o separador "Torneios").
  *
  * Converte os `EventGroup` da FPG (um evento = N escalões, cada escalão é um
  * `Tournament` com o seu ccode/tcode) no contrato `CircuitEntry[]` que o
@@ -22,6 +21,7 @@ import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import type { EventGroup, JovensGroup } from "../../ui/InscricoesComponents";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 import { tournamentHasManuel } from "../../data/fpgUtils";
+import { clubesHasManuel, clubesIndividualTournament } from "../../data/clubesFormats";
 import { parseTournKey } from "../../utils/format";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
@@ -123,6 +123,45 @@ export function buildJovensEntries(groups: JovensGroup[]): CircuitEntry[] {
   });
 }
 
+/** Entradas da vista Clubes (/FPG/clubes): um torneio de clubes = uma entrada
+ *  com uma divisão (o seu tcode no URL). O ano é o da edição (`_clubesYear`, o
+ *  ficheiro de onde veio), que agrupa a sidebar. A divisão traz o torneio como
+ *  o mostram as abas Resultados/Resumo (`clubesIndividualTournament`: num match
+ *  play, os jogadores saem dos confrontos e o Dia 1 entra como «Draw R1»); as
+ *  abas «Grupos» e «Match Play» desenham-se a partir do torneio original, que a
+ *  página encontra pela mesma posição em `clubes`. ★Manuel também pelos
+ *  confrontos do match play. */
+export function buildClubesEntries(clubes: FPGTournament[]): CircuitEntry[] {
+  return clubes.map((t): CircuitEntry => {
+    const results = clubesIndividualTournament(t);
+    const key = fpgMemberKey(t);
+    const hasManuel = clubesHasManuel(t);
+    const escalao = t.escalao || undefined;
+    const y = parseInt(t._clubesYear ?? "", 10);
+    const year = Number.isFinite(y) ? y : yearOf(t.date);
+    return {
+      id: `clubes-${year ?? "?"}-${key}`,
+      year,
+      name: t.name || t.campo || "Torneio",
+      tcode: t.tcode,
+      course: t.campo || undefined,
+      dateStart: t.date,
+      memberIds: [key],
+      escalao,
+      playerCount: t.playerCount || results.players.length,
+      divisionCount: 1,
+      hasManuel,
+      divisions: [{
+        key,
+        escalao: escalao ?? "",
+        tabLabel: escalao ?? t.name,
+        hasManuel,
+        results,
+      }],
+    };
+  });
+}
+
 /** Deep-link `/FPG/torneio/{ccode}-{tcode}` → (entrada, escalão) do shell. Um
  *  membro pode ter tcode sintético "A+B" (multi-dia); o URL canónico usa só o
  *  1º tcode, por isso o match parte o "+". Sem `tkey` ou sem match → ambos
@@ -163,5 +202,20 @@ export const FPG_CONFIG: CircuitConfig = {
     escalao: true,
     sex: true,
     toggles: ["manuel", "pt", "top10"],
+  },
+};
+
+/** Config do CircuitShell na vista Clubes: agrupada por ano da edição e com o
+ *  ★Manuel ligado à partida (como a lista antiga de /FPG/clubes). */
+export const CLUBES_CONFIG: CircuitConfig = {
+  ...FPG_CONFIG,
+  title: "🏅 Clubes",
+  grouping: "year",
+  filters: {
+    search: true,
+    year: true,
+    escalao: true,
+    toggles: ["manuel"],
+    defaultToggles: ["manuel"],
   },
 };

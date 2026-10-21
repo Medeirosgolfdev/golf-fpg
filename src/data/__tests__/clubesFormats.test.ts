@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   autoGruposByClub, diaPoints, diaPendentes, playerRows, matchPlayToPlayers,
-  clubesIndividualTournament, selectClubesList, isClubesMatchPlay,
+  clubesIndividualTournament, clubesHasManuel, isClubesMatchPlay,
 } from "../clubesFormats";
 import type { Tournament, Player } from "../fpgTypes";
 import type { MatchPlayData, MpDia } from "../clubesMatchplayTypes";
@@ -102,8 +102,8 @@ describe("match play 3-way", () => {
   });
 });
 
-describe("selectClubesList", () => {
-  it("★Manuel também pelos confrontos do match play; ordena por ano desc e escalão", () => {
+describe("clubesHasManuel", () => {
+  it("★Manuel pelos jogadores e também pelos confrontos do match play", () => {
     const mp: MatchPlayData = { clubs: [], categories: [{ key: "J", label: "J", dias: [
       { dia: 1, subtotal: {}, matches: [{ match: 1, players: { cgss: { name: "Manuel Medeiros", fed: "52884" } } }] }] }] };
     const ts = [
@@ -111,9 +111,6 @@ describe("selectClubesList", () => {
       mkT({ name: "B", ccode: "1", tcode: "2", _clubesYear: "2026", _clubesEsc: "sub18" }),
       mkT({ name: "C", ccode: "059", tcode: "10685", _clubesYear: "2026", _clubesEsc: "midam", matchPlayResults: mp }),
     ];
-    const opts = { filterManuel: false, yearFilter: null, searchTerm: "" };
-    expect(selectClubesList(ts, opts).map(t => t.name)).toEqual(["C", "B", "A"]);
-    expect(selectClubesList(ts, { ...opts, filterManuel: true }).map(t => t.name)).toEqual(["C", "A"]);
-    expect(selectClubesList(ts, { ...opts, yearFilter: "2024" }).map(t => t.name)).toEqual(["A"]);
+    expect(ts.filter(clubesHasManuel).map(t => t.name)).toEqual(["A", "C"]);
   });
 });

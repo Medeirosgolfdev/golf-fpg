@@ -35,6 +35,7 @@ import AdmissionsTab from "../../ui/AdmissionsTab";
 import { teeRuleFor } from "../../utils/teeRegulation";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
+import { initialTabIndex } from "./detailTabs";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -83,9 +84,12 @@ export interface TournamentDetailProps {
   /** Parâmetro do URL que guarda a aba (default «tab»; a /uskids usa «tab»
    *  para as suas abas e passa outro). */
   tabParam?: string;
+  /** Aba a abrir quando o URL não traz nenhuma (ex.: «grupos» nos torneios de
+   *  clubes). Sem ela, abre na fase mais avançada do torneio. */
+  defaultTab?: string;
 }
 
-function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab" }: TournamentDetailProps) {
+function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leadingTabs, roundDraws, roundLabels, siLabel, options, accShowCols, accExtraColumns, accHeader, accExtra, roundExtra, renderRoundSection, renderAccSection, renderAccName, drawHideCols, hideHeader, synthDraws = true, tabParam = "tab", defaultTab }: TournamentDetailProps) {
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
@@ -276,7 +280,6 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   // auto-select — quem quer essas vai por link explícito.
   const [searchParams] = useSearchParams();
   const urlTabKey = searchParams.get(tabParam);
-  const urlTabIdx = urlTabKey ? tabs.findIndex(t => t.key === urlTabKey) : -1;
   const lastProgressionIdx = useMemo(() => {
     // "matchplay" fora do auto-select: o default fica no Resumo (regra global);
     // a fase knockout vê-se por clique explícito na tab "Match Play".
@@ -291,7 +294,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
     }
     return 0;
   }, [tabs, extraTabs, leadingTabs]);
-  const tab = urlTabIdx >= 0 ? urlTabIdx : lastProgressionIdx;
+  const tab = initialTabIndex(tabs, urlTabKey, defaultTab, lastProgressionIdx);
 
   const activeTab = tabs[Math.min(tab, Math.max(0, tabs.length - 1))];
   const activeKey = activeTab?.key || "";

@@ -44,7 +44,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
   - Rankings com circuito de eventos: `ui/ranking/RankingPage` (`RankingPage`, `RankingList`, `RankingTable`, `RankingDetail`) — a página só dá configuração e colunas.
   - Evolução ano-a-ano: `ui/evo.tsx` (`EvoSummary`, `tagEvo`, `makeEvoCols`).
   - Provas de fora da FPG: `intlScorecardOptions({...})` (`src/data/intlScorecard.ts`) e `buildFPGTournament()` (`src/data/intlTournament.ts`).
-  - CircuitShell: abas próprias de uma divisão em `extraSections`.
+  - CircuitShell: abas próprias de uma divisão em `extraSections`. Com `renderFull` (TournamentDetail), as abas da página vão em `leadingTabs`/`extraTabs` e a aba inicial sem `?tab=` em `defaultTab` (os Clubes da FPG abrem em «Grupos», 21/10/2026).
   - Match play: `ui/circuit/MatchplayView` (formato `MatchplayFile`) — brackets ETC/FFG/Taça da Federação e o 3-way dos Clubes (`sides`, `playerRefs`, `pendingNote`, prop `roundPicker`; adaptador `data/clubesMatchplayAdapter.ts`). Classificação de equipas por pontos (categoria × dia): `ui/circuit/TeamPointsStandings` (21/10/2026).
 - Datas/idades/bandeiras em `utils/`: `dateParts`, `ageAtDate`, `birthYearOf`, `todayIso`, `fmtDateRangePt`, `shortDateSlash` (`format.ts`); `flagOrEmpty`, `clubFlagPrefix`, `isPtCountry` (`flagUtils.ts`); `normLoose`/`normName` (`normName.ts`).
 - `Toolbar.tsx` exporta `Toolbar`, `ToolbarTitle`, `ToolbarMeta`, `ToolbarSep`.

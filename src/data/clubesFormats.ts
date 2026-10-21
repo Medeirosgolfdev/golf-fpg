@@ -5,7 +5,7 @@
  * - autoGruposByClub: composição das equipas a partir dos próprios jogadores
  * - match play 3-way: pontos por dia, confrontos por publicar, linhas por
  *   jogador, jogadores/draw sintéticos para o tab Individual
- * - selectClubesList: a lista da sidebar (filtros ★Manuel, ano e pesquisa)
+ * - clubesHasManuel: ★Manuel da sidebar (também pelos confrontos do match play)
  *
  * Extraído da FPGPage a 21/10/2026 — a página só desenha.
  */
@@ -14,8 +14,6 @@ import type { FpgDraw, FpgDrawFlight } from "./nacional2026Loader";
 import type { MatchPlayData, MpDia, MpMatch, MpRow } from "./clubesMatchplayTypes";
 import type { CategoriaCfg } from "../ui/ClubesCategoriasView";
 import { isManuel } from "../constants/manuel";
-import { yearMatchesFilter } from "../pages/fpg/constants";
-import { matchesTournamentSearch } from "./fpgUtils";
 
 export interface ClubesTeamFormat {
   bestNByRound?: number[];
@@ -295,21 +293,8 @@ export function clubesIndividualTournament(t: Tournament): Tournament {
   };
 }
 
-/* ── Lista da sidebar ─────────────────────────────────────────────────── */
-
-/** Lista de Clubes filtrada (★Manuel — também nos confrontos do match play —,
- *  ano e pesquisa), ordenada por ano desc e depois por escalão. */
-export function selectClubesList(
-  clubes: Tournament[],
-  opts: { filterManuel: boolean; yearFilter: string | null; searchTerm: string },
-): Tournament[] {
-  return clubes
-    .filter(t => !opts.filterManuel || t.players.some(p => isManuel(p)) || matchPlayHasManuel(t.matchPlayResults))
-    .filter(t => yearMatchesFilter(t._clubesYear ?? t.date?.substring(0, 4), opts.yearFilter))
-    .filter(t => matchesTournamentSearch(t, opts.searchTerm))
-    .sort((a, b) => {
-      const yCmp = (b._clubesYear ?? "").localeCompare(a._clubesYear ?? "");
-      if (yCmp !== 0) return yCmp;
-      return (a._clubesEsc ?? "").localeCompare(b._clubesEsc ?? "");
-    });
+/** O Manuel jogou (ou está nos confrontos do match play) neste torneio de
+ *  clubes? Alimenta o ★Manuel da sidebar de /FPG/clubes. */
+export function clubesHasManuel(t: Tournament): boolean {
+  return t.players.some(p => isManuel(p)) || matchPlayHasManuel(t.matchPlayResults);
 }
