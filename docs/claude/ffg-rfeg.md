@@ -105,6 +105,22 @@ Armadilhas medidas (todas com caso real):
   `memberIds[]` (novo campo opcional em `CircuitEntry`) e o `selectedId` da
   RFEGPage resolve o membro → grupo.
 
+### Onde está o código de Espanha (21/10/2026)
+
+A `RFEGPage` só desenha. Os dados vivem em `src/data/rfeg/`: `types.ts` (formatos
+das fontes e dos lookups por licença — `DobLookup`/`HcpLookup` são os mesmos do
+`fcgAdapter`), `text.ts` (`normEs`, `esDateToIso`), `escalao.ts` (`ageToSubN`,
+`escaloEsForPlayer`…), `flags.ts` (`rfegPlayerFlag`, overrides de nacionalidade),
+`adapters.ts` (`adaptLgs`, `adaptNextCaddy`), `toTournament.ts` (LGS/NextCaddy/
+RFEGolf/mitarjeta → Tournament FPG), `horarios.ts`, `roundDraw.ts`
+(`rfegRoundDraw`: o draw de uma volta já enriquecido), `divisionData.ts`
+(`loadRfegDivisionData`: detalhe lazy de um torneio — inscrições, links de PDF,
+voltas com draw, totais/destaques NextCaddy, divisão M/F), `entries.ts`
+(`buildRfegEntries`: sidebar, gémeos, `grp-…`), `lookups.ts` e o hook
+`useRfegData.ts`. As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
+passaram para `src/data/playerLookups.ts`. Testes:
+`src/data/__tests__/rfegConverters.test.ts`.
+
 ## Espanha — guardas dos scrapers (2026-10-20)
 
 As fontes espanholas respondem às vezes 200 com lixo (listas vazias, páginas de

@@ -113,7 +113,7 @@ for (const t of readJson(IDX_IN).tournaments || []) {
 
 /**
  * Índice da prova no catálogo (-1 se não está no índice → sem página nem meta).
- * `noLink` espelha o filtro `visible` do buildRfegEntries (RFEGPage): sem
+ * `noLink` espelha o filtro `visible` do buildRfegEntries (src/data/rfeg/entries.ts): sem
  * categoria e sem classificados nem admitidos, a prova não entra na sidebar —
  * linkar para lá dava uma página vazia.
  */

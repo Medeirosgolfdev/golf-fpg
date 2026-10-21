@@ -65,7 +65,7 @@ node scripts/scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamid
 > (Doral) e "Nome Apelido" (Future Masters/GolfGenius) darem a MESMA chave — antes
 > a mesma pessoa contava 2× (o Axel Monssoh saltou de 8→15 presenças). O
 > `build-major-catalog.js` espelha o `vetKey`; o `CircuitShell` faz o lookup com o
-> mesmo; o `normNameVet` da RFEGPage passou a reexportar o `vetKey` partilhado.
+> mesmo; o índice de veteranos de Espanha (`src/data/rfeg/useRfegData.ts`) usa o `vetKey` partilhado.
 >
 > **`major-veterans.json` + tab "✈️ Internacionalizações" (2026-07-24)** — o mesmo
 > `build-major-catalog.js` emite um 2º ficheiro (`public/data/major-veterans.json`,

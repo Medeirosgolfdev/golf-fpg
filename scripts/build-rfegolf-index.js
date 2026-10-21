@@ -133,7 +133,7 @@ function rfegHasPt(j) {
 }
 
 // ── Roster fingerprint ────────────────────────────────────────
-// Permite ao buildRfegEntries (RFEGPage) confirmar "é o mesmo evento?" por
+// Permite ao buildRfegEntries (src/data/rfeg/entries.ts) confirmar "é o mesmo evento?" por
 // JOGADORES no momento em que constrói a sidebar, sem carregar as divisões.
 // Chave = nome normalizado (todas as fontes têm nome; a comparação no cliente é
 // sempre DENTRO do mesmo balde fonte|ano|nome-base, por isso o formato do nome é

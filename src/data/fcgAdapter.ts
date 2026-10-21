@@ -17,12 +17,8 @@
  */
 import { displayName as displayCase } from "../utils/format";
 
-// Types redefinidos localmente (DobLookup/HcpLookup são privados ao RFEGPage.tsx).
-// Compatíveis estruturalmente — TypeScript faz duck typing.
-interface DobLookupEntry { name: string | null; dob: string; dobIso: string; sex: string | null; club: string | null; catEdad: string | null; licencia?: string | null }
-export type DobLookup = Record<string, DobLookupEntry>;
-interface HcpLookupEntry { hcp: number; source: string; tourneyId?: number; dateIso?: string | null }
-export type HcpLookup = Record<string, HcpLookupEntry>;
+// Os mesmos lookups por licença das outras fontes de Espanha.
+import type { DobLookup, HcpLookup } from "./rfeg/types";
 
 interface FCGScorecardGameTee {
   color: string | null;
