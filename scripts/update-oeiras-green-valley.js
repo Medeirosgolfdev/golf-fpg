@@ -26,7 +26,8 @@
  *   node scripts/update-oeiras-green-valley.js [--dry-run]
  *
  * Depois: `node scripts/build-course-players.js` (o alias "oeiras" →
- * "Oeiras Green Valley" em scripts/lib/course-aliases.cjs garante que as
+ * "Oeiras Green Valley" em src/utils/courseAliases.ts (que os scripts carregam via
+ * scripts/lib/course-aliases.cjs) garante que as
  * voltas antigas, cujo nome de campo na FPG é "Oeiras", continuam a ligar).
  */
 const fs = require("fs");

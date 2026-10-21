@@ -1,6 +1,6 @@
 /**
  * scripts/lib/drive-points.cjs — ESPELHO Node de src/constants/drivePoints.ts
- * (o Node não importa .ts; precedente: course-aliases.cjs ↔ courseAliases.ts).
+ * (espelho antigo; hoje o Node ≥ 22.18 já carrega .ts — ver scripts/lib/whs.cjs).
  * ⚠ MANTER SINCRONIZADO com src/constants/drivePoints.ts.
  *
  * Tabelas oficiais FPG/DataGolf do ranking Drive — POR SÉRIE (2026-07-10):

@@ -21,6 +21,14 @@
  *   - FPGPage `loadAllFiles` (normaliza ao carregar pull-torneios*.json)
  *   - KIDSdataLoader `processPullTorneios` (idem)
  *   - Qualquer outro loader que leia dados do scrape FPG
+ *   - Scripts Node: `scripts/lib/course-aliases.cjs` e `lib/course-aliases.js`
+ *     carregam ESTE ficheiro (o Node ≥ 22.18 corre TypeScript), como o
+ *     `scripts/lib/whs.cjs` faz com o whsCalc.ts. Até 2026-10-20 havia 3 cópias
+ *     à mão da tabela de aliases, que já tinham divergido.
+ *
+ * ⚠ Por isso este ficheiro só pode ter sintaxe que o Node sabe apagar (tipos,
+ * interfaces, `type`) — nada de `enum`/`namespace` — e NÃO importa outros
+ * ficheiros do `src` (`scripts/course-aliases-loader.test.js` parte se falhar).
  */
 
 /**
@@ -68,6 +76,10 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "oceânico o'connor": "O'Connor Jnr Course",
   "oceanico o'connor": "O'Connor Jnr Course",
 
+  // Oceânico Faldo → Faldo Course (mesmo campo, Amendoeira). 2026-06-13.
+  "oceânico faldo": "Faldo Course",
+  "oceanico faldo": "Faldo Course",
+
   // Morgado do Reguengo Golfe → Morgado Golf (par exacto).
   "morgado do reguengo golfe": "Morgado Golf",
 
@@ -114,10 +126,18 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "454golf du médoc": "Golf du Médoc",
   "pga catalunya resort, spain": "PGA Catalunya Resort",
 
+  // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
+  // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,
+  // mas a app deixava passar o curto (unificado a 2026-10-20).
+  "tróia": "Troia Golf",
+  "troia": "Troia Golf",
+  "porto santo": "Porto Santo Golfe",
+  "santo estevão": "Santo Estevão Golf",
+  "santo estevao": "Santo Estevão Golf",
+
   // ── NOVO 2026-08-20 — Oeiras remodelado e renomeado "Oeiras Green Valley" ──
   // A FPG continua a escrever só "Oeiras" no campo das voltas; sem o alias, o
   // rename no master-courses.json orfanava as 638 voltas nossas (124 jogadores).
-  // Espelhado em scripts/lib/course-aliases.cjs.
   "oeiras": "Oeiras Green Valley",
   "oeiras golf": "Oeiras Green Valley",
 
@@ -170,7 +190,14 @@ export function resolveAroeiraIIByPar(name: string, pars: number[] | null | unde
 
 /** Normaliza key para lookup em COURSE_NAME_ALIASES. */
 function aliasKey(s: string): string {
-  return s.toLowerCase().replace(/\s+/g, " ").trim();
+  return String(s || "").toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+/** Normalização para comparar nomes (sem acentos, só letras/dígitos). */
+export function norm(s: string | null | undefined): string {
+  return String(s || "").trim().normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "").toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ").trim();
 }
 
 /* ─────────────────────────────────────────────────────────────────────────
@@ -237,7 +264,7 @@ export function resolveSantoDaSerraByPar(name: string, pars: number[] | null | u
  * ordenando os nines alfabeticamente em 18H. Não consegue corrigir nines
  * mal-etiquetados em 9H.
  */
-function canonicalSantoDaSerraNameOnly(name: string): string {
+export function canonicalSantoDaSerraNameOnly(name: string): string {
   if (!isSantoDaSerraName(name)) return name;
   const m = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*[-/]\s*([A-Za-zÀ-ÿ]+)\s*$/);
   if (m) {
@@ -299,7 +326,7 @@ export function canonicalCourseName<T extends string | null | undefined>(name: T
 // A config nova começa por 4-3-4-4-4-5 (par 18 = 3).
 
 /** Padrão de pars da config ANTIGA do PGA Aroeira No.2 */
-const AROEIRA2_OLD_PAR = [4, 5, 4, 5, 3, 4, 4, 3, 4, 4, 5, 3, 4, 3, 4, 4, 4, 5];
+export const AROEIRA2_OLD_PAR = [4, 5, 4, 5, 3, 4, 4, 3, 4, 4, 5, 3, 4, 3, 4, 4, 4, 5];
 
 /** Roda um array N posições para a esquerda (wrap-around). */
 function rotateLeft<T>(arr: T[], n: number): T[] {
@@ -375,4 +402,186 @@ export function rotateAroeira2ScorecardIfNeeded(sc: Record<string, unknown>): bo
   }
   sc._rotated = 12;
   return true;
+}
+
+/**
+ * Nome usado pelo pipeline Node (lib/process-data.js) para a mesma rotação:
+ * os registos da FPG (par_1..par_18, gross_1.., …) são o formato `Scorecard`.
+ */
+export const rotateAroeira2RecordIfNeeded = rotateAroeira2ScorecardIfNeeded;
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Resolução por par[] → courseKey do master-courses.json
+ * (usado pelo scripts/build-course-players.js; vinha da cópia em
+ * scripts/lib/course-aliases.cjs — unificado aqui a 2026-10-20)
+ * ───────────────────────────────────────────────────────────────────────── */
+
+/* Ribagolfe I/II por par (decisão 2026-06-13: resolver por par, sem assumir
+ * I=Lakes/II=Oaks). Pars extraídos de master-courses.json. */
+const RIBAGOLFE_PAR_TO_KEY: Record<string, string> = {
+  "[4,5,4,4,3,5,4,3,4,4,4,5,4,4,3,5,3,4]": "ribagolfe-lakes",
+  "[5,4,3,4,3,4,4,5,4,4,4,3,5,4,3,4,4,5]": "ribagolfe-oaks",
+};
+export function resolveRibagolfeKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
+  if (!/^\s*ribagolfe\b/i.test(String(name || ""))) return null;
+  if (!Array.isArray(pars) || pars.length !== 18) return null;
+  return RIBAGOLFE_PAR_TO_KEY[JSON.stringify(pars)] || null;
+}
+// Fallback por nome (voltas sem scorecard). I=Lakes / II=Oaks VERIFICADO por par:
+// 459 voltas resolvidas por par são 100% consistentes (I→Lakes 273, II→Oaks 186).
+const RIBAGOLFE_NAME_TO_KEY: Record<string, string> = { i: "ribagolfe-lakes", ii: "ribagolfe-oaks" };
+export function resolveRibagolfeKeyByName(name: string | null | undefined): string | null {
+  const m = String(name || "").match(/^\s*ribagolfe\s+(i{1,2})\b/i);
+  return m ? (RIBAGOLFE_NAME_TO_KEY[m[1].toLowerCase()] || null) : null;
+}
+
+/* Santo da Serra — 3 nines (par 36 cada) → combos do master. */
+const SDS_NINE_ID: Record<string, string> = {
+  "[4,4,5,3,4,4,5,3,4]": "machico",
+  "[4,5,4,4,4,3,5,3,4]": "desertas",
+  "[5,4,4,4,3,4,4,3,5]": "serras",
+};
+// Chave = nines ordenados alfabeticamente, separados por "|".
+const SDS_COMBO_KEY: Record<string, string> = {
+  "desertas|serras": "santo-da-serra-desertas-serras",
+  "desertas|machico": "santo-da-serra-machico-desertas",
+  "machico|serras": "santo-da-serra-serras-machico",
+  "serras|serras": "santo-da-serra-serras-serras",
+};
+// 9 buracos de loop único → combo onde esse nine é o FRONT-nine (F9).
+const SDS_NINE_KEY: Record<string, string> = {
+  "serras": "santo-da-serra-serras-serras",
+  "desertas": "santo-da-serra-desertas-serras",
+  "machico": "santo-da-serra-machico-desertas",
+};
+function _sdsNine(p9: number[]): string | null {
+  return (Array.isArray(p9) && p9.length === 9) ? (SDS_NINE_ID[JSON.stringify(p9)] || null) : null;
+}
+export function resolveSantoDaSerraKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
+  if (!isSantoDaSerraName(name) || !Array.isArray(pars)) return null;
+  if (pars.length === 9) {
+    const n = _sdsNine(pars);
+    return n ? (SDS_NINE_KEY[n] || null) : null;
+  }
+  if (pars.length === 18) {
+    const f = _sdsNine(pars.slice(0, 9)), b = _sdsNine(pars.slice(9, 18));
+    if (!f || !b) return null;
+    const [a, c] = [f, b].sort();
+    return SDS_COMBO_KEY[`${a}|${c}`] || null;
+  }
+  return null;
+}
+// Fallback sem par: parsear os nomes dos nines do próprio nome e ordenar.
+export function resolveSantoDaSerraKeyByName(name: string | null | undefined): string | null {
+  if (!isSantoDaSerraName(name)) return null;
+  const m = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*[-+/]\s*([A-Za-zÀ-ÿ]+)\s*$/);
+  if (m) {
+    const [a, b] = [m[1].toLowerCase(), m[2].toLowerCase()].sort();
+    return SDS_COMBO_KEY[`${a}|${b}`] || null;
+  }
+  const m2 = String(name).match(/-\s*([A-Za-zÀ-ÿ]+)\s*$/);
+  if (m2) return SDS_NINE_KEY[m2[1].toLowerCase()] || null;
+  return null;
+}
+
+/* Campos multi-loop PT (Vila Sol, Pinheiros Altos, Castro Marim): a FPG nomeia
+ * por UM nine ou por um combo cuja ordem não bate com o master. Resolve-se o
+ * combo pelo par[] dos DOIS nines. Assinaturas extraídas de master-courses.json. */
+interface Multiloop {
+  re: RegExp;
+  nines: Record<string, string>;
+  combos: Record<string, string>;
+  singleNine: Record<string, string>;
+}
+const MULTILOOP: Multiloop[] = [
+  {
+    re: /vila\s*sol/i,
+    nines: {
+      "[4,5,4,3,5,3,4,4,4]": "challenge",
+      "[5,3,4,4,5,4,3,4,4]": "prestige",
+      "[4,4,4,3,4,5,3,5,4]": "prime",
+    },
+    combos: {
+      "challenge|prestige": "vila-sol-challenge-prestige-10-27",
+      "prestige|prime": "vila-sol-prestige-prime-19-9",
+      "challenge|prime": "vila-sol-prime-challenge-1-18",
+    },
+    singleNine: {
+      "challenge": "vila-sol-challenge-prestige-10-27",
+      "prestige": "vila-sol-prestige-prime-19-9",
+      "prime": "vila-sol-prime-challenge-1-18",
+    },
+  },
+  {
+    re: /pinheiros\s*altos/i,
+    nines: {
+      "[4,3,4,4,3,4,5,5,4]": "corks",
+      "[4,4,5,5,3,4,4,3,4]": "olives",
+      "[4,3,4,5,4,5,4,4,3]": "pines",
+    },
+    combos: {
+      "corks|olives": "pinheiros-altos-corksolives",
+      "olives|pines": "pinheiros-altos-olivespines",
+      "corks|pines": "pinheiros-altos-pinescorks",
+    },
+    singleNine: {
+      "corks": "pinheiros-altos-corksolives",
+      "olives": "pinheiros-altos-olivespines",
+      "pines": "pinheiros-altos-pinescorks",
+    },
+  },
+  {
+    re: /castro\s*marim/i,
+    nines: {
+      "[4,4,4,3,4,4,4,3,5]": "atlantico",
+      "[4,3,4,5,5,3,4,4,4]": "grouse",
+      "[4,3,5,5,4,4,3,4,4]": "guadiana",
+    },
+    combos: {
+      "atlantico|grouse": "castro-marim-atlanticogrouse",
+      "grouse|guadiana": "castro-marim-grouseguadiana",
+      "atlantico|guadiana": "castro-marim-guadianaatlantico",
+    },
+    singleNine: {
+      "atlantico": "castro-marim-atlanticogrouse",
+      "grouse": "castro-marim-grouseguadiana",
+      "guadiana": "castro-marim-guadianaatlantico",
+    },
+  },
+];
+export function resolveMultiloopKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
+  if (!Array.isArray(pars)) return null;
+  const s = String(name || "");
+  for (const m of MULTILOOP) {
+    if (!m.re.test(s)) continue;
+    if (pars.length === 9) {
+      const nine = m.nines[JSON.stringify(pars)];
+      return nine ? (m.singleNine[nine] || null) : null;
+    }
+    if (pars.length === 18) {
+      const f = m.nines[JSON.stringify(pars.slice(0, 9))];
+      const b = m.nines[JSON.stringify(pars.slice(9, 18))];
+      if (!f || !b) return null;
+      const [a, c] = [f, b].sort();
+      return m.combos[`${a}|${c}`] || null;
+    }
+    return null;
+  }
+  return null;
+}
+// Fallback por nome (voltas sem scorecard): nines presentes no nome (sem
+// acentos) → 1 nine = singleNine, 2 nines = combo.
+export function resolveMultiloopKeyByName(name: string | null | undefined): string | null {
+  const s = norm(name);
+  for (const m of MULTILOOP) {
+    if (!m.re.test(String(name || ""))) continue;
+    const present = Object.keys(m.singleNine).filter((n) => s.includes(n));
+    if (present.length === 1) return m.singleNine[present[0]];
+    if (present.length === 2) {
+      const [a, b] = present.slice().sort();
+      return m.combos[`${a}|${b}`] || null;
+    }
+    return null;
+  }
+  return null;
 }

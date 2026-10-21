@@ -5,7 +5,8 @@
  * regra de escalão que a app usa em runtime. **Manter sincronizado** — o teste
  * `scripts/ffg-escalao-mirror.test.js` compara as duas implementações sobre
  * todos os labels reais dos ficheiros FFG e falha se divergirem.
- * (Precedente: `lib/course-aliases.cjs` ↔ `src/utils/courseAliases.ts`.)
+ * (O course-aliases.cjs deixou de ser espelho a 2026-10-20: carrega o .ts, como
+ * o whs.cjs — melhor caminho quando se puder.)
  */
 "use strict";
 

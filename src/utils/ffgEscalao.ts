@@ -3,8 +3,9 @@
  *
  * Fonte ÚNICA da regra (era interna à FFGPage). Espelhada em Node por
  * `scripts/lib/ffg-escalao.cjs` — **manter as duas sincronizadas** (o teste
- * `scripts/ffg-escalao-mirror.test.js` falha se divergirem). Precedente:
- * `lib/course-aliases.cjs` ↔ `src/utils/courseAliases.ts`.
+ * `scripts/ffg-escalao-mirror.test.js` falha se divergirem).
+ * (o course-aliases deixou de ser espelho a 2026-10-20: o Node carrega o .ts,
+ * como o `scripts/lib/whs.cjs` — é o caminho a seguir quando se puder).
  *
  * Buckets pela equivalência oficial do Vademecum (ffg-categories-age.json):
  * Poucet=U9-10 · Poussin=U11-12 · Benjamin=U13-14 · Minime=U15-16 ·
