@@ -17,10 +17,10 @@
 | `/kids2` (+ `/scout/:tid`, `/inscricoes`, `/ranking`, `/ranking/:year`, `/:juniorId`, `/next-t`) | KIDS2Page | rebuild canonical-first do tracker de rivais; sub-rotas em `src/pages/kids2/`. `/next-t` (Próximos torneios) é um CircuitShell desde 20/10/2026 (`kids2/nextCircuit.tsx`; `?t=&esc=&tab=`, os links antigos `tab=players&vista=…` continuam) |
 | `/FPG` (+ `/torneio/:tkey`, `/:filter`, `/:filter/:sub`; `/diversos` → redirect `/FPG`; o antigo `/FPG/clubes?ct=ccode-tcode` → `/FPG/torneio/ccode-tcode`) | FPGPage (estrutura em «A /FPG por dentro», abaixo) | pull-torneiosNNN.json, jovens_YYYY.json, CLUBES/clubes_sub_14&18, drive/aquapor-data (só os do `fpg-files-index.json`) |
 | `/drive` (+ `/torneio/:tkey`) | DrivePage | drive-data-YYYY-MM.json, aquapor-data-YYYY-MM.json |
-| — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO de dados (URLS, loadT, bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage — UI standalone removida 2026-07-02 | brjgt*_*.json, wjgc_*.json |
+| — (`/bjgt` e `/bjgt-legacy` → redirect `/major`) | BJGTPage.tsx é MÓDULO (bjgtMajorDivision, FStats/HoleDiff/ManuelDay) consumido pela MajorPage; os dados vivem em `src/data/major/bluegolf.ts` — UI standalone removida 2026-07-02 | brjgt*_*.json, wjgc_*.json |
 | `/bjgt-analysis/:fed?` | BJGTAnalysisPage | data.json por jogador |
 | `/major` (+ `/:source/:year`) | MajorPage | funde Doral + BJGT/EOWAGR no CircuitShell, agrupado por série/ano |
-| — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO de dados (DATA_FILES, normalizeFile, doralMajorDivision) consumido pela MajorPage — UI standalone removida 2026-07-02 | ftm_doral_*.json |
+| — (`/doral` e `/doral-legacy` → redirect `/major`) | DORALPage.tsx é MÓDULO (doralEvoFor, doralMajorDivision) consumido pela MajorPage; os dados vivem em `src/data/major/doral.ts` — UI standalone removida 2026-07-02 | ftm_doral_*.json |
 | `/comparar` | ComparePage (redirect) | **saiu da barra 2026-10-13** → `/campos?view=comparar` (vista «Comparar» dos Campos: Campo A vs B · Vantagem de Tee — `CamposCompareView`); comparar jogadores = `/jogadores?comparar=1` (CompararPage na vista «⚔️ Comparar» dos Jogadores) |
 | `/simulador` | SimuladorRedirect | **vista dos Campos desde 2026-10-13** → `/campos/<campo>?view=sim` |
 | `/calendario` | CalendarioPage (dados em `src/data/calendarEvents.ts`) | players.json (aniversários) |

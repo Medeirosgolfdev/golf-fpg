@@ -232,9 +232,9 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | uskids-field-sizes.json | USKids | fetch-uskids-field-sizes.js (manual, sem workflow) | ✗ | agregador (`sources/uskids.js`) |
 | uskids-discovery-cache.json | USKids | fetch-uskids-field.js (Fase 1) | ✗ | fetch-uskids-results.js |
 | t_de_tournaments_do_uskids.json | USKids | (automação, 6448 entries) | ✗ | agregador (lookup de nomes por t=) |
-| brjgt*_*.json, wjgc_*.json | BJGT/WJGC | scraper antigo (⛔ não correr; ficheiros históricos) | ✓ | MajorPage (via módulo BJGTPage), FieldRivaisDashboard, agregador |
-| eowagr25_*.json | EOWAGR | scraper antigo (⛔ não correr; ficheiros históricos) | ✓ | MajorPage (via módulo BJGTPage), agregador |
-| ftm_doral_{2018..2025}.json | Doral | scrape-golfgenius.js | r1/r2Gross | MajorPage (via módulo DORALPage), agregador |
+| brjgt*_*.json, wjgc_*.json | BJGT/WJGC | scraper antigo (⛔ não correr; ficheiros históricos) | ✓ | MajorPage (via `src/data/major/bluegolf.ts`), FieldRivaisDashboard, agregador |
+| eowagr25_*.json | EOWAGR | scraper antigo (⛔ não correr; ficheiros históricos) | ✓ | MajorPage (via `src/data/major/bluegolf.ts`), agregador |
+| ftm_doral_{2018..2025}.json | Doral | scrape-golfgenius.js | r1/r2Gross | MajorPage (via `src/data/major/doral.ts`), agregador |
 | coc_{2023..2026}.json | Champion of Champions | scrape-golfgenius-node.js (`--scope`) | ✓ (9 e 18 buracos) | MajorPage (source `coc`), aggregator (`sources/coc.js`) |
 | france-players.json | FFG | build-france-players.js | ✗ | FFGPage (`/ffg/info/joueurs`), aggregator |
 | ffgolf-player-tournaments.json | FFG | build-france-players.js | ✗ | FFGPage — torneios+resultados de cada jogador (painel expansível) |

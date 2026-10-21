@@ -3,7 +3,7 @@
  * scrape-golfbox.js — Scraper Node-puro (SEM Playwright) para torneios juvenis
  * hospedados no GolfBox Livescoring (scores.golfbox.dk). Output: JobFile (o mesmo
  * formato dos GolfGenius FSGA/UA/México), consumido pela `MajorPage` via
- * `buildGgJobEntries` → tabs flat Draw R{n} · R{n} · Resumo · Scorecards.
+ * `ggJobDivisions` → tabs flat Draw R{n} · R{n} · Resumo · Scorecards.
  *
  * A app pública `www.golfbox.dk/livescoring/tour/` é uma SPA que carrega tudo de
  * `scores.golfbox.dk/Handlers/*` em JSONP. Um único `GetLeaderboard` por CLASSE

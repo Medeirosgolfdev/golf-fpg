@@ -12,15 +12,15 @@
  *
  * O catálogo é DERIVADO dos ficheiros de dados existentes (glob) — sem
  * adivinhar anos → sem 404s. Para bjgt/eowagr, as datas de ronda não vivem nos
- * ficheiros bluegolf (vêm do array URLS da BJGTPage), por isso há um pequeno
+ * ficheiros bluegolf (vêm do BLUEGOLF_FILES de src/data/major/bluegolf.ts), por isso há um pequeno
  * mapa ROUND_DATES aqui (eventos históricos, estáveis).
  *
  * Correr:  node scripts/build-major-catalog.js
  * Deve correr sempre que um ficheiro de dados MAJOR muda (ver workflows).
  *
- * ⚠ As regras de metadata AQUI espelham os builders da MajorPage.tsx
- * (buildMajorEntries / buildJobEntries / buildFmEntries / buildGgJobEntries).
- * Se um builder mudar a forma como calcula name/playerCount/etc., actualizar aqui.
+ * ⚠ A metadata da lista (name/playerCount/etc.) calcula-se SÓ aqui (a página
+ * usa-a tal como vem). Os ids têm de bater com o `jobEntryId` de
+ * src/data/major/jobFile.ts — é por eles que a página encontra o ficheiro.
  */
 
 const fs = require("fs");
@@ -199,7 +199,7 @@ function buildBluegolf() {
     byKey.get(key).divs.push(d);
   }
   for (const [key, { series, year, divs }] of byKey) {
-    // players "válidos" = com total e pelo menos uma ronda (espelha loadT).
+    // players "válidos" = com total e pelo menos uma ronda (espelha normalizeBlueGolf).
     const validOf = (d) => d.players.filter((p) => p.total != null && Array.isArray(p.rounds) && p.rounds.length > 0);
     const allValid = divs.flatMap(validOf);
     const allPlayers = divs.flatMap((d) => d.players);
@@ -246,7 +246,7 @@ function buildDoral() {
       series: "Doral",
       year,
       name: d.tournament || `Doral ${year}`,
-      // buildMajorEntries: várias divisões = vários campos → "USA" (o Doral é
+      // várias divisões = vários campos → "USA" (o Doral é
       // sempre multi-campo Red Tiger/Golden Palm/…).
       course: d.divisions.length > 1 ? "USA" : undefined,
       ...deriveDatesFromRounds(players, year),
@@ -318,7 +318,7 @@ function buildGgJob() {
       if (!year) continue;
       const players = f.divisions.flatMap((dv) => dv.players || []);
       // playerCount: "union" (total OU rondas com scores) para fm/gg em curso;
-      // só `total != null` para o JOB (espelha buildJobEntries).
+      // só `total != null` para o JOB (como sempre foi no JOB).
       let valid = players.filter((p) => (p.total != null) || (src.union && hasScores(p)));
       const scored = valid;
       // preField: fontes cujo scraper semeia o campo pré-torneio (roster + tee

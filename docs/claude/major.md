@@ -29,12 +29,25 @@ node scripts/scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamid
 > `scripts/build-major-catalog.js`): a lista lateral sai desse índice (name,
 > campo, datas, nº jog/esc/rondas, hasManuel/hasPt) e o detalhe de cada torneio
 > (scorecards) carrega **lazy** ao clicar, via `loadDivisions` no `CircuitShell`
-> (que já suportava + cacheia — mesmo padrão do FFG/England). Os builders eager
-> (`buildMajorEntries`/`buildJobEntries`/`buildFmEntries`/`buildGgJobEntries`)
-> **mantêm-se** — o `loadDivisions` reusa-os por-fonte, dando-lhes só a fatia
-> mínima: bjgt/eowagr → ano + irmão 2025↔2026 (evo `bjgtEvoFor`); doral → todos
-> os anos ≤ seleccionado (evo multi-ano `doralEvoFor`); gg-job → [ano-1, ano]
-> (evo `jobEvoFor`). O `veteranIndex` (toggle ✦ Veteranos) vem pré-calculado no
+> (que já suportava + cacheia — mesmo padrão do FFG/England). Cada fonte lê só
+> a fatia mínima: bjgt/eowagr → ano + irmão 2025↔2026 (evo `bjgtEvoFor`); doral →
+> todos os anos ≤ seleccionado (evo multi-ano `doralEvoFor`); gg-job → [ano-1, ano]
+> (evo `jobEvoFor`).
+>
+> **Onde está o código (21/10/2026):** os dados vivem em `src/data/major/` —
+> `bluegolf.ts` (BJGT/EOWAGR/FCG/JWGC: `BLUEGOLF_FILES`, `normalizeBlueGolf`,
+> `blueGolfToTournament`, `flagForLocation`), `doral.ts` (`DORAL_FILES`,
+> metadados por escalão, `normalizeDoralFile`, `doralEntryToTournament`),
+> `jobFile.ts` (tipos JobFile, `jobDivisionToTournament`, `jobDrawsToFpg`,
+> `jobEvoFor`, `jobEntryId`, `jobFileDivisions`) e `majorLoader.ts` (tipos do
+> catálogo, `MAJOR_JOB_SOURCES` com os ficheiros e opções de cada fonte,
+> `loadBlueGolfDefs`/`loadDoralEntries`/`loadMajorJobData`). A `MajorPage` só
+> desenha: `blueGolfDivisions`/`doralDivisions`/`jobDivisions`/`ggJobDivisions`
+> + `loadDivisionsFor`. O FM é uma fonte `gg` como as outras (`eventName`,
+> `defaultCourse`, `sortByAge`). Os metadados da lista (nome, campo, nº de
+> jogadores…) vêm **só** do catálogo — os builders da página que os recalculavam
+> (e cujo resultado o modo lazy deitava fora) saíram. Testes:
+> `src/data/__tests__/majorConverters.test.ts`. O `veteranIndex` (toggle ✦ Veteranos) vem pré-calculado no
 > catálogo (o shell não tem os jogadores em memória no modo lazy).
 >
 > ⚠ Correr `node scripts/build-major-catalog.js` sempre que um ficheiro de dados
@@ -42,9 +55,9 @@ node scripts/scrape-golfgenius.js ftm_doral_2024.json https://2024firstteemiamid
 > de dados de todas as fontes MAJOR — brjgt/eowagr/ftm_doral/orangebowl/ftm_fm,
 > as JobFile GolfGenius e GolfBox (fsga/uajt/uaworlds/mexnacional/coc/reidtrophy/
 > optimist/icopa/interzonas/avtrophy/ebtc2/egtc/elg/eatc/eatc2/eym/ejo/ejt) e
-> fcg/jwgc — + o próprio script). As regras de metadata do script **espelham** os
-> builders da `MajorPage.tsx` — se um builder mudar name/playerCount/etc., alinhar
-> o script.
+> fcg/jwgc — + o próprio script). A metadata da lista (name/playerCount/etc.)
+> calcula-se **só** no script; os ids têm de bater com o `jobEntryId`
+> (`src/data/major/jobFile.ts`).
 >
 > **`vetKey` (2026-07-24)** — o `veteranIndex` (toggle ✦ Veteranos) e a tab de
 > internacionalizações usam agora `vetKey` (`src/utils/normName.ts`): `normName`
@@ -112,7 +125,7 @@ guarda que NÃO os transforma em participações, e o catálogo MAJOR ignora-os
 `update-golfbox.yml` (cron diário 21:00 UTC + `workflow_dispatch`) scrapa TODO o
 scope, regenera juniores + **`major-catalog.json`** e committa. Adicionar um evento
 = 1 entrada no scope (`competitionId`/`slug`/`name`) + ligar a fonte na `MajorPage`
-(`sourceColors`/`sourceLabels`/`GG_JOB_LOADERS`), no `build-major-catalog.js`
+(`sourceColors`/`sourceLabels`) e em `MAJOR_JOB_SOURCES` (`src/data/major/majorLoader.ts`), no `build-major-catalog.js`
 (`GG_SOURCES`) e nos paths do `build-major-catalog.yml`. Eventos futuros (sem campo/
 scores ainda) são **saltados** pelo catálogo até terem jogadores — aparecem sozinhos
 quando o cron os apanha.
@@ -136,8 +149,8 @@ jogador pode aparecer nas duas (cross-divisão, como no England Golf).
 node scripts/scrape-fsga.js                 # EDITIONS (72nd Boys' Junior)
 node scripts/scrape-fsga.js 4708880 4739657 # v2tids ad-hoc (uma edição, várias divisões)
 ```
-Wiring: entrada `fsga` em `GG_JOB_LOADERS` (`MajorPage.tsx`), construída por
-`buildGgJobEntries`; os anos vêm do `major-catalog.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
+Wiring: entrada `fsga` em `MAJOR_JOB_SOURCES` (`src/data/major/majorLoader.ts`), desenhada por
+`ggJobDivisions` (`MajorPage.tsx`); os anos vêm do `major-catalog.json`. `jobDivisionToTournament` ganhou suporte a `pars` por
 ronda (retrocompatível — FM/JOB sem `pars` usam o par da divisão).
 
 ### scrape-golfgenius-node.js — GolfGenius genérico Node-puro (pages/v2tids) ⭐
@@ -313,7 +326,7 @@ escolha automática (Resumo).
 
 ### ⚠ Campo hardcoded na família BJGT (corrigido 2026-07-23)
 
-O `tDataToTournament` (`BJGTPage.tsx`) fixava o campo em "Villa Padierna —
+O `tDataToTournament` (hoje `blueGolfToTournament`, `src/data/major/bluegolf.ts`) fixava o campo em "Villa Padierna —
 Flamingos"/"— Alferini", com uma excepção para o EOWAGR. Quando o **FCG** e o
 **JWGC** entraram nesta família (mesmo formato de ficheiro) herdaram o hardcode: o FCG
 Callaway World Championship aparecia a jogar-se em Villa Padierna em vez de

@@ -19,7 +19,7 @@
  *   (Firefox precisa de: npx playwright install firefox)
  *
  * Ficheiros gerados (1 por escalão): eowagr25_contest<id>.json
- * Depois: copiar para public/data/ e registar no array URLS do BJGTPage.
+ * Depois: copiar para public/data/ e registar no BLUEGOLF_FILES de src/data/major/bluegolf.ts.
  */
 
 const { chromium, firefox } = require("playwright");

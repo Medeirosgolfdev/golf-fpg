@@ -132,8 +132,8 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 `/campos` · `/comparar` · `/calendario` ·
 `/titulos` · `/torneios-recentes` · `/bjgt-analysis`.
 
-- `BJGTPage.tsx` e `DORALPage.tsx` são módulos de dados usados pela `/major`
-  (as rotas antigas redireccionam).
+- `BJGTPage.tsx` e `DORALPage.tsx` são módulos usados pela `/major` (as rotas
+  antigas redireccionam); os dados da `/major` vivem em `src/data/major/`.
 - `ScotlandPage.tsx` está completa mas **desligada de propósito** (os dados não
   são fiáveis) — não é bug.
 - **Calendário**: os eventos vivem em `src/data/calendarEvents.ts` (fora da

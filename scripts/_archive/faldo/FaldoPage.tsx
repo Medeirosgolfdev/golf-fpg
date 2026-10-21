@@ -19,7 +19,7 @@ import PasswordGate from "../ui/PasswordGate";
 import LoadingState from "../ui/LoadingState";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from "../ui/circuit/types";
-import { jobDivisionToTournament, jobScorecardOptions, type JobFile, type JobPlayer } from "./MajorPage";
+import { jobDivisionToTournament, jobScorecardOptions, type JobFile, type JobPlayer } from "../data/major/jobFile";
 import { gf, normPaisDisplay } from "../utils/flagUtils";
 import { fmtToPar } from "../utils/format";
 import { tpColorDark } from "../utils/scoreDisplay";
