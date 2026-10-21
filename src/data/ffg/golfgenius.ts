@@ -6,27 +6,23 @@
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import type { FpgDraw } from "../nacional2026Loader";
+import { buildFpgDraw } from "../intlDraw";
 import type { MatchplayFile, MatchplayRound, MatchplayTeamMatch } from "../../ui/circuit/matchplayTypes";
 import { normalizeName, ffgEscaloesOfTournament } from "./names";
 import type { FFGTournament, FFGDrawRound, CatalogEntry } from "./types";
 
 export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
-  return {
-    name: round.label ?? undefined,
-    date: round.dateIso ?? undefined,
-    totalJogadores: round.groups.reduce((s, g) => s + g.players.length, 0),
-    groups: round.groups.map((g) => ({
-      teeTime: g.teeTime,
-      startHole: null, // o GG não publica buraco de saída na tee sheet
-      tee: round.tee ?? null,
-      players: g.players.map((p) => ({
-        nome: normalizeName(p.name),
-        clube: p.club,
-        hcp: p.hcp,
-        tee: p.tee ?? null,
-      })),
-    })),
-  };
+  return buildFpgDraw(
+    // o GG não publica buraco de saída na tee sheet
+    round.groups.map((g) => ({ teeTime: g.teeTime, startHole: null, tee: round.tee ?? null, players: g.players })),
+    (p) => ({ nome: normalizeName(p.name), clube: p.club, hcp: p.hcp, tee: p.tee ?? null }),
+    undefined,
+    {
+      name: round.label ?? undefined,
+      date: round.dateIso ?? undefined,
+      totalJogadores: round.groups.reduce((s, g) => s + g.players.length, 0),
+    },
+  );
 }
 
 /* ── Match play GG → MatchplayFile (bracket knockout individual) ──────────

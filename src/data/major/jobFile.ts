@@ -22,6 +22,7 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes"
 import type { FpgDraw } from "../nacional2026Loader";
 import { playedParTotal } from "../fpgUtils";
 import { intlScorecardOptions } from "../intlScorecard";
+import { buildFpgDraw, indexByName } from "../intlDraw";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 
 export interface JobPlayer { pos: string; name: string; country: string; location?: string; detailId?: string | null; hcp?: number | null; hcpEstimated?: boolean; birthYear?: number | null; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null; dob?: string | null; club?: string | null; toPar: number | null; total: number | null; roundGross: number[]; rounds: { day: number; scores: number[]; f9?: number; b9?: number; gross: number; startingHole?: number; pars?: (number | null)[];
@@ -260,45 +261,42 @@ export function jobDrawsToFpg(draws: NonNullable<JobDivision["draws"]>, players:
   // grafia — com um lowercase simples os acentos falhavam o match exactamente
   // nos nomes PT ("João" no leaderboard vs "Joao" no tee sheet).
   const norm = normName;
-  const countryByName = new Map<string, string>();
-  const ptByName = new Set<string>();
+  const key = (p: JobPlayer) => [p.name ? norm(p.name) : null];
+  // Quem vem depois ganha (os jogadores do escalão vêm por último).
   // HCP do jogador (o tee sheet da Evian Juniors Cup publica-o) → coluna HCP do draw.
-  const hcpByName = new Map<string, number>();
+  const hcpByName = indexByName(players, key, (p) => (typeof p.hcp === "number" ? p.hcp : undefined), "last");
   // Nascimento (dob ISO ou só o ano) → coluna Nasc. do draw (Faldo Madeira).
-  const birthByName = new Map<string, { dob: string | null; birthYear: number | null }>();
+  const birthByName = indexByName(players, key, (p) => (p.dob || p.birthYear ? { dob: p.dob ?? null, birthYear: p.birthYear ?? null } : undefined), "last");
   // Valores ESTIMADOS (Faldo Madeira: estrangeiros sem fonte) → itálico vermelho no draw.
-  const estByName = new Map<string, { hcpEstimated?: boolean; birthYearEst?: number | null; birthYearEstMax?: number | null; countryEstimated?: boolean; estNote?: string | null }>();
+  const estByName = indexByName(players, key, (p) => (p.hcpEstimated || p.birthYearEst || p.countryEstimated
+    ? { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null }
+    : undefined), "last");
+  const countryByName = indexByName(players, key, (p) => (p.country ? `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim() : undefined), "last");
+  // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
+  const ptByName = indexByName(players, key, (p) => (p.country && isPtCountry(p.country) ? true : undefined), "last");
   // Escalão real de cada jogador (os «Overall …» juntam todos — não contam).
   const isAggregate = (d: JobDivision) => /overall|leaderboard|geral|absolut/i.test(d.division || "");
   const own = div && !isAggregate(div.self) ? new Set(div.self.players.map((p) => norm(p.name))) : null;
-  const divOf = new Map<string, string>();
-  if (own) for (const d of div!.all) if (d !== div!.self && !isAggregate(d)) for (const p of d.players) if (!divOf.has(norm(p.name))) divOf.set(norm(p.name), d.division);
-  for (const p of players) {
-    if (p.name && typeof p.hcp === "number") hcpByName.set(norm(p.name), p.hcp);
-    if (p.name && (p.dob || p.birthYear)) birthByName.set(norm(p.name), { dob: p.dob ?? null, birthYear: p.birthYear ?? null });
-    if (p.name && (p.hcpEstimated || p.birthYearEst || p.countryEstimated)) estByName.set(norm(p.name), { hcpEstimated: !!p.hcpEstimated, birthYearEst: p.birthYearEst ?? null, ...(p.birthYearEstMax !== undefined ? { birthYearEstMax: p.birthYearEstMax } : {}), countryEstimated: !!p.countryEstimated, estNote: p.estNote ?? null });
-    if (!p.name || !p.country) continue;
-    countryByName.set(norm(p.name), `${gf(p.country)} ${normPaisDisplay(p.country)}`.trim());
-    // Conterrâneos destacados (.row-portuguese) também no draw — regra da casa.
-    if (isPtCountry(p.country)) ptByName.add(norm(p.name));
-  }
-  return Object.fromEntries(Object.entries(draws).map(([rn, info]) => [rn, {
-    groups: (info.groups || []).map((g) => ({
-      teeTime: g.time || "",
-      startHole: g.startHole ?? null,
-      tee: null,
-      players: g.players.map((p) => ({
-        nome: p.name,
-        clube: countryByName.get(norm(p.name)) ?? null,
-        hcp: hcpByName.get(norm(p.name)) ?? null,
-        ...(birthByName.get(norm(p.name)) ?? {}),
-        ...(estByName.get(norm(p.name)) ?? {}),
-        tee: p.tee ?? null,
-        ...(ptByName.has(norm(p.name)) ? { isPortuguese: true } : {}),
-        ...(own && !own.has(norm(p.name)) && divOf.has(norm(p.name)) ? { otherDivision: divOf.get(norm(p.name)) } : {}),
-      })),
-    })),
-  } as FpgDraw]));
+  const divOf = own
+    ? indexByName(div!.all.filter((d) => d !== div!.self && !isAggregate(d)).flatMap((d) => d.players.map((p) => ({ p, d }))),
+      ({ p }) => [norm(p.name)], ({ d }) => d.division, "first")
+    : new Map<string, string>();
+  type DrawIn = JobDrawGroup["players"][number];
+  return Object.fromEntries(Object.entries(draws).map(([rn, info]) => [rn, buildFpgDraw(
+    (info.groups || []).map((g) => ({ teeTime: g.time || "", startHole: g.startHole ?? null, tee: null, players: g.players })),
+    (p: DrawIn) => ({ nome: p.name, clube: null, tee: p.tee ?? null }),
+    (p: DrawIn) => {
+      const k = norm(p.name);
+      return {
+        clube: countryByName.get(k) ?? null,
+        hcp: hcpByName.get(k) ?? null,
+        ...(birthByName.get(k) ?? {}),
+        ...(estByName.get(k) ?? {}),
+        ...(ptByName.has(k) ? { isPortuguese: true } : {}),
+        ...(own && !own.has(k) && divOf.has(k) ? { otherDivision: divOf.get(k) } : {}),
+      };
+    },
+  )]));
 }
 
 /** id da entrada no catálogo. Circuitos multi-evento/ano (Estonian Junior

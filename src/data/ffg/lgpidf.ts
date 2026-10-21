@@ -5,7 +5,8 @@
  *
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
-import type { FpgDraw, FpgDrawFlight, FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
+import type { FpgDraw, FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
+import { buildFpgDraw } from "../intlDraw";
 import { normalizeName, ffgCountry } from "./names";
 import type { LGPIDFTournament } from "./types";
 
@@ -21,14 +22,15 @@ export function lgpidfAdmissions(data: LGPIDFTournament): FpgAdmissions | undefi
 
 /** Um PDF de horários por volta (pela ordem publicada). */
 export function lgpidfDraws(data: LGPIDFTournament): FpgDraw[] {
-  return data.teeTimePdfs.map((pdf) => ({
-    groups: pdf.groups.map((g): FpgDrawFlight => ({
+  return data.teeTimePdfs.map((pdf) => buildFpgDraw(
+    pdf.groups.map((g) => ({
       teeTime: g.players.find((p) => p.teeTime)?.teeTime ?? "",
       startHole: g.players.find((p) => p.startHole != null)?.startHole ?? null,
       tee: null,
-      players: g.players.map((p) => ({ nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp ?? null })),
+      players: g.players,
     })),
-  }));
+    (p) => ({ nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp ?? null }),
+  ));
 }
 
 /** Par 72 assumido (18 buracos — standard nos Grand Prix Jeunes franceses):

@@ -9,7 +9,9 @@
  */
 import { displayName, norm } from "../../utils/format";
 import { formatPlayerName } from "../../utils/playerUtils";
-import type { FpgDraw, FpgDrawFlight } from "../nacional2026Loader";
+import type { FpgDraw } from "../nacional2026Loader";
+import { buildFpgDraw, groupConsecutive, indexByName } from "../intlDraw";
+import { isLgsCard } from "./toTournament";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { RFEGDetail, RFEGIndexEntry, NCHorario, LgsHorarioRound, LgsRound } from "./types";
 import { esDateToIso } from "./text";
@@ -57,26 +59,22 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   // passou por `formatPlayerName` → "Frankie Morton". Só com a primeira chave o
   // cruzamento falhava em TODA a gente e as colunas ±/Tot ficavam a "–".
   type Info = { name: string; fed: string | null; dobIso: string | null; club: string | null; hcp: number | null; gross: number; toPar: number | null; country: string | null };
-  const mitaByName = new Map<string, Info>();
-  if (!isNc) {
-    const grp = (detail.results || []).find((r) => r.players && r.players.length > 0);
-    for (const p of (grp?.players || [])) {
-      const r1 = Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0;
-      const info: Info = {
-        name: formatPlayerName(p.name),
-        fed: p.licencia || null,
-        dobIso: esDateToIso(p.dob),
-        club: p.club || null,
-        hcp: typeof p.hcp === "number" ? p.hcp : null,
-        gross: r1,
-        toPar: typeof p.toPar === "number" ? p.toPar : null,
-        country: ((p as { country?: string | null }).country) || null,
-      };
-      for (const k of [norm(p.name), norm(formatPlayerName(p.name))]) {
-        if (k && !mitaByName.has(k)) mitaByName.set(k, info);
-      }
-    }
-  }
+  const bothOrders = (name: string) => [norm(name), norm(formatPlayerName(name))];
+  const mitaByName = isNc ? new Map<string, Info>() : indexByName(
+    (detail.results || []).find((r) => r.players && r.players.length > 0)?.players || [],
+    (p) => bothOrders(p.name),
+    (p): Info => ({
+      name: formatPlayerName(p.name),
+      fed: p.licencia || null,
+      dobIso: esDateToIso(p.dob),
+      club: p.club || null,
+      hcp: typeof p.hcp === "number" ? p.hcp : null,
+      gross: Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0,
+      toPar: typeof p.toPar === "number" ? p.toPar : null,
+      country: ((p as { country?: string | null }).country) || null,
+    }),
+    "first",
+  );
 
   // Gross de CADA ronda por jogador (livegolfscoring). O `mitaByName` só guarda
   // "a primeira ronda com valor", o que servia o mitarjeta (1 ronda) mas fazia o
@@ -89,14 +87,10 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
       ? detail.coursePar.reduce((a: number, b) => a + (b || 0), 0)
       : null;
     for (const r of lgsRounds) {
-      const m = new Map<string, { gross: number; toPar: number | null }>();
-      for (const p of (r.players || [])) {
-        if (p.total == null || p.total <= 0 || p.total >= 999) continue;
-        // ±par DESTA ronda (gross − par do campo). O `toPar` do leaderboard é o
-        // acumulado do torneio e no draw de uma ronda seria enganador.
-        const rec = { gross: p.total, toPar: parTotal != null ? p.total - parTotal : null };
-        for (const k of [norm(p.name), norm(formatPlayerName(p.name))]) if (k && !m.has(k)) m.set(k, rec);
-      }
+      // ±par DESTA ronda (gross − par do campo). O `toPar` do leaderboard é o
+      // acumulado do torneio e no draw de uma ronda seria enganador.
+      const m = indexByName(r.players || [], (p) => bothOrders(p.name),
+        (p) => (isLgsCard(p.total) ? { gross: p.total, toPar: parTotal != null ? p.total - parTotal : null } : undefined), "first");
       if (m.size) lgsGrossByRound.set(r.round, m);
     }
   }
@@ -160,39 +154,40 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   let draw: FpgDraw | null = null;
   const r = horarios && horarios.length ? (horarios.find((rd) => rd.round === round) || horarios[0]) : null;
   if (r && r.players && r.players.length > 0) {
-    const flights: FpgDrawFlight[] = [];
-    let curKey = "";
-    for (const p of r.players) {
-      const k = `${p.time}|${p.tee}`;
-      if (k !== curKey) {
-        flights.push({
-          teeTime: p.time || "",
-          startHole: p.tee != null ? p.tee : null,
-          tee: null,
-          players: [],
-        });
-        curKey = k;
-      }
-      const dist = p.ins ? teeByIns[String(p.ins)] : undefined;   // distância do tee (cruzada do cartão)
-      const info = isNc ? undefined : mitaByName.get(norm(p.name)); // mitarjeta: cruzar por nome
-      flights[flights.length - 1].players.push({
-        nome: formatPlayerName(p.name),
-        clube: info?.club ? displayName(info.club) : null,   // NC não expõe clube; mitarjeta sim
-        fed: isNc ? (p.jid || null) : (info?.fed || null),   // jid NC / licencia mitarjeta
-        hcp: isNc ? p.hcp : (info?.hcp ?? null),
-        tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
-        // Conterrâneos destacados como nos draws internacionais do MAJOR
-        // (`.row-portuguese`) — num campo de 120 é o que os torna visíveis.
-        isPortuguese: info?.country === "PT",
-        country: info?.country || null,
-      });
-    }
-    draw = {
-      name: detail.meta.name || `Tour ${entry.id}`,
-      date: detail.meta.dateStart || undefined,
-      totalJogadores: r.players.length,
-      groups: flights,
-    };
+    draw = buildFpgDraw(
+      groupConsecutive(r.players, (p) => `${p.time}|${p.tee}`, (p) => ({
+        teeTime: p.time || "",
+        startHole: p.tee != null ? p.tee : null,
+        tee: null,
+      })),
+      (p) => {
+        const dist = p.ins ? teeByIns[String(p.ins)] : undefined;   // distância do tee (cruzada do cartão)
+        return {
+          nome: formatPlayerName(p.name),
+          clube: null,
+          fed: isNc ? (p.jid || null) : null,   // jid NC / licencia mitarjeta
+          hcp: isNc ? p.hcp : null,
+          tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
+          isPortuguese: false,
+          country: null,
+        };
+      },
+      // mitarjeta/LGS: cruzar por nome com o leaderboard (clube, licença, HCP, país).
+      (p) => {
+        if (isNc) return undefined;
+        const info = mitaByName.get(norm(p.name));
+        return {
+          clube: info?.club ? displayName(info.club) : null,   // NC não expõe clube; mitarjeta sim
+          fed: info?.fed || null,
+          hcp: info?.hcp ?? null,
+          // Conterrâneos destacados como nos draws internacionais do MAJOR
+          // (`.row-portuguese`) — num campo de 120 é o que os torna visíveis.
+          isPortuguese: info?.country === "PT",
+          country: info?.country || null,
+        };
+      },
+      { name: detail.meta.name || `Tour ${entry.id}`, date: detail.meta.dateStart || undefined, totalJogadores: r.players.length },
+    );
   }
 
   return {
