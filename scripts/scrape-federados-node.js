@@ -420,7 +420,8 @@ async function main() {
   }
 
   console.log(`→ A gravar ${outPath}...`);
-  writeJsonGuarded(outPath, out, { spaces: 2, failOnRefuse: true });
+  const g = writeJsonGuarded(outPath, out, { spaces: 2, failOnRefuse: true });
+  if (!g.written) process.exit(1); // guarda anti-encolhimento — ficheiro anterior intacto
   const sizeKb = (fs.statSync(outPath).size / 1024).toFixed(0);
   console.log(`✓ Gravado: ${outPath} (${sizeKb} KB)`);
   process.exit(0);

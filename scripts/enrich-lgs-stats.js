@@ -58,4 +58,7 @@ async function worker() {
   for (let i = 0; i < concurrency; i++) ws.push(worker());
   await Promise.all(ws);
   console.log(`\nDone: total=${done} adicionados=${added} ja-tinham=${skip} sem-estatisticas=${none} erros=${err}`);
-})();
+  // Exit: 0 gravou · 2 nada de novo · 1 tudo falhou (antes acabava sempre em 0).
+  if (err > 0 && added === 0 && none === 0) process.exitCode = 1;
+  else if (added === 0) process.exitCode = 2;
+})().catch((e) => { console.error(e); process.exit(1); });

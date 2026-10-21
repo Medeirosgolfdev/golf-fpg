@@ -137,13 +137,15 @@ async function main() {
 
   let editions = mergeEditions(discovered, onlyNew);
   if (currentOnly) {
-    if (!discovered) { console.log('\n--current pedido mas a descoberta falhou — nada a fazer.'); return; }
+    // Descoberta falhada é ERRO (antes acabava em 0 e o workflow dava-o por bom).
+    if (!discovered) { console.error('\n--current pedido mas a descoberta falhou.'); process.exitCode = 1; return; }
     editions = editions.filter(e => e.year === discovered.year);
   }
   if (yearFilter.length) editions = editions.filter(e => yearFilter.includes(e.year));
 
   if (editions.length === 0) {
     console.log('\nNada para fazer (sem anos a processar).');
+    process.exitCode = 2;
     return;
   }
 
@@ -155,13 +157,17 @@ async function main() {
   // scorecards já gravados de anos completos (seria destrutivo).
   const forceRescrape = !skipScorecards;
 
+  let falhas = 0;
   for (const ed of editions) {
     try {
       await scrapeYear(ed.year, ed.ageGroups, { forceRescrape, skipScorecards });
     } catch (e) {
+      falhas++;
       console.error(`✗ ${ed.year}: ${e.message}`);
     }
   }
+  // Exit 1 se todos os anos falharam (antes acabava sempre em 0).
+  if (falhas && falhas === editions.length) process.exitCode = 1;
 
   console.log('\n═══ Concluído. ═══');
 }

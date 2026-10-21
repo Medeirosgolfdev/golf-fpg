@@ -88,4 +88,7 @@ async function enrich(file) {
   for (let i = 0; i < concurrency; i++) ws.push(worker());
   await Promise.all(ws);
   console.log(`ok=${ok} fail=${fail} skip=${skip}`);
-})();
+  // Exit: 0 gravou · 2 nada de novo · 1 tudo falhou (antes acabava sempre em 0).
+  if (fail > 0 && ok === 0) process.exitCode = 1;
+  else if (ok === 0) process.exitCode = 2;
+})().catch((e) => { console.error(e); process.exit(1); });

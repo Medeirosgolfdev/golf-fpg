@@ -21,7 +21,7 @@
  */
 
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const https = require("https");
 const { lgsCountryToIso } = require("./lib/lgs-country.js");
@@ -694,7 +694,13 @@ async function main() {
               }
             }
           } catch { /* ficheiro anterior ilegível — segue com o novo */ }
-          writeAtomic(out, JSON.stringify(result, null, pretty ? 2 : 0));
+          // Guarda anti-encolhimento: menos de 70% das entradas do ficheiro em
+          // disco = resposta degradada → mantém-se o anterior (--force grava).
+          const g = writeJsonGuarded(out, result, {
+            count: (d) => (d.rounds || []).reduce((a, r) => a + ((r.players || []).length), 0),
+            maxDrop: 0.3, spaces: pretty ? 2 : 0, label: path.basename(out),
+          });
+          if (!g.written) { skip++; continue; }
           ok++;
           const nP = result.rounds.reduce((a, r) => a + (r.players?.length || 0), 0);
           const mt = result.course ? `, ${result.course.metersTotal}m` : "";
@@ -709,6 +715,9 @@ async function main() {
   for (let i = 0; i < concurrency; i++) workers.push(worker());
   await Promise.all(workers);
   console.log(`\nDone: ok=${ok} fail=${fail} skip=${skip}`);
+  // Exit: 0 gravou · 2 nada gravado · 1 tudo falhou.
+  if (fail > 0 && ok === 0) process.exitCode = 1;
+  else if (ok === 0) process.exitCode = 2;
 }
 
 if (require.main === module) {

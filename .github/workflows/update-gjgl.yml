@@ -58,9 +58,9 @@ jobs:
         run: |
           SLUGS="${{ github.event.inputs.slugs }}"
           if [ -n "$SLUGS" ]; then
-            node scripts/scrape-gjgl.js --slugs "$SLUGS"
+            node scripts/scrape-gjgl.js --slugs "$SLUGS" || [ $? -eq 2 ]
           else
-            node scripts/scrape-gjgl.js --year "$(date -u +%Y)"
+            node scripts/scrape-gjgl.js --year "$(date -u +%Y)" || [ $? -eq 2 ]
           fi
 
       - name: Detectar alterações reais (ignora scrapedAt)

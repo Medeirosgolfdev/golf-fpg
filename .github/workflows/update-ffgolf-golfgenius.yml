@@ -94,7 +94,7 @@ jobs:
             ARGS="$ARGS --gg-page ${{ github.event.inputs.gg_page }}"
           fi
           echo "Args: $ARGS"
-          node scripts/scrape-ffgolf.js $ARGS
+          node scripts/scrape-ffgolf.js $ARGS || [ $? -eq 2 ]
 
       - name: Rota fetch p/ torneios sem leaderboard no iframe
         # Alguns torneios (Internationaux U14, Grand Prix National U12…) embebem o

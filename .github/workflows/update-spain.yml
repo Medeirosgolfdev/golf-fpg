@@ -170,7 +170,7 @@ jobs:
       - name: Scrape livegolfscoring (scorecards hbh)
         id: lgs
         continue-on-error: true
-        run: node scripts/scrape-livegolfscoring.js --seasons "2025,2026" --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG
+        run: node scripts/scrape-livegolfscoring.js --seasons "2025,2026" --range "$LGS_RANGE" --concurrency 10 $SKIP_FLAG || [ $? -eq 2 ]
 
       - name: Scrape NextCaddy (leaderboards)
         id: nextcaddy
@@ -186,7 +186,7 @@ jobs:
       - name: Scrape NextCaddy horários (tee times)
         id: nc_horarios
         continue-on-error: true
-        run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG
+        run: node scripts/scrape-nextcaddy-horarios.js --all --concurrency 8 $SKIP_FLAG || [ $? -eq 2 ]
 
       - name: Scrape NextCaddy scorecards (backfill incremental)
         id: nc_scorecards
@@ -226,12 +226,12 @@ jobs:
       - name: Enrich LGS dates
         id: enrich_lgs
         continue-on-error: true
-        run: node scripts/enrich-lgs-dates.js
+        run: node scripts/enrich-lgs-dates.js || [ $? -eq 2 ]
 
       - name: Enrich LGS stats (metros + SI por buraco)
         id: enrich_lgs_stats
         continue-on-error: true
-        run: node scripts/enrich-lgs-stats.js --concurrency 6
+        run: node scripts/enrich-lgs-stats.js --concurrency 6 || [ $? -eq 2 ]
 
       - name: Inferir par NextCaddy (fallback)
         id: infer_par

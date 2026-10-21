@@ -35,7 +35,7 @@
  */
 const { chromium } = require("playwright");
 const fs = require("fs");
-const { writeAtomic } = require("./lib/atomic-write");
+const { writeJsonGuarded } = require("./lib/shrink-guard");
 const path = require("path");
 const { applyCourseOverride } = require("./lib/ffgolf-course-overrides.js");
 const { preserveTeesheet } = require("./lib/ffgolf-teesheet-preserve.js");
@@ -1449,11 +1449,10 @@ function parseArgs(argv) {
           const ds = result.matchplay.flights.flatMap((f) => f.rounds.map((r) => r.date)).filter(Boolean).sort();
           if (ds.length) { result.matchplay.startDate = ds[0]; result.matchplay.endDate = ds[ds.length - 1]; }
         }
-        // Atomic write: escrever para .tmp e renomear no fim. Evita ficheiros truncados
-        // se o processo for interrompido (Ctrl+C) durante a escrita.
-        const tmpPath = outPath + ".tmp";
-        writeAtomic(tmpPath, JSON.stringify(result, null, 2), "utf-8");
-        fs.renameSync(tmpPath, outPath);
+        // Escrita atómica (fsync) + guarda anti-encolhimento: um leaderboard com
+        // muito menos jogadores do que o do disco não o substitui (--force grava).
+        const g = writeJsonGuarded(outPath, result, { count: (d) => (d.players || []).length, maxDrop: 0.3, label: path.basename(outPath) });
+        if (!g.written) { fail++; continue; }
         console.log("   gravado " + outPath + " (" + result.players.length + " jogadores, " + (hasMeters ? "metros OK" : "sem metros") + ")");
         ok++;
       } else {
@@ -1467,4 +1466,7 @@ function parseArgs(argv) {
 
   await browser.close();
   console.log(`\n✅ ${ok}/${tournaments.length} OK · ${fail} falhas`);
-})();
+  // Exit: 0 gravou · 2 nada gravado · 1 tudo falhou (antes acabava sempre em 0).
+  if (fail > 0 && ok === 0) process.exitCode = 1;
+  else if (ok === 0) process.exitCode = 2;
+})().catch((e) => { console.error("❌", e); process.exit(1); });

@@ -740,7 +740,11 @@ async function main() {
     }
   }
 
-  process.exit(failed > 0 && ok === 0 ? 1 : 0);
+  // Exit: 0 gravou · 2 nada gravado · 1 tudo falhou ou guarda do catálogo
+  // recusou (process.exitCode já a 1). Antes o exit(0) final apagava esse 1.
+  if (process.exitCode) process.exit(process.exitCode);
+  if (args.discoveryOnly) process.exit(failed > 0 && ok === 0 ? 1 : 0);
+  process.exit(failed > 0 && ok === 0 ? 1 : ok === 0 ? 2 : 0);
 }
 
 if (require.main === module) {

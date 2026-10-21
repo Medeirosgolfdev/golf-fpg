@@ -204,5 +204,6 @@ async function discover() {
     writeJsonGuarded(args.json, events, { spaces: 2, failOnRefuse: true });
     console.log("\nlista completa -> " + args.json);
   }
+  if (process.exitCode) process.exit(process.exitCode); // guarda anti-encolhimento recusou
   process.exit(missing.length ? 0 : 2);
 })();

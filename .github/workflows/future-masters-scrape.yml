@@ -76,7 +76,7 @@ jobs:
             ARGS="$ARGS --skip-scorecards"
           fi
           echo "Args: $ARGS"
-          node scripts/scrape-future-masters-all.js $ARGS
+          node scripts/scrape-future-masters-all.js $ARGS || [ $? -eq 2 ]
 
       - name: Commit e push (se houver mudanças)
         run: |

@@ -359,7 +359,7 @@ async function main() {
       process.exit(2);
     }
     console.error("Usage: scrape-fcg.js --game <ID> | --games <ID1,ID2> | --scope <file>");
-    process.exit(2);
+    process.exit(1); // argumentos em falta = erro (2 é «nada de novo»)
   }
 
   console.log("[fcg] " + games.length + " games to scrape, concurrency=" + CONCURRENCY + ", skip-existing=" + SKIP_EXISTING);

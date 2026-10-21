@@ -186,6 +186,15 @@ async function main() {
         }
         const r = await processTour(tid);
         if (!r.ok) { fail++; continue; }
+        // Guarda anti-encolhimento: horários com muito menos jogadores do que
+        // os já guardados (resposta degradada) não os substituem (--force grava).
+        const nJog = (rs) => (rs || []).reduce((a, rd) => a + ((rd.players || []).length), 0);
+        const antes = nJog(existing.horarios), agora = nJog(r.rounds);
+        if (!process.argv.includes("--force") && antes > 0 && agora < antes * 0.7) {
+          console.warn(`  [${cursor}/${tourIds.length}] ${tid}: ${antes} → ${agora} jogadores nos horários — mantém-se o que estava`);
+          skipped++;
+          continue;
+        }
         existing.horarios = r.rounds;
         existing.horariosScrapedAt = new Date().toISOString();
         writeAtomic(outFile, JSON.stringify(existing, null, 2), "utf-8");
@@ -202,6 +211,9 @@ async function main() {
 
   await Promise.all(Array.from({ length: concurrency }, () => worker()));
   console.log(`Done: ok=${ok} fail=${fail} skipped=${skipped} withData=${withData}`);
+  // Exit: 0 gravou · 2 nada gravado · 1 tudo falhou.
+  if (fail > 0 && ok === 0) process.exitCode = 1;
+  else if (ok === 0) process.exitCode = 2;
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
