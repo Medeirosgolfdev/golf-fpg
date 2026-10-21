@@ -146,17 +146,7 @@ const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 // «Too many requests» em texto com HTTP 200. À primeira: nenhum pedido mais
 // nesta corrida (nem retries), grava-se o que já está completo e sai-se.
 let RECUSA = null; // motivo, quando a fonte recusou
-const STATUS_RECUSA = new Set([403, 429, 503]);
-
-function ehRecusa(status, txt) {
-  return STATUS_RECUSA.has(Number(status)) || /too many requests/i.test(String(txt || '').slice(0, 200));
-}
-
-function erroRecusa(motivo) {
-  const e = new Error(`recusa da fonte — ${motivo}`);
-  e.recusa = true;
-  return e;
-}
+const { ehRecusa, erroRecusa } = require('./lib/uskids-recusa');
 
 function recusa() { return RECUSA; }
 function _resetRecusa() { RECUSA = null; }

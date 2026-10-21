@@ -7,6 +7,10 @@
  * Para históricos: busca na primeira execução e guarda.
  * Output: uskids-results.json com leaderboard + strokes buraco-a-buraco + par/yards reais
  *
+ * Exit: 0 gravou · 2 nada de novo (inclui recusa sem nada completo) · 1 erro.
+ * Recusa da fonte → pára (::warning::); --force deixa um torneio com menos
+ * jogadores substituir o que está em disco.
+ *
  * Fonte do PAR/YARDS:
  *   GetMeta → flight_courses[flight_round_id].pars[]    = par real por buraco
  *   GetMeta → flight_courses[flight_round_id].lengths[]  = yards por buraco
@@ -19,6 +23,11 @@ const { chromium } = require('playwright');
 // Formato das voltas (par/yards do GetMeta, leaderboard) — partilhado com o
 // build-uskids-edicoes-anteriores.js, que monta edições a partir da cache.
 const { construirMapaCursos, buscarParDoMapa, calcularLeaderboard } = require('./lib/uskids-results-shape');
+// Regra da USKids: um pedido de cada vez e PARAR À PRIMEIRA RECUSA (403/429/503
+// ou «Too many requests» em texto). Um torneio apanhado a meio não é gravado e
+// um torneio novo com muito menos jogadores não substitui o que está em disco.
+const { pageJSONcomRecusa, respostaJSONcomRecusa, contarJogadoresResultados, deveManterAntigo } = require('./lib/uskids-recusa');
+const { writeJsonAtomic } = require('./lib/atomic-write');
 
 // ── Torneios históricos ─────────────
 const HISTORICOS = [
@@ -184,19 +193,13 @@ function esperarGetMeta(page, t, ms = 12000) {
       if (!response.url().includes(`op=GetMeta&t=${t}`)) return;
       clearTimeout(timer);
       page.off('response', handler);
-      try { resolve(await response.json()); } catch (e) { reject(e); }
+      try { resolve(await respostaJSONcomRecusa(response)); } catch (e) { reject(e); }
     };
     page.on('response', handler);
   });
 }
 
-async function pageJSON(page, url) {
-  return page.evaluate(async (u) => {
-    const r = await fetch(u, { credentials: 'include' });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  }, url);
-}
+const pageJSON = (page, url) => pageJSONcomRecusa(page, url, 'GET');
 
 // ══════════════════════════════════════
 // Extrair PAR + YARDS de flight_courses (do GetMeta)
@@ -240,7 +243,10 @@ async function buscarJogadores(page, fid, ronda, total_inscritos) {
         });
       if (!jogadores.length) break;
       todos.push(...jogadores);
-    } catch { break; }
+    } catch (err) {
+      if (err.recusa) throw err; // parar tudo — o torneio a meio é descartado
+      break;
+    }
   }
   const vistos = new Set();
   return todos.filter(j => { if (vistos.has(j.nome)) return false; vistos.add(j.nome); return true; });
@@ -257,6 +263,7 @@ async function processarTorneio(page, torneio) {
     meta = await metaP;
   } catch (err) {
     console.warn(`  ⚠️  GetMeta falhou: ${err.message}`);
+    if (err.recusa) throw err;
     return null;
   }
 
@@ -461,6 +468,7 @@ async function main() {
 
   if (!aProcessar.length) {
     console.log('   Nada a fazer.');
+    process.exitCode = 2;
     return;
   }
 
@@ -471,9 +479,18 @@ async function main() {
   const page = await context.newPage();
 
   const novos = [];
+  let recusa = null;
   try {
     for (const t of aProcessar) {
-      const res = await processarTorneio(page, t);
+      let res = null;
+      try {
+        res = await processarTorneio(page, t);
+      } catch (err) {
+        if (!err.recusa) throw err;
+        recusa = err.message;
+        console.warn(`  ⛔ ${recusa} — t=${t.t} descartado; nenhum pedido mais nesta corrida`);
+        break;
+      }
       if (res) novos.push(res);
       await sleep(DELAY_MS);
     }
@@ -481,17 +498,30 @@ async function main() {
     await browser.close();
   }
 
+  const force = process.argv.includes('--force');
   const mapa = new Map((outputActual.resultados || []).map(r => [r.t, r]));
-  for (const r of novos) mapa.set(r.t, r);
+  let mudou = 0;
+  for (const r of novos) {
+    const g = deveManterAntigo(mapa.get(r.t), r, contarJogadoresResultados, { force });
+    if (g.manter) {
+      console.warn(`  ⚠️  t=${r.t} ${r.name}: ${g.motivo} — fica a versão em disco (--force para substituir)`);
+      continue;
+    }
+    mapa.set(r.t, r);
+    mudou++;
+  }
+  if (recusa) console.log(`::warning::USKids results: a fonte recusou (${recusa}) — parei à primeira recusa; gravado só o que estava completo.`);
+  if (!mudou) {
+    console.log('   Nada de novo para gravar.');
+    process.exitCode = 2;
+    return;
+  }
 
   const todos = [...mapa.values()]
     .sort((a, b) => (parsearDataISO(b.date_inicio)||'').localeCompare(parsearDataISO(a.date_inicio)||''));
 
   fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(OUTPUT, JSON.stringify({
-    gerado_em: new Date().toISOString(),
-    resultados: todos,
-  }, null, 2), 'utf8');
+  writeJsonAtomic(OUTPUT, { gerado_em: new Date().toISOString(), resultados: todos });
 
   console.log('\n══════════════════════════════════════');
   console.log(`✅  uskids-results.json — ${todos.length} torneios`);

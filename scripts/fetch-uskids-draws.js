@@ -13,6 +13,9 @@
  *
  * Corre no fim do workflow uskids-results.yml.
  *
+ * Exit: 0 gravou · 2 nada a descarregar · 1 erro. Recusa da fonte (403/429/503,
+ * «Too many requests») → pára e grava só os torneios completos.
+ *
  * Fonte de detecção do Manuel: public/data/uskids-field.json (gerado pelo
  * workflow uskids-field). Procura jogador com nome contendo "Manuel" +
  * "Medeiros" e país PT — apanha as 4 variantes documentadas.
@@ -34,6 +37,10 @@
 const fs   = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
+// Regra da USKids: PARAR À PRIMEIRA RECUSA; torneio a meio não se grava e um
+// draw novo com muito menos jogadores não substitui o que está em disco.
+const { pageJSONcomRecusa, respostaJSONcomRecusa, contarJogadoresDraw, deveManterAntigo } = require('./lib/uskids-recusa');
+const { writeJsonAtomic } = require('./lib/atomic-write');
 
 // ── Detecção do Manuel (espelho de src/constants/manuel.ts) ──────────────
 const MANUEL_NAME_REGEX = /\bmanuel\b/i;
@@ -257,19 +264,13 @@ function esperarGetMeta(page, t, ms = 12000) {
       if (!response.url().includes(`op=GetMeta&t=${t}`)) return;
       clearTimeout(timer);
       page.off('response', handler);
-      try { resolve(await response.json()); } catch (e) { reject(e); }
+      try { resolve(await respostaJSONcomRecusa(response)); } catch (e) { reject(e); }
     };
     page.on('response', handler);
   });
 }
 
-async function pageJSON(page, url, method = 'GET') {
-  return page.evaluate(async (args) => {
-    const r = await fetch(args.u, { credentials: 'include', method: args.method });
-    if (!r.ok) throw new Error('HTTP ' + r.status);
-    return r.json();
-  }, { u: url, method });
-}
+const pageJSON = (page, url, method = 'GET') => pageJSONcomRecusa(page, url, method);
 
 // ── Extrair pairings de flight_players ─────────────────────────────────
 /**
@@ -338,7 +339,10 @@ async function fetchFlightRound(page, fid, ronda, totalEstim) {
       viaT1 = true;
       for (const k of keys) collected[k] = fp[k];
       if (keys.length < 20) break;
-    } catch { break; }
+    } catch (err) {
+      if (err.recusa) throw err;
+      break;
+    }
   }
   if (viaT1 && Object.keys(collected).length) return { players: collected, via: 't=1' };
 
@@ -352,7 +356,10 @@ async function fetchFlightRound(page, fid, ronda, totalEstim) {
       if (!keys.length) break;
       for (const k of keys) collected[k] = fp[k];
       if (keys.length < 20) break; // última página
-    } catch { break; }
+    } catch (err) {
+      if (err.recusa) throw err;
+      break;
+    }
   }
   return { players: collected, via: 't=0' };
 }
@@ -399,6 +406,7 @@ async function processarTorneio(page, spec) {
     meta = await metaP;
   } catch (err) {
     console.warn(`  ⚠️  GetMeta falhou: ${err.message}`);
+    if (err.recusa) throw err;
     return null;
   }
 
@@ -477,7 +485,9 @@ async function main() {
   // Merge com output anterior primeiro — para saber que torneios já têm draw
   let outputAnterior = { torneios: [] };
   if (fs.existsSync(OUTPUT)) {
-    try { outputAnterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8')); } catch {}
+    // Ilegível = erro: antes ficava { torneios: [] } e o fim do script
+    // regravava o ficheiro só com os torneios desta corrida.
+    outputAnterior = JSON.parse(fs.readFileSync(OUTPUT, 'utf8'));
   }
   const jaTemDraw = new Set(
     (outputAnterior.torneios || [])
@@ -550,11 +560,11 @@ async function main() {
     console.log('\n   Nada para descarregar.');
     if (!fs.existsSync(OUTPUT)) {
       fs.mkdirSync(DIR, { recursive: true });
-      fs.writeFileSync(OUTPUT, JSON.stringify({
-        gerado_em: new Date().toISOString(), manuel_focus: true, janela_dias_antes: DIAS_ANTES, torneios: [],
-      }, null, 2), 'utf8');
+      writeJsonAtomic(OUTPUT, { gerado_em: new Date().toISOString(), manuel_focus: true, janela_dias_antes: DIAS_ANTES, torneios: [] });
       console.log(`   📝 Escreveu ${OUTPUT} vazio.`);
+      return;
     }
+    process.exitCode = 2;
     return;
   }
 
@@ -565,9 +575,18 @@ async function main() {
   const page = await context.newPage();
 
   const novos = [];
+  let recusa = null;
   try {
     for (const spec of aProcessar) {
-      const res = await processarTorneio(page, spec);
+      let res = null;
+      try {
+        res = await processarTorneio(page, spec);
+      } catch (err) {
+        if (!err.recusa) throw err;
+        recusa = err.message;
+        console.warn(`  ⛔ ${recusa} — t=${spec.torneio.t} descartado; nenhum pedido mais nesta corrida`);
+        break;
+      }
       if (res) novos.push(res);
       await sleep(DELAY_MS);
     }
@@ -575,8 +594,17 @@ async function main() {
     await browser.close();
   }
 
+  const force = process.argv.includes('--force');
   const mapa = new Map((outputAnterior.torneios || []).map(r => [r.t, r]));
-  for (const r of novos) mapa.set(r.t, r);
+  for (const r of novos) {
+    const g = deveManterAntigo(mapa.get(r.t), r, contarJogadoresDraw, { force });
+    if (g.manter) {
+      console.warn(`  ⚠️  t=${r.t} ${r.name}: ${g.motivo} — fica o draw em disco (--force para substituir)`);
+      continue;
+    }
+    mapa.set(r.t, r);
+  }
+  if (recusa) console.log(`::warning::USKids draws: a fonte recusou (${recusa}) — parei à primeira recusa; gravado só o que estava completo.`);
 
   // Cull: manter permanentemente qualquer torneio que TENHA draw (os históricos
   // do Manuel não desaparecem); os futuros/em-curso ainda sem draw ficam se
@@ -588,12 +616,12 @@ async function main() {
     .sort((a, b) => (parsearDataISO(a.date_inicio) || '').localeCompare(parsearDataISO(b.date_inicio) || ''));
 
   fs.mkdirSync(DIR, { recursive: true });
-  fs.writeFileSync(OUTPUT, JSON.stringify({
+  writeJsonAtomic(OUTPUT, {
     gerado_em: new Date().toISOString(),
     manuel_focus: true,
     janela_dias_antes: DIAS_ANTES,
     torneios: todos,
-  }, null, 2), 'utf8');
+  });
 
   console.log('\n══════════════════════════════════════');
   console.log(`✅  uskids-draws.json — ${todos.length} torneios`);

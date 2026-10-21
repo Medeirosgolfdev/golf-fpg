@@ -20,9 +20,12 @@ jobs:
         with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install chromium --with-deps
-      - run: node scripts/fetch-uskids-results.js
+      # Exit 2 = nada de novo (não é erro); 1 = erro. Os dois scripts param à
+      # primeira recusa da USKids e gravam só os torneios completos.
+      - name: Resultados
+        run: node scripts/fetch-uskids-results.js || [ $? -eq 2 ]
       - name: Draws (Manuel + adjacentes ±1, ≤ 3d antes)
-        run: node scripts/fetch-uskids-draws.js
+        run: node scripts/fetch-uskids-draws.js || [ $? -eq 2 ]
       - name: Validar dados scrapados
         run: node scripts/validate-data.js public/data/uskids-results.json
 
