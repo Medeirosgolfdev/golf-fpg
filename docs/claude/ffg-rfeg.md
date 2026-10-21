@@ -104,3 +104,29 @@ Armadilhas medidas (todas com caso real):
   batia com entrada nenhuma. As entradas combinadas passaram a levar
   `memberIds[]` (novo campo opcional em `CircuitEntry`) e o `selectedId` da
   RFEGPage resolve o membro → grupo.
+
+## Espanha — guardas dos scrapers (2026-10-20)
+
+As fontes espanholas respondem às vezes 200 com lixo (listas vazias, páginas de
+erro). Regras actuais (`update-spain.yml` trata o exit 2 de todos):
+- **`scrape-nextcaddy.js --discover`**: 0 tours, ou menos de metade do scope em
+  disco → o scope NÃO é regravado (o scrape a seguir usa o anterior), exit 2.
+  Por torneio: um `nextcaddy/{id}.json` com >30% menos jogadores
+  (classificação + inscritos) não substitui o do disco. Exit 1 se todos falharam,
+  2 se nada foi gravado.
+- **`discover-rfegolf-comps.js --merge`**: scope existente ilegível é ERRO (antes
+  gravava só a janela desta corrida por cima dos ~400 comps curados); perda >10%
+  recusada; exit 2 sem compIds novos.
+- **`scrape-rfegolf-node.js`**: um `{ok:false}` nunca substitui um
+  `rfegolf-resultats/{cid}.json` bom; perda >50% de inscritos+resultados
+  recusada. Exit 1 se tudo falhou, 2 se nada gravado.
+- **`scrape-livegolfscoring.js`** (>30% menos entradas) e
+  **`scrape-nextcaddy-horarios.js`** (horários com <70% dos jogadores já
+  guardados) também já não regravam por cima; os dois e os `enrich-lgs-*`
+  passaram a devolver 1/2 em vez de acabar sempre em 0.
+- Os builders (`build-rfegolf-index`, `build-licencia-*-lookup`, `build-lgs-twins`,
+  `build-fcg-rivals`, `build-spain-player-tournaments`, `build-spain-players-export`,
+  `build-rfegolf-rivals`, e na França o `build-france-players`) recusam gravar um
+  ficheiro com menos de metade dos bytes do anterior: `::error::` e exit 1
+  (`--force` para gravar).
+`--force` passa todas estas guardas.

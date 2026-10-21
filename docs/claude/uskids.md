@@ -27,10 +27,38 @@ Cache separada do member-history: `uskids-rich-flight-cache.json.gz` (re-fetch s
 node scripts/fetch-uskids-rich-players-node.js                    # default (skip-existing 14d)
 node scripts/fetch-uskids-rich-players-node.js --limit 10         # smoke test
 node scripts/fetch-uskids-rich-players-node.js --players 630106,591440
-node scripts/fetch-uskids-rich-players-node.js --since-days 30 --concurrency 8
+node scripts/fetch-uskids-rich-players-node.js --since-days 30
 node scripts/fetch-uskids-rich-players-node.js --force-rebuild    # ignora todos os caches
 node scripts/fetch-uskids-rich-players-node.js --discovery-only   # só descobre novos mids
+node scripts/fetch-uskids-rich-players-node.js --force            # regrava fichas com menos torneios
 ```
+
+**Um pedido de cada vez e parar à primeira recusa (2026-10-20).** Até aqui a
+Fase 1 corria com um pool de 4 workers (`--concurrency 4` no workflow) e o
+`apiGet` repetia 3× qualquer erro, 429 incluído. Agora:
+- tudo **sequencial**; `--concurrency` é ignorado (com aviso) e saiu do workflow;
+- recusa = HTTP **403/429/503** ou «Too many requests» em texto com 200
+  (`scripts/lib/uskids-recusa.js`, partilhado com results/draws): à primeira,
+  **nenhum pedido mais** nesta corrida (nem retries) — discovery, carreiras e
+  Fase 2 param;
+- um torneio apanhado a meio **não entra na flight-cache** (ficaria como
+  completo e nunca mais seria pedido);
+- só se gravam fichas de jogadores com **todos** os torneios enriquecidos; os
+  outros ficam para o próximo run (não actualiza o `lastUpdated`);
+- ficha nova com **menos torneios** do que a do disco não é regravada (`--force`);
+- flight-cache ilegível é **erro** (antes «re-descobria tudo» = milhares de
+  pedidos numa corrida); a cache não se grava se perder >10% dos torneios.
+Exit: 0 gravou (também depois de uma recusa, com `::warning::`) · 2 nada de novo · 1 erro.
+
+**fetch-uskids-results.js / fetch-uskids-draws.js (2026-10-20)** — mesma regra:
+os pedidos saem de dentro da página (Playwright) por `pageJSONcomRecusa`, que
+reconhece a recusa; à primeira, o torneio em curso é **descartado** e não se
+pede mais nada. Guarda anti-encolhimento **por torneio** (`deveManterAntigo`):
+um torneio novo com >15% menos jogadores, ou sem um escalão que tinha
+jogadores, não substitui o do disco (`--force` substitui). Escrita atómica.
+Exit 2 = nada de novo (o `uskids-results.yml` trata-o). O draws deixou de
+tratar um `uskids-draws.json` ilegível como vazio (regravava-o só com a corrida
+actual).
 
 Workflow: `update-uskids-rich-players.yml` (Seg 02:00 UTC, depois do member-history). Sem secrets (signupanytime é público server-side).
 

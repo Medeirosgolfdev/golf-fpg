@@ -200,6 +200,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   corre TypeScript). Por isso o `whsCalc.ts` só pode ter tipos e interfaces
   (nada de `enum`/`namespace`) e não importa outros ficheiros do `src`
   (`scripts/whs-loader.test.js` parte se isto falhar).
+- **Nomes de campo: o mesmo esquema** — a tabela de aliases e a resolução por
+  par vivem só em `src/utils/courseAliases.ts`; os scripts usam
+  `scripts/lib/course-aliases.cjs` (e o pipeline `lib/course-aliases.js`), que o
+  carregam. Mesmas restrições (`scripts/course-aliases-loader.test.js`).
 - Detalhe e validação contra o oficial: [whs-pcc-sd.md](docs/claude/whs-pcc-sd.md)
   e [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md).
 
@@ -207,8 +211,12 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **Nunca gravar um ficheiro muito mais pequeno do que o que está em disco sem
   `--force`** — as fontes às vezes respondem 200 com lixo. Os scripts têm guardas
   anti-encolhimento; um script novo também tem de ter.
+  Usar `writeJsonGuarded` (`scripts/lib/shrink-guard.js`): escrita atómica +
+  guarda numa só chamada. Input/cache/scope **ilegível é erro**, nunca «vazio».
 - **Exit codes dos scrapers:** `0` gravou · `2` nada de novo (não é erro, o
-  workflow salta o commit) · `1` erro · `3` FPG em baixo.
+  workflow salta o commit) · `1` erro · `3` FPG em baixo. O step do workflow
+  tem de aceitar o 2 (`node scripts/x.js || [ $? -eq 2 ]`), e um
+  `process.exit(0)` final não pode apagar o `exitCode = 1` de uma guarda.
 - **A FPG reutiliza tcodes entre clubes e anos:** nunca casar só por tcode. Usar
   tcode + data + campo (PCC), fed + data da volta (SD), `ccode:tcode` no
   `--tcodes`. No PJA, `PJA_TCODES` só leva tcodes que não se repetem; os outros

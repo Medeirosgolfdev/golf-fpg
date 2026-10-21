@@ -39,7 +39,26 @@ Em `public/data/` os 41 ficheiros são todos v2 (com `signupanytime_t`): os 1–
 `scripts/aggregator/index.js` orquestra os adapters de `scripts/aggregator/sources/`
 e escreve `public/data/{juniors,juniors-tournaments*,tournament-catalog}.json`
 (consumidos pelo `KIDS2Page`). Corre no `build-juniors.yml` (push nos paths de
-input + workflow_dispatch). ~30.4k juniores / ~21.2k torneios (2026-09-15).
+input + workflow_dispatch). ~30.4k juniores / ~21.2k torneios (2026-09-15);
+38 672 juniores / 27 987 torneios a 2026-10-20.
+
+### Guardas de escrita e de input (2026-10-20)
+
+Os outputs somam ~185 MB e são committados — um canónico truncado ou com
+metade dos jogadores partia o kids2 e os Scouts dos circuitos.
+- **Escrita atómica com fsync** em tudo (`util/io.js` → `writeJson`/`writeAtomic`:
+  `juniors.json`, manifest + shards, catálogo, `hcp-listas-ligacoes`, form, scout).
+- **Input corrupto = erro (exit 1).** `readJsonSafe` só devolve o default quando
+  o ficheiro NÃO existe; se existir e tiver NUL bytes ou JSON inválido lança
+  `CorruptInputError`, que o `runAdapter` não engole (antes cortava os NUL e
+  «fechava» o JSON à força, e um adapter que caía levava a fonte inteira em
+  silêncio). Resolver: repor o ficheiro do git ou voltar a correr o scraper.
+- **Sanity checks realistas** (`validate/sanity-check.js`): pisos de **29 000
+  juniores / 21 000 torneios** (eram 100/500) e **queda máxima de 10%** face ao
+  canónico em disco (`readPrevious`: `juniors.json` + `totalTournaments` do
+  manifest). Falhou → nada é gravado e o exit é **1** (era 2, que se lia como
+  «nada de novo»). `--force` passa por cima (ex: uma limpeza grande de
+  duplicados, ou `--only=…` de debug sem `--dry-run`).
 
 ### Fontes (os 11 adapters originais — hoje são ~30, ver `scripts/aggregator/sources/`)
 

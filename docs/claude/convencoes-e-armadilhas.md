@@ -129,6 +129,13 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
     Low HI = mínimo dos 365 dias antes da última volta), `enrich-players.js`
     ("SD Best 8/20" = média das voltas que contam — a ±0,1 da média oficial em 90
     de 184 jogadores, eram 84).
+  - **Nomes de campo: o mesmo esquema** (2026-10-20). `src/utils/courseAliases.ts`
+    é a única tabela de aliases e de resolução por par (Aroeira II, Santo da
+    Serra, Ribagolfe, Vila Sol/Pinheiros Altos/Castro Marim); o
+    `scripts/lib/course-aliases.cjs` e o `lib/course-aliases.js` (pipeline)
+    carregam-no. Eram 3 cópias à mão e já divergiam (Tróia, Porto Santo, Santo
+    Estevão e Oceânico Faldo só nos scripts). Mesmas restrições do whsCalc.ts;
+    `scripts/course-aliases-loader.test.js` compara Node real × site.
   - **Ranking Sub-12 = o SD REAL de cada miúdo** (decisão 2026-09-15): o
     `roundScores[].sd` oficial das voltas ou, sem ele, o calculado com o HCP da
     inscrição.
@@ -154,6 +161,38 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 - Jogadores sem nome nos ficheiros de histórico são mantidos (potencial matching futuro).
 - Filtros multi-select (circuitos, escalões) usam `Set`.
 - **`rivalData.ts`**: dados estáticos de campos (par/SI/metros para Villa Padierna, Alferini, La Forêt, Venice, Marco Simone, Doral GP/SF), FIELD_2025 (WJGC stats), FIELD_CARDS (scorecards top players), TIER cores.
+
+### Scripts — escrita de JSON, guardas e exit codes (auditoria 2026-10-20)
+
+- **Escrita sempre atómica com fsync.** `scripts/lib/atomic-write.js` →
+  `lib/atomic-write.js` (chunks + `fsync` + verificação de tamanho + rename +
+  fsync da pasta). `writeJsonAtomic(path, data, { spaces })` para objectos,
+  `writeAtomic(path, string)` para texto já serializado. O tmp+rename sem fsync
+  (que havia no `pipeline.js`, no rich-players, no update-cgss…) **não chega** —
+  foi assim que o `players.json` e o `drive-data-2026-06.json` ficaram truncados.
+  Os ~45 scripts chamados pelos workflows passaram todos para aqui (codemod).
+- **Guarda anti-encolhimento: `writeJsonGuarded`** (`scripts/lib/shrink-guard.js`)
+  — grava atómico, excepto se o novo perder mais de `maxDrop` face ao disco
+  (`count: (d) => …` para contar jogadores/torneios; sem `count` compara bytes).
+  Ficheiro anterior ausente/ilegível → grava. `--force` (ou `force: true`) passa.
+  Com `failOnRefuse: true` (builders) sai com 1 e escreve `::error::` no log do
+  GitHub. Já a usam: os builders de França/Espanha/FFG/EGR/GJGL, `federados.json`,
+  catálogos England/FFG, scopes NextCaddy/RFEGolf, `players.json` (pipeline, 10%),
+  NextCaddy/RFEGolf/FFG/LGS por torneio.
+- **Input corrupto = erro, nunca reparação silenciosa.** O agregador cortava NUL
+  bytes e «fechava» JSONs truncados; hoje `readJsonSafe` lança `CorruptInputError`
+  (exit 1). O mesmo para caches/scopes ilegíveis que antes eram tratados como
+  vazios e depois regravados só com a corrida actual (rich-players flight-cache,
+  `uskids-draws.json`, scope RFEGolf no `--merge`).
+- **Exit codes:** `0` gravou · `2` nada de novo · `1` erro · `3` FPG em baixo.
+  Um `process.exit(0)` no fim do script **apaga** o `process.exitCode = 1` que a
+  guarda pôs — usar `process.exit(process.exitCode || …)` ou deixar acabar
+  sozinho. Quem passa a devolver 2 tem de ter, no workflow,
+  `node scripts/x.js || [ $? -eq 2 ]` (o bash dos Actions corre com `-e`).
+  Excepções antigas e documentadas: as guardas do `fetch-uskids-field`,
+  `build-course-players`, `build-recent-tournaments` e `discover-fcg-scope`
+  recusam com 2 (o ficheiro anterior fica); o `verify-drive-rankings` usa 1 para
+  «divergências».
 
 ### Normalização
 
