@@ -171,7 +171,7 @@ export async function loadRfegDivisionData(
   else if (t.source === "rfegolf") results = data.mitarjetaTorneo
     ? mitarjetaToFPGTournament(data, dob)
     : rfegolfToFPGTournament(data, dob);
-  else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dob) as unknown as FPGTournament | null;
+  else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dob);
 
   // NextCaddy sem scorecard hbh: muitas Liguillas TÊM leaderboard real (pos/
   // total/±par) mas sem cartões → ncToFPGTournament devolve null. Nesse caso

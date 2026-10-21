@@ -19,6 +19,8 @@ import { displayName as displayCase } from "../utils/format";
 
 // Os mesmos lookups por licença das outras fontes de Espanha.
 import type { DobLookup, HcpLookup } from "./rfeg/types";
+import type { Tournament as FPGTournament } from "./fpgTypes";
+import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
 
 interface FCGScorecardGameTee {
   color: string | null;
@@ -262,52 +264,6 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
  * Limitação: cada game golfdirecto = 1 jornada (1 ronda). Para multi-round
  * o adapter teria que correlacionar múltiplos gameIds via tournament._id.
  */
-interface FpgRoundScoreShape {
-  round: number;
-  gross: number;
-  scores: number[];
-  pars: number[];
-  si: number[];
-  meters: number[];
-  teeName?: string;
-}
-
-interface FpgPlayerShape {
-  scoreId: string;
-  pos: number;
-  name: string;
-  club: string;
-  fed?: string;
-  fedCode?: string;
-  grossTotal: number | null;
-  toPar: number | null;
-  hcpExact?: number;
-  escalao: string | null;
-  _sex: "M" | "F" | null;
-  _age: number | null;
-  _category?: string;
-  teeName?: string;
-  nholes: number;
-  parTotal: number;
-  scores: number[];
-  par: number[];
-  si: number[];
-  meters: number[];
-  roundScores: FpgRoundScoreShape[];
-  _wd: boolean;
-  _roundsPlayed: number;
-}
-
-export interface FpgTournamentShape {
-  name: string;
-  tcode: string;
-  date: string;
-  campo: string;
-  rounds: number;
-  playerCount: number;
-  players: FpgPlayerShape[];
-}
-
 function ageAtFcg(dobIso: string | null | undefined, refIso: string | null | undefined): number | null {
   if (!dobIso || !refIso) return null;
   try {
@@ -341,7 +297,10 @@ function escalaoFromCategory(catName: string | null, age: number | null): string
   return null;
 }
 
-export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLookup): FpgTournamentShape | null {
+/** Regras do golfdirecto que esperam decisão: par 4 por buraco quando nenhum cartão traz o par. */
+const FCG_OPTS = { inventedPar: PAR_INVENTADO };
+
+export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLookup): FPGTournament | null {
   const cats = detail.__categories || [];
   if (cats.length === 0) return null;
 
@@ -366,12 +325,10 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
     }
     if (par18.length > 0) break;
   }
-  if (par18.length === 0) par18 = new Array(18).fill(4);
-  const parTotal = par18.reduce((a, b) => a + b, 0);
-  const nholes = par18.length;
+  par18 = parOrInvented(par18, par18.length || 18, FCG_OPTS.inventedPar);
 
   const dateRef = detail.meta.dateStart || null;
-  const players: FpgPlayerShape[] = [];
+  const players: IntlPlayerIn[] = [];
   let scoreIdCounter = 0;
 
   for (const cat of cats) {
@@ -392,61 +349,40 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       const hasScorecard = scores.some((s) => s > 0);
       const r1Total = hasScorecard ? scores.reduce((a, b) => a + b, 0) : (grossTotal ?? 0);
 
-      const roundScores: FpgRoundScoreShape[] = hasScorecard ? [{
-        round: 1,
-        gross: r1Total,
-        scores,
-        pars: par18,
-        si: si18,
-        meters: meters18,
-        teeName,
-      }] : [];
+      const rounds: IntlRoundIn[] = hasScorecard ? [{ round: 1, gross: r1Total, scores }] : [];
 
       const escalao = escalaoFromCategory(cat.name, age);
       const sex: "M" | "F" | null = (p.gender === "M" ? "M" : (p.gender === "F" ? "F" : (cat.gender === "M" ? "M" : (cat.gender === "F" ? "F" : (dobEntry?.sex === "M" ? "M" : (dobEntry?.sex === "F" ? "F" : null))))));
 
       players.push({
-        scoreId: `fcg-${detail.compId}-${scoreIdCounter++}`,
+        id: `fcg-${detail.compId}-${scoreIdCounter++}`,
         pos,
         name: fmtName(p.firstName, p.surname),
         club: dobEntry?.club || "—",
-        fed: lic,
-        fedCode: lic,
-        grossTotal,
+        total: grossTotal,
         toPar,
-        hcpExact: p.hcpExact ?? undefined,
-        escalao,
-        _sex: sex,
-        _age: age,
-        _category: cat.name,
-        teeName,
-        nholes,
-        parTotal,
+        hcp: p.hcpExact,
+        rounds,
+        // O cartão da 1.ª linha é o do jogo, mesmo sem buracos jogados.
         scores,
-        par: par18,
-        si: si18,
-        meters: meters18,
-        roundScores,
-        _wd: !p.isCardFinished,
-        _roundsPlayed: roundScores.length,
+        wd: !p.isCardFinished,
+        isPortuguese: null,
+        extra: { fed: lic, fedCode: lic, escalao, _sex: sex, _age: age, _category: cat.name },
       });
     }
   }
 
   // Ordenar por posição (pos), depois por nome
   players.sort((a, b) => {
-    const pa = a.pos ?? 999, pb = b.pos ?? 999;
+    const pa = (a.pos as number | null) ?? 999, pb = (b.pos as number | null) ?? 999;
     if (pa !== pb) return pa - pb;
     return a.name.localeCompare(b.name);
   });
 
-  return {
-    name: detail.meta.name || `FCG ${detail.compId}`,
-    tcode: String(detail.compId),
-    date: detail.meta.dateStart || "",
-    campo: detail.meta.course || "",
-    rounds: 1,
-    playerCount: players.length,
+  return buildFPGTournament(
+    { name: detail.meta.name || `FCG ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: 1 },
+    { par: par18, si: si18, meters: meters18, teeName, holes: par18.length },
     players,
-  };
+    { keepNoRounds: true, raw: true, ...FCG_OPTS },
+  );
 }
