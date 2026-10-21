@@ -21,6 +21,7 @@ import { tpColor } from "../../ui/tournamentPrimitives";
 import { useCompareSelection } from "../../ui/useCompareSelection";
 import HistoricScorecardsTab from "./HistoricScorecardsTab";
 import CourseTab from "./CourseTab";
+import { CoursesGate } from "../../context/CoursesContext";
 import PrevisaoTab from "./PrevisaoTab";
 import { kidsUrl } from "../../ui/KidsLink";
 
@@ -1502,8 +1503,8 @@ export function FieldRivaisSection({ data, torneioT, escalaoNome, section, autoR
   const torneio = futureTorneios.find(x => x.t === torneioT) || null;
   if (section === "scores") return <HistoricTopNTable mh={mh} torneio={torneio} escalaoNome={escalaoNome} autoRivals={autoRivals} />;
   if (section === "sc-edicoes") return <HistoricScorecardsTab mh={mh} torneio={torneio} escalaoNome={escalaoNome} />;
-  if (section === "campo") return <CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} />;
-  if (section === "previsao") return <PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} />;
+  if (section === "campo") return <CoursesGate><CourseTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
+  if (section === "previsao") return <CoursesGate><PrevisaoTab torneio={torneio} escalaoNome={escalaoNome} mh={mh} /></CoursesGate>;
   if (!dataset) return <div className="muted p-16">Sem dados para este torneio/escalão.</div>;
   return (
     <RivaisDashboard

@@ -16,6 +16,7 @@
 import React, { lazy, Suspense, useCallback, useEffect, useMemo, useState } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { loadPlayerStats, daysSince, type PlayerStatsDb } from "../data/playerStatsTypes";
@@ -47,7 +48,8 @@ import MasterDetail from "../ui/MasterDetail";
 const CompararPlayersView = lazy(() => import("./CompararPage"));
 
 export default function JogadoresPage() {
-  const { players, simCourses: courses } = useAppContext();
+  const { players } = useAppContext();
+  const { simCourses: courses } = useCourses();
   const { fed: urlFed } = useParams<{ fed?: string }>();
   const navigate = useNavigate();
   const [selectedFed, setSelectedFed] = useState<string | null>(urlFed ?? null);

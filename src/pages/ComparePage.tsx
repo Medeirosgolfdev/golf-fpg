@@ -17,6 +17,7 @@
 import { useState, useMemo, lazy, Suspense } from "react";
 import { Navigate } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
 import { Toolbar, ToolbarTitle, ToolbarMeta, ToolbarSep } from "../ui/Toolbar";
@@ -1050,7 +1051,7 @@ export function CourseComparisonView({ simCourses, initialCourseKey }: { simCour
 
 /** Vista «⚔️ Comparar» dentro dos Campos — Campo A vs B · Vantagem de Tee. */
 export function CamposCompareView({ courseKey }: { courseKey?: string }) {
-  const ctx = useAppContext();
+  const { simCourses } = useCourses();
   const [activeTab, setActiveTab] = useState<"campos" | "tees">("campos");
   return (
     <div>
@@ -1068,8 +1069,8 @@ export function CamposCompareView({ courseKey }: { courseKey?: string }) {
       </div>
       <Suspense fallback={<LoadingState message="A carregar…" />}>
         {activeTab === "campos"
-          ? <CourseComparisonView key={courseKey} simCourses={ctx.simCourses} initialCourseKey={courseKey} />
-          : <TeeAdvisorView key={courseKey} simCourses={ctx.simCourses} initialCourseKey={courseKey} />}
+          ? <CourseComparisonView key={courseKey} simCourses={simCourses} initialCourseKey={courseKey} />
+          : <TeeAdvisorView key={courseKey} simCourses={simCourses} initialCourseKey={courseKey} />}
       </Suspense>
     </div>
   );

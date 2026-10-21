@@ -1,4 +1,5 @@
 import type { MasterData, PlayersDb, AwayCoursesData, Course } from "./types";
+import type { MelhoriasJson } from "./melhoriasTypes";
 import { cachedFetchJson } from "./fetchCache";
 import { deepFixMojibake } from "../utils/fixEncoding";
 
@@ -55,4 +56,14 @@ export async function loadAwayCourses(opts?: { force?: boolean }): Promise<Cours
     // Ficheiro ainda não gerado pelo pipeline — não bloquear a app
     return [];
   }
+}
+
+/**
+ * Carrega o melhorias.json da raiz (voltas internacionais) — chunk à parte.
+ * Usado pelo App (contexto) e pela fusão dos campos (src/data/courses.ts).
+ */
+export function loadMelhorias(): Promise<MelhoriasJson> {
+  return import("../../melhorias.json")
+    .then((m) => m.default as unknown as MelhoriasJson)
+    .catch(() => ({} as MelhoriasJson));
 }

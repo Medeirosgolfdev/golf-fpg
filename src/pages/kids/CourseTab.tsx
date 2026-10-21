@@ -16,7 +16,7 @@
  */
 import { useMemo } from "react";
 import CourseHeroCard from "../../ui/CourseHeroCard";
-import { useAppContext } from "../../context/AppContext";
+import { useCourses } from "../../context/CoursesContext";
 import type { Course, Tee } from "../../data/types";
 
 interface FieldEscalao { nome: string }
@@ -344,10 +344,10 @@ export default function CourseTab({ torneio, escalaoNome, mh }: {
   escalaoNome: string;
   mh: MHSlim | null;
 }) {
-  const ctx = useAppContext();
+  const { simCourses } = useCourses();
   const result = useMemo<ResolvedCourse | null>(
-    () => resolveCourseTee(torneio, escalaoNome, mh, ctx.simCourses),
-    [torneio, escalaoNome, mh, ctx.simCourses],
+    () => resolveCourseTee(torneio, escalaoNome, mh, simCourses),
+    [torneio, escalaoNome, mh, simCourses],
   );
 
   if (!torneio) {

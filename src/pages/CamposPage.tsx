@@ -12,6 +12,7 @@ import { MOBILE_BREAKPOINT } from "../hooks/useIsMobile";
 import { useParams, useNavigate } from "react-router-dom";
 import type { Course, Tee, SexFilter, CoursePlayerRound } from "../data/types";
 import { useAppContext } from "../context/AppContext";
+import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
@@ -1197,7 +1198,8 @@ function CourseHoleAverages({ course }: { course: Course }) {
 }
 
 export default function CamposPage() {
-  const { simCourses, tournamentCourses, players } = useAppContext();
+  const { players } = useAppContext();
+  const { simCourses, tournamentCourses } = useCourses();
   // Base = campos reais + torneios. O filtro de origem decide o que mostrar:
   // por defeito (ALL/PT/INTL) os torneios ficam escondidos; só aparecem em "Torneios".
   const courses = useMemo(
