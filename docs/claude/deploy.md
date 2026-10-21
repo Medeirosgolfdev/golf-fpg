@@ -118,6 +118,18 @@ as caches à raiz. A app só lê `/{fed}/analysis/data.json`.
 ⚠ Se um dia a app passar a ler outro ficheiro por federado, **acrescentá-lo à
 excepção** — senão passa a dar 404 em produção e funciona em local.
 
+### 4. `scripts/compact-deploy-json.js` — JSON compactos no deploy (21/10/2026)
+
+Corre a seguir ao `prune-deploy-output.js`, também **só no Vercel**. Regrava
+compactos (sem indentação) todos os `.json` do Output Directory. O repo continua
+indentado de propósito — diffs legíveis, e há ficheiros editados por splice ou
+regravados por vários scripts com `JSON.stringify(…, null, 2)` (o pull-torneios
+tem ~10 escritores) — por isso a compactação faz-se na cópia do deploy e não nos
+geradores. Medido sobre o `public/`: 42 054 JSON, **1 269 → 734 MB**, ~11 s
+(juniors.json 52 → ~30 MB, uskids-results 23 → ~6, pull-torneios001 21 → ~6).
+Um ficheiro que não seja JSON válido fica como está. Experimentar em local:
+`node scripts/compact-deploy-json.js --dir <cópia>`.
+
 ### Seguranças — como é que a informação NÃO se perde
 
 O corte do scope não pode custar informação já recolhida. Quatro camadas,
