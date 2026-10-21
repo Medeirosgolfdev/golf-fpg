@@ -4547,26 +4547,30 @@ table td.lb-col-divider {
 }
 .mp-banner-icon { font-size: var(--fs-16); }
 
-/* Cartão de clube nos pontos do match play (/FPG/clubes → Grupos) */
-.mp-club-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);
+/* Match play a N lados e jogadores com identidade (MatchplayView — 3-way dos Clubes) */
+.mp-player-link { color: inherit; text-decoration: none; }
+.mp-player-link:hover { text-decoration: underline; }
+.mp-gross { margin-left: 5px; font-size: var(--fs-10); font-weight: 400; color: var(--text-3); white-space: nowrap; }
+.mp-nway-cell { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.mp-pts {
+  flex-shrink: 0; min-width: 26px; padding: 1px 6px; border-radius: var(--radius-sm);
+  text-align: center; font-weight: 700; font-variant-numeric: tabular-nums;
+  background: var(--bg-muted); color: var(--text-2);
 }
-.mp-club-card-hdr {
-  background: var(--color-good-dark); color: var(--text-inv);
-  padding: 8px 12px; display: flex; align-items: center; gap: 10px;
-}
-.mp-club-rank {
-  width: 34px; height: 34px; flex-shrink: 0; border-radius: 6px;
-  background: var(--overlay-white-25);
-  display: flex; align-items: center; justify-content: center;
-  font-size: var(--fs-20); font-weight: 900;
-}
-.mp-club-name {
-  flex: 1; min-width: 0; font-size: var(--fs-12); font-weight: 700;
-  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.mp-club-total { font-size: var(--fs-20); font-weight: 900; line-height: 1; }
+.mp-pts.mp-pts-lead { background: var(--accent-hover); color: var(--text-inv); }
+.mp-round-picker { display: flex; align-items: center; gap: 6px; margin: 4px 0 10px; }
+
+/* Classificação de equipas por pontos (TeamPointsStandings) */
+.tps-wrap { overflow-x: auto; padding-bottom: 6px; }
+.tps-table { font-variant-numeric: tabular-nums; width: max-content; min-width: 100%; }
+.sc-lb.tps-table td.tps-team { text-align: left; padding-left: 8px; }
+.sc-lb.tps-table td.tps-total { font-weight: 800; color: var(--color-good-dark); }
+.sc-lb.tps-table tr.tps-row { cursor: pointer; }
+.sc-lb.tps-table tr.tps-row.tps-open { background: var(--bg-hover); }
+.tps-detail { padding: 6px 4px 10px; }
+.sc-lb.tps-players td.tps-name { text-align: left; padding-left: 8px; }
+.tps-res { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.tps-pending { color: var(--text-4); }
 
 /* Valor estimado (sem fonte que o dê) — itálico vermelho. Draw do Faldo Madeira. */
 .est-value { font-style: italic; color: var(--color-danger); }

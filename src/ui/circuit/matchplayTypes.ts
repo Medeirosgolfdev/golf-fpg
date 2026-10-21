@@ -11,6 +11,16 @@
  */
 import { isPTByName } from "../../utils/ptPlayers";
 
+/** Jogador com identidade e resultado (opcional) — quando a fonte os dá
+ *  (ex.: Regional de Clubes da FPG: federado, gross e ±par do dia). Com `fed`,
+ *  o nome liga à ficha /jogadores/:fed. */
+export interface MatchplayPlayerRef {
+  name: string;
+  fed?: string | null;
+  gross?: number | null;
+  toPar?: number | null;
+}
+
 export interface MatchplaySide {
   teamId: number | null;
   name: string | null;         // "PORTUGAL"
@@ -19,6 +29,9 @@ export interface MatchplaySide {
   points: number | null;       // 5.5
   isLead: boolean;
   seed?: number | null;        // cabeça de série (quadros individuais da FPG)
+  shortName?: string | null;   // "SdS" — nos jogos de um confronto a N
+  /** Jogadores que representam o lado NESTE confronto (3-way de clubes: 1 por clube). */
+  playerRefs?: MatchplayPlayerRef[];
 }
 
 export interface MatchplayGameHole {
@@ -33,6 +46,8 @@ export interface MatchplayGameSide {
   players: string[];           // ["Francisco Reis", "Luis Antonio Silva"]
   result: string | null;       // "1UP", "3&2", ""
   won: boolean;
+  /** Os mesmos jogadores de `players`, com federado/gross/±par quando há. */
+  playerRefs?: MatchplayPlayerRef[];
 }
 
 export interface MatchplayGame {
@@ -59,6 +74,11 @@ export interface MatchplayTeamMatch {
   away: MatchplaySide | null;
   winner: "home" | "away" | null;
   games: MatchplayGame[];
+  /** Confronto a N lados (3-way match play): TODOS os lados, com os pontos de
+   *  cada um; `home`/`away` ficam com os dois primeiros. Os jogos são os
+   *  duelos de cada par de lados. Com isto a ronda desenha-se com uma coluna
+   *  por lado em vez de Casa/Fora. */
+  sides?: MatchplaySide[];
 }
 
 export interface MatchplayRound {
@@ -88,6 +108,9 @@ export interface MatchplayFile {
   endDate?: string;
   flights: MatchplayFlight[];
   scrapedAt: string;
+  /** Com isto, a vista avisa dos confrontos sem resultado (`isSettled` falso)
+   *  e explica porquê com este texto. */
+  pendingNote?: string;
 }
 
 /** Um lado é português? (para destaque na UI). Equipas trazem iso/nome do país;

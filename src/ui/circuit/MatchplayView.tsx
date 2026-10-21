@@ -11,6 +11,15 @@
  * `.row-portuguese`, e expansão em linha (`row-expanded` + colSpan — o mesmo
  * padrão da RecentTournamentsPage/CoursePlayersSection) com a tabela de jogos
  * num cartão com header band (o idioma dos scorecards de match play da FPG).
+ *
+ * Opcional, pelos dados ou por props (usado no 3-way match play dos Clubes da
+ * FPG — adaptador em src/data/clubesMatchplayAdapter.ts):
+ *   - confrontos a N lados (`MatchplayTeamMatch.sides`): uma coluna por lado,
+ *     com os pontos; os jogos são os duelos de cada par de lados;
+ *   - jogadores com identidade (`playerRefs`): link para /jogadores/:fed e
+ *     gross (±par) ao lado do nome;
+ *   - `pendingNote` no ficheiro: aviso dos confrontos sem resultado;
+ *   - prop `roundPicker`: selector das rondas (ex.: Dia 1 / Dia 2 / Total).
  */
 import { Fragment, useMemo, useState, type CSSProperties } from "react";
 import { useSort } from "../../hooks/useSort";
@@ -21,8 +30,41 @@ import { flag } from "../../utils/flagUtils";
 import {
   type MatchplayFile, type MatchplayFlight, type MatchplayRound,
   type MatchplayTeamMatch, type MatchplayGame, type MatchplayGameSide,
-  type MatchplaySide, sideIsPt,
+  type MatchplaySide, type MatchplayPlayerRef, sideIsPt,
 } from "./matchplayTypes";
+import { fmtPoints } from "./teamPointsTypes";
+import { fmtToPar } from "../../utils/format";
+import { isManuel } from "../../constants/manuel";
+
+/** Nome de um jogador: com federado liga à ficha /jogadores/:fed; ↗ kids2 se
+ *  existir no roster; gross (±par) ao lado quando a fonte o dá. */
+function PlayerName({ name, info: r }: { name: string; info?: MatchplayPlayerRef }) {
+  const fed = r?.fed ?? null;
+  return (
+    <>
+      {fed ? <a href={`/jogadores/${fed}`} className="mp-player-link">{name}</a> : name}
+      <KidsLink nome={name} fed={fed} />
+      {r?.gross != null && (
+        <span className="mp-gross">{r.gross}{r.toPar != null ? ` (${fmtToPar(r.toPar)})` : ""}</span>
+      )}
+    </>
+  );
+}
+
+/** Nomes de um lado (foursomes têm 2 — cada um com a sua seta). */
+function SideNames({ players, refs }: { players: string[] | undefined; refs?: MatchplayPlayerRef[] }) {
+  if (!players?.length) return <>—</>;
+  return (
+    <>
+      {players.map((p, i) => (
+        <Fragment key={i}>
+          {i > 0 && " · "}
+          <PlayerName name={p} info={refs?.[i]} />
+        </Fragment>
+      ))}
+    </>
+  );
+}
 
 const fmtFormat = (f: string | null): string =>
   f ? f.charAt(0).toUpperCase() + f.slice(1) : "—";
@@ -130,7 +172,7 @@ type GameSortKey = "order" | "format" | "result";
 /** Tabela de jogos (foursomes/singles) de UM confronto — dentro da expansão.
  *  As colunas são as EQUIPAS do confronto (nome no cabeçalho), não o casa/fora
  *  cru do GolfBox — cada jogo é orientado via `orientGame`. */
-function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: MatchplaySide | null; away: MatchplaySide | null }) {
+function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame[]; home: MatchplaySide | null; away: MatchplaySide | null; /** Confronto a N: cada jogo é um par de lados diferente — o lado vai em cada célula, não no cabeçalho. */ multi?: boolean }) {
   const { sortKey, sortDir, toggleSort } = useSort<GameSortKey>("order");
   const [expanded, setExpanded] = useState<Set<number>>(new Set());
   const toggleGame = (id: number) => setExpanded(prev => {
@@ -151,17 +193,12 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
     });
   }, [games, sortKey, sortDir]);
 
-  // Nomes com ↗ kids2 por jogador (foursomes têm 2 nomes — cada um com a sua seta).
-  const names = (ps: string[] | undefined) =>
-    ps && ps.length
-      ? ps.map((p, i) => (
-          <Fragment key={i}>
-            {i > 0 && " · "}
-            {p}
-            <KidsLink nome={p} />
-          </Fragment>
-        ))
-      : "—";
+  const names = (s: MatchplayGameSide | null, side: "left" | "right") => {
+    const ns = <SideNames players={s?.players} refs={s?.playerRefs} />;
+    if (!multi) return ns;
+    const pill = <span className="p p-sm p-muted">{s?.name ?? "?"}</span>;
+    return side === "left" ? <>{ns} {pill}</> : <>{pill} {ns}</>;
+  };
 
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
@@ -170,9 +207,9 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
           <tr>
             <SortableHdr k="order" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
             <SortableHdr k="format" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Formato</SortableHdr>
-            <th style={{ textAlign: "right", width: "32%" }}>{sideFlag(home?.iso ?? null, home?.country ?? null)} {home?.name ?? "Casa"}</th>
+            <th style={{ textAlign: "right", width: "32%" }}>{multi ? "" : <>{sideFlag(home?.iso ?? null, home?.country ?? null)} {home?.name ?? "Casa"}</>}</th>
             <SortableHdr k="result" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Resultado</SortableHdr>
-            <th style={{ width: "32%" }}>{sideFlag(away?.iso ?? null, away?.country ?? null)} {away?.name ?? "Fora"}</th>
+            <th style={{ width: "32%" }}>{multi ? "" : <>{sideFlag(away?.iso ?? null, away?.country ?? null)} {away?.name ?? "Fora"}</>}</th>
             <th className="tight" />
           </tr>
         </thead>
@@ -181,7 +218,7 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
             const id = g.matchNo ?? g.order ?? i;
             const expandable = hasHoles(g);
             const isOpen = expanded.has(id);
-            const { left, right, flipped } = orientGame(g, home);
+            const { left, right, flipped } = multi ? { left: g.home, right: g.away, flipped: false } : orientGame(g, home);
             const settled = !!left?.won || !!right?.won;
             return (
               <Fragment key={id}>
@@ -197,7 +234,7 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
                   {/* Sem 🏆/✗/½ aqui: o badge com seta + bold/esbatido já dizem quem venceu;
                       as marcas por cima disso eram ruído (½ dos dois lados, ✗ solto). */}
                   <td style={{ textAlign: "right", whiteSpace: "normal", fontWeight: left?.won ? 700 : 400, color: settled && !left?.won ? "var(--text-3)" : undefined }}>
-                    {names(left?.players)}
+                    {names(left, "left")}
                   </td>
                   <td style={{ textAlign: "center", whiteSpace: "nowrap", padding: "4px 14px" }}>
                     {g.result ? (
@@ -207,7 +244,7 @@ function GamesTable({ games, home, away }: { games: MatchplayGame[]; home: Match
                     )}
                   </td>
                   <td style={{ whiteSpace: "normal", fontWeight: right?.won ? 700 : 400, color: settled && !right?.won ? "var(--text-3)" : undefined }}>
-                    {names(right?.players)}
+                    {names(right, "right")}
                   </td>
                   <td className="tight" style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>
                     {expandable ? `${g.playedHoles ?? ""}${g.playedHoles ? "b " : ""}${isOpen ? "▴" : "▾"}` : ""}
@@ -354,8 +391,113 @@ function RoundTable({ round }: { round: MatchplayRound }) {
   );
 }
 
-function FlightSection({ fl, showTitle }: { fl: MatchplayFlight; showTitle: boolean }) {
-  const rounds = useMemo(() => [...fl.rounds].sort((a, b) => a.number - b.number), [fl.rounds]);
+/** Chave de um lado num confronto a N (a mesma equipa em todas as linhas). */
+const sideKey = (s: MatchplaySide): string => (s.teamId != null ? `t${s.teamId}` : `n${s.name ?? ""}`);
+
+/** O confronto tem o Manuel? (destaque da linha, como nas outras tabelas). */
+const matchHasManuel = (m: MatchplayTeamMatch): boolean =>
+  (m.sides ?? []).some(s => (s.playerRefs ?? []).some(r => isManuel({ fed: r.fed ?? undefined, name: r.name })));
+
+/** Tabela de confrontos de UMA ronda com N lados por confronto (3-way): uma
+ *  coluna por lado (equipa), com os jogadores e os pontos; ordenável por
+ *  qualquer coluna. Expandir mostra os duelos de cada par de lados. */
+function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
+  const cols = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const m of round.matches) for (const s of m.sides ?? []) {
+      const k = sideKey(s);
+      if (!seen.has(k)) seen.set(k, s.name ?? "?");
+    }
+    return [...seen.entries()].map(([key, label]) => ({ key, label }));
+  }, [round.matches]);
+  const { sortKey, sortDir, toggleSort } = useSort<string>("no");
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
+  const toggle = (id: number) => setExpanded(prev => {
+    const n = new Set(prev); n.has(id) ? n.delete(id) : n.add(id); return n;
+  });
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    const val = (m: MatchplayTeamMatch): string | number => {
+      if (sortKey === "no") return m.matchNo ?? 999;
+      if (sortKey === "time") return m.startTime ?? "";
+      const s = (m.sides ?? []).find(x => sideKey(x) === sortKey);
+      return s?.points ?? -1;
+    };
+    return [...round.matches].sort((a, b) => {
+      const va = val(a), vb = val(b);
+      return va < vb ? -dir : va > vb ? dir : 0;
+    });
+  }, [round.matches, sortKey, sortDir]);
+
+  return (
+    <div style={{ overflowX: "auto" }}>
+      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
+        <thead>
+          <tr>
+            <SortableHdr k="no" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
+            {cols.map(c => (
+              <SortableHdr key={c.key} k={c.key} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Ordenar pelos pontos deste lado">{c.label}</SortableHdr>
+            ))}
+            <SortableHdr k="time" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Hora</SortableHdr>
+            <th className="tight">Jogos</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((m, i) => {
+            const id = m.teamMatchId ?? i;
+            const isOpen = expanded.has(id);
+            return (
+              <Fragment key={id}>
+                <tr
+                  className={`player-list-row${matchHasManuel(m) ? " row-manuel" : ""}`}
+                  style={{ cursor: m.games.length ? "pointer" : "default" }}
+                  onClick={() => m.games.length && toggle(id)}
+                  title={m.games.length ? "Clicar para ver os duelos de cada par" : undefined}
+                >
+                  <td className="num c-muted">{m.matchNo ?? i + 1}</td>
+                  {cols.map(c => {
+                    const s = (m.sides ?? []).find(x => sideKey(x) === c.key);
+                    if (!s) return <td key={c.key} className="c-muted">—</td>;
+                    const cls = !m.isSettled ? "" : s.isLead ? "fw-700" : "c-muted";
+                    return (
+                      <td key={c.key} style={{ whiteSpace: "normal" }}>
+                        <span className="mp-nway-cell">
+                          <span className={cls}>
+                            <SideNames players={(s.playerRefs ?? []).map(r => r.name)} refs={s.playerRefs} />
+                          </span>
+                          <span className={`mp-pts${m.isSettled && s.isLead ? " mp-pts-lead" : ""}`}
+                            title={m.isSettled ? "Pontos neste confronto" : "Sem resultado publicado"}>
+                            {m.isSettled ? fmtPoints(s.points) : "—"}
+                          </span>
+                        </span>
+                      </td>
+                    );
+                  })}
+                  <td className="tight c-muted">{m.startTime ?? "—"}</td>
+                  <td className="tight c-muted">{m.games.length ? `${m.games.length} ${isOpen ? "▴" : "▾"}` : "—"}</td>
+                </tr>
+                {isOpen && (
+                  <tr className="row-expanded">
+                    <td colSpan={cols.length + 3} style={{ background: "var(--bg-card)", padding: "8px 12px 12px" }}>
+                      <GamesTable games={m.games} home={null} away={null} multi />
+                    </td>
+                  </tr>
+                )}
+              </Fragment>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FlightSection({ fl, showTitle, roundFilter }: { fl: MatchplayFlight; showTitle: boolean; /** Só esta ronda (null = todas). */ roundFilter: number | null }) {
+  const rounds = useMemo(
+    () => [...fl.rounds].filter(r => roundFilter == null || r.number === roundFilter).sort((a, b) => a.number - b.number),
+    [fl.rounds, roundFilter],
+  );
+  if (!rounds.length) return null;
   return (
     <div style={{ marginBottom: 20 }}>
       {showTitle && (
@@ -371,25 +513,66 @@ function FlightSection({ fl, showTitle }: { fl: MatchplayFlight; showTitle: bool
             {r.name || `Ronda ${r.number}`}
             {r.date && <span style={{ fontWeight: 400, color: "var(--text-muted)" }}> · {fmtRoundDate(r.date)}</span>}
           </div>
-          {r.matches.length ? <RoundTable round={r} /> : <div className="muted">Sem confrontos.</div>}
+          {!r.matches.length ? <div className="muted">Sem confrontos.</div>
+            : r.matches.some(m => m.sides) ? <MultiWayRoundTable round={r} />
+            : <RoundTable round={r} />}
         </div>
       ))}
     </div>
   );
 }
 
-export default function MatchplayView({ data }: { data: MatchplayFile }) {
+export default function MatchplayView({ data, roundPicker = false }: {
+  data: MatchplayFile;
+  /** Selector das rondas (ex.: Dia 1 / Dia 2 / Total) em vez de as mostrar todas empilhadas. */
+  roundPicker?: boolean;
+}) {
+  const roundOpts = useMemo(() => {
+    const m = new Map<number, string>();
+    for (const fl of data.flights) for (const r of fl.rounds) if (!m.has(r.number)) m.set(r.number, r.name || `Ronda ${r.number}`);
+    return [...m.entries()].sort((a, b) => a[0] - b[0]).map(([n, label]) => ({ n, label }));
+  }, [data]);
+  const showPicker = roundPicker && roundOpts.length > 1;
+  const [selRound, setSelRound] = useState<number | null>(roundOpts[0]?.n ?? null);
+  const roundFilter = showPicker ? selRound : null;
   if (!data.flights.length) return <div className="muted">Sem brackets de match play.</div>;
   const multiFlight = data.flights.length > 1;
+  const visRounds = data.flights.flatMap(fl => fl.rounds.filter(r => roundFilter == null || r.number === roundFilter));
+  const pendentes = data.pendingNote ? visRounds.reduce((s, r) => s + r.matches.filter(m => !m.isSettled).length, 0) : 0;
+  const anyGames = visRounds.some(r => r.matches.some(m => m.games.length));
+  const nway = visRounds.some(r => r.matches.some(m => m.sides));
   return (
     // Largura contida: um confronto são 2 nomes + um badge — esticar isto pela
     // página toda afastava os nomes do resultado e perdia-se a leitura.
     <div style={{ maxWidth: 880 }}>
-      {data.flights.map(fl => <FlightSection key={fl.competitionId} fl={fl} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
+      {showPicker && (
+        <div className="mp-round-picker">
+          <div className="segmented-toggle" role="tablist" aria-label="Ronda">
+            {roundOpts.map(o => (
+              <button key={o.n} role="tab" aria-selected={selRound === o.n}
+                className={`seg-btn${selRound === o.n ? " active" : ""}`} onClick={() => setSelRound(o.n)}>
+                <span className="seg-label">{o.label}</span>
+              </button>
+            ))}
+            <button role="tab" aria-selected={selRound == null}
+              className={`seg-btn${selRound == null ? " active" : ""}`} onClick={() => setSelRound(null)} title="Todas as rondas">
+              <span className="seg-label">Total</span>
+            </button>
+          </div>
+        </div>
+      )}
+      {pendentes > 0 && (
+        <div className="notice notice-warn">
+          ⚠ <strong>{pendentes}</strong> {pendentes === 1 ? "confronto sem resultado publicado" : "confrontos sem resultado publicado"} — {data.pendingNote}
+        </div>
+      )}
+      {data.flights.map(fl => <FlightSection key={fl.competitionId} fl={fl} roundFilter={roundFilter} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
       {/* Só faz sentido com confrontos de equipas (quadros individuais não têm jogos). */}
-      {data.flights.some(fl => fl.rounds.some(r => r.matches.some(m => m.games.length))) && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
-        Clica num confronto para ver os jogos (foursomes e singles), e num jogo para o
-        buraco-a-buraco · estado corrido na perspectiva da equipa da coluna ESQUERDA
+      {anyGames && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
+        {nway
+          ? <>Clica num confronto para ver os duelos de cada par de lados, e num duelo com cartão para o buraco-a-buraco</>
+          : <>Clica num confronto para ver os jogos (foursomes e singles), e num jogo para o buraco-a-buraco</>}
+        {" "}· estado corrido na perspectiva {nway ? "do jogador" : "da equipa"} da coluna ESQUERDA
         (<span style={{ color: "var(--accent)", fontWeight: 700 }}>UP</span> à frente,{" "}
         <span style={{ color: "var(--medal-bronze)", fontWeight: 700 }}>DN</span> atrás).
       </div>}
