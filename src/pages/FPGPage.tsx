@@ -1,24 +1,18 @@
 ﻿// @refresh reset
 /**
- * TorneiosAnalisePage.tsx — Análise Genérica de Torneios
+ * FPGPage.tsx — /FPG: torneios da federação portuguesa
  *
- * Lê automaticamente todos os ficheiros:
- *   /data/pull-torneios000.json
- *   /data/pull-torneios001.json
- *   /data/pull-torneios002.json
- *   ... (para quando aparecer um 404)
+ * Vistas: Torneios (Todos / Jovens / Clubes / STO / PJA), Ranking PJA,
+ * Ranking Sub-12 e Classificações. O torneio seleccionado sai do URL (`tkey`).
  *
- * Apresenta:
- *   • Sidebar com todos os torneios de todos os ficheiros, agrupados por mês/ano
- *   • Leaderboard com scorecard buraco-a-buraco
- *   • Tabs por ronda (R1, R2, ... + Acumulado para multi-ronda)
- *   • Suporte a 9H e 18H, 1 a N rondas
+ * Dados e contas fora da página:
+ *   - src/data/fpgPageLoader.ts     — loaders (hooks) e listas derivadas
+ *   - src/data/fpgRankingsLoader.ts — Ranking Sub-12 e Classificações
+ *   - src/data/clubesFormats.ts     — formatos de equipa, match play, lista de Clubes
  */
 import React, { useEffect, useState, useMemo, useRef, useCallback } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useAppContext } from "../context/AppContext";
-import { loadPlayers } from "../data/loader";
-import { buildEscLookup, type EscLookup, normalizePlayer } from "../utils/playerUtils";
 import { SIDEBAR_ACCENT, EscPill, PillBadge } from "../ui/PillBadge";
 import { TournSidebarItem, SSERRA_CCODE, type SidebarItemTournament } from "../ui/TournSidebarItem";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -29,27 +23,25 @@ import ResultMark from "../ui/ResultMark";
 import LoadingState from "../ui/LoadingState";
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import { tournamentUrl, parseTournKey, fmtDateShort } from "../utils/format";
-import {
-  isManuel,
-  type PlayersDB,
-} from "../ui/tournamentPrimitives";
-import { PJARankingView, type PjaPdfEntry } from "../ui/PJARankingView";
-import { cachedFetchJson } from "../data/fetchCache";
+import { PJARankingView } from "../ui/PJARankingView";
 import ClubesGruposView from "../ui/ClubesGruposView";
-import ClubesCategoriasView, { type CategoriaCfg } from "../ui/ClubesCategoriasView";
+import ClubesCategoriasView from "../ui/ClubesCategoriasView";
 import TournExtLinks from "../ui/TournExtLinks";
-import type { FpgDraw, FpgDrawFlight } from "../data/nacional2026Loader";
 // Tipos e utilitários FPG — fonte canónica em ../data/fpgTypes.ts e ../data/fpgUtils.ts
-import type { Tournament, GrupoEntry, Player } from "../data/fpgTypes";
-import type { MatchPlayData, MpDia, MpMatch, MpRow } from "../data/clubesMatchplayTypes";
-import { buildDisplayList, tournamentHasManuel, isHiddenNonManuelDrive, isDriveOrAquapor } from "../data/fpgUtils";
+import type { Tournament } from "../data/fpgTypes";
+import type { MatchPlayData, MpDia } from "../data/clubesMatchplayTypes";
+import { buildDisplayList, tournamentHasManuel, isDriveOrAquapor, normSearchTerm } from "../data/fpgUtils";
+import {
+  useFpgPlayersDB, useFpgMainData, useFpgJovensData, useFpgPjaExtra,
+  dedupDisplayTournaments, jovensCandidates, selectJovens, buildTcodePills,
+} from "../data/fpgPageLoader";
+import { useLazyRanking, SUB12_RANKING_URL, CLASSIFICACOES_URL } from "../data/fpgRankingsLoader";
+import {
+  autoGruposByClub, clubesFormatOf, clubesIndividualTournament, diaPendentes, diaPoints,
+  isClubesMatchPlay, playerRows, selectClubesList,
+} from "../data/clubesFormats";
 import { isDNS } from "../ui/driveUtils";
-// Leaderboard components — extraídos para fpg/LeaderboardComponents.tsx
-// Inscrições e Jovens — extraídos para fpg/InscricoesComponents.tsx
 import { InscricoesPanel, buildJovensGroups, buildEventGroups, type JovensGroup, type EventGroup } from "../ui/InscricoesComponents";
-// Admissions + draws (browser scrape + merge) — ver CLAUDE.md
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, type FpgTournamentData, type FpgAdmissionsDrawsFile } from "../data/nacional2026Loader";
-import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic, inferEscalao, stripEscalaoSuffix } from "../data/featuredTournaments";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 // Re-exports para consumidores que ainda importam de FPGPage
 export type { RoundScore, Player, Tournament, ScorecardOptions } from "../data/fpgTypes";
@@ -57,11 +49,7 @@ export { expandMultiRound } from "../data/fpgUtils";
 export { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../ui/LeaderboardComponents";
 export { TournamentDetail } from "./fpg/TournamentDetail";
 
-// ── Módulos extraídos (refactor 2026-05-09) ──────────────────────────────
-import {
-  DATA_MAX, PRE_2020_KEY, yearMatchesFilter, dataUrl,
-  TOURN_PILLS, type TournPill, type FileMeta, type DriveData,
-} from "./fpg/constants";
+import { PRE_2020_KEY, TOURN_PILLS } from "./fpg/constants";
 import { isPJACore } from "../../ranking-pja/pja-rules.mjs";
 import {
   type SeriesKey, URL_TO_FILTER, URL_TO_NAV, NAV_TO_URL, FILTER_TO_URL, INSCRITOS_SHORTCUTS,
@@ -71,6 +59,10 @@ import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
 import { fpgMatchplayTabs, useFpgMatchplay, type FpgMatchplayData } from "./fpg/fpgMatchplay";
+import CircuitShell from "../ui/circuit/CircuitShell";
+import type { CircuitConfig } from "../ui/circuit/types";
+import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
+import MasterDetail from "../ui/MasterDetail";
 
 /** Junta o tab do Match Play (Taça da Federação) e o da Ordem de Mérito (CGSS)
  *  aos tabs de "Edições anteriores". */
@@ -78,173 +70,9 @@ function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], 
   const tabs = [...(fpgMatchplayTabs(matchplay ?? null, t) ?? []), ...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
   return tabs.length ? tabs : undefined;
 }
-import CircuitShell from "../ui/circuit/CircuitShell";
-import type { CircuitConfig } from "../ui/circuit/types";
-import { buildFpgEntries, fpgRepDivision, FPG_CONFIG } from "./fpg/fpgCircuitData";
-import MasterDetail from "../ui/MasterDetail";
-
-/* ─────────────────────────────────────────────
-   MAIN CONTENT
-   ───────────────────────────────────────────── */
-
-
-/* InscricoesPanel, buildJovensGroups, TERMOS_COMPETICAO, JovensGroup — importados de fpg/InscricoesComponents */
-
-/**
- * Auto-constrói a composição de equipas (GrupoEntry[]) de um torneio de clubes
- * a partir dos próprios jogadores, agrupados pelo campo `club`. Usado para
- * torneios de clubes sem composição curada em CLUBES_GRUPOS_BY_YEAR (ex:
- * Campeonato Nacional de Clubes Mid-Amateur). A ClubesGruposView cruza por
- * `fed` e calcula o best-N por equipa, exactamente como nos juvenis.
- */
-function autoGruposByClub(t: Tournament | null): GrupoEntry[] {
-  if (!t) return [];
-  // Agrupar jogadores por clube (a chave do grupo — letra — é atribuída só
-  // depois, por ordem alfabética de clube, para o cartão mostrar "A/B/C…" na
-  // caixa e o nome do clube ao lado — igual aos juvenis curados).
-  const byClub = new Map<string, { clube: string; jogadores: GrupoEntry["jogadores"] }>();
-  const add = (clubeRaw: string, nome: string, fed: string | null, hcpRaw: unknown) => {
-    const clube = (clubeRaw || "Sem clube").trim();
-    if (!byClub.has(clube)) byClub.set(clube, { clube, jogadores: [] });
-    byClub.get(clube)!.jogadores.push({
-      nome,
-      fed: fed ?? null,
-      hcp: hcpRaw != null && hcpRaw !== "" ? (hcpRaw as number) : 0,
-    });
-  };
-  if (t.players.length) {
-    for (const p of t.players) {
-      add(p.club || "", p.name, p.fedCode ?? null, p.hcpExact ?? p.hcpPlay);
-    }
-  } else {
-    // Pré-jogo: ainda não há scorecards. Usar os inscritos (_admissions.players)
-    // para já compor as equipas por clube/categoria (exclui reservas).
-    for (const p of t._admissions?.players ?? []) {
-      if (p.status === "reserva") continue;
-      add(p.clube || "", p.nome, p.fed ?? null, p.hcp);
-    }
-  }
-  const letra = (i: number) =>
-    i < 26 ? String.fromCharCode(65 + i)
-           : String.fromCharCode(65 + Math.floor(i / 26) - 1) + String.fromCharCode(65 + (i % 26));
-  // Letras oficiais por clube (do sorteio FPG), se o torneio as trouxer
-  // (campo `teamLetters` em CLUBES{ano}.json). Caso contrário, letras
-  // alfabéticas por ordem de clube como fallback.
-  const letterMap = t.teamLetters;
-  return [...byClub.values()]
-    .sort((a, b) => a.clube.localeCompare(b.clube, "pt"))
-    .map((g, i) => ({ grupo: letterMap?.[g.clube] ?? letra(i), clube: g.clube, jogadores: g.jogadores }))
-    .sort((a, b) => a.grupo.localeCompare(b.grupo));
-}
-
-/**
- * Formato de pontuação por equipa para torneios de clubes NÃO-juvenis, keyed
- * por `${ccode}-${tcode}`. Vive em código (e não no JSON) para sobreviver a
- * re-scrapes dos ficheiros CLUBES{ano}.json. `bestNByRound` = nº de resultados
- * contados em cada ronda; `note` = descrição mostrada no topo da vista Grupos.
- * Default para midam sem entrada: 5 melhores em todas as rondas (Absoluto).
- */
-const CLUBES_TEAM_FORMAT: Record<string, {
-  bestNByRound?: number[];
-  defaultBestN?: number;
-  note: string;
-  /** Se presente, cada clube é dividido em sub-grupos por categoria
-   *  (ClubesCategoriasView) em vez de uma única equipa. */
-  categories?: CategoriaCfg[];
-  /** Torneio em MATCH PLAY (pontos por equipa), não strokeplay. As vistas de
-   *  Grupos por pancadas não se aplicam — mostra-se placeholder até existir a
-   *  vista de match play e os dados reais. */
-  matchPlay?: boolean;
-}> = {
-  // Campeonato Nacional de Clubes Mid-Amateur BPI 2026 — R1 individual (5
-  // melhores), R2 foursomes (2 melhores).
-  "000-10912": { bestNByRound: [5, 2], note: "R1: 5 melhores (individual) · R2: 2 melhores (foursomes)" },
-  // Campeonato Regional de Clubes Absoluto 2024 — 2 dias individual, com 3
-  // categorias por clube: Homens >18 (5 melhores), Senhoras >18 (2), Juniores
-  // ≤Sub-18 (3). Sub-grupos dentro de cada card de clube.
-  "059-10483": {
-    bestNByRound: [5, 5],
-    note: "Cada dia: 5 melhores resultados (Absoluto masculino)",
-    categories: [
-      { key: "H", label: "Homens", bestN: 5 },
-      { key: "S", label: "Senhoras", bestN: 2 },
-      { key: "J", label: "Juniores", bestN: 3 },
-    ],
-  },
-  // Campeonato Regional de Clubes 2026 (059/10685, Palheiro, 20-21 Jun 2026).
-  // ⚠ FORMATO NOVO: 36 buracos de 3-Way Match Play (pontos: V=1, E=0.5, D=0).
-  // 3 campeonatos: Homens (6+1), Senhoras (3+1), Jovens (4+1, ≤18). NÃO é
-  // strokeplay — a classificação é por pontos, por isso usa-se placeholder até
-  // existir a vista de match play (construir com os dados reais do fim-de-semana).
-  "059-10685": {
-    note: "36 buracos · 3-Way Match Play (pontos: V=1 · E=0.5 · D=0)",
-    matchPlay: true,
-    categories: [
-      { key: "H", label: "Homens", bestN: 6 },
-      { key: "S", label: "Senhoras", bestN: 3 },
-      { key: "J", label: "Juniores", bestN: 4 },
-    ],
-  },
-};
 
 // ── 3-Way Match Play Results ──────────────────────────────────────────────
 const MP_CLUB_COLOR = "var(--color-good-dark,#2d6a4f)";
-
-/** Pontos de um clube num dia. O `subtotal` do ficheiro nem sempre existe (o
- *  Dia 2 do Regional 2026 não o tem) — nesse caso somam-se os pontos dos
- *  próprios confrontos, senão os pontos ficavam de fora do total do clube. */
-function diaPoints(dia: MpDia, clubKey: string): number {
-  const fromMatches = (dia.matches ?? []).reduce((s, m) => {
-    const v = m[clubKey];
-    return s + (typeof v === "number" ? v : 0);
-  }, 0);
-  const hasMatchPts = (dia.matches ?? []).some(m => typeof m[clubKey] === "number");
-  return hasMatchPts ? fromMatches : (dia.subtotal?.[clubKey] ?? 0);
-}
-
-/** Confrontos de um dia ainda sem resultado publicado (h2h vazio e sem pontos). */
-function diaPendentes(dia: MpDia): number {
-  return (dia.matches ?? []).filter(m => !(m.h2h?.length) ).length;
-}
-
-function playerRows(matches: (MpMatch & { _dia?: number })[], clubKey: string): MpRow[] {
-  const out: MpRow[] = [];
-  const idx = new Map<string, MpRow>();
-  for (const m of matches) {
-    const player = m.players?.[clubKey];
-    const pts = m[clubKey] as number | null | undefined;
-    const key = player?.fed ?? (player?.name ? `n:${player.name.toLowerCase()}` : `m:${m._dia}-${m.match}`);
-    let row = idx.get(key);
-    if (!row) {
-      row = { key, player, pts: null, byOpp: new Map() };
-      idx.set(key, row);
-      out.push(row);
-    }
-    // Prefere o registo com gross (o dia de stroke play traz-no).
-    if (!row.player?.gross && player?.gross != null) row.player = player;
-    if (pts != null) row.pts = (row.pts ?? 0) + pts;
-    // UNIÃO dos adversários do match: os que têm jogador listado (para gerar a
-    // entrada pendente quando o resultado não foi publicado) MAIS os que só
-    // aparecem no h2h (há matches em que se sabe o resultado mas não o nome do
-    // adversário — Senhoras m1/m2, Homens m1). Percorrer só um dos lados
-    // perderia informação de um deles.
-    const oppKeys = new Set<string>([
-      ...Object.keys(m.players ?? {}),
-      ...(m.h2h ?? []).flatMap(h => [h.w, h.l]),
-    ]);
-    for (const opp of oppKeys) {
-      if (opp === clubKey) continue;
-      const h = (m.h2h ?? []).find(x =>
-        (x.w === clubKey && x.l === opp) || (x.l === clubKey && x.w === opp));
-      const list = row.byOpp.get(opp) ?? [];
-      list.push(h
-        ? { won: !h.half && h.w === clubKey, half: h.half === true, margin: h.margin }
-        : { won: false, half: false, margin: null, pending: true });
-      row.byOpp.set(opp, list);
-    }
-  }
-  return out;
-}
 
 /** Faixa 🆚 no topo das vistas de match play de clubes (tabs Grupos e Match Play). */
 function MatchPlayBanner({ children }: { children: React.ReactNode }) {
@@ -638,11 +466,6 @@ function Content() {
     : (URL_TO_FILTER[urlSeg] ?? "");
   const startInscritos = isInscritosShortcut
     || (startSeries === "jovens" && INSCRITOS_SHORTCUTS.has(urlSub));
-  const [tournaments, setTournaments] = useState<Tournament[]>([]);
-  const [fileMeta, setFileMeta] = useState<FileMeta[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [loadingMsg, setLoadingMsg] = useState("A carregar ficheiros...");
-  const [error, setError] = useState<string | null>(null);
   // selected=-1 inicial (independente de haver ou não params.tkey):
   // - Com deep-link: URL→state encontra o match e chama setSelected(idx).
   // - Sem deep-link (utilizador entra em /FPG): `cur = displayList[-1] = undefined`
@@ -653,7 +476,7 @@ function Content() {
   // enquanto pjaExtra ou jovens ainda carregam — dando a ilusão de "várias
   // páginas a piscar".
   const [selected, setSelected] = useState<number>(-1);
-    const md = useMasterDetail();
+  const md = useMasterDetail();
   // Filtros sincronizados com URL query params para partilha directa.
   // Ex: `/FPG?year=2026&manuel=0&q=pedro`. Declarado ANTES dos useStates que
   // dependem dele (Temporal Dead Zone).
@@ -667,78 +490,24 @@ function Content() {
   const [yearFilter, setYearFilter]    = useState<string | null>(() => searchParams.get("year"));
   const [filterManuel, setFilterManuel] = useState(() => searchParams.get("manuel") !== "0");
   const [searchQuery, setSearchQuery]  = useState(() => searchParams.get("q") || "");  // filtro de texto: nome ou campo/clube
-  const [escLookup, setEscLookup] = useState<EscLookup>(new Map());
-  const [playersDB, setPlayersDB] = useState<PlayersDB>({});
-  // Lista de fedCodes inscritos no circuito PJA por ano.
-  // Carregado de /data/pja-members.json — ver PJARankingView para uso.
-  const [pjaMembers, setPjaMembers] = useState<Record<string, string[]>>({});
-  // Snapshot do PDF oficial PJA para comparação — se definido, a tabela mostra
-  // Δ pts e Δ rondas vs PDF e destaca células com disparidade.
-  const [pjaPdfSnapshot, setPjaPdfSnapshot] = useState<Record<string, PjaPdfEntry[]>>({});
-
-  // ── Estado Clubes ─────────────────────────────────────────────────────────
-  const [clubesTournaments, setClubesTournaments] = useState<Tournament[]>([]);
-  const [clubesLoaded, setClubesLoaded]           = useState(false);
+  // ── Dados (src/data/fpgPageLoader.ts, fpgRankingsLoader.ts) ──────────────
+  const { playersDB, escLookup } = useFpgPlayersDB();
+  // pull-torneios + Clubes (os Clubes chegam primeiro, já com inscrições/draws)
+  const {
+    tournaments, fileMeta, loading, loadingMsg, error,
+    clubesTournaments, clubesLoaded, clubesMeta,
+  } = useFpgMainData();
   const clubesLoading = !clubesLoaded;
   const [clubesSelected, setClubesSelected]       = useState<number>(0);
   const [clubesView, setClubesView]               = useState<"individual" | "grupos" | "matchplay">("grupos");
-
-  // ── Estado PJA (drive/aquapor mensais, para o Ranking PJA 2026+) ─────────
-  // Carregamos separadamente para não afectar o displayList principal (tabs
-  // Todos/Circuito/Santo continuam a ver apenas pull-torneios).
-  const [pjaExtraTournaments, setPjaExtraTournaments] = useState<Tournament[]>([]);
-  const [pjaExtraReady, setPjaExtraReady] = useState(false);
-
-  // ── Estado CLASSIFICAÇÕES ─────────────────────────────────────────────────
-  // Calendário dos jogadores de referência (Nuno Palmares, Santiago Dias,
-  // João Setúbal) com o campo reduzido a juniores. Ficheiro pré-construído por
-  // scripts/build-classificacoes.js — carregado lazy ao abrir o tab.
-  const [classifTournaments, setClassifTournaments] = useState<Tournament[]>([]);
-  const [classifLoading, setClassifLoading]         = useState(false);
-
-  // ⚠ O guard de "já está a carregar" é um ref, NÃO state: pô-lo nas deps faz
-  // o efeito re-correr assim que setClassifLoading(true) aplica, e a cleanup
-  // dessa primeira execução marcava alive=false antes do fetch resolver — os
-  // dados chegavam e eram deitados fora (ficava preso em "A carregar…").
-  const classifFetchStarted = useRef(false);
-  // ── Estado Ranking Sub-12 ────────────────────────────────────────────────
-  // Ficheiro pré-construído por scripts/build-sub12-ranking.js — mesma vista do
-  // Ranking PJA, mas com metric="sd": o SD oficial que a FPG deu a cada miúdo
-  // em cada volta (média das 8 melhores).
-  const [sub12Tournaments, setSub12Tournaments] = useState<Tournament[]>([]);
-  const [sub12Loading, setSub12Loading] = useState(false);
-  const sub12FetchStarted = useRef(false);
-  useEffect(() => {
-    if (navMode !== "ranking-sub12" || sub12FetchStarted.current) return;
-    sub12FetchStarted.current = true;
-    setSub12Loading(true);
-    (async () => {
-      try {
-        const d = await cachedFetchJson<{ tournaments?: Tournament[] }>("/data/sub12-ranking.json");
-        setSub12Tournaments(d?.tournaments || []);
-      } catch {
-        setSub12Tournaments([]);
-      } finally {
-        setSub12Loading(false);
-      }
-    })();
-  }, [navMode]);
-
-  useEffect(() => {
-    if (navMode !== "classificacoes" || classifFetchStarted.current) return;
-    classifFetchStarted.current = true;
-    setClassifLoading(true);
-    (async () => {
-      try {
-        const d = await cachedFetchJson<{ tournaments?: Tournament[] }>("/data/classificacoes.json");
-        setClassifTournaments(d?.tournaments || []);
-      } catch {
-        setClassifTournaments([]);
-      } finally {
-        setClassifLoading(false);
-      }
-    })();
-  }, [navMode]);
+  // Drive/Aquapor mensais (Ranking PJA 2026+) — fora do displayList principal.
+  const { pjaExtraTournaments, pjaExtraReady, pjaMembers, pjaPdfSnapshot } = useFpgPjaExtra();
+  // Jovens: arrancam no mount, para aparecerem também em "Todos".
+  const { jovensTournaments, jovensLoaded, jovensMeta, admissionsMeta } = useFpgJovensData();
+  const jovensLoading = !jovensLoaded;
+  // Ranking Sub-12 e Classificações: ficheiros pré-construídos, lidos ao abrir o tab.
+  const { tournaments: sub12Tournaments, loading: sub12Loading } = useLazyRanking(SUB12_RANKING_URL, navMode === "ranking-sub12");
+  const { tournaments: classifTournaments, loading: classifLoading } = useLazyRanking(CLASSIFICACOES_URL, navMode === "classificacoes");
 
   // Sincronização state → URL (query string). Só parâmetros com valor
   // não-default vão para o URL. replace:true evita poluir o histórico.
@@ -760,9 +529,6 @@ function Content() {
   }, [yearFilter, filterManuel, searchQuery]);
 
   // ── Estado Jovens ─────────────────────────────────────────────────────────
-  const [jovensTournaments, setJovensTournaments] = useState<Tournament[]>([]);
-  const [jovensLoading, setJovensLoading]         = useState(false);
-  const [jovensLoaded, setJovensLoaded]           = useState(false);
   const [jovensGroupKey, setJovensGroupKey]        = useState<string | null>(null);
   const [jovensEscIdx, setJovensEscIdx]            = useState<number>(0);
   const [jovensShowInscricoes, setJovensShowInscricoes] = useState(startInscritos);
@@ -801,523 +567,16 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlSeg, urlSub, isInscritosShortcut, params.tkey]);
 
-  // ── Sources secundárias (para o painel DataSourcesChip) ─────────────────
-  //   Cada secção (clubes, jovens, admissions) regista ficheiros tentados/lidos.
-  //   fileMeta cobre apenas os pull-torneios; estes cobrem o resto.
-  const [clubesMeta, setClubesMeta] = useState<DataSource[]>([]);
-  const [jovensMeta, setJovensMeta] = useState<DataSource[]>([]);
-  const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
-
   const { melhorias } = useAppContext();
 
-  const tcodePills = useMemo<Record<string, TournPill>>(() => {
-    const pills: Record<string, TournPill> = {};
-    for (const playerData of Object.values(melhorias)) {
-      if (typeof playerData !== "object" || !playerData) continue;
-      for (const raw of Object.values(playerData)) {
-        if (typeof raw !== "object" || !raw || Array.isArray(raw)) continue;
-        const entry = raw as { pill?: TournPill; links?: Record<string, unknown> };
-        if (!entry.pill) continue;
-        // Extrair TODOS os tcodes dos links desta entrada (ex: classificacao_d1 + classificacao_d2)
-        for (const v of Object.values(entry.links || {})) {
-          const match = String(v).match(/tcode=(\d+)/);
-          if (match) pills[match[1]] = entry.pill;
-        }
-      }
-    }
-    return pills;
-  }, [melhorias]);
+  const tcodePills = useMemo(() => buildTcodePills(melhorias), [melhorias]);
 
-  useEffect(() => {
-    let alive = true;
+  // Termo de pesquisa normalizado (nome/campo/clube, sem acentos nem maiúsculas).
+  const searchTerm = normSearchTerm(searchQuery);
 
-    async function load() {
-      // Clubes (CLUBES{ano}.json + clubes_sub_14&18_{ano}.json) arrancam já, em
-      // paralelo com os players e os pull-torneios: a vista /FPG/clubes (e o
-      // deep-link ?ct=) não espera pelos ficheiros pull-torneios. Era para isso
-      // que existia um 2.º loader de Clubes, duplicado e com regras diferentes
-      // (sem verificação de nome no enrich) — saiu a 21/10/2026.
-      const admIdxP = loadFpgAdmissionsDraws().catch(() => null)
-        .then(f => f ? indexFpgAdmissionsDraws(f) : new Map<string, FpgTournamentData>());
-      const clubesP = (async () => {
-        const { tournaments: clubes, meta } = await loadClubesFiles();
-        if (alive) setClubesMeta(meta);
-        const admIdx = await admIdxP;
-        // Só depois de enriquecidos com _draws/_admissions é que se publica o
-        // estado dos clubes — evita renderizar primeiro sem draws.
-        const enriched = clubes.map(t => enrichAdmDraws(t, admIdx));
-        if (alive) { setClubesTournaments(enriched); setClubesLoaded(true); }
-        return enriched;
-      })().catch(() => {
-        if (alive) setClubesLoaded(true);
-        return [] as Tournament[];
-      });
-      try {
-        // loadPlayers() usa fetchCache — 1 único fetch por sessão mesmo que FPGPage,
-        // DrivePage e App.tsx o peçam em simultâneo.
-        const [players, linksResp, kidsLinksResp, natResp, kidsTrackedResp] = await Promise.all([
-          loadPlayers().catch(() => ({})),
-          fetch("/data/tournament-links.json").catch(() => null),
-          fetch("/data/kids-links.json").catch(() => null),
-          fetch("/data/players-nationality.json").catch(() => null),
-          fetch("/data/kids-tracked-names.json").catch(() => null),
-        ]);
-        const pdb = players as PlayersDB;
-        // Merge players-nationality.json no playersDB — para cada federado FPG
-        // estrangeiro (Joe Short→GB, Peter Yao→CN, etc.) injecta `country` no
-        // entry existente, para o TournPName renderizar 🇬🇧 antes do nome.
-        if (natResp?.ok) {
-          try {
-            const nat = await natResp.json();
-            const byFed: Record<string, string> = nat?.byFed || {};
-            // info: { fed: {country, dob, sex, name} } — fonte de DOB para
-            // os ~58K federados (activos+inactivos).
-            const info: Record<string, { country?: string; dob?: string; sex?: string; name?: string }> = nat?.info || {};
-            for (const fed in byFed) {
-              const cc = byFed[fed];
-              if (!cc) continue;
-              const inf = info[fed] || {};
-              const entry = pdb[fed];
-              if (entry) {
-                if (!entry.country) entry.country = cc;
-                if (!entry.dob && inf.dob) entry.dob = inf.dob;
-                if (!entry.sex && inf.sex) entry.sex = inf.sex;
-              } else {
-                pdb[fed] = {
-                  country: cc,
-                  ...(inf.dob ? { dob: inf.dob } : {}),
-                  ...(inf.sex ? { sex: inf.sex } : {}),
-                  ...(inf.name ? { name: inf.name } : {}),
-                };
-              }
-            }
-          } catch { /* ignore */ }
-        }
-        // Merge kids-links.json no playersDB — entries CURADOS para
-        // jogadores internacionais sem fedCode português (Emile Cuanalo,
-        // George Campbell, etc.). Mantém precedência sobre auto-derived.
-        if (kidsLinksResp?.ok) {
-          try {
-            const kl = await kidsLinksResp.json();
-            for (const entry of (kl.players || [])) {
-              if (!entry.name || !entry.kidsHash) continue;
-              const key = "intl:" + entry.name.toLowerCase().replace(/\s+/g, "_");
-              pdb[key] = {
-                name: entry.name,
-                kidsHash: entry.kidsHash,
-                ...(entry.country ? { country: entry.country } : {}),
-                ...(entry.escalao ? { escalao: entry.escalao } : {}),
-                ...(entry.sex ? { sex: entry.sex } : {}),
-              };
-            }
-          } catch { /* ignore */ }
-        }
-        // Merge kids-tracked-names.json — índice fino (~150KB) com todos os
-        // nomes que aparecem nalguma fonte /kids (USKids, WJGC, Doral, etc.).
-        // Para cada nome aqui, cria entry virtual com kidsHash = memberId
-        // (preferido — link directo via ID) ou nome encodificado (fallback).
-        // Isto resolve o problema de ↗ aparecer em jogadores que NÃO estão
-        // em /kids: agora só aparece quando há match REAL com a fonte.
-        if (kidsTrackedResp?.ok) {
-          try {
-            const kt = await kidsTrackedResp.json();
-            const namesMap: Record<string, string | null> = kt?.names || {};
-            // Meta extra: { sex?, country? } por normName (de FFG resultats etc.)
-            const metaMap: Record<string, { sex?: "M" | "F"; country?: string }> = kt?.meta || {};
-            for (const normName in namesMap) {
-              if (!normName) continue;
-              const memberId = namesMap[normName];
-              const m = metaMap[normName] || {};
-              const key = "kids:" + normName.replace(/\s+/g, "_");
-              if (pdb[key]) continue; // já populado por kids-links.json
-              const displayName = normName.replace(/\b\w/g, c => c.toUpperCase());
-              pdb[key] = {
-                name: displayName,
-                kidsHash: memberId || encodeURIComponent(displayName),
-                ...(m.sex ? { sex: m.sex } : {}),
-                ...(m.country ? { country: m.country } : {}),
-              };
-            }
-          } catch { /* ignore */ }
-        }
-        if (alive) { setEscLookup(buildEscLookup(pdb)); setPlayersDB(pdb); }
-        let externalLinks: Record<string, Record<string, string>> = {};
-        if (linksResp?.ok) {
-          externalLinks = await linksResp.json().catch(() => ({}));
-        }
-
-        const allT: Tournament[] = [];
-        const meta: FileMeta[] = [];
-
-        // Paraleliza os fetches dos pull-torneios*.json em lotes de PARALLEL_BATCH.
-        // Antes: loop sequencial com await (6 ficheiros → 6× latência da rede).
-        // Agora: 1 único batch de até DATA_MAX fetches concorrentes, pára no
-        // primeiro null consecutivo que vier (via findIndex).
-        const PARALLEL_BATCH = 10;
-        let stopAt = DATA_MAX;
-        for (let start = 0; start < stopAt; start += PARALLEL_BATCH) {
-          if (!alive) return;
-          const batchEnd = Math.min(start + PARALLEL_BATCH, stopAt);
-          const batch = await Promise.all(
-            Array.from({ length: batchEnd - start }, (_, k) => start + k).map(async (i) => {
-              const url = dataUrl(i);
-              try {
-                const resp = await fetch(url);
-                if (!resp.ok) return { i, url, d: null as DriveData | null, parseErr: null as string | null };
-                const d = await resp.json() as DriveData;
-                return { i, url, d, parseErr: null };
-              } catch (e) {
-                return { i, url, d: null, parseErr: String(e).slice(0, 120) };
-              }
-            })
-          );
-          let consecutiveMisses = 0;
-          let hitStop = false;
-          for (const { i, url, d, parseErr } of batch) {
-            if (!d) {
-              if (parseErr) console.warn(`[FPGPage] Falhou a parsear ${url}: ${parseErr} — a continuar`);
-              consecutiveMisses++;
-              if (consecutiveMisses >= 2) { stopAt = i; hitStop = true; break; }
-              continue;
-            }
-            consecutiveMisses = 0;
-            const normalised = (d.tournaments || []).map(t => {
-              const extLinks = externalLinks[String(t.tcode)];
-              return { ...t, _sourceFile: url, _sourceIndex: i,
-                players: t.players.map(normalizePlayer),
-                ...(extLinks ? { links: { ...(t.links || {}), ...extLinks } } : {}) };
-            });
-            allT.push(...normalised);
-            meta.push({ file: url, index: i, lastUpdated: d.lastUpdated, source: d.source, count: normalised.length });
-          }
-          if (alive) {
-            setTournaments([...allT]);
-            setFileMeta([...meta]);
-            setLoadingMsg(`A carregar... ${meta.length} ficheiro(s) · ${allT.length} torneios`);
-          }
-          if (hitStop) break;
-        }
-
-        if (alive) {
-          if (allT.length === 0) {
-            setError(`Ficheiro não encontrado: ${dataUrl(0)}`);
-          }
-
-          // Enriquecer TODOS os torneios (pull-torneios + clubes) com as
-          // inscrições/draws do fpg-admissions-draws.json, para aparecerem com
-          // draws/pairings nos tabs STO, PJA, Clubes e Todos. O loader Jovens faz
-          // o mesmo para os seus.
-          const [admIdx, clubes] = await Promise.all([admIdxP, clubesP]);
-          if (alive) setTournaments([...allT.map(t => enrichAdmDraws(t, admIdx)), ...clubes]);
-
-          if (alive) setLoading(false);
-        }
-      } catch {
-        // erro inesperado — não mostrar stack trace técnico
-        if (alive) setLoading(false);
-      }
-    }
-
-    load();
-    return () => { alive = false; };
-  }, []);
-
-  // ── Loader PJA (Drive Tour + Aquapor mensais, para Ranking PJA 2026+) ────
-  // Estes torneios NÃO entram em tournaments/displayList (para não poluir as
-  // outras tabs). São carregados num state separado e combinados só quando
-  // construímos `pjaRankingList`. Activado apenas quando a tab Ranking PJA
-  // está activa.
-  useEffect(() => {
-    // Carregar drive-data/aquapor SEMPRE (não só no tab Ranking PJA) — assim
-    // deep-links em nova aba para `/FPG/torneio/{ccode}-{tcode}` de um Drive
-    // Tour ou Aquapor conseguem encontrar o torneio no displayList em vez de
-    // cair no default (primeiro torneio).
-    if (pjaExtraTournaments.length > 0) return;  // já carregado
-    let alive = true;
-    // Monta lista de URLs a tentar (todos os meses desde startYear até agora),
-    // faz fetch em PARALELO com Promise.all. Cada fetch individual falha
-    // silenciosamente (muitos meses podem não existir). Isto é 10-30× mais
-    // rápido que o loop sequencial com await.
-    const loadMonthly = async (prefix: string, startYear: number): Promise<Tournament[]> => {
-      const now = new Date();
-      const curYear = now.getFullYear();
-      const curMonth = now.getMonth() + 1;
-      const urls: string[] = [];
-      for (let y = startYear; y <= curYear; y++) {
-        const endMonth = (y === curYear) ? curMonth : 12;
-        for (let m = 1; m <= endMonth; m++) {
-          urls.push(`/data/${prefix}-${y}-${String(m).padStart(2, "0")}.json`);
-        }
-      }
-      const results = await Promise.all(urls.map(async (url) => {
-        try {
-          const r = await fetch(url);
-          if (!r.ok) return [];
-          const ct = r.headers.get("content-type") || "";
-          if (!ct.includes("json")) return [];
-          const d = await r.json();
-          return ((d as DriveData).tournaments || []).map(t => ({
-            ...t, _sourceFile: url,
-            players: (t.players || []).map(normalizePlayer),
-          }));
-        } catch { return []; }
-      }));
-      if (!alive) return [];
-      return results.flat();
-    };
-    const loadPjaMembers = async (): Promise<Record<string, string[]>> => {
-      try {
-        const r = await fetch("/data/pja-members.json");
-        if (!r.ok) return {};
-        const ct = r.headers.get("content-type") || "";
-        if (!ct.includes("json")) return {};
-        const d = await r.json();
-        const out: Record<string, string[]> = {};
-        for (const [k, v] of Object.entries(d)) {
-          if (k.startsWith("_")) continue;
-          if (Array.isArray(v)) out[k] = v.map(String);
-        }
-        return out;
-      } catch { return {}; }
-    };
-    const loadPdfSnapshot = async (): Promise<Record<string, PjaPdfEntry[]>> => {
-      try {
-        const r = await fetch("/data/pja-pdf-snapshot.json");
-        if (!r.ok) return {};
-        const ct = r.headers.get("content-type") || "";
-        if (!ct.includes("json")) return {};
-        const d = await r.json();
-        const out: Record<string, PjaPdfEntry[]> = {};
-        for (const [k, v] of Object.entries(d)) {
-          if (k.startsWith("_")) continue;
-          if (Array.isArray(v)) out[k] = v as PjaPdfEntry[];
-        }
-        return out;
-      } catch { return {}; }
-    };
-    Promise.all([
-      loadMonthly("drive-data", 2026),
-      loadMonthly("aquapor-data", 2026),
-      loadPjaMembers(),
-      loadPdfSnapshot(),
-    ]).then(([drive, aq, members, pdfSnap]) => {
-      if (!alive) return;
-      // NÃO chamar buildDisplayList aqui — drive-data é single-round por design,
-      // aquapor já vem como entrada única multi-round. buildDisplayList só
-      // agruparia se houvesse padrões "Dia 1/Dia 2" no nome (não é o caso).
-      // Torneios manuais (PJA exclusivos, Santo da Serra juniores) são agora
-      // lidos no loader principal via pull-torneios003.json — incluídos em
-      // `tournaments` e `displayList` naturalmente, aparecendo em todas as tabs
-      // (Torneios, Ranking PJA, Draw) tal como o Nacional sintético.
-      setPjaExtraTournaments([...drive, ...aq]);
-      setPjaExtraReady(true);
-      setPjaMembers(members);
-      setPjaPdfSnapshot(pdfSnap);
-    });
-    return () => { alive = false; };
-  }, [navMode, pjaExtraTournaments.length]);
-
-  // ── Loader Jovens (arranca automaticamente no mount, para aparecerem em "Todos") ──
-  useEffect(() => {
-    if (jovensLoaded) return;
-    let alive = true;
-    setJovensLoading(true);
-    const JOVENS_FILES = [
-      { url: "/data/jovens_2026.json", year: "2026" },
-      { url: "/data/jovens_2025.json", year: "2025" },
-      { url: "/data/jovens_2024.json", year: "2024" },
-      { url: "/data/jovens_2023.json", year: "2023" },
-      { url: "/data/jovens_2022.json", year: "2022" },
-      { url: "/data/jovens_2020.json", year: "2020" },
-      { url: "/data/jovens_2019.json", year: "2019" },
-    ];
-    // Histórico dos Campeonatos Nacionais Jovens (2005-2026, 206 torneios) —
-    // o mesmo ficheiro que alimenta a TitulosPage e a NacionaisJovensPage.
-    // Carregado aqui para que os Nacionais históricos apareçam na sidebar
-    // de /FPG/jovens (anos pré-2019 não estão em jovens_YYYY.json).
-    // Tcodes que coincidam com jovens_YYYY perdem para a entrada existente
-    // (dedup por ccode/tcode no loop "seen" abaixo).
-    const HISTORICO_URL = "/data/fpg-nacionais-historico.json";
-    const jovensMetaLocal: DataSource[] = [];
-    Promise.all([
-      ...JOVENS_FILES.map(async ({ url, year }) => {
-        try {
-          const r = await fetch(url);
-          if (!r.ok) {
-            jovensMetaLocal.push({ path: url, status: "error", error: `HTTP ${r.status}`, group: "jovens" });
-            return [];
-          }
-          const d: DriveData = await r.json();
-          const rows = (d.tournaments || []).map(t => ({
-            ...t, _jovensYear: year, _sourceFile: url,
-            players: t.players.map(normalizePlayer),
-          }));
-          jovensMetaLocal.push({ path: url, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "jovens" });
-          return rows;
-        } catch (e) {
-          jovensMetaLocal.push({ path: url, status: "error", error: String(e), group: "jovens" });
-          return [];
-        }
-      }),
-      // Carrega o ficheiro histórico dos Nacionais Jovens — mesma forma que os
-      // jovens_YYYY mas cobre 2005-2026 (incluindo Drive Tour Finals e Sub-10/12
-      // 2025 Santo Estevão ccode=988). Filtra "de Clubes" (têm tab própria).
-      (async () => {
-        try {
-          const r = await fetch(HISTORICO_URL);
-          if (!r.ok) {
-            jovensMetaLocal.push({ path: HISTORICO_URL, status: "error", error: `HTTP ${r.status}`, group: "jovens" });
-            return [];
-          }
-          const d = await r.json() as DriveData;
-          const rows = (d.tournaments || [])
-            .filter(t => !/de\s+clubes/i.test(t.name || ""))
-            .map(t => ({
-              ...t,
-              _jovensYear: (t.date || "").substring(0, 4),
-              _sourceFile: HISTORICO_URL,
-              players: (t.players || []).map(normalizePlayer),
-              // Quando o historico contém admissions/draws (consolidação 2026-05-05
-              // do Nacional Jovens 2026), promove-os para _admissions/_draws para
-              // o detalhe do torneio mostrar tabs de Inscrições/Pairings.
-              ...(t.admissions ? { _admissions: t.admissions } : {}),
-              ...(t.draws ? { _draws: t.draws } : {}),
-            }));
-          jovensMetaLocal.push({ path: HISTORICO_URL, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "jovens" });
-          return rows;
-        } catch (e) {
-          jovensMetaLocal.push({ path: HISTORICO_URL, status: "error", error: String(e), group: "jovens" });
-          return [];
-        }
-      })(),
-      // Carrega também admissions + draws (107 torneios) para enriquecer existentes
-      // e injectar sinteticamente os 10 Nacional 2026 (que ainda não estão em jovens_2026).
-      loadFpgAdmissionsDraws().catch(() => null),
-    ]).then(all => {
-      if (!alive) return;
-      const admLoaded = all[all.length - 1] as FpgAdmissionsDrawsFile | null;
-      setAdmissionsMeta([{
-        path: "/data/fpg-admissions-draws.json",
-        status: admLoaded ? "loaded" : "error",
-        count: admLoaded ? (admLoaded.tournaments?.length || 0) : undefined,
-        source: admLoaded?.source,
-        lastUpdated: admLoaded?.scrapedAt ?? undefined,
-        group: "admissions",
-      }]);
-      setJovensMeta(jovensMetaLocal);
-      const admDrawsFile = all[all.length - 1] as Awaited<ReturnType<typeof loadFpgAdmissionsDraws>> | null;
-      const admDrawsIdx = admDrawsFile ? indexFpgAdmissionsDraws(admDrawsFile) : new Map<string, FpgTournamentData>();
-      const tournaments = (all.slice(0, -1) as Tournament[][]).flat();
-
-      const seen = new Map<string, Tournament>();
-      // 1) Torneios existentes — dedup + enriquecer com admissions/draws quando houver match
-      for (const t of tournaments) {
-        const key = t.ccode + "/" + String(t.tcode);
-        if (seen.has(key)) continue;
-        const idxKey = `${t.ccode}-${t.tcode}`;
-        const ad = admDrawsIdx.get(idxKey);
-        if (ad) {
-          t._admissions = ad.admissions;
-          t._draws = ad.draws;
-        }
-        seen.set(key, t);
-      }
-      // 2) Injectar torneios em destaque (FEATURED_TOURNAMENTS — template genérico
-      //    para torneios futuros: Nacional 2026 Aroeira, Amendoeira 2026, …) como
-      //    torneios sintéticos se não existirem já em pull-torneios/jovens_YYYY.json.
-      //    Só injecta quando há dados scraped no fpg-admissions-draws.json — sem
-      //    scrape, a entrada da config fica dormente. Nome/data/campo/escalão vêm
-      //    do scrape salvo override na config (ver src/data/featuredTournaments.ts).
-      //    Entradas de séries Drive (tour/challenge/aquapor) são da DrivePage.
-      for (const ft of FEATURED_TOURNAMENTS) {
-        if ((ft.series ?? "jovens") !== "jovens") continue;  // Drive → DrivePage
-        const key = ft.ccode + "/" + ft.tcode;
-        if (seen.has(key)) continue;
-        const ad = admDrawsIdx.get(`${ft.ccode}-${ft.tcode}`);
-        if (!ad) continue;  // sem dados scraped, não injecta
-        const date = ft.date || ad.date || "";
-        const synthetic = {
-          ...buildFeaturedSynthetic(ft, ad),
-          _jovensYear: date.substring(0, 4) || String(new Date().getFullYear()),
-        } as unknown as Tournament;
-        seen.set(key, synthetic);
-      }
-      // 3) Injectar outros torneios jovens com apenas admissions (sem resultados ainda em
-      //    pull-torneios) — detectados pelo nome na fpg-admissions-draws.json.
-      //    Permite que torneios Junior/Sub-N de qualquer clube (ex: ccode=004) apareçam
-      //    em /FPG/jovens logo que tenham inscrições scrapadas, sem precisar de pull-torneios.
-      {
-        const ADM_JOVEM_RE = /\b(juniors?|júniors?|juvenil|juvenis|sub[\s\-_]?\d{1,2}|u\d{1,2}|jovens?)\b/i;
-        const stripDia = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "");
-        // (inferEscalao / stripEscalaoSuffix importados de featuredTournaments.ts,
-        //  partilhados com a injecção (2) e com a DrivePage)
-        for (const [, ad] of admDrawsIdx) {
-          const tournKey = `${ad.ccode}/${ad.tcode}`;
-          if (seen.has(tournKey)) continue;
-          const playerCount = ad.admissions?.totalInscritos ?? (ad.admissions?.players?.length ?? 0);
-          if (playerCount === 0) continue;
-          if (!ADM_JOVEM_RE.test(stripDia(ad.name || ""))) continue;
-          const year = ad.date?.substring(0, 4) || String(new Date().getFullYear());
-          const baseName = stripEscalaoSuffix(ad.name || "") || `Torneio ${ad.tcode}`;
-          seen.set(tournKey, {
-            name: baseName,
-            ccode: ad.ccode,
-            tcode: String(ad.tcode),
-            date: ad.date || "",
-            campo: ad.campo || null,
-            clube: ad.ccode,
-            circuit: "tour",
-            series: "jovens",
-            region: null,
-            escalao: inferEscalao(ad.name || ""),
-            num: 1,
-            rounds: (ad.admissions as { rounds?: number } | undefined)?.rounds ?? 1,
-            playerCount,
-            players: [],
-            _jovensYear: year,
-            _sourceFile: "fpg-admissions-draws.json",
-            _admissions: ad.admissions,
-            _draws: ad.draws,
-          } as unknown as Tournament);
-        }
-      }
-      setJovensTournaments([...seen.values()] as Tournament[]);
-      setJovensLoaded(true);
-      setJovensLoading(false);
-    });
-    return () => { alive = false; };
-  }, [jovensLoaded]);
-
-  // Match do filtro de pesquisa por nome/campo/clube (normalizado, case+accent insensitive)
-  // Declarado ANTES dos useMemo que o consomem (ordem importante no JS — temporal dead zone).
-  const searchTerm = searchQuery.trim().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
-  const matchesSearch = (t: Tournament): boolean => {
-    if (!searchTerm) return true;
-    const fields = [t.name, t.campo, t.clube, t.tcode, t.ccode]
-      .map(v => String(v ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, ""));
-    return fields.some(f => f.includes(searchTerm));
-  };
-
-  // Lista filtrada por escalão dentro de Clubes, agrupada por ano
+  // Lista de Clubes (★Manuel, ano, pesquisa), agrupada por ano na sidebar.
   const clubesList = useMemo(
-    () => clubesTournaments
-      .filter(t => !filterManuel || t.players.some(p => isManuel(p)) || (() => {
-        const mp = t.matchPlayResults;
-        if (!mp) return false;
-        return mp.categories.some(cat => cat.dias.some(dia =>
-          (dia.matches ?? []).some(m => Object.values(m.players ?? {}).some(
-            (p: { fed?: string; name?: string }) => isManuel({ fed: p.fed, name: p.name })
-          ))
-        ));
-      })())
-      .filter(t => yearMatchesFilter(t._clubesYear ?? t.date?.substring(0, 4), yearFilter))
-      .filter(t => matchesSearch(t))
-      .sort((a, b) => {
-        const yCmp = (b._clubesYear ?? "").localeCompare(a._clubesYear ?? "");
-        if (yCmp !== 0) return yCmp;
-        return (a._clubesEsc ?? "").localeCompare(b._clubesEsc ?? "");
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    () => selectClubesList(clubesTournaments, { filterManuel, yearFilter, searchTerm }),
     [clubesTournaments, filterManuel, yearFilter, searchTerm]
   );
   const clubesByYear = useMemo(() => {
@@ -1345,84 +604,13 @@ function Content() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [seriesFilter, clubesLoaded, clubesList, searchParams]);
 
-  const jovensGroups = useMemo(() => {
-    // Input do tab JOVENS:
-    //   1. jovensTournaments — Nacionais Jovens + sintéticos 2026 Aroeira
-    //   2. Torneios com "Junior" no nome de outras fontes (Vila Sol Junior,
-    //      GJG Junior Classics, ESTORIL Junior Open, Academia Junior, etc.) —
-    //      têm pill JUNIOR na sidebar e faz sentido também aparecerem aqui
-    //      já que são competições juvenis, mesmo que de clubes não-FPG.
-    //      PJA e Greatgolf já têm os seus tabs próprios — excluídos por
-    //      terem pill PJA em vez de pill JUNIOR genérica.
-    //
-    //   Dedup robusto via Map (primeira ocorrência ganha) — garante que mesmo
-    //   se `tournaments` ou `jovensTournaments` contiverem entradas duplicadas,
-    //   só aparece uma por (ccode/tcode) na sidebar e nos tabs de escalão.
-    const dedupMap = new Map<string, Tournament>();
-    const keyOf = (t: Tournament) => (t.ccode || "") + "/" + String(t.tcode || "");
-    // Um torneio FEATURED já jogado cujos resultados vivem em pull-torneios
-    // (ex: Amendoeira World Kids 2026) entra em `jovensTournaments` como
-    // sintético (players:[], só inscrições/draws) E em `tournaments` com os
-    // resultados reais. Sem preferir o que tem resultados, o tab Jovens mostrava
-    // a ficha vazia. `hasResults` distingue os dois.
-    const hasResults = (t: Tournament) =>
-      (t.players || []).some(p => (p.roundScores?.length ?? 0) > 0 || p.grossTotal != null);
-    // Nº de rondas com scorecard — entre duas versões REAIS do mesmo torneio
-    // (ex: pull-torneios002 com 2 rondas vs ...006 com 3), ganha a mais completa.
-    const roundCount = (t: Tournament) =>
-      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
-    for (const j of jovensTournaments) {
-      const k = keyOf(j);
-      if (!dedupMap.has(k)) dedupMap.set(k, j);
-    }
-    // Regex de detecção de torneios juvenis pelo nome:
-    //  - "junior" / "juniors"  (Junior Open, GJG Portuguese Juniors)
-    //  - "júnior" (Taça Yeatman Júnior — strip de diacríticos antes do test)
-    //  - "subN"   (sub10, sub-14, sub 14, ...)
-    //  - "UN"     (U10, U12, U14, U16, U18, U21 — categorias internacionais)
-    //  - "escola"/"estagio"/"academia" (contexto juvenil: Escola de Golfe,
-    //    Estágio Verão, Academia Junior)
-    const JOVEM_NAME_RE = /\b(juniors?|júniors?|juvenil|juvenis|jovens?|sub[\s-]?\d{1,2}|u\d{1,2}|escola|estagio|academia)\b/i;
-    const stripAcc = (s: string) =>
-      s.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    for (const t of tournaments) {
-      const cleanName = stripAcc(t.name || "");
-      // "kids" pode vir colado ao nome do clube ("CityKids") — teste à parte.
-      if (!JOVEM_NAME_RE.test(cleanName) && !/kids/i.test(cleanName)) continue;
-      // Falsos positivos de "academia": "Academia Militar" não é juvenil.
-      if (/academia\s+militar/i.test(cleanName)) continue;
-      if (/PJA/i.test(t.name || "")) continue;                // já em tab PJA
-      if (/greatgolf.*junior/i.test(t.name || "")) continue;  // já em tab PJA (excepção)
-      const k = keyOf(t);
-      const existing = dedupMap.get(k);
-      if (!existing) { dedupMap.set(k, t); continue; }
-      // Resultados reais (pull-torneios) suplantam o sintético admissions-only;
-      // e entre duas versões reais, ganha a MAIS COMPLETA (mais rondas). Em ambos
-      // os casos herda as inscrições/draws/links que só o sintético/versão antiga traz.
-      if ((hasResults(t) && !hasResults(existing)) || roundCount(t) > roundCount(existing)) {
-        dedupMap.set(k, {
-          ...t,
-          _admissions: existing._admissions ?? t._admissions,
-          _draws: existing._draws ?? t._draws,
-          extraLinks: existing.extraLinks ?? t.extraLinks,
-        });
-      }
-    }
-    const combined = [...dedupMap.values()];
-
-    // Para torneios pré-jogo o Manuel só aparece em _admissions.players ou
-    // _draws.*.groups.*.players. `tournamentHasManuel` cobre todos os sítios.
-    const filtered = combined
-      // Drive/Aquapor têm a sua própria página /drive — fora da /FPG (incl. jovens).
-      .filter(t => !isDriveOrAquapor(t))
-      // Clubes match-play vivem em /FPG/clubes (não na lista strokeplay).
-      .filter(t => !CLUBES_TEAM_FORMAT[`${t.ccode}-${t.tcode}`]?.matchPlay)
-      .filter(t => !filterManuel || tournamentHasManuel(t))
-      .filter(t => yearMatchesFilter(t._jovensYear ?? t.date?.substring(0, 4), yearFilter))
-      .filter(t => matchesSearch(t));
-    return buildJovensGroups(filtered);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jovensTournaments, tournaments, filterManuel, yearFilter, searchTerm]);
+  // Tab JOVENS: Nacionais Jovens + sintéticos + torneios juvenis de outras
+  // fontes (pelo nome), com os filtros da página. Para torneios pré-jogo o Manuel
+  // só aparece nas inscrições/draws — `tournamentHasManuel` cobre-os.
+  const jovensGroups = useMemo(
+    () => buildJovensGroups(selectJovens(jovensCandidates(jovensTournaments, tournaments), { filterManuel, yearFilter, searchTerm })),
+    [jovensTournaments, tournaments, filterManuel, yearFilter, searchTerm]
+  );
 
   const jovensByYear = useMemo(() => {
     const m: Record<string, JovensGroup[]> = {};
@@ -1451,80 +639,13 @@ function Content() {
   // criando ping-pong entre dois torneios. Ver logs do 2026-04-19.
   const skipNextStateUrlRef = useRef(false);
 
-  /** Lista unificada que alimenta o tab "Todos":
-   *  - tournaments (pull-torneios + clubes merged no loader principal)
-   *  - jovensTournaments (jovens_YYYY.json + Nacional 2026 sintético) — dedup por ccode/tcode
-   *  Clubes (seriesFilter === "clubes") mantém sidebar própria, mas também fazem parte de `tournaments`.
-   *
-   *  ⚠ Dedup robusto: usa Map para garantir UMA entrada por (ccode/tcode), eliminando
-   *  duplicações que possam existir DENTRO de `tournaments` (ex: o mesmo torneio em
-   *  dois pull-torneios*.json) ou entre `tournaments` e `jovensTournaments`.
-   *  Sem isto, o Campeonato Nacional aparecia com cada escalão duplicado quando o
-   *  mesmo torneio existia em pull-torneios006.json E em jovens_2026.json (via
-   *  algum re-merge defeituoso, ou se o mesmo ficheiro fosse carregado duas vezes).
-   *  Política: primeira ocorrência ganha; jovens só entra se ccode/tcode novo. */
-  const displayList = useMemo(() => {
-    const dedupMap = new Map<string, Tournament>();
-    const keyOf = (t: Tournament) => (t.ccode || "?") + "/" + String(t.tcode ?? "?");
-    // Nº de rondas com scorecard de um torneio — para escolher a versão MAIS
-    // COMPLETA quando o mesmo (ccode/tcode) existe em 2 ficheiros pull-torneios.
-    // ⚠ Aconteceu com o Amendoeira World Kids 2026: um scrape parcial (2 rondas)
-    // ficou em pull-torneios002.json e os finais (3 rondas) em ...006.json; como
-    // o 002 carrega primeiro, a versão de 2 rondas ganhava e a R3 saía vazia.
-    const roundCount = (t: Tournament) =>
-      Math.max(0, ...(t.players || []).map(p => p.roundScores?.length ?? 0));
-    for (const t of tournaments) {
-      const k = keyOf(t);
-      const ex = dedupMap.get(k);
-      if (!ex || roundCount(t) > roundCount(ex)) dedupMap.set(k, t);
-    }
-    for (const j of jovensTournaments) {
-      const k = keyOf(j);
-      const ex = dedupMap.get(k);
-      if (!ex) { dedupMap.set(k, j); continue; }
-      // O torneio já veio com resultados (pull-torneios/EXTRA_TOURN_FILES) mas o
-      // synthetic jovem traz as inscrições/draw do fpg-admissions-draws — enxertá-las
-      // na versão com resultados para não perder as tabs Inscrições/Draw (caso do
-      // Miramar U25/Sub-10 2026, cujos resultados foram scraped à parte durante a prova).
-      // `extraLinks` (página do clube, regulamento) vem da config FEATURED e só
-      // existe no synthetic: sem o enxerto, os links do clube DESAPARECIAM do
-      // cabeçalho assim que os primeiros resultados eram scraped.
-      if ((!ex._admissions && j._admissions)
-          || (!ex._draws && j._draws)
-          || (!ex.extraLinks?.length && j.extraLinks?.length)) {
-        dedupMap.set(k, {
-          ...ex,
-          _admissions: ex._admissions ?? j._admissions,
-          _draws: ex._draws ?? j._draws,
-          extraLinks: ex.extraLinks?.length ? ex.extraLinks : j.extraLinks,
-        });
-      }
-    }
-    // Drive Tour + Aquapor NÃO entram aqui — esses torneios estão na DrivePage
-    // e os deep-links usam /drive/torneio/{ccode}-{tcode} (não /FPG/torneio/...).
-    // pjaExtraTournaments só é usado internamente pelo Ranking PJA.
-    // Esconder drives sem Manuel: chegam aqui via admissions (fpg-admissions-draws)
-    // mesmo depois de limpos do pull. Vivem na página /drive; os do Manuel ficam.
-    // Mesmo torneio com ccode/tcode diferentes (nome + data + campo iguais) →
-    // UMA entrada com a informação das duas: jogadores da versão mais completa,
-    // inscrições/draws de quem os tiver (13/10/2026 — Troféu João Sousa em duplicado).
-    const byIdentity = new Map<string, Tournament>();
-    for (const t of dedupMap.values()) {
-      const id = `${normTournamentName(t.name)}|${t.date || ""}|${normTournamentName(t.campo || "")}`;
-      const ex = byIdentity.get(id);
-      if (!ex) { byIdentity.set(id, t); continue; }
-      const [main, other] = roundCount(t) > roundCount(ex) || (t.players?.length ?? 0) > (ex.players?.length ?? 0) ? [t, ex] : [ex, t];
-      byIdentity.set(id, {
-        ...main,
-        _admissions: main._admissions ?? other._admissions,
-        _draws: hasDraws(main._draws) ? main._draws : other._draws,
-        extraLinks: main.extraLinks?.length ? main.extraLinks : other.extraLinks,
-        _mergedFrom: `${other.ccode}-${other.tcode}`,
-      });
-    }
-    const values = [...byIdentity.values()].filter(t => !isHiddenNonManuelDrive(t));
-    return buildDisplayList(values);
-  }, [tournaments, jovensTournaments]);
+  /** Lista que alimenta o tab "Todos": pull-torneios + clubes + jovens, UMA
+   *  entrada por torneio (ver dedupDisplayTournaments). Drive Tour + Aquapor
+   *  NÃO entram — vivem na /drive; pjaExtraTournaments só serve o Ranking PJA. */
+  const displayList = useMemo(
+    () => buildDisplayList(dedupDisplayTournaments(tournaments, jovensTournaments)),
+    [tournaments, jovensTournaments]
+  );
   const cur = displayList[selected];
 
   // ── Deep-link: sync URL (:tkey) → estado ────────────────────────────────
@@ -1755,7 +876,7 @@ function Content() {
     // deep-links continuarem a resolver.
     () => buildEventGroups(
       displayList.filter(t =>
-        !isDriveOrAquapor(t) && !CLUBES_TEAM_FORMAT[`${t.ccode}-${t.tcode}`]?.matchPlay),
+        !isDriveOrAquapor(t) && !isClubesMatchPlay(t)),
       { mergeEditions: true },
     ),
     [displayList]
@@ -2278,7 +1399,7 @@ function Content() {
               {(() => {
                 // O tab Match Play só existe em provas de match play com dados
                 // (Regional de Clubes 2026) — nos strokeplay não faria sentido.
-                const _fmtTabs = curClubes ? CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`] : undefined;
+                const _fmtTabs = clubesFormatOf(curClubes);
                 const hasMp = !!_fmtTabs?.matchPlay && !!curClubes?.matchPlayResults;
                 const views = hasMp
                   ? (["grupos", "matchplay", "individual"] as const)
@@ -2311,7 +1432,7 @@ function Content() {
             )}
 
             {clubesView === "matchplay" && curClubes ? (() => {
-              const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
+              const _fmt = clubesFormatOf(curClubes);
               const _mp = curClubes.matchPlayResults;
               if (!_mp || !_fmt?.categories) {
                 return <div className="fs-13 c-muted" style={{ padding: "32px 24px", textAlign: "center" }}>Sem confrontos publicados.</div>;
@@ -2325,101 +1446,7 @@ function Content() {
             })() : clubesView === "individual"
               ? curClubes
                   ? (() => {
-                      const _fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
-                      const _mp = _fmt?.matchPlay ? curClubes.matchPlayResults : undefined;
-                      const _par = _mp?.course?.par ?? [];
-                      const _meters = _mp?.course?.meters ?? [];
-                      const _tee = _mp?.course?.tee;
-                      // Sintetizar jogadores do match play, agrupando todos os dias por jogador
-                      // (fedCode como chave → Manuel aparece 1× com R1+R2, não 2×)
-                      const _mpPlayers = _mp && _par.length > 0
-                        ? (() => {
-                            const parTot = _par.reduce((s, v) => s + v, 0);
-                            type RndEntry = { diaNum: number; gross: number; scores: (number|null)[]; nholes: number };
-                            const byPlayer = new Map<string, { fed?: string; name: string; club: string; rounds: RndEntry[] }>();
-                            for (const cat of _mp.categories) {
-                              for (const dia of cat.dias) {
-                                for (const m of dia.matches ?? []) {
-                                  for (const cl of _mp.clubs) {
-                                    const p = m.players?.[cl.key];
-                                    if (!p?.scores || p.scores.filter(Boolean).length < 9) continue;
-                                    const holesPlayed = p.scores.filter((v): v is number => v != null);
-                                    const gross = holesPlayed.reduce((s, v) => s + v, 0);
-                                    const nholes = holesPlayed.length;
-                                    // fed code → merge rounds; sem fed → entrada única por dia/match
-                                    const key = p.fed ?? `${cat.key}-d${dia.dia}-${cl.key}-m${m.match}`;
-                                    const existing = byPlayer.get(key);
-                                    const rnd: RndEntry = { diaNum: dia.dia, gross, scores: p.scores, nholes };
-                                    if (existing) existing.rounds.push(rnd);
-                                    else byPlayer.set(key, { fed: p.fed, name: p.name ?? cl.name, club: cl.name, rounds: [rnd] });
-                                  }
-                                }
-                              }
-                            }
-                            return Array.from(byPlayer.entries()).map(([key, entry]): Player => {
-                              const allGross = entry.rounds.reduce((s, r) => s + r.gross, 0);
-                              const allComplete = entry.rounds.every(r => r.nholes >= _par.length);
-                              const toPar = allComplete ? allGross - parTot * entry.rounds.length : null;
-                              // ⚠ `nholes` é o TAMANHO DA VOLTA (18), não os buracos
-                              // preenchidos: com 16 o leaderboard desenhava uma volta
-                              // de 16 buracos e o ±par comparava com o par errado
-                              // (caso Tomás Câmara, Regional de Clubes 2026).
-                              const nholes = _par.length;
-                              return {
-                                scoreId: `mp-${key}`,
-                                name: entry.name,
-                                club: entry.club,
-                                fedCode: entry.fed,
-                                pos: null,
-                                grossTotal: allGross,
-                                toPar,
-                                // Os buracos por jogar vêm a null (o ScorecardLB trata-os).
-                                scores: entry.rounds[0]?.scores as number[] | undefined,
-                                par: _par,
-                                nholes,
-                                teeName: _tee,
-                                meters: _meters,
-                                roundScores: entry.rounds.map(r => ({
-                                  round: r.diaNum,
-                                  gross: r.gross,
-                                  scores: r.scores as number[],
-                                  pars: _par,
-                                  si: [],
-                                  meters: _meters,
-                                  teeName: _tee,
-                                })),
-                              };
-                            });
-                          })()
-                        : [];
-                      // Injetar dia1 como _draws["1"] sintético para aparecer como "Draw R1"
-                      const _dia1 = _mp?.dia1;
-                      const _syntheticDraw1: FpgDraw | undefined = _dia1 ? (() => {
-                        const clubMap = Object.fromEntries((_mp?.clubs ?? []).map(c => [c.key, c]));
-                        const flights: FpgDrawFlight[] = Object.values(_dia1.groups)
-                          .flat()
-                          .map(g => ({
-                            teeTime: g.teeTime,
-                            startHole: 1,
-                            tee: g.tee ?? null,
-                            players: g.players.map(p => ({
-                              nome: p.name,
-                              clube: clubMap[p.club]?.name ?? p.club,
-                              fed: p.fed ?? null,
-                              tee: p.tee ?? null,
-                            })),
-                          }))
-                          .sort((a, b) => a.teeTime.localeCompare(b.teeTime));
-                        const total = flights.reduce((s, f) => s + f.players.length, 0);
-                        return { name: `Draw — ${_dia1.modalidade ?? "R1"}`, date: _dia1.date, totalJogadores: total, groups: flights };
-                      })() : undefined;
-                      const _existingDraws: Record<string, FpgDraw> = curClubes._draws ?? {};
-                      const _draws = _syntheticDraw1 ? { "1": _syntheticDraw1, ..._existingDraws } : _existingDraws;
-                      const _t: Tournament = {
-                        ...curClubes,
-                        ...(_mpPlayers.length > 0 ? { players: _mpPlayers } : {}),
-                        _draws,
-                      };
+                      const _t = clubesIndividualTournament(curClubes);
                       return <TournamentDetail tournament={_t} escLookup={escLookup} playersDB={playersDB} extraTabs={fpgExtraTabs(editionsIndex, _t, playersDB, matchplayData)} />;
                     })()
                   : !clubesLoading && (
@@ -2446,7 +1473,7 @@ function Content() {
                   // (CLUBES_TEAM_FORMAT). Default = 5 melhores em todas as rondas
                   // (Absoluto), sem cap de pancadas por buraco.
                   const isMidam = esc === "midam";
-                  const fmt = CLUBES_TEAM_FORMAT[`${curClubes.ccode}-${curClubes.tcode}`];
+                  const fmt = clubesFormatOf(curClubes);
                   // Match Play (ex: Regional 2026) — a classificação é por pontos,
                   // não por pancadas. As vistas de Grupos por strokeplay não se
                   // aplicam; mostra-se nota e remete para Individual / Draw.
@@ -2737,94 +1764,6 @@ function Content() {
     </DataSourcesProvider>
   );
 }
-
-/** Ficheiros de Clubes: juvenis (sub14 + sub18 no mesmo JSON — escalão lido de
- *  `t.escalao`) e não-juvenis (Nacional de Clubes Mid-Amateur, Regional de
- *  Clubes Absoluto) com escFallback "midam" — a vista Grupos auto-constrói as
- *  equipas por clube, mesmo que o JSON não traga `escalao` (ex.: gerado pelo
- *  scrape-classif-node). */
-const CLUBES_FILES: { url: string; year: string; escFallback: string | null }[] = [
-  { url: "/data/clubes_sub_14&18_2026.json", year: "2026", escFallback: null },
-  { url: "/data/clubes_sub_14&18_2025.json", year: "2025", escFallback: null },
-  { url: "/data/clubes_sub_14&18_2024.json", year: "2024", escFallback: null },
-  { url: "/data/CLUBES2026.json", year: "2026", escFallback: "midam" },
-  { url: "/data/CLUBES2024.json", year: "2024", escFallback: "midam" },
-];
-
-function resolveClubesEsc(escalao: string | null | undefined, fallback: string | null): string {
-  if (escalao && /14/i.test(escalao)) return "sub14";
-  if (escalao && /18/i.test(escalao)) return "sub18";
-  if (escalao && /mid|amateur|absolut|s[eé]nior/i.test(escalao)) return "midam";
-  return fallback ?? "sub14";
-}
-
-/** Lê os ficheiros de Clubes, marca `_clubesEsc`/`_clubesYear` e deduplica por
- *  tcode (a última ocorrência ganha). */
-async function loadClubesFiles(): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
-  const meta: DataSource[] = [];
-  const results = await Promise.all(CLUBES_FILES.map(async ({ url, year, escFallback }) => {
-    try {
-      // cache:"no-store" — os ficheiros CLUBES{ano}.json são scrapados/
-      // actualizados com frequência (draws, novos torneios). Sem isto, o
-      // browser servia a versão antiga em cache e os draws não apareciam.
-      const r = await fetch(url, { cache: "no-store" });
-      if (!r.ok) {
-        meta.push({ path: url, status: "error", error: `HTTP ${r.status}`, group: "clubes" });
-        return [];
-      }
-      const d: DriveData = await r.json();
-      const rows: Tournament[] = (d.tournaments || []).map(t => ({
-        ...t,
-        series: "clubes" as const,
-        _clubesEsc: resolveClubesEsc(t.escalao, escFallback),
-        _clubesYear: year,
-        _sourceFile: url,
-        players: t.players.map(normalizePlayer),
-      }));
-      meta.push({ path: url, status: "loaded", count: rows.length, source: d.source, lastUpdated: d.lastUpdated, group: "clubes" });
-      return rows;
-    } catch (e) {
-      meta.push({ path: url, status: "error", error: String(e), group: "clubes" });
-      return [];
-    }
-  }));
-  const seen = new Map<string, Tournament>();
-  for (const t of results.flat()) seen.set(String(t.tcode), t);
-  return { tournaments: [...seen.values()], meta };
-}
-
-/** Junta ao torneio as inscrições e os draws do fpg-admissions-draws.json.
- *  ⚠ A FPG reutiliza tcodes: o registo só serve se o NOME bater com o do torneio
- *  (13/10/2026 — um «Troféu João Sousa» com o ccode:tcode da Final do Drive
- *  Challenge recebia os inscritos, o draw e o ★Manuel do Jamor).
- *  DRAWS: preferir os embebidos no JSON do torneio (CLUBES{ano}.json, scrapados
- *  por scripts/scrape-clube-draws.js, completos); o fpg-admissions-draws.json
- *  pode ter o torneio com `draws: {}` vazio (só admissions) — nesse caso NÃO
- *  sobrepor os embebidos (era este o bug do regional 2024).
- *  ADMISSIONS: preferir as da FPG (mais completas), senão as embebidas.
- *  Muda o próprio objecto e devolve-o. */
-function enrichAdmDraws(t: Tournament, admIdx: Map<string, FpgTournamentData>): Tournament {
-  const adRaw = admIdx.get(`${t.ccode}-${t.tcode}`);
-  const ad = adRaw && sameTournamentName(t.name, adRaw.name) ? adRaw : undefined;
-  if (hasDraws(t.draws)) t._draws = t.draws;
-  else if (hasDraws(ad?.draws)) t._draws = ad!.draws;
-  t._admissions = ad?.admissions ?? t.admissions;
-  return t;
-}
-
-/** Nome de torneio normalizado para comparar registos (sem acentos/pontuação). */
-function normTournamentName(s: string | undefined | null): string {
-  return String(s || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-    .replace(/[^a-z0-9]+/g, " ").trim();
-}
-/** Dois nomes do MESMO torneio? Igual normalizado, ou um contém o outro (a FPG
- *  abrevia: «Drive Chall Tejo-…»). Sem nome de um dos lados → aceitar. */
-function sameTournamentName(a: string | undefined | null, b: string | undefined | null): boolean {
-  const x = normTournamentName(a), y = normTournamentName(b);
-  if (!x || !y) return true;
-  return x === y || x.includes(y) || y.includes(x);
-}
-const hasDraws = (d: unknown) => !!d && typeof d === "object" && Object.keys(d as object).length > 0;
 
 export default function TorneiosAnalisePage() {
   return <Content />;

@@ -853,3 +853,17 @@ export function buildDisplayList(tournaments: Tournament[]): Tournament[] {
     return ka.localeCompare(kb);
   });
 }
+
+/** Termo de pesquisa normalizado (minúsculas, sem acentos) para `matchesTournamentSearch`. */
+export function normSearchTerm(q: string): string {
+  return q.trim().toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "");
+}
+
+/** O torneio bate com a pesquisa (nome, campo, clube, tcode ou ccode)? O termo
+ *  já vem normalizado por `normSearchTerm`; vazio = tudo. */
+export function matchesTournamentSearch(t: Tournament, searchTerm: string): boolean {
+  if (!searchTerm) return true;
+  const fields = [t.name, t.campo, t.clube, t.tcode, t.ccode]
+    .map(v => String(v ?? "").toLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, ""));
+  return fields.some(f => f.includes(searchTerm));
+}
