@@ -386,6 +386,47 @@ async function callDatagolf(action, params) {
 }
 
 /* ═════════════════════════════════════════════════════════════════
+   Caminho PÚBLICO (sem cookies) — o mesmo dos scrapers desde 2026-09-15
+   (scripts/lib/fpg-session.js: gate da ficha do federado `page=fedhcp`).
+   As cookies do Vercel (env DATAGOLF_COOKIES) não são renovadas por
+   ninguém — o refresh diário do PC só actualiza os Secrets do GitHub —,
+   por isso morrem ~9 h depois de postas e o WHS dava 502 (21/10/2026).
+   ───────────────────────────────────────────────────────────────── */
+const { criarRoteador } = require("../scripts/lib/fpg-session.js");
+let _roteadorPublico = null;
+const roteadorPublico = () => (_roteadorPublico ||= criarRoteador({ dgPost: null }));
+
+async function callPublico(action, params) {
+  const fed = String(params.fed || "52884");
+  if (action === "whs") {
+    const PAGE = 100;
+    const wanted = params.limit ? Number(params.limit) : 999;
+    const all = [];
+    let start = 0, total = Infinity;
+    while (all.length < Math.min(wanted, total)) {
+      const qs = `fed_code=${fed}&pp=N&jtStartIndex=${start}&jtPageSize=${PAGE}`;
+      const body = { fed_code: fed, pp: "N", jtStartIndex: String(start), jtPageSize: String(PAGE) };
+      const d = await roteadorPublico().post("PlayerWHS.aspx/HCPWhsFederLST", body, qs, { fed });
+      const recs = d.Records || [];
+      if (total === Infinity) total = Number(d.TotalRecordCount || recs.length);
+      all.push(...recs);
+      if (recs.length < PAGE) break;
+      start += PAGE;
+    }
+    const target = Math.min(wanted, total === Infinity ? all.length : total);
+    return { Result: "OK", Records: all.slice(0, target).map(normalizeFpgWhsRecord), TotalRecordCount: total };
+  }
+  if (action === "scorecard") {
+    const st = String(params.scoringType || "1");
+    const ct = String(params.competitionType || "10");
+    const qs = `score_id=${params.scoreId}&scoringtype=${st}&competitiontype=${ct}&pp=N`;
+    const body = { score_id: String(params.scoreId), scoringtype: st, competitiontype: ct, pp: "N" };
+    return await roteadorPublico().post("PlayerWHS.aspx/ScoreCard", body, qs, { fed });
+  }
+  throw new Error("público não suporta action=" + action);
+}
+
+/* ═════════════════════════════════════════════════════════════════
    Cache server-side — evita chamadas repetidas à FPG quando o
    mesmo jogador/scorecard é pedido várias vezes numa mesma sessão.
    TTL 5 min para whs (pode haver rondas novas), 60 min para scorecards
@@ -460,6 +501,18 @@ async function tryBoth(action, params) {
   const errors = [];
   const dgSupports = (action === "whs" || action === "scorecard");
   const preferDg = dgSupports && hasLocalDgCookies();
+
+  // 1.º sempre o caminho público (não expira); cookies e GP ficam de recurso.
+  if (dgSupports) {
+    try {
+      const d = await callPublico(action, params);
+      const result = { data: unwrap(d), source: "fpg-publico" };
+      respCacheSet(cacheKey, result, respCacheTtlFor(action));
+      return result;
+    } catch (e) {
+      errors.push("publico: " + e.message.slice(0, 100));
+    }
+  }
 
   // Caminho rápido: se temos cookies locais E datagolf suporta este action,
   // tentar datagolf PRIMEIRO. Isto evita 10-15s de retries inúteis do GP
