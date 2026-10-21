@@ -14,7 +14,10 @@
  *       [juniorId]: { n: torneios na carreira, t?: tier, w?: vitórias, t3?: top-3, h?: HCP, d?: "AAAA-MM-DD",
  *                     c?: clube, p?: país,
  *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel], …],
- *                     mf?: confrontos no mesmo flight } } }
+ *                     mf?: confrontos no mesmo flight,
+ *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição] } } }
+ * O `r` poupa ao browser o computeRanking sobre ~38 mil juniores (ficha do kids2
+ * e /kids2/ranking; 21/10/2026).
  * Só entram juniores com alguma coisa para mostrar.
  */
 const path = require("path");
@@ -33,7 +36,7 @@ function loadCalc() {
 }
 
 function buildScout(juniors, tournaments, generatedAt) {
-  const { computeRanking, computeTier, countWins, countTop3, getSharedTournamentIds, getSharedFlightTids } = loadCalc();
+  const { computeRanking, encodeRankingEntry, computeTier, countWins, countTop3, getSharedTournamentIds, getSharedFlightTids } = loadCalc();
   const tById = new Map(tournaments.map((t) => [t.id, t]));
   const ranking = computeRanking(juniors, tById);
   const manuel = juniors.find((j) => j.id === MANUEL_ID) || null;
@@ -44,6 +47,8 @@ function buildScout(juniors, tournaments, generatedAt) {
     const o = { n: j.tournamentIds.length };
     const tier = computeTier(j, tById, ranking);
     if (tier) o.t = tier;
+    const rk = ranking.get(j.id);
+    if (rk) o.r = encodeRankingEntry(rk);
     const w = countWins(j, tById);
     if (w) o.w = w;
     const t3 = countTop3(j, tById);
@@ -78,7 +83,7 @@ function buildScout(juniors, tournaments, generatedAt) {
         if (mf) o.mf = mf;
       }
     }
-    if (o.t || o.w || o.m || o.h != null) players[j.id] = o;
+    if (o.t || o.w || o.m || o.h != null || o.r) players[j.id] = o;
   }
   return { schemaVersion: 1, generatedAt, manuelId: MANUEL_ID, players };
 }

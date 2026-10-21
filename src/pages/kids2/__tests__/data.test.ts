@@ -21,6 +21,8 @@ import {
   computeTier,
   computeCareerScore,
   computeRanking,
+  encodeRankingEntry,
+  decodeRanking,
   getSharedFlightTids,
   hasRealConfrontWithManuel,
   countWins,
@@ -30,6 +32,7 @@ import {
   getTierLabel,
   type Junior,
   type Tournament,
+  type RankingRow,
 } from "../data";
 import { categorizeTournamentLinks } from "../tournamentLinks";
 import { getTournWeight, formatStars } from "../tournWeight";
@@ -361,6 +364,27 @@ describe("computeRanking", () => {
     const ranking = computeRanking([j1, j2], ti);
     expect(computeTier(j1, ti, ranking)).toBe("elite");
     expect(computeTier(j2, ti, ranking)).toBe("beginner");
+  });
+
+  it("encode/decode (juniors-scout.json, campo r) reconstrói o ranking", () => {
+    const j1: Junior = { ...mkRival("j1", "Alpha", ["t1", "t2"]), dob: "2013-01-01" };
+    const j2: Junior = { ...mkRival("j2", "Beta",  ["t3", "t4"]), dob: "2013-05-10" };
+    const j3: Junior = { ...mkRival("j3", "Gamma", ["t5", "t6"]), dob: "2013-09-20", sex: "F" };
+    const ti = mkTournamentByMap([
+      mkTournament("t1", "B12", [{ juniorId: "j1", pos: 1 }], 72, { rounds: 4, fieldSize: 300 }),
+      mkTournament("t2", "B12", [{ juniorId: "j1", pos: 2 }], 72, { rounds: 4, fieldSize: 300 }),
+      mkTournament("t3", "B12", [{ juniorId: "j2", pos: 1 }]),
+      mkTournament("t4", "B12", [{ juniorId: "j2", pos: 1 }]),
+      mkTournament("t5", "G12", [{ juniorId: "j3", pos: 25 }]),
+      mkTournament("t6", "G12", [{ juniorId: "j3", pos: 30 }]),
+    ]);
+    const ranking = computeRanking([j1, j2, j3], ti);
+    const decoded = decodeRanking([...ranking].map(([id, e]): [string, RankingRow] => [id, encodeRankingEntry(e)]));
+    expect(decoded.size).toBe(ranking.size);
+    for (const [id, e] of ranking) {
+      const { score: _score, ...semScore } = e;
+      expect(decoded.get(id)).toEqual(semScore);
+    }
   });
 });
 
