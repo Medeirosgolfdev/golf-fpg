@@ -28,6 +28,7 @@ import { displayName } from "../../utils/format";
 import { normName } from "../../utils/normName";
 import { isManuelByName } from "../../constants/manuel";
 import { kidsUrl } from "../../ui/KidsLink";
+import { useJuniorsLinks } from "../../hooks/useKidsLinkMap";
 import { ffgEscalaoCanonico } from "../../utils/ffgEscalao";
 import { PlayerTournaments, type FfgPlayerTournamentsFile } from "./PlayerTournaments";
 
@@ -59,17 +60,6 @@ interface FrancePlayersFile {
   totalPlayers: number;
   byName: Record<string, FrancePlayer>;
   byLicense: Record<string, FrancePlayer>;
-}
-
-/** Subconjunto do roster canónico kids2 (`juniors.json`) para a seta ↗ —
- *  ligamos por LICENÇA FFG (chave forte do agregador) e, em fallback, por
- *  nome normalizado (juniores vistos noutros circuitos). Mesmo princípio do
- *  useKidsLinkMap, mas com o lookup exacto por licença que esta lista permite. */
-interface RosterJunior {
-  id: string;
-  canonicalName: string;
-  aliases?: string[];
-  sources?: { ffgolf?: { lic?: string } };
 }
 
 /** ISO "2026-03-29" → "29/03/2026". Outros formatos passam tal-qual. */
@@ -114,7 +104,9 @@ export function FFGPlayersView() {
   const [region, setRegion] = useState<string>("ALL");
   const [jovens, setJovens] = useState(false);
   const [page, setPage] = useState(1);
-  const [roster, setRoster] = useState<RosterJunior[]>([]);
+  // Roster kids2 compacto (juniors-links.json, partilhado com useKidsLinkMap) —
+  // as setas ↗ aparecem quando chegar, sem bloquear a tabela.
+  const roster = useJuniorsLinks();
   const { sortKey, sortDir, toggleSort } = useSort<SK>("name");
   // Torneios por jogador — ficheiro pesado (~2,8 MB), só carrega quando o
   // utilizador expande a PRIMEIRA linha. Depois fica em memória para todas.
@@ -147,18 +139,13 @@ export function FFGPlayersView() {
         setData(d);
       })
       .catch((e) => setErr(String(e?.message ?? e)));
-    // Roster kids2 em background (fetch partilhado com useKidsLinkMap via cache)
-    // — as setas ↗ aparecem quando chegar, sem bloquear a tabela.
-    cachedFetchJson<{ juniors?: RosterJunior[] }>("/data/juniors.json")
-      .then((d) => setRoster(d?.juniors ?? []))
-      .catch(() => {});
   }, []);
 
   // lic FFG → juniorId (exacto) e normName → juniorId (fallback, 1º vence).
   const kidsByLic = useMemo(() => {
     const m = new Map<string, string>();
     for (const j of roster) {
-      const lic = j.sources?.ffgolf?.lic;
+      const lic = j.ffgLic;
       if (lic && !m.has(lic)) m.set(lic, j.id);
     }
     return m;
@@ -168,7 +155,7 @@ export function FFGPlayersView() {
     for (const j of roster) {
       const nk = normName(j.canonicalName);
       if (!m.has(nk)) m.set(nk, j.id);
-      for (const alias of j.aliases || []) {
+      for (const alias of j.aliases) {
         const ak = normName(alias);
         if (!m.has(ak)) m.set(ak, j.id);
       }
