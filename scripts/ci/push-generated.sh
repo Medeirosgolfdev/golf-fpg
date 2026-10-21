@@ -67,7 +67,8 @@ family() {
     agregador)
       GEN+=('public/data/juniors.json' 'public/data/juniors-tournaments*.json'
             'public/data/tournament-catalog.json' 'public/data/hcp-listas-ligacoes.json'
-            'public/data/juniors-form.json' 'public/data/juniors-scout.json')
+            'public/data/juniors-form.json' 'public/data/juniors-scout.json'
+            'public/data/juniors-links.json')
       REGEN+=('node scripts/aggregator/index.js') ;;
     major)
       GEN+=('public/data/major-catalog.json' 'public/data/major-veterans.json')
@@ -236,7 +237,7 @@ for i in $(seq 1 "$TRIES"); do
       bash -c "$cmd"; rc=$?
       # exit 2 = «nada a mudar» (convenção dos scripts do repo), não é erro
       if [ "$rc" != 0 ] && [ "$rc" != 2 ]; then echo "❌ Regeneração falhou (exit $rc): $cmd"; exit 1; fi
-      # (o agregador também sai 2 quando a sanidade recusa gravar: fica a versão do main, que é coerente)
+      # (o agregador sai 1 quando a sanidade falha → o push falha vermelho, sem publicar agregados maus)
       [ "$rc" = 2 ] && echo "::warning::$cmd saiu 2 (nada a mudar ou gravação recusada) — os gerados ficam como no main"
     done
   fi

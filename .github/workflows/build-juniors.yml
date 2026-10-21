@@ -94,12 +94,12 @@ jobs:
       - name: Detect changes
         id: diff
         run: |
-          if git diff --quiet public/data/juniors.json 'public/data/juniors-tournaments*.json' public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json; then
+          if git diff --quiet public/data/juniors.json 'public/data/juniors-tournaments*.json' public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json public/data/juniors-links.json; then
             echo "changed=false" >> $GITHUB_OUTPUT
             echo "Sem mudanças nos outputs canónicos"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
-            git diff --stat public/data/juniors.json 'public/data/juniors-tournaments*.json' public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json
+            git diff --stat public/data/juniors.json 'public/data/juniors-tournaments*.json' public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json public/data/juniors-links.json
           fi
 
       - name: Commit outputs
