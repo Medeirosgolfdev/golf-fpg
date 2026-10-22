@@ -197,16 +197,19 @@ export function TournPName({
   // ── Seta ↗ para /kids2: UMA so, resolvida aqui ──────────────────────────
   // Tres origens, por ordem de fiabilidade:
   //   1. juniorId  — id do agregador ("r"+licenca federativa). Deterministico.
-  //   2. kidsHash  — do playersDB (entradas virtuais kids:/intl: por NOME).
-  //   3. KidsLinkCtx — mapa por nome fornecido pelas paginas de circuito.
-  // A (3) estava a ser desenhada por um <KidsLink> IRMAO nos chamadores, o que
+  //   2. KidsLinkCtx — mapa por nome das paginas de circuito (id canonico).
+  //   3. kidsHash  — do playersDB (entradas virtuais kids:/intl: por NOME).
+  // A do mapa estava a ser desenhada por um <KidsLink> IRMAO nos chamadores, o que
   // punha DUAS setas na mesma linha quando (2) e (3) resolviam ambas. Passa a
   // ser resolvida aqui, para haver sempre exactamente uma.
   const ctxEntry = useContext(KidsLinkCtx).get(normNameLocal(name));
+  // O mapa (3) dá o id canónico; vem antes do kidsHash (2), que é só o nome —
+  // a /drive tem os dois desde que usa o playersDB da /FPG (decisão F,
+  // 22/10/2026); a /FPG não fornece o mapa, por isso não muda.
   const kidsLink =
     juniorId ? kidsUrl({ id: juniorId })
-    : kidsHash ? `/kids2#${kidsHash}`   // ja vem codificado pelo FPGPage
     : ctxEntry ? kidsUrl({ id: ctxEntry.id, memberId: ctxEntry.memberId, name: ctxEntry.n })
+    : kidsHash ? `/kids2#${kidsHash}`   // ja vem codificado pelo FPGPage
     : null;
 
   const titleMsg = hasLink && !hasProfile ? "Federado (perfil limitado — dados do federados.json)" : undefined;
