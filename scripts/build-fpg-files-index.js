@@ -5,6 +5,8 @@
  *   - pull-torneiosNNN.json        (FPGPage)
  *   - drive-data-YYYY-MM.json      (FPGPage → Ranking PJA, DrivePage)
  *   - aquapor-data-YYYY-MM.json    (idem)
+ *   - `data`: todos os *.json da raiz de public/data (a /major pedia o ano
+ *     anterior de cada fonte às cegas — faldomadeira_2025.json dava 404)
  *
  * Porquê: as páginas sondavam os nomes às cegas (pull-torneios000… até falharem
  * dois seguidos; todos os meses de drive/aquapor desde o 1.º ano) e cada
@@ -39,6 +41,7 @@ function buildIndex(names) {
   for (const [key, re] of Object.entries(SERIES)) {
     out[key] = names.filter((n) => re.test(n)).sort();
   }
+  out.data = names.filter((n) => n.endsWith(".json") && n !== "fpg-files-index.json").sort();
   return out;
 }
 

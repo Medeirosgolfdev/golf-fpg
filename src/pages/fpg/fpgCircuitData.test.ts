@@ -186,3 +186,11 @@ describe("resolveFpgTkey", () => {
     expect(resolveFpgTkey(entries, "007-10935")).toEqual({});
   });
 });
+
+describe("labelIsEscalao (filtro «Escalão» da /FPG)", () => {
+  it("aceita escalões e recusa datas e «9 buracos»", async () => {
+    const { labelIsEscalao } = await import("./fpgCircuitData");
+    for (const ok of ["Sub 14", "Sub-12", "S18", "Absoluto", "Seniores", "Juvenil", "Mid-Amateur"]) expect(labelIsEscalao(ok)).toBe(true);
+    for (const no of ["01/02", "05/09", "9 buracos", "9 HOLES", "9buracos", "Esc", "R2"]) expect(labelIsEscalao(no)).toBe(false);
+  });
+});

@@ -12,7 +12,19 @@ export const FPG_FILES_INDEX_URL = "/data/fpg-files-index.json";
 
 export type FpgFileSeries = "pull-torneios" | "drive-data" | "aquapor-data";
 
-export type FpgFilesIndex = Partial<Record<FpgFileSeries, string[]>>;
+export type FpgFilesIndex = Partial<Record<FpgFileSeries | "data", string[]>>;
+
+/** Os URLs de ficheiros da raiz de /data que existem segundo o
+ *  índice. Sem índice (ou sem a lista `data`) não se filtra nada. */
+export function existingDataUrls(index: FpgFilesIndex, urls: string[]): string[] {
+  const all = index.data;
+  if (!all?.length) return urls;
+  const set = new Set(all);
+  return urls.filter((u) => {
+    const m = /^\/data\/([^/]+\.json)$/.exec(u);
+    return !m || set.has(m[1]);
+  });
+}
 
 /** O índice (vazio se não existir — nesse caso não se pede ficheiro nenhum). */
 export async function loadFpgFilesIndex(): Promise<FpgFilesIndex> {

@@ -61,6 +61,13 @@ export function fpgDivLabel(t: FPGTournament, groupName: string): string {
   return nm && nm.length <= 20 ? nm : "Esc";
 }
 
+/** O label da tab só serve de ESCALÃO (filtro «Escalão» do shell) quando o é
+ *  mesmo — senão as datas «01/02» e os «9 buracos» das tabs apareciam no
+ *  filtro como se fossem escalões (22/10/2026). */
+export function labelIsEscalao(label: string): boolean {
+  return /^(sub[\s-]?\d+|[su]\d{2}\b|absolut|s[eé]nior|j[uú]nior|juvenil|infantil|benjamim|alevim|cadete|mid[\s-]?amateur|veteran|pais e filhos)/i.test(label.trim());
+}
+
 /** Uma divisão (escalão) por `Tournament` do grupo. NÃO preenche
  *  `inscritos`/`draw` — o `TournamentDetail` (via `renderFull`, anexado na
  *  FPGPage) lê `_admissions`/`_draws` do próprio torneio e desenha tudo. */
@@ -70,7 +77,7 @@ export function buildFpgDivisions(group: EventGroup): CircuitDivision[] {
     const sex = divSex(t);
     return {
       key: fpgMemberKey(t),
-      escalao: t.escalao || label,
+      escalao: t.escalao || (labelIsEscalao(label) ? label : ""),
       tabLabel: label,
       ...(sex ? { sex } : {}),
       hasManuel: tournamentHasManuel(t),

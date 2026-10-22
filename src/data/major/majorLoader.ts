@@ -13,6 +13,7 @@
  * Tirado da MajorPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { cachedFetchJson } from "../fetchCache";
+import { loadFpgFilesIndex, existingDataUrls } from "../fpgFilesIndex";
 import type { MatchplayFile } from "../../ui/circuit/matchplayTypes";
 import { BLUEGOLF_FILES, normalizeBlueGolf, type TDef } from "./bluegolf";
 import { DORAL_FILES, normalizeDoralFile, type DoralEntry } from "./doral";
@@ -170,12 +171,15 @@ export interface MajorJobData {
 export async function loadMajorJobData(cat: MajorCatalogEntry): Promise<MajorJobData | null> {
   const def = MAJOR_JOB_SOURCES[cat.source];
   if (!def) return null;
+  // Só os ficheiros que existem (índice gerado no build): o ano anterior entra
+  // na evolução, mas nem todas as fontes o têm — pedi-lo às cegas era um 404.
+  const index = await loadFpgFilesIndex();
+  const mpUrl = `/data/${cat.source}_matchplay_${cat.year}.json`;
+  const wantMp = GOLFBOX_MATCHPLAY_SOURCES.has(cat.source) && existingDataUrls(index, [mpUrl]).length > 0;
   const [files, mp] = await Promise.all([
-    Promise.all(def.files(cat.year).map((p) => cachedFetchJson<JobFile>(p).catch(() => null)))
+    Promise.all(existingDataUrls(index, def.files(cat.year)).map((p) => cachedFetchJson<JobFile>(p).catch(() => null)))
       .then((fs) => fs.filter((f): f is JobFile => !!f && Array.isArray(f.divisions))),
-    GOLFBOX_MATCHPLAY_SOURCES.has(cat.source)
-      ? cachedFetchJson<MatchplayFile>(`/data/${cat.source}_matchplay_${cat.year}.json`).catch(() => null)
-      : Promise.resolve(null),
+    wantMp ? cachedFetchJson<MatchplayFile>(mpUrl).catch(() => null) : Promise.resolve(null),
   ]);
   const file = files.find((f) => jobEntryId(cat.source, f, !def.noStop) === cat.id);
   if (!file) return null;

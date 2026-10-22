@@ -1135,6 +1135,10 @@ function DriveContent() {
     if (driveEntries.length === 0) return;
     const exists = selectedDriveId && driveEntries.some(e => e.id === selectedDriveId);
     if (exists) return;
+    // Esperar pelas inscrições/draws: os torneios ainda por jogar (a Final de
+    // 07/11) só entram na lista quando elas chegam. Com os meses a carregar em
+    // paralelo, escolher antes disso abria sempre o penúltimo (22/10/2026).
+    if (admissionsMeta.length === 0) return;
     // Deep-link /drive/torneio/{ccode}-{tcode}: abrir ESSE torneio e não o mais
     // recente. Se existe nos dados mas ainda não está visível, o efeito de
     // deep-link está a ajustar série/ano/Manuel — esperar pela próxima corrida.
@@ -1151,7 +1155,7 @@ function DriveContent() {
     const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
     setSelectedDriveId(latest?.id ?? null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [driveEntries, selectedDriveId, urlTkey]);
+  }, [driveEntries, selectedDriveId, urlTkey, admissionsMeta]);
 
 
   // Anos disponíveis — só os que têm torneios reais na série activa (exclui sub-rondas expandidas)
