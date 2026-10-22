@@ -24,6 +24,7 @@ import type { DataSource } from "../ui/DataSources";
 import type { PjaPdfEntry } from "../ui/PJARankingView";
 import type { MelhoriasJson } from "./melhoriasTypes";
 import { cachedFetchJson } from "./fetchCache";
+import { loadDriveMonthly, type DriveMonthlyPrefix } from "./drive/driveLoader";
 import { loadPlayers } from "./loader";
 import { buildEscLookup, normalizePlayer, type EscLookup } from "../utils/playerUtils";
 import {
@@ -545,24 +546,9 @@ export function useFpgJovensData(): FpgJovensData {
 
 /* ── PJA (Drive Tour + Aquapor mensais) ───────────────────────────────── */
 
-/** drive-data/aquapor-data desde `startYear`, em paralelo — só os meses que o
- *  índice (`fpg-files-index.json`) diz existirem. */
-async function loadMonthly(prefix: "drive-data" | "aquapor-data", startYear: number): Promise<Tournament[]> {
-  const urls = fpgFileUrls(await loadFpgFilesIndex(), prefix, startYear);
-  const results = await Promise.all(urls.map(async (url) => {
-    try {
-      const r = await fetch(url);
-      if (!r.ok) return [];
-      const ct = r.headers.get("content-type") || "";
-      if (!ct.includes("json")) return [];
-      const d = await r.json() as DriveData;
-      return (d.tournaments || []).map(t => ({
-        ...t, _sourceFile: url,
-        players: (t.players || []).map(normalizePlayer),
-      }));
-    } catch { return []; }
-  }));
-  return results.flat();
+/** drive-data/aquapor-data desde `startYear` (src/data/drive/driveLoader.ts). */
+async function loadMonthly(prefix: DriveMonthlyPrefix, startYear: number): Promise<Tournament[]> {
+  return (await loadDriveMonthly(prefix, { fromYear: startYear })).tournaments;
 }
 
 /** Objecto `{ ano: [...] }` sem as chaves `_…` e só com os valores em lista. */

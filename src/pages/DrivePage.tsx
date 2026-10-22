@@ -15,7 +15,7 @@ import { FilterPills } from "../ui/FilterPills";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
-import { resolveFedsInTournaments , buildEscLookup, normalizePlayer } from "../utils/playerUtils";
+import { resolveFedsInTournaments, buildEscLookup } from "../utils/playerUtils";
 import { resolveEsc, buildTemporalEscLookup, computeSD, type TemporalEscLookup } from "../data/fpgUtils";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
 import SidebarToggle from "../ui/SidebarToggle";
@@ -44,7 +44,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders, shortCampo } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import MasterDetail from "../ui/MasterDetail";
-import { loadFpgFilesIndex, fpgFileUrls } from "../data/fpgFilesIndex";
+import { loadDriveMonthly } from "../data/drive/driveLoader";
 
 import type {
   Tournament,
@@ -53,10 +53,6 @@ import type {
   TStats,
   Sub12Row,
 } from "../ui/driveTypes";
-
-function normalizeTournament(t: any): Tournament {
-  return { ...t, players: (t.players || []).map(normalizePlayer) };
-}
 
 /* ── Constants ── */
 const REGIONS = [
@@ -874,52 +870,12 @@ function DriveContent() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, selectedDriveId, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
 
-  // Carrega os ficheiros mensais {prefix}-YYYY-MM.json que o índice
-  // (`fpg-files-index.json`, gerado no build) diz existirem — sem sondar meses
-  // às cegas (cada mês em falta era um 404).
-  // Retorna torneios com `_sourceFile` preenchido + meta de cada ficheiro.
-  async function loadAllFiles(prefix: "drive-data" | "aquapor-data", forceAqapor = false): Promise<{ tournaments: Tournament[]; meta: DataSource[] }> {
-    const all: Tournament[] = [];
-    const meta: DataSource[] = [];
-    const urls = fpgFileUrls(await loadFpgFilesIndex(), prefix);
-    const lidos = await Promise.all(urls.map(async (url) => {
-      try {
-        const r = await fetch(url);
-        if (!r.ok) return { url, error: `HTTP ${r.status}` };
-        // Em dev, o Vite responde index.html a um ficheiro que não existe
-        // (r.ok=true mas HTML): verificar o Content-Type antes de parsear.
-        const ct = r.headers.get("content-type") || "";
-        if (!ct.includes("json")) return { url, error: "não é JSON" };
-        return { url, d: await r.json() };
-      } catch (e) {
-        return { url, error: String(e) };
-      }
-    }));
-    for (const { url, d, error } of lidos) {
-      if (!d) { meta.push({ path: url, status: "error", error, group: prefix }); continue; }
-      const tourns: Tournament[] = (d.tournaments || []).map((t: any) => {
-        const base = forceAqapor ? { ...t, series: "aquapor" as const } : t;
-        return { ...normalizeTournament(base), _sourceFile: url } as Tournament;
-      });
-      all.push(...tourns);
-      meta.push({
-        path: url,
-        status: "loaded",
-        count: tourns.length,
-        source: d.source,
-        lastUpdated: d.lastUpdated,
-        group: prefix,
-      });
-    }
-    return { tournaments: all, meta };
-  }
-
   const [monthlyMeta, setMonthlyMeta] = useState<DataSource[]>([]);
 
   useEffect(() => {
     Promise.all([
-      loadAllFiles("drive-data", false),
-      loadAllFiles("aquapor-data", true),
+      loadDriveMonthly("drive-data"),
+      loadDriveMonthly("aquapor-data", { forceSeries: "aquapor" }),
       loadPlayers().catch(() => ({})),
     ]).then(([driveR, aqR, pp]) => {
       const driveTourns = driveR.tournaments;

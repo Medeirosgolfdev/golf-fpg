@@ -43,7 +43,7 @@
 |---|---|
 | Rotas ↔ estado (`/FPG/jovens`, `/sto`, `/clubes`, `/pja`, `/rankingPJA`, `/rankingSub12`, `/classificacoes`, `/inscritos`, `/jovens/inscritosCN`, o antigo `?ct=`) | `src/pages/fpg/routes.ts` |
 | Carregar os dados (pull-torneios, Clubes, Jovens, drive/aquapor mensais do PJA, playersDB) e as listas derivadas | `src/data/fpgPageLoader.ts` (hooks `useFpg*`) |
-| Que ficheiros existem (pull-torneios, drive-data, aquapor-data) — **nada de sondar nomes até dar 404** | `public/data/fpg-files-index.json`, gerado no `predev`/`prebuild` por `scripts/build-fpg-files-index.js` (gitignored; o Vercel gera-o em cada deploy); lido por `src/data/fpgFilesIndex.ts` (FPGPage e DrivePage) |
+| Que ficheiros existem (pull-torneios, drive-data, aquapor-data) — **nada de sondar nomes até dar 404** | `public/data/fpg-files-index.json`, gerado no `predev`/`prebuild` por `scripts/build-fpg-files-index.js` (gitignored; o Vercel gera-o em cada deploy); lido por `src/data/fpgFilesIndex.ts`; os mensais do Drive/AQUAPOR entram só por `loadDriveMonthly` (`src/data/drive/driveLoader.ts`, `cachedFetchJson` — a /drive e o Ranking PJA da /FPG partilham o pedido) |
 | Ranking Sub-12 e Classificações | `src/data/fpgRankingsLoader.ts` |
 | Torneios → entradas do CircuitShell (Todos/STO/PJA, Jovens, Clubes), deep-link `tkey` → (entrada, escalão) | `src/pages/fpg/fpgCircuitData.ts` (`buildFpgEntries`, `buildJovensEntries`, `buildClubesEntries`, `resolveFpgTkey`) |
 | Clubes: formatos de equipa, match play 3-way, nº de jogadores e voltas sem classificação por pancadas | `src/data/clubesFormats.ts` (`clubesIndividualTournament`) · abas «Grupos»/«Match Play» em `src/pages/fpg/fpgClubes.tsx` |
