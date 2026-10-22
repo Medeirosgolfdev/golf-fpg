@@ -121,7 +121,10 @@
 - **Bandeiras (decisão F, 22/10/2026)** — o playersDB da /drive é o da /FPG
   (`loadFpgPlayersDB`, `src/data/fpgPlayersDB.ts`): `players.json` +
   nacionalidades dos federados estrangeiros (bandeira antes do nome, nascimento
-  e sexo) + os seguidos no /kids (↗).
+  e sexo) + os seguidos no /kids (↗). ⚠ O nascimento é o do `federados.json`
+  (pelo `federados-lite.json`): o `players-nationality.json` tem-no um dia antes
+  em ~9 mil federados. A seta ↗ prefere o id canónico do mapa das páginas de
+  circuito ao link por nome do playersDB (`TournPName`).
 - **Calendário (decisão E, 22/10/2026)** — sai dos dados: `driveCalendar`
   (`src/data/drive/driveCalendar.ts`) sobre os torneios da /drive (resultados dos
   mensais + os por jogar das inscrições da FPG), um por evento, da série e do ano

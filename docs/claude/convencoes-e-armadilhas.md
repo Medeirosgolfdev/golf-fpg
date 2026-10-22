@@ -192,6 +192,7 @@ rankings, inscrições, Kids 2, equipas) e aos scripts.
 
 ### Dados
 
+- **`players-nationality.json`: datas de nascimento com um dia a menos** em ~9 mil federados (meia-noite de Lisboa lida como UTC). O `loadFpgPlayersDB` (`src/data/fpgPlayersDB.ts`) usa a do `federados.json` (via `federados-lite.json`) quando existe (22/10/2026). Quem ler o `info[].dob` desse ficheiro noutro sítio (TitulosPage, JovensAnaliseView) tem o mesmo problema.
 - **Layer de campos:** `extraCourses.ts` (manual) sobrepõe `away-courses.json` (pipeline). `_players` do pipeline é reaplicado por cima. CourseKeys devem coincidir com aliases do pipeline.
 - **`players.json`:** carregado em paralelo, cross-referenciado por nome normalizado para enriquecer rivais com `fpgClub` e `dob`.
 - Ficheiros "torneios completos" curados manualmente têm precedência sobre output do pipeline.
