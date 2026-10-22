@@ -343,14 +343,11 @@ Torneios com **muitos** dos nossos são bons candidatos a scrapear a sério.
   Janela default `--since 2024-01-01` (~2.8k torneios, ~10 MB). CLI:
   `--since`, `--min-ours`, `--all-origins`. Teste: `build-recent-tournaments.test.js`.
   Também emite `public/data/recent-tournaments-scrape-scope.json` (ver "Auto-scrape").
-- **Página:** `src/pages/RecentTournamentsPage.tsx`. Lista = tabela sortável
-  (`useSort`+`SortableHdr`, estilo `player-list-table`) com filtros (pesquisa,
-  mín. nº nossos, estado scrapeado, ano) + coluna **FPG** (link directo à
-  classificação oficial, `fpgScoringUrl`). Clicar numa linha: torneios com **< 10
-  nossos EXPANDEM inline** (linha `row-expanded` com `colSpan`), a partir de **10
-  abrem em janela nova** (rota `/:key`). O detalhe **reutiliza `TournamentDetail`**
-  da FPGPage (tabs de ronda + Resumo + Scorecards; os links Inscrições/Draw/
-  Scoring ↗ da Federação já vêm de lá). ⚠ A posição é **entre os nossos**, não a oficial.
+- **Página:** `src/pages/RecentTournamentsPage.tsx` no **CircuitShell** desde 23/10/2026 (fase 7 do plano
+  de reescrita): lista por mês/ano, abre no ano corrente (são ~3 000); «✓ scrapeado / por scrapear»
+  é a *fonte* (chip e filtro); ★ Manuel, pesquisa e «mín. nossos» na barra; `/:key` abre o torneio.
+  Dados em `src/data/recentTournaments.ts`. O detalhe é o `TournamentDetail` da FPG (+ OM e Scout), com
+  a nota «posição entre os nossos» e o link à leaderboard completa quando já scrapeada.
 - **Auto-scrape dos valiosos (>5 nossos):** o build emite
   `recent-tournaments-scrape-scope.json` = `[{tclub,tcode,name,nOurs}]` dos
   **não scrapeados com ≥6 nossos** (só FPG, ccode presente), ordenado por `nOurs`
