@@ -31,7 +31,11 @@ export interface JobPlayer { pos: string; name: string; country: string; locatio
   // ronda) — ganha ao da divisão quando existe.
   date?: string; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; courseRating?: number | null; slope?: number | null }[]; }
 export interface JobDrawGroup { time?: string; startHole?: number | null; players: { name: string; tee?: string }[]; }
-export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null; players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
+export interface JobDivision { division: string; source?: string; tid?: string; par?: (number | null)[] | null; parTotal?: number | null; meters?: (number | null)[] | null; si?: (number | null)[] | null; teeName?: string | null; metersTotal?: number | null; courseRating?: number | null; slope?: number | null;
+  /** PCC de cada dia (índice = dia − 1), quando se conhece — ex.: deduzido dos SD oficiais
+   *  importados pela FPG dos portugueses que jogaram (`pccNota` diz de onde veio). */
+  pcc?: (number | null)[] | null; pccNota?: string | null;
+  players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; startDate?: string | null; endDate?: string | null; divisions: JobDivision[]; }
 
 // Divisão 1 = Rapazes, Divisão 2 = Raparigas (consistente em todas as edições JOB).
@@ -151,9 +155,12 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       const roundSlope = !nineHole && sl != null ? sl : undefined;
       const rMeters = rMeters18 ? sliceFor(rMeters18, r.startingHole) : metersForRound(r.startingHole);
       const rTee = rMeters.length ? (r.teeName || div.teeName || "Tee") : teeName;
+      // PCC do dia (se se conhece) → entra no SD da volta (computeSD lê rs.pcc).
+      const dayPcc = div.pcc?.[(r.day ?? 1) - 1];
       return {
         gross, scores, startHole: r.startingHole,
         card: { par: roundPars, si: rSi18 ? sliceFor(rSi18, r.startingHole) : siForRound(r.startingHole), meters: rMeters, teeName: rTee, courseRating: roundCR, slope: roundSlope },
+        ...(typeof dayPcc === "number" && !nineHole ? { extra: { pcc: dayPcc } } : {}),
       };
     });
     // Em torneios a DECORRER o GolfGenius dá o to-par corrente mas ainda não o
