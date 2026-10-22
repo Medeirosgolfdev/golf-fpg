@@ -105,6 +105,8 @@ interface MultiRoundLBProps {
   extraColumns?: ExtraColumn<RowWithPos>[];
   /** Renderização customizada do nome do jogador. Se omitido, usa TournPName */
   renderName?: (row: MultiRoundRow) => React.ReactNode;
+  /** CR/Slope estimados → SD a vermelho com esta nota (ver Tournament._sdEstimate). */
+  sdEstimate?: string;
 }
 
 export function MultiRoundLeaderboard({
@@ -116,6 +118,7 @@ export function MultiRoundLeaderboard({
   tournamentDate,
   extraColumns,
   renderName,
+  sdEstimate,
 }: MultiRoundLBProps) {
   const {
     esc: wantEsc = true,
@@ -589,7 +592,7 @@ export function MultiRoundLeaderboard({
                             {showRoundStats && <>
                               {hasAnySD && <td className="lb-rnd-sd">
                                 {rd.sd != null
-                                  ? <SDPill sd={rd.sd} hcp={row.hcp} />
+                                  ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
                                   : <span className="muted">–</span>}
                               </td>}
                               <td className="lb-rnd-eag">{rd.eagles || ""}</td>
@@ -606,7 +609,7 @@ export function MultiRoundLeaderboard({
                           <>
                             {hasAnySD && <td className="lb-sd">
                               {rd?.sd != null
-                                ? <SDPill sd={rd.sd} hcp={row.hcp} />
+                                ? <SDPill sd={rd.sd} hcp={row.hcp} est={sdEstimate} />
                                 : <span className="muted">–</span>}
                             </td>}
                             <td className="lb-eag">{rd?.eagles || ""}</td>

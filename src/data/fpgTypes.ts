@@ -113,6 +113,9 @@ export interface Tournament extends BaseTournament, TournamentModel {
    *  do campo — `clubesIndividualTournament`): o resumo do Manuel não diz
    *  «líder» nem «+N do líder» nelas. */
   _noStrokeRankRounds?: number[];
+  /** CR/Slope ESTIMADOS (não publicados): o SD calculado mostra-se a vermelho,
+   *  com esta nota no tooltip (FFG Rennes 2026, U12 Garçons — 22/10/2026). */
+  _sdEstimate?: string;
   /** Torneio manual (pull-torneios003.json) e a sua origem ("PJA", …). */
   _manual?: boolean;
   _origin?: string;

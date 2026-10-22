@@ -172,7 +172,7 @@ export function AccumulatedLB({
     // torneio já está no cabeçalho) — 14/10/2026.
     showCourse && tournament.campo ? `📍 ${tournament.campo}` : null,
     cr ? `CR ${cr}` : null,
-    slope ? `Slope ${slope}` : null,
+    slope ? `Slope ${slope}${tournament._sdEstimate ? " (estimados)" : ""}` : null,
   ];
   const infoFiltered = infoParts.filter(Boolean) as string[];
 
@@ -199,6 +199,7 @@ export function AccumulatedLB({
         filterable
         extraColumns={extraColumns}
         renderName={renderName}
+        sdEstimate={tournament._sdEstimate}
       />
     </div>
   );

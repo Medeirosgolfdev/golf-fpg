@@ -287,6 +287,14 @@ export interface FFGSerieCourse {
   metersTotal?: number;
   teePorBuraco?: string[];
   nota?: string;
+  /** S.I. dos buracos (quando a Liga não o publica: o cartão FFG de um jogador). */
+  si?: number[];
+  /** CR/Slope do tee desta série — publicados, ou ESTIMADOS (`ratingEstimado`,
+   *  explicados em `ratingNota`: deduzidos de SD oficiais importados pela FPG). */
+  courseRating?: number;
+  slope?: number;
+  ratingEstimado?: boolean;
+  ratingNota?: string;
 }
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,

@@ -69,11 +69,13 @@ export function TeeDot({ teeName }: { teeName?: string }) {
 }
 
 /* ─── SD pill inline (sem <td>) ─── */
-export function SDPill({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
+export function SDPill({ sd, hcp, est }: { sd: number | null; hcp?: number | null; est?: string | null }) {
   // O SD oficial da FPG ou, sem ele, o calculado com o HCP da inscrição (computeSD).
   if (sd == null) {
     return <span className="muted" title="Sem SD para esta volta">–</span>;
   }
+  // Com CR/Slope estimados: a vermelho e em itálico, como as outras estimativas.
+  if (est) return <span className="est-value" title={`SD estimado — ${est}`}>{sd.toFixed(1)}</span>;
   const cls = sdClassByHcp(sd, hcp ?? null);
   return <span className={"p p-sm p-" + cls} title="Score Differential">{sd.toFixed(1)}</span>;
 }

@@ -669,7 +669,7 @@ export function ScorecardLB({
           {!hideSD_ && (
             <td className="lb-sd">
               {sd != null ? (
-                <SDPill sd={sd} hcp={p.hcpExact ?? null} />
+                <SDPill sd={sd} hcp={p.hcpExact ?? null} est={tournament._sdEstimate} />
               ) : (
                 <span className="muted">–</span>
               )}
@@ -716,7 +716,7 @@ export function ScorecardLB({
               está no cabeçalho) — 14/10/2026: aparecia repetido. */}
           {refP.course && (options?.showCourse || refP.course.trim() !== String(tournament.campo || "").trim()) && <span>· 📍 {refP.course}</span>}
           {teeCrSlopes.length === 1 && (
-            <span>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}</span>
+            <span title={tournament._sdEstimate ? `Estimados — ${tournament._sdEstimate}` : undefined}>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}{tournament._sdEstimate ? " (estimados)" : ""}</span>
           )}
           {teeCrSlopes.length > 1 && (
             <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>

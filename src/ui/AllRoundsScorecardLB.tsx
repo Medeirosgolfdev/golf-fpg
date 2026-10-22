@@ -138,7 +138,7 @@ export function AllRoundsScorecardLB({
     <>
       {!hideSD && (
         <td className="lb-sd" style={{ borderTop: bTop }}>
-          {rd.sd != null ? <SDPill sd={rd.sd} hcp={hcp} /> : <span className="muted">–</span>}
+          {rd.sd != null ? <SDPill sd={rd.sd} hcp={hcp} est={tournament._sdEstimate} /> : <span className="muted">–</span>}
         </td>
       )}
       <td className="lb-eag" style={{ borderTop: bTop }}>{rd.eags || ""}</td>

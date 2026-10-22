@@ -101,7 +101,8 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
     ? data._serieCourses?.[serieCourseKey(seriesToUse[0].label || seriesToUse[0].serieId)]
     : undefined;
   if (serieCourse && Array.isArray(serieCourse.meters) && serieCourse.meters.length === 18) {
-    chosenCourse = { par: serieCourse.par, meters: serieCourse.meters, si: chosenCourse?.si, metersTotal: serieCourse.metersTotal };
+    chosenCourse = { par: serieCourse.par, meters: serieCourse.meters,
+      si: serieCourse.si?.length === 18 ? serieCourse.si : chosenCourse?.si, metersTotal: serieCourse.metersTotal };
   }
   const ggMeters = chosenCourse?.meters && chosenCourse.meters.length === 18 ? chosenCourse.meters : [];
   const ggSi = chosenCourse?.si && chosenCourse.si.length === 18 ? chosenCourse.si : [];
@@ -139,12 +140,19 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
     };
   });
 
-  return buildFPGTournament(
+  // CR/Slope da série (publicados ou estimados) → SD de quem jogou esse tee.
+  const rating = serieCourse?.courseRating != null && serieCourse?.slope != null
+    ? { courseRating: serieCourse.courseRating, slope: serieCourse.slope } : {};
+  const t = buildFPGTournament(
     { name: data.name, tcode: data.trnId, date: data.date, campo: courseName, rounds: numRounds },
-    { par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined, holes: par.length || 18, parTotal },
+    { par, si: ggSi, meters: ggMeters, teeName: ggMeters.length ? ffgTeeName : undefined, holes: par.length || 18, parTotal, ...rating },
     players,
     { keepNoRounds: true, raw: true },
   );
+  if (serieCourse?.ratingEstimado && rating.courseRating != null) {
+    t._sdEstimate = `CR ${rating.courseRating.toFixed(1)} · Slope ${rating.slope} estimados — ${serieCourse.ratingNota || "não publicados"}`;
+  }
+  return t;
 }
 
 /* ── Adaptador FFG → FPGTournament (para reusar IntlTournView) ── */
