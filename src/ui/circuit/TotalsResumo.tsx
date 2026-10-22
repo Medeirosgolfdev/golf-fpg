@@ -16,7 +16,7 @@ import type React from "react";
 import { MultiRoundLeaderboard } from "../MultiRoundLeaderboard";
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import { RoundPill } from "../PillBadge";
-import { gf } from "../../utils/flagUtils";
+import { gf, isPtCountry } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
 import SexBadge from "../SexBadge";
 import { isNoCardGross } from "../../data/intlCommon";
@@ -41,8 +41,6 @@ export interface TotalsPlayer {
   /** Colunas extra (ex.: pontos WAGR) — lidas pelos `extra`. */
   [k: string]: unknown;
 }
-
-const isPt = (c?: string | null) => /portugal/i.test(c || "") || /^(pt|prt|por)$/i.test(c || "");
 
 export default function TotalsResumo({ players, parPerRound, notice, extra, tournamentDate }: {
   players: TotalsPlayer[];
@@ -77,7 +75,7 @@ export default function TotalsResumo({ players, parPerRound, notice, extra, tour
       dob: p.birthYear ? `${p.birthYear}-07-01` : null,
       countryFlag: p.country ? gf(p.country) : undefined,
       isHighlighted: isManuelByName(p.name),
-      isPortuguese: !isManuelByName(p.name) && isPt(p.country),
+      isPortuguese: !isManuelByName(p.name) && isPtCountry(p.country),
       isIncomplete: nRounds > 0 && played.length < nRounds,
       rounds: Array.from({ length: nRounds }, (_, r) => {
         const g = p.rounds[r];

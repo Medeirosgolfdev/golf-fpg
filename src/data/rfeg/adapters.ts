@@ -6,6 +6,7 @@
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
+import { isPtCountry } from "../../utils/flagUtils";
 import { normEs } from "./text";
 import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
 import { dobLookupByName } from "../intlCommon";
@@ -83,7 +84,7 @@ export function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpL
       const hcpEs = lic && hcpLookup ? (hcpLookup[lic]?.hcp ?? null) : null;
       // Português: a ficha vem da FPG (ver o gémeo em lgsToFPGTournament). É o
       // que dá ESC/Nasc./FED/Clube/HCP aos nossos nas tabs de Draw e Inscrições.
-      const ptFed = a.country === "PT" && fedByName
+      const ptFed = isPtCountry(a.country) && fedByName
         ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
         : undefined;
       const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;
@@ -131,7 +132,7 @@ export function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpL
         const e = lookupByName[norm(a.name)];
         // Mesmo enriquecimento do leaderboard: sem ele os nossos apareciam na
         // lista de inscritos sem federado, clube, HCP nem data de nascimento.
-        const ptFed = a.country === "PT" && fedByName
+        const ptFed = isPtCountry(a.country) && fedByName
           ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
           : undefined;
         const gb = !e && !ptFed ? golfboxLookup(golfbox, a.name, a.country) : undefined;

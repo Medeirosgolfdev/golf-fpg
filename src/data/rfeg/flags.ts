@@ -64,6 +64,26 @@ export function rfegNatNorm(name: string | null | undefined): string {
   return (name || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "")
     .replace(/,/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
 }
+/** País de cada inscrito, por licença e por nome (`norm`, nas duas ordens que a
+ *  fonte usa) — os resultados do PDF e do mitarjeta não trazem o país, as
+ *  listas de inscritos sim. Ganha o 1.º país não vazio. */
+export function rfegPaisLookup(
+  inscritos: Record<string, unknown> | null | undefined,
+  norm: (s: string) => string,
+): (licencia: string | null | undefined, name: string | null | undefined) => string | null {
+  const byLic = new Map<string, string>(), byName = new Map<string, string>();
+  for (const list of Object.values(inscritos || {})) {
+    if (!Array.isArray(list)) continue;
+    for (const p of list as { name?: string | null; licencia?: string | null; pais?: string | null }[]) {
+      if (!p?.pais) continue;
+      const lic = (p.licencia || "").trim();
+      if (lic && !byLic.has(lic)) byLic.set(lic, p.pais);
+      if (p.name) { const k = norm(p.name); if (!byName.has(k)) byName.set(k, p.pais); }
+    }
+  }
+  return (lic, name) => (lic && byLic.get(lic.trim())) || (name ? byName.get(norm(name)) : undefined) || null;
+}
+
 /** Bandeira a mostrar para um jogador na página de Espanha: override curado de
  *  nacionalidade primeiro, senão a regra geral (só estrangeiros levam bandeira). */
 export function rfegPlayerFlag(name: string | null | undefined, pais: string | null | undefined): string | undefined {

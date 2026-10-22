@@ -280,6 +280,9 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **kids2:** as fontes entram pelo agregador (`scripts/aggregator/`), nunca pelo
   `KIDSdataLoader`. Ao acrescentar uma fonte, seguir a checklist em
   [kids2-agregador.md](docs/claude/kids2-agregador.md); verificação: Manuel × Dmitrii = 7 confrontos.
+- **Destaque PT nas fontes de fora e nos draws: sempre `isPtCountry`**
+  (`utils/flagUtils.ts`: PT, PRT, POR, Portugal), nunca `country === "PT"`. Só a
+  FFG soma as excepções por nome (`isPT`, `utils/ptPlayers.ts`).
 - **MAJOR:** correr `node scripts/build-major-catalog.js` sempre que um ficheiro
   de dados MAJOR muda (o workflow fá-lo em push). → [major.md](docs/claude/major.md)
 

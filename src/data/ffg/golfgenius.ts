@@ -9,13 +9,15 @@ import type { FpgDraw } from "../nacional2026Loader";
 import { buildFpgDraw } from "../intlDraw";
 import type { MatchplayFile, MatchplayRound, MatchplayTeamMatch } from "../../ui/circuit/matchplayTypes";
 import { normalizeName, ffgEscaloesOfTournament } from "./names";
+import { isPT } from "../../utils/ptPlayers";
 import type { FFGTournament, FFGDrawRound, CatalogEntry } from "./types";
 
 export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
   return buildFpgDraw(
     // o GG não publica buraco de saída na tee sheet
     round.groups.map((g) => ({ teeTime: g.teeTime, startHole: null, tee: round.tee ?? null, players: g.players })),
-    (p) => ({ nome: normalizeName(p.name), clube: p.club, hcp: p.hcp, tee: p.tee ?? null }),
+    // O GG não publica o país: destaque PT pela regra da FFG (excepções de nome).
+    (p) => ({ nome: normalizeName(p.name), clube: p.club, hcp: p.hcp, tee: p.tee ?? null, ...(isPT(null, null, p.name) ? { isPortuguese: true } : {}) }),
     undefined,
     {
       name: round.label ?? undefined,

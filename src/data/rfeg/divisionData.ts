@@ -18,7 +18,8 @@ import { loadFedByName, loadGolfboxPlayers, type FedByNameEntry } from "../playe
 import type { RFEGDetail, RFEGIndexEntry, RFEGPlayer, NCDetail, LgsDetail, DobLookup, HcpLookup } from "./types";
 import { esDateToIso } from "./text";
 import { escaloEsForPlayer } from "./escalao";
-import { rfegPlayerFlag } from "./flags";
+import { rfegPaisLookup, rfegPlayerFlag } from "./flags";
+import { normEs } from "./text";
 import { adaptLgs, adaptNextCaddy } from "./adapters";
 import { lgsToFPGTournament, ncToFPGTournament, rfegolfToFPGTournament, mitarjetaToFPGTournament } from "./toTournament";
 import { loadDobLookup, loadHcpLookup } from "./lookups";
@@ -144,6 +145,32 @@ function rfegolfResultLinks(data: RFEGDetail): CircuitLink[] {
   return links;
 }
 
+/** LGS com gémeo RFEGolf: o LGS não traz o país de quem não tem bandeira na
+ *  linha, mas as listas de inscritos do gémeo trazem («PORTUGAL»). Preenche o
+ *  `country` em falta (só estrangeiros — os espanhóis não levam bandeira) para
+ *  o destaque PT e a bandeira valerem no leaderboard, nas inscrições e no draw.
+ *  Devolve uma cópia; o ficheiro em cache não é tocado. */
+async function lgsWithTwinCountries(raw: LgsDetail): Promise<LgsDetail> {
+  const tw = await cachedFetchJson<{ twins?: Record<string, number> }>("/data/rfegolf-lgs-twins.json").catch(() => null);
+  const rfegId = Object.entries(tw?.twins ?? {}).find(([, lgs]) => lgs === raw.id)?.[0];
+  if (!rfegId) return raw;
+  const twin = await cachedFetchJson<RFEGDetail>(`/data/rfegolf-resultats/${rfegId}.json`).catch(() => null);
+  if (!twin?.inscritos) return raw;
+  const paisOf = rfegPaisLookup(twin.inscritos as unknown as Record<string, unknown>, normEs);
+  return {
+    ...raw,
+    rounds: raw.rounds.map((r) => ({
+      ...r,
+      players: (r.players ?? []).map((p) => {
+        const pc = p as { country?: string | null; name: string };
+        if (pc.country) return p;
+        const c = rfegPlayerFlag(pc.name, paisOf(null, pc.name));
+        return c ? { ...p, country: c } : p;
+      }),
+    })),
+  };
+}
+
 export interface RfegDivisionData {
   /** O detalhe já adaptado (alimenta o draw de cada volta). */
   data: RfegDrawDetail;
@@ -182,7 +209,7 @@ export async function loadRfegDivisionData(
 
   let data: RFEGDetail;
   if (t.source === "nextcaddy") data = adaptNextCaddy(raw as NCDetail, dob, hcp);
-  else if (t.source === "livegolfscoring") data = adaptLgs(raw as LgsDetail, dob, hcp, fbn, gbx);
+  else if (t.source === "livegolfscoring") data = adaptLgs(await lgsWithTwinCountries(raw as LgsDetail), dob, hcp, fbn, gbx);
   else if (t.source === "golfdirecto") data = adaptFcg(raw as unknown as FCGDetail, dob, hcp) as unknown as RFEGDetail;
   else { const d = raw as RFEGDetail; data = { ...d, coursePar: d.coursePar ?? null }; }
 

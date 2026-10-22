@@ -364,7 +364,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
         // O cartão da 1.ª linha é o do jogo, mesmo sem buracos jogados.
         scores,
         wd: !p.isCardFinished,
-        isPortuguese: null,
+        country: p.country,   // destaque PT pela regra comum (ISO-3)
         extra: { fed: lic, fedCode: lic, escalao, _sex: sex, _age: age, _category: cat.name },
       });
     }

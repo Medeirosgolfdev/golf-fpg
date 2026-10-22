@@ -8,6 +8,8 @@
  * Tirado do DrawSaidaView da RFEGPage a 21/10/2026 — comportamento igual.
  */
 import { displayName, norm } from "../../utils/format";
+import { isPtCountry } from "../../utils/flagUtils";
+import { rfegPaisLookup, rfegPlayerFlag } from "./flags";
 import { formatPlayerName } from "../../utils/playerUtils";
 import type { FpgDraw } from "../nacional2026Loader";
 import { buildFpgDraw, groupConsecutive, indexByName } from "../intlDraw";
@@ -60,6 +62,8 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   // cruzamento falhava em TODA a gente e as colunas ±/Tot ficavam a "–".
   type Info = { name: string; fed: string | null; dobIso: string | null; club: string | null; hcp: number | null; gross: number; toPar: number | null; country: string | null };
   const bothOrders = (name: string) => [norm(name), norm(formatPlayerName(name))];
+  // País: o da linha (LGS) ou, sem ele, o das listas de inscritos (mitarjeta).
+  const paisOf = rfegPaisLookup(detail.inscritos as unknown as Record<string, unknown>, norm);
   const mitaByName = isNc ? new Map<string, Info>() : indexByName(
     (detail.results || []).find((r) => r.players && r.players.length > 0)?.players || [],
     (p) => bothOrders(p.name),
@@ -71,7 +75,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
       hcp: typeof p.hcp === "number" ? p.hcp : null,
       gross: Array.isArray(p.rounds) ? (p.rounds.find((g) => g != null && g > 0) ?? 0) : 0,
       toPar: typeof p.toPar === "number" ? p.toPar : null,
-      country: ((p as { country?: string | null }).country) || null,
+      country: ((p as { country?: string | null }).country) || rfegPlayerFlag(p.name, paisOf(p.licencia, p.name)) || null,
     }),
     "first",
   );
@@ -168,7 +172,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
           fed: isNc ? (p.jid || null) : null,   // jid NC / licencia mitarjeta
           hcp: isNc ? p.hcp : null,
           tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
-          isPortuguese: false,
+          isPortuguese: isPtCountry(null),
           country: null,
         };
       },
@@ -182,7 +186,7 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
           hcp: info?.hcp ?? null,
           // Conterrâneos destacados como nos draws internacionais do MAJOR
           // (`.row-portuguese`) — num campo de 120 é o que os torna visíveis.
-          isPortuguese: info?.country === "PT",
+          isPortuguese: isPtCountry(info?.country),
           country: info?.country || null,
         };
       },

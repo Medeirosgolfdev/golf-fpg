@@ -6,7 +6,8 @@
  * Tirado da RFEGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
 import { displayName, ageAtDate, todayIso } from "../../utils/format";
-import { flag } from "../../utils/flagUtils";
+import { flag, isPtCountry } from "../../utils/flagUtils";
+import { rfegPaisLookup, rfegPlayerFlag } from "./flags";
 import { formatPlayerName } from "../../utils/playerUtils";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
@@ -165,7 +166,7 @@ export function lgsToFPGTournament(
     // RFEG), mas nós temos a ficha dele na FPG. Só se aplica a quem a BANDEIRA
     // da fonte marca como PT — cruzar por nome sem essa garantia apanharia
     // homónimos espanhóis.
-    const ptFed = a.country === "PT" && fedByName
+    const ptFed = isPtCountry(a.country) && fedByName
       ? fedByNameKeys(a.name).map((k) => fedByName.get(k)).find(Boolean)
       : undefined;
     // Estrangeiro sem ficha local: procurar no roster GolfBox, exigindo a
@@ -200,7 +201,7 @@ export function lgsToFPGTournament(
       pos: a.pos ?? idx + 1,
       name: formatPlayerName(a.name),
       club: [flagEmoji, clubLabel].filter(Boolean).join(" ") || "—",
-      isPortuguese: a.country === "PT",
+      country: a.country,
       total: a.total || null,
       toPar: a.toPar,
       hcp,
@@ -421,7 +422,9 @@ export function ncToFPGTournament(
       hcp: p.hcp,
       rounds: roundScores,
       scores: roundScores[0]?.scores || [],
-      isPortuguese: null,
+      // Destaque PT pela regra comum (o NextCaddy marca toda a gente «ESPAÑA»;
+      // valem as nacionalidades curadas).
+      country: rfegPlayerFlag(p.name, p.pais) ?? p.pais,
       // Metros e CR/Slope do tee deste jogador (o SD sai daqui).
       course: { meters: playerMeters, teeName: teeLabel, courseRating: rating?.cr, slope: rating?.slope },
       extra: {
@@ -469,6 +472,8 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
   }
 
   const dateRef = detail.meta.dateStart || null;
+  // O PDF não traz o país: vem das listas de inscritos (destaque PT).
+  const paisOf = rfegPaisLookup(detail.inscritos as unknown as Record<string, unknown>, norm);
   const players: IntlPlayerIn[] = allRows.map((p, idx): IntlPlayerIn => {
     const nm = norm(p.name || "");
     const ins = insByName[nm];
@@ -489,7 +494,7 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
       toPar: p.toPar ?? null,
       rounds,
       scores: [],
-      isPortuguese: null,
+      country: rfegPlayerFlag(p.name, paisOf(ins?.licencia, p.name)) ?? null,
       extra: {
         fed: ins?.licencia || e?.licencia || undefined,
         fedCode: ins?.licencia || e?.licencia || undefined,
@@ -547,6 +552,8 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
   const lookupByName = dobLookupByName(dobLookup, norm);
 
   const dateRef = detail.meta.dateStart || null;
+  // O mitarjeta não traz o país: vem das listas de inscritos (destaque PT).
+  const paisOf = rfegPaisLookup(detail.inscritos as unknown as Record<string, unknown>, norm);
 
   const players: IntlPlayerIn[] = group.players.map((p, idx): IntlPlayerIn => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
@@ -585,7 +592,7 @@ export function mitarjetaToFPGTournament(detail: RFEGDetail, dobLookup?: DobLook
       // Torneio AO VIVO: não marcar WD por terem jogado menos rondas que o total
       // (apagaria o total). WD real virá quando o mitarjeta o indicar.
       wd: false,
-      isPortuguese: null,
+      country: rfegPlayerFlag(p.name, paisOf(p.licencia, p.name)) ?? null,
       extra: {
         fed: p.licencia || e?.licencia || undefined,
         fedCode: p.licencia || e?.licencia || undefined,

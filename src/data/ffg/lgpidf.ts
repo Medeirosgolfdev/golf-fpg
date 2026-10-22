@@ -8,6 +8,7 @@
 import type { FpgDraw, FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
 import { buildFpgDraw } from "../intlDraw";
 import { normalizeName, ffgCountry } from "./names";
+import { isPT } from "../../utils/ptPlayers";
 import type { LGPIDFTournament } from "./types";
 
 export function lgpidfAdmissions(data: LGPIDFTournament): FpgAdmissions | undefined {
@@ -29,7 +30,8 @@ export function lgpidfDraws(data: LGPIDFTournament): FpgDraw[] {
       tee: null,
       players: g.players,
     })),
-    (p) => ({ nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp ?? null }),
+    // Os PDFs de horários não trazem o país: destaque PT pela regra da FFG.
+    (p) => ({ nome: normalizeName(p.name), clube: p.club || null, hcp: p.hcp ?? null, ...(isPT(null, null, p.name) ? { isPortuguese: true } : {}) }),
   ));
 }
 

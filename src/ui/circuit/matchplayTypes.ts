@@ -10,6 +10,7 @@
  * GOLFBOX_MATCHPLAY_SOURCES em loadDivisionsFor).
  */
 import { isPTByName } from "../../utils/ptPlayers";
+import { isPtCountry } from "../../utils/flagUtils";
 
 /** Jogador com identidade e resultado (opcional) — quando a fonte os dá
  *  (ex.: Regional de Clubes da FPG: federado, gross e ±par do dia). Com `fed`,
@@ -119,7 +120,7 @@ export interface MatchplayFile {
 export function sideIsPt(s: MatchplaySide | MatchplayGameSide | null): boolean {
   if (!s) return false;
   const iso = (s as MatchplaySide).iso;
-  if (iso) return iso.toUpperCase() === "PT";
+  if (iso) return isPtCountry(iso);
   if (/portugal/i.test(s.name || "")) return true;
   const players = (s as MatchplayGameSide).players;
   if (players?.some((p) => isPTByName(p))) return true;

@@ -3,7 +3,11 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import { isNoCardGross } from "../intlCommon";
 import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournament";
-import { isLgsCard, rfegolfToFPGTournament } from "../rfeg/toTournament";
+import { isLgsCard, rfegolfToFPGTournament, mitarjetaToFPGTournament } from "../rfeg/toTournament";
+import { rfegPaisLookup } from "../rfeg/flags";
+import { normEs } from "../rfeg/text";
+import { isPtCountry } from "../../utils/flagUtils";
+import { isPT } from "../../utils/ptPlayers";
 import { expandMultiRound } from "../fpgUtils";
 import { ScorecardLeaderboard } from "../../ui/ScorecardLeaderboard";
 import { normalizeBlueGolf } from "../major/bluegolf";
@@ -119,5 +123,39 @@ describe("3. Totais do NextCaddy no TotalsResumo (peça única)", () => {
     expect(hl).not.toContain(">Tot<");
     expect(hl).toMatch(/<th class="lb-sortable[^"]*"[^>]*>(?:(?!<\/th>).)*🐦 Birdie/);
     expect(hl).not.toContain("🥇");
+  });
+});
+
+describe("4. Destaque PT pela regra comum (isPtCountry)", () => {
+  const meta = { name: "X", dateStart: "2026-05-01", dateEnd: null, course: null, courseClubId: null, players: 1, hcpLimitMen: null, hcpLimitWomen: null, mode: null, style: null, category: null, sex: null, federation: null, federationCatId: null };
+  const ins = (list: object[]) => ({ admitidos: list, reservas: [], bajas: [], invitados: [], noAdmitidos: [], provisional: [], counts: { admitidos: list.length, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 } });
+
+  it("PT, PRT, POR e Portugal; a excepção por nome só na FFG (isPT)", () => {
+    expect(["PT", "PRT", "POR", "Portugal", "PORTUGAL", "FR", null].map((c) => isPtCountry(c))).toEqual([true, true, true, true, true, false, false]);
+    expect(isPT("FRA", null, "Ricardo Castro Ferreira")).toBe(true);
+    expect(isPT("PRT")).toBe(true);
+  });
+
+  it("RFEGolf (PDF): o país vem dos inscritos — Luis Antonio Silva destacado", () => {
+    const t = rfegolfToFPGTournament({
+      compId: 15923, ok: true, scrapedAt: "", coursePar: null, meta,
+      inscritos: ins([{ pos: 22, name: "SILVA , LUIS ANTONIO", licencia: "XXXXXPOR07", pais: "Portugal" }]),
+      results: [{ label: "", nRounds: 1, players: [{ pos: 50, name: "SILVA, LUIS ANTONIO", toPar: 3, rounds: [72], total: 72 }, { pos: 51, name: "PEREZ, JUAN", toPar: 4, rounds: [73], total: 73 }] }],
+    } as never)!;
+    expect(t.players.map((p) => [p.name, !!p._isPortuguese])).toEqual([["Luis Antonio Silva", true], ["Juan Perez", false]]);
+  });
+
+  it("mitarjeta: país dos inscritos por licença — Catarina Sousa Conceicao destacada", () => {
+    const t = mitarjetaToFPGTournament({
+      compId: 16189, ok: true, scrapedAt: "", coursePar: null, meta,
+      inscritos: ins([{ name: "SOUSA CONCEICAO, CATARINA", licencia: "AM00414469", pais: "PORTUGAL" }]),
+      results: [{ label: "", nRounds: 1, players: [{ pos: 43, name: "SOUSA CONCEICAO, Catarina", licencia: "AM00414469", toPar: 15, rounds: [87], total: 87 }] }],
+    } as never)!;
+    expect(t.players[0]._isPortuguese).toBe(true);
+  });
+
+  it("rfegPaisLookup: 1.º país não vazio, por licença ou nome", () => {
+    const f = rfegPaisLookup({ reservas: [{ name: "JOHANSEN , MARTIM", licencia: "X8", pais: null }], provisional: [{ name: "JOHANSEN , MARTIM", licencia: "X8", pais: "Portugal" }] }, normEs);
+    expect([f("X8", null), f(null, "Johansen, Martim"), f(null, "Outro")]).toEqual(["Portugal", "Portugal", null]);
   });
 });

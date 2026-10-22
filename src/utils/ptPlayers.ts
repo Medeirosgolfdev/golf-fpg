@@ -11,6 +11,8 @@
  * assim apanha variantes de ordem e nomes do meio ("Castro Ferreira Ricardo",
  * "Ricardo Castro Ferreira").
  */
+import { isPtCountry } from "./flagUtils";
+
 const PT_NAME_EXCEPTIONS: ReadonlyArray<string[]> = [
   ["castro", "ferreira", "ricardo"], // Ricardo Castro Ferreira — St Germain (FR) desde 2026
 ];
@@ -25,7 +27,9 @@ export function isPTByName(name: string | null | undefined): boolean {
   return PT_NAME_EXCEPTIONS.some((tokens) => tokens.every((t) => n.includes(t)));
 }
 
-/** Detecta jogador português via nacionalidade ISO-3 (PRT) ou variantes, ou via
- *  a lista de excepções de nome (jogadores PT federados noutro país). */
+/** Regra da FFG: o país pela regra comum (`isPtCountry`) OU a lista de
+ *  excepções de nome (jogadores PT federados noutro país — vale mesmo com a
+ *  bandeira FR, por isso NÃO é um recurso para país em falta e fica só na
+ *  FFG; decisão de 22/10/2026). */
 export const isPT = (nat: string | null | undefined, flag?: string | null, name?: string | null): boolean =>
-  /^(PRT|POR|PT|PORTUGAL)$/i.test(String(nat || flag || "").trim()) || isPTByName(name);
+  isPtCountry(nat || flag) || isPTByName(name);
