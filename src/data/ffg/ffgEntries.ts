@@ -256,10 +256,11 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
       key: "main",
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
-      // Só totais → o shell desenha o TotalsResumo (o PDF não traz o par: 72 assumido, avisado).
+      // Só totais → o shell desenha o TotalsResumo. O PDF não traz o par do
+      // campo: sem par oficial fica SEM PAR (decisão dela, 22/10/2026 — antes
+      // assumia-se 72), por isso não há ±par.
       totals: data.players.length ? {
-        players: lgpidfTotais(data), parPerRound: 72, tournamentDate: data.dateStart ?? undefined,
-        notice: { kind: "nota", text: "* ±Par com par 72 assumido — o PDF de resultados não traz o par do campo." },
+        players: lgpidfTotais(data), parPerRound: null, tournamentDate: data.dateStart ?? undefined,
       } : undefined,
       admissions: lgpidfAdmissions(data),
       roundDraws: lgpidfDraws(data).map((draw, i) => ({

@@ -35,8 +35,7 @@ export function lgpidfDraws(data: LGPIDFTournament): FpgDraw[] {
   ));
 }
 
-/** Par 72 assumido (18 buracos — standard nos Grand Prix Jeunes franceses):
- *  o PDF de resultados não traz o par. */
+/** Totais LGPIDF. O PDF de resultados não traz o par → sem ±par (nunca 72 assumido). */
 export function lgpidfTotais(data: LGPIDFTournament) {
   return data.players.map((p) => ({ name: normalizeName(p.name), country: p.country ?? null, club: p.club ?? null,
     hcp: p.hcp ?? null, pos: p.pos ?? null, rounds: [p.r1 ?? null, p.r2 ?? null].slice(0, data.rounds || 2), total: p.total ?? null }));
