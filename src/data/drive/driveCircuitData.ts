@@ -1,7 +1,7 @@
 /**
- * src/pages/drive/driveCircuitData.ts
+ * src/data/drive/driveCircuitData.ts
  *
- * Adaptador Drive → CircuitShell (NOVO, ainda NÃO ligado à rota).
+ * Adaptador Drive → CircuitShell (a /drive) e a lista de torneios que lhe dá origem.
  *
  * Objectivo: converter os torneios do Drive/Challenge/AQUAPOR (já em formato
  * FPGTournament) para o contrato `CircuitEntry[]` + `CircuitConfig` que a
@@ -16,11 +16,11 @@
  *
  * Este módulo é puro (sem React) e testável isoladamente.
  */
-import type { Tournament as FPGTournament } from "../../data/fpgTypes";
+import type { Tournament as FPGTournament } from "../fpgTypes";
 import { ESCALOES_DRIVE as DRIVE_ESCALOES } from "../../constants/escaloes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circuit/types";
 import { isManuelByName } from "../../constants/manuel";
-import { withDivisionModel } from "../../data/model/division";
+import { withDivisionModel } from "../model/division";
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 

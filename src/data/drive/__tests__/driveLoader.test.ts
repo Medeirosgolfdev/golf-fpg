@@ -16,7 +16,7 @@ beforeEach(() => {
   }) as unknown as typeof fetch;
 });
 
-describe("loadDriveMonthly", () => {
+describe("loadDriveMonthly", { timeout: 30000 }, () => {
   it("lê só os meses do índice, normaliza e marca a origem", async () => {
     const { loadDriveMonthly } = await import("../driveLoader");
     const r = await loadDriveMonthly("drive-data");

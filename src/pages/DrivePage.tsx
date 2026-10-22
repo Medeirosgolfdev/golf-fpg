@@ -6,7 +6,6 @@
  */
 import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
 import { ESCALOES_DRIVE as ESCALOES } from "../constants/escaloes";
-import { loadPlayers } from "../data/loader";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { fmtToPar, fmtHcp, medal, shortDateSlash, tournamentUrl, parseTournKey } from "../utils/format";
@@ -37,17 +36,14 @@ import {
   tpColor,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../data/nacional2026Loader";
-import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../data/featuredTournaments";
-import { cachedFetchJson } from "../data/fetchCache";
 import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
 import TournamentGrid from "../ui/TournamentGrid";
-import { expandMultiRound } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders, shortCampo } from "./drive/driveCircuitData";
+import { buildDriveEntries, DRIVE_CONFIG, shortCampo } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import MasterDetail from "../ui/MasterDetail";
-import { loadDriveMonthly } from "../data/drive/driveLoader";
+import { loadDriveAdmissions, loadDriveData, loadDriveEquipas } from "../data/drive/driveLoader";
+import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex } from "../data/drive/driveSource";
 
 import type {
   Tournament,
@@ -564,17 +560,9 @@ function DriveContent() {
   const [monthlyMeta, setMonthlyMeta] = useState<DataSource[]>([]);
 
   useEffect(() => {
-    Promise.all([
-      loadDriveMonthly("drive-data"),
-      loadDriveMonthly("aquapor-data", { forceSeries: "aquapor" }),
-      loadPlayers().catch(() => ({})),
-    ]).then(([driveR, aqR, pp]) => {
-      const driveTourns = driveR.tournaments;
-      const aqTourns = aqR.tournaments;
-      setMonthlyMeta([...driveR.meta, ...aqR.meta]);
-      const rawTournaments = [...driveTourns, ...aqTourns];
+    loadDriveData().then(({ raw: rawTournaments, tournaments: allTourns, meta, players: pp }) => {
+      setMonthlyMeta(meta);
       setRaw(rawTournaments);
-      const allTourns = expandMultiRound(rawTournaments);
       const driveData: DriveData = {
         lastUpdated: "",
         source: "scoring.datagolf.pt",
@@ -583,48 +571,31 @@ function DriveContent() {
         totalScorecards: 0,
         tournaments: allTourns,
       };
-      setData(driveData); setPdb(pp as PlayersDB); setLoading(false);
+      setData(driveData); setPdb(pp); setLoading(false);
+      // Fed por nome (mexe nos jogadores) só depois do 1.º desenho.
       setTimeout(() => {
-        resolveFedsInTournaments(driveData.tournaments, pp as PlayersDB);
+        resolveFedsInTournaments(driveData.tournaments, pp);
         setData({ ...driveData });
       }, 0);
     }).catch(e => { setError(e.message); setLoading(false); });
   }, []);
 
-  // Classificação por equipas (regiões) das Finais — drive-equipas.json, chave «ccode-tcode».
-  // Opcional: sem o ficheiro a página funciona igual, só não aparece o separador «Equipas».
+  // Classificação por equipas (regiões) das Finais. Opcional: sem o ficheiro a
+  // página funciona igual, só não aparece o separador «Equipas».
   const [equipasIdx, setEquipasIdx] = useState<Record<string, DriveEquipasData | null>>({});
   useEffect(() => {
-    cachedFetchJson<Record<string, DriveEquipasData | null>>("/data/drive-equipas.json")
-      .then((d) => { if (d) setEquipasIdx(d); })
-      .catch(() => {});
+    loadDriveEquipas().then((d) => { if (d) setEquipasIdx(d); });
   }, []);
 
-  // Carregar admissions + draws (uma vez) e atachar aos tournaments por ccode-tcode
-  const [admDrawsIdx, setAdmDrawsIdx] = useState<Map<string, any>>(new Map());
+  // Inscrições + draws da FPG (uma vez), por ccode-tcode.
+  const [admDrawsIdx, setAdmDrawsIdx] = useState<DriveAdmissionsIndex>(new Map());
   const [raw, setRaw] = useState<Tournament[]>([]);
   const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   useEffect(() => {
-    loadFpgAdmissionsDraws()
-      .then(f => {
-        setAdmDrawsIdx(indexFpgAdmissionsDraws(f));
-        setAdmissionsMeta([{
-          path: "/data/fpg-admissions-draws.json",
-          status: "loaded",
-          count: f?.tournaments?.length || 0,
-          source: (f as any)?.source,
-          lastUpdated: (f as any)?.scrapedAt,
-          group: "admissions",
-        }]);
-      })
-      .catch((e) => {
-        setAdmissionsMeta([{
-          path: "/data/fpg-admissions-draws.json",
-          status: "error",
-          error: String(e),
-          group: "admissions",
-        }]);
-      });
+    loadDriveAdmissions().then(({ idx, meta }) => {
+      if (meta.status === "loaded") setAdmDrawsIdx(idx);
+      setAdmissionsMeta([meta]);
+    });
   }, []);
 
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
@@ -633,77 +604,9 @@ function DriveContent() {
   const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
   const driveEntries = useMemo(() => {
     if (raw.length === 0) return [];
-    if (admDrawsIdx.size > 0) {
-      for (const t of raw) {
-        const ad = admDrawsIdx.get(`${t.ccode}-${(t as any).tcode}`);
-        if (ad) { (t as any)._admissions = ad.admissions; (t as any)._draws = ad.draws; }
-      }
-    }
-    // Injectar torneios Drive FUTUROS como sintéticos — mesmo template da
-    // FPGPage (src/data/featuredTournaments.ts): aparecem na sidebar apenas
-    // com Inscrições/Draw enquanto não há resultados nos drive-data-*.json;
-    // o TournamentDetail (renderFull abaixo) trata das tabs e da verificação
-    // LIVE das inscrições. Dedup por ccode/tcode: quando o torneio real chega
-    // aos ficheiros mensais, o sintético deixa de ser injectado.
-    // Duas vias:
-    //   (a) config FEATURED_TOURNAMENTS com series tour/challenge/aquapor
-    //       (casos especiais — overrides de nome/região/links);
-    //   (b) AUTO-DETECÇÃO por nome em fpg-admissions-draws.json — o scraper
-    //       descobre os Drive futuros sozinho via TournamentsLST (INCLUDE_RX
-    //       drive tour/challenge + aquapor) e aqui basta o nome bater.
-    let src = raw as any[];
-    if (admDrawsIdx.size > 0) {
-      const have = new Set(src.map(t => `${t.ccode}/${(t as any).tcode}`));
-      // (a) config
-      for (const ft of FEATURED_TOURNAMENTS) {
-        if (!ft.series || ft.series === "jovens") continue;  // jovens → FPGPage
-        const key = `${ft.ccode}/${ft.tcode}`;
-        if (have.has(key)) continue;
-        const ad = admDrawsIdx.get(`${ft.ccode}-${ft.tcode}`);
-        if (!ad) continue;  // sem dados scraped, a entrada fica dormente
-        src = [...src, buildFeaturedSynthetic(ft, ad) as unknown as Tournament];
-        have.add(key);
-      }
-      // (b) auto-detecção por nome — /chall/ como PREFIXO porque os nomes
-      // longos vêm abreviados da FPG em pontos arbitrários ("Drive Chall
-      // Tejo-Mosteiro-…", "Drive Challe Tejo-Power by Belas-…")
-      const DRIVE_RE = /\bdrive\s+(tour\b|chall)/i;
-      const AQUA_RE = /\baquapor\b/i;
-      const inferDriveRegion = (name: string): string | null => {
-        if (/madeira/i.test(name)) return "madeira";
-        if (/a[çc]ores/i.test(name)) return "acores";
-        if (/\bnorte\b/i.test(name)) return "norte";
-        if (/\btejo\b/i.test(name)) return "tejo";
-        if (/\bsul\b/i.test(name)) return "sul";
-        return null;
-      };
-      for (const [, ad] of admDrawsIdx) {
-        const key = `${ad.ccode}/${ad.tcode}`;
-        if (have.has(key)) continue;
-        const name = ad.name || "";
-        if (!DRIVE_RE.test(name) && !AQUA_RE.test(name)) continue;
-        const ftAuto = {
-          ccode: String(ad.ccode),
-          tcode: String(ad.tcode),
-          series: (AQUA_RE.test(name) ? "aquapor" : /\bchall/i.test(name) ? "challenge" : "tour") as "aquapor" | "challenge" | "tour",
-          region: inferDriveRegion(name),
-        };
-        src = [...src, buildFeaturedSynthetic(ftAuto, ad) as unknown as Tournament];
-        have.add(key);
-      }
-    }
-    // Torneio provisório (lista de apurados, tcode inventado) + o real da FPG do
-    // mesmo dia → UMA entrada com a informação das duas (Final Drive Tour 2026).
-    src = mergeDrivePlaceholders(src as any[]) as typeof src;
-    // Filtros tournament-level (partilhados por TODOS os escalões do mesmo dia →
-    // não destroem o agrupamento por evento): série / ano / região.
-    if (series !== "all") src = src.filter(t => (t.series || "tour") === series);
-    // Ano: por defeito o mais recente disponível (não "todos os anos").
-    const yrs = [...new Set(src.map(t => (t.date || "").slice(0, 4)).filter(Boolean))].sort().reverse();
-    const effYear = yearFilter ?? yrs[0];
-    if (effYear) src = src.filter(t => (t.date || "").slice(0, 4) === effYear);
-    if (regionFilter) src = src.filter(t => t.region === regionFilter);
-    const ents = buildDriveEntries(src as any);
+    attachDriveAdmissions(raw, admDrawsIdx);
+    const src = filterDriveSource(buildDriveSource(raw, admDrawsIdx), { series, year: yearFilter, region: regionFilter });
+    const ents = buildDriveEntries(src);
     // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
     // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
     // inscrições/draws sozinho por ccode-tcode.

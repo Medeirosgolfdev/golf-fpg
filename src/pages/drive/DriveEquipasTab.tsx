@@ -11,9 +11,8 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import { isManuelByName } from "../../constants/manuel";
 
-export interface DriveEquipaJogador { nome: string; gross: number | null; toPar: number; buracos: number; conta: boolean }
-export interface DriveEquipa { pos: number; regiao: string; toPar: number; jogadores: DriveEquipaJogador[] }
-export interface DriveEquipasData { nome: string; data: string; regra: string; fonte: string; equipas: DriveEquipa[] }
+import type { DriveEquipasData } from "../../data/drive/driveLoader";
+export type { DriveEquipasData };
 
 const fmtPar = (n: number) => (n === 0 ? "PAR" : n > 0 ? `+${n}` : String(n));
 

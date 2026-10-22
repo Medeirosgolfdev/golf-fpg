@@ -1,5 +1,5 @@
 /**
- * Testes do adaptador Drive → CircuitShell (src/pages/drive/driveCircuitData.ts).
+ * Testes do adaptador Drive → CircuitShell (src/data/drive/driveCircuitData.ts).
  * Cobre o agrupamento (single / multi-ronda / evento multi-escalão) e o mapeamento
  * para CircuitEntry/CircuitDivision.
  */

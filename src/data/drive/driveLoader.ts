@@ -15,6 +15,11 @@ import type { DataSource } from "../../ui/DataSources";
 import { cachedFetchJson } from "../fetchCache";
 import { fpgFileUrls, loadFpgFilesIndex } from "../fpgFilesIndex";
 import { normalizePlayer } from "../../utils/playerUtils";
+import { loadPlayers } from "../loader";
+import { expandMultiRound } from "../../ui/driveUtils";
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../nacional2026Loader";
+import type { PlayersDB } from "../../ui/tournamentPrimitives";
+import type { DriveAdmissionsIndex } from "./driveSource";
 
 export type DriveMonthlyPrefix = "drive-data" | "aquapor-data";
 
@@ -62,4 +67,49 @@ export async function loadDriveMonthly(prefix: DriveMonthlyPrefix, opts: DriveMo
     meta.push({ path: url, status: "loaded", count: tourns.length, source: d.source, lastUpdated: d.lastUpdated, group: prefix });
   }
   return { tournaments, meta };
+}
+
+/** Tudo o que a /drive precisa para arrancar: os mensais do Drive e do AQUAPOR
+ *  (lista crua, por ordem do índice), a lista com as voltas expandidas
+ *  (R1/R2/Resumo) e o `players.json`. */
+export interface DriveDataLoad {
+  raw: Tournament[];
+  tournaments: Tournament[];
+  meta: DataSource[];
+  players: PlayersDB;
+}
+export async function loadDriveData(): Promise<DriveDataLoad> {
+  const [driveR, aqR, pp] = await Promise.all([
+    loadDriveMonthly("drive-data"),
+    loadDriveMonthly("aquapor-data", { forceSeries: "aquapor" }),
+    loadPlayers().catch(() => ({})),
+  ]);
+  const raw = [...driveR.tournaments, ...aqR.tournaments];
+  return { raw, tournaments: expandMultiRound(raw), meta: [...driveR.meta, ...aqR.meta], players: pp as PlayersDB };
+}
+
+/** Classificação por equipas de uma Final (`drive-equipas.json`, lida do PDF oficial). */
+export interface DriveEquipaJogador { nome: string; gross: number | null; toPar: number; buracos: number; conta: boolean }
+export interface DriveEquipa { pos: number; regiao: string; toPar: number; jogadores: DriveEquipaJogador[] }
+export interface DriveEquipasData { nome: string; data: string; regra: string; fonte: string; equipas: DriveEquipa[] }
+
+/** Classificação por equipas (zonas) das Finais — `drive-equipas.json`, chave
+ *  «ccode-tcode». Opcional: sem o ficheiro devolve `null`. */
+export async function loadDriveEquipas(): Promise<Record<string, DriveEquipasData | null> | null> {
+  return cachedFetchJson<Record<string, DriveEquipasData | null>>("/data/drive-equipas.json").catch(() => null);
+}
+
+/** Inscrições e draws da FPG indexados por «ccode-tcode», com o registo para o
+ *  painel de fontes. Em erro: índice vazio e o registo do erro. */
+export async function loadDriveAdmissions(): Promise<{ idx: DriveAdmissionsIndex; meta: DataSource }> {
+  const path = "/data/fpg-admissions-draws.json";
+  try {
+    const f = await loadFpgAdmissionsDraws();
+    return {
+      idx: indexFpgAdmissionsDraws(f),
+      meta: { path, status: "loaded", count: f?.tournaments?.length || 0, source: f?.source, lastUpdated: f?.scrapedAt ?? undefined, group: "admissions" },
+    };
+  } catch (e) {
+    return { idx: new Map(), meta: { path, status: "error", error: String(e), group: "admissions" } };
+  }
 }

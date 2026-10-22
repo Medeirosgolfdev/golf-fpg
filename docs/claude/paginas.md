@@ -59,3 +59,21 @@
 > **⚠ `ScotlandPage.tsx` (Junior Tour Scotland) está COMPLETA mas deliberadamente NÃO ligada às rotas** — página de circuito de 363 linhas (como England/FFG/RFEG), com scraper `scrape-junior-tour-scotland.js` e dados `scotland-jts-*.json`, mas sem `import`/`<Route>` no `App.tsx`. **Decisão 2026-07-02: os dados actuais NÃO são úteis/fiáveis — só ligar a rota quando houver uma fonte de dados boa e fiável.** Até lá fica desligada de propósito; não é bug.
 >
 > **`NacionaisJovensPage.tsx` foi REMOVIDA em 2026-07-02** (era código morto: lazy-importada sem `<Route>`). A funcionalidade vive na tab **`/titulos/nacional`** (`TitulosPage`), que reusa o mesmo `JovensAnaliseView` com os mesmos dados. A secção "Página `/nacionais-jovens`" mais abaixo descreve o pipeline de dados (continua válido) mas a página/rota já não existem.
+
+### A /drive por dentro (22/10/2026, fase 1 da reescrita por tipo de torneio)
+
+| O quê | Onde |
+|---|---|
+| Mensais `drive-data`/`aquapor-data` (pelo índice, `cachedFetchJson`; partilhados com o Ranking PJA da /FPG), arranque (`loadDriveData`: crus + voltas expandidas + players), equipas das Finais (`loadDriveEquipas`), inscrições/draws (`loadDriveAdmissions`) | `src/data/drive/driveLoader.ts` |
+| Lista de torneios da /drive: `attachDriveAdmissions` (⚠ pendura nos próprios objectos), `buildDriveSource` (futuros sintéticos + provisório da Final fundido), `filterDriveSource` (série/ano/zona) | `src/data/drive/driveSource.ts` |
+| Adaptador para o CircuitShell (`buildDriveEntries`, `DRIVE_CONFIG`, `mergeDrivePlaceholders`) | `src/data/drive/driveCircuitData.ts` |
+| Ranking Sub-12 e Classificação por escalão (`buildSub12Data`, `filterBySub12Series`, `filterTournByEsc`, contagens, KPIs) | `src/data/drive/driveSub12.ts` |
+| A página (estado, URL, barra, vistas do Sub-12) | `src/pages/DrivePage.tsx` |
+
+Comportamentos de hoje que são decisões (não mudar sem o sim da Mariana): a
+Classificação por escalão reescreve `p.pos` dos jogadores partilhados (o efeito
+fica no leaderboard e nos pontos do Ranking Sub-12 até recarregar); um deep-link
+`/drive/torneio/{cc}-{tc}` de um torneio com várias voltas é reescrito para
+`…_R1` (e esse link, reaberto, já não encontra o torneio); `s12s=challenge` e
+`s12v=ranking|evolucao` não reabrem; ao montar, `region`/`esc`/`year` do URL
+perdem-se.
