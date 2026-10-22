@@ -23,6 +23,7 @@ import type { TemporalEscLookup } from "../../data/fpgUtils";
 import { ESCALOES_DRIVE } from "../../constants/escaloes";
 import { fmtToPar, fmtHcp, medal, shortDateSlash } from "../../utils/format";
 import { sdClassByHcp } from "../../utils/scoreDisplay";
+import { flagOrEmpty } from "../../utils/flagUtils";
 import { C } from "../../utils/colors";
 import { norm } from "../../utils/format";
 import SexBadge from "../../ui/SexBadge";
@@ -165,13 +166,13 @@ function rankByPts(rows: Sub12Row[]): Map<string, number> {
   return m;
 }
 
-function cols(rows: Sub12Row[], withEsc: boolean): RankingCol<Sub12Row>[] {
+function cols(rows: Sub12Row[], withEsc: boolean, pdb: PlayersDB): RankingCol<Sub12Row>[] {
   const rk = rankByPts(rows);
   return [
     { key: "rank", label: "#", className: "num", sort: r => rk.get(r.fed) ?? 9999, firstDir: "asc",
       cell: r => r.totalPts > 0 ? (medal(rk.get(r.fed)!) ?? <span className="mono fw-700">{rk.get(r.fed)}</span>) : <span className="c-muted">–</span> },
     { key: "name", label: "Jogador", sort: r => norm(r.name), firstDir: "asc",
-      cell: r => <><a href={`/jogadores/${r.fed}`} target="_blank" rel="noopener noreferrer" className="fw-700 drive-rank-name" onClick={e => e.stopPropagation()}>{r.name}</a>
+      cell: r => <>{pdb[r.fed]?.country && pdb[r.fed]!.country !== "PT" ? <span title={pdb[r.fed]!.country ?? ""}>{flagOrEmpty(pdb[r.fed]!.country)} </span> : null}<a href={`/jogadores/${r.fed}`} target="_blank" rel="noopener noreferrer" className="fw-700 drive-rank-name" onClick={e => e.stopPropagation()}>{r.name}</a>
         {(r.sex === "M" || r.sex === "F") && <SexBadge sex={r.sex} size="sm" className="ml-4" />}</> },
     ...(withEsc ? [{ key: "esc", label: "Escalão", sort: (r: Sub12Row) => ESCALOES_DRIVE.indexOf(r.esc ?? "") + 1 || 99, firstDir: "asc" as const,
       cell: (r: Sub12Row) => r.esc || "—" }] : []),
@@ -207,7 +208,7 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
     label: "🏅 Ranking",
     rows: rowsOf,
     table: (rows, ctx) => ({
-      cols: cols(rows, escOf(ctx) === "all"),
+      cols: cols(rows, escOf(ctx) === "all", d.pdb),
       rowKey: r => r.fed,
       defaultSort: "pts",
       defaultDir: "desc",
