@@ -12,5 +12,7 @@ describe("bandeiras na /drive (decisão F)", () => {
     expect(raw.some(t => t.players.some(p => String(p.fed) === "51804"))).toBe(true);
     const estrangeiros = new Set(raw.flatMap(t => t.players.map(p => String(p.fed))).filter(f => players[f]?.country && players[f]!.country !== "PT"));
     expect(estrangeiros.size).toBeGreaterThan(5);
+    // Nascimento: o do federados.json (o players-nationality.json tem um dia a menos em ~9 mil)
+    expect(players["48990"]?.dob).toBe("2010-07-23");
   }, 120000);
 });

@@ -26,12 +26,17 @@ interface KidsTrackedFile {
  *  `loadPlayers()` (o mesmo da cache) — como sempre fez; as fusões só
  *  acrescentam, por isso repetir não altera nada. */
 export async function loadFpgPlayersDB(): Promise<PlayersDB> {
-  const [players, nat, kl, kt] = await Promise.all([
+  const [players, nat, kl, kt, lite] = await Promise.all([
     loadPlayers().catch(() => ({})),
     cachedFetchJson<PlayersNationalityFile>("/data/players-nationality.json").catch(() => null),
     cachedFetchJson<KidsLinksFile>("/data/kids-links.json").catch(() => null),
     cachedFetchJson<KidsTrackedFile>("/data/kids-tracked-names.json").catch(() => null),
+    cachedFetchJson<{ b?: Record<string, string> }>("/data/federados-lite.json").catch(() => null),
   ]);
+  // ⚠ As datas de nascimento do players-nationality.json estão UM DIA antes em
+  // ~9 mil federados (a meia-noite de Lisboa lida como UTC, no verão); a do
+  // federados.json (via federados-lite.json) é a certa e ganha (22/10/2026).
+  const dobOf = (fed: string, inf: { dob?: string }) => lite?.b?.[fed] ?? inf.dob;
   const pdb = players as PlayersDB;
   // Merge players-nationality.json — para cada federado FPG estrangeiro (Joe
   // Short→GB, Peter Yao→CN, etc.) injecta `country` no entry existente, para o
@@ -47,12 +52,12 @@ export async function loadFpgPlayersDB(): Promise<PlayersDB> {
         const entry = pdb[fed];
         if (entry) {
           if (!entry.country) entry.country = cc;
-          if (!entry.dob && inf.dob) entry.dob = inf.dob;
+          if (!entry.dob && dobOf(fed, inf)) entry.dob = dobOf(fed, inf);
           if (!entry.sex && inf.sex) entry.sex = inf.sex;
         } else {
           pdb[fed] = {
             country: cc,
-            ...(inf.dob ? { dob: inf.dob } : {}),
+            ...(dobOf(fed, inf) ? { dob: dobOf(fed, inf) } : {}),
             ...(inf.sex ? { sex: inf.sex } : {}),
             ...(inf.name ? { name: inf.name } : {}),
           };
