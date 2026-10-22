@@ -54,29 +54,38 @@
       336
     ],
     "si": [
-      1,
-      12,
-      10,
-      16,
       5,
-      13,
-      15,
-      14,
-      17,
       9,
-      11,
       18,
+      13,
+      1,
+      17,
+      11,
+      3,
+      7,
+      12,
+      16,
+      2,
       6,
       8,
-      7,
-      3,
-      2,
-      4
+      14,
+      4,
+      15,
+      10
     ],
     "parTotal": 71,
     "metersTotal": 5221,
     "parSource": "course_analytics",
-    "metersSource": "course_analytics"
+    "metersSource": "course_analytics",
+    "courseRating": 70.6,
+    "slope": 135,
+    "pcc": [
+      1,
+      1,
+      1
+    ],
+    "ratingEstimado": true,
+    "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e Gaspard Maes perante a FPG (lançada pelo clube Miramar; só um clube, é o que há); PCC deduzido dos SD oficiais; SI do cartão do Vilamoura/Oporto"
   },
   "courses": [
     {
@@ -123,27 +132,36 @@
         336
       ],
       "si": [
-        1,
-        12,
-        10,
-        16,
         5,
-        13,
-        15,
-        14,
-        17,
         9,
-        11,
         18,
+        13,
+        1,
+        17,
+        11,
+        3,
+        7,
+        12,
+        16,
+        2,
         6,
         8,
-        7,
-        3,
-        2,
-        4
+        14,
+        4,
+        15,
+        10
       ],
       "parTotal": 71,
-      "metersTotal": 5221
+      "metersTotal": 5221,
+      "courseRating": 70.6,
+      "slope": 135,
+      "pcc": [
+        1,
+        1,
+        1
+      ],
+      "ratingEstimado": true,
+      "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e Gaspard Maes perante a FPG (lançada pelo clube Miramar; só um clube, é o que há); PCC deduzido dos SD oficiais; SI do cartão do Vilamoura/Oporto"
     }
   ],
   "rounds": 3,
@@ -231,7 +249,7 @@
       "name": "DIAS Santiago",
       "country": null,
       "club": null,
-      "hcp": null,
+      "hcp": 3.7,
       "total": 164,
       "toPar": 22,
       "roundScores": [
@@ -296,7 +314,9 @@
           "date": "Fri, April 4",
           "dateIso": "2025-04-04"
         }
-      ]
+      ],
+      "hcpFed": "42908",
+      "hcpDate": "2025-04-03"
     },
     {
       "id": "11538351602960216985",
@@ -5507,7 +5527,7 @@
       "name": "MAES Gaspard",
       "country": null,
       "club": null,
-      "hcp": null,
+      "hcp": 3.2,
       "total": 245,
       "toPar": 32,
       "roundScores": [
@@ -5601,7 +5621,9 @@
           "date": "Sat, April 5",
           "dateIso": "2025-04-05"
         }
-      ]
+      ],
+      "hcpFed": "51074",
+      "hcpDate": "2025-04-03"
     }
   ],
   "events": []

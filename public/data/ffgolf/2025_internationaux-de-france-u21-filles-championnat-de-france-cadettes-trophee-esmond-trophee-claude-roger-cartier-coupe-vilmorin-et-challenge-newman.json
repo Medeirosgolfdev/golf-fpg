@@ -72,7 +72,15 @@
       3
     ],
     "parTotal": 71,
-    "metersTotal": 5256
+    "metersTotal": 5256,
+    "courseRating": 75,
+    "slope": 148,
+    "pcc": [
+      1,
+      1
+    ],
+    "ratingEstimado": true,
+    "ratingNota": "CR/Slope obtidos da pontuação de Inês Belchior e Amélia Gabin perante a FPG (lançada pelos clubes Comporta e Quinta do Lago, iguais; os mesmos de 2026); PCC +1 deduzido dos SD oficiais"
   },
   "courses": [
     {
@@ -139,7 +147,15 @@
         3
       ],
       "parTotal": 71,
-      "metersTotal": 5256
+      "metersTotal": 5256,
+      "courseRating": 75,
+      "slope": 148,
+      "pcc": [
+        1,
+        1
+      ],
+      "ratingEstimado": true,
+      "ratingNota": "CR/Slope obtidos da pontuação de Inês Belchior e Amélia Gabin perante a FPG (lançada pelos clubes Comporta e Quinta do Lago, iguais; os mesmos de 2026); PCC +1 deduzido dos SD oficiais"
     }
   ],
   "rounds": 2,
@@ -4085,7 +4101,7 @@
       "name": "BELCHIOR Inês (U18)",
       "country": "PT",
       "club": "",
-      "hcp": null,
+      "hcp": -2.6,
       "total": 148,
       "toPar": 6,
       "roundScores": [
@@ -4146,7 +4162,9 @@
           "f9": 37,
           "b9": 37
         }
-      ]
+      ],
+      "hcpFed": "38424",
+      "hcpDate": "2025-04-17"
     },
     {
       "id": "11576131983541056019",
@@ -8639,7 +8657,7 @@
       "name": "GABIN Amélia (U18)",
       "country": "PT",
       "club": "",
-      "hcp": null,
+      "hcp": -2.3,
       "total": 157,
       "toPar": 15,
       "roundScores": [
@@ -8700,7 +8718,9 @@
           "f9": 38,
           "b9": 38
         }
-      ]
+      ],
+      "hcpFed": "38233",
+      "hcpDate": "2025-04-17"
     },
     {
       "id": "11576131983507502068",
