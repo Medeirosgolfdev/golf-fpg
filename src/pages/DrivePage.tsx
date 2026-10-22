@@ -32,7 +32,6 @@ import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
 import {
-  tpColor,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
@@ -77,7 +76,6 @@ const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; ho
   { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", holes: "18h" },
 ];
 const CHART_COLORS = C.charts;
-const SERIE_COLORS: Record<string, string> = { tour: "var(--color-teal)", challenge: C.chartPurple, aquapor: "var(--chart-5)" };
 const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
 /** Labels legíveis das zonas Drive (chaves canónicas em minúsculas). */
@@ -135,14 +133,11 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
           const endRef = e.endDate || e.date;
           const isPast = endRef.getTime() < now.getTime();
           const isNext = !isPast && entries.slice(0,i).every(prev => (prev.endDate||prev.date).getTime() < now.getTime());
-          const col = SERIE_COLORS[series];
           return (
-            // Cor da série: ⚠ `col + "18"` só é CSS válido no Challenge (hex); no Tour e
-            // no AQUAPOR (var(--…)) o fundo fica transparente — é assim hoje (decisão C).
-            <div key={i} className={"drive-cal-pill" + (isNext ? " is-next" : isPast ? " is-past" : "")}
-              style={isNext ? { background: col + "18", color: col, border: `2px solid ${col}` } : undefined}>
+            // Cor da série por classe (decisão C): tokens --drive-* + color-mix.
+            <div key={i} className={`drive-cal-pill drive-serie-${series}` + (isNext ? " is-next" : isPast ? " is-past" : "")}>
               {REGION_EMOJI[e.region] || ""} <span className="fw-700">{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
-              {isNext && <span className="badge-next" style={{ background: col }}>PRÓXIMO</span>}
+              {isNext && <span className="badge-next">PRÓXIMO</span>}
             </div>
           );
         })}
@@ -158,8 +153,7 @@ function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
 }
 function ToParSpan({ tp }: { tp: number | null }) {
   if (tp == null) return <span className="c-muted">–</span>;
-  const color = tpColor(tp);
-  return <span className="fw-700 fs-11" style={{ color }}>{fmtToPar(tp)}</span>;
+  return <span className={"fw-700 fs-11" + (tp < 0 ? " c-good" : tp > 0 ? " c-danger" : "")}>{fmtToPar(tp)}</span>;
 }
 
 function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
@@ -291,7 +285,7 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
                 <td className="mono fs-10">{r.date}</td>
                 <td>
                   <span className="fw-600">{r.tournName}</span>
-                  <span className="badge-serie ml-4" style={{ background: (SERIE_COLORS[r.series]||"var(--text-muted)")+"22", color: SERIE_COLORS[r.series], border: `1px solid ${SERIE_COLORS[r.series]}44` }}>
+                  <span className={`badge-serie drive-serie drive-serie-${r.series} ml-4`}>
                     {SERIE_LABELS[r.series]}
                   </span>
                 </td>

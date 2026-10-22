@@ -147,6 +147,12 @@
   --color-navy:         #1e3a5f;
   --color-loading:      #e67e22;  /* laranja — loading, SD fraco */
   --color-teal:         #00838f;
+  /* /drive — cor de cada série (decisão C, 22/10/2026). Fundos e bordas por
+     color-mix nas classes .drive-serie-* do App.css (o `cor + "18"` só dava CSS
+     válido com hex: no Tour e no AQUAPOR o fundo desaparecia). */
+  --drive-tour:         var(--color-teal);
+  --drive-challenge:    var(--chart-5);
+  --drive-aquapor:      var(--chart-5);
   --color-purple:       #9c27b0;  /* USKids — categoria especial */
   --color-orange-deep:  #e65100;  /* USKids — não-euro */
   --color-hcp:          #6b5c3e;  /* label da linha de hcp */

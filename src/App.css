@@ -3737,7 +3737,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .badge-warn-sm { font-size: var(--fs-10); color: var(--color-warn); }
 .badge-next    { display: inline-block; font-size: var(--fs-10); font-weight: 700; color: #fff; padding: 0 4px; border-radius: var(--radius-sm); margin-left: 2px; }
 
-/* ─── Série de torneios (cor dinâmica via style) ─── */
+/* ─── Série de torneios (a cor vem de uma classe .drive-serie-*) ─── */
 .badge-serie {
  display: inline-flex; align-items: center;
  font-size: var(--fs-10); font-weight: 600;
@@ -4668,7 +4668,14 @@ table td.lb-col-divider {
 .drive-cal-list { display: flex; }
 .drive-cal-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: var(--radius-pill); font-size: var(--fs-10); font-weight: 600; background: var(--bg-card); color: var(--text-2); border: 1px solid var(--border); text-decoration: none; opacity: 1; }
 .drive-cal-pill.is-past { font-weight: 400; background: transparent; color: var(--text-muted); border: 1px solid var(--border-light); text-decoration: line-through; opacity: 0.6; }
-.drive-cal-pill.is-next { font-weight: 800; }
+.drive-cal-pill.is-next { font-weight: 800; background: color-mix(in srgb, var(--drive-serie) 9.4%, transparent); color: var(--drive-serie); border: 2px solid var(--drive-serie); }
+.drive-cal-pill .badge-next { background: var(--drive-serie); }
+/* Cor da série (decisão C): a classe define --drive-serie; fundo/borda por color-mix. */
+.drive-serie           { --drive-serie: var(--text-muted); }
+.drive-serie-tour      { --drive-serie: var(--drive-tour); }
+.drive-serie-challenge { --drive-serie: var(--drive-challenge); }
+.drive-serie-aquapor   { --drive-serie: var(--drive-aquapor); }
+.badge-serie.drive-serie { background: color-mix(in srgb, var(--drive-serie) 13.3%, transparent); color: var(--drive-serie); border: 1px solid color-mix(in srgb, var(--drive-serie) 26.7%, transparent); }
 .dtable .drive-col-n { width: 36px; }
 .dtable .drive-col-player { padding-left: 6px; }
 .dtable .drive-col-pts { font-weight: 800; color: var(--color-warn-dark); }
