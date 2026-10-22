@@ -709,11 +709,19 @@ export function expandMultiRound(t: Tournament): Tournament[] {
   }
   let cutN = -1;
   let cutCount = 0;
+  // ⚠ Num cut só faltam as ÚLTIMAS voltas. Quem tem a R2 sem a R1 não foi
+  // cortado: é rotação de equipa (2e Division B U16 2026, campeonato de clubes —
+  // cada clube escolhe quem joga cada dia; 11 jogaram só o 2.º dia e apareciam
+  // como «CUT»). Havendo voltas saltadas, a prova não tem cut (22/10/2026).
+  const skipped = t.players.some((p) => {
+    const played = (p.roundScores ?? []).filter((rs) => rs.gross < 900).map((rs) => rs.round).filter((r): r is number => typeof r === "number");
+    return played.length > 0 && Math.max(...played) > played.length;
+  });
   // ⚠ Com uma ronda AINDA A DECORRER não se procura cut nenhum: quem não saiu
   // tem menos voltas que os primeiros grupos, e a heurística lia isso como uma
   // eliminação em massa — a meio da manhã metade do campo aparecia como "CUT",
   // o líder da véspera incluído. Fica em "INC" (ronda por jogar), que é o que é.
-  if (!openRound) {
+  if (!openRound && !skipped) {
     for (const k of Object.keys(countByN)) {
       const n = Number(k);
       if (countByN[n] >= 5 && countByN[n] > cutCount) {
