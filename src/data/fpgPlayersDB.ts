@@ -48,15 +48,17 @@ export async function loadFpgPlayersDB(): Promise<PlayersDB> {
       for (const fed in byFed) {
         const cc = byFed[fed];
         if (!cc) continue;
+        // «@1»…«@4» (~4 mil federados) não são países: sem bandeira (era 🏴).
+        const iso = /^[A-Z]{2}$/.test(cc) ? cc : undefined;
         const inf = info[fed] || {};
         const entry = pdb[fed];
         if (entry) {
-          if (!entry.country) entry.country = cc;
+          if (!entry.country && iso) entry.country = iso;
           if (!entry.dob && dobOf(fed, inf)) entry.dob = dobOf(fed, inf);
           if (!entry.sex && inf.sex) entry.sex = inf.sex;
         } else {
           pdb[fed] = {
-            country: cc,
+            ...(iso ? { country: iso } : {}),
             ...(dobOf(fed, inf) ? { dob: dobOf(fed, inf) } : {}),
             ...(inf.sex ? { sex: inf.sex } : {}),
             ...(inf.name ? { name: inf.name } : {}),

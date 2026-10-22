@@ -14,5 +14,7 @@ describe("bandeiras na /drive (decisão F)", () => {
     expect(estrangeiros.size).toBeGreaterThan(5);
     // Nascimento: o do federados.json (o players-nationality.json tem um dia a menos em ~9 mil)
     expect(players["48990"]?.dob).toBe("2010-07-23");
+    // «@1» do players-nationality não é país (dava 🏴)
+    expect(Object.values(players).some(p => p && typeof p === "object" && /^@/.test(String((p as { country?: string }).country ?? "")))).toBe(false);
   }, 120000);
 });
