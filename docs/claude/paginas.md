@@ -70,6 +70,13 @@
 | Ranking Sub-12 e Classificação por escalão (`buildSub12Data`, `filterBySub12Series`, `filterTournByEsc`, contagens, KPIs) | `src/data/drive/driveSub12.ts` |
 | A página (estado, URL, barra, vistas do Sub-12) | `src/pages/DrivePage.tsx` |
 
+- **Abrir o torneio certo (decisão B, 22/10/2026):** o CircuitShell da /drive fica
+  «a carregar» até chegarem as inscrições (`fpg-admissions-draws.json`) — os
+  torneios por jogar (a Final de 07/11) só entram na lista com elas, e o shell
+  escolhia antes o penúltimo. Teste com os dados reais:
+  `src/data/drive/__tests__/driveOpenLatest.test.ts` (o `realDataFetch.ts` põe o
+  `fetch` a ler `public/data`).
+
 Comportamentos de hoje que são decisões (não mudar sem o sim da Mariana): a
 Classificação por escalão reescreve `p.pos` dos jogadores partilhados (o efeito
 fica no leaderboard e nos pontos do Ranking Sub-12 até recarregar); um deep-link

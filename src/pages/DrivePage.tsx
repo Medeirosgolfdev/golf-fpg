@@ -1138,7 +1138,10 @@ function DriveContent() {
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
         <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, below: driveBelow, hideTitle: true }}>
-        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true } }} loading={loading}
+        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true } }}
+          // «A carregar» até chegarem as inscrições: os torneios por jogar (a Final
+          // de 07/11) só entram com elas, e o shell escolhia antes o penúltimo (B, 22/10/2026).
+          loading={loading || admissionsMeta.length === 0}
           selectedId={selectedDriveId ?? undefined}
           onSelectEntry={(e) => setSelectedDriveId(e.id)} />
         </CircuitToolbarSlotCtx.Provider>
