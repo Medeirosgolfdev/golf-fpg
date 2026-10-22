@@ -64,8 +64,8 @@ function buildScout(juniors, tournaments, generatedAt) {
     const h = src.fpg?.hcpExact ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
     if (typeof h === "number") o.h = h;
     if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
-    const rk = rfo?.rankings?.[0];
-    if (rk && rk.pos != null) o.rk = [rk.pos, rk.n, rk.curto, rk.f || null];
+    const rkRfeg = rfo?.rankings?.[0];
+    if (rkRfeg && rkRfeg.pos != null) o.rk = [rkRfeg.pos, rkRfeg.n, rkRfeg.curto, rkRfeg.f || null];
     if (j.dob) o.d = j.dob;
     const club = j.club || src.fpg?.club || src.rfeg?.club || src.ffgolf?.club || null;
     if (club) o.c = club;
