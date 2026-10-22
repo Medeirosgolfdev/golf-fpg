@@ -2,6 +2,7 @@ import type React from "react";
 import type { BaseRoundScore, BasePlayer, BaseTournament } from "../ui/sharedTypes";
 import type { FpgAdmissions, FpgDraw } from "./nacional2026Loader";
 import type { MatchPlayData } from "./clubesMatchplayTypes";
+import type { PlayerIdentity, TournamentModel } from "./model/types";
 
 /**
  * fpgTypes.ts — Tipos partilhados do pipeline FPG
@@ -45,10 +46,16 @@ export interface Player extends BasePlayer {
   /** Marca jogador português em páginas internacionais (FFG, etc.) — aplica
    *  highlight verde néon na linha. Atribuído pelo adaptador da página. */
   _isPortuguese?: boolean;
+  /** Identidade no modelo comum (sexo, país ISO, nascimento, escalão
+   *  canónico) — `enrichPlayerIdentity` (src/data/model/identity.ts). Ao lado
+   *  dos campos antigos, que continuam a ser os que a interface lê. */
+  identity?: PlayerIdentity;
 }
 
-/** FPG-specific tournament with full structure and metadata */
-export interface Tournament extends BaseTournament {
+/** FPG-specific tournament with full structure and metadata. Os campos do
+ *  modelo comum (formato, estado, buracos, cut, origem do par) vêm de
+ *  `TournamentModel` (src/data/model). */
+export interface Tournament extends BaseTournament, TournamentModel {
   /** Override BaseTournament.players (BasePlayer[]) com o tipo FPG completo,
    *  para que `t.players[i].roundScores` etc. tipem correctamente em fpgUtils. */
   players: Player[];

@@ -17,6 +17,7 @@ import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import type { TotalsPlayer } from "./TotalsResumo";
+import type { TournamentModel } from "../../data/model/types";
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
@@ -53,9 +54,11 @@ export type CircuitToggle =
 
 /**
  * Uma divisão (escalão) dentro de um torneio. Corresponde a um tab `.tab-under`
- * no detalhe. Tem pelo menos uma secção com dados.
+ * no detalhe. Tem pelo menos uma secção com dados. Os campos do modelo comum
+ * (`format`, `status`, `holes`, `cut`, `parOrigin` — src/data/model) são
+ * preenchidos pelos conversores com `withDivisionModel`.
  */
-export interface CircuitDivision {
+export interface CircuitDivision extends TournamentModel {
   /** Chave única dentro do entry (usada como key de React e no estado de tab). */
   key: string;
   /** Escalão canónico para pill/sorting (ex: "Boys 10-11", "Benjamín", "Sub-12"). */
