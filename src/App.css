@@ -966,7 +966,15 @@ tr.clickable { cursor: pointer; }
 .score-delta { font-size: var(--fs-10); font-weight: 500; margin-left: 3px; }
 .score-delta.pos { color: var(--color-danger); }
 .score-delta.neg { color: var(--color-good); }
-.hb { font-size: var(--fs-10); font-weight: 700; padding: 1px 5px; border-radius: var(--radius-sm); }
+/* Pílula de buracos (9/18) com as MESMAS medidas das pílulas de torneio
+   `.p .p-sm .p-tourn` (2R, 9H, tcode) — só a cor muda. Antes era mais baixa e,
+   lado a lado com o «2R», via-se a diferença (22/10/2026). */
+.hb {
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: var(--fs-10); font-weight: 800; letter-spacing: 0.04em; line-height: 1.4;
+  padding: 1px 6px; border: 1.5px solid transparent;
+  border-radius: 3px; white-space: nowrap; vertical-align: middle;
+}
 .hb9 { background: var(--color-warn); color: #fff; }
 .hb18 { background: var(--badge-fed); color: #fff; }
 /* Pill badges (from melhorias.json) */
