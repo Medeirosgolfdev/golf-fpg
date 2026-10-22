@@ -305,6 +305,9 @@ export interface FFGSerieCourse {
   slope?: number;
   ratingEstimado?: boolean;
   ratingNota?: string;
+  /** PCC por dia (índice = volta − 1), quando se sabe (deduzido dos SD oficiais). */
+  pcc?: (number | null)[];
+  pccNota?: string;
 }
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,

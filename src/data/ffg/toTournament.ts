@@ -121,7 +121,8 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
     const rounds: IntlRoundIn[] = [];
     cards.forEach((card, i) => {
       const [scores, gross] = card(p);
-      if (scores && scores.length === 18 && gross != null) rounds.push({ round: i + 1, gross, scores });
+      const dayPcc = serieCourse?.pcc?.[i];
+      if (scores && scores.length === 18 && gross != null) rounds.push({ round: i + 1, gross, scores, ...(typeof dayPcc === "number" ? { extra: { pcc: dayPcc } } : {}) });
     });
     const playerCountry = ffgCountry(p); // país REAL ou null — nunca "FRA" inventado
     const clubText = (p.club && p.club.trim()) ? p.club.trim() : (playerCountry ? normPaisDisplay(playerCountry) : "");
