@@ -230,6 +230,8 @@ export function blueGolfToTournament(data: TData, def: TDef): FPGTournament {
       country: p.country,
       total: p.total,
       toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
+      // HCP FPG à data (portugueses) — o BlueGolf não publica HCP; serve o NDB do SD.
+      hcp: (p as unknown as { hcp?: number | null }).hcp ?? undefined,
       rounds: rated && pcc ? p.rounds.map((r, i) => {
         const dayPcc = pcc[(r.day ?? i + 1) - 1];
         return typeof dayPcc === "number" ? { ...r, extra: { pcc: dayPcc } } : r;

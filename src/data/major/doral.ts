@@ -243,6 +243,8 @@ export function doralEntryToTournament(entry: DoralEntry): FPGTournament {
       id: p.id, name: p.name, pos: p.pos,
       club: p.country ? intlCountryCell(p.country) : "",
       country: p.country, total: p.total, toPar: p.toPar, rounds: p.rounds,
+      // HCP FPG à data (portugueses) — o GolfGenius do Doral não publica HCP.
+      hcp: (p as unknown as { hcp?: number | null }).hcp ?? undefined,
     })),
   );
   if (entry.ratingNota && entry.cr != null && entry.slope != null) {
