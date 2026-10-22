@@ -3,6 +3,21 @@
 > Detalhe tirado do CLAUDE.md a 2026-09-15 (o CLAUDE.md fica só com o essencial e
 > aponta para aqui). Datas entre parênteses = quando a regra ou a medição foi feita.
 
+## Auditoria do catálogo de campos — trava de regressão (2026-10-22)
+
+`scripts/audit-courses.js` (`npm run audit:courses`; `--no-fail` para só ver,
+`--json` para máquinas) mede o catálogo **como o site o mostra**: empacota com o
+esbuild o próprio `buildAllCourses`/`splitCourses` (`src/data/courses.ts`) e
+corre-o sobre master + away + `melhorias.json` + `extraCourses.ts` — não há uma
+segunda cópia da fusão nem dos aliases (`courseAliases.ts`). Tectos em
+`BASELINE`: grupos duplicados (mesmo campo com nomes que a canonização não
+junta), torneios como campos (fora de `tournamentCourses.ts`), campos away sem
+metros, tees no pior campo. Corre no `update-data.yml` logo a seguir ao
+`extract-courses`; se passar um tecto, os dados publicam-se na mesma e o job
+acaba vermelho. **Corrigir a origem e descer o tecto — nunca subir.** Regras
+testadas em `scripts/audit-courses.test.js`. Veio do ramo
+`arquivo/course-data-single-source` (17/08), refeito sobre o main.
+
 ## PNGs da volta nos torneios (2026-10-16)
 
 Os PNGs do simulador (`OverlayExport`) também saem de qualquer volta do Manuel
