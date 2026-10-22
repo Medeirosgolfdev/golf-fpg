@@ -55,8 +55,12 @@ export function lgsToFPGTournament(
   // Nº de buracos do campo (9 ou 18). Benjamín/Alevín (sub-10/12) jogam 9 buracos;
   // tudo o resto 18. Detecta-se pelo par[] que o scraper produz. 18 buracos = path
   // original intocado.
-  const rawPar = lgs.rounds[0]?.par;
-  const courseHoles: number = holesOf(rawPar) ?? 18;
+  // O par da volta é o primeiro; sem ele, o par do campo que a fonte publica
+  // (`course.par`, com nulls depois do buraco 9 nos campos de 9) — é oficial,
+  // não inventado. Caso real: Benjamín 2023 (LGS 216/217), voltas sem par.
+  const coursePar = (lgs.course?.par ?? []).filter((x): x is number => typeof x === "number");
+  const rawPar = lgs.rounds[0]?.par?.length ? lgs.rounds[0].par : (coursePar.length ? coursePar : null);
+  const courseHoles: number = holesOf(rawPar) ?? (lgs.course as { holes?: number } | null | undefined)?.holes ?? 18;
   // Sem par válido → sem par (o ±par do torneio é o do leaderboard oficial).
   const par = parOrNone(rawPar, courseHoles);
   const parTotal = par.length ? par.reduce((a, b) => a + b, 0) : null;
@@ -233,7 +237,12 @@ export function lgsToFPGTournament(
     },
     {
       par, si: sliceH(lgs.course?.si) as number[], meters: sliceH(lgs.course?.meters) as number[],
-      courseRating: lgs.course?.courseRating ?? undefined, slope: lgs.course?.slope ?? undefined,
+      // CR/Slope só quando condizem com o nº de buracos: o LGS dá o CR de 18
+      // buracos mesmo nas voltas de 9 dos benjamins (67.2 em 9 buracos dava SD
+      // −27.7). Sem CR certo não há SD — nunca estimar.
+      ...(courseHoles === 9 && (lgs.course?.courseRating ?? 0) > 45 ? {} : {
+        courseRating: lgs.course?.courseRating ?? undefined, slope: lgs.course?.slope ?? undefined,
+      }),
       holes: courseHoles, parTotal,
     },
     players,

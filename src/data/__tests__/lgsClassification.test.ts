@@ -34,3 +34,19 @@ describe("lgsFillFromClassification", () => {
     expect(out).toBe(lgs);
   });
 });
+
+describe("LGS benjamins (9 buracos) sem par nas voltas", () => {
+  it("usa os 9 buracos e o par do campo, e não calcula SD com o CR de 18 buracos", async () => {
+    const { lgsToFPGTournament } = await import("../rfeg/toTournament");
+    const lgs = lgsFillFromClassification(real216());
+    const t = lgsToFPGTournament(lgs as never);
+    const enzo = t.players.find((p) => /Enzo/i.test(p.name))!;
+    const r1 = enzo.roundScores?.find((r) => r.round === 1) ?? enzo.roundScores?.[0];
+    expect(r1?.gross).toBe(38);
+    const card = r1 as unknown as { par?: number[]; courseRating?: number; sd?: number | null };
+    expect(card.courseRating ?? null).toBeNull();
+    expect(card.sd ?? null).toBeNull();
+    const json = JSON.stringify(t);
+    expect(json).not.toContain("67.2");
+  });
+});
