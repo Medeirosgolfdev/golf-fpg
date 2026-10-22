@@ -1,5 +1,5 @@
 {
-  "scrapedAt": "2026-10-18T22:03:29.802Z",
+  "scrapedAt": "2026-10-22T12:41:38.450Z",
   "total": 1234,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
@@ -399071,17 +399071,318 @@
       "tcode": "10246",
       "name": "Final Drive Tour – Oeiras Green Valley",
       "date": "2026-11-07",
-      "expectedYear": "2026",
+      "expectedYear": 2026,
       "admissions": {
         "name": "Final Drive Tour – Oeiras Green Valley",
         "date": "2026-11-07",
-        "totalInscritos": 0,
+        "totalInscritos": 30,
         "reservas": 0,
-        "status": "Inscrições fechadas",
+        "status": "Inscrições em curso",
         "rounds": 1,
         "tcode": "10246",
         "ccode": "985",
-        "players": []
+        "players": [
+          {
+            "pos": 1,
+            "fed": "51524",
+            "nome": "William Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 3.6,
+            "vacf": null,
+            "registo": "2026/10/07 17:33",
+            "status": "confirmed"
+          },
+          {
+            "pos": 2,
+            "fed": "51523",
+            "nome": "Angelina Gao",
+            "clube": "Quinta do Peru",
+            "hcp": 2.9,
+            "vacf": null,
+            "registo": "2026/10/07 17:33",
+            "status": "confirmed"
+          },
+          {
+            "pos": 3,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 6.4,
+            "vacf": null,
+            "registo": "2026/10/07 18:09",
+            "status": "confirmed"
+          },
+          {
+            "pos": 4,
+            "fed": "48046",
+            "nome": "Tomás Sarmento de Beires",
+            "clube": "Citynorte",
+            "hcp": 9.2,
+            "vacf": null,
+            "registo": "2026/10/07 18:21",
+            "status": "confirmed"
+          },
+          {
+            "pos": 5,
+            "fed": "42374",
+            "nome": "Ethan Prybys Orton",
+            "clube": "Vila Sol",
+            "hcp": 2.5,
+            "vacf": null,
+            "registo": "2026/10/07 18:48",
+            "status": "confirmed"
+          },
+          {
+            "pos": 6,
+            "fed": "48297",
+            "nome": "João Rocha",
+            "clube": "Estoril",
+            "hcp": 3.5,
+            "vacf": null,
+            "registo": "2026/10/07 18:57",
+            "status": "confirmed"
+          },
+          {
+            "pos": 7,
+            "fed": "52393",
+            "nome": "Mateus Penucho",
+            "clube": "Santo da Serra",
+            "hcp": 12.6,
+            "vacf": null,
+            "registo": "2026/10/07 19:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 8,
+            "fed": "53847",
+            "nome": "Madalena Miguel Araujo",
+            "clube": "Ponte de Lima",
+            "hcp": 8.6,
+            "vacf": null,
+            "registo": "2026/10/07 19:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 9,
+            "fed": "50247",
+            "nome": "Beau Delfortrie",
+            "clube": "Vila Sol",
+            "hcp": 10.5,
+            "vacf": null,
+            "registo": "2026/10/07 21:07",
+            "status": "confirmed"
+          },
+          {
+            "pos": 10,
+            "fed": "51804",
+            "nome": "Joe Short",
+            "clube": "Vila Sol",
+            "hcp": 9.2,
+            "vacf": null,
+            "registo": "2026/10/07 21:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 11,
+            "fed": "43968",
+            "nome": "Salvador Ivo de Carvalho",
+            "clube": "Estoril",
+            "hcp": 4,
+            "vacf": null,
+            "registo": "2026/10/07 21:17",
+            "status": "confirmed"
+          },
+          {
+            "pos": 12,
+            "fed": "47341",
+            "nome": "Sebastião Soares",
+            "clube": "Oporto",
+            "hcp": 8.1,
+            "vacf": null,
+            "registo": "2026/10/07 22:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 13,
+            "fed": "53838",
+            "nome": "Gabriel Costa",
+            "clube": "Amendoeira",
+            "hcp": 14.1,
+            "vacf": null,
+            "registo": "2026/10/07 23:34",
+            "status": "confirmed"
+          },
+          {
+            "pos": 14,
+            "fed": "48791",
+            "nome": "Miguel Silva",
+            "clube": "Amendoeira",
+            "hcp": 7.6,
+            "vacf": null,
+            "registo": "2026/10/08 00:40",
+            "status": "confirmed"
+          },
+          {
+            "pos": 15,
+            "fed": "41609",
+            "nome": "Martim Sousa de Morais",
+            "clube": "Belas",
+            "hcp": 3.5,
+            "vacf": null,
+            "registo": "2026/10/08 09:36",
+            "status": "confirmed"
+          },
+          {
+            "pos": 16,
+            "fed": "54774",
+            "nome": "Rafael Gonçales Benesi",
+            "clube": "Estoril",
+            "hcp": 6.1,
+            "vacf": null,
+            "registo": "2026/10/08 10:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 17,
+            "fed": "53715",
+            "nome": "João Gomes",
+            "clube": "Lisbon SC",
+            "hcp": 10.6,
+            "vacf": null,
+            "registo": "2026/10/08 13:02",
+            "status": "confirmed"
+          },
+          {
+            "pos": 18,
+            "fed": "44406",
+            "nome": "Matteo Balzer",
+            "clube": "Amendoeira",
+            "hcp": 0.8,
+            "vacf": null,
+            "registo": "2026/10/08 21:28",
+            "status": "confirmed"
+          },
+          {
+            "pos": 19,
+            "fed": "48971",
+            "nome": "Sabrina Ribeiro Crisóstomo",
+            "clube": "Vilamoura, C. G",
+            "hcp": 4.8,
+            "vacf": null,
+            "registo": "2026/10/08 21:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 20,
+            "fed": "47078",
+            "nome": "Madalena Plantier Van Zeller",
+            "clube": "Ilha Terceira",
+            "hcp": 6.7,
+            "vacf": null,
+            "registo": "2026/10/08 22:46",
+            "status": "confirmed"
+          },
+          {
+            "pos": 21,
+            "fed": "46480",
+            "nome": "Afonso de Sousa Pinto",
+            "clube": "Oporto",
+            "hcp": 6,
+            "vacf": null,
+            "registo": "2026/10/09 05:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 22,
+            "fed": "56749",
+            "nome": "João Pereira",
+            "clube": "Quinta do Peru",
+            "hcp": 16.4,
+            "vacf": null,
+            "registo": "2026/10/09 14:45",
+            "status": "confirmed"
+          },
+          {
+            "pos": 23,
+            "fed": "41130",
+            "nome": "Vasco Leal Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 18.1,
+            "vacf": null,
+            "registo": "2026/10/11 13:47",
+            "status": "confirmed"
+          },
+          {
+            "pos": 24,
+            "fed": "46308",
+            "nome": "Marc Costa",
+            "clube": "Citynorte",
+            "hcp": 10.3,
+            "vacf": null,
+            "registo": "2026/10/12 16:12",
+            "status": "confirmed"
+          },
+          {
+            "pos": 25,
+            "fed": "52011",
+            "nome": "Madalena Figueiredo",
+            "clube": "Belas",
+            "hcp": 4.8,
+            "vacf": null,
+            "registo": "2026/10/13 07:11",
+            "status": "confirmed"
+          },
+          {
+            "pos": 26,
+            "fed": "40473",
+            "nome": "André Von Hafe",
+            "clube": "Estela",
+            "hcp": 7.9,
+            "vacf": null,
+            "registo": "2026/10/13 11:54",
+            "status": "confirmed"
+          },
+          {
+            "pos": 27,
+            "fed": "49085",
+            "nome": "Ricardo Castro Ferreira",
+            "clube": "Estoril",
+            "hcp": 3.9,
+            "vacf": null,
+            "registo": "2026/10/15 04:58",
+            "status": "confirmed"
+          },
+          {
+            "pos": 28,
+            "fed": "48933",
+            "nome": "Ethan Sutherland",
+            "clube": "Vila Sol",
+            "hcp": 3.9,
+            "vacf": null,
+            "registo": "2026/10/15 09:24",
+            "status": "confirmed"
+          },
+          {
+            "pos": 29,
+            "fed": "50398",
+            "nome": "Gonçalo Gouveia",
+            "clube": "Santo da Serra",
+            "hcp": 14.9,
+            "vacf": null,
+            "registo": "2026/10/18 18:22",
+            "status": "confirmed"
+          },
+          {
+            "pos": 30,
+            "fed": "48794",
+            "nome": "Catarina Sousa Conceição",
+            "clube": "Vilamoura, C. G",
+            "hcp": 5,
+            "vacf": null,
+            "registo": "2026/10/20 20:55",
+            "status": "confirmed"
+          }
+        ]
       },
       "draws": {}
     },

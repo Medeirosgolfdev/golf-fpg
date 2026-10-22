@@ -208,5 +208,22 @@ describe("mergeDrivePlaceholders", () => {
   });
   it("não junta quando há dois candidatos (ambíguo)", () => {
     expect(mergeDrivePlaceholders([ph, real, { ...real, tcode: "10247" }])).toHaveLength(3);
+  });  it("com inscritos na FPG, cruza-os com os apurados (confirmados vs pendentes)", () => {
+    const phA = { ...ph, _admissions: { _manual: true, players: [
+      { fed: "1", nome: "A", status: "confirmed", pts: 674, ptsRank: "1º Madeira", escalao: "Sub 16" },
+      { fed: "2", nome: "B", status: "confirmed", pts: 500 },
+    ] } };
+    const realI = { ...real, _admissions: { name: "Final Drive Tour – Oeiras Green Valley", status: "Inscrições em curso", players: [
+      { pos: 1, fed: "3", nome: "C", hcp: 3.6, status: "confirmed", dataInscricao: "2026/10/07 17:33" },
+      { pos: 2, fed: "2", nome: "B", hcp: 6.4, status: "confirmed", dataInscricao: "2026/10/07 18:09" },
+    ] } };
+    const adm = mergeDrivePlaceholders<Record<string, any>>([phA, realI])[0]._admissions;
+    const by = Object.fromEntries(adm.players.map((p: any) => [p.fed, p]));
+    expect(by["2"]).toMatchObject({ status: "confirmed", pos: 2, hcp: 6.4, pts: 500, dataInscricao: "2026/10/07 18:09" });
+    expect(by["1"]).toMatchObject({ status: "reserva", pts: 674, ptsRank: "1º Madeira", escalao: "Sub 16" });
+    expect(by["3"].tags).toContain("fora dos apurados");
+    expect(adm.totalInscritos).toBe(2);
+    expect(adm.reservas).toBe(1);
+    expect(adm.status).toBe("Inscrições em curso");
   });
 });

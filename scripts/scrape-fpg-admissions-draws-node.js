@@ -51,6 +51,7 @@ const { writeAtomic } = require("./lib/atomic-write");
 const path = require("path");
 const { parseAdmissions, parseAdmissionsPt, parseDraw } = require("./fpg-admissions-draw-parser.js");
 const { lisbonCivilDayStr } = require("../lib/helpers");
+const { Sessao, BASE_PT } = require("./lib/fpg-session.js");
 
 /* ── Paths ──────────────────────────────────────────────────────────────── */
 const REPO = path.resolve(__dirname, "..");
@@ -265,11 +266,42 @@ async function fetchAdmissionsPt(ccode, tcode) {
   }
 }
 
+/* ── Inscritos pela sessão PÚBLICA completa (sem cookies) ───────────────────
+   Medido 2026-10-22 (985/10246, Final Drive Tour): o `admissions.asp` público
+   passou a responder só com o gate JavaScript `datalinkpt.html` (o `fetch`
+   simples já não traz a tabela). O browser monta então o
+   `1PreparePage.aspx?page=admissions`, que emite a sessão e redirecciona para a
+   própria `tournAdmissions.aspx` — a MESMA página das cookies, com todos os
+   campos (posição, registo, reservas). Reconstruímos esse passo como nas
+   listas/WHS do `lib/fpg-session.js`. */
+async function fetchAdmissionsSessaoPublica(ccode, tcode) {
+  try {
+    const s = new Sessao({ base: BASE_PT });
+    await s.get("https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=" + ACK_TOURNLIST);
+    const r = await s.get(`${BASE_PT}/1PreparePage.aspx?user=fpguser&page=admissions&ccode=${ccode}&tcode=${tcode}&pagelang=PT`);
+    const ok = r.status === 200 && /tournAdmissions\.aspx/i.test(r.url || "") &&
+               !/Runtime Error|Server Error in|Param_Errors|Err=999/i.test(r.html);
+    return { ok, html: r.html };
+  } catch (e) {
+    return { ok: false, error: e.message };
+  }
+}
+
 /* ── Scrape uma admissions ──────────────────────────────────────────────── */
 async function scrapeAdmissions(t) {
   const r = await fetchLinkpage(t.ccode, t.tcode, "admissions", null);
   const primary = (r.ok && !r.paramErr) ? markSuspect(parseAdmissions(r.html), t.date) : null;
   if (primary && !primary.error && (primary.players?.length ?? 0) > 0) return primary;
+
+  // Sessão pública completa (1PreparePage) — mesma página e mesmos campos das cookies.
+  const sp = await fetchAdmissionsSessaoPublica(t.ccode, t.tcode);
+  if (sp.ok) {
+    const parsedSp = markSuspect(parseAdmissions(sp.html), t.date);
+    if (!parsedSp.error && (parsedSp.players?.length ?? 0) > 0) {
+      console.log(`[adm-draws] sessão pública (1PreparePage): ${t.ccode}/${t.tcode} · ${parsedSp.players.length} inscritos`);
+      return parsedSp;
+    }
+  }
 
   // Caminho autenticado falhou ou veio vazio → tentar o gémeo público.
   const pt = await fetchAdmissionsPt(t.ccode, t.tcode);

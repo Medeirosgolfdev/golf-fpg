@@ -372,6 +372,33 @@ function driveBaseName(name: string | undefined | null): string {
 }
 
 /**
+ * Cruza a lista de APURADOS (provisório) com os INSCRITOS da FPG (real) —
+ * 22/10/2026: a Mariana quer ver, entre os apurados, quem já confirmou a
+ * presença. Por federado: apurado inscrito → `confirmed` (ordem, HCP e registo
+ * da FPG; escalão/região/pontos da lista de apurados); apurado ainda sem
+ * inscrição → `reserva` (a tabela mostra «pendente»); inscrito que não está na
+ * lista → `confirmed` com a marca «fora dos apurados». O cabeçalho (nome, data,
+ * estado das inscrições) é o da FPG.
+ */
+export function crossApuradosInscritos<A extends Record<string, any>>(apur: A, insc: A): A {
+  const inscPlayers: any[] = insc.players || [];
+  const byFed = new Map(inscPlayers.filter(p => p.fed).map(p => [String(p.fed), p]));
+  const apFeds = new Set((apur.players || []).map((p: any) => String(p.fed)));
+  let nPend = 0;
+  const players = (apur.players || []).map((a: any) => {
+    const i = a.fed ? byFed.get(String(a.fed)) : undefined;
+    if (!i) return { ...a, status: "reserva", pos: ++nPend, dataInscricao: null };
+    return { ...a, status: "confirmed", pos: i.pos ?? a.pos, hcp: i.hcp ?? a.hcp, vac: i.vac ?? a.vac,
+      dataInscricao: i.dataInscricao ?? null, clube: i.clube || a.clube };
+  });
+  for (const i of inscPlayers) {
+    if (!i.fed || !apFeds.has(String(i.fed))) players.push({ ...i, status: "confirmed", tags: [...(i.tags || []), "fora dos apurados"] });
+  }
+  const nConf = players.filter((p: any) => p.status === "confirmed").length;
+  return { ...apur, ...insc, players, totalInscritos: nConf, reservas: nPend } as A;
+}
+
+/**
  * Junta o torneio PROVISÓRIO (entrada manual com tcode inventado, ex. 988/90800,
  * criada a partir da lista de apurados antes de a FPG abrir o torneio) com o
  * torneio REAL da FPG do mesmo dia (ex. 985/10246) — 13/10/2026: apareciam duas
@@ -382,8 +409,8 @@ function driveBaseName(name: string | undefined | null): string {
  * provisório (`_admissions._placeholder` ou `_manual`), mesma data e série,
  * nome-base igual e campo compatível; com mais de um candidato não se junta.
  * Fica a identidade/draws/resultados do real; a lista de apurados (e o campo) do
- * provisório entram quando o real ainda não tem inscritos; rondas e nº de
- * jogadores = o máximo dos dois.
+ * provisório entram quando o real ainda não tem inscritos; quando já tem, as duas
+ * cruzam-se (`crossApuradosInscritos`); rondas e nº de jogadores = o máximo dos dois.
  */
 export function mergeDrivePlaceholders<T extends Record<string, any>>(src: T[]): T[] {
   const isPlaceholder = (t: T) => !!(t._admissions?._placeholder || t._admissions?._manual || t._manual);
@@ -406,7 +433,10 @@ export function mergeDrivePlaceholders<T extends Record<string, any>>(src: T[]):
       ...real,
       name: String(real.name || "").length >= String(ph.name || "").length ? real.name : ph.name,
       campo: real.campo || ph.campo || ph._admissions?.campo || null,
-      _admissions: realPlayers === 0 && ph._admissions ? ph._admissions : real._admissions,
+      _admissions: realPlayers === 0 && ph._admissions ? ph._admissions
+        : ph._admissions?.players?.length && real._admissions?.players?.length
+          ? crossApuradosInscritos(ph._admissions, real._admissions)
+          : real._admissions,
       _draws: real._draws && Object.keys(real._draws).length ? real._draws : ph._draws,
       rounds: Math.max(Number(real.rounds) || 0, Number(ph.rounds) || 0) || real.rounds,
       playerCount: Math.max(Number(real.playerCount) || 0, Number(ph.playerCount) || 0),
