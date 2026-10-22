@@ -84,25 +84,25 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
     return arr18.slice(off, off + 9);
   };
 
-  // Par derivado (fallback para ficheiros sem par[18]): par "chato" de `holes`.
-  let parDerived: number[] | null = null;
+  // Ficheiros sem par[18]: o par TOTAL de uma volta é real (total − toPar de
+  // quem os tem); por buraco fica SEM PAR — nunca um par «chato» inventado
+  // (decisão de 22/10/2026). Sem ninguém com toPar, nem par total.
+  let parRoundReal: number | null = null;
   if (!par18) {
     const ref = players.find((p) => p.toPar != null && p.total != null && (p.rounds?.length || p.roundGross.length));
-    const refR = ref ? (ref.rounds?.length || ref.roundGross.length) : nR;
-    const pt = ref && refR ? Math.round((ref.total! - ref.toPar!) / refR) : (nineHole ? 36 : 72);
-    const hi = Math.ceil(pt / holes), lo = Math.floor(pt / holes), rem = pt % holes;
-    parDerived = Array.from({ length: holes }, (_, i) => (i < rem ? hi : lo));
+    const refR = ref ? (ref.rounds?.length || ref.roundGross.length) : 0;
+    parRoundReal = ref && refR ? Math.round((ref.total! - ref.toPar!) / refR) : null;
   }
 
   // Par/SI/metros por ronda em função do seu startingHole.
-  const parForRound = (sh?: number) => (par18 ? sliceFor(par18, sh) : (parDerived || []));
+  const parForRound = (sh?: number) => (par18 ? sliceFor(par18, sh) : []);
   const metersForRound = (sh?: number) => sliceFor(meters18, sh);
   const siForRound = (sh?: number) => sliceFor(si18, sh);
 
   // Representativo (cabeçalho/stats): a 1ª ronda jogada na divisão.
   const repSH = players.find((p) => p.rounds?.length)?.rounds?.[0]?.startingHole;
   const par = parForRound(repSH);
-  const parTotal = par.reduce((a, b) => a + b, 0) || (nineHole ? 36 : 72);
+  const parTotal: number | null = par18 ? par.reduce((a, b) => a + b, 0) : parRoundReal;
   // A linha de metros no scorecard só aparece quando há teeName.
   const teeName = meters18 ? (div.teeName || "Tee") : undefined;
 
@@ -163,8 +163,8 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
     const grossTotal = p.total ?? (rounds.length ? playedGross : null);
     // Par acumulado somado RONDA A RONDA (só os buracos jogados) — `parTotal ×
     // nº de rondas` dava −50 a quem estava a meio da última volta.
-    const playedPar = rounds.reduce((s, r) => s + playedParTotal({ gross: r.gross, scores: r.scores, pars: r.card.par }, parTotal), 0);
-    const toPar = p.toPar ?? (rounds.length ? playedGross - playedPar : null);
+    const playedPar = rounds.reduce((s, r) => s + playedParTotal({ gross: r.gross, scores: r.scores, pars: r.card.par }, parTotal ?? 0), 0);
+    const toPar = p.toPar ?? (rounds.length && playedPar > 0 ? playedGross - playedPar : null);
     return {
       id: p.detailId || p.name,
       pos: parseInt(String(p.pos).replace(/^T/i, ""), 10) || null,

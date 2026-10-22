@@ -21,7 +21,7 @@ import { displayName as displayCase } from "../utils/format";
 import type { DobLookup, HcpLookup } from "./intlCommon";
 import { holesOf } from "./intlCommon";
 import type { Tournament as FPGTournament } from "./fpgTypes";
-import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
+import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
 
 interface FCGScorecardGameTee {
   color: string | null;
@@ -298,9 +298,6 @@ function escalaoFromCategory(catName: string | null, age: number | null): string
   return null;
 }
 
-/** Regras do golfdirecto que esperam decisão: par 4 por buraco quando nenhum cartão traz o par. */
-const FCG_OPTS = { inventedPar: PAR_INVENTADO };
-
 export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLookup): FPGTournament | null {
   const cats = detail.__categories || [];
   if (cats.length === 0) return null;
@@ -326,7 +323,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
     }
     if (par18.length > 0) break;
   }
-  par18 = parOrInvented(par18, par18.length || 18, FCG_OPTS.inventedPar);
+  // Nenhum cartão com par → sem par (o ±par é o da fonte, `onlyGross`).
 
   const dateRef = detail.meta.dateStart || null;
   const players: IntlPlayerIn[] = [];
@@ -382,8 +379,8 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
 
   return buildFPGTournament(
     { name: detail.meta.name || `FCG ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: 1 },
-    { par: par18, si: si18, meters: meters18, teeName, holes: par18.length },
+    { par: par18, si: si18, meters: meters18, teeName, holes: par18.length || 18, parTotal: par18.length ? undefined : null },
     players,
-    { keepNoRounds: true, raw: true, ...FCG_OPTS },
+    { keepNoRounds: true, raw: true },
   );
 }

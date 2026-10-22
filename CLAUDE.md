@@ -325,7 +325,12 @@ tornam o JSON inválido e a `/major` fica sem torneios nenhuns.
   (R1 = 91), não o jogado (`applyResultOverrides` na `USKIDSPage`).
 - **Dados USKids:** `lengths[]` são jardas (×0,9144); `strokes[]` tem sempre 18
   posições, com zeros nos buracos não jogados.
-- **`ScorecardLeaderboard`** usa `par.length`: um `par[]` vazio dá 0 buracos.
+- **Sem par oficial fica SEM PAR** (22/10/2026): nunca inventar par por buraco
+  (o 4×18 de LGS/NextCaddy/RFEGolf/golfdirecto/GJGL e o par «chato» do MAJOR
+  saíram — `parOrNone`). Linha PAR vazia, sem cores/contagens por buraco nem
+  «Par N»; o ±par do total só o da fonte ou do par total real. O
+  `ScorecardLeaderboard` tira o nº de buracos de `holes`/dos cartões quando
+  `par[]` vem vazio.
 - Mais em [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md).
 
 ## Tags do `players.json`

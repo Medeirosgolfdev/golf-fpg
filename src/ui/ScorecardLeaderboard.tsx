@@ -74,7 +74,12 @@ export interface ScorecardRow {
 }
 
 interface ScorecardLeaderboardProps {
+  /** Par por buraco. Vazio = SEM PAR (fonte sem par oficial): a linha PAR fica
+   *  vazia, sem cores nem ±par por nine, e o nº de buracos sai de `holes` ou
+   *  dos cartões. */
   par: number[];
+  /** Nº de buracos quando não há par (por omissão, o dos cartões: 9 ou 18). */
+  holes?: number;
   si?: number[];
   /** Label da linha SI (default: "S.I."). Usar "m" para metros. */
   siLabel?: string;
@@ -116,8 +121,15 @@ interface ScorecardLeaderboardProps {
 
 type SCSortKey = "pos" | "name" | "gross" | "toPar" | "f9" | "b9" | `hole:${number}`;
 
+/** Nº de buracos pelos cartões (sem par): 18 se algum tem mais de 9, 9 se há
+ *  cartões, 0 sem nenhum. */
+function holesFromCards(rows: { scores?: readonly unknown[] | null }[]): number {
+  const n = Math.max(0, ...rows.map((r) => r.scores?.length ?? 0));
+  return n > 9 ? 18 : n > 0 ? 9 : 0;
+}
+
 export function ScorecardLeaderboard({
-  par, si, siLabel = "S.I.", teeMeters, rows,
+  par, holes: holesProp, si, siLabel = "S.I.", teeMeters, rows,
   prefixHeaderCells,
   postScorecardHeaderCells,
   parLabelColSpan = 1,
@@ -131,7 +143,10 @@ export function ScorecardLeaderboard({
   hideTotals = false,
 }: ScorecardLeaderboardProps) {
   const startHole = startHoleProp ?? 1;
-  const nh = par.length;
+  // Sem par, o nº de buracos vem de `holes` ou dos cartões — `par.length`
+  // dava 0 buracos e a grelha desaparecia.
+  const hasPar = par.length > 0;
+  const nh = hasPar ? par.length : (holesProp ?? holesFromCards(rows));
   const is9 = nh <= 9;
   const parF9 = par.slice(0, 9).reduce((a, b) => a + b, 0);
   const parB9 = !is9 ? par.slice(9, 18).reduce((a, b) => a + b, 0) : 0;
@@ -298,16 +313,16 @@ export function ScorecardLeaderboard({
                 <td className="sticky-col-0" />
                 <td className="lb-par-lbl sticky-col-1" colSpan={parLabelColSpan + 1}>PAR</td>
                 <td className="lb-topar" />
-                <td className="lb-gross">{parTotal}</td>
+                <td className="lb-gross">{hasPar ? parTotal : ""}</td>
                 {Array.from({ length: postTotalColCount }, (_, i) => <td key={i} />)}
-                {par.slice(0, 9).map((v, i) => (
-                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                {Array.from({ length: Math.min(9, nh) }, (_, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{par[i] ?? ""}</td>
                 ))}
-                <td className="lb-halftot">{parF9}</td>
-                {!is9 && par.slice(9, 18).map((v, i) => (
-                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{v}</td>
+                <td className="lb-halftot">{hasPar ? parF9 : ""}</td>
+                {!is9 && Array.from({ length: Math.min(9, nh - 9) }, (_, i) => (
+                  <td key={i} className={"lb-hole" + (i === 0 ? " lb-hole-first" : "")}>{par[9 + i] ?? ""}</td>
                 ))}
-                {!is9 && <td className="lb-halftot">{parB9}</td>}
+                {!is9 && <td className="lb-halftot">{hasPar ? parB9 : ""}</td>}
                 {postScorecardColCount > 0 && Array.from({ length: postScorecardColCount }, (_, i) => <td key={i} />)}
               </tr>
             )}
@@ -392,6 +407,7 @@ export function ScorecardLeaderboard({
               // Par por buraco do jogador (campo que ele jogou nesta ronda) —
               // cai para o par partilhado quando a linha não traz o seu próprio.
               const rp = row.holePars && row.holePars.length >= nh ? row.holePars : par;
+              const rowHasPar = rp.length >= nh && nh > 0;
               // ⚠ O ±par de cada nine soma o par SÓ DOS BURACOS JOGADOS. Com um
               // scorecard incompleto (cartão por entregar, jogo interrompido), o
               // par dos 9 contra a soma de 7 buracos dava um "(−1)" enganador.
@@ -435,7 +451,7 @@ export function ScorecardLeaderboard({
                     );})}
                     <td className="lb-halftot" style={{ borderTop: row.borderTop }}
                       title={nF9 > 0 && nF9 < 9 ? `Parcial — ${nF9} de 9 buracos` : undefined}>
-                      {f9 || "–"}{nF9 > 0 && <span className="fs-10 c-text-3">
+                      {f9 || "–"}{nF9 > 0 && rowHasPar && <span className="fs-10 c-text-3">
                         {" "}({fmtToPar(f9 - rpF9)}){nF9 < 9 && <span title={`${nF9} de 9 buracos`}> ·{nF9}b</span>}
                       </span>}
                     </td>
@@ -452,7 +468,7 @@ export function ScorecardLeaderboard({
                     {!is9 && (
                       <td className="lb-halftot" style={{ borderTop: row.borderTop }}
                         title={nB9 > 0 && nB9 < 9 ? `Parcial — ${nB9} de 9 buracos` : undefined}>
-                        {b9 || "–"}{nB9 > 0 && <span className="fs-10 c-text-3">
+                        {b9 || "–"}{nB9 > 0 && rowHasPar && <span className="fs-10 c-text-3">
                           {" "}({fmtToPar(b9 - rpB9)}){nB9 < 9 && <span title={`${nB9} de 9 buracos`}> ·{nB9}b</span>}
                         </span>}
                       </td>

@@ -169,10 +169,11 @@ function loadGjglOverrides(): Promise<GjglOverrides> {
 
 /* ── Adapter GjglData → FPGTournament por escalão ─────────────────── */
 function divisionToTournament(d: GjglData, div: GjglDivision, label: string, ovr?: GjglCourseOverride | null): FPGTournament {
-  const par18: number[] = d.par && d.par.length >= 18 ? (d.par as number[]) : new Array(18).fill(4);
+  // Sem par por buraco → sem par (nunca 4 inventado); o ±par é o da fonte.
+  const par18: number[] = d.par && d.par.length >= 18 ? (d.par as number[]) : [];
   return buildFPGTournament(
     { name: label, tcode: `${d.slug}-u${div.ak}`, date: d.start_date || "", campo: ovr?.course || d.course || d.country },
-    { par: par18, teeName: "Tee" },
+    { par: par18, teeName: "Tee", holes: 18, parTotal: par18.length ? undefined : null },
     div.players.map((p): IntlPlayerIn => {
       // Tee curado por sexo — só se houver evidência para ESSE sexo (não
       // mostrar metros dos rapazes a uma rapariga).
@@ -182,6 +183,7 @@ function divisionToTournament(d: GjglData, div: GjglDivision, label: string, ovr
         id: p.playerKey || p.name, name: p.name, pos: p.pos,
         club: p.country ? `${flagForCountry(p.country)} ${dispCountry}` : "",
         country: p.country, total: p.total, hcp: p.hcp, rounds: p.rounds || [],
+        ...(par18.length ? {} : { toPar: typeof p.toPar === "number" ? p.toPar : null }),
         wd: false,
         course: teeOvr ? { si: teeOvr.si, meters: teeOvr.meters, teeName: teeOvr.tee ?? "Tee" } : undefined,
       };

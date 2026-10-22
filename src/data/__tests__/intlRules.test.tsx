@@ -2,8 +2,10 @@ import { describe, it, expect } from "vitest";
 import { renderToStaticMarkup } from "react-dom/server";
 import { MemoryRouter } from "react-router-dom";
 import { isNoCardGross } from "../intlCommon";
-import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
-import { isLgsCard } from "../rfeg/toTournament";
+import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournament";
+import { isLgsCard, rfegolfToFPGTournament } from "../rfeg/toTournament";
+import { expandMultiRound } from "../fpgUtils";
+import { ScorecardLeaderboard } from "../../ui/ScorecardLeaderboard";
 import { normalizeBlueGolf } from "../major/bluegolf";
 import TotalsResumo from "../../ui/circuit/TotalsResumo";
 
@@ -56,5 +58,42 @@ describe("1. Gross ≥ 900 = sem cartão (isNoCardGross)", () => {
     expect(html).toContain("1 inc.");
     expect(html).toContain("Média 80.0");
     expect(html).not.toContain(">998<");
+  });
+});
+
+describe("2. Sem par oficial fica SEM PAR (nunca 4×18 inventado)", () => {
+  it("parOrNone: só o par da fonte com um valor por buraco", () => {
+    expect(parOrNone(null, 18)).toEqual([]);
+    expect(parOrNone([4, 4, 3], 18)).toEqual([]);
+    expect(parOrNone(par18, 18)).toBe(par18);
+  });
+
+  it("RFEGolf (PDF): sem par por buraco nem par total; o ±par é o do PDF", () => {
+    const t = rfegolfToFPGTournament({
+      compId: 1, ok: true, scrapedAt: "", coursePar: null,
+      meta: { name: "X", dateStart: "2026-05-01", dateEnd: null, course: null, courseClubId: null, players: 1, hcpLimitMen: null, hcpLimitWomen: null, mode: null, style: null, category: null, sex: null, federation: null, federationCatId: null },
+      inscritos: { admitidos: [], reservas: [], bajas: [], invitados: [], noAdmitidos: [], provisional: [], counts: { admitidos: 0, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 } },
+      results: [{ label: "", nRounds: 2, players: [{ pos: 1, name: "SILVA, LUIS", toPar: -4, rounds: [70, 68], total: 138 }] }],
+    } as never)!;
+    const p = t.players[0];
+    expect([p.par, p.parTotal, p.toPar, p.nholes]).toEqual([[], undefined, -4, 18]);
+  });
+
+  it("expandMultiRound: sem par, cada volta fica sem ±par e o total guarda o da fonte", () => {
+    const t = buildFPGTournament({ name: "T", tcode: "t", rounds: 2 }, { par: [], holes: 18, parTotal: null },
+      [{ id: "a", name: "A", total: 150, toPar: 6, rounds: [{ gross: 74 }, { gross: 76 }] }], { keepNoRounds: true, raw: true });
+    const [r1, , tot] = expandMultiRound(t);
+    expect(r1.players[0].toPar).toBeNull();
+    expect(tot.players[0].toPar).toBe(6);
+  });
+
+  it("ScorecardLeaderboard sem par: buracos pelos cartões, linha PAR vazia, sem ±par por nine", () => {
+    const html = renderToStaticMarkup(
+      <ScorecardLeaderboard par={[]} showScorecard rows={[{ key: 1, pos: 1, gross: 72, toPar: null, scores: Array(18).fill(4), nameContent: "A" }]} />,
+    );
+    const heads = [...html.matchAll(/<th class="lb-hole[^"]*"[^>]*>(\d+)/g)].map((m) => m[1]);
+    expect(heads).toHaveLength(18);
+    expect(html).toMatch(/PAR<\/td><td class="lb-topar"><\/td><td class="lb-gross"><\/td>/);
+    expect(html).not.toContain("(E)");
   });
 });

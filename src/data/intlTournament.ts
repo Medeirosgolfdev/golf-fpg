@@ -80,25 +80,16 @@ export interface IntlBuildOptions {
    *  «só quando cobrem todos os buracos», sem null → 0 e sem os valores por
    *  omissão de posição, clube e total. */
   raw?: boolean;
-  /** Par INVENTADO por buraco quando a fonte não traz um par válido (o tamanho
-   *  do par ≠ nº de buracos). Sem esta opção o par fica como vem (vazio = sem
-   *  linha de PAR). ⚠ Decisão pendente da Mariana — hoje LGS, NextCaddy,
-   *  RFEGolf (PDF) e golfdirecto inventam 4 por buraco. */
-  inventedPar?: number;
   /** Campos do próprio torneio (`_openRound`, `_noHbh`, …). */
   extra?: Record<string, unknown>;
 }
 
-/** Par INVENTADO por buraco (4) que algumas fontes de Espanha usam quando não
- *  há par real. ⚠ Decisão pendente da Mariana: cada conversor que o usa
- *  passa-o explicitamente (`inventedPar: PAR_INVENTADO`) — tirá-lo é uma linha. */
-export const PAR_INVENTADO = 4;
-
-/** O par da fonte quando é válido (um valor por buraco); senão o inventado,
- *  se o chamador o pedir; senão o que veio (vazio = sem linha de PAR). */
-export function parOrInvented(par: number[] | null | undefined, holes: number, invented?: number): number[] {
-  if (par && par.length === holes) return par;
-  return invented != null ? new Array(holes).fill(invented) : (par ?? []);
+/** O par da fonte quando é válido (um valor por buraco); senão SEM PAR (`[]`:
+ *  a linha PAR fica vazia e não há ±par por buraco). Nunca se inventa par —
+ *  decisão da Mariana, 22/10/2026 (antes LGS, NextCaddy, RFEGolf, golfdirecto e
+ *  GJGL punham 4 em cada buraco). */
+export function parOrNone(par: readonly (number | null)[] | null | undefined, holes: number): number[] {
+  return par && par.length === holes && par.every((x) => typeof x === "number") ? (par as number[]) : [];
 }
 
 const full = (arr: number[] | null | undefined, n: number): number[] | undefined =>
@@ -123,8 +114,6 @@ export function buildFPGTournament(
   const nR = meta.rounds ?? Math.max(0, ...kept.map((p) => p.rounds.length));
   const out: Player[] = kept.map((p) => {
     const c: IntlCourse = { ...course, ...p.course, par: p.course?.par ?? course.par };
-    const holes = c.holes ?? (c.par.length || 18);
-    c.par = parOrInvented(c.par, holes, opts.inventedPar);
     const n = c.par.length;
     const parSum = c.par.reduce((a, b) => a + b, 0);
     const parTotal = c.parTotal === null ? undefined : (c.parTotal ?? parSum);

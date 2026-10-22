@@ -160,7 +160,11 @@ export function ScorecardLB({
   let longest: number[] = [];
   for (const p of rawPlayers) { const pp = parOf(p); if (pp.length > longest.length) longest = pp; }
   const par = longest.length ? longest : (refP?.par?.length ? refP.par : refRs0?.pars || []);
-  const nh = par.length;
+  // Sem par (fonte sem par oficial): o nº de buracos sai dos cartões — com
+  // `par.length` dava 0 buracos. Nada de ±par por buraco, cores nem contagens.
+  const hasPar = par.length > 0;
+  const longestCard = Math.max(0, ...rawPlayers.map((p) => (p.scores?.length ? p.scores : p.roundScores?.[0]?.scores)?.length ?? 0));
+  const nh = hasPar ? par.length : longestCard > 9 ? 18 : longestCard > 0 ? 9 : (refP?.nholes || 18);
   // Par por buraco do PRÓPRIO jogador (o campo que ele jogou nesta ronda). Em
   // torneios cujo campo se divide por vários percursos numa mesma ronda (ex:
   // FSGA joga R1 Roost / R2 Karoo por ondas), cada jogador tem o par do seu
@@ -435,9 +439,14 @@ export function ScorecardLB({
     const scoredHoles = scores.filter(Boolean).length;
     const playedSum = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
     const playedParSum = pp.reduce((a, v, i) => a + (scores[i] ? v : 0), 0);
+    // Par TOTAL real sem par por buraco (MAJOR: total − toPar da fonte).
+    const parTotalReal = typeof p.parTotal === "number" && p.parTotal > 0 ? p.parTotal : null;
     let toParVal: number | null;
     if (isWDPlayer) {
       toParVal = null;
+    } else if (pp.length < nh || !pp.length) {
+      // Sem par por buraco: só há ±par com o par total real e a volta inteira.
+      toParVal = parTotalReal != null && (scoredHoles === 0 || scoredHoles >= nh) ? gross - parTotalReal : null;
     } else if (noInfer) {
       // Torneio interrompido / a decorrer: nunca estimar buracos por jogar.
       if (scoredHoles >= nh) {
@@ -682,6 +691,7 @@ export function ScorecardLB({
     <>
     <ScorecardLeaderboard
       par={par}
+      holes={nh}
       si={si.length >= nh ? si : undefined}
       siLabel={siLabel}
       teeMeters={teeMeters.length ? teeMeters : undefined}
@@ -694,11 +704,11 @@ export function ScorecardLB({
       metaLine={
         <>
           <span>
-            {rawPlayers.length} jog · Par {parTotal} · {nh}h
+            {rawPlayers.length} jog{hasPar ? ` · Par ${parTotal}` : ""} · {nh}h
           </span>
           {avg > 0 && (
             <span title={nIncompletos > 0 ? `Média só das ${grosses.length} voltas completas (${nIncompletos} ainda a decorrer)` : undefined}>
-              · Média {avg.toFixed(1)} ({fmtTP(Math.round(avg - parTotal))})
+              · Média {avg.toFixed(1)}{hasPar && <> ({fmtTP(Math.round(avg - parTotal))})</>}
             </span>
           )}
           {nIncompletos > 0 && <span className="muted">· {nIncompletos} a decorrer</span>}

@@ -146,7 +146,10 @@ RFEGolf/mitarjeta → Tournament FPG), `horarios.ts`, `roundDraw.ts`
 (`loadRfegDivisionData`: detalhe lazy de um torneio — inscrições, links de PDF,
 voltas com draw, totais/destaques NextCaddy, divisão M/F), `entries.ts`
 (`buildRfegEntries`: sidebar, gémeos, `grp-…`), `lookups.ts` e o hook
-`useRfegData.ts`. As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
+`useRfegData.ts`. Sem par (RFEGolf PDF, LGS/NextCaddy/golfdirecto sem cartão
+do campo) não se inventa par (22/10/2026): o ±par é o da fonte (PDF,
+leaderboard LGS, `onlyGross` do golfdirecto) e no NextCaddy com cartões e sem
+par fica «–». As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)
 passaram para `src/data/playerLookups.ts`. Testes:
 `src/data/__tests__/rfegConverters.test.ts`.
 

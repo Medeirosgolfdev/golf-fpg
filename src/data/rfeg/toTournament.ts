@@ -10,7 +10,7 @@ import { flag } from "../../utils/flagUtils";
 import { formatPlayerName } from "../../utils/playerUtils";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes";
 import { intlScorecardOptions } from "../intlScorecard";
-import { buildFPGTournament, parOrInvented, PAR_INVENTADO, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
+import { buildFPGTournament, parOrNone, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } from "../playerLookups";
 import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
@@ -21,8 +21,6 @@ import { dobLookupByName, holesOf, isNoCardGross } from "../intlCommon";
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
  * IntlTournView (mesmo componente que FFGPage usa) para aspecto consistente
  * com FPG/FFG: cabeçalho, tabs R1/R2/Resumo, scorecard global com cores. */
-/** Regras do livegolfscoring que esperam decisão: par 4 por buraco quando não há par. */
-export const LGS_OPTS = { inventedPar: PAR_INVENTADO };
 /** Volta com cartão no LGS: total > 0 e não «sem cartão» (gross ≥ 900, regra comum). */
 export const isLgsCard = (total: number | null | undefined): total is number =>
   total != null && total > 0 && !isNoCardGross(total);
@@ -58,8 +56,9 @@ export function lgsToFPGTournament(
   // original intocado.
   const rawPar = lgs.rounds[0]?.par;
   const courseHoles: number = holesOf(rawPar) ?? 18;
-  const par = parOrInvented(rawPar, courseHoles, LGS_OPTS.inventedPar);
-  const parTotal = par.reduce((a, b) => a + b, 0);
+  // Sem par válido → sem par (o ±par do torneio é o do leaderboard oficial).
+  const par = parOrNone(rawPar, courseHoles);
+  const parTotal = par.length ? par.reduce((a, b) => a + b, 0) : null;
   const numRounds = lgs.rounds.length;
   // Rondas EFECTIVAMENTE jogadas: uma ronda só com SCORES reais conta. Uma ronda
   // agendada mas ainda por jogar pode (a) vir vazia, OU (b) trazer já a lista de
@@ -121,7 +120,7 @@ export function lgsToFPGTournament(
         agg[key].rounds.push({
           round: r.round, gross: emCurso ? (p.partialGross as number) : (p.total as number),
           scores: hasCard ? (p.scores as number[]) : [],
-          card: { par: r.par || par, teeName: lgsTeeLabel },
+          card: { par: parOrNone(r.par, courseHoles).length ? (r.par as number[]) : par, teeName: lgsTeeLabel },
           // Volta a meio: o gross é a soma dos buracos ENTREGUES, não uma volta.
           // Fica fora do total do torneio (ver `total` mais abaixo) e o cartão
           // mostra só os buracos jogados.
@@ -238,7 +237,7 @@ export function lgsToFPGTournament(
     },
     players,
     {
-      keepNoRounds: true, raw: true, inventedPar: LGS_OPTS.inventedPar,
+      keepNoRounds: true, raw: true,
       // Ronda a decorrer (se houver): o acumulado desconta-a ao decidir quem está
       // incompleto, para não marcar como eliminado quem ainda nem saiu.
       extra: { _openRound: lgs.rounds.find(roundEmCurso)?.round },
@@ -306,9 +305,6 @@ export function ncDeriveRatings(
   return { M: fit("M"), F: fit("F") };
 }
 
-/** Regras do NextCaddy que esperam decisão: par 4 por buraco quando não há par. */
-const NC_OPTS = { inventedPar: PAR_INVENTADO };
-
 export function ncToFPGTournament(
   detail: RFEGDetail & { _ncCourseSi?: number[] | null; _ncCourseMeters?: number[] | null },
   dobLookup?: DobLookup,
@@ -345,8 +341,8 @@ export function ncToFPGTournament(
   })();
   const par18 = ncIsPitchAndPutt
     ? new Array(holeCount).fill(3)
-    : parOrInvented(detail.coursePar, holeCount, NC_OPTS.inventedPar);
-  const parTotal = par18.reduce((a, b) => a + b, 0);
+    : parOrNone(detail.coursePar, holeCount);
+  const parTotal = par18.reduce((a, b) => a + b, 0);   // 0 = sem par
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
 
   const norm = normEs;
@@ -360,7 +356,8 @@ export function ncToFPGTournament(
 
   // CR/Slope por sexo derivados do hándicap de campo (coluna "HcpJuego") — a
   // NextCaddy não os publica. Alimentam a coluna SD (via computeSD).
-  const ncRatings = ncDeriveRatings(players, parTotal, holeCount <= 9);
+  // Sem par não há CR (CR = Par + intercepto) → sem SD.
+  const ncRatings = parTotal > 0 ? ncDeriveRatings(players, parTotal, holeCount <= 9) : { M: null, F: null };
 
   const fpgPlayers: IntlPlayerIn[] = players.map((p, idx): IntlPlayerIn => {
     const e = (p.licencia && dobLookup && dobLookup[p.licencia.trim()]) || lookupByName[norm(p.name || "")] || null;
@@ -412,7 +409,8 @@ export function ncToFPGTournament(
     // continua correcta mesmo em Stableford (o pos não vem do gross).
     const grossSum = roundScores.reduce((s, r) => s + (r.gross || 0), 0);
     const grossTotal = grossSum > 0 ? grossSum : (typeof p.total === "number" ? p.total : null);
-    const toPar = grossSum > 0 ? grossSum - parTotal * roundScores.length : (p.toPar ?? null);
+    // Sem par: sem ±par calculado (o toPar da fonte só vale sem cartões).
+    const toPar = grossSum > 0 ? (parTotal > 0 ? grossSum - parTotal * roundScores.length : null) : (p.toPar ?? null);
     return {
       id: `nc-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,
@@ -439,9 +437,9 @@ export function ncToFPGTournament(
 
   return buildFPGTournament(
     { name: detail.meta.name || `NextCaddy ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: nRounds },
-    { par: par18, si: si18, holes: holeCount, parTotal },
+    { par: par18, si: si18, holes: holeCount, parTotal: parTotal || null },
     fpgPlayers,
-    { keepNoRounds: true, raw: true, ...NC_OPTS },
+    { keepNoRounds: true, raw: true },
   );
 }
 
@@ -449,17 +447,12 @@ export function ncToFPGTournament(
  * Converte RFEGolf microsite results (PDF parsed) em FPGTournament. Sem hbh,
  * apenas totais por ronda — IntlTournView mostra "Resumo" mas as tabs Rn
  * mostram só totais. Útil para uniformidade visual. */
-/** Regras do RFEGolf (PDF) que esperam decisão: par 4 por buraco (a fonte não tem par). */
-const RFEGOLF_OPTS = { inventedPar: PAR_INVENTADO };
-
 export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup): FPGTournament | null {
   const results = (detail.results || []).filter(r => r.players && r.players.length > 0);
   if (results.length === 0) return null;
   // Concatenar todos os groups de resultados (categorias)
   const allRows = results.flatMap(g => g.players.map(p => ({ ...p, _label: g.label })));
   const nRounds = Math.max(...results.map(r => r.nRounds || 0), 1);
-  // RFEGolf não expõe par → par inventado (opção explícita, decisão pendente).
-  const par18 = parOrInvented(null, 18, RFEGOLF_OPTS.inventedPar);
 
   const norm = normEs;
   const lookupByName = dobLookupByName(dobLookup, norm);
@@ -510,13 +503,14 @@ export function rfegolfToFPGTournament(detail: RFEGDetail, dobLookup?: DobLookup
 
   return buildFPGTournament(
     { name: detail.meta.name || `RFEGolf ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: nRounds },
-    { par: par18, si: [], meters: [], holes: 18 },
+    // RFEGolf não expõe par → sem par (o ±par é o do PDF).
+    { par: [], si: [], meters: [], holes: 18, parTotal: null },
     players,
     {
-      keepNoRounds: true, raw: true, ...RFEGOLF_OPTS,
+      keepNoRounds: true, raw: true,
       // RFEGolf publica ~65% só em PDF: temos os TOTAIS por ronda mas NÃO o cartão
       // hole-by-hole (scores/par/si/meters vazios). Marca para o IntlTournView NÃO
-      // mostrar a tab "📋 Scorecards" (grelha vazia contra par-72 falso = parece partido).
+      // mostrar a tab "📋 Scorecards" (grelha vazia = parece partido).
       extra: { _noHbh: true },
     },
   );

@@ -603,3 +603,12 @@ com DOB/clube). Flag em `SOURCE_FLAGS.México = flagOf("Mexico")`.
 
 > **Nota México — handicaps:** a FMG (`fmg.org.mx/ghin`) publica índices dos
 > jovens mas o GHIN bloqueia consultas fora do México. Não incorporado.
+
+## Sem par por buraco (22/10/2026)
+
+Ficheiros JobFile sem `par[18]` (Champion of Champions 2023–2026, UA Junior
+Tour, UA Worlds, Nacional do México, Copa Internacional) já não levam um par
+«chato» por buraco: a linha PAR fica vazia (as voltas com `pars` próprios
+continuam a usá-los). O par TOTAL de uma volta é o real (total − toPar de quem
+os tem) e dá o ±par; sem ninguém com toPar não há par nenhum. Regra geral em
+[convencoes-e-armadilhas.md](convencoes-e-armadilhas.md).

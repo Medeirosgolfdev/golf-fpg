@@ -33,7 +33,8 @@ function backSum(rd: { scores: number[] }): number {
 export interface RdData {
   scores: number[];
   gross: number;
-  toPar: number;
+  /** null = sem par (fonte sem par oficial e sem par total). */
+  toPar: number | null;
   sd: number | null;
   eags: number;
   birds: number;
@@ -262,17 +263,24 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
       ? (capped.reduce((a, s, i) => a + (s > 0 ? (refPars?.[i] ?? par[i] ?? 0) : 0), 0)
          || refPars?.reduce((a, b) => a + b, 0) || parTot)
       : (refPars?.reduce((a, b) => a + b, 0) || parTot);
+    // Sem par por buraco (fonte sem par oficial): sem contagens nem ±par por
+    // buraco; o ±par da volta só com o par total real e o cartão inteiro.
+    const holePar = (h: number): number | undefined => refPars?.[h] ?? par[h];
+    const semPar = !refPars?.length && !par.length;
+    const parTotalReal = typeof p.parTotal === "number" && p.parTotal > 0 ? p.parTotal : null;
+    const fullCard = !capped.length || capped.filter((s) => s > 0).length >= nh;
+    const toPar = semPar ? (parTotalReal != null && fullCard ? gross - parTotalReal : null) : gross - rdPar;
     let eags = 0, birds = 0, pars2 = 0, bogs = 0;
     capped.forEach((s, h) => {
-      if (!s || s <= 0) return; // buraco não jogado (9H guardadas como 18 com zeros)
-      const d = s - (refPars[h] ?? par[h] ?? 0);
+      if (!s || s <= 0 || semPar) return; // buraco não jogado (9H guardadas como 18 com zeros)
+      const d = s - (holePar(h) ?? 0);
       if (d <= -2) eags++;
       else if (d === -1) birds++;
       else if (d === 0) pars2++;
       else bogs++;
     });
     const sd = computeRoundSD ? computeRoundSD(p, capped, rs, ref, gross) : null;
-    return { scores: capped, gross, toPar: gross - rdPar, sd, eags, birds, pars: pars2, bogs, holePars: refPars || [] };
+    return { scores: capped, gross, toPar, sd, eags, birds, pars: pars2, bogs, holePars: refPars || [] };
   }
 
   // Jogadores filtrados
@@ -290,7 +298,7 @@ export function useAllRoundsData(opts: UseAllRoundsOptions): AllRoundsResult {
         (r, ri) => r == null && !!p.roundScores?.find((rs) => rs.round === ri + 1),
       );
       const total = validRds.length ? validRds.reduce((s, r) => s + r.gross, 0) : null;
-      const totalTP = validRds.length ? validRds.reduce((s, r) => s + r.toPar, 0) : null;
+      const totalTP = validRds.length && validRds.every((r) => r.toPar != null) ? validRds.reduce((s, r) => s + (r.toPar as number), 0) : null;
       return {
         key: p.scoreId || p.name,
         name: p.name,

@@ -40,7 +40,12 @@ export function AccumulatedLB({
 
   const complete = rawPlayers.filter((p) => !p._incomplete);
   const incomplete = rawPlayers.filter((p) => p._incomplete);
-  const parPerRound = complete[0]?.parTotal ?? incomplete[0]?.parTotal ?? 72;
+  // Par de uma volta: o par total ou a soma do par por buraco. Sem nenhum dos
+  // dois (fonte sem par oficial) → sem par: nada de ±par nem «Par 72» inventado.
+  const parOfPlayer = (p: (typeof rawPlayers)[number] | undefined): number | null =>
+    p?.parTotal || p?.par?.reduce((a, b) => a + b, 0) || null;
+  const parPerRound: number | null = parOfPlayer(complete[0]) ?? parOfPlayer(incomplete[0]);
+  const semParBuraco = !rawPlayers.some((p) => p.roundScores?.some((rs) => rs.pars?.length));
   // Par do torneio = soma do par de CADA volta (13/10/2026 — PGA Golf Club
   // Invitational: R1 de 18 e R2 encurtada a 9; «Par × nRondas» dava 72 em vez
   // de 108). Sem pares por volta, fica o Par × nRondas de sempre.
@@ -50,7 +55,7 @@ export function AccumulatedLB({
     return rss.reduce((s, rs) => s + rs.pars.reduce((a: number, b) => a + (b || 0), 0), 0);
   };
   const parRef = complete.find((p) => (p.roundScores?.length ?? 0) >= nRounds);
-  const parTorneio = sumRoundPars(parRef) ?? parPerRound * nRounds;
+  const parTorneio = sumRoundPars(parRef) ?? (parPerRound != null ? parPerRound * nRounds : null);
 
   // useMemo ANTES do early return — regra dos hooks React
   const rows: MRRow[] = useMemo(() => {
@@ -83,7 +88,7 @@ export function AccumulatedLB({
           birdies = 0,
           pars = 0,
           bogeys = 0;
-        for (let i = 0; i < (rs.scores?.length ?? 0); i++) {
+        for (let i = 0; i < (rs.pars?.length ? rs.scores?.length ?? 0 : 0); i++) {
           const sc = rs.scores[i] || 0;
           if (sc <= 0) continue; // buraco não jogado (9H guardadas como 18 com zeros)
           const d = sc - (rs.pars[i] || 0);
@@ -96,7 +101,7 @@ export function AccumulatedLB({
           gross: rs.gross,
           // Par SÓ dos buracos jogados — numa volta a decorrer os restantes vêm
           // a zero e comparar 9 buracos com o par de 18 dava "36 (−36)".
-          parPerRound: playedParTotal(rs, parPerRound) || parPerRound,
+          parPerRound: (playedParTotal(rs, parPerRound ?? 0) || parPerRound) ?? undefined,
           sd,
           eagles,
           birdies,
@@ -117,7 +122,7 @@ export function AccumulatedLB({
         age: (p as { _age?: number | null })._age ?? null,
         teeName: p.teeName,
         gross: numGross(p),
-        parTotal: sumRoundPars(p) ?? parPerRound * (p._roundsPlayed ?? nRounds),
+        parTotal: sumRoundPars(p) ?? (parPerRound != null ? parPerRound * (p._roundsPlayed ?? nRounds) : undefined),
         toPar: p.toPar ?? null,
         isIncomplete: !!p._incomplete,
         isWD: !!p._wd,
@@ -141,8 +146,9 @@ export function AccumulatedLB({
   // Buracos riscados (sem pancadas, mas com o gross oficial) NÃO são volta a
   // decorrer — o Torneio 50 Anos de Autonomia dizia «95 a decorrer» depois de
   // acabado (14/10/2026). A regra é a do isRoundInProgress (fpgUtils).
+  // Sem par por buraco em todo o torneio, a volta acaba quando tem gross.
   const roundDone = (rs: { gross?: number | null; scores?: number[]; pars?: number[] }) =>
-    !!rs.pars?.length && (rs.gross ?? 0) > 0 && !isRoundInProgress(rs);
+    (semParBuraco || !!rs.pars?.length) && (rs.gross ?? 0) > 0 && !isRoundInProgress(rs);
   const fully = complete.filter((p) => {
     const rss = p.roundScores || [];
     return rss.length >= nRounds && rss.every(roundDone);
@@ -158,9 +164,9 @@ export function AccumulatedLB({
     incomplete.length > 0 ? `${incomplete.length} inc.` : null,
     nEmCurso > 0 ? `${nEmCurso} a decorrer` : null,
     nRounds > 1 ? `__ROUND_PILL__` : null,
-    `Par ${parTorneio}`,
+    parTorneio != null ? `Par ${parTorneio}` : null,
     avgGross != null
-      ? `Média ${avgGross.toFixed(1)} (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})`
+      ? `Média ${avgGross.toFixed(1)}` + (parTorneio != null ? ` (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})` : "")
       : null,
     // O campo só aqui quando cada escalão joga num campo diferente (o do
     // torneio já está no cabeçalho) — 14/10/2026.
@@ -187,7 +193,7 @@ export function AccumulatedLB({
         rows={rows}
         nRounds={nRounds}
         playersDB={playersDB}
-        showCols={showColsProp ?? { esc: true, fed: true, tee: true }}
+        showCols={{ ...(showColsProp ?? { esc: true, fed: true, tee: true }), ...(parPerRound == null ? { roundToPar: false } : {}) }}
         tournamentDate={tournament.date}
         sortable
         filterable

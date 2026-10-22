@@ -381,7 +381,9 @@ export interface FilledScores {
  *   - não há buracos vazios;
  *   - o gross oficial é desconhecido / WD / DNS;
  *   - todos os buracos estão vazios (cartão não entregue);
- *   - o gross é ≤ soma dos buracos jogados (dados inconsistentes).
+ *   - o gross é ≤ soma dos buracos jogados (dados inconsistentes);
+ *   - não há par (fonte sem par oficial) e falta mais de um buraco — a
+ *     repartição precisava de um par por buraco.
  *
  *  IMPORTANTE: não escreve nada nos ficheiros de dados — a inferência vive só
  *  na camada de cálculo/visualização. Os buracos inferidos são marcados em
@@ -409,8 +411,9 @@ export function fillBlankHoles(p: Player): FilledScores {
   const played = scores.reduce((a, b) => a + (b > 0 ? b : 0), 0);
   const remaining = gross - played;
   if (remaining <= 0) return { scores, inferred, hasInferred: false };
+  if (!parArr.length && blanks.length > 1) return { scores, inferred, hasInferred: false };
 
-  const caps = (cr != null && slope != null && hcp != null)
+  const caps = (parArr.length && cr != null && slope != null && hcp != null)
     ? ndbCapsForRound(parArr, si, cr, slope, hcp, nh) : null;
 
   // Caso comum — um único buraco vazio: o valor é exacto (gross − jogados).
@@ -627,7 +630,8 @@ export function expandMultiRound(t: Tournament): Tournament[] {
         ...p,
         scoreId: p.scoreId + "_R" + rd,
         grossTotal: rs.gross,
-        toPar: rs.gross - parT,
+        // Sem par (nem por buraco nem total) não há ±par — nunca gross − 0.
+        toPar: parT > 0 ? rs.gross - parT : null,
         scores: rs.scores, par: rs.pars, si: rs.si, meters: rs.meters,
         courseRating: rs.courseRating, slope: rs.slope, teeName: rs.teeName,
         pcc: rs.pcc,
@@ -685,7 +689,8 @@ export function expandMultiRound(t: Tournament): Tournament[] {
     totalPlayers.push(normalizePlayer({
       ...p,
       grossTotal: gross,
-      toPar: gross - parT,
+      // Sem par: o ±par da fonte (real) ou nenhum.
+      toPar: parT > 0 ? gross - parT : (p.toPar ?? null),
       _incomplete: incomplete,
       _wd: isWD,
       _roundsPlayed: nPlayed,

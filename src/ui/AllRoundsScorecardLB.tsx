@@ -213,7 +213,7 @@ export function AllRoundsScorecardLB({
       metaLine={
         <span className="muted fs-11" style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
           <span>
-            {groupMode ? gDisplayed.length : displayed.length} {groupMode ? "jogadores" : "scorecards"} · {playedRounds}R · Par {parTot}
+            {groupMode ? gDisplayed.length : displayed.length} {groupMode ? "jogadores" : "scorecards"} · {playedRounds}R{parTot > 0 ? ` · Par ${parTot}` : ""}
           </span>
           <span className="segmented-toggle seg-sm">
             {([true, false] as const).map((g) => (

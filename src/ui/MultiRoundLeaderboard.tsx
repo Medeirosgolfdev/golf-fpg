@@ -413,7 +413,8 @@ export function MultiRoundLeaderboard({
           </thead>
           <tbody>
             {visibleSorted.map((row, idx) => {
-              const tp = row.toPar != null ? row.toPar : (row.gross ?? 0) - (row.parTotal ?? 0);
+              // Sem ±par nem par total (fonte sem par) → «–», nunca gross − 0.
+              const tp = row.toPar != null ? row.toPar : row.parTotal ? (row.gross ?? 0) - row.parTotal : null;
               const isInc = row.isIncomplete && !row.isWD && !row.isCut;  // ronda ainda por jogar
               const isWD  = !!row.isWD;                     // desistiu
               const isCut = !!row.isCut && !row.isWD;       // eliminado no cut
@@ -559,7 +560,7 @@ export function MultiRoundLeaderboard({
                             ))}
                           </React.Fragment>
                         );
-                        const rtp = (rd.gross ?? 0) - (rd.parPerRound ?? 0);
+                        const rtp = rd.parPerRound ? (rd.gross ?? 0) - rd.parPerRound : null;
                         return (
                           <React.Fragment key={r}>
                             <td className="lb-rnd">{rd.gross}</td>
