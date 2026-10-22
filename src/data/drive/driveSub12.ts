@@ -12,6 +12,9 @@ import { resolveEsc, computeSD, type TemporalEscLookup } from "../fpgUtils";
 import { isDNS } from "../../ui/driveUtils";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { Tournament, Player, TStats, Sub12Row, EscLookup } from "../../ui/driveTypes";
+import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
+import { escalaoCanon, escaloesCanon } from "../model/escalao";
+import { isManuelByName } from "../../constants/manuel";
 
 export type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 
@@ -138,21 +141,27 @@ export function availEscaloes(
   return ordered;
 }
 
-/** Filter tournaments keeping only players of a given escalão; recalculate positions */
+/** «Classificação» por escalão (decisão H, 22/10/2026): cada torneio fica só com
+ *  os jogadores do(s) escalão(ões) — escalão do jogador no torneio, comparado pela
+ *  tabela única (`model/escalao.ts`: «Sub-12» = «Sub 12») — e as posições
+ *  refazem-se em CÓPIAS. Os torneios e os jogadores partilhados ficam como estão:
+ *  o leaderboard sem filtro e os pontos do Ranking Sub-12 não mudam. */
 export function filterTournByEsc(
   tournaments: Tournament[],
   escs: string[],
   escLookup: EscLookup,
   playersDB: PlayersDB,
   temporalEscLookup?: TemporalEscLookup,
-  fedBirthdates?: Map<string, string>
+  fedBirthdates?: Map<string, string>,
+  escOf?: (p: Player) => string,
 ): Tournament[] {
+  const want = new Set(escs.flatMap(e => escaloesCanon(e, "fpg")));
   return tournaments.map(t => {
     const filtered = t.players.filter(p => {
       if (isDNS(p)) return false;
-      const esc = resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
-      return escs.includes(esc);
-    });
+      const esc = escOf ? escOf(p) : resolveEscForTournament(p, t, escLookup, playersDB, temporalEscLookup, fedBirthdates);
+      return escaloesCanon(esc, "fpg").some(e => want.has(e));
+    }).map(p => ({ ...p }));
     if (!filtered.length) return null;
     // Recalculate positions
     const sorted = [...filtered].sort((a, b) => {
@@ -177,6 +186,37 @@ export function filterTournByEsc(
     });
     return { ...t, players: sorted, playerCount: sorted.length };
   }).filter(Boolean) as Tournament[];
+}
+
+/** O mesmo filtro nas entradas da /drive. Divisões que SÃO um escalão (eventos
+ *  do Challenge): a entrada fica, com todos os escalões do evento, se algum for
+ *  o pedido (como antes). Divisões sem escalão (Tour, AQUAPOR — «—», Masculino/
+ *  Senhoras): ficam só os jogadores do escalão, em cópias com as posições
+ *  refeitas; sem nenhum, a divisão sai (e a entrada, sem divisões). */
+export function driveEntriesByEsc(
+  entries: CircuitEntry[],
+  escs: string[],
+  escOf: (p: Player, t: Tournament) => string,
+): CircuitEntry[] {
+  const want = new Set(escs.flatMap(e => escaloesCanon(e, "fpg")));
+  const isEscDiv = (d: CircuitDivision) => /^Sub \d+$/.test(escalaoCanon(d.escalao, "fpg") ?? "");
+  const out: CircuitEntry[] = [];
+  for (const e of entries) {
+    const divs = e.divisions ?? [];
+    if (divs.some(isEscDiv)) {
+      if (divs.some(d => escaloesCanon(d.escalao, "fpg").some(x => want.has(x)))) out.push(e);
+      continue;
+    }
+    const kept: CircuitDivision[] = [];
+    for (const d of divs) {
+      const t = d.results;
+      if (!t) continue;
+      const [f] = filterTournByEsc([t], escs, new Map(), {}, undefined, undefined, (p) => escOf(p, t));
+      if (f) kept.push({ ...d, results: f, hasManuel: f.players.some(p => isManuelByName(p.name)) });
+    }
+    if (kept.length) out.push({ ...e, divisions: kept, playerCount: kept.reduce((a, d) => a + (d.results?.players.length ?? 0), 0) });
+  }
+  return out;
 }
 
 export const numAvg = (nums: number[]): number | null => nums.length === 0 ? null : nums.reduce((a, b) => a + b, 0) / nums.length;

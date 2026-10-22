@@ -23,7 +23,7 @@ import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
 import PlayerLink from "../ui/PlayerLink";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
 import {
-  availEscaloes, buildSub12Data, countEvents, dateToSort, filterBySub12Series, filterTournByEsc,
+  availEscaloes, buildSub12Data, countEvents, dateToSort, driveEntriesByEsc, filterBySub12Series, resolveEscForTournament,
   sub12Kpis, sub12SeriesCounts, sub12Tournaments, uniquePC, type Sub12SeriesTab,
 } from "../data/drive/driveSub12";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -410,6 +410,11 @@ function DriveContent() {
   const yearFilter = st.year && (availYears.length === 0 || availYears.includes(st.year)) ? st.year : null;
   const activeYear = yearFilter ?? availYears[0] ?? null;
   const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
+  // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
+  const temporalEscLookup = useMemo(
+    () => buildTemporalEscLookup(data?.tournaments ?? []),
+    [data]
+  );
   const admissionsReady = admissionsMeta.length > 0;
   // Todos os torneios (resultados + por jogar), sem filtros: deep-links e `?t=`.
   const allSrc = useMemo(() => {
@@ -420,7 +425,14 @@ function DriveContent() {
   const driveEntries = useMemo(() => {
     if (allSrc.length === 0) return [];
     const src = filterDriveSource(allSrc, { series, year: yearFilter, region: regionFilter });
-    const ents = buildDriveEntries(src);
+    let ents = buildDriveEntries(src);
+    // Filtros ao nível da entrada: ★ Manuel e a «Classificação» por escalão
+    // (decisão H: no Tour/AQUAPOR fica cada torneio só com esse escalão, em
+    // cópias com as posições refeitas; no Challenge, os eventos com esse escalão).
+    if (filterManuel) ents = ents.filter(e => e.hasManuel);
+    if (escFilter.length > 0) {
+      ents = driveEntriesByEsc(ents, escFilter, (p, t) => resolveEscForTournament(p, t, escLookup, pdb, temporalEscLookup, fedBirthdates));
+    }
     // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
     // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
     // inscrições/draws sozinho por ccode-tcode.
@@ -434,12 +446,8 @@ function DriveContent() {
           extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
-    // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.
-    let out = ents;
-    if (filterManuel) out = out.filter(e => e.hasManuel);
-    if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao)));
-    return out;
-  }, [allSrc, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, equipasIdx]);
+    return ents;
+  }, [allSrc, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, temporalEscLookup, fedBirthdates, equipasIdx]);
 
   // Pool INTEGRAL para a tab "Edições anteriores" — TODOS os torneios (todos os
   // anos/séries/regiões), sem os filtros da sidebar nem os sintéticos futuros.
@@ -488,11 +496,6 @@ function DriveContent() {
   const aquaporT = useMemo(() => data?.tournaments.filter(t => t.series === "aquapor"   && inYear(t)) ?? [], [data, activeYear]);
   // escLookup definido acima (antes de driveEntries).
 
-  // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
-  const temporalEscLookup = useMemo(
-    () => buildTemporalEscLookup(data?.tournaments ?? []),
-    [data]
-  );
 
 
 
@@ -547,16 +550,6 @@ function DriveContent() {
     const s = new Set(seriesT.map(t => t.region));
     return REGIONS.filter(r => s.has(r.id));
   }, [series, seriesT]);
-
-  // ⚠ Até à decisão H: a «Classificação» por escalão refaz as posições
-  // reescrevendo `p.pos` dos jogadores partilhados (efeito que se vê no
-  // leaderboard e nos pontos do Ranking Sub-12). A lista antiga que o fazia saiu
-  // com o `…_R1` (decisão A); o efeito fica igual.
-  useMemo(() => {
-    if (escFilter.length === 0 || series === "challenge") return;
-    const ts = regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT;
-    filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
-  }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
   const uniquePCRegion    = useMemo(() => uniquePC(regionT), [regionT]);

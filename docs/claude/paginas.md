@@ -100,6 +100,10 @@
     para `…_R1`, que saía da lista antiga `buildGroups`, apagada).
   - Testes: `src/data/drive/__tests__/driveUrl.test.ts` (com os dados reais).
 
-Comportamentos de hoje que são decisões (não mudar sem o sim da Mariana): a
-Classificação por escalão reescreve `p.pos` dos jogadores partilhados (o efeito
-fica no leaderboard e nos pontos do Ranking Sub-12 até recarregar); os links já não se perdem (decisão A, acima).
+- **«Classificação» por escalão (decisão H, 22/10/2026)** —
+  `driveEntriesByEsc`/`filterTournByEsc` (`driveSub12.ts`): no Tour e no AQUAPOR
+  (divisões sem escalão) cada torneio fica só com os jogadores do escalão
+  (escalão do jogador no torneio, comparado pela tabela única `model/escalao.ts`)
+  e as posições refazem-se em CÓPIAS; no Challenge ficam os eventos que têm esse
+  escalão, com todos os escalões. Já não se reescreve `p.pos` dos jogadores
+  partilhados (o efeito passava ao leaderboard e aos pontos do Ranking Sub-12).

@@ -33,11 +33,18 @@ describe("driveSub12", () => {
     expect(sub12Tournaments(rows).map((t) => t.short)).toEqual(["DT1 Mad", "DT1 Sul", "DC1 Sul"]);
     expect(tournShort(T({ name: "Final Drive Tour", players: [] }))).toBe("DTF");
   });
-  it("Classificação por escalão: refaz posições (e reescreve p.pos nos jogadores — decisão)", () => {
+  it("Classificação por escalão: refaz posições em CÓPIAS (decisão H) — o torneio partilhado fica igual", () => {
     const t = T({ tcode: "Z", players: [pl("9", 70, 1), pl("1", 80, 2), pl("2", 85, 3)] });
     const [f] = filterTournByEsc([t], ["Sub 12"], esc, {});
     expect(f.players.map((p) => [p.fed, p.pos])).toEqual([["1", 1], ["2", 2]]);
-    expect(t.players[1].pos).toBe(1);
+    expect(t.players.map((p) => p.pos)).toEqual([1, 2, 3]);
+    expect(f.players[0]).not.toBe(t.players[1]);
+    // «Sub-12» e «Sub 12» são o mesmo escalão (tabela única, model/escalao.ts)
+    expect(filterTournByEsc([t], ["Sub-12"], esc, {})[0].players.length).toBe(2);
+    // e os pontos do Ranking Sub-12 continuam os do campo todo
+    const antes = buildSub12Data([t], {}, esc).map((r) => [r.fed, r.totalPts]);
+    filterTournByEsc([t], ["Sub 12"], esc, {});
+    expect(buildSub12Data([t], {}, esc).map((r) => [r.fed, r.totalPts])).toEqual(antes);
     expect(countEvents(ts)).toBe(3);
     expect(uniquePC(ts)).toBe(2);
   });
