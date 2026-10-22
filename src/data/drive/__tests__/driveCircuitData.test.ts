@@ -122,6 +122,16 @@ describe("buildDriveGroups", () => {
     expect(g[0].subGroups).toBeUndefined();
   });
 
+  it("dois torneios no mesmo dia e clube com os mesmos escalões ficam separados (sem chaves repetidas)", () => {
+    const ts = ["3º", "4º"].flatMap((n, j) => ["Sub 10", "Sub 12"].map((esc, i) => ({
+      ccode: "984", tcode: String(100 + j * 10 + i), name: `${n} Torn. Drive Challenge Açores - Batalha - ${esc}`,
+      date: "2021-09-03", campo: "Batalha", series: "challenge", escalao: esc, players: [], playerCount: 0,
+    }))) as unknown as FPGTournament[];
+    const gs = buildDriveGroups(ts);
+    expect(gs.map(g => [g.key, g.entries.map(e => e.escalao)])).toEqual([
+      ["ev-2021-09-03-984", ["Sub 10", "Sub 12"]], ["ev-2021-09-03-984-2", ["Sub 10", "Sub 12"]],
+    ]);
+  });
   it("Challenge single-escalão NÃO é evento", () => {
     const g = buildDriveGroups([t({ name: "X", tcode: "400", series: "challenge", escalao: "Sub 10", ccode: "009" })]);
     expect(g[0].isEvent).toBe(false);

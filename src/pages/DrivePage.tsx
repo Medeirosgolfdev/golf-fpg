@@ -4,11 +4,11 @@
  * v10: Reads scraper v7 format directly (fedCode, roundScores)
  *      + multi-round support (R1/R2/Total tabs)
  */
-import React, { useEffect, useState, useMemo, useCallback, useRef } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { ESCALOES_DRIVE as ESCALOES } from "../constants/escaloes";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
 import { sdClassByHcp } from "../utils/scoreDisplay";
-import { fmtToPar, fmtHcp, medal, shortDateSlash, tournamentUrl, parseTournKey } from "../utils/format";
+import { fmtToPar, fmtHcp, medal, shortDateSlash } from "../utils/format";
 import TabRow from "../ui/TabRow";
 import { FilterPills } from "../ui/FilterPills";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
@@ -32,22 +32,24 @@ import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
 import { C } from "../utils/colors";
 import {
-  isManuel,
   tpColor,
   type PlayersDB,
 } from "../ui/tournamentPrimitives";
 import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
 import TournamentGrid from "../ui/TournamentGrid";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import { buildDriveEntries, DRIVE_CONFIG, shortCampo } from "../data/drive/driveCircuitData";
+import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import MasterDetail from "../ui/MasterDetail";
 import { loadDriveAdmissions, loadDriveData, loadDriveEquipas } from "../data/drive/driveLoader";
 import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex } from "../data/drive/driveSource";
+import {
+  driveDivTkey, driveFiltersForTkey, driveQueryString, driveRepDivision, legacyDriveT, parseDriveQuery,
+  resolveDriveTkey, type DriveUrlState,
+} from "../data/drive/driveUrl";
 
 import type {
   Tournament,
-  Player,
   DriveData,
   Sub12Row,
 } from "../ui/driveTypes";
@@ -60,154 +62,6 @@ const REGIONS = [
   { id: "madeira", label: "Madeira", emoji: "📍" },
   { id: "acores",  label: "Açores",  emoji: "📍" },
 ];
-/** Remove o sufixo de ronda/total do tcode ("X_R2"/"X_Total" → "X"). */
-const stripRoundSuffix = (tc: string | null | undefined) => (tc || "").replace(/_R\d+$|_Total$/, "");
-
-/** A display group: either a single tournament or a multi-round set (R1+R2+Total) */
-interface TournGroup {
-  key: string;
-  label: string;       // tab label
-  campo?: string;
-  num?: number;
-  date: string;
-  escalao: string | null | undefined; // para Challenge single-escalão ou null quando evento agrupa vários
-  isMulti: boolean;    // multi-ronda (R1/R2/Total)
-  isEvent: boolean;    // Challenge: vários escalões no mesmo dia/campo → tabs por escalão
-  totalRounds: number;
-  entries: Tournament[];  // 1 para single, N+1 para multi-ronda, N escalões para isEvent
-}
-
-function buildGroups(tournaments: Tournament[]): TournGroup[] {
-  const escIdx = (esc: string | null | undefined) => {
-    const i = ESCALOES.indexOf(esc || "");
-    return i >= 0 ? i : 99;
-  };
-  const sorted = [...tournaments].sort((a, b) => {
-    const dateCmp = a.date.localeCompare(b.date);
-    if (dateCmp !== 0) return dateCmp;
-    return escIdx(a.escalao) - escIdx(b.escalao);
-  });
-  const groups: TournGroup[] = [];
-  const multiMap   = new Map<string, Tournament[]>();   // Tour multi-ronda (sem escalão de evento)
-  const eventMap   = new Map<string, Tournament[]>();   // Challenge: date+ccode → TODAS as entries (single/R1/R2/Resumo)
-  const singles: Tournament[] = [];
-
-  // ── 1ª passagem: bucketizar ───────────────────────────────────────────
-  // Challenge agrupa SEMPRE por evento (data+campo), juntando escalões — mesmo
-  // quando multi-ronda. As entries R1/R2/Resumo entram aqui e são consolidadas
-  // por escalão na 2ª passagem (antes, a expansão multi-ronda fragmentava o
-  // evento num cartão por escalão).
-  for (const t of sorted) {
-    if (t.series === "challenge" && t.escalao) {
-      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
-      if (!eventMap.has(eventKey)) eventMap.set(eventKey, []);
-      eventMap.get(eventKey)!.push(t);
-    } else if (t._multiGroup) {
-      if (!multiMap.has(t._multiGroup)) multiMap.set(t._multiGroup, []);
-      multiMap.get(t._multiGroup)!.push(t);
-    } else {
-      singles.push(t);
-    }
-  }
-
-  const roundSort = (a: Tournament, b: Tournament) => {
-    if (a._roundLabel === "Resumo") return 1;
-    if (b._roundLabel === "Resumo") return -1;
-    return (a._roundLabel || "").localeCompare(b._roundLabel || "");
-  };
-
-  const seen = new Set<string>();
-  for (const t of sorted) {
-    if (t.series === "challenge" && t.escalao) {
-      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
-      if (seen.has(eventKey)) continue;
-      seen.add(eventKey);
-      const bucket = eventMap.get(eventKey) || [];
-
-      // Agrupar por escalão e escolher um representante por escalão:
-      //   multi-ronda → entry "Resumo" (acumulado, renderiza via DriveAccumulatedLB)
-      //   1 ronda     → a própria entry
-      const byEsc = new Map<string, Tournament[]>();
-      for (const e of bucket) {
-        const k = e.escalao || "?";
-        if (!byEsc.has(k)) byEsc.set(k, []);
-        byEsc.get(k)!.push(e);
-      }
-      const reps: { escalao: string; rep: Tournament; rounds: Tournament[]; totalRounds: number }[] = [];
-      for (const [esc, ents] of byEsc) {
-        const resumo = ents.find(e => e._roundLabel === "Resumo");
-        const rdEnts = ents.filter(e => e._roundLabel && e._roundLabel !== "Resumo");
-        if (resumo) {
-          reps.push({ escalao: esc, rep: resumo, rounds: rdEnts, totalRounds: resumo._totalRounds || (rdEnts.length || 2) });
-        } else {
-          reps.push({ escalao: esc, rep: ents[0], rounds: [], totalRounds: 1 });
-        }
-      }
-      reps.sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
-
-      if (reps.length === 1) {
-        const r = reps[0];
-        if (r.rounds.length > 0) {
-          // 1 escalão multi-ronda → cartão multi-ronda (tabs R1/R2/Resumo) — preserva drill-down por ronda
-          const entries = [...r.rounds, r.rep].sort(roundSort);
-          groups.push({
-            key: r.rep._multiGroup || eventKey,
-            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
-            escalao: r.escalao, isMulti: true, isEvent: false, totalRounds: r.totalRounds, entries,
-          });
-        } else {
-          groups.push({
-            key: eventKey,
-            label: shortCampo(r.rep.campo), campo: r.rep.campo, num: r.rep.num, date: r.rep.date,
-            escalao: r.escalao, isMulti: false, isEvent: false, totalRounds: 1, entries: [r.rep],
-          });
-        }
-      } else {
-        // Vários escalões no mesmo evento → cartão de evento, 1 tab por escalão.
-        const entries = reps.map(r => r.rep);
-        const maxRounds = Math.max(1, ...reps.map(r => r.totalRounds));
-        groups.push({
-          key: eventKey,
-          label: shortCampo(t.campo), campo: t.campo, num: t.num, date: t.date,
-          escalao: null, isMulti: false, isEvent: true, totalRounds: maxRounds, entries,
-        });
-      }
-    } else if (t._multiGroup) {
-      if (seen.has(t._multiGroup)) continue;
-      seen.add(t._multiGroup);
-      const entries = multiMap.get(t._multiGroup)!;
-      entries.sort(roundSort);
-      groups.push({
-        key: t._multiGroup,
-        label: shortCampo(t.campo),
-        campo: t.campo,
-        num: t.num,
-        date: t.date,
-        escalao: t.escalao ?? null,
-        isMulti: true,
-        isEvent: false,
-        totalRounds: t._totalRounds || 2,
-        entries,
-      });
-    } else {
-      groups.push({
-        key: t.tcode + "_" + t.date,
-        label: shortCampo(t.campo),
-        campo: t.campo,
-        num: t.num,
-        date: t.date,
-        escalao: t.escalao ?? null,
-        isMulti: false,
-        isEvent: false,
-        totalRounds: 1,
-        entries: [t],
-      });
-    }
-  }
-  return groups;
-}
-
-
 /* ═══════════════════════════════════════════════════════
    MAIN — DriveContent com sidebar coerente
    ═══════════════════════════════════════════════════════ */
@@ -465,92 +319,34 @@ function DriveContent() {
   const [error, setError]         = useState<string | null>(null);
   // Fallback DOB p/ federados fora de players.json curado.
   const fedBirthdates = useFedBirthdates();
-  // Deep-link canónico: /drive/torneio/{ccode}-{tcode}
+  // O URL é a única fonte de verdade (decisão A, src/data/drive/driveUrl.ts):
+  // o torneio/escalão no caminho /drive/torneio/{ccode}-{tcode}, os filtros na
+  // query. Só as acções do utilizador mudam a query — nada se perde ao montar.
   const { tkey: urlTkey } = useParams<{ tkey?: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Filtros sincronizados com URL query params para partilha directa.
-  // Formato: `/drive?nav=ranking-sub12&series=aquapor&year=2026&region=Norte&esc=Sub+12,Sub+14&manuel=0`.
-  const [searchParams, setSearchParams] = useSearchParams();
-  const getQP = (key: string) => searchParams.get(key);
-
-  const [navMode, setNavMode]   = useState<"torneios"|"ranking-sub12">(() => {
-    const v = getQP("nav");
-    return (v === "ranking-sub12") ? v : "torneios";
-  });
-  const [series, setSeries]     = useState<"all"|"tour"|"challenge"|"aquapor">(() => {
-    const v = getQP("series");
-    return (v === "all" || v === "tour" || v === "challenge" || v === "aquapor") ? v : "tour";
-  });
-  const [filterManuel, setFilterManuel] = useState(() => getQP("manuel") === "1");
-    const md = useMasterDetail();
-  const [regionFilter, setRegionFilter]         = useState<string | null>(() => getQP("region"));
-  const [escFilter, setEscFilter]               = useState<string[]>(() => {
-    const v = getQP("esc");
-    return v ? v.split(",").map(s => s.trim()).filter(Boolean) : [];
-  });
-  const [selectedGroupKey, setSelectedGroupKey] = useState<string | null>(null);
-  const [roundIdx, setRoundIdx]                 = useState(0);
-
-  // Filtro de ano (null = todos)
-  const [yearFilter, setYearFilter]             = useState<string | null>(() => getQP("year"));
-
-  // Estado específico Sub-12
-  const [sub12Series, setSub12Series]   = useState<Sub12SeriesTab>(() => {
-    const v = getQP("s12s"); return (v === "tour" || v === "aquapor") ? v as Sub12SeriesTab : "tour";
-  });
-  const [sub12View, setSub12View]       = useState<Sub12ViewTab>(() => {
-    const v = getQP("s12v"); return (v === "grid" || v === "list") ? v as Sub12ViewTab : "grid";
-  });
-  // Região: `s12r` é o param próprio; `region` (do modo torneios) serve de
-  // fallback — assim `?nav=ranking-sub12&region=acores` filtra o ranking em
-  // vez de ficar um param fantasma sem efeito (bug 2026-07-10).
-  const [sub12Region, setSub12Region]   = useState(() => getQP("s12r") || getQP("region") || "all");
-  const [sub12Sex, setSub12Sex]         = useState(() => getQP("s12x") || "all");
-  // Escalão do ranking (generalização 2026-07-10 — deixou de ser fixo Sub-12).
-  // "all" = todos os escalões jovens (Sub 10-18), como "Todas as zonas".
-  const [sub12Esc, setSub12Esc]         = useState<string>(() => {
-    const v = getQP("s12e");
-    return v && (v === "all" || ESCALOES.includes(v)) ? v : "Sub 12";
-  });
+  const [searchParams] = useSearchParams();
+  const st = useMemo(() => parseDriveQuery(searchParams), [searchParams]);
+  const tabParam = searchParams.get("tab");
+  const legacyT = searchParams.get("t");
+  const { nav: navMode, series, manuel: filterManuel, region: regionFilter, esc: escFilter,
+    s12s: sub12Series, s12v: sub12View, s12r: sub12Region, s12x: sub12Sex, s12e: sub12Esc } = st;
+  /** Muda filtros. Com `keepTkey` o torneio aberto fica (se deixar de estar
+   *  visível, o shell abre o mais recente); sem ele volta-se a /drive. */
+  const go = useCallback((patch: Partial<DriveUrlState>, keepTkey = true) => {
+    const pathname = keepTkey && urlTkey ? location.pathname : "/drive";
+    navigate({ pathname, search: driveQueryString({ ...st, ...patch }) }, { replace: true });
+  }, [navigate, location.pathname, urlTkey, st]);
+  /** Abre um torneio (tkey canónico); a aba fica só na aterragem (sem tkey). */
+  const goTkey = useCallback((tk: string | null) => {
+    if (!tk) return;
+    const pathname = `/drive/torneio/${tk}`;
+    if (pathname === location.pathname) return;
+    navigate({ pathname, search: driveQueryString(st, urlTkey ? null : tabParam) }, { replace: true });
+  }, [navigate, location.pathname, st, urlTkey, tabParam]);
+  const md = useMasterDetail();
   const [sub12Search, setSub12Search]   = useState("");
   const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
-
-  // Torneio seleccionado — vem do URL (?t=) para que o link seja partilhável.
-  // Sem isto, /drive?series=aquapor abria sempre o torneio MAIS RECENTE da
-  // série e não aquele que se estava a ver: partilhar o link mandava a outra
-  // pessoa para outro torneio (e mudava sozinho à medida que novos torneios
-  // fossem scrapados). Declarado aqui, acima do efeito state→URL, porque esse
-  // efeito passou a lê-lo.
-  const [selectedDriveId, setSelectedDriveId] = useState<string | null>(() => getQP("t"));
-
-  // Sincronização state → URL (query string). Constrói params só com valores
-  // não-default para manter URLs limpas. `replace: true` não pollui histórico.
-  useEffect(() => {
-    const sp = new URLSearchParams();
-    if (navMode !== "torneios") sp.set("nav", navMode);
-    if (series !== "tour") sp.set("series", series);
-    if (filterManuel) sp.set("manuel", "1");
-    if (regionFilter) sp.set("region", regionFilter);
-    if (escFilter.length) sp.set("esc", escFilter.join(","));
-    if (yearFilter) sp.set("year", yearFilter);
-    // Torneio aberto — torna o link partilhável ("estamos a ver ESTE").
-    // Só na vista de torneios: nos rankings não há torneio seleccionado.
-    if (navMode === "torneios" && selectedDriveId) sp.set("t", selectedDriveId);
-    if (navMode === "ranking-sub12") {
-      if (sub12Series !== "tour") sp.set("s12s", sub12Series);
-      if (sub12View !== "grid") sp.set("s12v", sub12View);
-      if (sub12Region !== "all") sp.set("s12r", sub12Region);
-      if (sub12Sex !== "all") sp.set("s12x", sub12Sex);
-      if (sub12Esc !== "Sub 12") sp.set("s12e", sub12Esc);
-    }
-    // Não mexer se o URL já é igual (evita push inútil ao histórico)
-    if (sp.toString() !== searchParams.toString()) {
-      setSearchParams(sp, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [navMode, series, filterManuel, regionFilter, escFilter, yearFilter, selectedDriveId, sub12Series, sub12View, sub12Region, sub12Sex, sub12Esc]);
 
   const [monthlyMeta, setMonthlyMeta] = useState<DataSource[]>([]);
 
@@ -596,11 +392,34 @@ function DriveContent() {
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
   // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
   // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
+  // Anos disponíveis — só os que têm torneios reais na série activa (exclui sub-rondas expandidas)
+  const yearsOf = useCallback((sr: DriveUrlState["series"]) => {
+    const s = new Set<string>();
+    for (const t of data?.tournaments ?? []) {
+      if ((sr === "all" || t.series === sr) && (!t._roundLabel || t._roundLabel === "Resumo")) {
+        const y = t.date?.split("-")[0];
+        if (y) s.add(y);
+      }
+    }
+    return [...s].sort((a, b) => b.localeCompare(a));
+  }, [data]);
+  const availYears = useMemo(() => yearsOf(series), [yearsOf, series]);
+
+  // Ano do URL só se existir na série (um `year` de outra série é ignorado, sem
+  // reescrever o URL); por omissão o mais recente disponível.
+  const yearFilter = st.year && (availYears.length === 0 || availYears.includes(st.year)) ? st.year : null;
+  const activeYear = yearFilter ?? availYears[0] ?? null;
   const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
-  const driveEntries = useMemo(() => {
+  const admissionsReady = admissionsMeta.length > 0;
+  // Todos os torneios (resultados + por jogar), sem filtros: deep-links e `?t=`.
+  const allSrc = useMemo(() => {
     if (raw.length === 0) return [];
     attachDriveAdmissions(raw, admDrawsIdx);
-    const src = filterDriveSource(buildDriveSource(raw, admDrawsIdx), { series, year: yearFilter, region: regionFilter });
+    return buildDriveSource(raw, admDrawsIdx);
+  }, [raw, admDrawsIdx]);
+  const driveEntries = useMemo(() => {
+    if (allSrc.length === 0) return [];
+    const src = filterDriveSource(allSrc, { series, year: yearFilter, region: regionFilter });
     const ents = buildDriveEntries(src);
     // Detalhe IDÊNTICO à FPGPage: cada divisão (escalão) renderiza o TournamentDetail
     // da FPGPage — tabs flat (Inscrições·Draw·R1·R2·Resumo·Scorecards), que busca
@@ -620,7 +439,7 @@ function DriveContent() {
     if (filterManuel) out = out.filter(e => e.hasManuel);
     if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao)));
     return out;
-  }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, equipasIdx]);
+  }, [allSrc, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, equipasIdx]);
 
   // Pool INTEGRAL para a tab "Edições anteriores" — TODOS os torneios (todos os
   // anos/séries/regiões), sem os filtros da sidebar nem os sintéticos futuros.
@@ -629,50 +448,38 @@ function DriveContent() {
   // irmãs ficavam limitadas ao ano/série/região filtrados na sidebar.
   const driveEditionsPool = useMemo(() => (raw.length === 0 ? [] : buildDriveEntries(raw)), [raw]);
 
-  // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
-  // actual deixa de estar visível depois de mudar filtros).
-  const tkeyConsumedRef = useRef<string | null>(null);
+  // ── Torneio aberto = o do caminho ────────────────────────────────────
+  const shellSel = useMemo(() => resolveDriveTkey(driveEntries, urlTkey), [driveEntries, urlTkey]);
+  // Um deep-link é «consumido» uma vez: se o torneio não está visível, mudam-se
+  // série/ano/zona/escalão/★Manuel para ele aparecer; depois disso, mudar
+  // filtros que o escondam abre o mais recente (o shell escolhe).
+  const [tkeyDone, setTkeyDone] = useState<string | null>(null);
+  const ready = !loading && admissionsReady && allSrc.length > 0;
   useEffect(() => {
-    if (driveEntries.length === 0) return;
-    const exists = selectedDriveId && driveEntries.some(e => e.id === selectedDriveId);
-    if (exists) return;
-    // Esperar pelas inscrições/draws: os torneios ainda por jogar (a Final de
-    // 07/11) só entram na lista quando elas chegam. Com os meses a carregar em
-    // paralelo, escolher antes disso abria sempre o penúltimo (22/10/2026).
-    if (admissionsMeta.length === 0) return;
-    // Deep-link /drive/torneio/{ccode}-{tcode}: abrir ESSE torneio e não o mais
-    // recente. Se existe nos dados mas ainda não está visível, o efeito de
-    // deep-link está a ajustar série/ano/Manuel — esperar pela próxima corrida.
-    // Consome-se UMA vez: depois disso, mudar filtros volta ao comportamento normal.
-    const parsed = tkeyConsumedRef.current === urlTkey ? null : parseTournKey(urlTkey);
-    if (parsed) {
-      const hit = (t: { ccode?: string | null; tcode?: string | number | null } | undefined) => !!t && String(t.ccode) === parsed.ccode
-        && stripRoundSuffix(String(t.tcode ?? "")).split("+").includes(parsed.tcode);
-      const entry = driveEntries.find(e => (e.divisions ?? []).some(d => hit(d.results)));
-      if (entry) { tkeyConsumedRef.current = urlTkey ?? null; setSelectedDriveId(entry.id); return; }
-      if (raw.some(hit)) return;
-      tkeyConsumedRef.current = urlTkey ?? null;
-    }
-    const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
-    setSelectedDriveId(latest?.id ?? null);
+    if (!ready || !urlTkey || tkeyDone === urlTkey) return;
+    const patch = shellSel.id ? null : driveFiltersForTkey(allSrc, urlTkey, st, false);
+    if (patch) go(patch);
+    else setTkeyDone(urlTkey);
+  }, [ready, urlTkey, tkeyDone, shellSel.id, allSrc, st, go]);
+  // `?t={id}` antigo → /drive/torneio/{ccode}-{tcode}.
+  useEffect(() => {
+    if (!ready || !legacyT) return;
+    const tk = legacyDriveT(buildDriveEntries(allSrc), legacyT);
+    navigate({ pathname: tk ? `/drive/torneio/${tk}` : location.pathname, search: driveQueryString(st, tabParam) }, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [driveEntries, selectedDriveId, urlTkey, admissionsMeta]);
+  }, [ready, legacyT]);
+  // Enquanto o deep-link (ou o `?t=`) não está resolvido, não se escolhe o
+  // torneio por omissão (escolhia-se e reescrevia-se o URL).
+  const tkeyPending = !shellSel.id && (!!legacyT || (!!urlTkey && tkeyDone !== urlTkey));
+  // Por omissão (sem torneio no URL, ou o do URL escondido pelos filtros): o
+  // mais recente/próximo — o primeiro por data, na ordem da lista (é a página
+  // que escolhe, não o shell, que desempata pelo nome).
+  useEffect(() => {
+    if (!ready || shellSel.id || tkeyPending || driveEntries.length === 0) return;
+    const latest = [...driveEntries].sort((a, b) => (b.dateStart || "").localeCompare(a.dateStart || ""))[0];
+    goTkey(driveDivTkey(driveRepDivision(latest)));
+  }, [ready, shellSel.id, tkeyPending, driveEntries, goTkey]);
 
-
-  // Anos disponíveis — só os que têm torneios reais na série activa (exclui sub-rondas expandidas)
-  const availYears = useMemo(() => {
-    const s = new Set<string>();
-    for (const t of data?.tournaments ?? []) {
-      if ((series === "all" || t.series === series) && (!t._roundLabel || t._roundLabel === "Resumo")) {
-        const y = t.date?.split("-")[0];
-        if (y) s.add(y);
-      }
-    }
-    return [...s].sort((a, b) => b.localeCompare(a));
-  }, [data, series]);
-
-  // Ano activo: por omissão o mais recente disponível
-  const activeYear = yearFilter ?? availYears[0] ?? null;
   const inYear = (t: Tournament) => !activeYear || t.date?.startsWith(activeYear);
 
   const tourT    = useMemo(() => data?.tournaments.filter(t => t.series === "tour"      && inYear(t)) ?? [], [data, activeYear]);
@@ -741,57 +548,15 @@ function DriveContent() {
     return REGIONS.filter(r => s.has(r.id));
   }, [series, seriesT]);
 
-  // Para series="all": aplicar filtros a cada série e combinar os grupos
-  // Mais eficiente que um único buildGroups(allT) com centenas de entries
-  const filteredT = useMemo(() => {
-    let ts = seriesT;
-    if (regionFilter) ts = ts.filter(t => t.region === regionFilter);
-    // Aplicar escFilter. Challenge: cada tcode é um único escalão (t.escalao
-    // definido), por isso filtra-se ao nível do torneio — caso contrário a
-    // ResumoTable (painel Temporada) mostrava todos os escalões juntos.
-    // Outras séries: filtro por jogador (DOB) com recálculo de posições.
-    if (escFilter.length > 0) {
-      ts = series === "challenge"
-        ? ts.filter(t => t.escalao != null && escFilter.includes(t.escalao))
-        : filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
-    }
-    if (filterManuel) ts = ts.filter(t => t.players.some((p: Player) => isManuel(p)));
-    return ts;
-  }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, filterManuel, fedBirthdates]);
-
-  const filteredGroups = useMemo(() => {
-    const applyFilters = (ts: Tournament[]) => {
-      let r = ts;
-      if (regionFilter) r = r.filter(t => t.region === regionFilter);
-      if (escFilter.length > 0 && series !== "challenge") r = filterTournByEsc(r, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
-      if (filterManuel) r = r.filter(t => t.players.some(p => isManuel(p)));
-      return r;
-    };
-
-    let groups: TournGroup[];
-    if (series === "all") {
-      groups = [
-        ...buildGroups(applyFilters(tourT)),
-        ...buildGroups(applyFilters(challT)),
-        ...buildGroups(applyFilters(aquaporT)),
-      ];
-    } else {
-      groups = buildGroups(filteredT);
-    }
-
-    // Para isEvent (Challenge agrupado): filtrar entries pelo escFilter
-    // O evento continua visível se tiver pelo menos 1 escalão que corresponde
-    if (escFilter.length > 0) {
-      groups = groups.map(g => {
-        if (!g.isEvent) return g;
-        const matchEntries = g.entries.filter(e => e.escalao && escFilter.includes(e.escalao));
-        if (matchEntries.length === 0) return null;
-        return { ...g, entries: matchEntries, escalao: matchEntries.length === 1 ? matchEntries[0].escalao : null };
-      }).filter(Boolean) as TournGroup[];
-    }
-
-    return groups;
-  }, [series, filteredT, tourT, challT, aquaporT, regionFilter, escFilter, filterManuel, escLookup, pdb, temporalEscLookup, fedBirthdates]);
+  // ⚠ Até à decisão H: a «Classificação» por escalão refaz as posições
+  // reescrevendo `p.pos` dos jogadores partilhados (efeito que se vê no
+  // leaderboard e nos pontos do Ranking Sub-12). A lista antiga que o fazia saiu
+  // com o `…_R1` (decisão A); o efeito fica igual.
+  useMemo(() => {
+    if (escFilter.length === 0 || series === "challenge") return;
+    const ts = regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT;
+    filterTournByEsc(ts, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates);
+  }, [series, seriesT, regionFilter, escFilter, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
   const regionT = useMemo(() => regionFilter ? seriesT.filter(t => t.region === regionFilter) : seriesT, [seriesT, regionFilter]);
   const uniquePCRegion    = useMemo(() => uniquePC(regionT), [regionT]);
@@ -805,101 +570,7 @@ function DriveContent() {
     return availEscaloes(regionT, escLookup, pdb, temporalEscLookup, fedBirthdates);
   }, [series, regionT, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
-  useEffect(() => { setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [series]);
-  // Se o ano activo não existe na nova série, resetar para o mais recente disponível
-  useEffect(() => {
-    if (yearFilter && !availYears.includes(yearFilter)) setYearFilter(null);
-  }, [availYears]);
-  useEffect(() => { setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); }, [regionFilter]);
   useEffect(() => { setSub12Player(null); }, [sub12Series]);
-
-  const selectedGroup = useMemo(
-    () => filteredGroups.find(g => g.key === selectedGroupKey) ?? null,
-    [filteredGroups, selectedGroupKey]
-  );
-  const curTournament = selectedGroup ? (selectedGroup.entries[roundIdx] || selectedGroup.entries[0]) : null;
-
-  // ── Deep-link: ajustar filtros para que o torneio seja visível ──────────
-  // Quando há `/drive/torneio/{ccode}-{tcode}` na URL, detectar em que série
-  // (tour/challenge/aquapor) o torneio está e mudar `series` para essa antes
-  // de procurar. Também desliga `filterManuel` se o Manuel não jogou no
-  // torneio apontado pelo deep-link. Corre só uma vez por deep-link (e
-  // quando a data chega).
-  useEffect(() => {
-    if (!urlTkey) return;
-    const parsed = parseTournKey(urlTkey);
-    if (!parsed) return;
-    const { ccode, tcode } = parsed;
-    const matchesT = (t: Tournament) => t.ccode === ccode && (
-      t.tcode === tcode || (t.tcode || "").split("+").includes(tcode)
-    );
-    // ⚠ Procurar em TODOS os anos (data.tournaments) — tourT/challT/aquaporT já
-    // vêm cortados ao ano activo, e um deep-link de outro ano nunca era achado.
-    const found: Tournament | null = data?.tournaments.find(matchesT) ?? null;
-    const detectedSeries = found ? ((found.series || "tour") as "tour" | "challenge" | "aquapor") : null;
-    if (!found || !detectedSeries) return;  // ainda não carregado — próxima corrida apanha
-    if (series !== detectedSeries && series !== "all") setSeries(detectedSeries);
-    // Desligar filterManuel se o Manuel não está neste torneio — caso contrário o
-    // filtro esconde-o e nunca aparece.
-    if (filterManuel && !found.players.some(p => isManuel(p))) setFilterManuel(false);
-    // Limpar filtros regionais/escalão que possam estar a esconder o torneio
-    if (regionFilter && found.region !== regionFilter) setRegionFilter(null);
-    if (escFilter.length > 0) setEscFilter([]);
-    // O ano por defeito é o mais recente: um deep-link para outro ano ficava
-    // escondido e a página abria outro torneio (ex.: links da /draws para 2023).
-    const fYear = (found.date || "").slice(0, 4);
-    if (fYear && activeYear !== fYear) setYearFilter(fYear);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, data]);
-
-  // ── Deep-link: sync URL (:tkey) → selectedGroupKey + roundIdx ──────────
-  // `/drive/torneio/{ccode}-{tcode}` → procura o torneio na lista filtrada
-  // e selecciona o grupo/entry correspondente. Corre quando `filteredGroups`
-  // termina de carregar e sempre que o tkey da URL muda.
-  useEffect(() => {
-    if (!urlTkey || filteredGroups.length === 0) return;
-    const parsed = parseTournKey(urlTkey);
-    if (!parsed) return;
-    const { ccode, tcode } = parsed;
-    for (const g of filteredGroups) {
-      // Match exacto primeiro (preserva ronda/escalão específico no URL).
-      let entryIdx = g.entries.findIndex(e =>
-        e.ccode === ccode && (
-          e.tcode === tcode ||
-          (e.tcode || "").split("+").includes(tcode)
-        )
-      );
-      // Fallback por tcode base (sem sufixo _R{n}/_Total) — para hrefs canónicos
-      // da sidebar de eventos multi-ronda, onde as entries são "_Total".
-      if (entryIdx < 0) {
-        entryIdx = g.entries.findIndex(e => {
-          const base = stripRoundSuffix(e.tcode);
-          return e.ccode === ccode && (base === tcode || base.split("+").includes(tcode));
-        });
-      }
-      if (entryIdx >= 0) {
-        if (selectedGroupKey !== g.key) setSelectedGroupKey(g.key);
-        if (roundIdx !== entryIdx) setRoundIdx(entryIdx);
-        return;
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [urlTkey, filteredGroups]);
-
-  // ── Deep-link: sync estado (torneio seleccionado) → URL ────────────────
-  // Quando o utilizador muda de torneio (clica na sidebar ou nas tabs de
-  // ronda/escalão), actualizar a URL para `/drive/torneio/{ccode}-{tcode}`
-  // com `replace: true` (não pollui o histórico). Não há loop: o useEffect
-  // URL→estado acima só dispara setters quando `idx !== selected`, e
-  // navegar para a URL actual é no-op.
-  useEffect(() => {
-    if (!curTournament || !curTournament.ccode || !curTournament.tcode) return;
-    const target = tournamentUrl("drive", curTournament.ccode, curTournament.tcode);
-    if (target && location.pathname !== target) {
-      navigate(target, { replace: true });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [curTournament]);
 
   if (loading) return <LoadingState />;
   if (error)   return <div className="jogadores-page"><div className="notice-error drive-error">Erro: {error}</div></div>;
@@ -929,7 +600,7 @@ function DriveContent() {
               { key: "ranking-sub12", label: "🏅 Rankings" },
             ]}
             active={navMode}
-            onChange={(k) => { setNavMode(k as typeof navMode); setSeries("tour"); setYearFilter(null); setSelectedGroupKey(null); setRoundIdx(0); }}
+            onChange={(k) => go({ nav: k as DriveUrlState["nav"], series: "tour", year: null }, false)}
           />
           {navMode === "torneios" && (<>
             <ToolbarSep />
@@ -942,7 +613,12 @@ function DriveContent() {
                 { key: "aquapor",   label: "💧 AQUAPOR", count: countAquapor },
               ]}
               active={series}
-              onChange={(k) => { const kk = k as typeof series; setSeries(kk); setRegionFilter(null); setEscFilter([]); setSelectedGroupKey(null); setRoundIdx(0); if (kk === "all" && !yearFilter) setYearFilter(availYears[0] ?? null); }}
+              onChange={(k) => {
+                const kk = k as DriveUrlState["series"];
+                const ys = yearsOf(kk);
+                const year = yearFilter && ys.includes(yearFilter) ? yearFilter : kk === "all" ? (ys[0] ?? null) : null;
+                go({ series: kk, region: null, esc: [], year });
+              }}
             />
             {availYears.length > 1 && (<>
               <ToolbarSep />
@@ -951,7 +627,7 @@ function DriveContent() {
                 {availYears.map(y => (
                   <button key={y} role="tab" aria-selected={activeYear === y}
                     className={"seg-btn" + (activeYear === y ? " active" : "")}
-                    onClick={() => { setYearFilter(y === activeYear && availYears.length > 1 ? null : y); setSelectedGroupKey(null); setRoundIdx(0); }}>
+                    onClick={() => go({ year: y === activeYear && availYears.length > 1 ? null : y })}>
                     <span className="seg-label">{y}</span>
                   </button>
                 ))}
@@ -959,7 +635,7 @@ function DriveContent() {
               <ToolbarSep />
               <button
                 className={"tourn-tab tourn-tab-sm drive-manuel" + (filterManuel ? " active" : " tourn-tab-muted")}
-                onClick={() => setFilterManuel(v => !v)}>
+                onClick={() => go({ manuel: !filterManuel })}>
                 ★ Manuel
               </button>
             </>)}
@@ -974,7 +650,7 @@ function DriveContent() {
           <div className={"drive-below" + (md.isMobile ? " is-mobile" : "")}>
             {availRegions.length > 1 && (<>
               <button className={"tourn-tab tourn-tab-sm shrink-0" + (regionFilter === null ? " active" : "")}
-                onClick={() => setRegionFilter(null)}>
+                onClick={() => go({ region: null, esc: [] })}>
                 {md.isMobile ? `Todas ${countEvents(seriesT)}` : `Todas (${countEvents(seriesT)})`}
               </button>
               {availRegions.map(reg => {
@@ -984,7 +660,7 @@ function DriveContent() {
                 return (
                   <button key={reg.id}
                     className={"tourn-tab tourn-tab-sm drive-region" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
-                    onClick={() => setRegionFilter(reg.id)}>
+                    onClick={() => go({ region: reg.id, esc: [] })}>
                     {md.isMobile
                       ? `${reg.label} ${nT}·${nJ}`
                       : `${reg.emoji} ${reg.label} (${nT}T · ${nJ} jog)`}
@@ -997,7 +673,7 @@ function DriveContent() {
                 só com o(s) escalão(ões) escolhido(s). */}
             <span className="fs-11 muted shrink-0" title="Classificação só com estes escalões (as posições são recalculadas)">Classificação:</span>
             <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : " tourn-tab-muted")}
-              onClick={() => setEscFilter([])}>
+              onClick={() => go({ esc: [] })}>
               {md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
             </button>
             <FilterPills
@@ -1007,7 +683,7 @@ function DriveContent() {
                 disabled: !availEscs.includes(e),
               }))}
               active={escFilter}
-              onToggle={(e) => setEscFilter(prev => prev.includes(e) ? prev.filter(x => x !== e) : [...prev, e])}
+              onToggle={(e) => go({ esc: escFilter.includes(e) ? escFilter.filter(x => x !== e) : [...escFilter, e] })}
               style={{ display: "contents" }}
             />
           </div>
@@ -1048,7 +724,7 @@ function DriveContent() {
               return (
                 <button key={s.key}
                   className={`course-item ${active ? "active" : ""}${empty ? " drive-empty" : ""}`}
-                  onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); md.onSelect(); }}>
+                  onClick={() => { go({ s12s: s.key, s12v: "grid" }, false); setSub12Player(null); md.onSelect(); }}>
                   <div className="course-item-name">{s.emoji} {s.label}</div>
                   <div className="course-item-sub">
                     {empty ? `sem jogadores${sub12Esc === "all" ? "" : ` ${sub12Esc}`}` : `${c.tourns} torneios · ${c.players} jog · ${s.holes}`}
@@ -1064,7 +740,7 @@ function DriveContent() {
               return (
                 <button key={v}
                   className={`course-item ${sub12View === v ? "active" : ""}`}
-                  onClick={() => { setSub12View(v); md.onSelect(); }}>
+                  onClick={() => { go({ s12v: v }, false); md.onSelect(); }}>
                   <div className="course-item-name">{labels[v]}</div>
                 </button>
               );
@@ -1074,17 +750,17 @@ function DriveContent() {
             <div className="sidebar-section-title mt-8">Filtros</div>
             <div className="flex-col gap-4 drive-s12-filters">
               <select className="select w-full fs-11" value={sub12Esc}
-                onChange={e => { setSub12Esc(e.target.value); setSub12Player(null); }}>
+                onChange={e => { go({ s12e: e.target.value }, false); setSub12Player(null); }}>
                 <option value="all">Todos os escalões</option>
                 {ESCALOES.map(esc => <option key={esc} value={esc}>{esc}</option>)}
               </select>
               {sub12AvailRegions.length > 0 && (
-                <select className="select w-full fs-11" value={sub12Region} onChange={e => setSub12Region(e.target.value)}>
+                <select className="select w-full fs-11" value={sub12Region} onChange={e => go({ s12r: e.target.value }, false)}>
                   <option value="all">Todas as zonas</option>
                   {sub12AvailRegions.map(z => <option key={z} value={z}>{regionLabel(z)}</option>)}
                 </select>
               )}
-              <select className="select w-full fs-11" value={sub12Sex} onChange={e => setSub12Sex(e.target.value)}>
+              <select className="select w-full fs-11" value={sub12Sex} onChange={e => go({ s12x: e.target.value }, false)}>
                 <option value="all">Ambos os sexos</option>
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
@@ -1142,8 +818,13 @@ function DriveContent() {
           // «A carregar» até chegarem as inscrições: os torneios por jogar (a Final
           // de 07/11) só entram com elas, e o shell escolhia antes o penúltimo (B, 22/10/2026).
           loading={loading || admissionsMeta.length === 0}
-          selectedId={selectedDriveId ?? undefined}
-          onSelectEntry={(e) => setSelectedDriveId(e.id)} />
+          // Nunca indefinido: o torneio por omissão escolhe-o a página (efeito acima).
+          selectedId={shellSel.id ?? "__drive-pending__"}
+          selectedDivKey={shellSel.divKey}
+          onSelectEntry={(e) => goTkey(driveDivTkey(driveRepDivision(e)))}
+          // Só o escalão do torneio do URL (o shell também chama isto para o
+          // escalão por omissão do que mostra enquanto espera).
+          onSelectDivision={(e, d) => { if (e.id === shellSel.id) goTkey(driveDivTkey(d)); }} />
         </CircuitToolbarSlotCtx.Provider>
       )}
 

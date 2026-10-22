@@ -77,10 +77,29 @@
   `src/data/drive/__tests__/driveOpenLatest.test.ts` (o `realDataFetch.ts` põe o
   `fetch` a ler `public/data`).
 
+- **O URL é a única fonte de verdade (decisão A, 22/10/2026;
+  `src/data/drive/driveUrl.ts`)** — como a /FPG: o torneio E o escalão abertos
+  vivem só no caminho `/drive/torneio/{ccode}-{tcode}` (`resolveDriveTkey` →
+  `selectedId`/`selectedDivKey` do shell; clicar na sidebar ou num escalão navega
+  com `replace`). Os filtros vivem na query (`parseDriveQuery`/`driveQueryString`:
+  `nav`, `series`, `manuel`, `region`, `esc`, `year`, `s12s`, `s12v`, `s12r`,
+  `s12x`, `s12e`, e a aba em `tab`); só as acções do utilizador os mudam — não há
+  efeitos de «reset» ao montar. Não há estado do torneio na página nem efeitos
+  URL↔estado: **não os voltar a pôr.**
+  - Torneio por omissão (sem torneio no URL, ou escondido pelos filtros): é a
+    página que escolhe — o primeiro por data, na ordem da lista (o shell
+    desempata pelo nome e escolhia outro na Final Nacional do Challenge). Ao shell
+    passa-se sempre um `selectedId` (sentinela enquanto não há), para ele nunca
+    escolher sozinho.
+  - Deep-link de outra série/ano/zona: é «consumido» uma vez
+    (`driveFiltersForTkey` muda série/ano/zona/escalão/★Manuel para ele aparecer);
+    depois, mudar filtros que o escondam abre o mais recente.
+  - Links antigos: `?t={id da entrada}` redirecciona para o caminho
+    (`legacyDriveT`); `…_R1`/`…_Total` abrem o torneio; `s12v=list` abre o Ranking.
+  - Torneios com várias voltas ficam com o tcode da FPG (acabou a reescrita
+    para `…_R1`, que saía da lista antiga `buildGroups`, apagada).
+  - Testes: `src/data/drive/__tests__/driveUrl.test.ts` (com os dados reais).
+
 Comportamentos de hoje que são decisões (não mudar sem o sim da Mariana): a
 Classificação por escalão reescreve `p.pos` dos jogadores partilhados (o efeito
-fica no leaderboard e nos pontos do Ranking Sub-12 até recarregar); um deep-link
-`/drive/torneio/{cc}-{tc}` de um torneio com várias voltas é reescrito para
-`…_R1` (e esse link, reaberto, já não encontra o torneio); `s12s=challenge` e
-`s12v=ranking|evolucao` não reabrem; ao montar, `region`/`esc`/`year` do URL
-perdem-se.
+fica no leaderboard e nos pontos do Ranking Sub-12 até recarregar); os links já não se perdem (decisão A, acima).

@@ -110,6 +110,8 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
 
   const multiMap = new Map<string, FPGTournament[]>();
   const eventMap = new Map<string, FPGTournament[]>();
+  const eventKeyOf = new Map<FPGTournament, string>();
+  const evKey = (t: FPGTournament) => eventKeyOf.get(t) ?? "ev-" + t.date + "-" + (t.ccode || t.campo);
 
   for (const t of sorted) {
     if (t._multiGroup) {
@@ -120,6 +122,27 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
       if (!eventMap.has(eventKey)) eventMap.set(eventKey, []);
       eventMap.get(eventKey)!.push(t);
     }
+  }
+
+  // Dois torneios no mesmo dia e clube (Açores 03/09/2021: o 3º e o 4º Challenge,
+  // cada um com os seus escalões) ficavam num só evento com escalões repetidos —
+  // chaves de divisão iguais e o link de um escalão a abrir o outro. Com
+  // escalões repetidos, separa-se pelo nome (sem o escalão); o primeiro fica
+  // com a chave de sempre.
+  for (const [key, bucket] of [...eventMap]) {
+    const escs = bucket.map(t => t.escalao);
+    if (new Set(escs).size === escs.length) continue;
+    const byName = new Map<string, FPGTournament[]>();
+    for (const t of bucket) {
+      const n = stripEscalaoFromName(t.name);
+      if (!byName.has(n)) byName.set(n, []);
+      byName.get(n)!.push(t);
+    }
+    [...byName.values()].forEach((ts, i) => {
+      const k = i === 0 ? key : `${key}-${i + 1}`;
+      eventMap.set(k, ts);
+      for (const t of ts) eventKeyOf.set(t, k);
+    });
   }
 
   const groups: DriveGroup[] = [];
@@ -148,7 +171,7 @@ export function buildDriveGroups(tournaments: FPGTournament[]): DriveGroup[] {
         entries,
       });
     } else if (t.series === "challenge" && t.escalao && !t._roundLabel) {
-      const eventKey = "ev-" + t.date + "-" + (t.ccode || t.campo);
+      const eventKey = evKey(t);
       if (seen.has(eventKey)) continue;
       seen.add(eventKey);
       const entries = [...(eventMap.get(eventKey) || [])].sort((a, b) => escIdx(a.escalao) - escIdx(b.escalao));
