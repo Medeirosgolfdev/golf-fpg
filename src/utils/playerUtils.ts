@@ -66,7 +66,7 @@ export type EscLookup = Map<string, string>;
 /** Constrói mapa fed → escalão a partir de playersDB e opcionalmente de torneios */
 export function buildEscLookup(
   playersDB: Record<string, { escalao?: string }>,
-  allTournaments?: { escalao?: string; players: { fed?: string; fedCode?: string }[] }[]
+  allTournaments?: { escalao?: string | null; players: { fed?: string; fedCode?: string }[] }[]
 ): EscLookup {
   const m: EscLookup = new Map();
   for (const [fed, info] of Object.entries(playersDB)) {

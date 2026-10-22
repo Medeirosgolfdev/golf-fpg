@@ -104,7 +104,7 @@ export function resolveEscForTournament(
   // `fedBirthdates` (federados.json) cobre Sub-10 e novos registos que não
   // estão em `players.json` curado — sem ele, torneios combinados herdam o
   // escalão base errado.
-  const viaResolve = resolveEsc(p as any, escLookup, {
+  const viaResolve = resolveEsc(p, escLookup, {
     tournamentDate: t.date,
     playersDB,
     temporalEscLookup,

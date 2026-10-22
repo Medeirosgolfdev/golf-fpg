@@ -385,7 +385,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
   const top = [...eligible].sort((a,b) => b.results.filter(r=>r.sd!=null).length - a.results.filter(r=>r.sd!=null).length).slice(0,10);
   const allDates = [...new Set(top.flatMap(p => p.results.filter(r=>r.sd!=null).map(r=>r.date)))].sort((a,b)=>dateToSort(a)-dateToSort(b));
   const chartData = allDates.map(d => {
-    const point: Record<string, any> = { date: shortDate(d) };
+    const point: Record<string, string | number | null> = { date: shortDate(d) };
     for (const p of top) { const res = p.results.find(r => r.date===d && r.sd!=null); if (res) point[p.fed] = res.sd; }
     return point;
   });
@@ -399,7 +399,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
             <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
-              formatter={(((value: number | undefined, name: string) => { const p = top.find(x => x.fed===name); return [value != null ? value.toFixed(1) : "", p?.name||name]; }) as any)} />
+              formatter={(value, name) => { const p = top.find(x => x.fed===name); return [value != null ? (value as number).toFixed(1) : "", p?.name||name]; }} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span className="fs-10">{p?.name||value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
             {top.map((p, i) => (
@@ -596,7 +596,7 @@ function DriveContent() {
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
   // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
   // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
-  const escLookup = useMemo(() => buildEscLookup(pdb, (data?.tournaments ?? []) as any /* tipo local diferente do playerUtils */), [pdb, data]);
+  const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
   const driveEntries = useMemo(() => {
     if (raw.length === 0) return [];
     attachDriveAdmissions(raw, admDrawsIdx);
@@ -607,17 +607,18 @@ function DriveContent() {
     // inscrições/draws sozinho por ccode-tcode.
     for (const e of ents) {
       for (const d of e.divisions ?? []) {
-        const t = d.results as any;
-        const eqData = equipasIdx[`${t?.ccode}-${t?.tcode}`];
+        const t = d.results;
+        if (!t) continue;  // as divisões do Drive trazem sempre `results`
+        const eqData = equipasIdx[`${t.ccode}-${t.tcode}`];
         const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <DriveEquipasTab data={eqData} /> } : null;
-        d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup as any} playersDB={pdb as any}
+        d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup} playersDB={pdb}
           extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }
     }
     // Filtros entry-level — preservam TODOS os escalões do evento: Manuel / escalão.
     let out = ents;
     if (filterManuel) out = out.filter(e => e.hasManuel);
-    if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao as any)));
+    if (escFilter.length > 0) out = out.filter(e => (e.divisions ?? []).some(d => escFilter.includes(d.escalao)));
     return out;
   }, [raw, admDrawsIdx, series, yearFilter, regionFilter, filterManuel, escFilter, pdb, escLookup, equipasIdx]);
 
@@ -626,7 +627,7 @@ function DriveContent() {
   // O Drive repete o mesmo evento várias vezes por ano (etapas), por vezes no
   // mesmo campo; a tab mostra-os todos como colunas. Sem este pool integral, as
   // irmãs ficavam limitadas ao ano/série/região filtrados na sidebar.
-  const driveEditionsPool = useMemo(() => (raw.length === 0 ? [] : buildDriveEntries(raw as any)), [raw]);
+  const driveEditionsPool = useMemo(() => (raw.length === 0 ? [] : buildDriveEntries(raw)), [raw]);
 
   // Auto-seleccionar o torneio mais recente (e re-seleccionar quando a selecção
   // actual deixa de estar visível depois de mudar filtros).
@@ -645,7 +646,7 @@ function DriveContent() {
     // Consome-se UMA vez: depois disso, mudar filtros volta ao comportamento normal.
     const parsed = tkeyConsumedRef.current === urlTkey ? null : parseTournKey(urlTkey);
     if (parsed) {
-      const hit = (t: any) => !!t && String(t.ccode) === parsed.ccode
+      const hit = (t: { ccode?: string | null; tcode?: string | number | null } | undefined) => !!t && String(t.ccode) === parsed.ccode
         && stripRoundSuffix(String(t.tcode ?? "")).split("+").includes(parsed.tcode);
       const entry = driveEntries.find(e => (e.divisions ?? []).some(d => hit(d.results)));
       if (entry) { tkeyConsumedRef.current = urlTkey ?? null; setSelectedDriveId(entry.id); return; }
@@ -906,7 +907,7 @@ function DriveContent() {
 
   const allSources: DataSource[] = [...monthlyMeta, ...admissionsMeta];
   const providerTournaments = (data?.tournaments ?? []).map(t => ({
-    _sourceFile: (t as any)._sourceFile,
+    _sourceFile: t._sourceFile,
     name: t.name,
     date: t.date,
     tcode: t.tcode,
