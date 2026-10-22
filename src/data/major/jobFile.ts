@@ -35,6 +35,9 @@ export interface JobDivision { division: string; source?: string; tid?: string; 
   /** PCC de cada dia (índice = dia − 1), quando se conhece — ex.: deduzido dos SD oficiais
    *  importados pela FPG dos portugueses que jogaram (`pccNota` diz de onde veio). */
   pcc?: (number | null)[] | null; pccNota?: string | null;
+  /** CR/Slope que a organização não publica, tirados dos cartões FPG dos portugueses
+   *  (`ratingNota` diz de quais clubes) — SD marcado como estimado. */
+  ratingEstimado?: boolean; ratingNota?: string | null;
   players: JobPlayer[]; draws?: Record<string, { round: number; label?: string; date?: string; groups: JobDrawGroup[] }>; }
 export interface JobFile { tournament: string; year: number; stop?: number | null; source?: string; course?: string | null; startDate?: string | null; endDate?: string | null; divisions: JobDivision[]; }
 
@@ -209,12 +212,16 @@ export function jobDivisionToTournament(div: JobDivision, name: string, year?: n
       },
     };
   });
-  return buildFPGTournament(
+  const t = buildFPGTournament(
     { name, tcode: `job-${name}`, date: date || "", campo: "", rounds: nR },
     { par, holes, parTotal },
     fpg,
     { keepNoRounds: true, raw: true },
   );
+  if (div.ratingEstimado && div.courseRating != null && div.slope != null) {
+    t._sdEstimate = `CR ${div.courseRating.toFixed(1)} · Slope ${div.slope} estimados — ${div.ratingNota || "não publicados"}`;
+  }
+  return t;
 }
 
 

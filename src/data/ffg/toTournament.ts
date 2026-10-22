@@ -103,6 +103,9 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
   if (serieCourse && Array.isArray(serieCourse.meters) && serieCourse.meters.length === 18) {
     chosenCourse = { par: serieCourse.par, meters: serieCourse.meters,
       si: serieCourse.si?.length === 18 ? serieCourse.si : chosenCourse?.si, metersTotal: serieCourse.metersTotal };
+  } else if (serieCourse?.si?.length === 18) {
+    // Só o SI (sem metros): ganha ao inferido — precisa-se dele para o NDB do SD.
+    chosenCourse = { ...(chosenCourse ?? { par: [], meters: [] }), si: serieCourse.si } as typeof chosenCourse;
   }
   const ggMeters = chosenCourse?.meters && chosenCourse.meters.length === 18 ? chosenCourse.meters : [];
   const ggSi = chosenCourse?.si && chosenCourse.si.length === 18 ? chosenCourse.si : [];
