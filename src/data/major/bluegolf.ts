@@ -16,7 +16,10 @@ import { isNoCardGross } from "../intlCommon";
 /* ── Types ── */
 export interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
 export interface PlayerData { name: string; country: string; pos: number | null; result: number | null; total: number | null; rounds: RoundData[] }
-export interface TData { tournament: string; par: number[]; si?: number[]; yards?: number[]; course?: string; parF9: number; parB9: number; parTotal: number; players: PlayerData[] }
+export interface TData { tournament: string; par: number[]; si?: number[]; yards?: number[]; course?: string; parF9: number; parB9: number; parTotal: number; players: PlayerData[];
+  /** CR/Slope (o BlueGolf não os publica) e PCC por dia — tirados dos SD oficiais
+   *  dos portugueses na FPG; `ratingNota` diz de quem, o SD sai marcado como estimado. */
+  courseRating?: number; slope?: number; pcc?: (number | null)[]; ratingNota?: string }
 export interface TDef { id: string; label: string; shortLabel: string; data: TData; manuelName: string; year: number; category: string; roundDates?: string[]; series: "bjgt" | "eowagr" | "fcg" | "jwgc" }
 
 
@@ -189,12 +192,13 @@ export function flagForLocation(loc: string): string {
 }
 
 export function blueGolfToTournament(data: TData, def: TDef): FPGTournament {
-  const { par, si, parTotal, players } = data;
+  const { par, si, parTotal, players, courseRating, slope, pcc } = data;
+  const rated = courseRating != null && slope != null;
   const nR = Math.max(...players.map(p => p.rounds.length), 0);
   // Distâncias: o BlueGolf dá `yards` por buraco → converter para metros.
   const meters = data.yards && data.yards.length >= par.length ? data.yards.map(y => Math.round(y * 0.9144)) : [];
   const hasMeters = meters.length >= par.length && par.length > 0;
-  return buildFPGTournament({
+  const t = buildFPGTournament({
     name: def.label,
     tcode: def.id,
     rounds: nR,
@@ -207,7 +211,7 @@ export function blueGolfToTournament(data: TData, def: TDef): FPGTournament {
     campo: def.series === "eowagr" ? "Le Touquet GC — La Forêt"
       : def.series === "bjgt" ? (def.category === "Boys 12-13" ? "Villa Padierna — Alferini" : "Villa Padierna — Flamingos")
       : (data.course || ""),
-  }, { par, si, meters: hasMeters ? meters : null, teeName: hasMeters ? (data.course || "Tee") : undefined },
+  }, { par, si, meters: hasMeters ? meters : null, teeName: hasMeters ? (data.course || "Tee") : undefined, ...(rated ? { courseRating, slope } : {}) },
   players.map((p): IntlPlayerIn => {
     // JWGC/FCG: os ficheiros trazem `gradYear` + país já limpo (p/ bandeira) +
     // `hometown` (cidade/estado, ex: "New York, NY"). Defensivo p/ dados antigos
@@ -226,11 +230,16 @@ export function blueGolfToTournament(data: TData, def: TDef): FPGTournament {
       country: p.country,
       total: p.total,
       toPar: p.result ?? (p.total != null ? p.total - parTotal * nR : null),
-      rounds: p.rounds,
+      rounds: rated && pcc ? p.rounds.map((r, i) => {
+        const dayPcc = pcc[(r.day ?? i + 1) - 1];
+        return typeof dayPcc === "number" ? { ...r, extra: { pcc: dayPcc } } : r;
+      }) : p.rounds,
       // Rondas em falta OU ronda parcial (WD/DNF) → não terminou. Reusa o
       // resultado de loadT (`_complete`); fallback para quem não passou por loadT.
       wd: (p as any)._complete != null ? !(p as any)._complete : !isPlayerComplete(p, nR, par.length),
       extra: { _classYear: classYear },
     };
   }));
+  if (rated) t._sdEstimate = `CR ${courseRating.toFixed(1)} · Slope ${slope} estimados — ${data.ratingNota || "não publicados"}`;
+  return t;
 }

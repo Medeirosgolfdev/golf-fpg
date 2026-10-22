@@ -166,7 +166,7 @@ describe("Doral — normalizeDoralFile / doralEntryToTournament", () => {
       [
         "2025_Boys_7_&_Under · Red Tiger · 9b · par 36 · CR –/– · 8 jog",
         "2025_Boys_8-9 · Red Tiger · 9b · par 36 · CR –/– · 21 jog",
-        "2025_Boys_10-11 · Golden Palm · 18b · par 71 · CR 69/130 · 35 jog",
+        "2025_Boys_10-11 · Golden Palm · 18b · par 71 · CR 69.9/133 · 35 jog",
         "2025_Boys_12-13 · Silver Fox · 18b · par 71 · CR 74/140 · 70 jog",
         "2025_Boys_14-15 · Golden Palm · 18b · par 71 · CR 72/136 · 92 jog",
         "2025_Boys_16-18 · Blue Monster · 18b · par 71 · CR 74/140 · 93 jog",

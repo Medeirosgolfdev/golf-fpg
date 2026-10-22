@@ -45,6 +45,11 @@ export interface DoralDivision {
   parB9?: number;
   parTotal?: number;
   startingHole?: number;
+  /** CR/Slope DESTE ano, por cima do do escalão (DORAL_DIVISION_META, igual em
+   *  todos os anos) — ex.: tirados do cartão FPG de um português (`ratingNota`). */
+  courseRating?: number;
+  slope?: number;
+  ratingNota?: string;
   players: DoralPlayer[];
 }
 export interface DoralFile {
@@ -69,6 +74,8 @@ export interface DoralEntry {
   course: string;
   cr?: number;
   slope?: number;
+  /** Nota do CR/Slope deste ano quando vem do cartão FPG (SD estimado). */
+  ratingNota?: string;
   metres: number[];
   metresF9?: number;
   metresB9?: number;
@@ -212,8 +219,9 @@ export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntr
       parB9: div.parB9 ?? 0,
       parTotal: div.parTotal ?? 0,
       course: meta.course,
-      cr: meta.cr,
-      slope: meta.slope,
+      cr: div.courseRating ?? meta.cr,
+      slope: div.slope ?? meta.slope,
+      ...(div.ratingNota ? { ratingNota: div.ratingNota } : {}),
       metres: meta.metres,
       metresF9: meta.metresF9,
       metresB9: meta.metresB9,
@@ -226,7 +234,7 @@ export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntr
 
 /* ── Adaptador DoralEntry → FPGTournament para reutilizar AllRoundsScorecardLB ── */
 export function doralEntryToTournament(entry: DoralEntry): FPGTournament {
-  return buildFPGTournament(
+  const t = buildFPGTournament(
     { name: entry.label, tcode: entry.id, campo: entry.course },
     // Metros na linha SI (siLabel="m"); Red Tiger, Golden Palm, Silver Fox,
     // Blue Monster — o percurso vai para a linha de stats.
@@ -237,4 +245,8 @@ export function doralEntryToTournament(entry: DoralEntry): FPGTournament {
       country: p.country, total: p.total, toPar: p.toPar, rounds: p.rounds,
     })),
   );
+  if (entry.ratingNota && entry.cr != null && entry.slope != null) {
+    t._sdEstimate = `CR ${entry.cr.toFixed(1)} · Slope ${entry.slope} estimados — ${entry.ratingNota}`;
+  }
+  return t;
 }
