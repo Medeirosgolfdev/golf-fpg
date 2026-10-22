@@ -12,6 +12,8 @@
 
 import { useState, useMemo } from "react";
 import type { HcpPoint } from "../data";
+import { useSort } from "../../../hooks/useSort";
+import SortableHdr from "../../../ui/SortableHdr";
 
 interface Props {
   points: HcpPoint[];
@@ -102,8 +104,19 @@ function HcpHistoryModal({
   playerName?: string;
   onClose: () => void;
 }) {
-  // Renderizar desc (mais recente em cima)
+  // Por defeito desc (mais recente em cima); a tabela ordena-se pelo cabeçalho.
   const desc = [...points].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+  const { sortKey, sortDir, toggleSort } = useSort<"date" | "hcp" | "source" | "label">("date", "desc", { source: "asc", label: "asc", hcp: "asc" });
+  const labelOf = (p: HcpPoint) => p.label || (p.tcode ? `tcode ${p.tcode}` : "");
+  const rows = [...desc].sort((a, b) => {
+    const c = sortKey === "hcp" ? a.hcpExact - b.hcpExact
+      : sortKey === "source" ? (a.source || "").localeCompare(b.source || "", "pt")
+      : sortKey === "label" ? labelOf(a).localeCompare(labelOf(b), "pt")
+      : (a.date || "").localeCompare(b.date || "");
+    return (sortDir === "asc" ? c : -c) || (b.date || "").localeCompare(a.date || "");
+  });
+  const hdr = (k: "date" | "hcp" | "source" | "label", label: string, className?: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;
 
   return (
     <div
@@ -158,14 +171,14 @@ function HcpHistoryModal({
         <table className="dtable">
           <thead>
             <tr>
-              <th>Data</th>
-              <th className="r">HCP</th>
-              <th>Fonte</th>
-              <th>Torneio</th>
+              {hdr("date", "Data")}
+              {hdr("hcp", "HCP", "r")}
+              {hdr("source", "Fonte")}
+              {hdr("label", "Torneio")}
             </tr>
           </thead>
           <tbody>
-            {desc.map((p, i) => (
+            {rows.map((p, i) => (
               <tr key={i}>
                 <td>{p.date}</td>
                 <td className="r" style={{ fontWeight: 600 }}>

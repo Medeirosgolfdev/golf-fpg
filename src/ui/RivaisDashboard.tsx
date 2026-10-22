@@ -144,6 +144,22 @@ export default function RivaisDashboard({
     return pl;
   }, [fTour, fUp, fCo, q, sort, dir, dOnly, D, T]);
 
+  // Nº de inscritos que o "Só com dados" está a esconder (sem resultado em
+  // nenhuma coluna), contados DEPOIS dos restantes filtros — para o chip junto
+  // ao contador dizer exactamente quantos apareceriam ao desligar o filtro.
+  const hiddenNoData = useMemo(() => {
+    if (!dOnly) return 0;
+    let pl = D.filter(x => !Object.values(x.r).some(r => r.tp != null));
+    if (fTour !== "all") pl = pl.filter(x => x.r[fTour]);
+    if (fUp !== "all") pl = pl.filter(x => x.up.includes(fUp));
+    if (fCo !== "all") pl = pl.filter(x => x.co === fCo);
+    if (q) {
+      const ql = q.toLowerCase();
+      pl = pl.filter(x => x.n.toLowerCase().includes(ql));
+    }
+    return pl.length;
+  }, [dOnly, fTour, fUp, fCo, q, D]);
+
   const doSort = (c: string) => {
     if (sort === c) setDir(d => (d === "asc" ? "desc" : "asc"));
     else {
@@ -281,6 +297,14 @@ export default function RivaisDashboard({
           vs Manuel
         </label>
         <div className="chip">{list.length} jogadores</div>
+        {hiddenNoData > 0 && (
+          <div className="chip">
+            {hiddenNoData} inscrito{hiddenNoData === 1 ? "" : "s"} escondido{hiddenNoData === 1 ? "" : "s"} (sem histórico) ·{" "}
+            <button type="button" className="btn-link" onClick={() => setDOnly(false)}>
+              mostrar
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Legend */}

@@ -5,10 +5,12 @@
  * Aqui só fica o que é deste ecrã — a evolução 2025 → 2026 (cartão do Manuel e
  * tabela), no fim do Resumo.
  */
-import { useMemo } from "react";
+import { useMemo, type CSSProperties } from "react";
 import { flag } from "../utils/flagUtils";
 import { isManuelByName } from "../constants/manuel";
 import EvoBadge from "./EvoBadge";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
 import { SC } from "../utils/scoreDisplay";
 import { IntlTournView } from "./IntlTournView";
 import type { Tournament as FPGTournament } from "../pages/FPGPage";
@@ -108,7 +110,18 @@ function ManuelEvo({ evo }: { evo: EvoEntry[] }) {
   );
 }
 
+type EvoSortKey = "n" | "y25" | "y26" | "delta" | "pill";
+
 function EvoTable({ evo }: { evo: EvoEntry[] }) {
+  const { sortKey, sortDir, toggleSort } = useSort<EvoSortKey>("delta");
+  const rows = [...evo].sort((a, b) => {
+    const c = sortKey === "n" || sortKey === "pill"
+      ? (a[sortKey] || "").localeCompare(b[sortKey] || "", "pt")
+      : a[sortKey] - b[sortKey];
+    return sortDir === "asc" ? c : -c;
+  });
+  const hdr = (k: EvoSortKey, label: string, className: string, style?: CSSProperties) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className} style={style}>{label}</SortableHdr>;
   return (
     <div className="card">
       <div className="h-md fs-14">📈 Evolução 2025 → 2026</div>
@@ -117,15 +130,15 @@ function EvoTable({ evo }: { evo: EvoEntry[] }) {
         <table className="dtable-lg">
           <thead>
             <tr>
-              <th className="ta-left" style={{ minWidth: 120 }}>Jogador</th>
-              <th className="r col-w55">2025</th>
-              <th className="r col-w55">2026</th>
-              <th className="r col-w45">Δ</th>
-              <th className="col-w70">Percurso</th>
+              {hdr("n", "Jogador", "ta-left", { minWidth: 120 })}
+              {hdr("y25", "2025", "r col-w55")}
+              {hdr("y26", "2026", "r col-w55")}
+              {hdr("delta", "Δ", "r col-w45")}
+              {hdr("pill", "Percurso", "col-w70")}
             </tr>
           </thead>
           <tbody>
-            {evo.map((e, idx) => {
+            {rows.map((e, idx) => {
               const isM = isManuelByName(e.n);
               return (
                 <tr key={idx} style={{ background: isM ? "var(--bg-success-subtle)" : undefined }}>

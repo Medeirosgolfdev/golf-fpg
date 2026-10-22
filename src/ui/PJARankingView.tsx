@@ -235,6 +235,9 @@ export interface PjaPdfEntry {
   fed: string; name: string; rounds: number; pts: number; pos: number;
 }
 
+/** Tabela «Não inscritos»: voltas e pontos começam do maior. */
+const NI_SORT_DIRS: Record<string, "asc" | "desc"> = { voltas: "desc", total: "desc" };
+
 export function PJARankingView({
   pjaList, playersDB, loading, pjaMembersByYear, externalFilterName,
   specialRules = true, emptyLabel = "Sem torneios PJA.", metric = "pts", showMeters = false, hcpFilterMax,
@@ -866,6 +869,8 @@ export function PJARankingView({
   }, [rowsInscritos, metric]);
 
   // Não inscritos: também aceita filtro por escalão/nome, ordenados por total desc.
+  const { sortKey: niSortKey, sortDir: niSortDir, toggleSort: niToggleSort } =
+    useSort<string>("rank", "asc", NI_SORT_DIRS);
   const sortedNaoInscritos = useMemo(() => {
     let rows = rowsNaoInscritos;
     if (filterSex) rows = rows.filter(r => r.sex === filterSex);
@@ -876,8 +881,20 @@ export function PJARankingView({
       const q = filterName.trim().toLowerCase();
       rows = rows.filter(r => r.name.toLowerCase().includes(q) || r.club.toLowerCase().includes(q));
     }
-    return [...rows].sort((a, b) => b.total - a.total);
-  }, [rowsNaoInscritos, filterSex, filterRegiao, filterHcp, hcpFilterMax, filterEsc, filterName]);
+    // # = posição por total (fixa); o cabeçalho só muda a ordem das linhas.
+    const ranked = [...rows].sort((a, b) => b.total - a.total).map((row, i) => ({ row, pos: i + 1 }));
+    const mult = niSortDir === "asc" ? 1 : -1;
+    return ranked.sort((a, b) => {
+      let c = 0;
+      if (niSortKey === "name") c = a.row.name.localeCompare(b.row.name, "pt");
+      else if (niSortKey === "escalao") c = (a.row.escalao || "").localeCompare(b.row.escalao || "", "pt");
+      else if (niSortKey === "club") c = (a.row.club || "").localeCompare(b.row.club || "", "pt");
+      else if (niSortKey === "voltas") c = a.row.voltas - b.row.voltas;
+      else if (niSortKey === "total") c = a.row.total - b.row.total;
+      else c = a.pos - b.pos;
+      return mult * c || a.pos - b.pos;
+    });
+  }, [rowsNaoInscritos, filterSex, filterRegiao, filterHcp, hcpFilterMax, filterEsc, filterName, niSortKey, niSortDir]);
 
 
 
@@ -1207,23 +1224,23 @@ export function PJARankingView({
           <table className="cs-table" style={{ fontSize: "var(--fs-12)" }}>
             <thead>
               <tr>
-                <th style={{ padding: "6px 8px", textAlign: "left" }}>#</th>
-                <th style={{ padding: "6px 8px", textAlign: "left" }}>Jogador</th>
-                <th style={{ padding: "6px 8px", textAlign: "center" }}>Esc.</th>
-                <th style={{ padding: "6px 8px", textAlign: "left" }}>Clube</th>
-                <th style={{ padding: "6px 8px", textAlign: "center" }}>Voltas</th>
-                <th style={{ padding: "6px 8px", textAlign: "center", color: "var(--color-warn-dark)", fontWeight: 800 }}>Total pts</th>
+                <CSortTh k="rank" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "left" }}>#</CSortTh>
+                <CSortTh k="name" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "left" }}>Jogador</CSortTh>
+                <CSortTh k="escalao" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "center" }}>Esc.</CSortTh>
+                <CSortTh k="club" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "left" }}>Clube</CSortTh>
+                <CSortTh k="voltas" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "center" }}>Voltas</CSortTh>
+                <CSortTh k="total" s={niSortKey} d={niSortDir} on={niToggleSort} style={{ padding: "6px 8px", textAlign: "center", color: "var(--color-warn-dark)", fontWeight: 800 }}>Total pts</CSortTh>
               </tr>
             </thead>
             <tbody>
-              {sortedNaoInscritos.map((row, idx) => {
+              {sortedNaoInscritos.map(({ row, pos }) => {
                 const isSel = selectedKey === row.key;
                 return (
                 <tr key={row.key}
                     className={isSel ? "row-selected" : undefined}
                     onClick={() => setSelectedKey(isSel ? null : row.key)}
                     style={{ opacity: isSel ? 1 : 0.75, cursor: "pointer" }}>
-                  <td style={{ padding: "5px 8px" }}>{idx + 1}</td>
+                  <td style={{ padding: "5px 8px" }}>{pos}</td>
                   <td style={{ padding: "5px 8px" }}>
                     <PName name={row.name} fedCode={row.fedCode} playersDB={playersDB} sex={row.sex} />
                   </td>
