@@ -75,7 +75,7 @@
   «a carregar» até chegarem as inscrições (`fpg-admissions-draws.json`) — os
   torneios por jogar (a Final de 07/11) só entram na lista com elas, e o shell
   escolhia antes o penúltimo. Teste com os dados reais:
-  `src/data/drive/__tests__/driveOpenLatest.test.ts` (o `realDataFetch.ts` põe o
+  `src/data/drive/__tests__/driveOpenLatest.realdata.ts` (o `realDataFetch.ts` põe o
   `fetch` a ler `public/data`).
 
 - **O URL é a única fonte de verdade (decisão A, 22/10/2026;
@@ -99,7 +99,7 @@
     (`legacyDriveT`); `…_R1`/`…_Total` abrem o torneio; `s12v=list` abre o Ranking.
   - Torneios com várias voltas ficam com o tcode da FPG (acabou a reescrita
     para `…_R1`, que saía da lista antiga `buildGroups`, apagada).
-  - Testes: `src/data/drive/__tests__/driveUrl.test.ts` (com os dados reais).
+  - Testes: `src/data/drive/__tests__/driveUrl.realdata.ts` (com os dados reais).
 
 - **«Classificação» por escalão (decisão H, 22/10/2026)** —
   `driveEntriesByEsc`/`filterTournByEsc` (`driveSub12.ts`): no Tour e no AQUAPOR
@@ -145,4 +145,4 @@
   `fpg-admissions-draws-drive.json` (~1,5 MB, `scripts/build-drive-admissions.js`)
   em vez do ficheiro de toda a FPG (~12 MB); `loadFpgAdmissionsDraws({ url })`
   guarda uma cache por ficheiro. Testes: `build-federados-lite.test.js`,
-  `driveAdmissionsSubset.test.ts`, `driveProgressive.test.ts`.
+  `driveAdmissionsSubset.test.ts`, `driveProgressive.realdata.ts`.

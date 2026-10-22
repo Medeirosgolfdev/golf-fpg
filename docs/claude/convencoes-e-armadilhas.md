@@ -332,6 +332,8 @@ testes «skipped».
 
 ### Guardas automáticas (21/10/2026)
 
+- **Testes da /drive com os dados reais** (22/10/2026): `src/data/drive/__tests__/*.realdata.ts` (+ `pages/drive/__tests__/driveRanking.realdata.ts`), todos importados por `driveRealData.test.ts` — um só processo; `realDataFetch.ts` põe o `fetch` a ler `public/data`. Em ficheiros separados (um processo cada, ~25 MB de JSON cada) davam timeouts a outros testes. Teste novo com dados reais → mais um `.realdata.ts` importado aí.
+
 - `scripts/css-vars.test.js` — falha se o `src` usar um `var(--x)` sem definição
   (em `tokens.css`/`App.css` ou num style inline). Token novo vai para o
   `tokens.css`; nada de fallbacks com hex (`var(--x, #fff)`).
