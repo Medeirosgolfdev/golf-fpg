@@ -437,6 +437,7 @@ const BASE_CONFIG: CircuitConfig = {
   routeBase: "/uskids",
   title: "🏌️ USKids",
   grouping: "month-year",
+  escalaoSource: "uskids",
   olderYearsByYear: true,
   filters: { search: true },
   editionKey: (e) => tournamentFamilyKey(e.name),

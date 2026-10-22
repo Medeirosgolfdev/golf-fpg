@@ -205,6 +205,7 @@ export const FPG_CONFIG: CircuitConfig = {
   routeBase: "/FPG",
   title: "🇵🇹 FPG",
   grouping: "month-year",
+  escalaoSource: "fpg",
   filters: {
     search: true,
     year: true,
@@ -220,6 +221,7 @@ export const CLUBES_CONFIG: CircuitConfig = {
   ...FPG_CONFIG,
   title: "🏅 Clubes",
   grouping: "year",
+  escalaoSource: "fpg",
   filters: {
     search: true,
     year: true,

@@ -16,6 +16,7 @@
  * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
  */
 
+import { escalaoFilterOptions, escaloesCanon } from "../../data/model/escalao";
 import { roundDrawNode, divisionResultsNode } from "./divisionPieces";
 import ManuelResultPills from "../ManuelResultPills";
 import AdmissionsTab from "../AdmissionsTab";
@@ -297,14 +298,16 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   const YEAR_PILL_LIMIT = 5;
   const recentYears = useMemo(() => years.slice(0, YEAR_PILL_LIMIT), [years]);
   const oldCutoff = useMemo(() => (years.length > YEAR_PILL_LIMIT ? years[YEAR_PILL_LIMIT - 1] : null), [years]);
+  // Filtro «Escalão» pela tabela única (22/10/2026): «Sub 10», «Sub-10», «U10»
+  // e «S10» são UMA opção; nomes sem escalão não criam uma opção vazia.
+  const entryEscNames = (e: CircuitEntry): string[] =>
+    e.escaloes?.length ? e.escaloes
+    : e.divisions ? e.divisions.map(d => d.escalao)
+    : (e.escalao ? [e.escalao] : []);
   const escaloes = useMemo(
-    () => [...new Set(entries.flatMap(e =>
-      e.escaloes?.length ? e.escaloes
-      : e.divisions ? e.divisions.map(d => d.escalao)
-      : (e.escalao ? [e.escalao] : [])))]
-      // numeric-aware: Sub-8 < Sub-10 < Sub-12 (sort alfabético punha Sub-8 no fim)
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true })),
-    [entries],
+    () => escalaoFilterOptions(entries.flatMap(e => [...entryEscNames(e), ...(e.divisions ?? []).map(d => d.escalao)]), config.escalaoSource),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [entries, config.escalaoSource],
   );
   const sources = useMemo(
     () => [...new Set(entries.map(e => e.source).filter((s): s is string => !!s))].sort(),
@@ -332,7 +335,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       if (toggles.has("manuel") && entryManuelState(e) === false) return false;
       if (toggles.has("pt") && entryPtState(e) === false) return false;
       if (toggles.has("results") && e.hasResults === false) return false;
-      if (flt.escalao && fEsc !== "all" && !(e.escalao === fEsc || (e.escaloes ?? []).includes(fEsc) || (e.divisions ?? []).some(d => d.escalao === fEsc))) return false;
+      if (flt.escalao && fEsc !== "all"
+        && ![...entryEscNames(e), ...(e.divisions ?? []).map(d => d.escalao)]
+          .some(n => escaloesCanon(n, config.escalaoSource).includes(fEsc))) return false;
       if (flt.sex && fSex !== "all" && !(e.sex === fSex || e.sex === "Mixed" || (e.divisions ?? []).some(d => d.sex === fSex || d.sex === "Mixed"))) return false;
       if (q) {
         const hay = normName(`${e.name} ${e.course ?? ""}`);
@@ -340,7 +345,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
       }
       return true;
     });
-  }, [entries, search, fYear, fEsc, fSex, fSource, fLiga, fIntl, oldCutoff, toggles, flt]);
+  }, [entries, search, fYear, fEsc, fSex, fSource, fLiga, fIntl, oldCutoff, toggles, flt, config.escalaoSource]);
 
   // ── Selecção do torneio activo ──────────────────────────────────────
   const [localId, setLocalId] = useState<string | null>(null);

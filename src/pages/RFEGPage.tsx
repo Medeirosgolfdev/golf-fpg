@@ -426,6 +426,7 @@ const RFEG_CONFIG: CircuitConfig = {
   title: "🇪🇸 España",
   color: "var(--color-rfeg-red)",
   grouping: "year",
+  escalaoSource: "es",
   sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)" },
   sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },

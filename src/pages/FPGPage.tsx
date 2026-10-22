@@ -414,6 +414,7 @@ function Content() {
   const shellConfig: CircuitConfig = isClubesView ? CLUBES_CONFIG : {
     ...FPG_CONFIG,
     grouping: seriesFilter === "" ? "month-year" : "year",
+    escalaoSource: "fpg",
     title: seriesFilter === "santo" ? "⛳ Santo da Serra"
       : seriesFilter === "" ? "🇵🇹 FPG — Todos"
       : isJovensView ? "🏆 Jovens" : "🏆 PJA",

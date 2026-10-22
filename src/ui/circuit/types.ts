@@ -302,6 +302,10 @@ export interface CircuitConfig {
   sourceLabels?: Record<string, string>;
   /** Labels legíveis por liga (FFG: ligue → nome da região) no dropdown. */
   ligaLabels?: Record<string, string>;
+  /** De que federação são os nomes de escalão (resolve «Benjamin», «Junior»,
+   *  «Juvenil», que mudam de país para país) — filtro «Escalão» pela tabela
+   *  única de `src/data/model/escalao.ts`. */
+  escalaoSource?: "fpg" | "ffg" | "es" | "uskids";
   /** Itens especiais fixos no topo da sidebar. */
   specialItems?: CircuitSpecialItem[];
 

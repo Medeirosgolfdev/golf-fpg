@@ -260,6 +260,7 @@ function FFGShellContent() {
       // 1265 entradas do portal — presente mas invisível. A fonte continua
       // legível na pill de cada linha e filtrável no dropdown "Fonte".
       grouping: "year",
+      escalaoSource: "ffg",
       sourceColors: { ffgres: "var(--color-ffg-dark)", lgpidf: C.ffgSrc.lgpidf, gg: C.ffgSrc.gg },
       sourceLabels: { ffgres: "FFG Officiel", lgpidf: "LGPIDF", gg: "GolfGenius" },
       ligaLabels: FFG_LIGUE_LABELS,
