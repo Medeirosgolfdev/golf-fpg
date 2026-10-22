@@ -1,17 +1,6 @@
 {
   "torneios": [
     {
-      "t": 23089,
-      "name": "Australian Challenge 2026",
-      "date_inicio": "9/21/2026",
-      "date_fim": "9/22/2026",
-      "rondas": 2,
-      "campo": "Heritage Golf and Country Club - St John",
-      "fee_18": "225.00",
-      "tour": "International Championships Tour",
-      "type": 8
-    },
-    {
       "t": 22959,
       "name": "International Teen Series at Somabay Golf (EG)",
       "date_inicio": "9/25/2026",
@@ -2146,6 +2135,17 @@
       "type": 8
     },
     {
+      "t": 23840,
+      "name": "Punta Tiburon Country Club (Tour Championship)",
+      "date_inicio": "3/14/2027",
+      "date_fim": "3/14/2027",
+      "rondas": 1,
+      "campo": "Punta Tiburon Country Club",
+      "fee_18": "45.00",
+      "tour": "Veracruz (MX) Tour",
+      "type": 6
+    },
+    {
       "t": 23775,
       "name": "Al Hamra Golf Club (Tour Championship)",
       "date_inicio": "3/21/2027",
@@ -2179,19 +2179,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-21T12:48:09.299Z",
-  "varredura_max_t": 23832,
+  "gerado_em": "2026-10-22T12:51:16.938Z",
+  "varredura_max_t": 23840,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 48,
+    "pedidos": 49,
     "novos": 1,
     "buracos_revistos": 1,
-    "catalogo": 1526,
+    "catalogo": 1534,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23832,
-  "fronteira_avancou_em": "2026-10-21",
+  "fronteira_max_t_visto": 23840,
+  "fronteira_avancou_em": "2026-10-22",
   "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-10-21"
+  "ultima_descoberta": "2026-10-22"
 }
