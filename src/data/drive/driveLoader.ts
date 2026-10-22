@@ -15,7 +15,7 @@ import type { DataSource } from "../../ui/DataSources";
 import { cachedFetchJson } from "../fetchCache";
 import { fpgFileUrls, loadFpgFilesIndex } from "../fpgFilesIndex";
 import { normalizePlayer } from "../../utils/playerUtils";
-import { loadPlayers } from "../loader";
+import { loadFpgPlayersDB } from "../fpgPlayersDB";
 import { expandMultiRound } from "../../ui/driveUtils";
 import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../nacional2026Loader";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
@@ -71,7 +71,8 @@ export async function loadDriveMonthly(prefix: DriveMonthlyPrefix, opts: DriveMo
 
 /** Tudo o que a /drive precisa para arrancar: os mensais do Drive e do AQUAPOR
  *  (lista crua, por ordem do índice), a lista com as voltas expandidas
- *  (R1/R2/Resumo) e o `players.json`. */
+ *  (R1/R2/Resumo) e o playersDB da FPG (`loadFpgPlayersDB`: com as
+ *  nacionalidades — bandeiras —, decisão F). */
 export interface DriveDataLoad {
   raw: Tournament[];
   tournaments: Tournament[];
@@ -82,10 +83,10 @@ export async function loadDriveData(): Promise<DriveDataLoad> {
   const [driveR, aqR, pp] = await Promise.all([
     loadDriveMonthly("drive-data"),
     loadDriveMonthly("aquapor-data", { forceSeries: "aquapor" }),
-    loadPlayers().catch(() => ({})),
+    loadFpgPlayersDB().catch(() => ({} as PlayersDB)),
   ]);
   const raw = [...driveR.tournaments, ...aqR.tournaments];
-  return { raw, tournaments: expandMultiRound(raw), meta: [...driveR.meta, ...aqR.meta], players: pp as PlayersDB };
+  return { raw, tournaments: expandMultiRound(raw), meta: [...driveR.meta, ...aqR.meta], players: pp };
 }
 
 /** Classificação por equipas de uma Final (`drive-equipas.json`, lida do PDF oficial). */

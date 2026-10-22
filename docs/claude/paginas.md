@@ -118,3 +118,7 @@
   A aba «Época» de cada torneio abre com a classificação acumulada das etapas da
   época (série/zona/ano), no escalão aberto (Challenge) ou todos (com coluna
   Escalão).
+- **Bandeiras (decisão F, 22/10/2026)** — o playersDB da /drive é o da /FPG
+  (`loadFpgPlayersDB`, `src/data/fpgPlayersDB.ts`): `players.json` +
+  nacionalidades dos federados estrangeiros (bandeira antes do nome, nascimento
+  e sexo) + os seguidos no /kids (↗).
