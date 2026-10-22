@@ -100,7 +100,10 @@ const FALLBACK_DATES = {
   "job:2025": { dateStart: "2025-01-03", dateEnd: "2025-01-06" },
   "job:2026": { dateStart: "2026-01-03", dateEnd: "2026-01-06" },
   // Daily Mail WJGC 2025 (BJGT) — sem datas de ronda nos ficheiros bluegolf.
-  "bjgt:2025": { dateStart: "2025-04-05", dateEnd: "2025-04-06" },
+  // Datas das voltas oficiais dos portugueses na FPG (22/10/2026): Raparigas
+  // 10-11 a 19-21/02 (Sabrina Crisóstomo), Rapazes 10-11 a 25-27/02 (Manuel).
+  // Antes estava 05-06/04, sem fonte.
+  "bjgt:2025": { dateStart: "2025-02-19", dateEnd: "2025-02-27" },
 };
 
 /* ── Meses em inglês (round.date dos JobFiles/doral: "Fri, December 19") ── */
