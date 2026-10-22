@@ -143,6 +143,30 @@ if (args.includes("--strict-cgss") && !/santo da serra/i.test(draw.campo || ""))
   process.exit(3);
 }
 
+// Prova INTERNACIONAL jogada no Santo da Serra (ex.: Faldo Junior Tour Madeira,
+// 16-18/10/2026): o clube manda o draw por email como os seus, mas a prova vive
+// no MAJOR (`public/data/{slug}_{ano}.json`, do GolfGenius). A 22/10/2026 o
+// «Draw dia 3» do Faldo entrou como 007/90078 na /FPG — draw perdido em
+// duplicado. Se há um ficheiro MAJOR no Santo da Serra que cobre a data do
+// draw, não se grava nada (exit 2 = «já lá está», o inbox dá-o por tratado).
+if (args.includes("--strict-cgss") && draw.date) {
+  const ano = String(draw.date).slice(0, 4);
+  const dir = path.join(REPO, "public", "data");
+  for (const f of fs.readdirSync(dir).filter(f => f.endsWith(`_${ano}.json`))) {
+    let m;
+    try {
+      const fp = path.join(dir, f);
+      if (fs.statSync(fp).size > 20e6) continue;
+      m = JSON.parse(fs.readFileSync(fp, "utf8"));
+    } catch { continue; }
+    if (!m || !m.startDate || !/santo da serra/i.test(String(m.course || ""))) continue;
+    if (draw.date >= m.startDate && draw.date <= (m.endDate || m.startDate)) {
+      console.log(`[add] prova internacional no MAJOR (${f}: ${m.tournament}, ${m.startDate}–${m.endDate}) — o draw não entra na /FPG. (exit 2)`);
+      process.exit(2);
+    }
+  }
+}
+
 /* ── detectar se o PDF traz coluna de clube real ─────────────────────────
  * O extractor mete "Santo da Serra" por defeito quando a coluna não existe —
  * se ≥95% vier assim, tratamos como SEM clube (clube:null, matching só pela
