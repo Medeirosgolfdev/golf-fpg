@@ -41,7 +41,7 @@ import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab"
 import TournamentGrid from "../ui/TournamentGrid";
 import { expandMultiRound, isDNS } from "../ui/driveUtils";
 import CircuitShell from "../ui/circuit/CircuitShell";
-import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders } from "./drive/driveCircuitData";
+import { buildDriveEntries, DRIVE_CONFIG, mergeDrivePlaceholders, shortCampo } from "./drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import MasterDetail from "../ui/MasterDetail";
 import { loadFpgFilesIndex, fpgFileUrls } from "../data/fpgFilesIndex";
@@ -51,11 +51,8 @@ import type {
   Player,
   DriveData,
   TStats,
+  Sub12Row,
 } from "../ui/driveTypes";
-
-/* ── Types ── */
-
-/* ── Normalizer: imported from playerUtils ── */
 
 function normalizeTournament(t: any): Tournament {
   return { ...t, players: (t.players || []).map(normalizePlayer) };
@@ -63,25 +60,14 @@ function normalizeTournament(t: any): Tournament {
 
 /* ── Constants ── */
 const REGIONS = [
-  { id: "norte",   label: "Norte",   emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
-  { id: "tejo",    label: "Tejo",    emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
-  { id: "sul",     label: "Sul",     emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
-  { id: "madeira", label: "Madeira", emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
-  { id: "acores",  label: "Açores",  emoji: "📍", color: "var(--accent)", bg: "var(--accent-light)" },
+  { id: "norte",   label: "Norte",   emoji: "📍" },
+  { id: "tejo",    label: "Tejo",    emoji: "📍" },
+  { id: "sul",     label: "Sul",     emoji: "📍" },
+  { id: "madeira", label: "Madeira", emoji: "📍" },
+  { id: "acores",  label: "Açores",  emoji: "📍" },
 ];
 /** Remove o sufixo de ronda/total do tcode ("X_R2"/"X_Total" → "X"). */
 const stripRoundSuffix = (tc: string | null | undefined) => (tc || "").replace(/_R\d+$|_Total$/, "");
-
-/* ── Rankings oficiais FPG (scoring.fpg.pt) ──
-   Todos hospedados no "club" universal 988, com ack fixo.
-   • Drive Tour:      RDT{R}{YY}            — por região (R: M/S/T/N/A)
-   • Drive Challenge: DC_{REG}M{NN}G{YY}    — por região+escalão (Gross)
-   Só os códigos de região do Challenge para a Madeira (MAD) estão confirmados;
-   acrescentar os restantes aqui quando se souberem. */
-
-/* ── Helpers ── */
-
-/** URL público do torneio em scoring.datagolf.pt */
 
 function computeStats(p: Player, date?: string | null): TStats | null {
   if (isDNS(p)) return null;
@@ -247,10 +233,6 @@ function filterTournByEsc(
     return { ...t, players: sorted, playerCount: sorted.length };
   }).filter(Boolean) as Tournament[];
 }
-const shortCampo = (c: string) =>
-  c?.replace(/Vilamoura - /g, "").replace(/ \(.*\)/, "").replace(/ - .*/, "")
-    .replace(/ Golf/g, "").replace(/Santo da Serra.*/, "Stº Serra") || "";
-
 /** A display group: either a single tournament or a multi-round set (R1+R2+Total) */
 interface TournGroup {
   key: string;
@@ -403,30 +385,13 @@ function buildGroups(tournaments: Tournament[]): TournGroup[] {
 /* ═══════════════════════════════════════════════════════
    SUB-12: Types & Data
    ═══════════════════════════════════════════════════════ */
-interface TournResult {
-  tournKey: string; tournName: string; tournShort: string;
-  date: string; dateSort: number; campo: string; region: string;
-  series: "tour" | "challenge" | "aquapor";
-  gross: number; toPar: number; sd: number | null;
-  pos: number | string | null; totalPlayers: number;
-  /** Pontos oficiais desta prova (já com empates partilhados; nas Finais é o
-   *  valor SIMPLES — o ×1.5 é aplicado pelo rankingTotal). */
-  pts: number;
-  nholes: number; birdies: number; pars: number; bogeys: number;
-}
-interface Sub12Row {
-  fed: string; name: string; club: string; region: string; sex: string; hcp: number | null;
-  results: TournResult[];
-  avgGross: number | null; avgSD: number | null; bestGross: number | null; bestSD: number | null; tourneiosPlayed: number;
-  totalBird: number; totalPars: number; totalBog: number; totalPts: number;
-}
 type Sub12SeriesTab = "tour" | "challenge" | "aquapor";
 type Sub12ViewTab = "grid" | "ranking" | "evolucao";
 
-const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; color: string; bg: string; holes: string }[] = [
-  { key: "tour",      label: "Tour",      emoji: "🏌️", color: "var(--color-teal)", bg: C.bgSuccessSubtle, holes: "18h" },
-  { key: "challenge", label: "Challenge", emoji: "⚡",  color: C.chartPurple, bg: "var(--bg-purple)", holes: "9h"  },
-  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", color: "var(--chart-5)", bg: "var(--bg-info-strong)", holes: "18h" },
+const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; holes: string }[] = [
+  { key: "tour",      label: "Tour",      emoji: "🏌️", holes: "18h" },
+  { key: "challenge", label: "Challenge", emoji: "⚡",  holes: "9h"  },
+  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", holes: "18h" },
 ];
 const CHART_COLORS = C.charts;
 const SERIE_COLORS: Record<string, string> = { tour: "var(--color-teal)", challenge: C.chartPurple, aquapor: "var(--chart-5)" };
@@ -1014,16 +979,6 @@ function DriveContent() {
         }]);
       });
   }, []);
-  useEffect(() => {
-    if (!data || admDrawsIdx.size === 0) return;
-    for (const t of data.tournaments) {
-      const ad = admDrawsIdx.get(`${t.ccode}-${(t as any).tcode}`);
-      if (ad) {
-        (t as any)._admissions = ad.admissions;
-        (t as any)._draws = ad.draws;
-      }
-    }
-  }, [data, admDrawsIdx]);
 
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
   // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
@@ -1486,16 +1441,6 @@ function DriveContent() {
             </>)}
           </>)}
   </>);
-  const driveTrail = (<>
-
-          {/* Contadores à direita */}
-          {navMode === "torneios" && data.totalScorecards > 0 && (
-            <span className="chip" style={{ flexShrink: 0, background: "var(--bg-success-strong)", color: "var(--color-good-dark)" }}>
-              📊 {data.totalScorecards} sc
-            </span>
-          )}
-          {data.lastUpdated && <span className="muted fs-10 shrink-0"  style={{ whiteSpace: "nowrap" }}>{data.lastUpdated}</span>}
-  </>);
   const driveBelow = (<>
         {/* Linha 2: regiões + escalões. Quebra para a linha seguinte (todos os
             botões ao mesmo nível, alinhados à esquerda) — antes, em desktop,
@@ -1564,7 +1509,6 @@ function DriveContent() {
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           {driveLead}
           <div className="flex-1" style={{ minWidth: 8 }} />
-          {driveTrail}
         </Toolbar>
       </div>
       )}
@@ -1676,7 +1620,7 @@ function DriveContent() {
           MODO NORMAL (Tour / Challenge / AQUAPOR)
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
-        <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, trail: driveTrail, below: driveBelow, hideTitle: true }}>
+        <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, below: driveBelow, hideTitle: true }}>
         <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
           selectedId={selectedDriveId ?? undefined}
           onSelectEntry={(e) => setSelectedDriveId(e.id)} />
