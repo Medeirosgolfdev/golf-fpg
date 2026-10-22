@@ -13,6 +13,8 @@
 import type { Tournament, Player, RoundScore } from "./fpgTypes";
 import { isPtCountry } from "../utils/flagUtils";
 import { isNoCardGross } from "./intlCommon";
+import { withTournamentModel } from "./model/tournament";
+import { playerIdentity } from "./model/identity";
 
 /** Campo de uma volta: par por buraco e, quando a fonte os dá, SI, metros, tee e CR/Slope. */
 export interface IntlCourse {
@@ -162,9 +164,12 @@ export function buildFPGTournament(
       _roundsPlayed: p.roundsPlayed ?? played,
       _isPortuguese: p.isPortuguese === null ? undefined : (p.isPortuguese ?? isPtCountry(p.country)),
       ...p.extra,
+      // Modelo comum (src/data/model): país, sexo, nascimento, escalão.
+      identity: playerIdentity({ country: p.country, ...p.extra }),
     } as unknown as Player;
   });
-  return {
+  // Formato, estado, buracos, cut e origem do par (src/data/model).
+  return withTournamentModel({
     name: meta.name,
     tcode: meta.tcode,
     date: meta.date ?? "",
@@ -173,5 +178,5 @@ export function buildFPGTournament(
     playerCount: out.length,
     players: out,
     ...opts.extra,
-  } as Tournament;
+  } as Tournament);
 }

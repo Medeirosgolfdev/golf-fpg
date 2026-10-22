@@ -83,6 +83,22 @@ export function tournamentParOrigin(t: Pick<Tournament, "players">): ParOrigin {
  *  cut, linha (pior acumulado de quem passou) e nº de eliminados. null = sem
  *  cut (ou volta a decorrer, onde não se procura). */
 export function tournamentCut(t: Tournament): CutInfo | null {
+  // O expandMultiRound é caro (~50 ms nos ~760 torneios FPG) e as páginas
+  // reconstroem as entradas várias vezes com os MESMOS torneios: memo por objecto.
+  const hit = cutMemo.get(t);
+  if (hit !== undefined) return hit;
+  const c = computeCut(t);
+  cutMemo.set(t, c);
+  return c;
+}
+const cutMemo = new WeakMap<Tournament, CutInfo | null>();
+
+function computeCut(t: Tournament): CutInfo | null {
+  // Atalho com as mesmas condições do `expandMultiRound` (sem o correr): uma
+  // volta só, ou nenhum jogador com mais de uma → sem cut; volta aberta → não
+  // se procura. Poupa o expandMultiRound na grande maioria dos torneios.
+  if ((t.rounds || 1) <= 1 || t._openRound != null) return null;
+  if (!(t.players || []).some((p) => (p.roundScores?.length ?? 0) > 1)) return null;
   const tot = expandMultiRound(t).find((x) => (x as { _isTotal?: boolean })._isTotal) as
     (Tournament & { _cutAfterRound?: number }) | undefined;
   const n = tot?._cutAfterRound;

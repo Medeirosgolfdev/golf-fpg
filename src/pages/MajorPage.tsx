@@ -13,6 +13,7 @@
  *
  * As rotas antigas /doral e /bjgt redireccionam para /major (ver App.tsx).
  */
+import { withDivisionModel } from "../data/model/division";
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -198,13 +199,15 @@ const MAJOR_CONFIG: CircuitConfig = {
 
 /** Devolve o `loadDivisions` adequado à fonte do torneio do catálogo. */
 function loadDivisionsFor(cat: MajorCatalogEntry): () => Promise<CircuitDivision[]> {
-  return async () => {
+  const load = async (): Promise<CircuitDivision[]> => {
     if (isBlueGolfSource(cat.source)) return blueGolfDivisions(cat.year, await loadBlueGolfDefs(cat.source, cat.year));
     if (cat.source === "doral") return doralDivisions(cat.year, await loadDoralEntries(cat.year));
     const data = await loadMajorJobData(cat);
     if (!data) return [];
     return data.def.layout === "job" ? jobDivisions(data) : ggJobDivisions(data);
   };
+  // Modelo comum (src/data/model): formato, estado, buracos, cut, par.
+  return async () => (await load()).map(withDivisionModel);
 }
 
 /** Entry LEVE (só metadata do catálogo) — o detalhe carrega lazy no shell. */

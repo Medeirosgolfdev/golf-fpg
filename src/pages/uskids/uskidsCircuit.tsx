@@ -13,6 +13,8 @@
  * As edições anteriores de public/data/uskids-edicoes/ entram como entradas
  * só do `pastEditionsPool` (não aparecem na barra lateral).
  */
+import { withDivisionModel } from "../../data/model/division";
+import { playerIdentity } from "../../data/model/identity";
 import { useContext, useMemo } from "react";
 import { TournamentDetail, type TournamentDetailProps } from "../fpg/TournamentDetail";
 import type { Tournament as TATournament } from "../FPGPage";
@@ -109,6 +111,8 @@ export function escalaoToTournament(
           fedCode: fpgFed,
           roundScores: [],
           _wd: false,
+          // Modelo comum (src/data/model): país, sexo e escalão do jogador.
+          identity: playerIdentity({ pais: j.pais }, { sex: sexoEscalao(e.nome), escalao: e.nome, escalaoSource: "uskids" }),
         });
       }
       const p = playerMap.get(key)!;
@@ -344,7 +348,8 @@ export function uskidsDivisions(campo: Torneio | null, res: TorneioResult | null
       renderFull: () => <TabCampoDetalhe torneio={campo} />,
     });
   }
-  return divs;
+  // Modelo comum (src/data/model): formato, estado, buracos, cut, par.
+  return divs.map(withDivisionModel);
 }
 
 /** Escalão que abre nos Resultados: o do Manuel, senão o primeiro com resultados. */

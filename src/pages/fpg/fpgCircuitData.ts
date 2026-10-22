@@ -23,6 +23,7 @@ import type { CircuitEntry, CircuitConfig, CircuitDivision, CircuitSex } from ".
 import { tournamentHasManuel } from "../../data/fpgUtils";
 import { clubesHasManuel, clubesIndividualTournament } from "../../data/clubesFormats";
 import { parseTournKey } from "../../utils/format";
+import { withDivisionModel } from "../../data/model/division";
 
 /** Chave de membro = chave de URL do escalão (`parseTournKey` parte no 1º "-"). */
 export function fpgMemberKey(t: FPGTournament): string {
@@ -83,7 +84,7 @@ export function buildFpgDivisions(group: EventGroup): CircuitDivision[] {
       hasManuel: tournamentHasManuel(t),
       results: t,
     };
-  });
+  }).map(withDivisionModel);
 }
 
 /** Converte os EventGroups da FPG em entries do CircuitShell. */
@@ -158,13 +159,14 @@ export function buildClubesEntries(clubes: FPGTournament[]): CircuitEntry[] {
       playerCount: results.playerCount || results.players.length,
       divisionCount: 1,
       hasManuel,
-      divisions: [{
+      // Modelo: Clubes são por equipas — matchplay-team (3-way) ou stroke-team.
+      divisions: [withDivisionModel({
         key,
         escalao: escalao ?? "",
         tabLabel: escalao ?? t.name,
         hasManuel,
         results,
-      }],
+      })],
     };
   });
 }

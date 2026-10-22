@@ -12,6 +12,7 @@
  *
  * O GJGL só expõe escalões U14, U18, U23. Manuel (12y) compete em U14.
  */
+import { withDivisionModel } from "../data/model/division";
 import TotalsResumo from "../ui/circuit/TotalsResumo";
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -228,7 +229,7 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
     .then(([d, allOvr]) => {
       if (!d || !d.divisions?.length) return [];
       const ovr = allOvr[slug] ?? null;
-      return d.divisions.map((div): CircuitDivision => {
+      return d.divisions.map((div): CircuitDivision => withDivisionModel(((): CircuitDivision => {
         const tournament = divisionToTournament(d, div, `${d.tournament} — U${div.ak}`, ovr);
         const hasHoleByHole = (tournament.rounds ?? 0) > 0 && tournament.players.length > 0;
         const hasManuel = div.players.some((p) => isM(p.name));
@@ -251,7 +252,7 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
           customResults: <GjglTotals div={div} />,
           totals: gjglTotais(div),
         };
-      });
+      })()));
     })
     .catch(() => []);
 }

@@ -16,6 +16,7 @@
  *
  * Tirado da FFGPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
+import { withDivisionModel } from "../model/division";
 import type { ReactNode } from "react";
 import { cachedFetchJson, invalidateCache } from "../fetchCache";
 import { isManuelByName as isM } from "../../constants/manuel";
@@ -74,7 +75,7 @@ export async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<Circu
       }
     } catch { /* GG opcional */ }
   }
-  return td.details.series.map((s): CircuitDivision => ({
+  return td.details.series.map((s): CircuitDivision => withDivisionModel({
     key: s.serieId,
     escalao: divisionLabel(s.label || s.serieId),
     tabLabel: divisionLabel(s.label || s.serieId),
@@ -127,7 +128,7 @@ export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament, R: FfgRen
   const hasManuel = data.players.some((p) => isM(p.name));
   const label = ffgGgEscalaoLabel(meta, data);
   const withDraw = (data.draws ?? []).filter((r: FFGDrawRound) => r.groups.length);
-  return {
+  return withDivisionModel({
     key: `${meta.year}_${meta.slug}`,
     escalao: label,
     tabLabel: label,
@@ -149,7 +150,7 @@ export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament, R: FfgRen
           render: () => R.draw(ggDrawToFpgDraw(r), r.round, r.dateIso, { fed: true, nasc: true, esc: true }),
         }))
       : undefined,
-  };
+  });
 }
 
 function ggLinks(meta: CatalogEntry, data: FFGTournament): CircuitLink[] {
@@ -254,7 +255,7 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
     divisionCount: 1,
     escaloes: ffgEscaloesOfTournament(data.tournament || meta.tournament, meta.divisions ?? []),
     hasManuel,
-    divisions: [{
+    divisions: [withDivisionModel({
       key: "main",
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
@@ -269,7 +270,7 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
         ? [{ key: "course-map", label: "📐 Mapa do campo", content: R.lgpidfCourseMap(data) }]
         : undefined,
       links: (data.allPdfs ?? []).map((p) => ({ label: `${p.kind}${p.category ? ` · ${p.category}` : ""}`, url: p.url, icon: "📄", title: p.filename })),
-    }],
+    })],
   };
 }
 

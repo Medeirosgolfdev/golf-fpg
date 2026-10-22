@@ -8,6 +8,7 @@
  * fonte, conversão para o formato FPG, escalões, bandeiras, inscrições, draws)
  * vivem em src/data/rfeg/ desde 21/10/2026; aqui fica o que se desenha.
  */
+import { withDivisionModel } from "../data/model/division";
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import DetailHeader from "../ui/DetailHeader";
@@ -413,10 +414,11 @@ async function rfegLoadDivisions(
       tabLabel: `${escLbl} ${sx}`,
       results: { ...results, players: plist, playerCount: plist.length },
     });
-    return [mkSex("M", d.bySex.M), mkSex("F", d.bySex.F)];
+    return [mkSex("M", d.bySex.M), mkSex("F", d.bySex.F)].map(withDivisionModel);
   }
 
-  return [division];
+  // Modelo comum (src/data/model): formato, estado, buracos, cut, par.
+  return [withDivisionModel(division)];
 }
 
 const RFEG_CONFIG: CircuitConfig = {

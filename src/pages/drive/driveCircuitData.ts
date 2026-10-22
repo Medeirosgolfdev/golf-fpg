@@ -20,6 +20,7 @@ import type { Tournament as FPGTournament } from "../../data/fpgTypes";
 import { ESCALOES_DRIVE as DRIVE_ESCALOES } from "../../constants/escaloes";
 import type { CircuitEntry, CircuitConfig, CircuitDivision } from "../../ui/circuit/types";
 import { isManuelByName } from "../../constants/manuel";
+import { withDivisionModel } from "../../data/model/division";
 
 /** Ordem canónica de escalões do Drive (para ordenar tabs/divisões). */
 
@@ -248,11 +249,16 @@ function tournamentHasManuel(t: FPGTournament): boolean {
 
 /** Constrói as divisões (tabs de escalão/ronda) de um grupo. */
 export function buildDriveDivisions(group: DriveGroup): CircuitDivision[] {
+  // Modelo comum (src/data/model): formato, estado, buracos, cut, par.
+  return driveDivisions(group).map(withDivisionModel);
+}
+
+function driveDivisions(group: DriveGroup): CircuitDivision[] {
   if (group.subGroups) {
     // Evento com sub-grupos (AQUAPOR M/S): cada sub-grupo constrói a sua
     // divisão pela via normal (preservando multi-ronda) e só troca de rótulo.
     return group.subGroups.map((sg, i): CircuitDivision => {
-      const [div] = buildDriveDivisions({ ...sg, subGroups: undefined });
+      const [div] = driveDivisions({ ...sg, subGroups: undefined });
       return {
         ...div,
         key: sg.divLabel || `d${i}`,

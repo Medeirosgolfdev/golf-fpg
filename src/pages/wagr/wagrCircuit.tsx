@@ -13,6 +13,7 @@
  *   Nacional de Jovens com 60 inscritos pode dar 4 linhas — daí o aviso no
  *   `metaLine`, para não se ler a tabela como o campo todo.
  */
+import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
 import TotalsResumo from "../../ui/circuit/TotalsResumo";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
@@ -67,7 +68,7 @@ export const wagrPlayerUrl = (link: string) => `${WAGR_SITE}/playerprofile/${lin
 async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[]> {
   const ev = await cachedFetchJson<WagrEventFull>(`/data/wagr/events/wagr_${e.id}.json`);
   const players = ev?.players || [];
-  return [{
+  return [withDivisionModel({
     key: "main",
     escalao: e.eventType || "—",
     sex: (e.sex || undefined) as CircuitSex | undefined,
@@ -79,7 +80,7 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
       extra={[{ header: "PTS", title: "Pontos WAGR ganhos no evento", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–") }]}
       players={totaisWagr(players)} />,
     totals: { players: totaisWagr(players), parPerRound: null },
-  }];
+  })];
 }
 
 /** Jogadores de um evento WAGR no formato da tabela de totais (e do `totals`). */

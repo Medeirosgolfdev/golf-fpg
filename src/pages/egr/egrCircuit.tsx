@@ -6,6 +6,7 @@
  * evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision` cujo
  * `customResults` é o TotalsResumo partilhado (o mesmo do GJGL e da LGPIDF).
  */
+import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { normLoose } from "../../utils/normName";
 import TotalsResumo from "../../ui/circuit/TotalsResumo";
@@ -77,7 +78,7 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
   const totais = players.map((p) => ({ name: p.name, country: p.country, club: p.club, hcp: p._hcp ?? null,
     pos: p.posNum, rounds: [p.r1, p.r2, p.r3, p.r4], total: p.total }));
   const par = ev?.par ?? e.par ?? null;
-  return [{
+  return [withDivisionModel({
     key: "main",
     escalao: e.ageGroup || "—",
     sex: (e.sex || undefined) as CircuitSex | undefined,
@@ -85,7 +86,7 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     // Resumo comum das fontes só com totais (14/10/2026).
     customResults: <TotalsResumo parPerRound={par} tournamentDate={e.startDate || undefined} players={totais} />,
     totals: { players: totais, parPerRound: par },
-  }];
+  })];
 }
 
 /* ── Constrói as CircuitEntry a partir do índice de eventos ─────── */
