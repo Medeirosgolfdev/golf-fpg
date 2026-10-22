@@ -34,6 +34,8 @@ function caminhos() {
 const GERADOS_NO_BUILD = {
   "/data/fpg-files-index.json": "build-fpg-files-index.js",
   "/data/ffg-list-index.json": "build-ffg-list-index.js",
+  "/data/federados-lite.json": "build-federados-lite.js",
+  "/data/fpg-admissions-draws-drive.json": "build-drive-admissions.js",
 };
 
 describe("caminhos /data/ do site", () => {

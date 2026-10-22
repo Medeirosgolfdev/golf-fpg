@@ -140,7 +140,11 @@ const ADMISSIONS_SKIP_TCODES = new Set<string>([
 
 // ── Loader ─────────────────────────────────────────────────────────
 
-let _cache: FpgAdmissionsDrawsFile | null = null;
+/** Por ficheiro: o completo e o só-do-Drive (`fpg-admissions-draws-drive.json`). */
+const _cache = new Map<string, FpgAdmissionsDrawsFile>();
+export const FPG_ADMISSIONS_URL = "/data/fpg-admissions-draws.json";
+/** Só os torneios do Drive/AQUAPOR (gerado no build, scripts/build-drive-admissions.js). */
+export const FPG_ADMISSIONS_DRIVE_URL = "/data/fpg-admissions-draws-drive.json";
 
 /**
  * Normaliza um player das admissions: o scraper produz dois formatos
@@ -176,10 +180,13 @@ function normalizePlayer(p: any): FpgAdmissionPlayer {
   };
 }
 
-export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Promise<FpgAdmissionsDrawsFile> {
-  if (_cache && !opts.force) return _cache;
+export async function loadFpgAdmissionsDraws(opts: { force?: boolean; url?: string } = {}): Promise<FpgAdmissionsDrawsFile> {
+  const url = opts.url ?? FPG_ADMISSIONS_URL;
+  const hit = _cache.get(url);
+  if (hit && !opts.force) return hit;
+  let out: FpgAdmissionsDrawsFile;
   try {
-    const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>("/data/fpg-admissions-draws.json");
+    const raw = await cachedFetchJson<FpgAdmissionsDrawsFile>(url);
     if (raw) {
       // Filtra torneios suprimidos (ver ADMISSIONS_SKIP_TCODES). Aplicado aqui
       // ao carregar para garantir que NENHUM consumidor (sidebar, Admissões,
@@ -200,11 +207,12 @@ export async function loadFpgAdmissionsDraws(opts: { force?: boolean } = {}): Pr
       // no fpg-admissions-draws.json (que o scraper regenera).
       await mergeCgssManualDraws(raw);
     }
-    _cache = raw || { scrapedAt: null, total: 0, tournaments: [] };
+    out = raw || { scrapedAt: null, total: 0, tournaments: [] };
   } catch {
-    _cache = { scrapedAt: null, total: 0, tournaments: [] };
+    out = { scrapedAt: null, total: 0, tournaments: [] };
   }
-  return _cache;
+  _cache.set(url, out);
+  return out;
 }
 
 /** Funde os draws curados do CGSS (cgss-draws-manual.json) no ficheiro de

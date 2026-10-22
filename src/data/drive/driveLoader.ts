@@ -16,8 +16,9 @@ import { cachedFetchJson } from "../fetchCache";
 import { fpgFileUrls, loadFpgFilesIndex } from "../fpgFilesIndex";
 import { normalizePlayer } from "../../utils/playerUtils";
 import { loadFpgPlayersDB } from "../fpgPlayersDB";
+import { loadPlayers } from "../loader";
 import { expandMultiRound } from "../../ui/driveUtils";
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws } from "../nacional2026Loader";
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, FPG_ADMISSIONS_DRIVE_URL } from "../nacional2026Loader";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { DriveAdmissionsIndex } from "./driveSource";
 
@@ -89,6 +90,40 @@ export async function loadDriveData(): Promise<DriveDataLoad> {
   return { raw, tournaments: expandMultiRound(raw), meta: [...driveR.meta, ...aqR.meta], players: pp };
 }
 
+/** O ano mais recente dos mensais (do Drive e do AQUAPOR) que o índice lista. */
+export async function latestDriveYear(): Promise<number | null> {
+  const idx = await loadFpgFilesIndex();
+  const ys = [...fpgFileUrls(idx, "drive-data"), ...fpgFileUrls(idx, "aquapor-data")]
+    .map(u => parseInt(/-(\d{4})-\d{2}\.json$/.exec(u)?.[1] ?? "", 10)).filter(Number.isFinite);
+  return ys.length ? Math.max(...ys) : null;
+}
+
+/** Arranque em dois tempos (decisão I, 22/10/2026): primeiro só os meses do ano
+ *  mais recente (abre logo a época em curso), depois tudo. O segundo resultado é
+ *  EXACTAMENTE o do `loadDriveData()` (os meses do 1.º já estão na cache dos
+ *  pedidos, não se descarregam outra vez). No 1.º tempo o playersDB é só o
+ *  `players.json`; as nacionalidades (bandeiras) chegam com o 2.º. `onData(d, completo)`. */
+export async function loadDriveDataProgressive(onData: (d: DriveDataLoad, complete: boolean) => void, before2nd?: Promise<unknown>): Promise<void> {
+  const year = await latestDriveYear();
+  if (year != null) {
+    const [driveR, aqR, pp] = await Promise.all([
+      loadDriveMonthly("drive-data", { fromYear: year }),
+      loadDriveMonthly("aquapor-data", { fromYear: year, forceSeries: "aquapor" }),
+      // Só o players.json (~0,1 MB): as nacionalidades (~9 MB) vêm no 2.º tempo.
+      loadPlayers().then(p => ({ ...p }) as PlayersDB).catch(() => ({} as PlayersDB)),
+    ]);
+    const raw = [...driveR.tournaments, ...aqR.tournaments];
+    onData({ raw, tournaments: expandMultiRound(raw), meta: [...driveR.meta, ...aqR.meta], players: pp }, false);
+  }
+  // O 2.º tempo espera por `before2nd` (a /drive: as inscrições — sem isso
+  // disputavam a largura de banda com os ~20 MB dos outros anos).
+  await before2nd?.catch(() => {});
+  // Objecto novo: o `loadFpgPlayersDB` acrescenta ao do `players.json` (o mesmo
+  // da cache), e a página tem de ver que mudou.
+  const all = await loadDriveData();
+  onData({ ...all, players: { ...all.players } }, true);
+}
+
 /** Classificação por equipas de uma Final (`drive-equipas.json`, lida do PDF oficial). */
 export interface DriveEquipaJogador { nome: string; gross: number | null; toPar: number; buracos: number; conta: boolean }
 export interface DriveEquipa { pos: number; regiao: string; toPar: number; jogadores: DriveEquipaJogador[] }
@@ -101,11 +136,13 @@ export async function loadDriveEquipas(): Promise<Record<string, DriveEquipasDat
 }
 
 /** Inscrições e draws da FPG indexados por «ccode-tcode», com o registo para o
- *  painel de fontes. Em erro: índice vazio e o registo do erro. */
+ *  painel de fontes. Em erro: índice vazio e o registo do erro. Lê só os
+ *  torneios do Drive/AQUAPOR (`fpg-admissions-draws-drive.json`, ~1,5 MB, gerado
+ *  no build) em vez do ficheiro de toda a FPG (~12 MB) — decisão I. */
 export async function loadDriveAdmissions(): Promise<{ idx: DriveAdmissionsIndex; meta: DataSource }> {
-  const path = "/data/fpg-admissions-draws.json";
+  const path = FPG_ADMISSIONS_DRIVE_URL;
   try {
-    const f = await loadFpgAdmissionsDraws();
+    const f = await loadFpgAdmissionsDraws({ url: path });
     return {
       idx: indexFpgAdmissionsDraws(f),
       meta: { path, status: "loaded", count: f?.tournaments?.length || 0, source: f?.source, lastUpdated: f?.scrapedAt ?? undefined, group: "admissions" },

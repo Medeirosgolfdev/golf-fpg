@@ -172,6 +172,9 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   `useCourses()` (`src/context/CoursesContext.tsx`); não os voltar a pôr no
   `AppContext`. As setas ↗ dos circuitos leem o `juniors-links.json` (~1,5 MB),
   nunca o `juniors.json` (~52 MB).
+  Nascimento/sexo/país/HCP por federado → `federados-lite.json` (~0,9 MB, gerado
+  no build), nunca o `federados.json` (~19 MB) só para isso; inscrições da /drive
+  → `fpg-admissions-draws-drive.json` (só Drive/AQUAPOR).
 - **«Hoje» = `todayIso()`** (`utils/format.ts`, dia em Lisboa), nunca
   `new Date().toISOString().slice(0, 10)` (dia em UTC). **Níveis por z-score =
   `zTier`** (`utils/mathUtils.ts`).

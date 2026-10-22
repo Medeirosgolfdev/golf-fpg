@@ -50,10 +50,20 @@ function usePlayerStats() {
   return stats;
 }
 
+/* ── federados-lite.json ──
+ * Nascimento, sexo, país (fora PT) e HCP de todos os federados FPG, gerado no
+ * build a partir do federados.json (scripts/build-federados-lite.js): ~0,9 MB
+ * em vez de ~19 MB, com os mesmos filtros que estes hooks aplicavam. */
+interface FederadosLite { b: Record<string, string>; s: Record<string, "M" | "F">; c: Record<string, string>; h: Record<string, number> }
+const LITE_VAZIO: FederadosLite = { b: {}, s: {}, c: {}, h: {} };
+function loadFederadosLite(): Promise<FederadosLite> {
+  return cachedFetchJson<FederadosLite>("/data/federados-lite.json").then(d => d ?? LITE_VAZIO).catch(() => LITE_VAZIO);
+}
+
 /* ── fed → country_prefix (lazy-load, partilhado entre instâncias) ──
  *
  * Funde 2 fontes:
- *   1. /data/federados.json        — country_prefix do FPG (mas é "país de federação",
+ *   1. /data/federados-lite.json        — country_prefix do FPG (mas é "país de federação",
  *                                     não nacionalidade — frequentemente errado)
  *   2. /data/nationalities.json    — override manual (curado por nós) — prevalece
  *
@@ -63,17 +73,11 @@ let _fedCountryPromise: Promise<Map<string, string>> | null = null;
 function loadFedCountries(): Promise<Map<string, string>> {
   if (_fedCountryPromise) return _fedCountryPromise;
   _fedCountryPromise = Promise.all([
-    cachedFetchJson<any>("/data/federados.json").catch(() => null),
+    loadFederadosLite(),
     cachedFetchJson<any>("/data/nationalities.json").catch(() => null),
-  ]).then(([feds, overrides]) => {
-    const m = new Map<string, string>();
-    // 1) Base: FPG
-    const items = (feds && (feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []))) || [];
-    for (const p of items) {
-      const fed = String(p.federation_code || p.fed || "");
-      const cc = (p.country_prefix || "").toUpperCase().trim().slice(0, 2);
-      if (fed && cc && cc !== "PT" && !cc.startsWith("@")) m.set(fed, cc);
-    }
+  ]).then(([lite, overrides]) => {
+    // 1) Base: FPG (country_prefix ≠ PT, já filtrado no federados-lite.json)
+    const m = new Map<string, string>(Object.entries(lite.c));
     // 2) Override (curado): adiciona/substitui/remove
     if (overrides && typeof overrides === "object") {
       for (const [fed, raw] of Object.entries(overrides)) {
@@ -97,7 +101,7 @@ export function useFedCountries(): Map<string, string> {
 
 /* ── fed → birthdate (lazy-load, partilhado entre instâncias) ──
  *
- * Fonte: `/data/federados.json` (campo `birthdate`, formato "YYYY-MM-DD").
+ * Fonte: `/data/federados-lite.json` (campo `birthdate`, formato "YYYY-MM-DD").
  *
  * Usado como fallback quando `playersDB[fed].dob` está indisponível — ou
  * seja, para jogadores que não estão em `players.json` curado (muito comum
@@ -108,21 +112,7 @@ export function useFedCountries(): Map<string, string> {
 let _fedBirthdatePromise: Promise<Map<string, string>> | null = null;
 function loadFedBirthdates(): Promise<Map<string, string>> {
   if (_fedBirthdatePromise) return _fedBirthdatePromise;
-  _fedBirthdatePromise = cachedFetchJson<any>("/data/federados.json")
-    .catch(() => null)
-    .then(feds => {
-      const m = new Map<string, string>();
-      if (!feds) return m;
-      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
-      for (const p of items) {
-        const fed = String(p.federation_code || p.fed || "");
-        const dob = p.birthdate || p.dt_aniv || p.dob || "";
-        if (fed && typeof dob === "string" && /^\d{4}-\d{2}-\d{2}/.test(dob)) {
-          m.set(fed, dob.slice(0, 10));
-        }
-      }
-      return m;
-    });
+  _fedBirthdatePromise = loadFederadosLite().then(lite => new Map(Object.entries(lite.b)));
   return _fedBirthdatePromise;
 }
 
@@ -134,7 +124,7 @@ export function useFedBirthdates(): Map<string, string> {
 
 /* ── fed → HCP actual (lazy-load, partilhado entre instâncias) ──
  *
- * Fonte: `/data/federados.json` (campo `hcp_index`, com fallback a `hcp_exact`).
+ * Fonte: `/data/federados-lite.json` (campo `hcp_index`, com fallback a `hcp_exact`).
  *
  * Usado como ÚLTIMO fallback para a coluna HCP quando o snapshot temporal do
  * evento (draw/admissions) não existe — tipicamente jogadores que estão no draw
@@ -146,21 +136,7 @@ export function useFedBirthdates(): Map<string, string> {
 let _fedHcpPromise: Promise<Map<string, number>> | null = null;
 function loadFedHcp(): Promise<Map<string, number>> {
   if (_fedHcpPromise) return _fedHcpPromise;
-  _fedHcpPromise = cachedFetchJson<any>("/data/federados.json")
-    .catch(() => null)
-    .then(feds => {
-      const m = new Map<string, number>();
-      if (!feds) return m;
-      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
-      for (const p of items) {
-        const fed = String(p.federation_code || p.fed || "");
-        if (!fed) continue;
-        const raw = p.hcp_index ?? p.hcp_exact;
-        const v = typeof raw === "number" ? raw : parseFloat(raw);
-        if (Number.isFinite(v) && v <= 54) m.set(fed, v);
-      }
-      return m;
-    });
+  _fedHcpPromise = loadFederadosLite().then(lite => new Map(Object.entries(lite.h)));
   return _fedHcpPromise;
 }
 
@@ -172,7 +148,7 @@ export function useFedHcp(): Map<string, number> {
 
 /* ── fed → sexo "M"/"F" (lazy-load, partilhado entre instâncias) ──
  *
- * Fonte: `/data/federados.json` (campo `gender`, "M"/"F").
+ * Fonte: `/data/federados-lite.json` (campo `gender`, "M"/"F").
  *
  * Usado para calcular a "área de partida" (tee) por jogador em torneios cuja
  * regra de tees depende de escalão + sexo (ver src/utils/teeRegulation.ts).
@@ -180,19 +156,7 @@ export function useFedHcp(): Map<string, number> {
 let _fedGenderPromise: Promise<Map<string, "M" | "F">> | null = null;
 function loadFedGenders(): Promise<Map<string, "M" | "F">> {
   if (_fedGenderPromise) return _fedGenderPromise;
-  _fedGenderPromise = cachedFetchJson<any>("/data/federados.json")
-    .catch(() => null)
-    .then(feds => {
-      const m = new Map<string, "M" | "F">();
-      if (!feds) return m;
-      const items = feds.players || feds.federados || feds.records || (Array.isArray(feds) ? feds : []);
-      for (const p of items) {
-        const fed = String(p.federation_code || p.fed || "");
-        const g = String(p.gender || p.sex || "").toUpperCase();
-        if (fed && (g === "M" || g === "F")) m.set(fed, g);
-      }
-      return m;
-    });
+  _fedGenderPromise = loadFederadosLite().then(lite => new Map(Object.entries(lite.s)));
   return _fedGenderPromise;
 }
 

@@ -128,3 +128,18 @@
   da barra; «hoje» = `todayIso()`. A lista escrita à mão (`CAL_ENTRIES`) saiu —
   todas as datas que lá estavam existem nos dados (o «3º DT Sul» de 04/04 é na
   Quinta do Vale, não na «Penina (TBC)»); entram também os Açores e as Finais.
+- **Abrir mais depressa (decisão I, 22/10/2026)** — (1) nascimento/sexo/país/HCP
+  dos federados vêm do `federados-lite.json` (~0,9 MB, gerado no build por
+  `scripts/build-federados-lite.js`, gitignored) em vez do `federados.json`
+  (~19 MB): os hooks `useFedBirthdates`/`useFedGenders`/`useFedCountries`/`useFedHcp`
+  (`ui/InscricoesComponents.tsx`) — servem todas as páginas de torneios; o
+  `federados.json` fica para /jogadores, Draws, nomes→federado da /rfeg e scripts.
+  (2) Mensais em dois tempos (`loadDriveDataProgressive`): primeiro só o ano mais
+  recente (e o `players.json`), depois — já com as inscrições — tudo, com as
+  nacionalidades; os botões de ano, as «Edições anteriores» e as bandeiras
+  completam-se depois; um link para outro ano / torneio que ainda não chegou /
+  `?t=` espera pelos restantes meses (`needAll`). (3) Inscrições só do Drive:
+  `fpg-admissions-draws-drive.json` (~1,5 MB, `scripts/build-drive-admissions.js`)
+  em vez do ficheiro de toda a FPG (~12 MB); `loadFpgAdmissionsDraws({ url })`
+  guarda uma cache por ficheiro. Testes: `build-federados-lite.test.js`,
+  `driveAdmissionsSubset.test.ts`, `driveProgressive.test.ts`.

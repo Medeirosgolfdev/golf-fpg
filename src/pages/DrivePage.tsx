@@ -28,10 +28,10 @@ import { todayIso } from "../utils/format";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
-import { loadDriveAdmissions, loadDriveData, loadDriveEquipas } from "../data/drive/driveLoader";
+import { loadDriveAdmissions, loadDriveDataProgressive, loadDriveEquipas } from "../data/drive/driveLoader";
 import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex, type DriveSeries } from "../data/drive/driveSource";
 import {
-  driveDivTkey, driveFiltersForTkey, driveQueryString, driveRepDivision, legacyDriveT, parseDriveQuery,
+  driveDivTkey, driveFiltersForTkey, driveTournamentMatches, driveQueryString, driveRepDivision, legacyDriveT, parseDriveQuery,
   resolveDriveTkey, type DriveUrlState,
 } from "../data/drive/driveUrl";
 import type { Tournament, DriveData } from "../ui/driveTypes";
@@ -74,6 +74,10 @@ function DriveContent() {
   const [data, setData]           = useState<DriveData | null>(null);
   const [pdb, setPdb]             = useState<PlayersDB>({});
   const [loading, setLoading]     = useState(true);
+  const [allLoaded, setAllLoaded] = useState(false);
+  const [admDrawsIdx, setAdmDrawsIdx] = useState<DriveAdmissionsIndex>(new Map());
+  const [raw, setRaw] = useState<Tournament[]>([]);
+  const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
   const [error, setError]         = useState<string | null>(null);
   // Fallback DOB p/ federados fora de players.json curado.
   const fedBirthdates = useFedBirthdates();
@@ -109,7 +113,19 @@ function DriveContent() {
   const [monthlyMeta, setMonthlyMeta] = useState<DataSource[]>([]);
 
   useEffect(() => {
-    loadDriveData().then(({ raw: rawTournaments, tournaments: allTourns, meta, players: pp }) => {
+    // Primeiro o ano mais recente, depois tudo (decisão I): os botões dos outros
+    // anos e as «Edições anteriores» completam-se ~1 s depois; o resultado final
+    // é o de sempre.
+    let alive = true;
+    // Inscrições e draws da FPG (uma vez), por ccode-tcode. Os restantes meses
+    // só se pedem depois delas: são elas que abrem o torneio certo (decisão B).
+    const adm = loadDriveAdmissions().then(({ idx, meta }) => {
+      if (!alive) return;
+      if (meta.status === "loaded") setAdmDrawsIdx(idx);
+      setAdmissionsMeta([meta]);
+    });
+    loadDriveDataProgressive(({ raw: rawTournaments, tournaments: allTourns, meta, players: pp }, complete) => {
+      if (!alive) return;
       setMonthlyMeta(meta);
       setRaw(rawTournaments);
       const driveData: DriveData = {
@@ -120,13 +136,15 @@ function DriveContent() {
         totalScorecards: 0,
         tournaments: allTourns,
       };
-      setData(driveData); setPdb(pp); setLoading(false);
+      setData(driveData); setPdb(pp); setLoading(false); setAllLoaded(complete);
       // Fed por nome (mexe nos jogadores) só depois do 1.º desenho.
       setTimeout(() => {
+        if (!alive) return;
         resolveFedsInTournaments(driveData.tournaments, pp);
         setData({ ...driveData });
       }, 0);
-    }).catch(e => { setError(e.message); setLoading(false); });
+    }, adm).catch(e => { if (alive) { setError(e.message); setLoading(false); } });
+    return () => { alive = false; };
   }, []);
 
   // Classificação por equipas (regiões) das Finais. Opcional: sem o ficheiro a
@@ -137,15 +155,6 @@ function DriveContent() {
   }, []);
 
   // Inscrições + draws da FPG (uma vez), por ccode-tcode.
-  const [admDrawsIdx, setAdmDrawsIdx] = useState<DriveAdmissionsIndex>(new Map());
-  const [raw, setRaw] = useState<Tournament[]>([]);
-  const [admissionsMeta, setAdmissionsMeta] = useState<DataSource[]>([]);
-  useEffect(() => {
-    loadDriveAdmissions().then(({ idx, meta }) => {
-      if (meta.status === "loaded") setAdmDrawsIdx(idx);
-      setAdmissionsMeta([meta]);
-    });
-  }, []);
 
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
   // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
@@ -220,7 +229,11 @@ function DriveContent() {
   // série/ano/zona/escalão/★Manuel para ele aparecer; depois disso, mudar
   // filtros que o escondam abre o mais recente (o shell escolhe).
   const [tkeyDone, setTkeyDone] = useState<string | null>(null);
-  const ready = !loading && admissionsReady && allSrc.length > 0;
+  // Só com o ano mais recente carregado (decisão I): um link para outro ano, um
+  // torneio que ainda não chegou ou um `?t=` esperam pelos restantes meses.
+  const needAll = !allLoaded && (!!legacyT || (!!st.year && !availYears.includes(st.year))
+    || (!!urlTkey && !allSrc.some(t => driveTournamentMatches(t, urlTkey))));
+  const ready = !loading && admissionsReady && allSrc.length > 0 && !needAll;
   useEffect(() => {
     if (!ready || !urlTkey || tkeyDone === urlTkey) return;
     const patch = shellSel.id ? null : driveFiltersForTkey(allSrc, urlTkey, st, false);
@@ -409,7 +422,7 @@ function DriveContent() {
           onSelectInfo={(k) => go({ nav: k ? "ranking-sub12" : "torneios" })}
           // «A carregar» até chegarem as inscrições: os torneios por jogar (a Final
           // de 07/11) só entram com elas, e o shell escolhia antes o penúltimo (B, 22/10/2026).
-          loading={loading || admissionsMeta.length === 0}
+          loading={loading || admissionsMeta.length === 0 || needAll}
           // Nunca indefinido: o torneio por omissão escolhe-o a página (efeito acima).
           selectedId={shellSel.id ?? "__drive-pending__"}
           selectedDivKey={shellSel.divKey}

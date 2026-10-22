@@ -179,3 +179,8 @@ data-archive/uskids-member-diario.jsonl
 # Lista da /ffg (GolfGenius + LGPIDF) — gerada no predev/prebuild
 # (scripts/build-ffg-list-index.js); o Vercel gera-a em cada deploy.
 /public/data/ffg-list-index.json
+
+# Leves para a /drive (e páginas de torneios) — gerados no predev/prebuild
+# (scripts/build-federados-lite.js, scripts/build-drive-admissions.js).
+/public/data/federados-lite.json
+/public/data/fpg-admissions-draws-drive.json
