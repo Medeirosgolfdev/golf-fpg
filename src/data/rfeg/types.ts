@@ -273,6 +273,9 @@ export interface LgsDetail {
   rounds: LgsRound[];
   course?: { meters: (number | null)[]; si: (number | null)[]; par: (number | null)[]; avg?: (number | null)[]; metersTotal?: number | null; holes?: number } | null;
   horarios?: LgsHorarioRound[];
+  /** Classificação final do LGS: traz o resultado de cada volta (`roundTotals`)
+   *  mesmo quando o «hoyo a hoyo» das voltas vem sem cartões nem totais. */
+  classification?: { memberId?: string | null; name: string; roundTotals?: (number | null)[] | null }[];
 }
 
 export interface LgsHorarioRound {

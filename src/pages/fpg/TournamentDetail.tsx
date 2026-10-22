@@ -181,7 +181,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
     const wanted = Array.from({ length: cutAfterRound }, (_, i) => i + 1);
     const trimmed = tournament.players.map((p) => {
       const rs = (p.roundScores || []).filter((r) => r.round <= cutAfterRound);
-      const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && (r.gross || 0) > 0 && (r.gross || 0) < 999));
+      const hasAll = wanted.every((rd) => rs.some((r) => r.round === rd && (r.gross || 0) > 0 && (r.gross || 0) < 900));
       const parPerRound = p.parTotal || (rs[0]?.pars?.reduce((a, b) => a + b, 0) || 0);
       const gross = rs.reduce((x, r) => x + (r.gross || 0), 0);
       return { ...p, roundScores: rs, grossTotal: gross, toPar: gross - parPerRound * cutAfterRound, parTotal: parPerRound,

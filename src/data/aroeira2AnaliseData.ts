@@ -265,7 +265,7 @@ async function loadAroeiraIIAnalise(currentTournament: Tournament): Promise<Anal
   const si18 = currentTournament.players?.[0]?.roundScores?.[0]?.si?.slice(0, 18) ?? [];
   const hotSpots: HoleHotSpot[] = [];
   // Field rounds = todas rondas do torneio actual (todos os 21 jogadores)
-  const fieldRoundsCurrent = (currentTournament.players || []).flatMap(p => (p.roundScores || []).filter(rs => rs.scores && rs.scores.length === 18 && rs.gross < 999 && !rs.scores.every(s => s === 0)));
+  const fieldRoundsCurrent = (currentTournament.players || []).flatMap(p => (p.roundScores || []).filter(rs => rs.scores && rs.scores.length === 18 && rs.gross < 900 && !rs.scores.every(s => s === 0)));
   const manuelRoundsAll = manuelHistory.filter(r => r.scores.length === 18);
 
   for (let h = 0; h < 18; h++) {

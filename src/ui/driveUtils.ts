@@ -72,14 +72,14 @@ export function expandMultiRound(tournaments: Tournament[]): Tournament[] {
     // (evita marcar todos como incompletos quando ainda faltam rondas futuras)
     const playedRoundsMax = Math.max(0, ...t.players.map(p =>
       (p.roundScores?.filter(rs =>
-        rs.gross < 999 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
+        rs.gross < 900 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
       ).length ?? 0)
     ));
 
     const totalPlayers = t.players.map(p => {
       // Rondas válidas: excluir WD (gross>=999 ou scorecard todo zeros)
       const validRounds = (p.roundScores || []).filter(rs =>
-        rs.gross < 999 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
+        rs.gross < 900 && !(rs.scores?.length && rs.scores.every((s: number) => s === 0))
       );
       const playedRounds2 = validRounds.length;
       const isWD = playedRounds2 < (p.roundScores?.length || 0);

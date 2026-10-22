@@ -669,7 +669,7 @@ export function expandMultiRound(t: Tournament): Tournament[] {
 
     // Rondas válidas: excluir WD (gross>=999 ou scorecard todo zeros)
     const validRounds = p.roundScores.filter(rs =>
-      rs.gross < 999 && !(rs.scores?.length && rs.scores.every(s => s === 0))
+      rs.gross < 900 && !(rs.scores?.length && rs.scores.every(s => s === 0))
     );
     const isWD = validRounds.length < p.roundScores.length;   // desistiu em ≥1 ronda
     const nPlayed = validRounds.length;

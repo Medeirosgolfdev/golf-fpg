@@ -495,7 +495,7 @@ export function buildJovensAnalise(
         // Em torneios provisórios (1R de 2), usar a primeira ronda real
         const reals = realRoundsOf(p);
         if (reals.length >= 1) return reals[0];
-        return typeof p.grossTotal === "number" && p.grossTotal < 999 ? p.grossTotal : null;
+        return typeof p.grossTotal === "number" && p.grossTotal < 900 ? p.grossTotal : null;
       }
       const reals = realRoundsOf(p);
       if (reals.length < expectedRounds) return null;

@@ -9,9 +9,40 @@ import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } 
 import { isPtCountry } from "../../utils/flagUtils";
 import { normEs } from "./text";
 import type { RFEGPlayer, RFEGDetail, NCRoundScore, NCDetail, DobLookup, HcpLookup, LgsRound, LgsDetail, LgsHorarioRound } from "./types";
-import { dobLookupByName } from "../intlCommon";
+import { dobLookupByName, isNoCardGross } from "../intlCommon";
 
-export function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup, fedByName?: Map<string, FedByNameEntry>, golfbox?: Map<string, GolfboxEntry[]>): RFEGDetail {
+/** Voltas LGS sem total (cartão por publicar) recebem o resultado da volta que
+ *  a classificação final traz (`roundTotals`). Caso real: Campeonato de España
+ *  Benjamín 2023 (LGS 216/217) — 71 jogadores com `total: null` em todas as
+ *  voltas, o que deixava o torneio «a decorrer» com «Média 999.0». Jogadores a
+ *  meio de uma volta (`partialGross`) e totais «sem cartão» ficam como estão. */
+export function lgsFillFromClassification(lgs: LgsDetail): LgsDetail {
+  const cls = lgs.classification;
+  if (!cls?.length) return lgs;
+  const byKey = new Map<string, (number | null)[]>();
+  for (const c of cls) {
+    if (!c.roundTotals?.length) continue;
+    if (c.memberId) byKey.set(`id:${c.memberId}`, c.roundTotals);
+    byKey.set(`nm:${normEs(c.name)}`, c.roundTotals);
+  }
+  if (!byKey.size) return lgs;
+  let changed = false;
+  const rounds = lgs.rounds.map((r, i) => ({
+    ...r,
+    players: r.players.map((p) => {
+      if (p.total != null || (p as { partialGross?: number | null }).partialGross) return p;
+      const rt = (p.memberId && byKey.get(`id:${p.memberId}`)) || byKey.get(`nm:${normEs(p.name)}`);
+      const t = rt?.[i];
+      if (typeof t !== "number" || t <= 0 || isNoCardGross(t)) return p;
+      changed = true;
+      return { ...p, total: t };
+    }),
+  }));
+  return changed ? { ...lgs, rounds } : lgs;
+}
+
+export function adaptLgs(lgsIn: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup, fedByName?: Map<string, FedByNameEntry>, golfbox?: Map<string, GolfboxEntry[]>): RFEGDetail {
+  const lgs = lgsFillFromClassification(lgsIn);
   const norm = normEs;
   const lookupByName = dobLookupByName(dobLookup, norm);
   // Anexar hcpLookup ao detail para o adapter LGS-FPG poder usar
@@ -28,7 +59,7 @@ export function adaptLgs(lgs: LgsDetail, dobLookup?: DobLookup, hcpLookup?: HcpL
   // placeholder do draw com total=null → não é uma ronda jogada). Sem isto, o
   // leaderboard agregado zerava pos/toPar/total (→ "--") e somava um 0 fantasma.
   const lgsRoundIsPlayed = (r: { players: Array<{ total: number | null }> }) =>
-    (r.players ?? []).some((p) => p.total != null && p.total > 0 && p.total < 999);
+    (r.players ?? []).some((p) => p.total != null && p.total > 0 && !isNoCardGross(p.total));
   const lgsPlayedRounds = lgs.rounds.filter(lgsRoundIsPlayed);
   const lastR = lgsPlayedRounds[lgsPlayedRounds.length - 1];
   for (const r of lgsPlayedRounds) {
