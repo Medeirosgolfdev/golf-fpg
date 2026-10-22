@@ -4,13 +4,15 @@
  * Espanha, MAJOR…). Cada fonte só traduz os seus dados para `IntlPlayerIn`
  * (nome, voltas, país…); as regras comuns vivem aqui: roundScores por volta,
  * SI/metros só quando cobrem todos os buracos, ±par pelas voltas jogadas, WD
- * por voltas em falta e o destaque PT pelo país.
+ * por voltas em falta, «sem cartão» (gross ≥ 900, `isNoCardGross`) e o
+ * destaque PT pelo país.
  *
  * O que muda de fonte para fonte entra por opção explícita (`IntlBuildOptions`)
  * ou pelo campo do jogador/volta — nunca por uma cópia do construtor.
  */
 import type { Tournament, Player, RoundScore } from "./fpgTypes";
 import { isPtCountry } from "../utils/flagUtils";
+import { isNoCardGross } from "./intlCommon";
 
 /** Campo de uma volta: par por buraco e, quando a fonte os dá, SI, metros, tee e CR/Slope. */
 export interface IntlCourse {
@@ -109,7 +111,15 @@ export function buildFPGTournament(
   opts: IntlBuildOptions = {},
 ): Tournament {
   const { raw = false } = opts;
-  const kept = opts.keepNoRounds ? players : players.filter((p) => p.rounds.length > 0);
+  // «Sem cartão» (gross ≥ 900): a volta não conta como jogada e um total ≥ 900
+  // não é resultado — sem total, ±par nem posição. Quem só tinha voltas sem
+  // cartão continua na lista (como WD, pelas voltas em falta).
+  const kept = (opts.keepNoRounds ? players : players.filter((p) => p.rounds.length > 0)).map((p): IntlPlayerIn => {
+    const noCardTotal = isNoCardGross(p.total);
+    const rounds = p.rounds.filter((r) => !isNoCardGross(r.gross));
+    if (!noCardTotal && rounds.length === p.rounds.length) return p;
+    return { ...p, rounds, ...(noCardTotal ? { total: null, toPar: null, pos: null } : {}) };
+  });
   const nR = meta.rounds ?? Math.max(0, ...kept.map((p) => p.rounds.length));
   const out: Player[] = kept.map((p) => {
     const c: IntlCourse = { ...course, ...p.course, par: p.course?.par ?? course.par };

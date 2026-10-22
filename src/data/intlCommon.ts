@@ -2,8 +2,8 @@
  * intlCommon.ts — peças IGUAIS entre os conversores das fontes de fora da FPG
  * (MAJOR, França, Espanha, Catalunha). Só entra aqui o que é exactamente a
  * mesma regra em todas as fontes que o usam; as regras que diferem de fonte
- * para fonte (destaque PT, normalização de nomes, escalão por idade, «sem
- * cartão») ficam em cada conversor até a Mariana decidir.
+ * para fonte (destaque PT, normalização de nomes, escalão por idade) ficam em
+ * cada conversor até a Mariana decidir.
  */
 import { gf, normPaisDisplay } from "../utils/flagUtils";
 
@@ -33,6 +33,16 @@ export function dobLookupByName(dobLookup: DobLookup | undefined, norm: (s: stri
   const out: Record<string, DobLookupEntry> = {};
   if (dobLookup) for (const e of Object.values(dobLookup)) if (e.name) out[norm(e.name)] = e;
   return out;
+}
+
+/* ── Sem cartão ── */
+
+/** Gross ≥ 900 (998, 999…) = «sem cartão» — regra da casa (decisão da Mariana,
+ *  22/10/2026) em TODAS as fontes de fora e nos draws: a volta não conta como
+ *  jogada, não pontua e não entra em médias, posições nem ±par. */
+export const NO_CARD_FROM = 900;
+export function isNoCardGross(gross: number | null | undefined): gross is number {
+  return typeof gross === "number" && gross >= NO_CARD_FROM;
 }
 
 /* ── Campo ── */

@@ -15,18 +15,17 @@ import { fedByNameKeys, golfboxLookup, type FedByNameEntry, type GolfboxEntry } 
 import { normEs } from "./text";
 import { ageToEscalaoEs, escaloEsForPlayer } from "./escalao";
 import type { RFEGPlayer, RFEGDetail, DobLookup } from "./types";
-import { dobLookupByName, holesOf } from "../intlCommon";
+import { dobLookupByName, holesOf, isNoCardGross } from "../intlCommon";
 
 /* ── lgsToFPGTournament ──────────────────────────────────────
  * Converte JSON livegolfscoring para FPGTournament — permite reusar
  * IntlTournView (mesmo componente que FFGPage usa) para aspecto consistente
  * com FPG/FFG: cabeçalho, tabs R1/R2/Resumo, scorecard global com cores. */
-/** Regras do livegolfscoring que esperam decisão: par 4 por buraco quando não
- *  há par e «sem cartão» só a partir de 999 (a regra da casa é ≥ 900). */
-export const LGS_OPTS = { inventedPar: PAR_INVENTADO, noCardFrom: 999 };
-/** Volta com cartão no LGS: total > 0 e abaixo do «sem cartão». */
+/** Regras do livegolfscoring que esperam decisão: par 4 por buraco quando não há par. */
+export const LGS_OPTS = { inventedPar: PAR_INVENTADO };
+/** Volta com cartão no LGS: total > 0 e não «sem cartão» (gross ≥ 900, regra comum). */
 export const isLgsCard = (total: number | null | undefined): total is number =>
-  total != null && total > 0 && total < LGS_OPTS.noCardFrom;
+  total != null && total > 0 && !isNoCardGross(total);
 
 export function lgsToFPGTournament(
   lgs: {

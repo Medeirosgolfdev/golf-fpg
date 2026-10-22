@@ -230,8 +230,10 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   tcode + data + campo (PCC), fed + data da volta (SD), `ccode:tcode` no
   `--tcodes`. No PJA, `PJA_TCODES` só leva tcodes que não se repetem; os outros
   entram por nome.
-- **Gross ≥ 900 (998/999…) é "sem cartão"** — não pontua nem entra em médias.
-  `grossTotal` pode vir como texto ("WD").
+- **Gross ≥ 900 (998/999…) é "sem cartão"** — não pontua nem entra em médias,
+  posições ou ±par. `grossTotal` pode vir como texto ("WD"). Nas fontes de fora
+  e nos draws a regra é uma só: `isNoCardGross` (`src/data/intlCommon.ts`),
+  aplicada no `buildFPGTournament`, `TotalsResumo` e `DrawTab`.
 - **Datas `/Date(ms)/` da FPG são meia-noite de Lisboa** — converter com
   `lisbonCivilDay`/`lisbonCivilDayStr` (`lib/helpers.js`), nunca com `toISOString()`.
 - **Cartões WHS de voltas internacionais NÃO são fonte oficial do campo:** quem os

@@ -14,6 +14,7 @@ import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import { RoundPill } from "../PillBadge";
 import { gf } from "../../utils/flagUtils";
 import { isManuelByName } from "../../constants/manuel";
+import { isNoCardGross } from "../../data/intlCommon";
 
 export interface TotalsPlayer {
   name: string;
@@ -41,11 +42,13 @@ export default function TotalsResumo({ players, parPerRound, notice, extra, tour
   extra?: { header: string; title?: string; value: (p: TotalsPlayer) => React.ReactNode }[];
   tournamentDate?: string;
 }) {
-  const nRounds = Math.max(0, ...players.map((p) => p.rounds.filter((g) => g != null && g > 0).length));
+  // Volta jogada = gross > 0 e não «sem cartão» (≥ 900, regra comum).
+  const isCard = (g: number | null | undefined): g is number => g != null && g > 0 && !isNoCardGross(g);
+  const nRounds = Math.max(0, ...players.map((p) => p.rounds.filter(isCard).length));
   const byKey = new Map<string, TotalsPlayer>();
   const rows: MultiRoundRow[] = players.map((p, i) => {
-    const played = p.rounds.filter((g): g is number => g != null && g > 0);
-    const gross = p.total ?? (played.length ? played.reduce((a, b) => a + b, 0) : null);
+    const played = p.rounds.filter(isCard);
+    const gross = isNoCardGross(p.total) ? null : (p.total ?? (played.length ? played.reduce((a, b) => a + b, 0) : null));
     const parTotal = parPerRound ? parPerRound * played.length : undefined;
     const key = `${p.name}-${i}`;
     byKey.set(key, p);
@@ -65,7 +68,7 @@ export default function TotalsResumo({ players, parPerRound, notice, extra, tour
       isIncomplete: nRounds > 0 && played.length < nRounds,
       rounds: Array.from({ length: nRounds }, (_, r) => {
         const g = p.rounds[r];
-        return g != null && g > 0 ? { gross: g, parPerRound: parPerRound ?? undefined } : undefined;
+        return isCard(g) ? { gross: g, parPerRound: parPerRound ?? undefined } : undefined;
       }) as MultiRoundRow["rounds"],
     };
   });

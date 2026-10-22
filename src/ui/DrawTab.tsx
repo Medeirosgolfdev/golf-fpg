@@ -30,6 +30,7 @@ import { lookupOm, OmCatBadge, type OmHit } from "../pages/fpg/fpgOmRanking";
 import { isVirtualFed } from "../utils/fedKeys";
 import { escalaoAgeCap, fitsEscalaoAgeCap } from "../data/fpgUtils";
 import { displayFed } from "../utils/fedKeys";
+import { isNoCardGross } from "../data/intlCommon";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
 
@@ -464,9 +465,9 @@ export default function DrawTab({
           estNote: (p as { estNote?: string | null }).estNote ?? null,
           countryEstimated: !!(p as { countryEstimated?: boolean }).countryEstimated,
           escHist,
-          // Gross ≥ 900 (998/999) é «sem cartão» — regra da casa: mostra «–», sem ±.
-          gross: res && res.gross < 900 ? res.gross : 0,
-          toPar: res && res.gross < 900 ? res.toPar ?? null : null,
+          // Gross ≥ 900 (998/999) é «sem cartão» — regra comum: mostra «–», sem ±.
+          gross: res && !isNoCardGross(res.gross) ? res.gross : 0,
+          toPar: res && !isNoCardGross(res.gross) ? res.toPar ?? null : null,
           // Draws internacionais (MAJOR): conterrâneos vêm marcados na fonte
           // (`fmDrawsToFpg`) → `.row-portuguese`. Nos draws FPG o campo não
           // existe (todos são PT — destacar todos não distinguiria nada).

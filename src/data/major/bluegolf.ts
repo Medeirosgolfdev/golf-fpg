@@ -11,6 +11,7 @@
 import { gf, normPaisDisplay } from "../../utils/flagUtils";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
+import { isNoCardGross } from "../intlCommon";
 
 /* ── Types ── */
 export interface RoundData { day: number; scores: number[] | null; f9: number | null; b9: number | null; gross: number }
@@ -153,7 +154,8 @@ export function normalizeBlueGolf(raw: any, reverseRounds?: boolean): TData {
   const withR = players.filter((p: any) => p.rounds?.length > 0);
   const maxR = Math.max(0, ...withR.map((p: any) => p.rounds.length));
   players = withR.filter((p: any) => p.total != null)
-    .map((p: any) => ({ ...p, _complete: isPlayerComplete(p, maxR, holesPerRound) }))
+    // Total «sem cartão» (≥ 900) não terminou: sem posição, para o fim.
+    .map((p: any) => ({ ...p, _complete: !isNoCardGross(p.total) && isPlayerComplete(p, maxR, holesPerRound) }))
     .sort((a: any, b: any) => {
       // Quem não terminou vai sempre para o fim, independentemente do total.
       if (a._complete !== b._complete) return a._complete ? -1 : 1;

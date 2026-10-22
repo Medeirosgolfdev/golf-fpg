@@ -10,7 +10,7 @@
  * Boys 8-9: 9 buracos (H10-H18) · Boys 10-11 / 12-13: 18 buracos.
  * Tirado da DORALPage a 21/10/2026 — comportamento igual ao que estava lá.
  */
-import { intlCountryCell } from "../intlCommon";
+import { intlCountryCell, isNoCardGross } from "../intlCommon";
 import type { Tournament as FPGTournament } from "../fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn } from "../intlTournament";
 
@@ -190,7 +190,9 @@ export function normalizeDoralFile(raw: DoralFile, sourceUrl: string): DoralEntr
         const af = a.rounds.length === nR ? 0 : 1;
         const bf = b.rounds.length === nR ? 0 : 1;
         if (af !== bf) return af - bf;
-        return (a.total ?? 999) - (b.total ?? 999);
+        // Sem total ou «sem cartão» (≥ 900) → no fim.
+        const tot = (t: number | null) => (t == null || isNoCardGross(t) ? 999 : t);
+        return tot(a.total) - tot(b.total);
       });
     // Lookup do DORAL_DIVISION_META — normaliza o key porque o scraper guarda
     // "Boys 14 & 15" (com ampersand) mas o DORAL_DIVISION_META tem "Boys 14-15" (hífen).
