@@ -14,6 +14,10 @@ import TeePill from "./TeePill";
 import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
 import { CourseLink } from "./jogadoresHelpers";
+import SortableHdr from "./SortableHdr";
+import { useSort } from "../hooks/useSort";
+
+type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
 
 /** CR/Slope/Par introduzidos à mão (strings — vêm dos inputs).
  *  Usado para pré-preencher o modo "Manual" do simulador a partir de outra
@@ -637,6 +641,44 @@ export function RoundSimulator({
   );
   const finalTopIds = useMemo(() => new Set(finalTopRanks.keys()), [finalTopRanks]);
   const oldTopRanks = useMemo(() => topRanks(initialPool), [initialPool]);
+
+  // ── Janela WHS final: ordenação pelo cabeçalho (WHS# = posição na janela, fica fixo) ──
+  const { sortKey: poolKey, sortDir: poolDir, toggleSort: togglePool } =
+    useSort<PoolSortKey>("whs", "asc");
+  const sortedFinalPool = useMemo(() => {
+    if (!simResults) return [];
+    const rows = simResults.finalPool.map((entry, i) => ({ entry, i }));
+    const val = ({ entry, i }: (typeof rows)[number]): number | string | null => {
+      const r = entry.origRound;
+      switch (poolKey) {
+        case "course":
+          return entry.isSimulated
+            ? simResults.results.find((x) => x.roundId === entry.eid)?.courseName ?? null
+            : r?.course ?? null;
+        case "hcp": return r?.hi ?? null;
+        case "tee": return r?.tee || null;
+        case "gross": return r?.gross != null ? Number(r.gross) : null;
+        case "sd": return entry.sd;
+        case "sdAdj": return entry.adj !== 0 ? entry.sd + entry.adj : null;
+        case "top": return finalTopRanks.get(entry.eid) ?? null;
+        default: return i; // "whs" e "date": a janela já vem por data
+      }
+    };
+    return rows.sort((a, b) => {
+      const va = val(a), vb = val(b);
+      if (va == null || vb == null || (typeof va === "number" && isNaN(va)) || (typeof vb === "number" && isNaN(vb))) {
+        const na = va == null || (typeof va === "number" && isNaN(va));
+        const nb = vb == null || (typeof vb === "number" && isNaN(vb));
+        if (na !== nb) return na ? 1 : -1;
+        return a.i - b.i;
+      }
+      const c = typeof va === "string" ? va.localeCompare(String(vb), "pt") : va - (vb as number);
+      return (poolDir === "asc" ? c : -c) || a.i - b.i;
+    });
+  }, [simResults, poolKey, poolDir, finalTopRanks]);
+  const poolHdr = (k: PoolSortKey, label: string, className?: string) => (
+    <SortableHdr k={k} sortKey={poolKey} sortDir={poolDir} onSort={togglePool} className={className}>{label}</SortableHdr>
+  );
 
   // ── Tabela gross→HCP (última ronda em modo Campo válida) ──
   const grossTable = useMemo(() => {
@@ -2180,19 +2222,19 @@ export function RoundSimulator({
           <table className="dtable-sm">
             <thead>
               <tr>
-                <th className="r">WHS#</th>
-                <th>Data</th>
-                <th>Campo</th>
-                <th className="r">HCP</th>
-                <th>Tee</th>
-                <th className="r">Gross</th>
-                <th className="r">SD</th>
-                <th className="r">SD adj.</th>
-                <th className="r">Top</th>
+                {poolHdr("whs", "WHS#", "r")}
+                {poolHdr("date", "Data")}
+                {poolHdr("course", "Campo")}
+                {poolHdr("hcp", "HCP", "r")}
+                {poolHdr("tee", "Tee")}
+                {poolHdr("gross", "Gross", "r")}
+                {poolHdr("sd", "SD", "r")}
+                {poolHdr("sdAdj", "SD adj.", "r")}
+                {poolHdr("top", "Top", "r")}
               </tr>
             </thead>
             <tbody>
-              {simResults.finalPool.map((entry, i) => {
+              {sortedFinalPool.map(({ entry, i }) => {
                 const r = entry.origRound;
                 const adjSd = entry.sd + entry.adj;
                 const isTop = finalTopIds.has(entry.eid);

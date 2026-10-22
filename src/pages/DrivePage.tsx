@@ -30,6 +30,8 @@ import { useMasterDetail } from "../hooks/useMasterDetail";
 import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
 import SexBadge from "../ui/SexBadge";
+import SortableHdr from "../ui/SortableHdr";
+import { useSort } from "../hooks/useSort";
 import { C } from "../utils/colors";
 import {
   isManuel,
@@ -308,9 +310,35 @@ function ToParSpan({ tp }: { tp: number | null }) {
   return <span className="fw-700 fs-11" style={{ color }}>{fmtToPar(tp)}</span>;
 }
 
+type RankSortKey = "pos" | "name" | "club" | "hcp" | "t" | "pts" | "best" | "bestSD";
+const RANK_SORT_DIRS: Partial<Record<RankSortKey, "asc" | "desc">> = { t: "desc", pts: "desc" };
+
 function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
-  const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts);
+  const { sortKey, sortDir, toggleSort } = useSort<RankSortKey>("pos", "asc", RANK_SORT_DIRS);
+  // A posição é sempre a do ranking (pontos); a ordenação só muda a ordem das linhas.
+  const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts)
+    .map((p, i) => ({ p, pos: i + 1 }));
   const zeroPts = rows.filter(p => p.totalPts === 0);
+  const sortVal = (x: { p: Sub12Row; pos: number }): number | string | null => {
+    switch (sortKey) {
+      case "name": return x.p.name;
+      case "club": return x.p.club || null;
+      case "hcp": return x.p.hcp;
+      case "t": return x.p.tourneiosPlayed;
+      case "pts": return x.p.totalPts;
+      case "best": return x.p.bestGross;
+      case "bestSD": return x.p.bestSD;
+      default: return x.pos;
+    }
+  };
+  const sortedRanked = [...ranked].sort((a, b) => {
+    const va = sortVal(a), vb = sortVal(b);
+    if (va == null || vb == null) return va == null ? (vb == null ? a.pos - b.pos : 1) : -1;
+    const c = typeof va === "string" ? va.localeCompare(String(vb), "pt") : va - (vb as number);
+    return (sortDir === "asc" ? c : -c) || a.pos - b.pos;
+  });
+  const hdr = (k: RankSortKey, label: string, className?: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;
   return (
     <div>
       {ranked.length === 0 ? (
@@ -319,19 +347,19 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
         <div className="bjgt-chart-scroll">
           <table className="dtable fs-12" >
             <thead><tr>
-              <th className="r drive-col-n">#</th>
-              <th className="ta-left drive-col-player">Jogador</th>
-              <th>Clube</th>
-              <th className="r">HCP</th>
-              <th className="r">T</th>
-              <th className="r drive-col-pts">Pts</th>
-              <th className="r">Best SD</th>
-              <th className="r">Melhor</th>
+              {hdr("pos", "#", "r drive-col-n")}
+              {hdr("name", "Jogador", "ta-left drive-col-player")}
+              {hdr("club", "Clube")}
+              {hdr("hcp", "HCP", "r")}
+              {hdr("t", "T", "r")}
+              {hdr("pts", "Pts", "r drive-col-pts")}
+              {hdr("bestSD", "Best SD", "r")}
+              {hdr("best", "Melhor", "r")}
             </tr></thead>
             <tbody>
-              {ranked.map((p, i) => (
+              {sortedRanked.map(({ p, pos }) => (
                 <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
-                  <td className="r drive-medal">{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
+                  <td className="r drive-medal">{medal(pos) ?? <span className="mono fw-700">{pos}</span>}</td>
                   <td>
                     <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer"
                       className="fw-700 drive-rank-name"
@@ -412,7 +440,29 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
   );
 }
 
+type ResultSortKey = "date" | "tourn" | "campo" | "pos" | "gross" | "toPar" | "sd";
+
 function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
+  const { sortKey, sortDir, toggleSort } = useSort<ResultSortKey>("date", "asc");
+  const sortVal = (r: Sub12Row["results"][number]): number | string | null => {
+    switch (sortKey) {
+      case "tourn": return r.tournName;
+      case "campo": return r.campo || null;
+      case "pos": { const n = typeof r.pos === "number" ? r.pos : parseInt(String(r.pos ?? ""), 10); return isNaN(n) ? null : n; }
+      case "gross": return r.gross;
+      case "toPar": return r.toPar;
+      case "sd": return r.sd;
+      default: return r.dateSort;
+    }
+  };
+  const results = [...row.results].sort((a, b) => {
+    const va = sortVal(a), vb = sortVal(b);
+    if (va == null || vb == null) return va == null ? (vb == null ? 0 : 1) : -1;
+    const c = typeof va === "string" ? va.localeCompare(String(vb), "pt") : va - (vb as number);
+    return sortDir === "asc" ? c : -c;
+  });
+  const hdr = (k: ResultSortKey, label: string, className?: string) =>
+    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className={className}>{label}</SortableHdr>;
   return (
     <div className="card drive-player-card">
       <button onClick={onClose} title="Fechar" aria-label="Fechar" className="drive-player-close">✕</button>
@@ -430,9 +480,12 @@ function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) 
       </div>
       <div className="scroll-x">
         <table className="dtable fs-11">
-          <thead><tr><th>Data</th><th>Torneio</th><th>Campo</th><th className="r">Pos</th><th className="r">Gross</th><th className="r">±Par</th><th className="r">SD</th></tr></thead>
+          <thead><tr>
+            {hdr("date", "Data")}{hdr("tourn", "Torneio")}{hdr("campo", "Campo")}{hdr("pos", "Pos", "r")}
+            {hdr("gross", "Gross", "r")}{hdr("toPar", "±Par", "r")}{hdr("sd", "SD", "r")}
+          </tr></thead>
           <tbody>
-            {row.results.map((r, i) => (
+            {results.map((r, i) => (
               <tr key={i}>
                 <td className="mono fs-10">{r.date}</td>
                 <td>
