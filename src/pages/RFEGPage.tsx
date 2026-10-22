@@ -10,20 +10,11 @@
  */
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSort } from "../hooks/useSort";
-import { KidsLink } from "../ui/KidsLink";
 import DetailHeader from "../ui/DetailHeader";
 import EmptyState from "../ui/EmptyState";
 import LoadingState from "../ui/LoadingState";
-import { ManuelPill } from "../ui/PillBadge";
-import SortableHdr from "../ui/SortableHdr";
-import SexBadge from "../ui/SexBadge";
 import ExtLink from "../ui/ExternalLink";
-import { ScorecardLeaderboard, type ScorecardRow } from "../ui/ScorecardLeaderboard";
-import { isManuelByName as isM } from "../constants/manuel";
-import { displayName } from "../utils/format";
 import { C } from "../utils/colors";
-import { formatPlayerName } from "../utils/playerUtils";
 import DrawTab from "../ui/DrawTab";
 import type { Player as FPGPlayer } from "./FPGPage";
 import { RFEGFederationsView } from "./rfeg/FederationsView";
@@ -31,11 +22,12 @@ import { RFEGPlayersView } from "./rfeg/PlayersView";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig, CircuitDivision } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
-import type { RFEGIndexEntry, RFEGPlayer, DobLookup, HcpLookup } from "../data/rfeg/types";
+import type { RFEGIndexEntry, DobLookup, HcpLookup } from "../data/rfeg/types";
 import { lgsScorecardOptions } from "../data/rfeg/toTournament";
 import { rfegSex } from "../data/rfeg/entries";
 import { rfegRoundDraw, type RfegDrawDetail } from "../data/rfeg/roundDraw";
-import { loadRfegDivisionData, type NCHighlightRow } from "../data/rfeg/divisionData";
+import { loadRfegDivisionData } from "../data/rfeg/divisionData";
+import TotalsResumo, { type TotalsPlayer } from "../ui/circuit/TotalsResumo";
 import { useRfegData } from "../data/rfeg/useRfegData";
 
 /* ── DrawSaidaView ──────────────────────────────────────────
@@ -364,128 +356,12 @@ p.ex. jogador nascido em 2014, em 2026:
   );
 }
 
-function NCHighlights({ rows, hasPdf }: { rows: NCHighlightRow[]; hasPdf?: boolean }) {
-  const { sortKey, sortDir, toggleSort } = useSort<"name" | "ace" | "eagle" | "birdie">("name");
-  const sorted = useMemo(() => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    const val = (r: NCHighlightRow): string | number => (sortKey === "name" ? r.name.toLowerCase() : r[sortKey]);
-    return [...rows].sort((a, b) => { const va = val(a), vb = val(b); return va < vb ? -dir : va > vb ? dir : 0; });
-  }, [rows, sortKey, sortDir]);
-  const hdr = (k: "name" | "ace" | "eagle" | "birdie", label: string) => (
-    <SortableHdr k={k} sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>{label}</SortableHdr>
-  );
-  return (
-    <div>
-      <p className="muted fs-13 mb-8">
-        {hasPdf
-          ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
-          : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}
-      </p>
-      <div className="bjgt-chart-scroll">
-        <table className="sc-lb">
-          <thead><tr>{hdr("name", "Jogador")}{hdr("ace", "🏌 HiO")}{hdr("eagle", "🦅 Eagle")}{hdr("birdie", "🐦 Birdie")}</tr></thead>
-          <tbody>
-            {sorted.map((r, i) => (
-              <tr key={i} className={isM(r.name) ? "row-manuel" : undefined}>
-                <td className="lb-name fw-700 ta-left">{r.name}{isM(r.name) && <> <ManuelPill /></>}</td>
-                <td>{r.ace || "—"}</td>
-                <td>{r.eagle || "—"}</td>
-                <td>{r.birdie || "—"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-/* ── NCResultsLeaderboard ────────────────────────────────────────────────
- * Leaderboard de TOTAIS (sem scorecard buraco-a-buraco). Usado quando a fonte
- * dá pos/total/±par por jogador mas não os scores hole-by-hole (ex: NextCaddy
- * Liguillas, cujo leaderboard é real mas sem cartões). Mesmo aspecto .sc-lb que
- * o resto da app, via ScorecardLeaderboard sem scorecard. Colunas vazias ocultas. */
-function NCResultsLeaderboard({ players }: { players: RFEGPlayer[] }) {
-  type K = "pos" | "nome" | "toPar" | "total" | "hcp" | "club" | "fed";
-  const { sortKey, sortDir, toggleSort } = useSort<K>("pos");
-  const showFed = players.some((p) => !!p.licencia);
-  const showClub = players.some((p) => !!p.club);
-  const showHcp = players.some((p) => p.hcp != null);
-
-  const enriched = useMemo(() => players.map((p) => ({
-    ...p,
-    _name: formatPlayerName(p.name || ""),
-    _club: p.club ? displayName(p.club) : "",
-  })), [players]);
-
-  const sorted = useMemo(() => {
-    const INF = 9999;
-    const mult = sortDir === "asc" ? 1 : -1;
-    return [...enriched].sort((a, b) => {
-      let v = 0;
-      switch (sortKey) {
-        case "pos":   v = (a.pos ?? INF) - (b.pos ?? INF); break;
-        case "nome":  v = (a._name || "").localeCompare(b._name || "", "pt"); break;
-        case "toPar": v = (a.toPar ?? INF) - (b.toPar ?? INF); break;
-        case "total": v = (a.total ?? INF) - (b.total ?? INF); break;
-        case "hcp":   v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
-        case "club":  v = (a._club || "").localeCompare(b._club || "", "es"); break;
-        case "fed":   v = (a.licencia || "").localeCompare(b.licencia || ""); break;
-      }
-      return mult * v;
-    });
-  }, [enriched, sortKey, sortDir]);
-
-  const rows: ScorecardRow[] = sorted.map((p, i) => {
-    const manuel = p._name ? isM(p._name) : false;
-    return {
-      key: `${p.licencia ?? "-"}-${i}`,
-      pos: p.pos ?? i + 1,
-      gross: p.total ?? 0,
-      toPar: p.toPar ?? null,
-      isManuel: manuel,
-      sortPos: p.pos ?? null,
-      sortName: p._name || "",
-      fedCode: p.licencia ?? undefined,
-      nameContent: (
-        <span className="tourn-pname inline-flex items-center gap-4">
-          {p._name || "—"}
-          {(p.sexo === "M" || p.sexo === "F") && <SexBadge sex={p.sexo} />}
-          {manuel && <ManuelPill />}
-          {p._name && <KidsLink nome={p._name} />}
-        </span>
-      ),
-      prefixCells: (
-        <>
-          {showFed && <td className="lb-fed">{p.licencia ?? "—"}</td>}
-          {showClub && <td className="lb-club" title={p._club}>{p._club || "—"}</td>}
-          {showHcp && <td className="lb-hcp">{p.hcp != null ? p.hcp.toFixed(1) : "—"}</td>}
-        </>
-      ),
-    };
-  });
-
-  return (
-    <ScorecardLeaderboard
-      par={[]}
-      rows={rows}
-      showScorecard={false}
-      prefixHeaderCells={
-        <>
-          {showFed && <SortableHdr k="fed" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-fed">LICENCIA</SortableHdr>}
-          {showClub && <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-club">CLUBE</SortableHdr>}
-          {showHcp && <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as K)} className="lb-hcp">HCP</SortableHdr>}
-        </>
-      }
-      onSortPos={() => toggleSort("pos")}
-      onSortName={() => toggleSort("nome")}
-      onSortToPar={() => toggleSort("toPar")}
-      onSortGross={() => toggleSort("total")}
-      activeSortKey={sortKey === "nome" ? "name" : sortKey === "total" ? "gross" : sortKey}
-      activeSortDir={sortDir}
-    />
-  );
-}
+/** Destaques de live scoring (NextCaddy só-PDF) no TotalsResumo partilhado. */
+const NC_HIGHLIGHT_COLS = ([["ace", "🏌 HiO", "Hole-in-one"], ["eagle", "🦅 Eagle", "Eagles"], ["birdie", "🐦 Birdie", "Birdies"]] as const).map(([k, header, title]) => ({
+  header, title,
+  value: (p: TotalsPlayer) => (p[k] as number) || "—",
+  sortValue: (p: TotalsPlayer) => -((p[k] as number) || 0),
+}));
 
 /** Carrega o detalhe de um torneio (src/data/rfeg/divisionData.ts) e desenha a
  *  sua divisão — ou duas (M/F) no NextCaddy com rapazes e raparigas. */
@@ -498,9 +374,15 @@ async function rfegLoadDivisions(
 
   // NextCaddy sem cartões: leaderboard de totais (Liguillas) ou, sem nem isso,
   // os destaques de live scoring.
+  const tDate = data.meta.dateStart ?? undefined;
   const customResults: React.ReactNode = d.ncTotals
-    ? <NCResultsLeaderboard players={d.ncTotals} />
-    : d.ncHighlights ? <NCHighlights rows={d.ncHighlights.rows} hasPdf={d.ncHighlights.hasPdf} /> : undefined;
+    ? <TotalsResumo parPerRound={null} players={d.ncTotals} tournamentDate={tDate} />
+    : d.ncHighlights ? (
+      <TotalsResumo parPerRound={null} players={d.ncHighlights.players} tournamentDate={tDate} extra={NC_HIGHLIGHT_COLS}
+        notice={<p className="muted fs-13 mb-8">{d.ncHighlights.hasPdf
+          ? "⚠ Resultados finais só publicados em PDF (ver link no cabeçalho). Destaques de live-scoring registados durante o jogo:"
+          : "⚠ Sem leaderboard publicado na plataforma — apenas destaques de live-scoring registados durante o jogo:"}</p>} />
+    ) : undefined;
 
   // Draw por ronda → abas "Draw R{n}" intercaladas com os resultados (o MESMO
   // DrawSaidaView → DrawTab partilhado, uma ronda de cada vez).

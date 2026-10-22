@@ -70,6 +70,8 @@ export interface ExtraColumn<R = MultiRoundRow & { _pos?: number | null }> {
   headerStyle?: React.CSSProperties;
   /** Renderizar célula para cada linha */
   cell: (row: R, idx: number) => React.ReactNode;
+  /** Valor para ordenar pela coluna (clique no cabeçalho). Sem ele a coluna não ordena. */
+  sortValue?: (row: R) => number | string | null | undefined;
 }
 
 /** Filtro vazio (estado inicial / botão "limpar"). */

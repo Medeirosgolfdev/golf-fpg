@@ -9,6 +9,8 @@
 import { cachedFetchJson } from "../fetchCache";
 import { adaptFcg, fcgToFPGTournament, type FCGDetail, type MinimalRFEGShape } from "../fcgAdapter";
 import { formatPlayerName } from "../../utils/playerUtils";
+import { displayName } from "../../utils/format";
+import type { TotalsPlayer } from "../../ui/circuit/TotalsResumo";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../fpgTypes";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
 import type { CircuitLink } from "../../ui/circuit/types";
@@ -45,6 +47,32 @@ export function ncHighlightRows(scoreTypes: NCDetail["scoreTypes"]): NCHighlight
   const rows = [...m.values()];
   for (const r of rows) r.pts = r.ace * 100 + r.eagle * 10 + r.birdie;
   return rows.sort((a, b) => b.pts - a.pts);
+}
+
+/** NextCaddy só com totais (Liguillas: pos/total/±par, sem cartões) → linhas do
+ *  TotalsResumo partilhado (22/10/2026 — era uma tabela própria na RFEGPage). */
+export function ncTotalsPlayers(admit: RFEGPlayer[]): TotalsPlayer[] {
+  return admit.map((p) => {
+    const name = formatPlayerName(p.name || "");
+    return {
+      name,
+      pos: p.pos ?? null,
+      total: p.total ?? null,
+      toPar: p.toPar ?? null,
+      hcp: p.hcp ?? null,
+      club: p.club ? displayName(p.club) : null,
+      country: rfegPlayerFlag(p.name, p.pais) ?? null,
+      fed: p.licencia ?? null,
+      sex: p.sexo === "M" || p.sexo === "F" ? p.sexo : null,
+      rounds: (p.rounds || []).map((r) => r.gross ?? null),
+    };
+  });
+}
+
+/** Destaques de live scoring → linhas do TotalsResumo (sem resultados; as
+ *  colunas HiO/Eagle/Birdie entram como colunas extra ordenáveis). */
+export function ncHighlightPlayers(rows: NCHighlightRow[]): TotalsPlayer[] {
+  return rows.map((r) => ({ name: r.name, rounds: [], ace: r.ace, eagle: r.eagle, birdie: r.birdie }));
 }
 
 /** Inscrições no formato FPG (o shell desenha-as com o AdmissionsTab partilhado).
@@ -125,9 +153,9 @@ export interface RfegDivisionData {
   /** Voltas com jogadores no draw → abas "Draw R{n}" intercaladas. */
   drawRounds: number[];
   /** NextCaddy sem cartões: leaderboard só de totais (Liguillas) e, sem nem
-   *  isso, os destaques de live scoring. */
-  ncTotals: RFEGPlayer[] | null;
-  ncHighlights: { rows: NCHighlightRow[]; hasPdf: boolean } | null;
+   *  isso, os destaques de live scoring — os dois no formato do TotalsResumo. */
+  ncTotals: TotalsPlayer[] | null;
+  ncHighlights: { players: TotalsPlayer[]; hasPdf: boolean } | null;
   /** NextCaddy com rapazes E raparigas: o leaderboard partido por sexo
    *  (desconhecidos ficam com os rapazes para não desaparecerem). */
   bySex: { M: FPGPlayer[]; F: FPGPlayer[] } | null;
@@ -179,15 +207,15 @@ export async function loadRfegDivisionData(
   // destaques ficam só para torneios mesmo só-PDF (sem qualquer leaderboard) — e
   // mesmo aí têm nomes por PAR de jogadores (o live-scoring regista o flight, não
   // o indivíduo), por isso são último recurso.
-  let ncTotals: RFEGPlayer[] | null = null;
+  let ncTotals: TotalsPlayer[] | null = null;
   let ncHighlights: RfegDivisionData["ncHighlights"] = null;
   if (t.source === "nextcaddy" && !results) {
     const admit = data.inscritos.admitidos;
-    if (admit.some((p) => p.total != null || p.toPar != null)) ncTotals = admit;
+    if (admit.some((p) => p.total != null || p.toPar != null)) ncTotals = ncTotalsPlayers(admit);
     else {
       const hl = ncHighlightRows((raw as NCDetail).scoreTypes);
       const ncPdfs = (raw as unknown as { pdfs?: unknown[] }).pdfs;
-      if (hl.length) ncHighlights = { rows: hl, hasPdf: Array.isArray(ncPdfs) && ncPdfs.length > 0 };
+      if (hl.length) ncHighlights = { players: ncHighlightPlayers(hl), hasPdf: Array.isArray(ncPdfs) && ncPdfs.length > 0 };
     }
   }
 

@@ -67,7 +67,7 @@ function resumo(d: RfegDivisionData | null) {
     links: d.links.map((l) => l.label),
     drawRounds: d.drawRounds,
     totais: d.ncTotals?.length ?? null,
-    destaques: d.ncHighlights ? d.ncHighlights.rows.slice(0, 3).map((r) => `${r.name} ${r.pts}`) : null,
+    destaques: d.ncHighlights ? d.ncHighlights.players.slice(0, 3).map((p) => `${p.name} ${(p.ace as number) * 100 + (p.eagle as number) * 10 + (p.birdie as number)}`) : null,
     porSexo: d.bySex ? `M ${d.bySex.M.length} · F ${d.bySex.F.length}` : null,
   };
 }

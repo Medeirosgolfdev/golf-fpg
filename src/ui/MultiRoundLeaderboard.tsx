@@ -63,7 +63,8 @@ type MRSortKey =
   | "eag" | "bird" | "par-stat" | "bog"
   | "acc:eag" | "acc:bird" | "acc:par" | "acc:bog"
   | `gross:${number}` | `rtp:${number}`
-  | `sd:${number}` | `eag:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`;
+  | `sd:${number}` | `eag:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`
+  | `x:${number}`;
 
 /* ══════════════════════════════════════════════════════════════
    COMPONENTE PRINCIPAL
@@ -91,6 +92,8 @@ interface MultiRoundLBProps {
     roundToPar?: boolean;
     /** Mostrar a coluna ±Par do total. Default: true (false quando a fonte não tem par — WAGR). */
     toPar?: boolean;
+    /** Mostrar a coluna Total. Default: true (false quando não há resultados — só destaques). */
+    gross?: boolean;
   };
   sortable?: boolean;
   filterable?: boolean;
@@ -125,6 +128,7 @@ export function MultiRoundLeaderboard({
     roundStats: wantRoundStats = true,
     roundToPar: wantRoundToPar = true,
     toPar: showToPar = true,
+    gross: showGross = true,
   } = showCols;
 
   // Auto-hide: mesmo que showCols permita, esconder se nenhum jogador ALÉM DO
@@ -179,7 +183,8 @@ export function MultiRoundLeaderboard({
 
   /* Posições — apenas jogadores completos e não-WD */
   const withPos: RowWithPos[] = useMemo(() => {
-    const forRank = [...complete].sort((a, b) => (a.gross ?? 9999) - (b.gross ?? 9999));
+    // Sem resultado (gross null) não há posição — nem «1.º empatado» de todos.
+    const forRank = complete.filter(r => r.gross != null).sort((a, b) => (a.gross as number) - (b.gross as number));
     let counter = 1;
     const posMap = new Map<string, number>();
     forRank.forEach((r, i) => {
@@ -202,6 +207,16 @@ export function MultiRoundLeaderboard({
   /* Sort */
   function cmp(a: RowWithPos, b: RowWithPos): number {
     const INF = 9999;
+    // Coluna extra com `sortValue`: "x:0", "x:1", ... (índice em extraColumns)
+    if (typeof sortKey === "string" && sortKey.startsWith("x:")) {
+      const sv = extraColumns?.[parseInt(sortKey.slice(2), 10)]?.sortValue;
+      const va = sv?.(a), vb = sv?.(b);
+      if (va == null && vb == null) return 0;
+      if (va == null) return 1;
+      if (vb == null) return -1;
+      const d = typeof va === "number" && typeof vb === "number" ? va - vb : String(va).localeCompare(String(vb), "pt");
+      return sortDir === "asc" ? d : -d;
+    }
     // Gross por ronda específica: "gross:0", "gross:1", ... (índice 0-based)
     // Menos pancadas primeiro em asc. Rondas não jogadas vão para o fim.
     if (typeof sortKey === "string" && sortKey.startsWith("gross:")) {
@@ -265,7 +280,11 @@ export function MultiRoundLeaderboard({
       case "fed":   return sortDir === "asc" ? (a.fed||"").localeCompare(b.fed||"") : (b.fed||"").localeCompare(a.fed||"");
       case "hcp":   return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
-      case "toPar": return sortDir === "asc" ? ((a.gross ?? INF) - (a.parTotal ?? 0)) - ((b.gross ?? INF) - (b.parTotal ?? 0)) : ((b.gross ?? INF) - (b.parTotal ?? 0)) - ((a.gross ?? INF) - (a.parTotal ?? 0));
+      case "toPar": {
+        // O ±par da linha quando existe (fontes com ±par próprio); senão gross − par.
+        const tp = (r: RowWithPos) => r.toPar ?? ((r.gross ?? INF) - (r.parTotal ?? 0));
+        return sortDir === "asc" ? tp(a) - tp(b) : tp(b) - tp(a);
+      }
       case "sd":    { const sa = a.rounds[0]?.sd ?? INF; const sb = b.rounds[0]?.sd ?? INF; return sortDir === "asc" ? sa - sb : sb - sa; }
       case "eag":       { const sa = a.rounds[0]?.eagles ?? 0;   const sb = b.rounds[0]?.eagles ?? 0;   return sortDir === "asc" ? sb - sa : sa - sb; }
       case "bird":      { const sa = a.rounds[0]?.birdies ?? 0;  const sb = b.rounds[0]?.birdies ?? 0;  return sortDir === "asc" ? sb - sa : sa - sb; }
@@ -366,7 +385,7 @@ export function MultiRoundLeaderboard({
 
               {/* ±Par ANTES de Total */}
               {showToPar && <SHdr k="toPar" className="lb-topar">±Par</SHdr>}
-              <SHdr k="gross" className="lb-gross">{isMulti ? "Total" : "Tot"}</SHdr>
+              {showGross && <SHdr k="gross" className="lb-gross">{isMulti ? "Total" : "Tot"}</SHdr>}
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
               {isMulti && showRoundStats && <>
@@ -407,7 +426,9 @@ export function MultiRoundLeaderboard({
 
               {/* Colunas extra */}
               {extraColumns?.map((col, ci) => (
-                <th key={ci} className={col.className} style={col.headerStyle}>{col.header}</th>
+                col.sortValue && sortable
+                  ? <SortableHdr key={ci} k={`x:${ci}` as MRSortKey} sortKey={sortKey} sortDir={sortDir} onSort={handleSort} className={col.className}>{col.header}</SortableHdr>
+                  : <th key={ci} className={col.className} style={col.headerStyle}>{col.header}</th>
               ))}
             </tr>
           </thead>
@@ -533,7 +554,7 @@ export function MultiRoundLeaderboard({
 
                   {/* ±Par ANTES de Total */}
                   {showToPar && <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>}
-                  <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>
+                  {showGross && <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>}
 
                   {/* Acumulados multi-ronda */}
                   {isMulti && showRoundStats && (() => {
