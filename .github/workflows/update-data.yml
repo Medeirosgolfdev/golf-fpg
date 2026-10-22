@@ -159,6 +159,13 @@ jobs:
             fi
           }
           corre scripts/extract-courses.js --force
+          # Trava de regressão do catálogo de campos (como o site o funde):
+          # duplicados, torneios como campos, campos sem metros, tees a mais.
+          # Exit 1 se uma métrica passar o tecto (BASELINE no script) — o que
+          # correu bem publica-se na mesma, mas o job acaba vermelho e chega
+          # o email. Corrigir a origem (courseAliases.ts, course-aliases.json,
+          # tournamentCourses.ts); nunca subir o tecto para calar o aviso.
+          corre scripts/audit-courses.js
           corre scripts/build-course-player-names.js
           corre scripts/build-course-players.js
           # Torneios recentes reconstruídos das voltas dos nossos jogadores

@@ -9,6 +9,7 @@
  *   1. Override curado do Manuel (MANUEL_AWAY_TEE) — torneios onde a cor
  *      registada não reflecte a marcação real (escalão USKids por idade).
  *   2. Match por nome de tee (normalizado).
+ *   2b. Match por sufixo — "Boys 12" ↔ "USKids Boys 12" (escalão com prefixo).
  *   3. Match por COR (teeGroupHex) — ex: "AZUIS" ↔ "Blu".
  */
 import type { Course, Tee } from "../data/types";
@@ -72,6 +73,23 @@ export function resolvePlayedTee(
   if (teeName) {
     const t = tees.find((t) => norm(t.teeName) === norm(teeName));
     if (t) return t;
+  }
+  // 2b. Marcação por escalão com prefixo de circuito.
+  //     A volta grava a marcação como o circuito a nomeia ("Boys 12"), mas o
+  //     catálogo do campo guarda-a com prefixo ("USKids Boys 12", "Bleus /
+  //     USKids Boys 12"). O override curado (passo 1) não resolve isto: é um
+  //     valor só por campo, e o mesmo campo é jogado de Boys 11 num ano e de
+  //     Boys 12 no seguinte. Só para nomes com 2+ palavras, para não casar
+  //     cores — "Vermelhas" nunca deve apanhar "Vermelhas Femininas".
+  if (teeName) {
+    const want = norm(teeName).replace(/[^a-z0-9]+/g, " ").trim();
+    if (want.split(" ").length >= 2) {
+      const t = tees.find((t) => {
+        const have = norm(t.teeName).replace(/[^a-z0-9]+/g, " ").trim();
+        return have !== want && have.endsWith(` ${want}`);
+      });
+      if (t) return t;
+    }
   }
   // 3. Cor do tee
   if (teeName) {
