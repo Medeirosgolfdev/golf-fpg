@@ -63,7 +63,9 @@ describe("índice da lista da /ffg (ffg-list-index.json)", () => {
       .toEqual([entryManuelState(eager), entryPtState(eager), entryHasAce(eager)]);
 
     const divs = await loadDivisions!();
-    expect(pedidos).toHaveLength(4);
+    // Os 4 ficheiros do torneio + o das correcções de match play (22/10/2026).
+    expect(pedidos.filter((u) => u.startsWith("/data/ffgolf/"))).toHaveLength(4);
+    expect(pedidos.filter((u) => !u.startsWith("/data/ffgolf/"))).toEqual(["/data/ffgolf-matchplay-overrides.json"]);
     expect(divs.map(divView)).toEqual(eager.divisions!.map(divView));
   });
 
