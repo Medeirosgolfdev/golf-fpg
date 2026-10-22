@@ -57,7 +57,8 @@ export function parseDriveQuery(sp: URLSearchParams): DriveUrlState {
     nav,
     series: series === "all" || isSeries(series) ? series : "tour",
     manuel: g("manuel") === "1",
-    region: g("region") || (nav === "ranking-sub12" && g("s12r") && g("s12r") !== "all" ? g("s12r") : null),
+    // (o AQUAPOR não tem zonas: aí o `s12r` antigo não passa a filtro)
+    region: g("region") || (nav === "ranking-sub12" && series !== "aquapor" && g("s12r") && g("s12r") !== "all" ? g("s12r") : null),
     esc: (g("esc") || "").split(",").map(s => s.trim()).filter(Boolean),
     year: /^\d{4}$/.test(g("year") || "") ? g("year") : null,
     s12s: isSeries(g("s12s")) ? g("s12s") as DriveSeries : "tour",

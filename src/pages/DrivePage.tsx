@@ -237,9 +237,13 @@ function DriveContent() {
   useEffect(() => {
     if (!ready || !urlTkey || tkeyDone === urlTkey) return;
     const patch = shellSel.id ? null : driveFiltersForTkey(allSrc, urlTkey, st, false);
-    if (patch) go(patch);
-    else setTkeyDone(urlTkey);
-  }, [ready, urlTkey, tkeyDone, shellSel.id, allSrc, st, go]);
+    if (patch) { go(patch); return; }
+    setTkeyDone(urlTkey);
+    // Link antigo (`…_R1`, o tcode de um provisório): passa ao tkey canónico.
+    const div = shellSel.id ? driveEntries.find(e => e.id === shellSel.id)?.divisions?.find(d => d.key === shellSel.divKey) : undefined;
+    const canon = driveDivTkey(div);
+    if (canon && canon !== urlTkey) goTkey(canon);
+  }, [ready, urlTkey, tkeyDone, shellSel.id, shellSel.divKey, driveEntries, allSrc, st, go, goTkey]);
   // `?t={id}` antigo → /drive/torneio/{ccode}-{tcode}.
   useEffect(() => {
     if (!ready || !legacyT) return;

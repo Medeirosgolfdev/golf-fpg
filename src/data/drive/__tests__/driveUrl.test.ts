@@ -23,8 +23,10 @@ describe("query da /drive (decisão A)", () => {
     expect(q("nav=ranking-sub12&s12v=evolucao").s12v).toBe("evolucao");
     expect(q("nav=ranking-sub12&s12v=list").s12v).toBe("ranking");
     // O Ranking é uma vista dos torneios (decisão D): a série e a zona são as da barra.
-    expect(driveQueryString(q("nav=ranking-sub12&s12s=aquapor&s12v=evolucao&s12r=madeira&s12x=F&s12e=all")))
-      .toBe("?nav=ranking-sub12&series=aquapor&region=madeira&s12v=evolucao&s12x=F&s12e=all");
+    expect(driveQueryString(q("nav=ranking-sub12&s12s=challenge&s12v=evolucao&s12r=madeira&s12x=F&s12e=all")))
+      .toBe("?nav=ranking-sub12&series=challenge&region=madeira&s12v=evolucao&s12x=F&s12e=all");
+    // o AQUAPOR não tem zonas
+    expect(q("nav=ranking-sub12&s12s=aquapor&s12r=madeira").region).toBeNull();
     expect(driveQueryString(q("nav=ranking-sub12&series=all&s12s=challenge"))).toBe("?nav=ranking-sub12&series=all&s12s=challenge");
   });
   it("por omissão, URL limpo; a aba só na vista de torneios", () => {
