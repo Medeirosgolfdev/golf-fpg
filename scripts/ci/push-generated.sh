@@ -79,10 +79,13 @@ family() {
     ffgolf)
       GEN+=('public/data/ffgolf-resultats-index.json' 'public/data/ffgolf-juniors-slim.json'
             'public/data/france-players.json' 'public/data/ffgolf-gg-twins.json'
-            'public/data/ffgolf-player-tournaments.json')
+            'public/data/ffgolf-player-tournaments.json' 'public/data/ffgolf-manuel-index.json')
+      # O índice Manuel/PT alimenta os filtros ★ Manuel / PT da /ffg — estava
+      # parado desde 20/05/2026 porque ninguém o regenerava (22/10/2026).
       REGEN+=('node scripts/build-ffgolf-resultats-index.js'
               'node scripts/build-ffgolf-juniors-slim.js'
-              'node scripts/build-france-players.js') ;;
+              'node scripts/build-france-players.js'
+              'node scripts/build-ffgolf-manuel-index.js') ;;
     simulador)
       # Escrito pelo update-drive e pelo update-federados (Drive + cadastro).
       GEN+=('public/data/simulador-players.json')

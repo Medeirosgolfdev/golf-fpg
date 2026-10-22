@@ -431,8 +431,12 @@ export function buildFfgEntries(src: FfgSources, R: FfgRenderers): CircuitEntry[
     for (const meta of ffgResIndex.tournaments) {
       if (seen.has(meta.trnId)) continue;
       seen.add(meta.trnId);
+      // O índice é ESPARSO (só lista torneios com o Manuel/portugueses): com
+      // ele carregado, a ausência quer dizer «não», não «não se sabe» — senão
+      // os filtros ★ Manuel / PT não tiravam nada da lista (22/10/2026).
       const mi = manuelIdx[meta.trnId];
-      out.push(ffgResEntry(meta, mi?.m, mi?.pt));
+      const known = Object.keys(manuelIdx).length > 0;
+      out.push(ffgResEntry(meta, known ? !!mi?.m : mi?.m, known ? !!mi?.pt : mi?.pt));
     }
   }
   for (const item of listIndex?.items ?? []) {
