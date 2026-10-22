@@ -26,10 +26,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig, CircuitSpecialItem } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { FFGPlayersView } from "./ffg/PlayersView";
-import DrawTab from "../ui/DrawTab";
-import TotalsResumo from "../ui/circuit/TotalsResumo";
 import type { FFGCategoriesData, LGPIDFTournament } from "../data/ffg/types";
-import { lgpidfTotais } from "../data/ffg/lgpidf";
 import type { FfgRenderers } from "../data/ffg/ffgEntries";
 import { useFfgData } from "../data/ffg/useFfgData";
 import { C } from "../utils/colors";
@@ -164,13 +161,6 @@ node scripts/parse-vademecum-distances.js`}
     </div>
   );
 }
-function LGPIDFTotals({ data }: { data: LGPIDFTournament }) {
-  return (
-    <TotalsResumo parPerRound={72} tournamentDate={data.dateStart ?? undefined}
-      players={lgpidfTotais(data)}
-      notice={<span className="muted fs-10">* ±Par com par 72 assumido — o PDF de resultados não traz o par do campo.</span>} />
-  );
-}
 
 function LGPIDFCourseMapTab({ data }: { data: LGPIDFTournament }) {
   if (!data.courseMapPdfs.length) return <div className="muted">Sem mapa do campo.</div>;
@@ -237,10 +227,6 @@ const FFG_LIGUE_LABELS: Record<string, string> = {
 /** O que se desenha dentro das divisões construídas em src/data/ffg/ (estável:
  *  o hook reconstrói a lista quando isto muda). */
 const FFG_RENDERERS: FfgRenderers = {
-  draw: (draw, round, date, hideCols) => (
-    <DrawTab draw={draw} roundNum={round} tournamentDate={date} {...(hideCols ? { hideCols } : {})} />
-  ),
-  lgpidfTotals: (data) => <LGPIDFTotals data={data} />,
   lgpidfCourseMap: (data) => <LGPIDFCourseMapTab data={data} />,
 };
 

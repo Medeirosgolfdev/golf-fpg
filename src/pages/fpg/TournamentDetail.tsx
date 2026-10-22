@@ -9,6 +9,8 @@
  * Antes vivia inline em FPGPage.tsx (linhas 542-872) — extraído para reduzir
  * o ficheiro principal e permitir reuso.
  */
+import type { CircuitRoundDraw } from "../../ui/circuit/types";
+import { roundDrawNode } from "../../ui/circuit/divisionPieces";
 import { ShareRoundsPanel, RoundAnalysisFor } from "../../ui/ShareRoundPanel";
 import ManuelResultPills from "../../ui/ManuelResultPills";
 import React, { useMemo } from "react";
@@ -60,7 +62,7 @@ export interface TournamentDetailProps {
   leadingTabs?: TabContent[];
   /** Draws desenhados pela página (fontes internacionais), por volta — entram
    *  como «Draw R{n}» antes da volta n, em vez do DrawTab FPG. */
-  roundDraws?: { round: number; render: () => React.ReactNode }[];
+  roundDraws?: CircuitRoundDraw[];
   /** Etiquetas próprias das voltas (ex.: «R1 · 25 Fev»). */
   roundLabels?: string[];
   /** Etiqueta da linha de SI no scorecard (ex.: «m»). */
@@ -159,7 +161,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
     return out;
   }, [draws, tournament, synthDraws]);
   // Draws desenhados pela página (internacionais) — ganham ao DrawTab FPG.
-  const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, d.render] as const)), [roundDraws]);
+  const customDraw = useMemo(() => new Map((roundDraws ?? []).map((d) => [d.round, () => roundDrawNode(d)] as const)), [roundDraws]);
   const hasDraw = (r: number) => drawsByRound.has(r) || customDraw.has(r);
   const allDrawRounds = useMemo(() => [...new Set([...drawsByRound.keys(), ...customDraw.keys()])].sort((a, b) => a - b), [drawsByRound, customDraw]);
 

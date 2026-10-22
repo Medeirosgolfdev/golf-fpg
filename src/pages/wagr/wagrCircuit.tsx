@@ -4,8 +4,8 @@
  * Os eventos WAGR (wagr.com) trazem leaderboard de TOTAIS por ronda (R1-R4) +
  * país e pontos WAGR, mas NÃO scorecards buraco-a-buraco e NÃO o par do campo.
  * Por isso cada evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision`
- * cujo `customResults` é o `ScorecardLeaderboard` partilhado sem scorecard —
- * o mesmo padrão do EGR/RFEG/GJGL. Zero tabelas próprias.
+ * só com `totals` (dados: jogadores, aviso e a coluna PTS) — o shell desenha o
+ * TotalsResumo partilhado, o mesmo do EGR/GJGL/LGPIDF. Zero tabelas próprias.
  *
  * ⚠ Sem par → `hideTotals` (esconde as colunas ± e Tot do shell) e o Total
  *   entra como coluna própria, ao lado dos pontos WAGR.
@@ -15,7 +15,6 @@
  */
 import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
-import TotalsResumo from "../../ui/circuit/TotalsResumo";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 
 /* ── Tipos dos dados WAGR ───────────────────────────────────────── */
@@ -72,14 +71,14 @@ async function wagrLoadDivisions(e: WagrEventListItem): Promise<CircuitDivision[
     key: "main",
     escalao: e.eventType || "—",
     sex: (e.sex || undefined) as CircuitSex | undefined,
-    // Resumo comum das fontes só com totais (14/10/2026). O WAGR não publica o
-    // par do campo (sem ±par) e só traz quem pontuou.
-    customResults: <TotalsResumo parPerRound={null} tournamentDate={e.startDate || undefined}
-      notice={<div className="notice" style={{ marginBottom: 8 }} title="O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.">
-        ⚠ Só os classificados que pontuaram no WAGR ({players.length}) — não é o campo completo.</div>}
-      extra={[{ header: "PTS", title: "Pontos WAGR ganhos no evento", value: (p) => (typeof p.points === "number" ? p.points.toFixed(2) : "–") }]}
-      players={totaisWagr(players)} />,
-    totals: { players: totaisWagr(players), parPerRound: null },
+    // Só totais → o shell desenha o TotalsResumo comum (ui/circuit/divisionPieces).
+    // O WAGR não publica o par do campo (sem ±par) e só traz quem pontuou.
+    totals: {
+      players: totaisWagr(players), parPerRound: null, tournamentDate: e.startDate || undefined,
+      notice: { kind: "aviso", title: "O WAGR só publica os jogadores que pontuaram no ranking — não é o campo todo.",
+        text: `⚠ Só os classificados que pontuaram no WAGR (${players.length}) — não é o campo completo.` },
+      extra: [{ header: "PTS", title: "Pontos WAGR ganhos no evento", field: "points", decimals: 2 }],
+    },
   })];
 }
 

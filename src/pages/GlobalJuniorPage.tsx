@@ -13,7 +13,6 @@
  * O GJGL só expõe escalões U14, U18, U23. Manuel (12y) compete em U14.
  */
 import { withDivisionModel } from "../data/model/division";
-import TotalsResumo from "../ui/circuit/TotalsResumo";
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { cachedFetchJson } from "../data/fetchCache";
@@ -210,17 +209,13 @@ function gjglTotais(div: GjglDivision) {
     rounds: (p.rounds || []).map((r) => r?.gross ?? null), total: p.total }));
   return { players, parPerRound };
 }
-function GjglTotals({ div }: { div: GjglDivision }) {
-  const { players, parPerRound } = gjglTotais(div);
-  return <TotalsResumo parPerRound={parPerRound} players={players} />;
-}
 
 /* ═══════════════════════════════════════════════════════════════
    GlobalJuniorPage (NOVO) — assente no CircuitShell partilhado.
    Carregamento LAZY por torneio (catálogo só tem metadados; o detalhe
    carrega gjgl_{slug}.json ao seleccionar). Divisões U14/U18/U23.
-   Quando uma divisão não tem hole-by-hole, usa o Resumo de totais via
-   `customResults` (GjglTotals).
+   Quando uma divisão não tem hole-by-hole, entrega os totais (`totals`) e o
+   shell desenha o Resumo de totais comum.
    ═══════════════════════════════════════════════════════════════ */
 
 /** Carrega o detalhe de um torneio GJGL e constrói as divisões (U14/U18/U23). */
@@ -248,8 +243,7 @@ function gjglLoadDivisions(slug: string): Promise<CircuitDivision[]> {
           escalao: `U${div.ak}`,
           tabLabel: `U${div.ak} (${div.players.length})`,
           hasManuel,
-          // Resumo comum das fontes só com totais (14/10/2026).
-          customResults: <GjglTotals div={div} />,
+          // Só totais → o shell desenha o TotalsResumo comum (ui/circuit/divisionPieces).
           totals: gjglTotais(div),
         };
       })()));

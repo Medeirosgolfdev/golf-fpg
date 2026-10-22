@@ -10,6 +10,7 @@
  * que continuam a funcionar; as funções de `tournament.ts` dizem o mesmo que
  * elas (há testes). Só tipos aqui — nada de React.
  */
+import type { FpgDraw } from "../nacional2026Loader";
 
 /** Formato do torneio (o que decide a peça que o desenha). */
 export type TournamentFormat =
@@ -68,6 +69,34 @@ export interface PlayerIdentity {
   dob: string | null;
   /** Ano de nascimento (do `dob`, ou o ano que a fonte dá). */
   birthYear: number | null;
-  /** Escalão CANÓNICO (`escalao.ts`: «Sub 12», «U14», «Boys 10»…). */
+  /** Escalão CANÓNICO (`escalao.ts`: «Sub 12», «10 anos», «Absoluto»…). */
   escalao: string | null;
 }
+
+/** Colunas que o DrawTab esconde (o mesmo `hideCols` do DrawTab). */
+export interface DrawHideCols { esc?: boolean; fed?: boolean; clube?: boolean; hcp?: boolean; tee?: boolean; nasc?: boolean }
+
+/** Draw de uma volta como DADOS (sem React): o CircuitShell/TournamentDetail
+ *  desenham-no com o DrawTab partilhado. Os loaders podem produzi-lo e outras
+ *  páginas (Kids 2, scripts) reaproveitá-lo sem desenhar nada. */
+export interface RoundDrawData {
+  /** Volta (1-based). */
+  round: number;
+  /** Grupos e horas no formato FPG. */
+  draw?: FpgDraw;
+  /** Data do torneio (para idades/escalões); null = a do próprio draw. */
+  tournamentDate?: string | null;
+  hideCols?: DrawHideCols;
+  /** Rótulo da coluna do clube (USKids: «Cidade»). */
+  clubLabel?: string;
+  /** Resultado de cada jogador nessa volta, por federado/nome normalizado. */
+  results?: Map<string, { gross: number; toPar: number | null }>;
+}
+
+/** Aviso por cima de uma tabela de totais: `aviso` = caixa «notice» (WAGR);
+ *  `nota` = linha pequena (LGPIDF). */
+export interface TotalsNotice { kind: "aviso" | "nota"; text: string; title?: string }
+
+/** Coluna extra de uma tabela de totais, como dados: o valor é o campo `field`
+ *  do jogador, com `decimals` casas (sem número → «–»). */
+export interface TotalsExtraCol { header: string; title?: string; field: string; decimals?: number }

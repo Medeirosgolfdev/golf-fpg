@@ -17,7 +17,14 @@ import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
 import type { MatchplayFile } from "./matchplayTypes";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
 import type { TotalsPlayer } from "./TotalsResumo";
-import type { TournamentModel } from "../../data/model/types";
+import type { TournamentModel, RoundDrawData, TotalsNotice, TotalsExtraCol } from "../../data/model/types";
+
+/** Draw de uma volta numa divisão: os DADOS (`draw`…, desenhados pelo DrawTab
+ *  partilhado — ver `divisionPieces.tsx`) ou, para desenhos à medida que ainda
+ *  não passaram a dados (Espanha: `DrawSaidaView`), um `render`, que ganha. */
+export interface CircuitRoundDraw extends RoundDrawData {
+  render?: () => React.ReactNode;
+}
 
 /** Sexo de uma divisão/escalão. "Mixed" → mostra dois badges (M+F). */
 export type CircuitSex = "M" | "F" | "Mixed";
@@ -75,14 +82,25 @@ export interface CircuitDivision extends TournamentModel {
   results?: FPGTournament;
   /**
    * Conteúdo de resultados à medida, renderizado em vez do IntlTournView quando
-   * não há scorecards hole-by-hole (ex: GJGL com leaderboard só de totais).
+   * não há scorecards hole-by-hole. Para só totais, preferir `totals` (dados —
+   * o shell desenha o TotalsResumo); isto fica para o que ainda não é dados
+   * (destaques de live scoring do NextCaddy, Escócia).
    * Se `results` existir, tem precedência sobre `customResults`.
    */
   customResults?: React.ReactNode;
   /** Os jogadores do `customResults` quando é uma tabela só de totais (EGR,
    *  WAGR, GJGL, LGPIDF — 20/10/2026): com isto o Scout conhece o field e as
    *  «Edições anteriores» têm com que fazer as colunas de cada ano. */
-  totals?: { players: TotalsPlayer[]; parPerRound: number | null };
+  totals?: {
+    players: TotalsPlayer[];
+    parPerRound: number | null;
+    /** Data do torneio (idades/nascimento). */
+    tournamentDate?: string;
+    /** Aviso por cima da tabela (ex.: WAGR «só os que pontuaram»). */
+    notice?: TotalsNotice;
+    /** Colunas extra (ex.: pontos WAGR). */
+    extra?: TotalsExtraCol[];
+  };
   /** Inscrições, no formato da FPG — desenhadas pelo AdmissionsTab partilhado
    *  (o mesmo da FPG/Drive). Cada jogador pode trazer dob/país/escalão/tee. */
   admissions?: FpgAdmissions;
@@ -139,7 +157,7 @@ export interface CircuitDivision extends TournamentModel {
    * ronda n. Sem resultados de ronda, aparecem na secção "Draw". `round` é
    * 1-based. Pode incluir rondas ainda não jogadas (só os pairings).
    */
-  roundDraws?: { round: number; render: () => React.ReactNode }[];
+  roundDraws?: CircuitRoundDraw[];
   /** Abas próprias da divisão (ex.: mapa do campo da LGPIDF): no fim da barra
    *  quando há resultados de ronda, senão na barra de secções. */
   extraSections?: { key: string; label: string; content: React.ReactNode }[];

@@ -6,7 +6,7 @@ import cfjBenjaminesRaw from "../../../public/data/ffgolf/2026_championnat-de-fr
 import cfjBenjaminsRaw from "../../../public/data/ffgolf/2026_championnat-de-france-des-jeunes-benjamins.json?raw";
 import cfjU12FRaw from "../../../public/data/ffgolf/2026_championnat-de-france-des-jeunes-u12-filles-trophee-lacoste.json?raw";
 import cfjU12GRaw from "../../../public/data/ffgolf/2026_championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile.json?raw";
-import { ffgResLoadDivisions, ggMergedEntry, type FfgRenderers } from "../ffg/ffgEntries";
+import { ffgResLoadDivisions, ggMergedEntry } from "../ffg/ffgEntries";
 import { normalizeName, ffgCountry, divisionLabel, ffgEscaloesOfTournament } from "../ffg/names";
 import { toFPGTournament } from "../ffg/toTournament";
 import { buildFfgMatchplay, ggDrawToFpgDraw, ffgEventFamilyKey } from "../ffg/golfgenius";
@@ -42,12 +42,6 @@ function row(p: Player): string {
 }
 const top = (t: Tournament | undefined, n = 3) => (t?.players ?? []).slice(0, n).map(row);
 
-/** Renderizadores falsos: só para ver que cada peça é pedida com os dados certos. */
-const R: FfgRenderers = {
-  draw: (draw, round, date, hideCols) => JSON.stringify({ grupos: draw.groups?.length, round, date, hideCols }),
-  lgpidfTotals: () => "totais",
-  lgpidfCourseMap: () => "mapa",
-};
 
 describe("portal FFG Resultats — ffgResLoadDivisions", () => {
   it("Grand Prix Jeunes de Rennes 2026 (ffgres:2601477509): séries, par real, cartão por série", async () => {
@@ -92,7 +86,7 @@ describe("GolfGenius — Championnat de France des Jeunes 2026", () => {
 
   it("os 4 escalões juntam-se em gg:evt:championnat-de-france-des-jeunes_2026", () => {
     expect(new Set(members.map((m) => ffgEventFamilyKey(m.meta)))).toEqual(new Set(["championnat-de-france-des-jeunes"]));
-    const e = ggMergedEntry(members, R);
+    const e = ggMergedEntry(members);
     expect([e.id, e.name, e.course, e.dateStart, e.dateEnd, e.playerCount, e.roundsCount, e.escaloes]).toMatchInlineSnapshot(`
       [
         "gg:evt:championnat-de-france-des-jeunes_2026",

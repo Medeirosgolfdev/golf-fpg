@@ -3,13 +3,13 @@
  *
  * Os eventos EGR (europeangolfrankings.com) trazem leaderboard de TOTAIS por
  * ronda (R1-R4) + país/clube, mas NÃO scorecards buraco-a-buraco. Por isso cada
- * evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision` cujo
- * `customResults` é o TotalsResumo partilhado (o mesmo do GJGL e da LGPIDF).
+ * evento vira uma `CircuitEntry` (lazy) com UMA `CircuitDivision` só com
+ * `totals` (dados) — o shell desenha o TotalsResumo partilhado (o mesmo do
+ * GJGL, da LGPIDF e do WAGR). Sem React: o loader serve também o Kids 2.
  */
 import { withDivisionModel } from "../../data/model/division";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { normLoose } from "../../utils/normName";
-import TotalsResumo from "../../ui/circuit/TotalsResumo";
 import type { CircuitEntry, CircuitDivision, CircuitSex } from "../../ui/circuit/types";
 
 /* ── Tipos dos dados EGR ────────────────────────────────────────── */
@@ -83,9 +83,8 @@ async function egrLoadDivisions(e: EgrEventListItem): Promise<CircuitDivision[]>
     escalao: e.ageGroup || "—",
     sex: (e.sex || undefined) as CircuitSex | undefined,
     hasManuel: e.hasManuel,
-    // Resumo comum das fontes só com totais (14/10/2026).
-    customResults: <TotalsResumo parPerRound={par} tournamentDate={e.startDate || undefined} players={totais} />,
-    totals: { players: totais, parPerRound: par },
+    // Só totais → o shell desenha o TotalsResumo comum (ui/circuit/divisionPieces).
+    totals: { players: totais, parPerRound: par, tournamentDate: e.startDate || undefined },
   })];
 }
 

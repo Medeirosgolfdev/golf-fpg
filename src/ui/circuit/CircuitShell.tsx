@@ -16,6 +16,7 @@
  * O leaderboard em si é desenhado pelo <IntlTournView> (round tabs + scorecards).
  */
 
+import { roundDrawNode, divisionResultsNode } from "./divisionPieces";
 import ManuelResultPills from "../ManuelResultPills";
 import AdmissionsTab from "../AdmissionsTab";
 import type { FpgAdmissions } from "../../data/nacional2026Loader";
@@ -124,7 +125,7 @@ const sectionLabel = (s: CircuitSectionKind): string => {
 /** Secções disponíveis numa divisão (apenas as que têm dados). */
 function divisionSections(d: CircuitDivision): CircuitSectionKind[] {
   const out: CircuitSectionKind[] = [];
-  if (d.results || d.customResults) out.push("results");
+  if (d.results || d.customResults || d.totals) out.push("results");
   if (d.admissions?.players?.length) out.push("inscritos");
   if (d.roundDraws?.length) out.push("draw");
   if (d.matchplay && d.matchplay.flights.length > 0) out.push("matchplay");
@@ -194,7 +195,7 @@ function DivisionDraws({ roundDraws }: { roundDraws: NonNullable<CircuitDivision
       {roundDraws.map(rd => (
         <div key={rd.round} className="mb-12">
           {roundDraws.length > 1 && <div className="fw-700 mb-4">Draw R{rd.round}</div>}
-          {rd.render()}
+          {roundDrawNode(rd)}
         </div>
       ))}
     </>
@@ -911,7 +912,7 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
                         ))}
                       </div>
                     )}
-                    {curSection === "results" && curDiv.customResults}
+                    {curSection === "results" && divisionResultsNode(curDiv)}
                     {curSection === "inscritos" && curDiv.admissions && (
                       <DivisionAdmissions admissions={curDiv.admissions} date={cur?.dateStart ?? cur?.dateEnd} />
                     )}

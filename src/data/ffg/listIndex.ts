@@ -20,7 +20,7 @@ import type { Catalog, FFGResIndex, FFGTournament, FfgListIndex, FfgListItem, LG
 import { ggGroupEntry, ggGroups, lgpidfEntry, visibleLgpidf, type FfgRenderers } from "./ffgEntries";
 
 /** No build não se desenha nada (os metadados não dependem do que se desenha). */
-const NO_RENDER: FfgRenderers = { draw: () => null as ReactNode, lgpidfTotals: () => null, lgpidfCourseMap: () => null };
+const NO_RENDER: FfgRenderers = { lgpidfCourseMap: () => null as ReactNode };
 
 export interface FfgListInput {
   ffgResIndex: FFGResIndex | null;
@@ -41,7 +41,7 @@ export function buildFfgListIndex(src: FfgListInput): FfgListIndex {
     items.push({ entry: entryListMeta(lgpidfEntry(meta, data, NO_RENDER)), lgpidf: meta });
   }
   for (const members of ggGroups(src.ggCatalog, src.ggData, src.ggTwins)) {
-    items.push({ entry: entryListMeta(ggGroupEntry(members, NO_RENDER)), gg: members.map((m) => m.meta) });
+    items.push({ entry: entryListMeta(ggGroupEntry(members)), gg: members.map((m) => m.meta) });
   }
   return { _gerado: "scripts/build-ffg-list-index.js", items };
 }

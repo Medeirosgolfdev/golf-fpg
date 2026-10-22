@@ -17,8 +17,6 @@ import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
  */
 
 const R: FfgRenderers = {
-  draw: (draw, round, date, hideCols) => JSON.stringify({ grupos: draw.groups?.length, round, date, hideCols }),
-  lgpidfTotals: () => "totais",
   lgpidfCourseMap: () => "mapa",
 };
 
@@ -32,8 +30,8 @@ const RAW: Record<string, string> = {
 const catalog: Catalog = { ...cat, tournaments: cat.tournaments.filter((t) => t.year === 2026 && t.slug in RAW) };
 const ggData = new Map(Object.entries(RAW).map(([slug, raw]) => [`2026_${slug}`, JSON.parse(raw) as FFGTournament]));
 
-/** Divisão comparável (os draws desenhados pelo R falso). */
-const divView = (d: CircuitDivision) => JSON.stringify({ ...d, roundDraws: d.roundDraws?.map((r) => [r.round, r.render()]) });
+/** Divisão comparável (os draws já são dados). */
+const divView = (d: CircuitDivision) => JSON.stringify(d);
 
 afterEach(() => { vi.unstubAllGlobals(); });
 
@@ -56,7 +54,7 @@ describe("índice da lista da /ffg (ffg-list-index.json)", () => {
       return raw == null ? { ok: false, status: 404, text: async () => "" } : { ok: true, status: 200, text: async () => raw };
     });
     const [lazy] = buildFfgEntries({ ffgResIndex: null, manuelIdx: {}, listIndex: idx, categories: null }, R);
-    const eager: CircuitEntry = ggGroupEntry(catalog.tournaments.map((meta) => ({ meta, data: ggData.get(`2026_${meta.slug}`)! })), R);
+    const eager: CircuitEntry = ggGroupEntry(catalog.tournaments.map((meta) => ({ meta, data: ggData.get(`2026_${meta.slug}`)! })));
     expect(pedidos).toEqual([]);
 
     const { loadDivisions, ...meta } = lazy;

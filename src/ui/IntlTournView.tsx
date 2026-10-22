@@ -8,6 +8,7 @@
  *
  * A aba activa vive no URL (?tab=…), como em todas as páginas de torneio.
  */
+import type { CircuitRoundDraw } from "./circuit/types";
 import React, { useCallback, useMemo } from "react";
 import { EMPTY_ESC_LOOKUP, EMPTY_PLAYERS_DB } from "./tournamentPrimitives";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../pages/FPGPage";
@@ -28,7 +29,7 @@ export interface IntlTournViewProps {
   renderAccSection?: (leaderboard: React.ReactNode) => React.ReactNode;
   accShowCols?: TournamentDetailProps["accShowCols"];
   leadingTabs?: { key: string; label: string; content: React.ReactNode }[];
-  roundDraws?: { round: number; render: () => React.ReactNode }[];
+  roundDraws?: CircuitRoundDraw[];
   trailingTabs?: { key: string; label: string; content: React.ReactNode }[];
   tabParam?: string;
   /** Obsoletos: a aba vive no URL (?tab=…) — aceites só por compatibilidade. */

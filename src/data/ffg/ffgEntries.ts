@@ -21,7 +21,6 @@ import type { ReactNode } from "react";
 import { cachedFetchJson, invalidateCache } from "../fetchCache";
 import { isManuelByName as isM } from "../../constants/manuel";
 import type { CircuitEntry, CircuitDivision, CircuitLink } from "../../ui/circuit/types";
-import type { FpgDraw } from "../nacional2026Loader";
 import type {
   FFGTournament, FFGDrawRound, Catalog, CatalogEntry, LGPIDFTournament, LGPIDFIndex, LGPIDFIndexEntry,
   FFGResTournament, FFGResIndex, FFGResIndexEntry, FFGSerieCourse, FFGCategoriesData, FfgListIndex, FfgListItem,
@@ -34,12 +33,10 @@ import {
   ffgGgEscalaoLabel, ffgEventFamilyKey, ffgPrettyTitle,
 } from "./golfgenius";
 
-/** O que a página desenha dentro das divisões. */
+/** O que a página desenha dentro das divisões. Os draws e o leaderboard de
+ *  totais da LGPIDF já são DADOS (`roundDraws[].draw`, `totals` — desenhados
+ *  pelo CircuitShell, ver ui/circuit/divisionPieces); fica só o mapa do campo. */
 export interface FfgRenderers {
-  /** Draw de uma volta (DrawTab partilhado). */
-  draw: (draw: FpgDraw, round: number, date: string | null | undefined, hideCols?: { fed?: boolean; nasc?: boolean; esc?: boolean }) => ReactNode;
-  /** Leaderboard só de totais (LGPIDF). */
-  lgpidfTotals: (data: LGPIDFTournament) => ReactNode;
   /** Aba «Mapa do campo» (LGPIDF). */
   lgpidfCourseMap: (data: LGPIDFTournament) => ReactNode;
 }
@@ -124,7 +121,7 @@ export function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?:
 /* ── GolfGenius ── */
 
 /** Uma divisão (escalão) de um torneio GG FFG — leaderboard + match play + draws. */
-export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament, R: FfgRenderers): CircuitDivision {
+export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament): CircuitDivision {
   const hasManuel = data.players.some((p) => isM(p.name));
   const label = ffgGgEscalaoLabel(meta, data);
   const withDraw = (data.draws ?? []).filter((r: FFGDrawRound) => r.groups.length);
@@ -147,7 +144,7 @@ export function ffgGgDivision(meta: CatalogEntry, data: FFGTournament, R: FfgRen
     roundDraws: withDraw.length
       ? withDraw.map((r) => ({
           round: r.round,
-          render: () => R.draw(ggDrawToFpgDraw(r), r.round, r.dateIso, { fed: true, nasc: true, esc: true }),
+          draw: ggDrawToFpgDraw(r), tournamentDate: r.dateIso, hideCols: { fed: true, nasc: true, esc: true },
         }))
       : undefined,
   });
@@ -163,8 +160,8 @@ function ggLinks(meta: CatalogEntry, data: FFGTournament): CircuitLink[] {
 }
 
 /** Torneio GG de escalão único. */
-export function ggEntry(meta: CatalogEntry, data: FFGTournament, R: FfgRenderers): CircuitEntry {
-  const div = ffgGgDivision(meta, data, R);
+export function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
+  const div = ffgGgDivision(meta, data);
   const { start, end } = ggInferDates(data);
   return {
     id: `gg:${meta.year}_${meta.slug}`,
@@ -192,14 +189,14 @@ export function ggEntry(meta: CatalogEntry, data: FFGTournament, R: FfgRenderers
 /** Vários escalões do MESMO campeonato GG (mesmo ano+campo) fundidos numa entrada
  *  com abas de escalão — ex: CFJ 2026 (U12 Garçons/Filles + Benjamins/Benjamines):
  *  4 leagues GolfGenius distintas mas 1 só evento (mesmos dias, mesmo campo). */
-export function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament }[], R: FfgRenderers): CircuitEntry {
+export function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament }[]): CircuitEntry {
   const escRank = (d: CircuitDivision): number => {
     const s = d.escalao.toLowerCase();
     const age = /u10/.test(s) ? 10 : /u12/.test(s) ? 12 : /benjamin/.test(s) ? 13
       : /u14/.test(s) ? 14 : /minime/.test(s) ? 15 : /u16/.test(s) ? 16 : /u18/.test(s) ? 18 : 99;
     return age * 10 + (d.sex === "F" ? 1 : 0);   // Garçons antes de Filles
   };
-  const divisions = members.map((m) => ffgGgDivision(m.meta, m.data, R)).sort((a, b) => escRank(a) - escRank(b));
+  const divisions = members.map((m) => ffgGgDivision(m.meta, m.data)).sort((a, b) => escRank(a) - escRank(b));
   const y = members[0].meta.year;
   // Os escalões podem jogar percursos diferentes do mesmo clube — no cabeçalho
   // da entrada fundida mostra-se o CLUBE (cada aba de escalão traz o seu percurso).
@@ -259,12 +256,15 @@ export function lgpidfEntry(meta: LGPIDFIndexEntry, data: LGPIDFTournament, R: F
       key: "main",
       escalao: meta.divisions?.length ? meta.divisions.join("/") : "—",
       hasManuel,
-      customResults: data.players.length ? R.lgpidfTotals(data) : undefined,
-      totals: data.players.length ? { players: lgpidfTotais(data), parPerRound: 72 } : undefined,
+      // Só totais → o shell desenha o TotalsResumo (o PDF não traz o par: 72 assumido, avisado).
+      totals: data.players.length ? {
+        players: lgpidfTotais(data), parPerRound: 72, tournamentDate: data.dateStart ?? undefined,
+        notice: { kind: "nota", text: "* ±Par com par 72 assumido — o PDF de resultados não traz o par do campo." },
+      } : undefined,
       admissions: lgpidfAdmissions(data),
       roundDraws: lgpidfDraws(data).map((draw, i) => ({
         round: i + 1,
-        render: () => R.draw(draw, i + 1, data.dateStart ?? null),
+        draw, tournamentDate: data.dateStart ?? null,
       })),
       extraSections: data.courseMapPdfs.length
         ? [{ key: "course-map", label: "📐 Mapa do campo", content: R.lgpidfCourseMap(data) }]
@@ -360,8 +360,8 @@ export function ggGroups(
 }
 
 /** Entrada completa (com divisões) de um grupo GolfGenius. */
-export function ggGroupEntry(members: { meta: CatalogEntry; data: FFGTournament }[], R: FfgRenderers): CircuitEntry {
-  return members.length > 1 ? ggMergedEntry(members, R) : ggEntry(members[0].meta, members[0].data, R);
+export function ggGroupEntry(members: { meta: CatalogEntry; data: FFGTournament }[]): CircuitEntry {
+  return members.length > 1 ? ggMergedEntry(members) : ggEntry(members[0].meta, members[0].data);
 }
 
 /** Divisões de um item do índice da lista — os ficheiros só se pedem quando
@@ -376,7 +376,7 @@ export async function ffgListLoadDivisions(item: FfgListItem, R: FfgRenderers): 
     meta, data: await cachedFetchJson<FFGTournament>(`/data/ffgolf/${meta.year}_${meta.slug}.json`),
   })));
   const ok = members.filter((m): m is { meta: CatalogEntry; data: FFGTournament } => !!m.data);
-  return ok.length ? ggGroupEntry(ok, R).divisions ?? [] : [];
+  return ok.length ? ggGroupEntry(ok).divisions ?? [] : [];
 }
 
 /* ── Fontes + lista completa ── */

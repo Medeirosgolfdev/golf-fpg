@@ -18,7 +18,6 @@ import { playerIdentity } from "../../data/model/identity";
 import { useContext, useMemo } from "react";
 import { TournamentDetail, type TournamentDetailProps } from "../fpg/TournamentDetail";
 import type { Tournament as TATournament } from "../FPGPage";
-import DrawTab from "../../ui/DrawTab";
 import EmptyState from "../../ui/EmptyState";
 import TabCampoDetalhe, { uskidsLinks } from "../../ui/TabCampoDetalhe";
 import type { FpgAdmissionPlayer, FpgAdmissions, FpgDraw } from "../../data/nacional2026Loader";
@@ -30,7 +29,7 @@ import { flag } from "../../utils/flagUtils";
 import { divKey, tournamentFamilyKey } from "../../ui/circuit/pastEditions";
 import { TEES_LOOKUP, isWD, fmtTs, ArMapCtx, isTerminado } from "../../ui/USKIDSPageHelpers";
 import { sortEscaloes, type Torneio, type TorneioResult, type EscalaoResult, type UskidsDrawsData, type UskidsDrawRonda } from "../../ui/uskidsTypes";
-import type { CircuitConfig, CircuitDivision, CircuitEntry, CircuitRenderFullExtras } from "../../ui/circuit/types";
+import type { CircuitConfig, CircuitDivision, CircuitEntry, CircuitRenderFullExtras, CircuitRoundDraw } from "../../ui/circuit/types";
 
 type FieldEscalao = Torneio["escaloes"][number];
 
@@ -189,15 +188,16 @@ function uskidsRoundResults(e: EscalaoResult | null, ronda: number): Map<string,
 
 const DRAW_HIDE = { esc: true, fed: true, hcp: true, tee: true, nasc: true };
 
-function roundDrawsOf(drawsData: UskidsDrawsData | null | undefined, t: number, ageGroup: number, e: EscalaoResult | null, date: string) {
+/** Draws de um escalão como DADOS (o shell/TournamentDetail desenham o DrawTab). */
+function roundDrawsOf(drawsData: UskidsDrawsData | null | undefined, t: number, ageGroup: number, e: EscalaoResult | null, date: string): CircuitRoundDraw[] | undefined {
   const td = drawsData?.torneios.find(x => x.t === t);
   const de = td?.escaloes.find(x => x.age_group === ageGroup);
   const rondas = (de?.rondas ?? []).filter(r => (r.grupos || []).length > 0);
   if (!rondas.length) return undefined;
   return rondas.map(dr => ({
     round: dr.ronda,
-    render: () => <DrawTab draw={uskidsDrawToFpg(dr)} roundNum={dr.ronda} tournamentDate={date}
-      results={uskidsRoundResults(e, dr.ronda)} hideCols={DRAW_HIDE} clubLabel="Cidade" />,
+    draw: uskidsDrawToFpg(dr), tournamentDate: date,
+    results: uskidsRoundResults(e, dr.ronda), hideCols: DRAW_HIDE, clubLabel: "Cidade",
   }));
 }
 
