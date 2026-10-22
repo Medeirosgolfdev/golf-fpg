@@ -49,23 +49,25 @@ describe("portal FFG Resultats — ffgResLoadDivisions", () => {
     const divs = await ffgResLoadDivisions(meta);
     expect(divs.map((d) => `${d.key} · ${d.escalao} · ${d.results?.players.length} jog · ${d.results?.rounds} voltas`)).toMatchInlineSnapshot(`
       [
-        "29 · Minime Filles · 1 jog · 2 voltas",
-        "111 · Minime Garçons · 6 jog · 2 voltas",
-        "115 · Benjamin Garçons · 20 jog · 2 voltas",
-        "119 · Sub-12 Garçons · 47 jog · 2 voltas",
-        "213 · Benjamin Filles · 8 jog · 2 voltas",
-        "217 · Sub-12 Filles · 12 jog · 2 voltas",
+        "119 · Poussin Garçons (Sub 12) · 47 jog · 2 voltas",
+        "217 · Poussin Filles (Sub 12) · 12 jog · 2 voltas",
+        "115 · Benjamin Garçons (Sub 14) · 20 jog · 2 voltas",
+        "213 · Benjamin Filles (Sub 14) · 8 jog · 2 voltas",
+        "111 · Minime Garçons (Sub 16) · 6 jog · 2 voltas",
+        "29 · Minime Filles (Sub 16) · 1 jog · 2 voltas",
       ]
     `);
-    expect(top(divs[0].results)).toMatchInlineSnapshot(`
+    // Pela chave da série (a ordem dos separadores é por idade desde 22/10/2026).
+    expect(top(divs.find((d) => d.key === "29")?.results)).toMatchInlineSnapshot(`
       [
         "1 | Louise Garnier-Gueguen | 🇫🇷 Ch. Cheverny | 179 | 35 | 18 | 72 | Minimes Filles (#20) — misto: Azuis + Vermelhas | 2",
       ]
     `);
-    expect(top(divs[divs.length - 1].results, 2)).toMatchInlineSnapshot(`
+    expect(top(divs.find((d) => d.key === "119")?.results)).toMatchInlineSnapshot(`
       [
-        "1 | Agathe Loussouarn | 🇫🇷 St Samson | 146 | 2 | 18 | 72 | U12 Filles / Poussines (#22) — misto: Vermelhas + partidas no fairway | 2",
-        "2 | Alice Gautier | 🇫🇷 Baden | 156 | 12 | 18 | 72 | U12 Filles / Poussines (#22) — misto: Vermelhas + partidas no fairway | 2",
+        "1 | Gabin Tosatto | 🇫🇷 Guerande | 140 | -4 | 18 | 72 | U12 Garçons / Poussins (#12) — misto: Azuis + Vermelhas | 2",
+        "2 | Ricardo Castro Ferreira | 🇫🇷 St Germain | 143 | -1 | 18 | 72 | U12 Garçons / Poussins (#12) — misto: Azuis + Vermelhas | 2",
+        "3 | Noa Lucas | 🇫🇷 L'Odet | 146 | 2 | 18 | 72 | U12 Garçons / Poussins (#12) — misto: Azuis + Vermelhas | 2",
       ]
     `);
   });
@@ -97,20 +99,20 @@ describe("GolfGenius — Championnat de France des Jeunes 2026", () => {
         291,
         2,
         [
-          "U12 Garçons",
-          "U12 Filles",
-          "Benjamines",
-          "Benjamins",
+          "Poussin Garçons (Sub 12)",
+          "Poussin Filles (Sub 12)",
+          "Benjamin Filles (Sub 14)",
+          "Benjamins (Sub 14)",
         ],
       ]
     `);
     expect(e.divisions!.map((d) => `${d.tabLabel} · ${d.sex ?? "–"} · ${d.results?.players.length} jog · match play ${d.matchplay?.flights.length ?? 0} · draws ${d.roundDraws?.length ?? 0}`))
       .toMatchInlineSnapshot(`
         [
-          "U12 Garçons · M · 87 jog · match play 1 · draws 7",
-          "U12 Filles · F · 57 jog · match play 1 · draws 7",
-          "Benjamines · – · 65 jog · match play 1 · draws 5",
-          "Benjamins · – · 82 jog · match play 1 · draws 3",
+          "Poussin Garçons (Sub 12) · M · 87 jog · match play 1 · draws 7",
+          "Poussin Filles (Sub 12) · F · 57 jog · match play 1 · draws 7",
+          "Benjamin Filles (Sub 14) · – · 65 jog · match play 1 · draws 5",
+          "Benjamins (Sub 14) · – · 82 jog · match play 1 · draws 3",
         ]
       `);
   });
@@ -181,10 +183,10 @@ describe("nomes, países e escalões", () => {
     `);
     expect(["U12G", "BF", "MINIME Fille", "U16 G"].map(divisionLabel)).toMatchInlineSnapshot(`
       [
-        "Sub-12 Garçons",
-        "Benjamin Filles",
-        "Minime Filles",
-        "U16 G",
+        "Poussin Garçons (Sub 12)",
+        "Benjamin Filles (Sub 14)",
+        "Minime Filles (Sub 16)",
+        "Minime Garçons (Sub 16)",
       ]
     `);
     expect(ffgEscaloesOfTournament("Grand Prix Jeunes U14", ["BG", "BF"])).toMatchInlineSnapshot(`

@@ -25,7 +25,7 @@ import type {
   FFGTournament, FFGDrawRound, Catalog, CatalogEntry, LGPIDFTournament, LGPIDFIndex, LGPIDFIndexEntry,
   FFGResTournament, FFGResIndex, FFGResIndexEntry, FFGSerieCourse, FFGCategoriesData, FfgListIndex, FfgListItem,
 } from "./types";
-import { divisionLabel, ffgEscaloesOfTournament } from "./names";
+import { divisionLabel, ffgDivisionRank, ffgEscaloesOfTournament } from "./names";
 import { ffgResToFPGTournament, toFPGTournament, ffgScorecardOptions } from "./toTournament";
 import { lgpidfAdmissions, lgpidfDraws, lgpidfTotais } from "./lgpidf";
 import {
@@ -72,6 +72,7 @@ export async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<Circu
       }
     } catch { /* GG opcional */ }
   }
+  // Mesma ordem em todas as provas (o portal lista as séries pela sua ordem interna).
   return td.details.series.map((s): CircuitDivision => withDivisionModel({
     key: s.serieId,
     escalao: divisionLabel(s.label || s.serieId),
@@ -79,7 +80,7 @@ export async function ffgResLoadDivisions(meta: FFGResIndexEntry): Promise<Circu
     hasManuel: s.players.some((p) => isM(p.name)),
     results: ffgResToFPGTournament(td, s.serieId),
     scOptions: ffgScorecardOptions(),
-  }));
+  })).sort((a, b) => ffgDivisionRank(a.tabLabel ?? "") - ffgDivisionRank(b.tabLabel ?? ""));
 }
 
 /** FFG-Resultats: entry LAZY a partir do índice (~1600 torneios — detalhe só
@@ -191,8 +192,10 @@ export function ggEntry(meta: CatalogEntry, data: FFGTournament): CircuitEntry {
  *  4 leagues GolfGenius distintas mas 1 só evento (mesmos dias, mesmo campo). */
 export function ggMergedEntry(members: { meta: CatalogEntry; data: FFGTournament }[]): CircuitEntry {
   const escRank = (d: CircuitDivision): number => {
+    // Pelo «(Sub N)» do nome (ffgCategoryLabel, 22/10/2026); recurso às siglas antigas.
     const s = d.escalao.toLowerCase();
-    const age = /u10/.test(s) ? 10 : /u12/.test(s) ? 12 : /benjamin/.test(s) ? 13
+    const sub = /\(sub (\d+)\)/.exec(s)?.[1];
+    const age = sub ? +sub : /u10/.test(s) ? 10 : /u12/.test(s) ? 12 : /benjamin/.test(s) ? 13
       : /u14/.test(s) ? 14 : /minime/.test(s) ? 15 : /u16/.test(s) ? 16 : /u18/.test(s) ? 18 : 99;
     return age * 10 + (d.sex === "F" ? 1 : 0);   // Garçons antes de Filles
   };

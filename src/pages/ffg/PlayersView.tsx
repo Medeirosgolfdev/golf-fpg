@@ -72,7 +72,8 @@ function isoToBr(iso: string | null | undefined): string {
 /** "Sub-14 (Benjamin)" → { sub: "Sub-14", fr: "Benjamin" }. */
 function splitCat(cat: string): { sub: string; fr: string | null } {
   const m = /^(.+?)\s*\((.+)\)$/.exec(cat);
-  return m ? { sub: m[1], fr: m[2] } : { sub: cat, fr: null };
+  // «Sub 14» com espaço, como nos separadores e no filtro Escalão.
+  return m ? { sub: m[1].replace("-", " "), fr: m[2] } : { sub: cat.replace(/^Sub-/, "Sub "), fr: null };
 }
 
 type SK = "name" | "license" | "cat" | "sex" | "hcp" | "club" | "region" | "tot" | "ano" | "hcpDate";
@@ -370,8 +371,9 @@ export function FFGPlayersView() {
                           {catParts ? (
                             r._young ? (
                               <>
+                                {/* Mesma ordem dos separadores: nome FR, depois o Sub (22/10/2026). */}
+                                {catParts.fr && <span className="fs-11" style={{ marginRight: 4 }}>{catParts.fr}</span>}
                                 <EscPill esc={catParts.sub} />
-                                {catParts.fr && <span className="muted fs-10" style={{ marginLeft: 4 }}>{catParts.fr}</span>}
                               </>
                             ) : (
                               <span className="muted fs-11">{r._cat}</span>

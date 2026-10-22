@@ -54,11 +54,46 @@ export function ffgCountry(p: { nationality?: string | null; flag?: string | nul
 }
 
 /* ── Legenda das siglas de divisão / categoria FFG ─────────────
-   B = Benjamin (~13-14 anos), M = Minime (~14-15), C = Cadet (~16-17)
-   U10/U12/U14 = sub-10/12/14 (categorias Kids/PitchPutt/escola)
+   Tabela oficial (Vademecum, /ffg/info/categorias): Enfant ≤ U8 · Poucet U9-10 ·
+   Poussin U11-12 · Benjamin U13-14 · Minime U15-16 · Cadet U17-18 · Junior U19-21.
    F = Filles (raparigas), G = Garçons (rapazes)
 */
+
+/** Nome mostrado de uma divisão FFG — UMA só convenção (decisão da Mariana,
+ *  22/10/2026): nome francês oficial + sexo + escalão português entre
+ *  parênteses — «Benjamin Garçons (Sub 14)», «Poussin Filles (Sub 12)»,
+ *  «Benjamins (Sub 14)» quando a divisão é mista. Antes misturava-se «Minime
+ *  Filles» (sigla MF) com «Sub-12 Garçons» (sigla U12G). Sem idade → null. */
+export function ffgCategoryLabel(raw: string): string | null {
+  raw = raw.replace(/\bsub[\s-]*(\d+)/i, "U$1");
+  const esc = ffgEscalaoCanonico(raw);
+  const m = esc ? /^Sub-(\d+)(?:\s*\((.+)\))?$/.exec(esc) : null;
+  if (!m) return null;
+  const n = +m[1];
+  const cat = m[2] || (n <= 8 ? "Enfant" : null);
+  if (!cat) return null;
+  const u = raw.toUpperCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const fem = /FILLE|GIRL|DAMES|\bF\b|\dF\b|^[A-Z]{1,3}F$|INES\b|CADETTES|^F\s*\//.test(u);
+  const masc = /GAR[CÇ]ON|BOY|MESSIEURS|HOMMES|\bG\b|\dG\b|^[A-Z]{1,3}G$|^[HM]\s*\//.test(u);
+  const sex = fem && !masc ? "Filles" : masc && !fem ? "Garçons" : null;
+  return sex ? `${cat} ${sex} (Sub ${n})` : `${cat}s (Sub ${n})`;
+}
+
+/** Ordem dos separadores FFG: dos mais novos para os mais velhos, Garçons antes
+ *  de Filles (mista entre os dois); sem escalão → no fim, pela ordem da fonte. */
+export function ffgDivisionRank(label: string): number {
+  const sub = /\(Sub (\d+)\)/.exec(label)?.[1];
+  if (!sub) return 9999;
+  return +sub * 10 + (/ Filles /.test(label) ? 2 : / Garçons /.test(label) ? 0 : 1);
+}
+
 export function divisionLabel(div: string): string {
+  const cat = div ? ffgCategoryLabel(div) : null;
+  if (cat) return cat;
+  return divisionLabelRaw(div);
+}
+
+function divisionLabelRaw(div: string): string {
   if (!div) return "—";
   const u = div.trim().toUpperCase();
   const map: Record<string, string> = {

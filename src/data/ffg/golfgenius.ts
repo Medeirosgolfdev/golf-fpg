@@ -8,7 +8,7 @@
 import type { FpgDraw } from "../nacional2026Loader";
 import { buildFpgDraw } from "../intlDraw";
 import type { MatchplayFile, MatchplayRound, MatchplayTeamMatch } from "../../ui/circuit/matchplayTypes";
-import { normalizeName, ffgEscaloesOfTournament } from "./names";
+import { normalizeName, ffgEscaloesOfTournament, ffgCategoryLabel } from "./names";
 import { isPT } from "../../utils/ptPlayers";
 import type { FFGTournament, FFGDrawRound, CatalogEntry } from "./types";
 
@@ -184,10 +184,12 @@ export function ffgGgEscalaoLabel(meta: CatalogEntry, data: FFGTournament): stri
   const s = (meta.slug || "").toLowerCase();
   const sex = /gar[cç]ons|boys/.test(s) ? "Garçons" : /filles|girls/.test(s) ? "Filles" : "";
   const age = /u1[0248]/.exec(s)?.[0]?.toUpperCase();
-  if (/benjamines/.test(s)) return "Benjamines";
-  if (/benjamins/.test(s)) return "Benjamins";
-  if (/minimes/.test(s)) return sex ? `Minimes ${sex}` : "Minimes";
-  if (age) return sex ? `${age} ${sex}` : age;
+  // Mesma convenção dos separadores do portal (ffgCategoryLabel): «Benjamin
+  // Filles (Sub 14)», «Poussin Garçons (Sub 12)».
+  const raw = /benjamines/.test(s) ? "Benjamines" : /benjamins/.test(s) ? "Benjamins"
+    : /minimes/.test(s) ? `Minimes ${sex}` : age ? `${age} ${sex}` : "";
+  const lab = raw ? ffgCategoryLabel(raw.trim()) : null;
+  if (lab) return lab;
   const esc = ffgEscaloesOfTournament(data.tournament || meta.title, data.divisions ?? []);
   return esc[0] || ((data.divisions ?? []).join("/")) || meta.title || "—";
 }
