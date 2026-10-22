@@ -18,6 +18,7 @@ import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
+import { HoleBadge } from "./tableCells";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
@@ -200,6 +201,12 @@ export function ScorecardLB({
     teeName,
     meters,
   }));
+
+  // Metros dos buracos jogados (9 buracos a sair do 10 → os da 2.ª volta).
+  const playedMeters = (m: number[]): number => {
+    const off = nh === 9 && m.length >= 18 && startHole_ === 10 ? 9 : 0;
+    return m.slice(off, off + nh).reduce((a, b) => a + (b || 0), 0);
+  };
 
   // Colectar CR/Slope distintos por tee (para metaLine multi-tee)
   const teeCrSlopeMap = new Map<string, { cr: number; slope: number }>();
@@ -703,9 +710,27 @@ export function ScorecardLB({
       onToggleScorecard={() => setShowScorecard((v) => !v)}
       metaLine={
         <>
-          <span>
-            {rawPlayers.length} jog{hasPar ? ` · Par ${parTotal}` : ""} · {nh}h
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            {rawPlayers.length} jog{hasPar ? ` · Par ${parTotal}` : ""} · <HoleBadge hc={nh} />
           </span>
+          {/* Distância jogada (22/10/2026): um tee → total; vários → por tee, com a cor. */}
+          {teeMeters.length === 1 && (
+            <span>· {playedMeters(teeMeters[0].meters).toLocaleString("pt")} m</span>
+          )}
+          {teeMeters.length > 1 && (
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+              {" · "}
+              {teeMeters.map(({ teeName, meters }) => {
+                const hex = getTeeHex(teeName);
+                return (
+                  <span key={teeName} title={teeName} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,.18)", flexShrink: 0 }} />
+                    <span>{playedMeters(meters).toLocaleString("pt")} m</span>
+                  </span>
+                );
+              })}
+            </span>
+          )}
           {avg > 0 && (
             <span title={nIncompletos > 0 ? `Média só das ${grosses.length} voltas completas (${nIncompletos} ainda a decorrer)` : undefined}>
               · Média {avg.toFixed(1)}{hasPar && <> ({fmtTP(Math.round(avg - parTotal))})</>}
