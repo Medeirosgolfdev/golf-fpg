@@ -11,6 +11,7 @@
  * um Tournament (FPG-format) por divisão/secção. Ver src/ui/IntlTournView.tsx.
  */
 
+import type { CircuitRanking } from "./CircuitRanking";
 import type React from "react";
 import type { Tournament as FPGTournament, ScorecardOptions } from "../../data/fpgTypes";
 import type { MultiRoundRow, ExtraColumn } from "../multiRoundTypes";
@@ -308,6 +309,10 @@ export interface CircuitConfig {
   escalaoSource?: "fpg" | "ffg" | "es" | "uskids";
   /** Itens especiais fixos no topo da sidebar. */
   specialItems?: CircuitSpecialItem[];
+  /** Ranking de jogadores como vista do shell (botão na barra, ou opção do menu
+   *  Info com `inInfoMenu`) e na aba «Época» — ver `CircuitRanking.tsx`. Criar com
+   *  `circuitRanking(…)`. */
+  ranking?: CircuitRanking<unknown>;
 
   /** Filtros activos na toolbar. */
   filters?: {

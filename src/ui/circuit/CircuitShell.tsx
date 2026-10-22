@@ -25,6 +25,7 @@ import React, { useMemo, useState, useEffect, useCallback, useContext } from "re
 import { useSearchParams } from "react-router-dom";
 import Scout from "./Scout";
 import { CircuitPastEditionsTab, divisionField } from "./pastEditions";
+import { CircuitRankingView } from "./CircuitRanking";
 import { useMasterDetail } from "../../hooks/useMasterDetail";
 import SidebarToggle from "../SidebarToggle";
 import SidebarSectionTitle from "../SidebarSectionTitle";
@@ -382,6 +383,11 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   };
 
   const curInfoItem = infoView ? config.specialItems?.find(si => si.key === infoView) : undefined;
+  // Capacidade «ranking» (22/10/2026): vista do shell com as linhas calculadas dos
+  // torneios visíveis (a página dá linhas e colunas; a tabela é a RankingTable).
+  const ranking = config.ranking;
+  const rankingOpen = !!ranking && infoView === ranking.key;
+  const rankingViewCtx = useMemo(() => ({ entries: visible, scope: "view" as const }), [visible]);
 
   // ── Carregamento (lazy) das divisões do torneio seleccionado ────────
   // A cache guarda o carregador que a encheu: quando a página entrega outro
@@ -560,8 +566,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
   }, [cur, editionsSource, seasonKey]);
   const seasonTabNode = (() => {
     if (!curDiv || !cur || !seasonSiblings) return null;
+    // Com a capacidade «ranking», a «Época» abre com a classificação acumulada
+    // das etapas da época (a mesma vista Ranking, só com estes torneios).
+    const rankingNode = ranking?.rows && ranking.seasonTitle
+      ? <CircuitRankingView ranking={ranking} ctx={{ entries: seasonSiblings, scope: "season", division: curDivLabel }} />
+      : null;
     return { key: "season", label: config.seasonTabLabel ?? "Época",
-      content: <CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} match={matchDiv} /> };
+      content: <>{rankingNode}<CircuitPastEditionsTab editions={seasonSiblings} division={curDivLabel} match={matchDiv} /></> };
   })();
   // Ordem na barra: … Resumo · 📋 Scorecards · Época · Edições anteriores.
   if (seasonTabNode && curDiv && !curDiv.renderFull) trailingTabs.push(seasonTabNode);
@@ -720,7 +731,13 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
           )}
 
           {/* Menu INFO — vistas informativas (categorias, federações, ...) */}
-          {!!config.specialItems?.length && (
+          {ranking && !ranking.inInfoMenu && (
+            <button type="button" className={`tourn-tab tourn-tab-sm${rankingOpen ? " active" : ""}`}
+              onClick={() => setInfo(rankingOpen ? null : ranking.key)} title="Ranking dos jogadores nos torneios visíveis">
+              {ranking.label}
+            </button>
+          )}
+          {(!!config.specialItems?.length || !!ranking?.inInfoMenu) && (
             <select
               className="input"
               value={infoView ?? ""}
@@ -729,7 +746,8 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               title="Páginas informativas"
             >
               <option value="">ⓘ Info</option>
-              {config.specialItems.map(si => <option key={si.key} value={si.key}>{si.label}</option>)}
+              {(config.specialItems ?? []).map(si => <option key={si.key} value={si.key}>{si.label}</option>)}
+              {ranking?.inInfoMenu && <option value={ranking.key}>{ranking.label}</option>}
             </select>
           )}
 
@@ -753,7 +771,9 @@ export default function CircuitShell({ entries, config, loading, pastEditionsPoo
               renderItem={renderSidebarItem}
             />
         </>}>
-            {curInfoItem ? (
+            {rankingOpen ? (
+              ranking!.render ? ranking!.render() : <CircuitRankingView ranking={ranking!} ctx={rankingViewCtx} />
+            ) : curInfoItem ? (
               curInfoItem.render()
             ) : !cur ? (
               <EmptyState message="Sem torneios para mostrar." />

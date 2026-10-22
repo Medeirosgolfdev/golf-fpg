@@ -5,10 +5,6 @@
  *      + multi-round support (R1/R2/Total tabs)
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { ESCALOES_DRIVE as ESCALOES } from "../constants/escaloes";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, ReferenceLine } from "recharts";
-import { sdClassByHcp } from "../utils/scoreDisplay";
-import { fmtToPar, fmtHcp, medal, shortDateSlash } from "../utils/format";
 import TabRow from "../ui/TabRow";
 import { FilterPills } from "../ui/FilterPills";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
@@ -17,41 +13,26 @@ import PasswordGate from "../ui/PasswordGate";
 import { resolveFedsInTournaments, buildEscLookup } from "../utils/playerUtils";
 import { buildTemporalEscLookup } from "../data/fpgUtils";
 import { DataSourcesChip, DataSourcesProvider, type DataSource } from "../ui/DataSources";
-import SidebarToggle from "../ui/SidebarToggle";
-import { Toolbar, ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
+import { ToolbarTitle, ToolbarSep } from "../ui/Toolbar";
 import { CircuitToolbarSlotCtx } from "../ui/circuit/toolbarSlot";
-import PlayerLink from "../ui/PlayerLink";
+import { circuitRanking } from "../ui/circuit/CircuitRanking";
 import { useFedBirthdates } from "../ui/InscricoesComponents";
-import {
-  availEscaloes, buildSub12Data, countEvents, dateToSort, driveEntriesByEsc, filterBySub12Series, resolveEscForTournament,
-  sub12Kpis, sub12SeriesCounts, sub12Tournaments, uniquePC, type Sub12SeriesTab,
-} from "../data/drive/driveSub12";
+import { availEscaloes, countEvents, driveEntriesByEsc, resolveEscForTournament, uniquePC } from "../data/drive/driveSub12";
 import { useMasterDetail } from "../hooks/useMasterDetail";
-import KpiCard from "../ui/KpiCard";
 import LoadingState from "../ui/LoadingState";
-import SexBadge from "../ui/SexBadge";
-import { C } from "../utils/colors";
-import {
-  type PlayersDB,
-} from "../ui/tournamentPrimitives";
+import type { PlayersDB } from "../ui/tournamentPrimitives";
 import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
-import TournamentGrid from "../ui/TournamentGrid";
+import { driveRanking, SERIE_LABELS } from "./drive/driveRanking";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
-import MasterDetail from "../ui/MasterDetail";
 import { loadDriveAdmissions, loadDriveData, loadDriveEquipas } from "../data/drive/driveLoader";
-import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex } from "../data/drive/driveSource";
+import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex, type DriveSeries } from "../data/drive/driveSource";
 import {
   driveDivTkey, driveFiltersForTkey, driveQueryString, driveRepDivision, legacyDriveT, parseDriveQuery,
   resolveDriveTkey, type DriveUrlState,
 } from "../data/drive/driveUrl";
-
-import type {
-  Tournament,
-  DriveData,
-  Sub12Row,
-} from "../ui/driveTypes";
+import type { Tournament, DriveData } from "../ui/driveTypes";
 
 /* ── Constants ── */
 const REGIONS = [
@@ -61,29 +42,7 @@ const REGIONS = [
   { id: "madeira", label: "Madeira", emoji: "📍" },
   { id: "acores",  label: "Açores",  emoji: "📍" },
 ];
-/* ═══════════════════════════════════════════════════════
-   MAIN — DriveContent com sidebar coerente
-   ═══════════════════════════════════════════════════════ */
-
-/* ═══════════════════════════════════════════════════════
-   SUB-12: Types & Data
-   ═══════════════════════════════════════════════════════ */
-type Sub12ViewTab = "grid" | "ranking" | "evolucao";
-
-const SUB12_SERIES_TABS: { key: Sub12SeriesTab; label: string; emoji: string; holes: string }[] = [
-  { key: "tour",      label: "Tour",      emoji: "🏌️", holes: "18h" },
-  { key: "challenge", label: "Challenge", emoji: "⚡",  holes: "9h"  },
-  { key: "aquapor",   label: "AQUAPOR",   emoji: "💧", holes: "18h" },
-];
-const CHART_COLORS = C.charts;
-const SERIE_LABELS: Record<string, string>  = { tour: "Tour",   challenge: "Challenge",  aquapor: "AQUAPOR" };
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
-/** Labels legíveis das zonas Drive (chaves canónicas em minúsculas). */
-const REGION_LABEL: Record<string, string>  = { norte: "Norte", tejo: "Tejo", sul: "Sul", madeira: "Madeira", acores: "Açores", nacional: "Nacional" };
-const regionLabel = (r: string): string => REGION_LABEL[r.toLowerCase()] || r;
-
-
-const shortDate = shortDateSlash;
 
 /* ─ Sub-12 Calendar ─ */
 const fmtCalDate = (d: Date, end?: Date): string => {
@@ -121,7 +80,7 @@ const CAL_ENTRIES: CalEntry[] = [
 /* ═══════════════════════════════════════════════════════
    SUB-12: UI Components
    ═══════════════════════════════════════════════════════ */
-function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
+function UpcomingSchedule({ series }: { series: DriveSeries }) {
   const now = new Date(); now.setHours(0,0,0,0);
   const entries = CAL_ENTRIES.filter(e => e.series === series).sort((a,b) => a.date.getTime()-b.date.getTime());
   if (!entries.length) return null;
@@ -147,165 +106,6 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
 }
 
 
-function SdSpan({ sd, hcp }: { sd: number | null; hcp?: number | null }) {
-  if (sd == null) return <span className="c-muted">–</span>;
-  return <span className={"p p-sm fs-11 p-" + sdClassByHcp(sd, hcp ?? null)}>{sd.toFixed(1)}</span>;
-}
-function ToParSpan({ tp }: { tp: number | null }) {
-  if (tp == null) return <span className="c-muted">–</span>;
-  return <span className={"fw-700 fs-11" + (tp < 0 ? " c-good" : tp > 0 ? " c-danger" : "")}>{fmtToPar(tp)}</span>;
-}
-
-function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick: (fed: string) => void }) {
-  const ranked = [...rows].filter(p => p.totalPts > 0).sort((a, b) => b.totalPts - a.totalPts);
-  const zeroPts = rows.filter(p => p.totalPts === 0);
-  return (
-    <div>
-      {ranked.length === 0 ? (
-        <div className="card"><div className="muted">Nenhum jogador com pontos ainda</div></div>
-      ) : (
-        <div className="bjgt-chart-scroll">
-          <table className="dtable fs-12" >
-            <thead><tr>
-              <th className="r drive-col-n">#</th>
-              <th className="ta-left drive-col-player">Jogador</th>
-              <th>Clube</th>
-              <th className="r">HCP</th>
-              <th className="r">T</th>
-              <th className="r drive-col-pts">Pts</th>
-              <th className="r">Best SD</th>
-              <th className="r">Melhor</th>
-            </tr></thead>
-            <tbody>
-              {ranked.map((p, i) => (
-                <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
-                  <td className="r drive-medal">{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
-                  <td>
-                    <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer"
-                      className="fw-700 drive-rank-name"
-                      onClick={e => e.stopPropagation()}>
-                      {p.name}
-                    </a>
-                    <SexBadge sex={p.sex} size="sm" className="ml-4" />
-                  </td>
-                  <td className="c-muted fs-11">{p.club}</td>
-                  <td className="r mono">{fmtHcp(p.hcp)}</td>
-                  <td className="r mono">{p.tourneiosPlayed}</td>
-                  <td className="r fw-800 drive-pts">{p.totalPts}</td>
-                  <td className="r"><SdSpan sd={p.bestSD} hcp={p.hcp} /></td>
-                  <td className="r mono fw-700 c-good-dark">{p.bestGross ?? "–"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
-      {zeroPts.length > 0 && (
-        <div className="card mt-14">
-          <div className="h-xs">Sem pontos ({zeroPts.length})</div>
-          <div className="drive-zero-grid">
-            {zeroPts.map(p => {
-              const r = p.results[0];
-              return (
-                <a key={p.fed}
-                  href={`/jogadores/${p.fed}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="drive-zero-item"
-                  onClick={e => { e.stopPropagation(); }}>
-                  <span className="fw-600">{p.name}</span>
-                  <span className="mono">{r?.gross ?? "–"} <span className="c-muted">({r?.tournShort})</span></span>
-                </a>
-              );
-            })}
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
-  const eligible = rows.filter(p => p.results.filter(r => r.sd != null).length >= 2);
-  if (!eligible.length) {
-    return <div className="card"><div className="h-xs">Evolução SD</div><div className="muted">Dados insuficientes (mínimo 2 torneios por jogador)</div></div>;
-  }
-  const top = [...eligible].sort((a,b) => b.results.filter(r=>r.sd!=null).length - a.results.filter(r=>r.sd!=null).length).slice(0,10);
-  const allDates = [...new Set(top.flatMap(p => p.results.filter(r=>r.sd!=null).map(r=>r.date)))].sort((a,b)=>dateToSort(a)-dateToSort(b));
-  const chartData = allDates.map(d => {
-    const point: Record<string, string | number | null> = { date: shortDate(d) };
-    for (const p of top) { const res = p.results.find(r => r.date===d && r.sd!=null); if (res) point[p.fed] = res.sd; }
-    return point;
-  });
-  return (
-    <div className="card">
-      <div className="h-xs">Evolução SD ao longo da época</div>
-      <div className="w-full mt-8 drive-evo-chart">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
-            <XAxis dataKey="date" tick={{ fontSize: 10 }} />
-            <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
-            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
-              formatter={(value, name) => { const p = top.find(x => x.fed===name); return [value != null ? (value as number).toFixed(1) : "", p?.name||name]; }} />
-            <Legend formatter={(value: string) => { const p = top.find(x => x.fed===value); return <span className="fs-10">{p?.name||value}</span>; }} />
-            <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />
-            {top.map((p, i) => (
-              <Line key={p.fed} type="monotone" dataKey={p.fed} stroke={CHART_COLORS[i % CHART_COLORS.length]} strokeWidth={2} dot={{ r: 3 }} connectNulls />
-            ))}
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  );
-}
-
-function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
-  return (
-    <div className="card drive-player-card">
-      <button onClick={onClose} title="Fechar" aria-label="Fechar" className="drive-player-close">✕</button>
-      <div className="mb-8 drive-player-head">
-        <span className="fw-800 drive-player-name">{row.name}</span>
-        <span className="muted fs-11">{row.club} · {regionLabel(row.region)} · HCP {fmtHcp(row.hcp)}</span>
-        {/* PlayerLink põe cor/sublinhado em linha: o estilo tem de ir pela prop. */}
-        <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: "var(--fs-11)", color: "var(--accent)", textDecoration: "underline" }} />
-      </div>
-      <div className="mb-10 flex-wrap d-flex gap-6">
-        <KpiCard label="Torneios"  value={String(row.tourneiosPlayed)} />
-        <KpiCard label="Pts"       value={row.totalPts > 0 ? String(row.totalPts) : "–"} color="var(--color-warn-dark)" />
-        <KpiCard label="Best SD"   value={row.bestSD?.toFixed(1) ?? "–"} color={row.bestSD != null && row.bestSD <= 25 ? "var(--color-good)" : undefined} />
-        <KpiCard label="Melhor"    value={row.bestGross != null ? String(row.bestGross) : "–"} color="var(--color-good-dark)" />
-      </div>
-      <div className="scroll-x">
-        <table className="dtable fs-11">
-          <thead><tr><th>Data</th><th>Torneio</th><th>Campo</th><th className="r">Pos</th><th className="r">Gross</th><th className="r">±Par</th><th className="r">SD</th></tr></thead>
-          <tbody>
-            {row.results.map((r, i) => (
-              <tr key={i}>
-                <td className="mono fs-10">{r.date}</td>
-                <td>
-                  <span className="fw-600">{r.tournName}</span>
-                  <span className={`badge-serie drive-serie drive-serie-${r.series} ml-4`}>
-                    {SERIE_LABELS[r.series]}
-                  </span>
-                </td>
-                <td className="c-muted fs-10">{r.campo}</td>
-                <td className="r mono">{r.pos ?? "–"}<span className="c-muted fs-10">/{r.totalPlayers}</span></td>
-                <td className="r mono fw-700">{r.gross}</td>
-                <td className="r"><ToParSpan tp={r.toPar} /></td>
-                <td className="r"><SdSpan sd={r.sd} /></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════
-   MAIN — DriveContent unificado (Tour + Challenge + AQUAPOR + Sub-12)
-   ═══════════════════════════════════════════════════════ */
 function DriveContent() {
   const [data, setData]           = useState<DriveData | null>(null);
   const [pdb, setPdb]             = useState<PlayersDB>({});
@@ -324,7 +124,7 @@ function DriveContent() {
   const tabParam = searchParams.get("tab");
   const legacyT = searchParams.get("t");
   const { nav: navMode, series, manuel: filterManuel, region: regionFilter, esc: escFilter,
-    s12s: sub12Series, s12v: sub12View, s12r: sub12Region, s12x: sub12Sex, s12e: sub12Esc } = st;
+    s12s: sub12Series, s12v: sub12View, s12x: sub12Sex, s12e: sub12Esc } = st;
   /** Muda filtros. Com `keepTkey` o torneio aberto fica (se deixar de estar
    *  visível, o shell abre o mais recente); sem ele volta-se a /drive. */
   const go = useCallback((patch: Partial<DriveUrlState>, keepTkey = true) => {
@@ -332,15 +132,15 @@ function DriveContent() {
     navigate({ pathname, search: driveQueryString({ ...st, ...patch }) }, { replace: true });
   }, [navigate, location.pathname, urlTkey, st]);
   /** Abre um torneio (tkey canónico); a aba fica só na aterragem (sem tkey). */
-  const goTkey = useCallback((tk: string | null) => {
+  const goTkey = useCallback((tk: string | null, nav: DriveUrlState["nav"] = st.nav) => {
     if (!tk) return;
     const pathname = `/drive/torneio/${tk}`;
-    if (pathname === location.pathname) return;
-    navigate({ pathname, search: driveQueryString(st, urlTkey ? null : tabParam) }, { replace: true });
+    if (pathname === location.pathname && nav === st.nav) return;
+    navigate({ pathname, search: driveQueryString({ ...st, nav }, urlTkey ? null : tabParam) }, { replace: true });
   }, [navigate, location.pathname, st, urlTkey, tabParam]);
   const md = useMasterDetail();
   const [sub12Search, setSub12Search]   = useState("");
-  const [sub12Player, setSub12Player]   = useState<Sub12Row | null>(null);
+  const [sub12Player, setSub12Player]   = useState<string | null>(null);
 
   const [monthlyMeta, setMonthlyMeta] = useState<DataSource[]>([]);
 
@@ -493,50 +293,18 @@ function DriveContent() {
 
 
 
-  // Sub-12: só calcular quando a tab é activada pela primeira vez
-  const [sub12Ready, setSub12Ready] = useState(false);
-  useEffect(() => { if (navMode === "ranking-sub12" && !sub12Ready) setSub12Ready(true); }, [navMode, sub12Ready]);
-
-  const sub12Data = useMemo(() => {
-    if (!sub12Ready || !data) return [];
-    const tourns = activeYear
-      ? data.tournaments.filter(t => t.date?.startsWith(activeYear))
-      : data.tournaments;
-    return buildSub12Data(tourns, pdb, escLookup, temporalEscLookup, fedBirthdates, sub12Esc);
-  }, [sub12Ready, data, pdb, escLookup, temporalEscLookup, activeYear, fedBirthdates, sub12Esc]);
-
-  const sub12SeriesRows = useMemo(() => filterBySub12Series(sub12Data, sub12Series), [sub12Data, sub12Series]);
-
-  const sub12Filtered = useMemo(() => {
-    let list = sub12SeriesRows;
-    if (sub12Region !== "all") list = list.filter(p => p.region.toLowerCase().includes(sub12Region.toLowerCase()));
-    if (sub12Sex !== "all")    list = list.filter(p => p.sex === sub12Sex);
-    if (sub12Search.trim()) {
-      const q = sub12Search.toLowerCase();
-      list = list.filter(p => p.name.toLowerCase().includes(q) || p.club.toLowerCase().includes(q) || p.fed.includes(q));
-    }
-    return list;
-  }, [sub12SeriesRows, sub12Region, sub12Sex, sub12Search]);
-
-  // Colunas da grid = torneios onde os jogadores VISÍVEIS jogaram (derivadas
-  // das linhas já filtradas) — com o filtro Madeira activo, as colunas das
-  // outras zonas desaparecem em vez de consumir espaço vazio (2026-07-10).
-  const sub12Tourns = useMemo(() => sub12Tournaments(sub12Filtered), [sub12Filtered]);
-
-  // Zonas disponíveis: derivadas de TODOS os dados do escalão (não só da série
-  // corrente) — senão o select desaparecia em séries pequenas (AQUAPOR com 1
-  // jogador → 1 zona) e a lista "saltava" ao trocar de série.
-  const sub12AvailRegions = useMemo(() => [...new Set(sub12Data.map(p => p.region).filter(Boolean))].sort(), [sub12Data]);
-
-  const sub12Counts = useMemo(() => sub12SeriesCounts(sub12Data, SUB12_SERIES_TABS.map(s => s.key)), [sub12Data]);
-
-  const sub12EscLabel = sub12Esc === "all" ? "Todos os escalões" : sub12Esc;
-  const { players: sub12KpiPlayers, rounds: sub12KpiRounds, bestSD: sub12KpiBestSD, best: sub12KpiBest } = sub12Kpis(sub12Filtered);
-
-  const handleSub12PlayerClick = useCallback((fed: string) => {
-    const p = sub12SeriesRows.find(x => x.fed === fed);
-    if (p) setSub12Player(prev => prev?.fed === fed ? null : p);
-  }, [sub12SeriesRows]);
+  // Ranking (decisões D e G): capacidade `ranking` do CircuitShell — vista
+  // «🏅 Ranking» (nav=ranking-sub12 no URL) e a classificação acumulada na «Época».
+  const rankingCap = useMemo(() => data ? circuitRanking(driveRanking({
+    expanded: data.tournaments, pdb, escLookup, temporal: temporalEscLookup, fedBirthdates,
+    series, seriesAll: sub12Series, year: activeYear, esc: sub12Esc, sex: sub12Sex, search: sub12Search,
+    view: sub12View, selected: sub12Player,
+    set: (p) => go(p),
+    setSearch: setSub12Search,
+    setSelected: setSub12Player,
+    top: (s) => <UpcomingSchedule series={s} />,
+  })) : undefined, [data, pdb, escLookup, temporalEscLookup, fedBirthdates, series, sub12Series, activeYear, sub12Esc, sub12Sex, sub12Search, sub12View, sub12Player, go]);
+  const shellConfig = useMemo(() => ({ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true }, ranking: rankingCap }), [rankingCap]);
 
   // Série normal (tour/challenge/aquapor)
   const seriesT = series === "all" ? allT : series === "tour" ? tourT : series === "challenge" ? challT : aquaporT;
@@ -557,7 +325,6 @@ function DriveContent() {
     return availEscaloes(regionT, escLookup, pdb, temporalEscLookup, fedBirthdates);
   }, [series, regionT, escLookup, pdb, temporalEscLookup, fedBirthdates]);
 
-  useEffect(() => { setSub12Player(null); }, [sub12Series]);
 
   if (loading) return <LoadingState />;
   if (error)   return <div className="jogadores-page"><div className="notice-error drive-error">Erro: {error}</div></div>;
@@ -571,8 +338,7 @@ function DriveContent() {
     tcode: t.tcode,
     ccode: t.ccode,
   }));
-  // Controlos da barra — partilhados entre a barra do CircuitShell (Torneios)
-  // e a barra própria (Rankings Sub-12).
+  // Controlos da página na barra do CircuitShell.
   const driveLead = (<>
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
@@ -580,17 +346,6 @@ function DriveContent() {
             className="p p-sm drive-rank-link"
             title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</a>
           <ToolbarSep />
-          <TabRow
-            className="drive-tabrow"
-            tabs={[
-              { key: "torneios",      label: "Torneios" },
-              { key: "ranking-sub12", label: "🏅 Rankings" },
-            ]}
-            active={navMode}
-            onChange={(k) => go({ nav: k as DriveUrlState["nav"], series: "tour", year: null }, false)}
-          />
-          {navMode === "torneios" && (<>
-            <ToolbarSep />
             <TabRow
               className="drive-tabrow"
               tabs={[
@@ -626,14 +381,13 @@ function DriveContent() {
                 ★ Manuel
               </button>
             </>)}
-          </>)}
   </>);
   const driveBelow = (<>
         {/* Linha 2: regiões + escalões. Quebra para a linha seguinte (todos os
             botões ao mesmo nível, alinhados à esquerda) — antes, em desktop,
             a linha não quebrava e os escalões embrulhavam-se sozinhos no meio
             do ecrã ao estreitar a janela (14/10/2026). */}
-        {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
+        {(availRegions.length > 1 || availEscs.length > 0) && (
           <div className={"drive-below" + (md.isMobile ? " is-mobile" : "")}>
             {availRegions.length > 1 && (<>
               <button className={"tourn-tab tourn-tab-sm shrink-0" + (regionFilter === null ? " active" : "")}
@@ -657,7 +411,8 @@ function DriveContent() {
               <ToolbarSep />
             </>)}
             {/* Não é o mesmo que o filtro da tabela: este refaz a classificação
-                só com o(s) escalão(ões) escolhido(s). */}
+                só com o(s) escalão(ões) escolhido(s). No Ranking o escalão é o da vista. */}
+            {navMode === "torneios" && (<>
             <span className="fs-11 muted shrink-0" title="Classificação só com estes escalões (as posições são recalculadas)">Classificação:</span>
             <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : " tourn-tab-muted")}
               onClick={() => go({ esc: [] })}>
@@ -673,6 +428,7 @@ function DriveContent() {
               onToggle={(e) => go({ esc: escFilter.includes(e) ? escFilter.filter(x => x !== e) : [...escFilter, e] })}
               style={{ display: "contents" }}
             />
+            </>)}
           </div>
         )}
   </>);
@@ -681,139 +437,23 @@ function DriveContent() {
     <DataSourcesProvider tournaments={providerTournaments}>
     <div className="jogadores-page">
 
-      {/* Uma só barra (13/10/2026): em «Torneios» os controlos da página entram
-          na barra do CircuitShell (CircuitToolbarSlotCtx); nos Rankings Sub-12
-          a página mantém a sua barra. */}
-      {navMode !== "torneios" && (
-      <div className="drive-s12-bar">
-        <Toolbar>
-          <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
-          {driveLead}
-          <div className="flex-1 drive-min-8" />
-        </Toolbar>
-      </div>
-      )}
-
-      {/* ══════════════════════════════════════════
-          MODO SUB-12
-          ══════════════════════════════════════════ */}
-      {navMode === "ranking-sub12" && (
-        <MasterDetail md={md} sidebar={<>
-            {/* Séries */}
-            <div className="sidebar-section-title">Série</div>
-            {SUB12_SERIES_TABS.map(s => {
-              const c = sub12Counts[s.key];
-              // Série sem jogadores no escalão escolhido: mostrar ESBATIDA em
-              // vez de esconder — esconder fazia parecer que a série tinha
-              // sido removida ao trocar de escalão (ex: AQUAPOR sem Sub 14).
-              const empty = !c || c.players === 0;
-              const active = sub12Series === s.key;
-              return (
-                <button key={s.key}
-                  className={`course-item ${active ? "active" : ""}${empty ? " drive-empty" : ""}`}
-                  onClick={() => { go({ s12s: s.key, s12v: "grid" }, false); setSub12Player(null); md.onSelect(); }}>
-                  <div className="course-item-name">{s.emoji} {s.label}</div>
-                  <div className="course-item-sub">
-                    {empty ? `sem jogadores${sub12Esc === "all" ? "" : ` ${sub12Esc}`}` : `${c.tourns} torneios · ${c.players} jog · ${s.holes}`}
-                  </div>
-                </button>
-              );
-            })}
-
-            {/* Vistas */}
-            <div className="sidebar-section-title mt-8">Vista</div>
-            {(["grid", "ranking", "evolucao"] as Sub12ViewTab[]).map(v => {
-              const labels: Record<Sub12ViewTab, string> = { grid: "📊 Tabela", ranking: "🏆 Ranking", evolucao: "📈 Evolução" };
-              return (
-                <button key={v}
-                  className={`course-item ${sub12View === v ? "active" : ""}`}
-                  onClick={() => { go({ s12v: v }, false); md.onSelect(); }}>
-                  <div className="course-item-name">{labels[v]}</div>
-                </button>
-              );
-            })}
-
-            {/* Filtros compactos */}
-            <div className="sidebar-section-title mt-8">Filtros</div>
-            <div className="flex-col gap-4 drive-s12-filters">
-              <select className="select w-full fs-11" value={sub12Esc}
-                onChange={e => { go({ s12e: e.target.value }, false); setSub12Player(null); }}>
-                <option value="all">Todos os escalões</option>
-                {ESCALOES.map(esc => <option key={esc} value={esc}>{esc}</option>)}
-              </select>
-              {sub12AvailRegions.length > 0 && (
-                <select className="select w-full fs-11" value={sub12Region} onChange={e => go({ s12r: e.target.value }, false)}>
-                  <option value="all">Todas as zonas</option>
-                  {sub12AvailRegions.map(z => <option key={z} value={z}>{regionLabel(z)}</option>)}
-                </select>
-              )}
-              <select className="select w-full fs-11" value={sub12Sex} onChange={e => go({ s12x: e.target.value }, false)}>
-                <option value="all">Ambos os sexos</option>
-                <option value="M">Masculino</option>
-                <option value="F">Feminino</option>
-              </select>
-              <input className="input w-full fs-11 drive-boxed"
-                value={sub12Search} onChange={e => setSub12Search(e.target.value)} placeholder="Nome, clube…" />
-            </div>
-
-            <div className="muted fs-10 drive-s12-foot">
-              {sub12EscLabel} · scoring.datagolf.pt
-            </div>
-        </>}>
-            <div>
-
-              {/* Detalhe jogador (se aberto) */}
-              {sub12Player && (
-                <div className="mt-12">
-                  <PlayerDetail row={sub12Player} onClose={() => setSub12Player(null)} />
-                </div>
-              )}
-
-              {/* Calendário no topo */}
-              <div className="mt-12">
-                <UpcomingSchedule series={sub12Series} />
-              </div>
-
-              <div className="card mt-8">
-                {/* Header do card igual ao Resumo */}
-                <div className="h-md">
-                  {sub12View === "grid" ? "📊" : sub12View === "ranking" ? "🏆" : "📈"}{" "}
-                  {sub12View === "grid" ? "Tabela" : sub12View === "ranking" ? "Ranking" : "Evolução SD"}{" "}
-                  — {sub12EscLabel} {SUB12_SERIES_TABS.find(s => s.key === sub12Series)?.label} {activeYear ?? ""}
-                </div>
-                <div className="muted fs-11 mb-8">
-                  {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas
-                  {sub12KpiBestSD != null && <> · Best SD <span className={"drive-kpi" + (sub12KpiBestSD <= 25 ? " is-good" : "")}>{sub12KpiBestSD.toFixed(1)}</span></>}
-                  {sub12KpiBest != null && <> · Melhor gross <span className="drive-kpi is-good-dark">{sub12KpiBest}</span></>}
-                </div>
-
-                {/* Conteúdo */}
-                {sub12View === "grid"     && <TournamentGrid rows={sub12Filtered} allTournaments={sub12Tourns} onPlayerClick={handleSub12PlayerClick} playersDB={pdb} escLookup={escLookup} />}
-                {sub12View === "ranking"  && <RankingView    rows={sub12Filtered} onPlayerClick={handleSub12PlayerClick} />}
-                {sub12View === "evolucao" && <EvolutionChart rows={sub12Filtered} />}
-              </div>
-            </div>
-        </MasterDetail>
-      )}
-
-      {/* ══════════════════════════════════════════
-          MODO NORMAL (Tour / Challenge / AQUAPOR)
-          ══════════════════════════════════════════ */}
-      {navMode === "torneios" && (
+      {/* Uma só barra: os controlos da página entram na barra do CircuitShell
+          (CircuitToolbarSlotCtx); o Ranking é uma vista do shell (capacidade `ranking`). */}
         <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, below: driveBelow, hideTitle: true }}>
-        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true } }}
+        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={shellConfig}
+          selectedInfo={navMode === "ranking-sub12" ? "ranking" : null}
+          onSelectInfo={(k) => go({ nav: k ? "ranking-sub12" : "torneios" })}
           // «A carregar» até chegarem as inscrições: os torneios por jogar (a Final
           // de 07/11) só entram com elas, e o shell escolhia antes o penúltimo (B, 22/10/2026).
           loading={loading || admissionsMeta.length === 0}
           // Nunca indefinido: o torneio por omissão escolhe-o a página (efeito acima).
           selectedId={shellSel.id ?? "__drive-pending__"}
           selectedDivKey={shellSel.divKey}
-          onSelectEntry={(e) => goTkey(driveDivTkey(driveRepDivision(e)))}
+          onSelectEntry={(e) => goTkey(driveDivTkey(driveRepDivision(e)), "torneios")}
           // Só o escalão do torneio do URL (o shell também chama isto para o
           // escalão por omissão do que mostra enquanto espera).
-          onSelectDivision={(e, d) => { if (e.id === shellSel.id) goTkey(driveDivTkey(d)); }} />
+          onSelectDivision={(e, d) => { if (e.id === shellSel.id) goTkey(driveDivTkey(d), "torneios"); }} />
         </CircuitToolbarSlotCtx.Provider>
-      )}
 
 
     </div>

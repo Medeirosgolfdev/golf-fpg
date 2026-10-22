@@ -17,19 +17,15 @@ describe("query da /drive (decisão A)", () => {
     expect(st).toMatchObject({ series: "challenge", region: "madeira", esc: ["Sub 12"], year: "2024" });
     expect(driveQueryString(st)).toBe("?series=challenge&region=madeira&esc=Sub+12&year=2024");
   });
-  it("Ranking Sub-12: Challenge, Ranking e Evolução reabrem; `list` (nome antigo) é o Ranking", () => {
-    expect(q("nav=ranking-sub12&s12s=challenge").s12s).toBe("challenge");
+  it("Ranking: Challenge, Ranking e Evolução reabrem; `list` (nome antigo) é o Ranking", () => {
+    expect(q("nav=ranking-sub12&s12s=challenge").series).toBe("challenge");
     expect(q("nav=ranking-sub12&s12v=ranking").s12v).toBe("ranking");
     expect(q("nav=ranking-sub12&s12v=evolucao").s12v).toBe("evolucao");
     expect(q("nav=ranking-sub12&s12v=list").s12v).toBe("ranking");
-    for (const s of ["nav=ranking-sub12&s12s=challenge", "nav=ranking-sub12&s12s=aquapor&s12v=evolucao&s12r=madeira&s12x=F&s12e=all"]) {
-      expect(driveQueryString(q(s))).toBe("?" + s);
-    }
-  });
-  it("`region` sem `s12r` também filtra o Ranking e não se repete no URL", () => {
-    const st = q("nav=ranking-sub12&region=acores");
-    expect(st.s12r).toBe("acores");
-    expect(driveQueryString(st)).toBe("?nav=ranking-sub12&region=acores");
+    // O Ranking é uma vista dos torneios (decisão D): a série e a zona são as da barra.
+    expect(driveQueryString(q("nav=ranking-sub12&s12s=aquapor&s12v=evolucao&s12r=madeira&s12x=F&s12e=all")))
+      .toBe("?nav=ranking-sub12&series=aquapor&region=madeira&s12v=evolucao&s12x=F&s12e=all");
+    expect(driveQueryString(q("nav=ranking-sub12&series=all&s12s=challenge"))).toBe("?nav=ranking-sub12&series=all&s12s=challenge");
   });
   it("por omissão, URL limpo; a aba só na vista de torneios", () => {
     expect(driveQueryString(DRIVE_URL_DEFAULTS)).toBe("");

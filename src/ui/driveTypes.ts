@@ -50,4 +50,6 @@ export interface Sub12Row {
   results: TournResult[];
   avgGross: number | null; avgSD: number | null; bestGross: number | null; bestSD: number | null; tourneiosPlayed: number;
   totalBird: number; totalPars: number; totalBog: number; totalPts: number;
+  /** Escalão do jogador no torneio mais recente do ranking. */
+  esc?: string;
 }

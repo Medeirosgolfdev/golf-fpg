@@ -25,6 +25,7 @@ import LoadingState from "../LoadingState";
 import EmptyState from "../EmptyState";
 import CircuitShell from "../circuit/CircuitShell";
 import type { CircuitConfig, CircuitEntry } from "../circuit/types";
+import { circuitRanking } from "../circuit/CircuitRanking";
 
 const PAGE_SIZE = 100;
 
@@ -42,8 +43,8 @@ export interface RankingPageConfig<R, E> {
   rankingUrl: string;
   eventsUrl: string;
   buildEntries: (events: E[]) => CircuitEntry[];
-  /** Configuração do CircuitShell (sem routeBase/specialItems/loadingMessage). */
-  shell: Omit<CircuitConfig, "routeBase" | "specialItems" | "loadingMessage">;
+  /** Configuração do CircuitShell (sem routeBase/ranking/loadingMessage). */
+  shell: Omit<CircuitConfig, "routeBase" | "ranking" | "loadingMessage">;
   /** Etiqueta do item do menu Info ("🏅 Ranking mundial"). */
   rankingLabel: string;
   loadingRanking: string;
@@ -95,7 +96,9 @@ function EventsCircuit<R, E>({ cfg, params }: { cfg: RankingPageConfig<R, E>; pa
   const config = useMemo<CircuitConfig>(() => ({
     ...cfg.shell,
     routeBase: cfg.base,
-    specialItems: [{ key: "jogadores", label: cfg.rankingLabel, render: () => <RankingRoot cfg={cfg} /> }],
+    // A lista do ranking é a capacidade `ranking` do shell (no menu Info, como
+    // sempre); o conteúdo é o próprio, com os filtros dela.
+    ranking: circuitRanking({ key: "jogadores", label: cfg.rankingLabel, inInfoMenu: true, render: () => <RankingRoot cfg={cfg} /> }),
     loadingMessage: `A carregar eventos ${cfg.name}…`,
   }), [cfg]);
 

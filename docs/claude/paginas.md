@@ -68,7 +68,8 @@
 | Lista de torneios da /drive: `attachDriveAdmissions` (⚠ pendura nos próprios objectos), `buildDriveSource` (futuros sintéticos + provisório da Final fundido), `filterDriveSource` (série/ano/zona) | `src/data/drive/driveSource.ts` |
 | Adaptador para o CircuitShell (`buildDriveEntries`, `DRIVE_CONFIG`, `mergeDrivePlaceholders`) | `src/data/drive/driveCircuitData.ts` |
 | Ranking Sub-12 e Classificação por escalão (`buildSub12Data`, `filterBySub12Series`, `filterTournByEsc`, contagens, KPIs) | `src/data/drive/driveSub12.ts` |
-| A página (estado, URL, barra, vistas do Sub-12) | `src/pages/DrivePage.tsx` |
+| Ranking (Sub-12 e restantes escalões) e a classificação acumulada da «Época»: capacidade `ranking` do CircuitShell | `src/pages/drive/driveRanking.tsx` (+ `ui/circuit/CircuitRanking.tsx`) |
+| A página (URL, barra, ligação ao shell) | `src/pages/DrivePage.tsx` |
 
 - **Abrir o torneio certo (decisão B, 22/10/2026):** o CircuitShell da /drive fica
   «a carregar» até chegarem as inscrições (`fpg-admissions-draws.json`) — os
@@ -107,3 +108,13 @@
   e as posições refazem-se em CÓPIAS; no Challenge ficam os eventos que têm esse
   escalão, com todos os escalões. Já não se reescreve `p.pos` dos jogadores
   partilhados (o efeito passava ao leaderboard e aos pontos do Ranking Sub-12).
+- **Ranking (decisões D e G, 22/10/2026)** — já não há modo «Rankings» com barra
+  e sidebar próprias: o botão «🏅 Ranking» da barra abre a vista do shell
+  (`nav=ranking-sub12` no URL), com a série/ano/zona da barra, ★ Manuel e a
+  pesquisa; escalão (`s12e`), sexo (`s12x`) e vista (`s12v`: Tabela, Ranking,
+  Evolução) no cabeçalho da vista; com «Todos» a série escolhe-se lá (`s12s`).
+  Os links antigos `s12s`/`s12r` passam a `series`/`region`. A zona filtra os
+  TORNEIOS da zona (era a zona «modal» de cada jogador): é o ranking regional.
+  A aba «Época» de cada torneio abre com a classificação acumulada das etapas da
+  época (série/zona/ano), no escalão aberto (Challenge) ou todos (com coluna
+  Escalão).

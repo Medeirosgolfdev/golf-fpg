@@ -309,6 +309,7 @@ export function buildSub12Data(
       }
       const row = playerMap.get(fed)!;
       if (row.results.some(r => r.tournKey === tournKey)) continue;
+      if (esc && row.results.every(r => r.date <= t.date)) row.esc = esc;
       row.results.push({
         tournKey, tournName: t.name, tournShort: tournShort(t),
         date: t.date, dateSort: dateToSort(t.date),
