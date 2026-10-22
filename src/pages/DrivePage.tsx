@@ -276,22 +276,17 @@ function UpcomingSchedule({ series }: { series: Sub12SeriesTab }) {
   return (
     <div className="card p-8-12">
       <div className="h-xs mb-6">📅 Calendário {SERIE_LABELS[series]} 2026</div>
-      <div className="flex-wrap gap-4" style={{ display: "flex" }}>
+      <div className="flex-wrap gap-4 drive-cal-list">
         {entries.map((e, i) => {
           const endRef = e.endDate || e.date;
           const isPast = endRef.getTime() < now.getTime();
           const isNext = !isPast && entries.slice(0,i).every(prev => (prev.endDate||prev.date).getTime() < now.getTime());
           const col = SERIE_COLORS[series];
           return (
-            <div key={i} style={{
-              display: "inline-flex", alignItems: "center", gap: 4,
-              padding: "3px 8px", borderRadius: "var(--radius-pill)", fontSize: "var(--fs-10)",
-              fontWeight: isNext ? 800 : isPast ? 400 : 600,
-              background: isNext ? col + "18" : isPast ? "transparent" : "var(--bg-card)",
-              color: isPast ? "var(--text-muted)" : isNext ? col : "var(--text-2)",
-              border: isNext ? `2px solid ${col}` : isPast ? "1px solid var(--border-light)" : "1px solid var(--border)",
-              textDecoration: isPast ? "line-through" : "none", opacity: isPast ? 0.6 : 1,
-            }}>
+            // Cor da série: ⚠ `col + "18"` só é CSS válido no Challenge (hex); no Tour e
+            // no AQUAPOR (var(--…)) o fundo fica transparente — é assim hoje (decisão C).
+            <div key={i} className={"drive-cal-pill" + (isNext ? " is-next" : isPast ? " is-past" : "")}
+              style={isNext ? { background: col + "18", color: col, border: `2px solid ${col}` } : undefined}>
               {REGION_EMOJI[e.region] || ""} <span className="fw-700">{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
               {isNext && <span className="badge-next" style={{ background: col }}>PRÓXIMO</span>}
             </div>
@@ -324,24 +319,23 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
         <div className="bjgt-chart-scroll">
           <table className="dtable fs-12" >
             <thead><tr>
-              <th className="r" style={{ width: 36 }}>#</th>
-              <th className="ta-left" style={{ paddingLeft: 6 }}>Jogador</th>
+              <th className="r drive-col-n">#</th>
+              <th className="ta-left drive-col-player">Jogador</th>
               <th>Clube</th>
               <th className="r">HCP</th>
               <th className="r">T</th>
-              <th className="r" style={{ fontWeight: 800, color: "var(--color-warn-dark)" }}>Pts</th>
+              <th className="r drive-col-pts">Pts</th>
               <th className="r">Best SD</th>
               <th className="r">Melhor</th>
             </tr></thead>
             <tbody>
               {ranked.map((p, i) => (
                 <tr key={p.fed} className={`pointer${p.sex === "F" ? " tourn-female-row" : ""}`} onClick={() => onPlayerClick(p.fed)}>
-                  <td className="r" style={{ fontSize: "var(--fs-16)" }}>{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
+                  <td className="r drive-medal">{medal(i + 1) ?? <span className="mono fw-700">{i+1}</span>}</td>
                   <td>
                     <a href={`/jogadores/${p.fed}`} target="_blank" rel="noopener noreferrer"
-                      className="fw-700"
-                      onClick={e => e.stopPropagation()}
-                      style={{ color: "inherit", textDecoration: "underline", textDecorationColor: "var(--border)", textUnderlineOffset: 2 }}>
+                      className="fw-700 drive-rank-name"
+                      onClick={e => e.stopPropagation()}>
                       {p.name}
                     </a>
                     <SexBadge sex={p.sex} size="sm" className="ml-4" />
@@ -349,7 +343,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                   <td className="c-muted fs-11">{p.club}</td>
                   <td className="r mono">{fmtHcp(p.hcp)}</td>
                   <td className="r mono">{p.tourneiosPlayed}</td>
-                  <td className="r fw-800" style={{ color: "var(--color-warn-dark)" }}>{p.totalPts}</td>
+                  <td className="r fw-800 drive-pts">{p.totalPts}</td>
                   <td className="r"><SdSpan sd={p.bestSD} hcp={p.hcp} /></td>
                   <td className="r mono fw-700 c-good-dark">{p.bestGross ?? "–"}</td>
                 </tr>
@@ -361,7 +355,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
       {zeroPts.length > 0 && (
         <div className="card mt-14">
           <div className="h-xs">Sem pontos ({zeroPts.length})</div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: 6 }}>
+          <div className="drive-zero-grid">
             {zeroPts.map(p => {
               const r = p.results[0];
               return (
@@ -369,7 +363,7 @@ function RankingView({ rows, onPlayerClick }: { rows: Sub12Row[]; onPlayerClick:
                   href={`/jogadores/${p.fed}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "4px 8px", background: "var(--bg)", borderRadius: "var(--radius)", fontSize: "var(--fs-11)", color: "inherit", textDecoration: "none" }}
+                  className="drive-zero-item"
                   onClick={e => { e.stopPropagation(); }}>
                   <span className="fw-600">{p.name}</span>
                   <span className="mono">{r?.gross ?? "–"} <span className="c-muted">({r?.tournShort})</span></span>
@@ -398,7 +392,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
   return (
     <div className="card">
       <div className="h-xs">Evolução SD ao longo da época</div>
-      <div className="w-full mt-8" style={{ height: 340 }}>
+      <div className="w-full mt-8 drive-evo-chart">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
@@ -420,11 +414,12 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
 
 function PlayerDetail({ row, onClose }: { row: Sub12Row; onClose: () => void }) {
   return (
-    <div className="card" style={{ border: "2px solid var(--accent)", position: "relative" }}>
-      <button onClick={onClose} title="Fechar" aria-label="Fechar" style={{ position: "absolute", top: 8, right: 10, background: "none", border: "none", cursor: "pointer", fontSize: "var(--fs-18)", color: "var(--text-3)" }}>✕</button>
-      <div className="mb-8" style={{ display: "flex", alignItems: "baseline", gap: 10 }}>
-        <span className="fw-800" style={{ fontSize: "var(--fs-16)" }}>{row.name}</span>
+    <div className="card drive-player-card">
+      <button onClick={onClose} title="Fechar" aria-label="Fechar" className="drive-player-close">✕</button>
+      <div className="mb-8 drive-player-head">
+        <span className="fw-800 drive-player-name">{row.name}</span>
         <span className="muted fs-11">{row.club} · {regionLabel(row.region)} · HCP {fmtHcp(row.hcp)}</span>
+        {/* PlayerLink põe cor/sublinhado em linha: o estilo tem de ir pela prop. */}
         <PlayerLink fed={row.fed} name="Ver perfil →" style={{ fontSize: "var(--fs-11)", color: "var(--accent)", textDecoration: "underline" }} />
       </div>
       <div className="mb-10 flex-wrap d-flex gap-6">
@@ -906,7 +901,7 @@ function DriveContent() {
   }, [curTournament]);
 
   if (loading) return <LoadingState />;
-  if (error)   return <div className="jogadores-page"><div className="notice-error" style={{ margin: 16 }}>Erro: {error}</div></div>;
+  if (error)   return <div className="jogadores-page"><div className="notice-error drive-error">Erro: {error}</div></div>;
   if (!data)   return null;
 
   const allSources: DataSource[] = [...monthlyMeta, ...admissionsMeta];
@@ -923,11 +918,11 @@ function DriveContent() {
           <ToolbarTitle>🏁 DRIVE</ToolbarTitle>
           <DataSourcesChip sources={allSources} />
           <a href="https://competicoes.fpg.pt/ranking/" target="_blank" rel="noopener noreferrer"
-            className="p p-sm" style={{ textDecoration: "none", background: "var(--bg-muted)", color: "var(--accent)", border: "1px solid var(--border)" }}
+            className="p p-sm drive-rank-link"
             title="Rankings oficiais da FPG (competicoes.fpg.pt)">🏆 Rankings FPG</a>
           <ToolbarSep />
           <TabRow
-            style={{ marginBottom: 0 }}
+            className="drive-tabrow"
             tabs={[
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-sub12", label: "🏅 Rankings" },
@@ -938,7 +933,7 @@ function DriveContent() {
           {navMode === "torneios" && (<>
             <ToolbarSep />
             <TabRow
-              style={{ marginBottom: 0 }}
+              className="drive-tabrow"
               tabs={[
                 { key: "all",       label: "Todos" },
                 { key: "tour",      label: "🏌️ Tour", count: countTour },
@@ -962,11 +957,8 @@ function DriveContent() {
               </div>
               <ToolbarSep />
               <button
-                className={"tourn-tab tourn-tab-sm" + (filterManuel ? " active" : " tourn-tab-muted")}
-                onClick={() => setFilterManuel(v => !v)}
-                style={filterManuel
-                  ? { flexShrink: 0, background: "var(--bg-success-subtle)", borderColor: "var(--color-good)", color: "var(--color-good-dark)", whiteSpace: "nowrap" }
-                  : { flexShrink: 0, whiteSpace: "nowrap" }}>
+                className={"tourn-tab tourn-tab-sm drive-manuel" + (filterManuel ? " active" : " tourn-tab-muted")}
+                onClick={() => setFilterManuel(v => !v)}>
                 ★ Manuel
               </button>
             </>)}
@@ -978,12 +970,7 @@ function DriveContent() {
             a linha não quebrava e os escalões embrulhavam-se sozinhos no meio
             do ecrã ao estreitar a janela (14/10/2026). */}
         {navMode === "torneios" && (availRegions.length > 1 || availEscs.length > 0) && (
-          <div style={{
-            display: "flex", alignItems: "center", gap: md.isMobile ? 4 : 6,
-            padding: "4px 12px 6px",
-            flexWrap: "wrap", rowGap: 4,
-            borderTop: "1px solid var(--border-light)",
-          }}>
+          <div className={"drive-below" + (md.isMobile ? " is-mobile" : "")}>
             {availRegions.length > 1 && (<>
               <button className={"tourn-tab tourn-tab-sm shrink-0" + (regionFilter === null ? " active" : "")}
                 onClick={() => setRegionFilter(null)}>
@@ -995,9 +982,8 @@ function DriveContent() {
                 const nJ = uniquePC(rt);
                 return (
                   <button key={reg.id}
-                    className={"tourn-tab tourn-tab-sm" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
-                    onClick={() => setRegionFilter(reg.id)}
-                    style={{ flexShrink: 0 }}>
+                    className={"tourn-tab tourn-tab-sm drive-region" + (regionFilter === reg.id ? " active" : " tourn-tab-muted")}
+                    onClick={() => setRegionFilter(reg.id)}>
                     {md.isMobile
                       ? `${reg.label} ${nT}·${nJ}`
                       : `${reg.emoji} ${reg.label} (${nT}T · ${nJ} jog)`}
@@ -1035,11 +1021,11 @@ function DriveContent() {
           na barra do CircuitShell (CircuitToolbarSlotCtx); nos Rankings Sub-12
           a página mantém a sua barra. */}
       {navMode !== "torneios" && (
-      <div style={{ borderBottom: "1px solid var(--border-light)" }}>
+      <div className="drive-s12-bar">
         <Toolbar>
           <SidebarToggle open={md.open} onToggle={md.toggle} backLabel="Torneios" />
           {driveLead}
-          <div className="flex-1" style={{ minWidth: 8 }} />
+          <div className="flex-1 drive-min-8" />
         </Toolbar>
       </div>
       )}
@@ -1060,8 +1046,7 @@ function DriveContent() {
               const active = sub12Series === s.key;
               return (
                 <button key={s.key}
-                  className={`course-item ${active ? "active" : ""}`}
-                  style={empty ? { opacity: 0.45 } : undefined}
+                  className={`course-item ${active ? "active" : ""}${empty ? " drive-empty" : ""}`}
                   onClick={() => { setSub12Series(s.key); setSub12View("grid"); setSub12Player(null); md.onSelect(); }}>
                   <div className="course-item-name">{s.emoji} {s.label}</div>
                   <div className="course-item-sub">
@@ -1086,7 +1071,7 @@ function DriveContent() {
 
             {/* Filtros compactos */}
             <div className="sidebar-section-title mt-8">Filtros</div>
-            <div className="flex-col gap-4" style={{ padding: "4px 8px", display: "flex" }}>
+            <div className="flex-col gap-4 drive-s12-filters">
               <select className="select w-full fs-11" value={sub12Esc}
                 onChange={e => { setSub12Esc(e.target.value); setSub12Player(null); }}>
                 <option value="all">Todos os escalões</option>
@@ -1103,11 +1088,11 @@ function DriveContent() {
                 <option value="M">Masculino</option>
                 <option value="F">Feminino</option>
               </select>
-              <input className="input w-full fs-11"  style={{ boxSizing: "border-box" }}
+              <input className="input w-full fs-11 drive-boxed"
                 value={sub12Search} onChange={e => setSub12Search(e.target.value)} placeholder="Nome, clube…" />
             </div>
 
-            <div className="muted fs-10" style={{ padding: "8px 12px", borderTop: "1px solid var(--border-light)", marginTop: 8 }}>
+            <div className="muted fs-10 drive-s12-foot">
               {sub12EscLabel} · scoring.datagolf.pt
             </div>
         </>}>
@@ -1134,8 +1119,8 @@ function DriveContent() {
                 </div>
                 <div className="muted fs-11 mb-8">
                   {sub12KpiPlayers} jogadores · {sub12KpiRounds} rondas
-                  {sub12KpiBestSD != null && <> · Best SD <span style={{ fontWeight: 700, color: sub12KpiBestSD <= 25 ? "var(--color-good)" : "var(--text)" }}>{sub12KpiBestSD.toFixed(1)}</span></>}
-                  {sub12KpiBest != null && <> · Melhor gross <span style={{ fontWeight: 700, color: "var(--color-good-dark)" }}>{sub12KpiBest}</span></>}
+                  {sub12KpiBestSD != null && <> · Best SD <span className={"drive-kpi" + (sub12KpiBestSD <= 25 ? " is-good" : "")}>{sub12KpiBestSD.toFixed(1)}</span></>}
+                  {sub12KpiBest != null && <> · Melhor gross <span className="drive-kpi is-good-dark">{sub12KpiBest}</span></>}
                 </div>
 
                 {/* Conteúdo */}
@@ -1152,7 +1137,7 @@ function DriveContent() {
           ══════════════════════════════════════════ */}
       {navMode === "torneios" && (
         <CircuitToolbarSlotCtx.Provider value={{ lead: driveLead, below: driveBelow, hideTitle: true }}>
-        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", textColor: "#fff", filters: { search: true } }} loading={loading}
+        <CircuitShell entries={driveEntries} pastEditionsPool={driveEditionsPool} config={{ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true } }} loading={loading}
           selectedId={selectedDriveId ?? undefined}
           onSelectEntry={(e) => setSelectedDriveId(e.id)} />
         </CircuitToolbarSlotCtx.Provider>
