@@ -122,3 +122,9 @@
   (`loadFpgPlayersDB`, `src/data/fpgPlayersDB.ts`): `players.json` +
   nacionalidades dos federados estrangeiros (bandeira antes do nome, nascimento
   e sexo) + os seguidos no /kids (↗).
+- **Calendário (decisão E, 22/10/2026)** — sai dos dados: `driveCalendar`
+  (`src/data/drive/driveCalendar.ts`) sobre os torneios da /drive (resultados dos
+  mensais + os por jogar das inscrições da FPG), um por evento, da série e do ano
+  da barra; «hoje» = `todayIso()`. A lista escrita à mão (`CAL_ENTRIES`) saiu —
+  todas as datas que lá estavam existem nos dados (o «3º DT Sul» de 04/04 é na
+  Quinta do Vale, não na «Penina (TBC)»); entram também os Açores e as Finais.

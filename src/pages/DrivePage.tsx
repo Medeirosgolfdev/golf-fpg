@@ -23,6 +23,8 @@ import LoadingState from "../ui/LoadingState";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
 import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
 import { driveRanking, SERIE_LABELS } from "./drive/driveRanking";
+import { calendarStatus, driveCalendar, type DriveCalEntry } from "../data/drive/driveCalendar";
+import { todayIso } from "../utils/format";
 import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
@@ -44,58 +46,21 @@ const REGIONS = [
 ];
 const REGION_EMOJI: Record<string, string>  = { norte: "🔵", tejo: "🟡", sul: "🟢", madeira: "🟣", acores: "🔴", nacional: "⚪" };
 
-/* ─ Sub-12 Calendar ─ */
-const fmtCalDate = (d: Date, end?: Date): string => {
-  const dd = (n: number) => String(n).padStart(2, "0");
-  const base = dd(d.getDate()) + "/" + dd(d.getMonth() + 1);
-  return end ? base + "–" + dd(end.getDate()) + "/" + dd(end.getMonth() + 1) : base;
-};
-interface CalEntry { name: string; date: Date; endDate?: Date; campo: string; region: string; series: "tour"|"challenge"|"aquapor"; }
-const CAL_ENTRIES: CalEntry[] = [
-  { name: "1º DT Sul",     date: new Date(2026,0,11), campo: "Laguna GC",        region: "sul",     series: "tour" },
-  { name: "2º DT Sul",     date: new Date(2026,1,1),  campo: "Vila Sol",          region: "sul",     series: "tour" },
-  { name: "3º DT Sul",     date: new Date(2026,3,4),  campo: "Penina (TBC)",      region: "sul",     series: "tour" },
-  { name: "4º DT Sul",     date: new Date(2026,5,10), campo: "Boavista",          region: "sul",     series: "tour" },
-  { name: "1º DT Norte",   date: new Date(2026,0,4),  campo: "Estela GC",         region: "norte",   series: "tour" },
-  { name: "2º DT Norte",   date: new Date(2026,1,1),  campo: "Amarante",          region: "norte",   series: "tour" },
-  { name: "3º DT Norte",   date: new Date(2026,1,28), endDate: new Date(2026,2,1), campo: "Vale Pisão", region: "norte", series: "tour" },
-  { name: "4º DT Norte",   date: new Date(2026,3,19), campo: "Ponte de Lima",     region: "norte",   series: "tour" },
-  { name: "1º DT Tejo",    date: new Date(2026,0,4),  campo: "Montado",           region: "tejo",    series: "tour" },
-  { name: "2º DT Tejo",    date: new Date(2026,0,31), campo: "Belas",             region: "tejo",    series: "tour" },
-  { name: "3º DT Tejo",    date: new Date(2026,2,28), endDate: new Date(2026,2,29), campo: "St. Estêvão", region: "tejo", series: "tour" },
-  { name: "4º DT Tejo",    date: new Date(2026,3,12), campo: "Lisbon SC",         region: "tejo",    series: "tour" },
-  { name: "1º DT Madeira", date: new Date(2026,0,3),  campo: "Palheiro Golf",     region: "madeira", series: "tour" },
-  { name: "2º DT Madeira", date: new Date(2026,1,7),  campo: "Santo da Serra",    region: "madeira", series: "tour" },
-  { name: "3º DT Madeira", date: new Date(2026,2,7),  campo: "Palheiro Golf",     region: "madeira", series: "tour" },
-  { name: "4º DT Madeira", date: new Date(2026,3,11), campo: "Porto Santo Golfe", region: "madeira", series: "tour" },
-  { name: "1º DC Madeira", date: new Date(2026,0,4),  campo: "Palheiro",          region: "madeira", series: "challenge" },
-  { name: "2º DC Madeira", date: new Date(2026,1,8),  campo: "Santo da Serra",    region: "madeira", series: "challenge" },
-  { name: "3º DC Madeira", date: new Date(2026,2,8),  campo: "Santo da Serra",    region: "madeira", series: "challenge" },
-  { name: "4º DC Madeira", date: new Date(2026,3,12), campo: "Porto Santo",       region: "madeira", series: "challenge" },
-  { name: "1º DC Açores",  date: new Date(2026,0,24), campo: "Terceira Island GC",region: "acores",  series: "challenge" },
-  { name: "2º DC Açores",  date: new Date(2026,1,28), campo: "Terceira Island GC",region: "acores",  series: "challenge" },
-  { name: "AQUAPOR",       date: new Date(2026,0,17), endDate: new Date(2026,0,18), campo: "Vidago Palace", region: "nacional", series: "aquapor" },
-];
-
-/* ═══════════════════════════════════════════════════════
-   SUB-12: UI Components
-   ═══════════════════════════════════════════════════════ */
-function UpcomingSchedule({ series }: { series: DriveSeries }) {
-  const now = new Date(); now.setHours(0,0,0,0);
-  const entries = CAL_ENTRIES.filter(e => e.series === series).sort((a,b) => a.date.getTime()-b.date.getTime());
+/* ─ Calendário da época (decisão E): sai dos dados — src/data/drive/driveCalendar.ts ─ */
+const ddmm = (iso: string) => iso.slice(8, 10) + "/" + iso.slice(5, 7);
+function UpcomingSchedule({ series, year, entries }: { series: DriveSeries; year: string; entries: DriveCalEntry[] }) {
   if (!entries.length) return null;
+  const status = calendarStatus(entries, todayIso());
   return (
     <div className="card p-8-12">
-      <div className="h-xs mb-6">📅 Calendário {SERIE_LABELS[series]} 2026</div>
+      <div className="h-xs mb-6">📅 Calendário {SERIE_LABELS[series]} {year}</div>
       <div className="flex-wrap gap-4 drive-cal-list">
         {entries.map((e, i) => {
-          const endRef = e.endDate || e.date;
-          const isPast = endRef.getTime() < now.getTime();
-          const isNext = !isPast && entries.slice(0,i).every(prev => (prev.endDate||prev.date).getTime() < now.getTime());
+          const isNext = status[i] === "next", isPast = status[i] === "past";
           return (
             // Cor da série por classe (decisão C): tokens --drive-* + color-mix.
             <div key={i} className={`drive-cal-pill drive-serie-${series}` + (isNext ? " is-next" : isPast ? " is-past" : "")}>
-              {REGION_EMOJI[e.region] || ""} <span className="fw-700">{fmtCalDate(e.date, e.endDate)}</span> {e.name} <span className="c-muted">{e.campo}</span>
+              {REGION_EMOJI[e.region] || ""} <span className="fw-700">{ddmm(e.date)}{e.endDate ? "–" + ddmm(e.endDate) : ""}</span> {e.name} <span className="c-muted">{e.campo}</span>
               {isNext && <span className="badge-next">PRÓXIMO</span>}
             </div>
           );
@@ -104,7 +69,6 @@ function UpcomingSchedule({ series }: { series: DriveSeries }) {
     </div>
   );
 }
-
 
 function DriveContent() {
   const [data, setData]           = useState<DriveData | null>(null);
@@ -302,8 +266,8 @@ function DriveContent() {
     set: (p) => go(p),
     setSearch: setSub12Search,
     setSelected: setSub12Player,
-    top: (s) => <UpcomingSchedule series={s} />,
-  })) : undefined, [data, pdb, escLookup, temporalEscLookup, fedBirthdates, series, sub12Series, activeYear, sub12Esc, sub12Sex, sub12Search, sub12View, sub12Player, go]);
+    top: (s) => { const y = activeYear ?? todayIso().slice(0, 4); return <UpcomingSchedule series={s} year={y} entries={driveCalendar(allSrc, s, y)} />; },
+  })) : undefined, [data, pdb, escLookup, temporalEscLookup, fedBirthdates, series, sub12Series, activeYear, sub12Esc, sub12Sex, sub12Search, sub12View, sub12Player, go, allSrc]);
   const shellConfig = useMemo(() => ({ ...DRIVE_CONFIG, color: "var(--color-good-dark)", filters: { search: true }, ranking: rankingCap }), [rankingCap]);
 
   // Série normal (tour/challenge/aquapor)
