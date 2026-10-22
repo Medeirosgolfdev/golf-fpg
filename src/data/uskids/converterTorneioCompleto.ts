@@ -9,7 +9,7 @@
  *   NOVO  (v2): objecto {signupanytime_t, name, start_date, age_groups, flight_courses, flights:{fid:{category,course_info,flight_players}}}
  */
 
-import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from './uskidsTypes';
+import type { TorneioResult, EscalaoResult, RondaResult, RondaJogador } from '../../ui/uskidsTypes';
 
 export function converterTorneioCompleto(raw: any): TorneioResult | null {
   // Detectar formato pela presença de signupanytime_t (novo) vs t+meta (antigo)

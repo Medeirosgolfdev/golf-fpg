@@ -11,7 +11,7 @@
 import { cachedFetchJson } from "./fetchCache";
 import { isManuelByName } from "../constants/manuel";
 import { todayIso } from "../utils/format";
-import { converterTorneioCompleto } from "../ui/converterTorneioCompleto";
+import { converterTorneioCompleto } from "./uskids/converterTorneioCompleto";
 import type { DataSource } from "../ui/DataSources";
 import type { ResultsData, RondaJogador, TorneioResult } from "../ui/uskidsTypes";
 
