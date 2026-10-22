@@ -184,3 +184,58 @@ erro). Regras actuais (`update-spain.yml` trata o exit 2 de todos):
   ficheiro com menos de metade dos bytes do anterior: `::error::` e exit 1
   (`--force` para gravar).
 `--force` passa todas estas guardas.
+
+## Espanha — hándicap oficial e rankings RFEG (2026-10-22)
+
+Pedido da Mariana: «quero acompanhar os espanhóis» — o hándicap actual e o lugar
+nos rankings da RFEG dos juniores espanhóis que jogam contra o Manuel. Refeito
+sobre o main a partir do ramo nunca juntado `claude/eloquent-goldberg-ykatma`
+(26/06), que lia o site ANTIGO (`serviciohandicap.aspx`, `RankingList.aspx`):
+**em Set/2026 a RFEG mudou para WordPress e esses endereços redireccionam para
+a página inicial.** Fontes actuais (públicas, sem cookies):
+
+- **Hándicap:** `GET https://rfegolf.es/wp-json/handicap-search/v1/search?q=<licença|nome>&size=20`
+  (o buscador de `rfegolf.es/aprende-mejora/consulta-handicap`). JSON com
+  `guid_licence`, `full_name`, `handicap`, `date_hdc_updated_at`, `enum_gender`,
+  `club_title`. Sem data de nascimento. Pesquisa aproximada (pode devolver
+  licenças parecidas) e responde **429** a pesquisas seguidas.
+- **Rankings:** lista em `rfegolf.es/competiciones/rankings-golf?rk_anio=&rk_comite=&rk_pagina=`
+  (Juvenil = 9239; 24 cartões por página com id, título, data e PDF); as linhas
+  vêm do botão «CSV»: `POST wp-admin/admin-ajax.php` `action=eqf_rankings_csv`
+  + `nonce` (o `eqfRankings.nonce` da página da lista) + `ranking_id` →
+  `{posicion, nombre, puntos}`. **A licença, a categoria (B/A/I/C) e a idade só
+  estão no PDF** dos rankings juvenis (os de Sub-18/Boy não as têm) — lidas com
+  o `pdf-parse` e casadas pelo nome do «CSV».
+
+Scripts (lib partilhada `scripts/lib/rfeg-web.js`):
+- **`scrape-rfeg-ranking.js`** → `public/data/rfeg-rankings/{ano}_{id}_{slug}.json`
+  + `rfeg-rankings-index.json`. Por omissão Comité Juvenil do ano corrente
+  (`--years`, `--comites juvenil,masculino…`). O id do post no nome acabou com a
+  colisão de 26/06 (slug cortado aos 48 caracteres: Zona 6/8/9 M×F gravavam-se
+  uns por cima dos outros); os 42 ficheiros antigos (`cb300750e7`) saíram.
+- **`scrape-federados-es.js`** → `public/data/rfeg-hcp.json` (`byLicencia`, chave =
+  licença pedida). **Não enriquece as ~17 mil licenças** (o `--enrich` de 26/06
+  parou aos 500): só os juniores do kids2 com licença RFEG nascidos 2010–2018
+  (sem data: escalão Benjamín/Alevín/Infantil/Cadete) ou que já jogaram com o
+  Manuel, mais as licenças dos rankings casadas por nome — ~1,1 mil pedidos, um
+  de cada vez (pausa 1,2 s; 429 → espera e pára à 4.ª). Salta o que consultou
+  há < 6 dias (`--max-dias`), grava a cada 100 e é aditivo.
+- **Casamento** (`scripts/lib/rfeg-oficial.js`, o MESMO no scraper e no
+  agregador): licença igual → mesmos 6 dígitos finais (mudança de clube; no
+  hándicap também tem de haver nome compatível) → só para fichas SEM licença
+  RFEG: nome (todas as palavras do kids2 no nome do ranking, ≥2) + ano de
+  nascimento = ano do ranking − EDAD + mesmo sexo + um só candidato. Guardas:
+  com data de nascimento e EDAD, >1 ano de diferença anula até o casamento por
+  licença (num Sub-12 nunca aparece um adulto, nem um cadete); hándicap com o
+  sexo trocado não entra; nunca se casa hándicap só pelo nome (sem idade).
+- **Agregador** `util/rfeg-oficial.js` (corre depois do matcher, só enriquece):
+  `junior.rfegOficial = { lic, hcp, hcpData, hcpClube, hcpVia, rankings:[{t, curto,
+  ano, pos, n, pts, f, nac, via}] }` (rankings: ano mais recente, nacional antes
+  de zona, melhor lugar). O `util/scout.js` passa a preferir o hándicap oficial
+  da RFEG ao da última inscrição (`h`, com `hr: [hcp, data]`) e grava
+  `rk: [lugar, jogadores, ranking curto, data]`.
+- **Interface:** Scout dos circuitos — tooltip do HCP com «oficial … actualizado
+  a» e coluna **Rk RFEG** (bloco Carreira, ordenável); ficha do kids2
+  (`HeroIdentity`) — pill do HCP RFEG com a data e pills «Nº de N · Ranking …».
+- Workflow `update-rfeg-rankings.yml` (terça 05:00 UTC) → agregador → push.
+  Testes: `scripts/lib/rfeg-oficial.test.js`.

@@ -250,6 +250,8 @@ Lido pelo agregador (`scripts/aggregator/sources/uskids.js`) como lookup de nome
 | ffgolf-player-tournaments.json | FFG | build-france-players.js | ✗ | FFGPage — torneios+resultados de cada jogador (painel expansível) |
 | spain-players.json | RFEG | build-spain-players-export.js | ✗ | RFEGPage (`/rfeg/info/jugadores`, `rfeg/PlayersView`), aggregator |
 | spain-player-tournaments.json | RFEG | build-spain-player-tournaments.js | ✗ | RFEGPage — torneios+resultados de cada jogador (painel expansível) |
+| rfeg-hcp.json | RFEG (pesquisa de hándicap) | scrape-federados-es.js | ✗ | aggregator (`junior.rfegOficial`) — hándicap oficial actual por licença |
+| rfeg-rankings/{ano}_{id}_{slug}.json + rfeg-rankings-index.json | RFEG (rankings juvenis) | scrape-rfeg-ranking.js | ✗ | aggregator (`junior.rfegOficial.rankings`, `rk` no juniors-scout.json) |
 | england_{slug}.json | England Golf | scrape-england-golf.js | ✓ (com teeColour/metersPlayed[18] por ronda) | EnglandGolfPage |
 | england-golf-catalog.json | England Golf | manual | ✗ | EnglandGolfPage (sidebar) |
 | torneio-greatgolf.json | Greatgolf | — | — | ⚠ ficheiro inexistente — só referido em `ui/DataSources.tsx` |

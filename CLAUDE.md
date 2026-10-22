@@ -289,6 +289,13 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **kids2:** as fontes entram pelo agregador (`scripts/aggregator/`), nunca pelo
   `KIDSdataLoader`. Ao acrescentar uma fonte, seguir a checklist em
   [kids2-agregador.md](docs/claude/kids2-agregador.md); verificação: Manuel × Dmitrii = 7 confrontos.
+- **RFEG — hándicap oficial e rankings juvenis dos espanhóis** (22/10/2026): a
+  RFEG mudou de site em Set/2026 (WordPress) e os `.aspx` antigos redireccionam
+  para a página inicial. `scrape-federados-es.js` (pesquisa de hándicap, só os
+  ~1,1 mil juniores que interessam, um pedido de cada vez) e
+  `scrape-rfeg-ranking.js` → agregador (`junior.rfegOficial`, `hr`/`rk` no
+  Scout). Casar só por licença → 6 dígitos finais → nome + ano de nascimento,
+  com as guardas de `scripts/lib/rfeg-oficial.js`. → [ffg-rfeg.md](docs/claude/ffg-rfeg.md)
 - **Destaque PT nas fontes de fora e nos draws: sempre `isPtCountry`**
   (`utils/flagUtils.ts`: PT, PRT, POR, Portugal), nunca `country === "PT"`. Só a
   FFG soma as excepções por nome (`isPT`, `utils/ptPlayers.ts`).

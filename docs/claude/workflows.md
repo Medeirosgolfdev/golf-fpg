@@ -37,6 +37,7 @@ continuam autenticadas.
 | **`update-dgv.yml`** | ✅ | `scripts/scrape-dgv.js` | Sex/Sáb/Dom 19:30 UTC + Seg 06:00 UTC | Provas juvenis do DGV (Alemanha) → `public/data/dgv_{n}.json` + agregador. A pedido: `ids` ou `from_days` (-1800 = desde 2022). Ver `docs/claude/kids2-agregador.md` → "Fonte DGV". |
 | **`update-wagr.yml`** | ✅ | `scripts/scrape-wagr.js` | Quarta 07:00 UTC | Ver "Fonte WAGR". |
 | **`update-egr.yml`** | ✅ | scrapers EGR | Segunda 06:00 UTC | European Golf Rankings. |
+| **`update-rfeg-rankings.yml`** | ✅ Novo 2026-10-22 | `scripts/scrape-rfeg-ranking.js` + `scripts/scrape-federados-es.js` + agregador | Terça 05:00 UTC | Hándicap oficial actual (`rfeg-hcp.json`) e rankings juvenis da RFEG (`rfeg-rankings/`) dos espanhóis do kids2 → `junior.rfegOficial` + `hr`/`rk` no `juniors-scout.json`. Node puro, sem secrets; ~25-40 min (um pedido de cada vez). A pedido: `anos` dos rankings. Ver [ffg-rfeg.md](ffg-rfeg.md). |
 | **`update-gjgl.yml`** | ✅ | scrapers GJGL | Segunda 05:30 UTC | Global Junior Golf Live. |
 | **`update-uskids-rich-players.yml`** | ✅ | `scripts/fetch-uskids-rich-players-node.js` | Segunda 02:00 UTC | Ver "fetch-uskids-rich-players-node.js". |
 | **`update-ffgolf-calendar-jeunes.yml`** | ✅ | calendário FFG jovens | Segunda 01:30 UTC | |
