@@ -193,6 +193,15 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   detalhe → `MasterDetail`; rankings com eventos (EGR, WAGR) →
   `ui/ranking/RankingPage`; evolução ano-a-ano → `ui/evo`. Provas de fora da FPG:
   `intlScorecardOptions()` e `buildFPGTournament()` (`src/data/`).
+- **Modelo comum por tipo de torneio: `src/data/model/`** (fase 0, 22/10/2026).
+  Formato (`stroke | totals | matchplay-ind | matchplay-team | stroke-team`),
+  estado (`future | live | finished`), buracos, cut e origem do par saem SEMPRE de
+  `tournament.ts`/`division.ts` (os conversores gravam-nos com `withTournamentModel`/
+  `withDivisionModel`); identidade do jogador (sexo, país ISO, nascimento, escalão)
+  de `identity.ts`; nomes de escalão de `escalao.ts` (tabela única de sinónimos).
+  Nada de inferências novas por página. Divisões do CircuitShell com DADOS, não
+  JSX: draws em `roundDraws[].draw`, só totais em `totals` — quem desenha é
+  `ui/circuit/divisionPieces.tsx`. → [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md#modelo-comum-srcdatamodel)
 - Definições partilhadas vivem em `constants/`, `utils/` e `App.css`, nunca
   duplicadas por página. Filtrar e calcular nos loaders, não nos componentes.
   Sem código morto.

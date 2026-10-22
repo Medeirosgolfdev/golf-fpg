@@ -45,7 +45,11 @@ const NOMES: Record<string, number> = {
 };
 const NOMES_FONTE: Record<EscalaoSource, Record<string, number>> = {
   es: { benjamin: 10, benjami: 10, junior: 18, juvenil: 21 },
-  ffg: { benjamin: 14, cadet: 18, junior: 21 },
+  // FFG: também no plural e no feminino («Benjamins», «Benjamines», «Cadettes»).
+  ffg: {
+    benjamin: 14, benjamins: 14, benjamine: 14, benjamines: 14, cadet: 18, cadets: 18, cadette: 18, cadettes: 18,
+    junior: 21, juniors: 21, poucets: 10, poucette: 10, poucettes: 10, poussins: 12, poussine: 12, poussines: 12, minimes: 16,
+  },
   fpg: {},
   uskids: {},
 };

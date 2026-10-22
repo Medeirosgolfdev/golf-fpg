@@ -147,7 +147,7 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
     `build-analise-percurso.js` faz uma média descritiva dos 8 melhores SD
     oficiais por idade — não é conta de handicap e fica lá.
 - **Máxima globalização** — definições partilhadas (constantes, formatação, CSS) devem viver em módulos globais (`constants/`, `utils/`, `App.css`), nunca duplicadas por página. Se duas páginas usam o mesmo valor, extrair para um módulo partilhado.
-- **Escalões são definidos por torneio** — cada organizador define os age groups conforme o número de inscritos (9-10, 10-11, etc.). Não existe uma lista global de escalões. Filtros de UI como `ESCALOES_DESTAQUE_USKIDS` são específicos da página onde são usados.
+- **Escalões são definidos por torneio** — cada organizador define os age groups conforme o número de inscritos (9-10, 10-11, etc.). Não existe uma lista global de escalões. Filtros de UI como `ESCALOES_DESTAQUE_USKIDS` são específicos da página onde são usados. O que existe (22/10/2026) é a tabela única de SINÓNIMOS — `src/data/model/escalao.ts` (`escalaoCanon`/`escaloesCanon`): «Sub 10» = «Sub-10» = «U10» = «S10» = «Benjamín» = «10 and Under»… (ver «Modelo comum», abaixo).
 - **Cores de tees são da FPG** — `teeColors.ts` define cores específicas das marcações de tees (Vermelhas, Amarelas, etc.) conforme a federação. Não alterar nem "corrigir" esses hex — são intencionais.
 - **Data layer sobre display layer** — filtragem, normalização e cálculos pertencem ao loader/data layer, não aos componentes de display.
 - **Validação de scores** — `tp` (to-par) só se calcula quando todas as rondas têm scorecard hole-by-hole completo. Em torneios de 9 buracos, validar `grossStrokes >= holes`.
@@ -156,6 +156,37 @@ Na barra de distribuição de scores o segmento de par deve ser branco/transpare
 - **Reescrita completa vs patches** — quando a implementação diverge do design acordado, preferir reescrita limpa de raiz.
 - **Cache de fetches** — `src/data/fetchCache.ts` exporta `cachedFetchJson()` (cache global entre páginas para URLs sem query string) e `invalidateCache()`. Guarda a Promise do objecto JÁ convertido — todos recebem o mesmo objecto, tratá-lo como só de leitura; uma falha (rede, HTTP ≥ 500, JSON inválido) sai da cache e a chamada seguinte tenta outra vez; um 404 fica como `null` (21/10/2026).
 - **Campos sob pedido** — `src/data/courses.ts` (`loadCourses`: fusão FPG + away + melhorias + manuais, uma vez por sessão) e `src/context/CoursesContext.tsx` (`<CoursesGate withPlayers?>` + `useCourses()`). Só a /campos pede o `course-players.json`. O `AppContext` tem só `players`, `melhorias`, `playerCount` e `calUnlocked`; os totais de campos/tees da NavBar vêm do `master-courses.json` em segundo plano (21/10/2026).
+
+### Modelo comum (`src/data/model/`)
+
+Fase 0 do plano «reescrita por tipo de torneio» (22/10/2026, sessão `9bd8db8a`;
+plano em `_CLAUDE_HISTORICO/auditoria/2026-10-22_plano-reescrita-por-tipo-de-torneio.md`).
+Só código de dados (sem React), para os loaders servirem a todas as páginas (Drive,
+rankings, inscrições, Kids 2, equipas) e aos scripts.
+
+| Ficheiro | O quê |
+|---|---|
+| `types.ts` | `TournamentFormat` (`stroke`, `totals`, `matchplay-ind`, `matchplay-team`, `stroke-team`), `TournamentStatus` (`future`, `live`, `finished`), `CutInfo` (`afterRound`, `line`, `out`), `ParOrigin` (`oficial`, `total-only`, `none`), `PlayerIdentity`, `RoundDrawData`, `TotalsNotice`, `TotalsExtraCol`. Campos opcionais no `Tournament` e no `CircuitDivision` (`TournamentModel`) e `identity` no `Player`. |
+| `tournament.ts` | `tournamentStatus/Format/Holes/Cut/ParOrigin/HasResults`, `tournamentModel`, `withTournamentModel`. Dizem o MESMO que as inferências antigas (testes com dados reais): estado = `_openRound` / resultados do `jovensCandidates`; cut = `_cutAfterRound` do `expandMultiRound` (memorizado por torneio — custava ~50 ms a cada reconstrução da /FPG); buracos = regra do `ScorecardLB`. |
+| `division.ts` | `divisionModel`/`withDivisionModel` (results › totals › match play › só inscrições). Aplicado em todas as divisões: /FPG (todas as vistas), /drive, /uskids e Kids 2, /major, /ffg, /rfeg, GJGL, /egr, /wagr. O que o conversor já disse não é substituído. |
+| `identity.ts` | `playerIdentity`/`enrichPlayerIdentity`, `sexOf`, `countryIsoOf` (nome/ISO-2/ISO-3/COI → ISO-2), `dobIso`. Preenchido no `buildFPGTournament` (todas as fontes de fora) e nos USKids. Ano ESTIMADO não entra; «Mixed» não dá sexo. |
+| `escalao.ts` | Tabela única: Sub N (Sub/S/U/Under N, «N & Under», «N&U», «NU», «N/Under», «N and Under», com ou sem sexo), nomes ES/FR (os ambíguos — Benjamin, Junior, Juvenil, Cadet — só com a fonte `ffg`/`es`; acento espanhol «í» conta como `es`), idades/intervalos («Boys 10» → «10 anos», «13 & 14» → «13-14 anos»), adultos (Absoluto/«All Ages», Seniores, Mid-Amateur, Adultos), dois escalões («U18 & U16»). O desconhecido fica como veio. `escalaoFilterOptions` dá as opções que o filtro teria. |
+
+- ⚠ **Ainda nada disto se vê no ecrã.** As páginas continuam a ler `_openRound`,
+  `hasResults`, `_cut`, `_sex`, `country`, `escalao`… — os campos novos estão ao lado.
+  Ligar o filtro «Escalão» do CircuitShell à tabela muda o ecrã: é decisão da
+  Mariana (contagens antes/depois no relatório da fase 0).
+- **Desenho escolhido pelos dados** (`ui/circuit/divisionPieces.tsx`):
+  `roundDrawNode` (draw de uma volta → `DrawTab`; um `render` da página ganha) e
+  `divisionResultsNode` (`totals` → `TotalsResumo`; um `customResults` ganha). Usados
+  pelo CircuitShell, IntlTournView e TournamentDetail. Já são dados: draws
+  GolfGenius e LGPIDF (/ffg) e USKids; totais EGR, WAGR, GJGL e LGPIDF. Ainda JSX:
+  `renderFull` (FPG, Drive, MAJOR, USKids — o TournamentDetail com props da página),
+  draws de Espanha (`DrawSaidaView`, com `playersDB` e estados vazios próprios),
+  totais/destaques do NextCaddy, mapa do campo da LGPIDF e a Escócia.
+- Divisão nova: entregar dados (`results`, `totals`, `roundDraws[].draw`,
+  `admissions`, `matchplay`) e passar por `withDivisionModel`; JSX só quando não
+  há peça partilhada.
 
 ### Dados
 

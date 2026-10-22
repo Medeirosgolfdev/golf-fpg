@@ -30,6 +30,9 @@ describe("escalaoCanon — nomes de categoria", () => {
     expect(escalaoCanon("Juvenil", "es")).toBe("Sub 21");
     expect(escalaoCanon("Junior")).toBe("Júnior");
     expect(escalaoCanon("Benjamin")).toBe("Benjamin");
+    expect(escalaoCanon("Benjamines", "ffg")).toBe("Sub 14");
+    expect(escalaoCanon("Benjamins", "ffg")).toBe("Sub 14");
+    expect(escalaoCanon("U12 Filles", "ffg")).toBe("Sub 12");
   });
 });
 

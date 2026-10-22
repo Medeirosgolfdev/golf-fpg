@@ -5,6 +5,16 @@
 
 ## Estruturas JSON
 
+> **Em memória, depois dos conversores** (não é um ficheiro): cada `Tournament` e
+> cada divisão do CircuitShell ganham os campos do modelo comum — `format`,
+> `status`, `holes`, `cut` (`{ afterRound, line, out }`), `parOrigin` — e cada
+> jogador das fontes de fora/USKids ganha `identity` (`{ sex, countryIso, dob,
+> birthYear, escalao }`). Os draws das divisões são `roundDraws[]: { round, draw:
+> FpgDraw, tournamentDate, hideCols, clubLabel, results }` e os totais `totals: {
+> players, parPerRound, tournamentDate, notice, extra }`. Tipos em
+> `src/data/model/types.ts` e `src/ui/circuit/types.ts`; regras em
+> [convencoes-e-armadilhas.md](convencoes-e-armadilhas.md#modelo-comum-srcdatamodel).
+
 ### pull-torneiosNNN.json / drive-data.json / aquapor-data.json (formato "fpg-pull")
 
 ```
