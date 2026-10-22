@@ -150,7 +150,9 @@ voltas com draw, totais/destaques NextCaddy, divisão M/F), `entries.ts`
 (divisionData) dão as linhas do `TotalsResumo` partilhado. Destaque PT
 (22/10/2026): `isPtCountry` sobre o país da fonte; RFEGolf PDF e mitarjeta não
 trazem país e vão buscá-lo às listas de inscritos (`rfegPaisLookup`), e o LGS
-com gémeo RFEGolf aos inscritos do gémeo (`lgsWithTwinCountries`). Sem par (RFEGolf PDF, LGS/NextCaddy/golfdirecto sem cartão
+com gémeo RFEGolf aos inscritos do gémeo (`lgsWithTwinCountries`). Escalão:
+`escaloEsForPlayer` também no golfdirecto (coorte de ano; sem nascimento, o
+nome da categoria por `escaloEsFromCategory`). Sem par (RFEGolf PDF, LGS/NextCaddy/golfdirecto sem cartão
 do campo) não se inventa par (22/10/2026): o ±par é o da fonte (PDF,
 leaderboard LGS, `onlyGross` do golfdirecto) e no NextCaddy com cartões e sem
 par fica «–». As fichas por nome (`loadFedByName`, `loadGolfboxPlayers`)

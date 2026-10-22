@@ -6,6 +6,12 @@ import { buildFPGTournament, parOrNone, type IntlPlayerIn } from "../intlTournam
 import { isLgsCard, rfegolfToFPGTournament, mitarjetaToFPGTournament } from "../rfeg/toTournament";
 import { rfegPaisLookup } from "../rfeg/flags";
 import { normEs } from "../rfeg/text";
+import { escaloEsFromCategory } from "../rfeg/escalao";
+import { adaptFcg, fcgToFPGTournament } from "../fcgAdapter";
+import palsRaw from "../../../public/data/fcg/69bc03d58369e10820b8a511.json?raw";
+import dobRaw from "../../../public/data/licencia-dob-lookup.json?raw";
+const pals = JSON.parse(palsRaw);
+const dobLookup = JSON.parse(dobRaw).lookup;
 import { isPtCountry } from "../../utils/flagUtils";
 import { isPT } from "../../utils/ptPlayers";
 import { expandMultiRound } from "../fpgUtils";
@@ -157,5 +163,21 @@ describe("4. Destaque PT pela regra comum (isPtCountry)", () => {
   it("rfegPaisLookup: 1.º país não vazio, por licença ou nome", () => {
     const f = rfegPaisLookup({ reservas: [{ name: "JOHANSEN , MARTIM", licencia: "X8", pais: null }], provisional: [{ name: "JOHANSEN , MARTIM", licencia: "X8", pais: "Portugal" }] }, normEs);
     expect([f("X8", null), f(null, "Johansen, Martim"), f(null, "Outro")]).toEqual(["Portugal", "Portugal", null]);
+  });
+});
+
+describe("5. Escalão de Espanha pela regra comum também no golfdirecto", () => {
+  it("escaloEsFromCategory: abreviaturas Inf/Cad/Alv e o resto das categorias reais", () => {
+    const cats = ["SCR Inf Mas", "SCR Cad Fem", "SCR Alv Mas", "ALEVÍ MASCULÍ", "BENJAMÍ FEMENÍ", "Scratch Sub-12", "SCRATCH SUB16",
+      "Scratch Cadet", "INFANTIL FEMENÍ", "Scratch Sub-18 Femenina", "GP CAD-INF", "SCR MAS", "General", "SCR 3a CAT"];
+    expect(cats.map(escaloEsFromCategory)).toEqual(["Infantil", "Cadete", "Alevín", "Alevín", "Benjamín", "Alevín", "Cadete",
+      "Cadete", "Infantil", "Sub-18", null, null, null, null]);
+  });
+
+  it("II Puntuable Zonal Juvenil 2026 – Pals: coorte de ano, fallback à categoria", () => {
+    const d = adaptFcg(pals as never, dobLookup);
+    const t = fcgToFPGTournament(d, dobLookup)!;
+    const esc = (n: string) => (t.players.find((p) => p.name === n) as { escalao?: string } | undefined)?.escalao;
+    expect([esc("Valentina Corretja de Miguel"), esc("Marc Camps Ortega"), esc("Valentina Alcaraz Legrand")]).toEqual(["Infantil", "Cadete", "Alevín"]);
   });
 });

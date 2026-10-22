@@ -22,6 +22,7 @@ import type { DobLookup, HcpLookup } from "./intlCommon";
 import { holesOf } from "./intlCommon";
 import type { Tournament as FPGTournament } from "./fpgTypes";
 import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "./intlTournament";
+import { escaloEsForPlayer, escaloEsFromCategory } from "./rfeg/escalao";
 
 interface FCGScorecardGameTee {
   color: string | null;
@@ -278,26 +279,6 @@ function ageAtFcg(dobIso: string | null | undefined, refIso: string | null | und
   } catch { return null; }
 }
 
-function escalaoFromCategory(catName: string | null, age: number | null): string | null {
-  // Preferir o nome da categoria FCG (mais específico) — depois fallback para idade.
-  if (catName) {
-    const t = catName.toLowerCase();
-    if (/benjam[íi]/.test(t)) return "Benjamín";
-    if (/alev[íi]|sub-?12/.test(t)) return "Alevín";
-    if (/infantil|sub-?14/.test(t)) return "Infantil";
-    if (/cadet|sub-?16/.test(t)) return "Cadete";
-    if (/sub-?18|junior/.test(t)) return "Sub-18";
-    if (/sub-?21|sub-?25/.test(t)) return "Sub-21";
-  }
-  if (age == null) return null;
-  if (age <= 10) return "Benjamín";
-  if (age <= 12) return "Alevín";
-  if (age <= 14) return "Infantil";
-  if (age <= 16) return "Cadete";
-  if (age <= 18) return "Sub-18";
-  return null;
-}
-
 export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLookup): FPGTournament | null {
   const cats = detail.__categories || [];
   if (cats.length === 0) return null;
@@ -349,7 +330,9 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
 
       const rounds: IntlRoundIn[] = hasScorecard ? [{ round: 1, gross: r1Total, scores }] : [];
 
-      const escalao = escalaoFromCategory(cat.name, age);
+      // Regra comum de Espanha (22/10/2026): coorte de ano (ano do torneio −
+      // ano de nascimento) e, sem data de nascimento, o nome da categoria.
+      const escalao = escaloEsForPlayer(escaloEsFromCategory(cat.name), dobIso, dateRef);
       const sex: "M" | "F" | null = (p.gender === "M" ? "M" : (p.gender === "F" ? "F" : (cat.gender === "M" ? "M" : (cat.gender === "F" ? "F" : (dobEntry?.sex === "M" ? "M" : (dobEntry?.sex === "F" ? "F" : null))))));
 
       players.push({

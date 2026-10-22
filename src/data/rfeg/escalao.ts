@@ -38,6 +38,29 @@ export function canonEscaloEs(s: string | null | undefined): string | null {
   const k = s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[\s-]/g, "");
   return ES_TERM_CANON[k] || s.trim();
 }
+/** Escalão RFEG a partir do NOME de uma categoria de prova (golfdirecto e
+ *  afins), com as abreviaturas que as fontes usam: «SCR Inf Mas», «SCR Cad Fem»,
+ *  «SCR Alv Mas», «ALEVÍ MASCULÍ», «BENJAMÍ», «Scratch Sub-12», «SCRATCH SUB16»,
+ *  «Junior». Categorias de dois escalões («GP CAD-INF») ou sem escalão
+ *  («SCR MAS», «General», «3a CAT») → null. Sub-18/Júnior e Sub-21/25 ficam
+ *  como «Sub-18»/«Sub-21» (o que o golfdirecto já mostrava). */
+export function escaloEsFromCategory(name: string | null | undefined): string | null {
+  if (!name) return null;
+  const t = name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const found = new Set<string>();
+  const word = (re: string) => new RegExp(`(?:^|[^a-z])(?:${re})`).test(t);
+  if (word("benj")) found.add("Benjamín");
+  if (word("alev|alv")) found.add("Alevín");
+  if (word("inf")) found.add("Infantil");
+  if (word("cad")) found.add("Cadete");
+  if (word("junior(?![a-z])")) found.add("Sub-18");
+  for (const m of t.matchAll(/(?:^|[^a-z])sub[ -]?([0-9]{2})(?![0-9])/g)) {
+    const n = parseInt(m[1], 10);
+    found.add(n <= 10 ? "Benjamín" : n <= 12 ? "Alevín" : n <= 14 ? "Infantil" : n <= 16 ? "Cadete" : n <= 18 ? "Sub-18" : "Sub-21");
+  }
+  return found.size === 1 ? [...found][0] : null;
+}
+
 /** Extrai o ano (4 dígitos) de uma data "DD/MM/YYYY" ou ISO "YYYY-MM-DD". */
 export function yearOf(s: string | null | undefined): number | null {
   if (!s) return null;
