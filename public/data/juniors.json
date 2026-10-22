@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-22T15:49:03.495Z",
+  "generatedAt": "2026-10-22T23:56:45.364Z",
   "juniors": [
     {
       "id": "u391389",
@@ -314123,7 +314123,7 @@
         "ffgolf": {
           "lic": "519172399",
           "club": "St Germain",
-          "hcp": 4.2,
+          "hcp": 5.7,
           "region": "PARIS-ILE-DE-FRANCE",
           "sex": "M",
           "glfLic": "0006"
@@ -323054,7 +323054,7 @@
         "ffgolf": {
           "lic": "E86126015",
           "club": "",
-          "hcp": 4.3,
+          "hcp": 5.3,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -340710,6 +340710,74 @@
           "gjgl",
           "egr",
           "dgv"
+        ]
+      }
+    },
+    {
+      "id": "u582668",
+      "canonicalName": "Hunter Hoffman",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "US",
+      "country": "US",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "582668",
+          "ageGroupCurrent": "Boys 13-14"
+        },
+        "_secondary": [
+          {
+            "sourceId": "doral",
+            "key": "doral-2173605275"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "uskids-12545",
+        "uskids-12547",
+        "uskids-20577",
+        "uskids-20578",
+        "uskids-20579",
+        "uskids-12546",
+        "uskids-21237",
+        "uskids-21845",
+        "uskids-20550",
+        "uskids-20552",
+        "uskids-21134",
+        "uskids-21135",
+        "uskids-21137",
+        "uskids-22986",
+        "uskids-20554",
+        "uskids-20555",
+        "uskids-18445",
+        "uskids-20553",
+        "uskids-21908",
+        "uskids-20580",
+        "uskids-20581",
+        "uskids-20582",
+        "uskids-22574",
+        "uskids-21140",
+        "uskids-21145",
+        "uskids-21136",
+        "uskids-23063",
+        "uskids-21141",
+        "uskids-21143",
+        "uskids-21144",
+        "uskids-21142",
+        "doral-ftm_doral_2025"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:582668",
+          "doral:doral-2173605275"
+        ],
+        "mergedFromSources": [
+          "uskids",
+          "doral"
         ]
       }
     },
@@ -364367,7 +364435,7 @@
         "ffgolf": {
           "lic": "E79411680",
           "club": "",
-          "hcp": 2.3,
+          "hcp": 3.2,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -369317,7 +369385,7 @@
         "ffgolf": {
           "lic": "E90895690",
           "club": "",
-          "hcp": 1,
+          "hcp": 0.9,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -424524,7 +424592,7 @@
         "ffgolf": {
           "lic": "E79411681",
           "club": "Oporto GC",
-          "hcp": 2.7,
+          "hcp": 3.7,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -468349,6 +468417,44 @@
       }
     },
     {
+      "id": "u645057",
+      "canonicalName": "Ismael El Fassi El Fihry",
+      "aliases": [],
+      "dob": null,
+      "sex": null,
+      "nationality": "MA",
+      "country": "MA",
+      "region": null,
+      "club": null,
+      "sources": {
+        "uskids": {
+          "memberId": "645057",
+          "ageGroupCurrent": "Boys 10"
+        }
+      },
+      "tournamentIds": [
+        "uskids-20621",
+        "uskids-20623",
+        "uskids-20624",
+        "uskids-20625",
+        "uskids-21209",
+        "uskids-21210",
+        "uskids-21211",
+        "uskids-21212",
+        "uskids-20622",
+        "uskids-21213"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "uskids:645057"
+        ],
+        "mergedFromSources": [
+          "uskids"
+        ]
+      }
+    },
+    {
       "id": "u645064",
       "canonicalName": "Nacer Lahlou",
       "aliases": [],
@@ -478414,7 +478520,7 @@
         "ffgolf": {
           "lic": "E73262710",
           "club": "PORTUGAL",
-          "hcp": 2.3,
+          "hcp": 2,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -479854,7 +479960,7 @@
         "ffgolf": {
           "lic": "E73262733",
           "club": "",
-          "hcp": 4.6,
+          "hcp": 4.7,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -485770,7 +485876,7 @@
         "ffgolf": {
           "lic": "E65168368",
           "club": "",
-          "hcp": 5.2,
+          "hcp": 5.1,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -487943,7 +488049,7 @@
         "ffgolf": {
           "lic": "E73262711",
           "club": "",
-          "hcp": 3.6,
+          "hcp": 3.9,
           "region": null,
           "sex": "M",
           "glfLic": "0000"
@@ -488306,7 +488412,7 @@
         "ffgolf": {
           "lic": "E86126062",
           "club": "",
-          "hcp": 2.5,
+          "hcp": 2.1,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -489469,7 +489575,7 @@
         "ffgolf": {
           "lic": "E77995992",
           "club": "",
-          "hcp": 7.5,
+          "hcp": 7.4,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -493817,7 +493923,7 @@
         "ffgolf": {
           "lic": "E86126063",
           "club": "CG Miramar",
-          "hcp": 4.1,
+          "hcp": 4.3,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -813132,7 +813238,7 @@
         "ffgolf": {
           "lic": "E49406538",
           "club": "",
-          "hcp": 0,
+          "hcp": 5.2,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -1048775,7 +1048881,7 @@
         "ffgolf": {
           "lic": "E66717963",
           "club": "",
-          "hcp": -1.4,
+          "hcp": -1,
           "region": null,
           "sex": "F",
           "glfLic": "0000"
@@ -1446938,37 +1447044,6 @@
         "mergedFromSources": [
           "doral",
           "optimist"
-        ]
-      }
-    },
-    {
-      "id": "x1ac45c78b7",
-      "canonicalName": "Hunter Hoffman",
-      "aliases": [],
-      "dob": null,
-      "sex": null,
-      "nationality": "US",
-      "country": "US",
-      "region": null,
-      "club": null,
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "doral",
-            "key": "doral-2173605275"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "doral-ftm_doral_2025"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "doral:doral-2173605275"
-        ],
-        "mergedFromSources": [
-          "doral"
         ]
       }
     },
@@ -2222021,13 +2222096,13 @@
     }
   ],
   "stats": {
-    "total": 38672,
+    "total": 38673,
     "droppedNoTourn": 32457,
-    "strong": 35038,
+    "strong": 35039,
     "probable": 3634,
     "manual": 0,
     "strongMerges": 9001,
-    "probableMerges": 16798,
+    "probableMerges": 16799,
     "manualMerges": 856
   }
 }
