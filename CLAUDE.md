@@ -116,6 +116,7 @@ npm run login     # login FPG (gera sessão)
 | Ranking PJA | [pja.md](docs/claude/pja.md) |
 | Convenções de código, armadilhas, ficheiros-chave, testes | [convencoes-e-armadilhas.md](docs/claude/convencoes-e-armadilhas.md) |
 | Campeões Nacionais de Jovens | [nacionais-jovens.md](docs/claude/nacionais-jovens.md) |
+| Internacionais júnior 2027 — datas, links, distâncias, histórico (pesquisa 19/10/2026; `node docs/torneios-intl-2027/build.cjs` regera a página) | [docs/torneios-intl-2027/](docs/torneios-intl-2027/) |
 
 **Mapa de links:** `docs/links-conhecidos.html` (também publicado como
 artifact) tem todos os endereços conhecidos — FPG, USKids, GolfGenius, GolfBox,

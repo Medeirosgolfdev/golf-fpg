@@ -1,0 +1,164 @@
+<title>Internacionais Júnior 2027</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: cabeçalho curto, calendário 2027 em lista, depois uma ficha por torneio (abre/fecha). */
+:root {
+  --bg: #f6f7f4; --surface: #ffffff; --ink: #18211b; --muted: #5d6a61; --line: #dde3dc;
+  --accent: #1d5b3a; --accent-soft: #e3efe6; --flag: #b4501f; --flag-soft: #f8e9df;
+  --manuel: #fff4c2; --manuel-ink: #6b5200;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121814; --surface: #19211c; --ink: #e5ebe6; --muted: #98a59c; --line: #2b362f;
+  --accent: #7cc79a; --accent-soft: #1f3327; --flag: #f0a070; --flag-soft: #3a2619;
+  --manuel: #3d3410; --manuel-ink: #f3d77a; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121814; --surface: #19211c; --ink: #e5ebe6; --muted: #98a59c; --line: #2b362f;
+  --accent: #7cc79a; --accent-soft: #1f3327; --flag: #f0a070; --flag-soft: #3a2619;
+  --manuel: #3d3410; --manuel-ink: #f3d77a; color-scheme: dark }
+body { background: var(--bg); color: var(--ink); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-block: 28px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: .01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1.05; }
+h2 { font-size: 1.6rem; margin-top: 36px; margin-bottom: 10px; }
+.lede { color: var(--muted); max-width: 68ch; margin: 8px 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 14px; font-size: 13px; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 4px; }
+.chip { border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 999px;
+  padding: 5px 12px; font: 500 13px var(--body); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.chip:focus-visible, summary:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.tag { display: inline-block; font: 600 11px var(--body); letter-spacing: .04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 4px; white-space: nowrap; }
+.tag.ok { background: var(--accent-soft); color: var(--accent); }
+.tag.tbc { background: var(--flag-soft); color: var(--flag); }
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11.5px var(--body); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.when { font-family: var(--mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cal td:first-child { width: 1%; }
+.cal a { color: inherit; text-decoration: none; font-weight: 600; }
+.cal a:hover { text-decoration: underline; }
+.grp { color: var(--muted); font-size: 12.5px; white-space: nowrap; }
+.cards { display: grid; gap: 10px; }
+details.card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+details.card > summary { list-style: none; cursor: pointer; padding: 14px 16px; display: grid;
+  grid-template-columns: minmax(0, 1fr) auto; gap: 4px 14px; align-items: baseline; }
+details.card > summary::-webkit-details-marker { display: none; }
+summary h3 { font-size: 1.3rem; }
+summary .sub { grid-column: 1 / -1; color: var(--muted); font-size: 13.5px; }
+summary .right { text-align: right; }
+.body { padding: 0 16px 18px; display: grid; gap: 18px; min-width: 0; }
+.body h4 { font: 600 12px var(--body); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 0 0 6px; }
+.aviso { background: var(--flag-soft); color: var(--ink); border-left: 3px solid var(--flag); padding: 8px 12px; border-radius: 4px; font-size: 13.5px; }
+dl.kv { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 4px 14px; margin: 0; font-size: 13.5px; }
+dl.kv dt { color: var(--muted); font-weight: 500; text-transform: capitalize; }
+dl.kv dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+ul.links { margin: 0; padding-left: 18px; columns: 2 320px; column-gap: 28px; font-size: 13.5px; }
+ul.links li { break-inside: avoid; margin-bottom: 4px; overflow-wrap: anywhere; }
+a { color: var(--accent); }
+.notas { color: var(--muted); font-size: 13px; white-space: pre-line; }
+tr.m td { background: var(--manuel); color: var(--manuel-ink); font-weight: 600; }
+.foot { margin-top: 40px; color: var(--muted); font-size: 12.5px; max-width: 80ch; }
+@media (max-width: 560px) { summary .right { text-align: left; grid-column: 1 / -1; } }
+</style>
+
+<div class="wrap">
+  <h1>Internacionais Júnior 2027</h1>
+  <p class="lede">Calendário 2027, links, distâncias do escalão do Manuel e histórico das últimas edições, com os portugueses que lá jogaram. Em 2027 o Manuel tem 13 anos (faz a 29 de Abril). Pesquisa de 19 de Outubro de 2026.</p>
+  <div class="legend">
+    <span><span class="tag ok">2027</span> data de 2027 publicada</span>
+    <span><span class="tag tbc">Por publicar</span> data aproximada, pela edição de 2026</span>
+  </div>
+
+  <div class="chips" role="group" aria-label="Filtrar por grupo" id="chips"></div>
+
+  <h2>Calendário 2027</h2>
+  <div class="scroll"><table class="cal"><thead><tr><th>Quando</th><th>Torneio</th><th>Onde</th><th>Escalão do Manuel</th><th>Grupo</th></tr></thead><tbody id="cal"></tbody></table></div>
+
+  <h2>Fichas</h2>
+  <div class="cards" id="cards"></div>
+
+  <p class="foot">Distâncias em metros. Onde a fonte dava jardas, convertemos (× 0,9144). Datas de 2027 tiradas do calendário EGA 2027 (actualizado a 15/10/2026), dos sites dos organizadores e do calendário Global Junior Golf; os organizadores podem mudá-las. Linhas a amarelo: o Manuel.</p>
+</div>
+
+<script>
+const DATA = /*__DATA__*/[];
+const GRUPOS = { all: "Todos", eu14: "Sub-14 Europa", u16: "Sub-16 Europa", usk: "US Kids", usa: "BJGT e EUA", pt: "Portugal", gjg: "Global Junior Golf" };
+const MES = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const isManuel = (s) => /manuel/i.test(s || "") && /medeiros/i.test(s || "");
+let grupo = "all";
+try { grupo = localStorage.getItem("intl27-grupo") || "all"; } catch (e) {}
+if (!GRUPOS[grupo]) grupo = "all";
+
+function quando(t) {
+  if (t.conf && t.datas2027) return String(t.datas2027).split(/[(;]/)[0].trim();
+  const [, m, d] = t.data.split("-").map(Number);
+  return "≈ " + d + " " + MES[m - 1];
+}
+function tag(t) { return t.conf ? '<span class="tag ok">2027</span>' : '<span class="tag tbc">Por publicar</span>'; }
+function idOf(t, i) { return "t" + i; }
+
+function table(rows, cols) {
+  if (!rows || !rows.length) return "";
+  const used = cols.filter(([k]) => rows.some((r) => r[k] != null && r[k] !== ""));
+  return '<div class="scroll"><table><thead><tr>' + used.map(([, h]) => "<th>" + h + "</th>").join("") +
+    "</tr></thead><tbody>" + rows.map((r) => {
+      const m = isManuel(r.nome) || isManuel(r.vencedor);
+      return "<tr" + (m ? ' class="m"' : "") + ">" + used.map(([k, , num]) => {
+        let v = r[k]; if (v == null) v = "";
+        if (typeof v === "object") v = JSON.stringify(v);
+        return '<td class="' + (num ? "num" : "") + '">' + esc(v) + "</td>";
+      }).join("") + "</tr>";
+    }).join("") + "</tbody></table></div>";
+}
+function kv(o) {
+  if (!o) return "";
+  if (typeof o === "string") return "<p style=\"margin:0;font-size:13.5px\">" + esc(o) + "</p>";
+  return '<dl class="kv">' + Object.entries(o).filter(([, v]) => v != null && v !== "")
+    .map(([k, v]) => "<dt>" + esc(k) + "</dt><dd>" + esc(typeof v === "object" ? JSON.stringify(v) : v) + "</dd>").join("") + "</dl>";
+}
+function notas(n) { if (!n) return ""; return '<p class="notas">' + esc(Array.isArray(n) ? n.join("\n") : n) + "</p>"; }
+
+function render() {
+  const list = DATA.map((t, i) => [t, i]).filter(([t]) => grupo === "all" || t.grupo === grupo);
+  document.getElementById("chips").innerHTML = Object.entries(GRUPOS).map(([k, v]) =>
+    '<button class="chip" type="button" data-g="' + k + '" aria-pressed="' + (k === grupo) + '">' + v + "</button>").join("");
+  document.getElementById("cal").innerHTML = list.map(([t, i]) =>
+    '<tr><td><span class="when">' + esc(quando(t)) + "</span><br>" + tag(t) + '</td><td><a href="#' + idOf(t, i) + '" data-open="' + idOf(t, i) + '">' + esc(t.curto) +
+    "</a></td><td>" + esc(String(t.campo || "").split(/ — |\(20|;/)[0]) + "</td><td>" + esc(t.esc) + '</td><td class="grp">' + GRUPOS[t.grupo] + "</td></tr>").join("");
+  document.getElementById("cards").innerHTML = list.map(([t, i]) => {
+    const pt = t.portugueses || [];
+    return '<details class="card" id="' + idOf(t, i) + '"><summary><h3>' + esc(t.curto) + '</h3><div class="right"><span class="when">' + esc(quando(t)) + "</span> " + tag(t) +
+      '</div><div class="sub">' + esc(t.nome) + " · " + esc(t.campo || "") + (t.pais ? " · " + esc(t.pais) : "") + '</div></summary><div class="body">' +
+      (t.aviso ? '<div class="aviso">' + esc(t.aviso) + "</div>" : "") +
+      '<div><h4>Escalão do Manuel em 2027</h4><p style="margin:0;font-size:13.5px">' + esc(t.escNota || t.esc) + "</p></div>" +
+      (t.datas2027 ? '<div><h4>Datas 2027</h4><p style="margin:0;font-size:13.5px">' + esc(t.datas2027) + "</p></div>" : "") +
+      (t.elegibilidade ? "<div><h4>Quem pode jogar</h4>" + kv(t.elegibilidade) + "</div>" : "") +
+      ((t.distancias || []).length ? "<div><h4>Distâncias</h4>" + table(t.distancias, [["ano", "Ano", 1], ["campo", "Campo"], ["escalao", "Escalão"], ["tee", "Tee"], ["metros", "Metros", 1], ["par", "Par", 1], ["cr", "CR", 1], ["slope", "Slope", 1], ["fonte", "Fonte"]]) + "</div>" : "") +
+      ((t.historico || []).length ? "<div><h4>Histórico</h4>" + table(t.historico, [["ano", "Ano", 1], ["escalao", "Escalão"], ["vencedor", "Vencedor"], ["pais", "País"], ["score", "Score", 1], ["toPar", "±Par", 1], ["voltas", "Voltas", 1], ["corte", "Corte"], ["campo", "Campo"], ["notas", "Notas"]]) + "</div>" : "") +
+      (pt.length ? "<div><h4>Portugueses</h4>" + table(pt, [["ano", "Ano", 1], ["nome", "Jogador"], ["escalao", "Escalão"], ["posicao", "Posição", 1], ["score", "Score", 1], ["notas", "Notas"]]) + "</div>" : "") +
+      ((t.links || []).length ? '<div><h4>Links</h4><ul class="links">' + t.links.map((l) =>
+        '<li><a href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.rotulo || l.url) + "</a></li>").join("") + "</ul></div>" : "") +
+      (t.notas ? "<div><h4>Notas</h4>" + notas(t.notas) + "</div>" : "") +
+      "</div></details>";
+  }).join("");
+}
+document.addEventListener("click", (e) => {
+  const c = e.target.closest(".chip");
+  if (c) { grupo = c.dataset.g; try { localStorage.setItem("intl27-grupo", grupo); } catch (err) {} render(); return; }
+  const a = e.target.closest("[data-open]");
+  if (a) { const d = document.getElementById(a.dataset.open); if (d) d.open = true; }
+});
+render();
+</script>
