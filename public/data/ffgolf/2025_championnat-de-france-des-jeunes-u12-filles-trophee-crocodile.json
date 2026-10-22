@@ -3,14 +3,16 @@
   "slug": "championnat-de-france-des-jeunes-u12-filles-trophee-crocodile",
   "year": 2025,
   "section": "national-international",
+  "dateStart": "2025-07-21",
+  "dateEnd": "2025-07-22",
   "source": "https://www.golfgenius.com/pages/11842474948620759722",
   "gg_page": "11842474948620759722",
   "gg_league": "11842474911878656853",
-  "stats_page": "11842474950701134508",
-  "scrapedAt": "2026-05-06T13:50:38.890Z",
+  "stats_page": null,
+  "scrapedAt": "2026-10-22T16:16:19.248Z",
   "course": {
-    "name": "",
-    "tee": "",
+    "name": "Golf du Gouverneur (Montaplan)",
+    "tee": "Golf du Gouverneur - Montaplan - Archived on 02-16-2026",
     "par": [
       4,
       4,
@@ -72,12 +74,14 @@
       18
     ],
     "parTotal": 71,
-    "metersTotal": 4356
+    "metersTotal": 4356,
+    "parSource": "course_analytics",
+    "metersSource": "course_analytics"
   },
   "courses": [
     {
-      "teeName": "",
-      "courseName": "",
+      "teeName": "Golf du Gouverneur - Montaplan - Archived on 02-16-2026",
+      "courseName": "Golf du Gouverneur (Montaplan)",
       "par": [
         4,
         4,
@@ -143,15 +147,22 @@
     }
   ],
   "rounds": 2,
-  "format": "7 eventos (2 stroke + 5 match)",
-  "divisions": [],
+  "format": "6 divisão(ões) via tournament_results (fetch)",
+  "divisions": [
+    "1/2 Finale (Sat, July 26)",
+    "1/4 de Finale (Fri, July 25)",
+    "1/8e de Finale (Thu, July 24)",
+    "1/16e de Finale (Wed, July",
+    "Qualification T1 (Mon, Jul",
+    "Finale (Sat, July 26)"
+  ],
   "players": [
     {
       "id": "11851716319223263781",
       "pos": 1,
       "name": "GUILLOUX Zélie",
       "country": "FR",
-      "club": "GOLF CLUB DE LYON",
+      "club": "GOLF CLUB DE LYON, 6.1",
       "hcp": 6.1,
       "total": 143,
       "toPar": 1,
@@ -159,7 +170,7 @@
         73,
         70
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -185,7 +196,9 @@
             3
           ],
           "f9": 36,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -211,7 +224,9 @@
             3
           ],
           "f9": 37,
-          "b9": 33
+          "b9": 33,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -220,7 +235,7 @@
       "pos": 2,
       "name": "ASSBAI Safaa",
       "country": "FR",
-      "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
+      "club": "EXCLUSIV GOLF DE CICE-BLOSSAC, 3.6",
       "hcp": 3.6,
       "total": 143,
       "toPar": 1,
@@ -228,7 +243,7 @@
         75,
         68
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -254,7 +269,9 @@
             4
           ],
           "f9": 40,
-          "b9": 35
+          "b9": 35,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -280,7 +297,9 @@
             3
           ],
           "f9": 34,
-          "b9": 34
+          "b9": 34,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -289,7 +308,7 @@
       "pos": 3,
       "name": "DIGUERHER Prune",
       "country": "FR",
-      "club": "DOMAINE ET GOLF DU RONCEMAY",
+      "club": "DOMAINE ET GOLF DU RONCEMAY, 2",
       "hcp": 2,
       "total": 143,
       "toPar": 1,
@@ -297,7 +316,7 @@
         72,
         71
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -323,7 +342,9 @@
             4
           ],
           "f9": 38,
-          "b9": 34
+          "b9": 34,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -349,7 +370,9 @@
             3
           ],
           "f9": 36,
-          "b9": 35
+          "b9": 35,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -358,7 +381,7 @@
       "pos": 4,
       "name": "HELSON Florence",
       "country": "FR",
-      "club": "GOLF DE TERRE BLANCHE",
+      "club": "GOLF DE TERRE BLANCHE, 8.2",
       "hcp": 8.2,
       "total": 143,
       "toPar": 1,
@@ -366,7 +389,7 @@
         71,
         72
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -392,7 +415,9 @@
             4
           ],
           "f9": 37,
-          "b9": 34
+          "b9": 34,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -418,7 +443,9 @@
             5
           ],
           "f9": 36,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -427,7 +454,7 @@
       "pos": 5,
       "name": "BINET Liliane",
       "country": "FR",
-      "club": "GOLF DE TERRE BLANCHE",
+      "club": "GOLF DE TERRE BLANCHE, 3.6",
       "hcp": 3.6,
       "total": 145,
       "toPar": 3,
@@ -435,7 +462,7 @@
         74,
         71
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -461,7 +488,9 @@
             4
           ],
           "f9": 39,
-          "b9": 35
+          "b9": 35,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -487,7 +516,9 @@
             4
           ],
           "f9": 34,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -496,7 +527,7 @@
       "pos": 6,
       "name": "HUMBERT Moira",
       "country": "FR",
-      "club": "GOLF DE L'ILE D'OR",
+      "club": "GOLF DE L'ILE D'OR, 5.2",
       "hcp": 5.2,
       "total": 146,
       "toPar": 4,
@@ -504,7 +535,7 @@
         73,
         73
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -530,7 +561,9 @@
             4
           ],
           "f9": 39,
-          "b9": 34
+          "b9": 34,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -556,7 +589,9 @@
             3
           ],
           "f9": 37,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -565,7 +600,7 @@
       "pos": 7,
       "name": "BAUDY Aylin",
       "country": "FR",
-      "club": "GOLF D'AIX LES BAINS",
+      "club": "GOLF D'AIX LES BAINS, 2.8",
       "hcp": 2.8,
       "total": 147,
       "toPar": 5,
@@ -573,7 +608,7 @@
         77,
         70
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -599,7 +634,9 @@
             3
           ],
           "f9": 40,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -625,7 +662,9 @@
             3
           ],
           "f9": 36,
-          "b9": 34
+          "b9": 34,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -634,7 +673,7 @@
       "pos": 8,
       "name": "SOLANO Sarah",
       "country": "FR",
-      "club": "GOLF DE BOURBON",
+      "club": "GOLF DE BOURBON, 9.4",
       "hcp": 9.4,
       "total": 149,
       "toPar": 7,
@@ -642,7 +681,7 @@
         74,
         75
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -668,7 +707,9 @@
             3
           ],
           "f9": 39,
-          "b9": 35
+          "b9": 35,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -694,7 +735,9 @@
             4
           ],
           "f9": 41,
-          "b9": 34
+          "b9": 34,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -703,7 +746,7 @@
       "pos": 9,
       "name": "LANNE LEWINSKI Justine",
       "country": "FR",
-      "club": "GOLF CLUB DE LYON",
+      "club": "GOLF CLUB DE LYON, 4.6",
       "hcp": 4.6,
       "total": 150,
       "toPar": 8,
@@ -711,7 +754,7 @@
         75,
         75
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -737,7 +780,9 @@
             4
           ],
           "f9": 38,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -763,7 +808,9 @@
             3
           ],
           "f9": 38,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -772,7 +819,7 @@
       "pos": 10,
       "name": "CLAVERIE Lana",
       "country": "FR",
-      "club": "GOLF DE MONT DE MARSAN",
+      "club": "GOLF DE MONT DE MARSAN, 6.5",
       "hcp": 6.5,
       "total": 150,
       "toPar": 8,
@@ -780,7 +827,7 @@
         75,
         75
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -806,7 +853,9 @@
             4
           ],
           "f9": 39,
-          "b9": 36
+          "b9": 36,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -832,7 +881,9 @@
             3
           ],
           "f9": 37,
-          "b9": 38
+          "b9": 38,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -841,7 +892,7 @@
       "pos": 11,
       "name": "PREVOST Jade",
       "country": "FR",
-      "club": "GOLF CLUB DE TOULOUSE",
+      "club": "GOLF CLUB DE TOULOUSE, 6.4",
       "hcp": 6.4,
       "total": 152,
       "toPar": 10,
@@ -849,7 +900,7 @@
         76,
         76
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -875,7 +926,9 @@
             3
           ],
           "f9": 38,
-          "b9": 38
+          "b9": 38,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -901,7 +954,9 @@
             4
           ],
           "f9": 42,
-          "b9": 34
+          "b9": 34,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -910,7 +965,7 @@
       "pos": 12,
       "name": "CAREMIER Ruby",
       "country": "FR",
-      "club": "GOLF BASTIDE DE LA SALETTE",
+      "club": "GOLF BASTIDE DE LA SALETTE, 9.9",
       "hcp": 9.9,
       "total": 152,
       "toPar": 10,
@@ -918,7 +973,7 @@
         73,
         79
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -944,7 +999,9 @@
             3
           ],
           "f9": 37,
-          "b9": 36
+          "b9": 36,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -970,7 +1027,9 @@
             4
           ],
           "f9": 42,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -979,7 +1038,7 @@
       "pos": 13,
       "name": "STREK-DEPLECHIN Rachel",
       "country": "FR",
-      "club": "GOLF DE FOURQUEUX",
+      "club": "GOLF DE FOURQUEUX, 6.6",
       "hcp": 6.6,
       "total": 153,
       "toPar": 11,
@@ -987,7 +1046,7 @@
         77,
         76
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1013,7 +1072,9 @@
             3
           ],
           "f9": 40,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1039,7 +1100,9 @@
             4
           ],
           "f9": 40,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1048,7 +1111,7 @@
       "pos": 14,
       "name": "DETTINGER Eden",
       "country": "FR",
-      "club": "GOLF DE VALESCURE",
+      "club": "GOLF DE VALESCURE, 7.5",
       "hcp": 7.5,
       "total": 154,
       "toPar": 12,
@@ -1056,7 +1119,7 @@
         79,
         75
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1082,7 +1145,9 @@
             3
           ],
           "f9": 40,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1108,7 +1173,9 @@
             4
           ],
           "f9": 38,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1117,7 +1184,7 @@
       "pos": 15,
       "name": "SCHMOHL Anna",
       "country": "FR",
-      "club": "GOLF DE CHIBERTA",
+      "club": "GOLF DE CHIBERTA, 4.8",
       "hcp": 4.8,
       "total": 154,
       "toPar": 12,
@@ -1125,7 +1192,7 @@
         78,
         76
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1151,7 +1218,9 @@
             4
           ],
           "f9": 39,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1177,7 +1246,9 @@
             4
           ],
           "f9": 41,
-          "b9": 35
+          "b9": 35,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1186,7 +1257,7 @@
       "pos": 16,
       "name": "DOREMUS Lou",
       "country": "FR",
-      "club": "GOLF DU HAVRE / OCTEVILLE/MER",
+      "club": "GOLF DU HAVRE / OCTEVILLE/MER, 7.8",
       "hcp": 7.8,
       "total": 154,
       "toPar": 12,
@@ -1194,7 +1265,7 @@
         78,
         76
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1220,7 +1291,9 @@
             4
           ],
           "f9": 41,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1246,7 +1319,9 @@
             3
           ],
           "f9": 40,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1255,7 +1330,7 @@
       "pos": 17,
       "name": "BADATE Farah",
       "country": "FR",
-      "club": "GOLF DU BASSIN BLEU",
+      "club": "GOLF DU BASSIN BLEU, 9.6",
       "hcp": 9.6,
       "total": 155,
       "toPar": 13,
@@ -1263,7 +1338,7 @@
         81,
         74
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1289,7 +1364,9 @@
             4
           ],
           "f9": 42,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1315,7 +1392,9 @@
             3
           ],
           "f9": 40,
-          "b9": 34
+          "b9": 34,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1324,7 +1403,7 @@
       "pos": 18,
       "name": "PILTERS Mattea",
       "country": "FR",
-      "club": "GOLF ISABELLA",
+      "club": "GOLF ISABELLA, 12.6",
       "hcp": 12.6,
       "total": 155,
       "toPar": 13,
@@ -1332,7 +1411,7 @@
         79,
         76
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1358,7 +1437,9 @@
             5
           ],
           "f9": 43,
-          "b9": 36
+          "b9": 36,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1384,7 +1465,9 @@
             4
           ],
           "f9": 41,
-          "b9": 35
+          "b9": 35,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1393,7 +1476,7 @@
       "pos": 19,
       "name": "DELGADO Margaux",
       "country": "FR",
-      "club": "GOLF DE L'ECOLE DE L'AIR",
+      "club": "GOLF DE L'ECOLE DE L'AIR, 8.6",
       "hcp": 8.6,
       "total": 155,
       "toPar": 13,
@@ -1401,7 +1484,7 @@
         78,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1427,7 +1510,9 @@
             4
           ],
           "f9": 38,
-          "b9": 40
+          "b9": 40,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1453,7 +1538,9 @@
             4
           ],
           "f9": 39,
-          "b9": 38
+          "b9": 38,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1462,7 +1549,7 @@
       "pos": 20,
       "name": "TERIITEHAU-PAQUIER Rokea",
       "country": "FR",
-      "club": "AS FEI PI 1923",
+      "club": "AS FEI PI 1923, 5.9",
       "hcp": 5.9,
       "total": 156,
       "toPar": 14,
@@ -1470,7 +1557,7 @@
         79,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1496,7 +1583,9 @@
             3
           ],
           "f9": 40,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1522,7 +1611,9 @@
             4
           ],
           "f9": 41,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1531,7 +1622,7 @@
       "pos": 21,
       "name": "PICARD Pauline",
       "country": "FR",
-      "club": "RACING CLUB DE FRANCE",
+      "club": "RACING CLUB DE FRANCE, 9.3",
       "hcp": 9.3,
       "total": 156,
       "toPar": 14,
@@ -1539,7 +1630,7 @@
         79,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1565,7 +1656,9 @@
             4
           ],
           "f9": 41,
-          "b9": 38
+          "b9": 38,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1591,7 +1684,9 @@
             3
           ],
           "f9": 40,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1600,7 +1695,7 @@
       "pos": 22,
       "name": "ALLEZOT Anne Sophie",
       "country": "FR",
-      "club": "GOLF CLUB COMBLES EN BARROIS",
+      "club": "GOLF CLUB COMBLES EN BARROIS, 6.1",
       "hcp": 6.1,
       "total": 156,
       "toPar": 14,
@@ -1608,7 +1703,7 @@
         79,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1634,7 +1729,9 @@
             3
           ],
           "f9": 40,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1660,7 +1757,9 @@
             5
           ],
           "f9": 39,
-          "b9": 38
+          "b9": 38,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1669,7 +1768,7 @@
       "pos": 23,
       "name": "MARCINIAK Valentina",
       "country": "FR",
-      "club": "UGOLF DU COUDRAY MONTCEAUX",
+      "club": "UGOLF DU COUDRAY MONTCEAUX, 7.1",
       "hcp": 7.1,
       "total": 157,
       "toPar": 15,
@@ -1677,7 +1776,7 @@
         83,
         74
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1703,7 +1802,9 @@
             4
           ],
           "f9": 42,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1729,7 +1830,9 @@
             4
           ],
           "f9": 41,
-          "b9": 33
+          "b9": 33,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1738,7 +1841,7 @@
       "pos": 24,
       "name": "HUART-VESSIE Jeanne",
       "country": "FR",
-      "club": "GOLF DE BRIGODE",
+      "club": "GOLF DE BRIGODE, 6.1",
       "hcp": 6.1,
       "total": 157,
       "toPar": 15,
@@ -1746,7 +1849,7 @@
         80,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1772,7 +1875,9 @@
             5
           ],
           "f9": 44,
-          "b9": 36
+          "b9": 36,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1798,7 +1903,9 @@
             4
           ],
           "f9": 40,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1807,7 +1914,7 @@
       "pos": 25,
       "name": "GRATTE Sarah",
       "country": "FR",
-      "club": "GOLF DE MARCILLY-ORLEANS",
+      "club": "GOLF DE MARCILLY-ORLEANS, 9.3",
       "hcp": 9.3,
       "total": 158,
       "toPar": 16,
@@ -1815,7 +1922,7 @@
         85,
         73
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1841,7 +1948,9 @@
             4
           ],
           "f9": 44,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1867,7 +1976,9 @@
             3
           ],
           "f9": 38,
-          "b9": 35
+          "b9": 35,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1876,7 +1987,7 @@
       "pos": 26,
       "name": "CHABOT Anne-Constance",
       "country": "FR",
-      "club": "GOLF BLUEGREEN LA DOMANGERE",
+      "club": "GOLF BLUEGREEN LA DOMANGERE, 9.2",
       "hcp": 9.2,
       "total": 158,
       "toPar": 16,
@@ -1884,7 +1995,7 @@
         80,
         78
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1910,7 +2021,9 @@
             5
           ],
           "f9": 40,
-          "b9": 40
+          "b9": 40,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -1936,7 +2049,9 @@
             4
           ],
           "f9": 40,
-          "b9": 38
+          "b9": 38,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -1945,7 +2060,7 @@
       "pos": 27,
       "name": "VELLIEUX Jeanne",
       "country": "FR",
-      "club": "GOLF BASTIDE DE LA SALETTE",
+      "club": "GOLF BASTIDE DE LA SALETTE, 13.5",
       "hcp": 13.5,
       "total": 159,
       "toPar": 17,
@@ -1953,7 +2068,7 @@
         81,
         78
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -1979,7 +2094,9 @@
             4
           ],
           "f9": 42,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2005,7 +2122,9 @@
             4
           ],
           "f9": 42,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -2014,7 +2133,7 @@
       "pos": 28,
       "name": "LEGOY Eloise",
       "country": "FR",
-      "club": "GOLF DU HAVRE / OCTEVILLE/MER",
+      "club": "GOLF DU HAVRE / OCTEVILLE/MER, 11.5",
       "hcp": 11.5,
       "total": 159,
       "toPar": 17,
@@ -2022,7 +2141,7 @@
         79,
         80
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2048,7 +2167,9 @@
             3
           ],
           "f9": 41,
-          "b9": 38
+          "b9": 38,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2074,7 +2195,9 @@
             4
           ],
           "f9": 40,
-          "b9": 40
+          "b9": 40,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -2083,7 +2206,7 @@
       "pos": 29,
       "name": "DE LOS RIOS Emma",
       "country": "FR",
-      "club": "GOLF DE TERRE BLANCHE",
+      "club": "GOLF DE TERRE BLANCHE, 11.8",
       "hcp": 11.8,
       "total": 160,
       "toPar": 18,
@@ -2091,7 +2214,7 @@
         86,
         74
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2117,7 +2240,9 @@
             4
           ],
           "f9": 45,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2143,7 +2268,9 @@
             4
           ],
           "f9": 38,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -2152,7 +2279,7 @@
       "pos": 30,
       "name": "BRIONES Capucine",
       "country": "FR",
-      "club": "GOLF DE MONT DE MARSAN",
+      "club": "GOLF DE MONT DE MARSAN, 12.2",
       "hcp": 12.2,
       "total": 160,
       "toPar": 18,
@@ -2160,7 +2287,7 @@
         83,
         77
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2186,7 +2313,9 @@
             4
           ],
           "f9": 44,
-          "b9": 39
+          "b9": 39,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2212,7 +2341,9 @@
             5
           ],
           "f9": 42,
-          "b9": 35
+          "b9": 35,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -2221,7 +2352,7 @@
       "pos": 31,
       "name": "CHATEL Colette",
       "country": "FR",
-      "club": "GOLF DU PRIEURE",
+      "club": "GOLF DU PRIEURE, 10.7",
       "hcp": 10.7,
       "total": 161,
       "toPar": 19,
@@ -2229,7 +2360,7 @@
         79,
         82
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2255,7 +2386,9 @@
             4
           ],
           "f9": 42,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2281,7 +2414,9 @@
             5
           ],
           "f9": 40,
-          "b9": 42
+          "b9": 42,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
@@ -2290,7 +2425,7 @@
       "pos": 32,
       "name": "FARRANDO Austine",
       "country": "FR",
-      "club": "RACING CLUB DE FRANCE",
+      "club": "RACING CLUB DE FRANCE, 8.7",
       "hcp": 8.7,
       "total": 162,
       "toPar": 20,
@@ -2298,7 +2433,7 @@
         84,
         78
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2324,7 +2459,9 @@
             4
           ],
           "f9": 43,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2350,16 +2487,18 @@
             4
           ],
           "f9": 41,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709335",
-      "pos": 33,
+      "pos": null,
       "name": "DUNLOP Mila",
       "country": "FR",
-      "club": "UGOLF DES TROIS VALLONS",
+      "club": "UGOLF DES TROIS VALLONS, 11",
       "hcp": 11,
       "total": 165,
       "toPar": 23,
@@ -2367,7 +2506,7 @@
         86,
         79
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2393,7 +2532,9 @@
             4
           ],
           "f9": 43,
-          "b9": 43
+          "b9": 43,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2419,16 +2560,18 @@
             4
           ],
           "f9": 43,
-          "b9": 36
+          "b9": 36,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319256818220",
-      "pos": 34,
+      "pos": null,
       "name": "CHASLES SCHNELL Aïkimi",
       "country": "FR",
-      "club": "BAYEUX OMAHA BEACH GOLF",
+      "club": "BAYEUX OMAHA BEACH GOLF, 12.4",
       "hcp": 12.4,
       "total": 165,
       "toPar": 23,
@@ -2436,7 +2579,7 @@
         84,
         81
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2462,7 +2605,9 @@
             5
           ],
           "f9": 43,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2488,16 +2633,18 @@
             4
           ],
           "f9": 44,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319256818227",
-      "pos": 35,
+      "pos": null,
       "name": "LACOMBRADE Elea",
       "country": "FR",
-      "club": "GOLF BLUEGREEN BORDEAUX LAC",
+      "club": "GOLF BLUEGREEN BORDEAUX LAC, 11.5",
       "hcp": 11.5,
       "total": 167,
       "toPar": 25,
@@ -2505,7 +2652,7 @@
         87,
         80
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2531,7 +2678,9 @@
             3
           ],
           "f9": 46,
-          "b9": 41
+          "b9": 41,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2557,16 +2706,18 @@
             4
           ],
           "f9": 41,
-          "b9": 39
+          "b9": 39,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154885",
-      "pos": 36,
+      "pos": null,
       "name": "DAVID Diane",
       "country": "FR",
-      "club": "GOLF DE LA NIVELLE",
+      "club": "GOLF DE LA NIVELLE, 16.6",
       "hcp": 16.6,
       "total": 167,
       "toPar": 25,
@@ -2574,7 +2725,7 @@
         85,
         82
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2600,7 +2751,9 @@
             5
           ],
           "f9": 42,
-          "b9": 43
+          "b9": 43,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2626,16 +2779,18 @@
             4
           ],
           "f9": 40,
-          "b9": 42
+          "b9": 42,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155390",
-      "pos": 37,
+      "pos": null,
       "name": "GERMAIN Alix",
       "country": "FR",
-      "club": "GOLF DE GUERANDE",
+      "club": "GOLF DE GUERANDE, 17.4",
       "hcp": 17.4,
       "total": 168,
       "toPar": 26,
@@ -2643,7 +2798,7 @@
         86,
         82
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2669,7 +2824,9 @@
             5
           ],
           "f9": 46,
-          "b9": 40
+          "b9": 40,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2695,16 +2852,18 @@
             5
           ],
           "f9": 40,
-          "b9": 42
+          "b9": 42,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154883",
-      "pos": 38,
+      "pos": null,
       "name": "SHABAEV Eugenie",
       "country": "FR",
-      "club": "LE GOLF NATIONAL",
+      "club": "LE GOLF NATIONAL, 16.5",
       "hcp": 16.5,
       "total": 169,
       "toPar": 27,
@@ -2712,7 +2871,7 @@
         86,
         83
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2738,7 +2897,9 @@
             5
           ],
           "f9": 46,
-          "b9": 40
+          "b9": 40,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2764,16 +2925,18 @@
             4
           ],
           "f9": 46,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709329",
-      "pos": 39,
+      "pos": null,
       "name": "DAVY Zoé",
       "country": "FR",
-      "club": "GOLF DE SAINT-MALO",
+      "club": "GOLF DE SAINT-MALO, 11.3",
       "hcp": 11.3,
       "total": 169,
       "toPar": 27,
@@ -2781,7 +2944,7 @@
         86,
         83
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2807,7 +2970,9 @@
             4
           ],
           "f9": 44,
-          "b9": 42
+          "b9": 42,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2833,16 +2998,18 @@
             4
           ],
           "f9": 44,
-          "b9": 39
+          "b9": 39,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709323",
-      "pos": 40,
+      "pos": null,
       "name": "VANDENPLAS Capucine",
       "country": "FR",
-      "club": "GOLF CLUB DE TOULOUSE",
+      "club": "GOLF CLUB DE TOULOUSE, 12.7",
       "hcp": 12.7,
       "total": 169,
       "toPar": 27,
@@ -2850,7 +3017,7 @@
         84,
         85
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2876,7 +3043,9 @@
             5
           ],
           "f9": 44,
-          "b9": 40
+          "b9": 40,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2902,16 +3071,18 @@
             5
           ],
           "f9": 46,
-          "b9": 39
+          "b9": 39,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319256818229",
-      "pos": 41,
+      "pos": null,
       "name": "ROGER Louise",
       "country": "FR",
-      "club": "RACING CLUB DE FRANCE",
+      "club": "RACING CLUB DE FRANCE, 11.8",
       "hcp": 11.8,
       "total": 169,
       "toPar": 27,
@@ -2919,7 +3090,7 @@
         81,
         88
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -2945,7 +3116,9 @@
             3
           ],
           "f9": 43,
-          "b9": 38
+          "b9": 38,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -2971,16 +3144,18 @@
             5
           ],
           "f9": 41,
-          "b9": 47
+          "b9": 47,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709332",
-      "pos": 42,
+      "pos": null,
       "name": "BERTROU Eloïse",
       "country": "FR",
-      "club": "GOLF CLUB DE LYON",
+      "club": "GOLF CLUB DE LYON, 10.7",
       "hcp": 10.7,
       "total": 170,
       "toPar": 28,
@@ -2988,7 +3163,7 @@
         88,
         82
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3014,7 +3189,9 @@
             4
           ],
           "f9": 42,
-          "b9": 46
+          "b9": 46,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3040,16 +3217,18 @@
             3
           ],
           "f9": 42,
-          "b9": 40
+          "b9": 40,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155387",
-      "pos": 43,
+      "pos": null,
       "name": "SCHWARZ Olivia",
       "country": "FR",
-      "club": "GOLF DE VANNES-ATLANTHEIX",
+      "club": "GOLF DE VANNES-ATLANTHEIX, 20.8",
       "hcp": 20.8,
       "total": 170,
       "toPar": 28,
@@ -3057,7 +3236,7 @@
         87,
         83
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3083,7 +3262,9 @@
             5
           ],
           "f9": 44,
-          "b9": 43
+          "b9": 43,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3109,16 +3290,18 @@
             6
           ],
           "f9": 39,
-          "b9": 44
+          "b9": 44,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154884",
-      "pos": 44,
+      "pos": null,
       "name": "DESSEMOND Lara",
       "country": "FR",
-      "club": "GOLF&COUNTRY DE MAISON BLANCHE",
+      "club": "GOLF&COUNTRY DE MAISON BLANCHE, 14.4",
       "hcp": 14.4,
       "total": 171,
       "toPar": 29,
@@ -3126,7 +3309,7 @@
         93,
         78
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3152,7 +3335,9 @@
             5
           ],
           "f9": 49,
-          "b9": 44
+          "b9": 44,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3178,16 +3363,18 @@
             3
           ],
           "f9": 41,
-          "b9": 37
+          "b9": 37,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709331",
-      "pos": 45,
+      "pos": null,
       "name": "FOUCHE Charlotte",
       "country": "FR",
-      "club": "GOLF DE PORNIC",
+      "club": "GOLF DE PORNIC, 12.9",
       "hcp": 12.9,
       "total": 172,
       "toPar": 30,
@@ -3195,7 +3382,7 @@
         91,
         81
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3221,7 +3408,9 @@
             5
           ],
           "f9": 44,
-          "b9": 47
+          "b9": 47,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3247,16 +3436,18 @@
             3
           ],
           "f9": 40,
-          "b9": 41
+          "b9": 41,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155391",
-      "pos": 46,
+      "pos": null,
       "name": "ICART Leïla",
       "country": "FR",
-      "club": "GOLF DE L'ARIEGE",
+      "club": "GOLF DE L'ARIEGE, 15.9",
       "hcp": 15.9,
       "total": 172,
       "toPar": 30,
@@ -3264,7 +3455,7 @@
         88,
         84
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3290,7 +3481,9 @@
             4
           ],
           "f9": 41,
-          "b9": 47
+          "b9": 47,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3316,16 +3509,18 @@
             3
           ],
           "f9": 45,
-          "b9": 39
+          "b9": 39,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709327",
-      "pos": 47,
+      "pos": null,
       "name": "DEYRA Eugenie",
       "country": "FR",
-      "club": "GOLF DE TERRE BLANCHE",
+      "club": "GOLF DE TERRE BLANCHE, 13.3",
       "hcp": 13.3,
       "total": 172,
       "toPar": 30,
@@ -3333,7 +3528,7 @@
         86,
         86
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3359,7 +3554,9 @@
             5
           ],
           "f9": 42,
-          "b9": 44
+          "b9": 44,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3385,16 +3582,18 @@
             4
           ],
           "f9": 44,
-          "b9": 42
+          "b9": 42,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155389",
-      "pos": 48,
+      "pos": null,
       "name": "JORAT Ombeline",
       "country": "FR",
-      "club": "GOLF CLUB ESERY GRAND GENEVE",
+      "club": "GOLF CLUB ESERY GRAND GENEVE, 18.1",
       "hcp": 18.1,
       "total": 173,
       "toPar": 31,
@@ -3402,7 +3601,7 @@
         92,
         81
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3428,7 +3627,9 @@
             5
           ],
           "f9": 47,
-          "b9": 45
+          "b9": 45,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3454,16 +3655,18 @@
             4
           ],
           "f9": 39,
-          "b9": 42
+          "b9": 42,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709324",
-      "pos": 49,
+      "pos": null,
       "name": "CHOUVIN Juliette",
       "country": "FR",
-      "club": "GOLF DE BONDUES",
+      "club": "GOLF DE BONDUES, 14.9",
       "hcp": 14.9,
       "total": 174,
       "toPar": 32,
@@ -3471,7 +3674,7 @@
         83,
         91
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3497,7 +3700,9 @@
             4
           ],
           "f9": 41,
-          "b9": 42
+          "b9": 42,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3523,16 +3728,18 @@
             5
           ],
           "f9": 48,
-          "b9": 43
+          "b9": 43,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319256818226",
-      "pos": 50,
+      "pos": null,
       "name": "ALFANDARI Eugenie",
       "country": "FR",
-      "club": "CABOT BORDEAUX",
+      "club": "CABOT BORDEAUX, 13.8",
       "hcp": 13.8,
       "total": 175,
       "toPar": 33,
@@ -3540,7 +3747,7 @@
         91,
         84
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3566,7 +3773,9 @@
             4
           ],
           "f9": 45,
-          "b9": 46
+          "b9": 46,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3592,16 +3801,18 @@
             4
           ],
           "f9": 44,
-          "b9": 40
+          "b9": 40,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154887",
-      "pos": 51,
+      "pos": null,
       "name": "LATARD Louna",
       "country": "FR",
-      "club": "GOLF BASTIDE DE LA SALETTE",
+      "club": "GOLF BASTIDE DE LA SALETTE, 12.1",
       "hcp": 12.1,
       "total": 177,
       "toPar": 35,
@@ -3609,7 +3820,7 @@
         87,
         90
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3635,7 +3846,9 @@
             4
           ],
           "f9": 50,
-          "b9": 37
+          "b9": 37,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3661,16 +3874,18 @@
             4
           ],
           "f9": 43,
-          "b9": 47
+          "b9": 47,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709325",
-      "pos": 52,
+      "pos": null,
       "name": "PAINDAVOINE Céleste",
       "country": "FR",
-      "club": "GOLF DE BONDUES",
+      "club": "GOLF DE BONDUES, 15.9",
       "hcp": 15.9,
       "total": 177,
       "toPar": 35,
@@ -3678,7 +3893,7 @@
         84,
         93
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3704,7 +3919,9 @@
             4
           ],
           "f9": 41,
-          "b9": 43
+          "b9": 43,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3730,16 +3947,18 @@
             5
           ],
           "f9": 47,
-          "b9": 46
+          "b9": 46,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154886",
-      "pos": 53,
+      "pos": null,
       "name": "THIBERT Salome",
       "country": "FR",
-      "club": "GOLF DE BONDUES",
+      "club": "GOLF DE BONDUES, 17.1",
       "hcp": 17.1,
       "total": 178,
       "toPar": 36,
@@ -3747,7 +3966,7 @@
         94,
         84
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3773,7 +3992,9 @@
             4
           ],
           "f9": 50,
-          "b9": 44
+          "b9": 44,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3799,16 +4020,18 @@
             4
           ],
           "f9": 40,
-          "b9": 44
+          "b9": 44,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709330",
-      "pos": 54,
+      "pos": null,
       "name": "BROUILLET Garance",
       "country": "FR",
-      "club": "GOLF CLUB DE PERIGUEUX",
+      "club": "GOLF CLUB DE PERIGUEUX, 13.2",
       "hcp": 13.2,
       "total": 179,
       "toPar": 37,
@@ -3816,7 +4039,7 @@
         96,
         83
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3842,7 +4065,9 @@
             5
           ],
           "f9": 49,
-          "b9": 47
+          "b9": 47,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3868,16 +4093,18 @@
             4
           ],
           "f9": 44,
-          "b9": 39
+          "b9": 39,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154880",
-      "pos": 55,
+      "pos": null,
       "name": "NGUYEN WILBAL Camille",
       "country": "FR",
-      "club": "GOLF AIX-MARSEILLE",
+      "club": "GOLF AIX-MARSEILLE, 14.7",
       "hcp": 14.7,
       "total": 179,
       "toPar": 37,
@@ -3885,7 +4112,7 @@
         87,
         92
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3911,7 +4138,9 @@
             4
           ],
           "f9": 43,
-          "b9": 44
+          "b9": 44,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -3937,16 +4166,18 @@
             4
           ],
           "f9": 48,
-          "b9": 44
+          "b9": 44,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709321",
-      "pos": 56,
+      "pos": null,
       "name": "YANG Chloé Angelle",
       "country": "FR",
-      "club": "GOLF DE BUSSY-GUERMANTES",
+      "club": "GOLF DE BUSSY-GUERMANTES, 16.1",
       "hcp": 16.1,
       "total": 181,
       "toPar": 39,
@@ -3954,7 +4185,7 @@
         92,
         89
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -3980,7 +4211,9 @@
             4
           ],
           "f9": 50,
-          "b9": 42
+          "b9": 42,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4006,16 +4239,18 @@
             4
           ],
           "f9": 44,
-          "b9": 45
+          "b9": 45,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156154882",
-      "pos": 57,
+      "pos": null,
       "name": "PORTE Mindy",
       "country": "FR",
-      "club": "GOLF INTERNATIONAL DE ROISSY",
+      "club": "GOLF INTERNATIONAL DE ROISSY, 18.1",
       "hcp": 18.1,
       "total": 183,
       "toPar": 41,
@@ -4023,7 +4258,7 @@
         97,
         86
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4049,7 +4284,9 @@
             3
           ],
           "f9": 51,
-          "b9": 46
+          "b9": 46,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4075,16 +4312,18 @@
             4
           ],
           "f9": 43,
-          "b9": 43
+          "b9": 43,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709336",
-      "pos": 58,
+      "pos": null,
       "name": "GILOT Alix",
       "country": "FR",
-      "club": "GOLF CLUB DE CABOURG LE HOME",
+      "club": "GOLF CLUB DE CABOURG LE HOME, 17.4",
       "hcp": 17.4,
       "total": 185,
       "toPar": 43,
@@ -4092,7 +4331,7 @@
         97,
         88
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4118,7 +4357,9 @@
             6
           ],
           "f9": 45,
-          "b9": 52
+          "b9": 52,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4144,16 +4385,18 @@
             6
           ],
           "f9": 45,
-          "b9": 43
+          "b9": 43,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155386",
-      "pos": 59,
+      "pos": null,
       "name": "BOIS Olivia",
       "country": "FR",
-      "club": "WIMEREUX GOLF CLUB",
+      "club": "WIMEREUX GOLF CLUB, 21.3",
       "hcp": 21.3,
       "total": 187,
       "toPar": 45,
@@ -4161,7 +4404,7 @@
         95,
         92
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4187,7 +4430,9 @@
             6
           ],
           "f9": 49,
-          "b9": 46
+          "b9": 46,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4213,16 +4458,18 @@
             5
           ],
           "f9": 46,
-          "b9": 46
+          "b9": 46,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155388",
-      "pos": 60,
+      "pos": null,
       "name": "LE GALL Inès",
       "country": "FR",
-      "club": "GOLF BLUEGREEN BADEN",
+      "club": "GOLF BLUEGREEN BADEN, 18.8",
       "hcp": 18.8,
       "total": 189,
       "toPar": 47,
@@ -4230,7 +4477,7 @@
         103,
         86
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4256,7 +4503,9 @@
             4
           ],
           "f9": 57,
-          "b9": 46
+          "b9": 46,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4282,16 +4531,18 @@
             4
           ],
           "f9": 43,
-          "b9": 43
+          "b9": 43,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319189709320",
-      "pos": 61,
+      "pos": null,
       "name": "VIGNAUD Eleonore",
       "country": "FR",
-      "club": "GOLF DE PRUNEVELLE",
+      "club": "GOLF DE PRUNEVELLE, 15.2",
       "hcp": 15.2,
       "total": 202,
       "toPar": 60,
@@ -4299,7 +4550,7 @@
         98,
         104
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4325,7 +4576,9 @@
             4
           ],
           "f9": 49,
-          "b9": 49
+          "b9": 49,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4351,16 +4604,18 @@
             4
           ],
           "f9": 61,
-          "b9": 43
+          "b9": 43,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     },
     {
       "id": "11851716319156155385",
-      "pos": 62,
+      "pos": null,
       "name": "MOURLON Clarisse",
       "country": "FR",
-      "club": "GOLF DE SAINT SYLVAIN D'ANJOU",
+      "club": "GOLF DE SAINT SYLVAIN D'ANJOU, 21.3",
       "hcp": 21.3,
       "total": 203,
       "toPar": 61,
@@ -4368,7 +4623,7 @@
         102,
         101
       ],
-      "division": "Qualification CFJ 2025 - U12 Filles",
+      "division": "Qualification T1 (Mon, Jul",
       "rounds": [
         {
           "round": 1,
@@ -4394,7 +4649,9 @@
             6
           ],
           "f9": 50,
-          "b9": 52
+          "b9": 52,
+          "date": "Mon, July 21",
+          "dateIso": "2025-07-21"
         },
         {
           "round": 2,
@@ -4420,6373 +4677,12 @@
             5
           ],
           "f9": 53,
-          "b9": 48
+          "b9": 48,
+          "date": "Tue, July 22",
+          "dateIso": "2025-07-22"
         }
       ]
     }
   ],
-  "events": [
-    {
-      "id": "11842482589233361834",
-      "name": "Qualification T1 (Lun, Jui...",
-      "format": "stroke",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11851716319223263781",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            73,
-            70
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263772",
-          "pos": 2,
-          "name": "ASSBAI Safaa",
-          "country": "FR",
-          "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
-          "hcp": 3.6,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            75,
-            68
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709337",
-          "pos": 3,
-          "name": "DIGUERHER Prune",
-          "country": "FR",
-          "club": "DOMAINE ET GOLF DU RONCEMAY",
-          "hcp": 2,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            72,
-            71
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818224",
-          "pos": 4,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            71,
-            72
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263773",
-          "pos": 5,
-          "name": "BINET Liliane",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 3.6,
-          "total": 145,
-          "toPar": 3,
-          "roundScores": [
-            74,
-            71
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263775",
-          "pos": 6,
-          "name": "HUMBERT Moira",
-          "country": "FR",
-          "club": "GOLF DE L'ILE D'OR",
-          "hcp": 5.2,
-          "total": 146,
-          "toPar": 4,
-          "roundScores": [
-            73,
-            73
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263771",
-          "pos": 7,
-          "name": "BAUDY Aylin",
-          "country": "FR",
-          "club": "GOLF D'AIX LES BAINS",
-          "hcp": 2.8,
-          "total": 147,
-          "toPar": 5,
-          "roundScores": [
-            77,
-            70
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709333",
-          "pos": 8,
-          "name": "SOLANO Sarah",
-          "country": "FR",
-          "club": "GOLF DE BOURBON",
-          "hcp": 9.4,
-          "total": 149,
-          "toPar": 7,
-          "roundScores": [
-            74,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709338",
-          "pos": 9,
-          "name": "LANNE LEWINSKI Justine",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 4.6,
-          "total": 150,
-          "toPar": 8,
-          "roundScores": [
-            75,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263777",
-          "pos": 10,
-          "name": "CLAVERIE Lana",
-          "country": "FR",
-          "club": "GOLF DE MONT DE MARSAN",
-          "hcp": 6.5,
-          "total": 150,
-          "toPar": 8,
-          "roundScores": [
-            75,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818222",
-          "pos": 11,
-          "name": "PREVOST Jade",
-          "country": "FR",
-          "club": "GOLF CLUB DE TOULOUSE",
-          "hcp": 6.4,
-          "total": 152,
-          "toPar": 10,
-          "roundScores": [
-            76,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818225",
-          "pos": 12,
-          "name": "CAREMIER Ruby",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 9.9,
-          "total": 152,
-          "toPar": 10,
-          "roundScores": [
-            73,
-            79
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263778",
-          "pos": 13,
-          "name": "STREK-DEPLECHIN Rachel",
-          "country": "FR",
-          "club": "GOLF DE FOURQUEUX",
-          "hcp": 6.6,
-          "total": 153,
-          "toPar": 11,
-          "roundScores": [
-            77,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263780",
-          "pos": 14,
-          "name": "DETTINGER Eden",
-          "country": "FR",
-          "club": "GOLF DE VALESCURE",
-          "hcp": 7.5,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            79,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263779",
-          "pos": 15,
-          "name": "SCHMOHL Anna",
-          "country": "FR",
-          "club": "GOLF DE CHIBERTA",
-          "hcp": 4.8,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            78,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818214",
-          "pos": 16,
-          "name": "DOREMUS Lou",
-          "country": "FR",
-          "club": "GOLF DU HAVRE / OCTEVILLE/MER",
-          "hcp": 7.8,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            78,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818223",
-          "pos": 17,
-          "name": "BADATE Farah",
-          "country": "FR",
-          "club": "GOLF DU BASSIN BLEU",
-          "hcp": 9.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            81,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709334",
-          "pos": 18,
-          "name": "PILTERS Mattea",
-          "country": "FR",
-          "club": "GOLF ISABELLA",
-          "hcp": 12.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            79,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818217",
-          "pos": 19,
-          "name": "DELGADO Margaux",
-          "country": "FR",
-          "club": "GOLF DE L'ECOLE DE L'AIR",
-          "hcp": 8.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            78,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154881",
-          "pos": 20,
-          "name": "TERIITEHAU-PAQUIER Rokea",
-          "country": "FR",
-          "club": "AS FEI PI 1923",
-          "hcp": 5.9,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818219",
-          "pos": 21,
-          "name": "PICARD Pauline",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 9.3,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818215",
-          "pos": 22,
-          "name": "ALLEZOT Anne Sophie",
-          "country": "FR",
-          "club": "GOLF CLUB COMBLES EN BARROIS",
-          "hcp": 6.1,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263776",
-          "pos": 23,
-          "name": "MARCINIAK Valentina",
-          "country": "FR",
-          "club": "UGOLF DU COUDRAY MONTCEAUX",
-          "hcp": 7.1,
-          "total": 157,
-          "toPar": 15,
-          "roundScores": [
-            83,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263774",
-          "pos": 24,
-          "name": "HUART-VESSIE Jeanne",
-          "country": "FR",
-          "club": "GOLF DE BRIGODE",
-          "hcp": 6.1,
-          "total": 157,
-          "toPar": 15,
-          "roundScores": [
-            80,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818221",
-          "pos": 25,
-          "name": "GRATTE Sarah",
-          "country": "FR",
-          "club": "GOLF DE MARCILLY-ORLEANS",
-          "hcp": 9.3,
-          "total": 158,
-          "toPar": 16,
-          "roundScores": [
-            85,
-            73
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818218",
-          "pos": 26,
-          "name": "CHABOT Anne-Constance",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN LA DOMANGERE",
-          "hcp": 9.2,
-          "total": 158,
-          "toPar": 16,
-          "roundScores": [
-            80,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709322",
-          "pos": 27,
-          "name": "VELLIEUX Jeanne",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 13.5,
-          "total": 159,
-          "toPar": 17,
-          "roundScores": [
-            81,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818228",
-          "pos": 28,
-          "name": "LEGOY Eloise",
-          "country": "FR",
-          "club": "GOLF DU HAVRE / OCTEVILLE/MER",
-          "hcp": 11.5,
-          "total": 159,
-          "toPar": 17,
-          "roundScores": [
-            79,
-            80
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709328",
-          "pos": 29,
-          "name": "DE LOS RIOS Emma",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 11.8,
-          "total": 160,
-          "toPar": 18,
-          "roundScores": [
-            86,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818230",
-          "pos": 30,
-          "name": "BRIONES Capucine",
-          "country": "FR",
-          "club": "GOLF DE MONT DE MARSAN",
-          "hcp": 12.2,
-          "total": 160,
-          "toPar": 18,
-          "roundScores": [
-            83,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709326",
-          "pos": 31,
-          "name": "CHATEL Colette",
-          "country": "FR",
-          "club": "GOLF DU PRIEURE",
-          "hcp": 10.7,
-          "total": 161,
-          "toPar": 19,
-          "roundScores": [
-            79,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818216",
-          "pos": 32,
-          "name": "FARRANDO Austine",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 8.7,
-          "total": 162,
-          "toPar": 20,
-          "roundScores": [
-            84,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709335",
-          "pos": 33,
-          "name": "DUNLOP Mila",
-          "country": "FR",
-          "club": "UGOLF DES TROIS VALLONS",
-          "hcp": 11,
-          "total": 165,
-          "toPar": 23,
-          "roundScores": [
-            86,
-            79
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818220",
-          "pos": 34,
-          "name": "CHASLES SCHNELL Aïkimi",
-          "country": "FR",
-          "club": "BAYEUX OMAHA BEACH GOLF",
-          "hcp": 12.4,
-          "total": 165,
-          "toPar": 23,
-          "roundScores": [
-            84,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818227",
-          "pos": 35,
-          "name": "LACOMBRADE Elea",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN BORDEAUX LAC",
-          "hcp": 11.5,
-          "total": 167,
-          "toPar": 25,
-          "roundScores": [
-            87,
-            80
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154885",
-          "pos": 36,
-          "name": "DAVID Diane",
-          "country": "FR",
-          "club": "GOLF DE LA NIVELLE",
-          "hcp": 16.6,
-          "total": 167,
-          "toPar": 25,
-          "roundScores": [
-            85,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155390",
-          "pos": 37,
-          "name": "GERMAIN Alix",
-          "country": "FR",
-          "club": "GOLF DE GUERANDE",
-          "hcp": 17.4,
-          "total": 168,
-          "toPar": 26,
-          "roundScores": [
-            86,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154883",
-          "pos": 38,
-          "name": "SHABAEV Eugenie",
-          "country": "FR",
-          "club": "LE GOLF NATIONAL",
-          "hcp": 16.5,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            86,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709329",
-          "pos": 39,
-          "name": "DAVY Zoé",
-          "country": "FR",
-          "club": "GOLF DE SAINT-MALO",
-          "hcp": 11.3,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            86,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709323",
-          "pos": 40,
-          "name": "VANDENPLAS Capucine",
-          "country": "FR",
-          "club": "GOLF CLUB DE TOULOUSE",
-          "hcp": 12.7,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            84,
-            85
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818229",
-          "pos": 41,
-          "name": "ROGER Louise",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 11.8,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            81,
-            88
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709332",
-          "pos": 42,
-          "name": "BERTROU Eloïse",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 10.7,
-          "total": 170,
-          "toPar": 28,
-          "roundScores": [
-            88,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155387",
-          "pos": 43,
-          "name": "SCHWARZ Olivia",
-          "country": "FR",
-          "club": "GOLF DE VANNES-ATLANTHEIX",
-          "hcp": 20.8,
-          "total": 170,
-          "toPar": 28,
-          "roundScores": [
-            87,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154884",
-          "pos": 44,
-          "name": "DESSEMOND Lara",
-          "country": "FR",
-          "club": "GOLF&COUNTRY DE MAISON BLANCHE",
-          "hcp": 14.4,
-          "total": 171,
-          "toPar": 29,
-          "roundScores": [
-            93,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709331",
-          "pos": 45,
-          "name": "FOUCHE Charlotte",
-          "country": "FR",
-          "club": "GOLF DE PORNIC",
-          "hcp": 12.9,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            91,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155391",
-          "pos": 46,
-          "name": "ICART Leïla",
-          "country": "FR",
-          "club": "GOLF DE L'ARIEGE",
-          "hcp": 15.9,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            88,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709327",
-          "pos": 47,
-          "name": "DEYRA Eugenie",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 13.3,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            86,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155389",
-          "pos": 48,
-          "name": "JORAT Ombeline",
-          "country": "FR",
-          "club": "GOLF CLUB ESERY GRAND GENEVE",
-          "hcp": 18.1,
-          "total": 173,
-          "toPar": 31,
-          "roundScores": [
-            92,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709324",
-          "pos": 49,
-          "name": "CHOUVIN Juliette",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 14.9,
-          "total": 174,
-          "toPar": 32,
-          "roundScores": [
-            83,
-            91
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818226",
-          "pos": 50,
-          "name": "ALFANDARI Eugenie",
-          "country": "FR",
-          "club": "CABOT BORDEAUX",
-          "hcp": 13.8,
-          "total": 175,
-          "toPar": 33,
-          "roundScores": [
-            91,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154887",
-          "pos": 51,
-          "name": "LATARD Louna",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 12.1,
-          "total": 177,
-          "toPar": 35,
-          "roundScores": [
-            87,
-            90
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709325",
-          "pos": 52,
-          "name": "PAINDAVOINE Céleste",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 15.9,
-          "total": 177,
-          "toPar": 35,
-          "roundScores": [
-            84,
-            93
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154886",
-          "pos": 53,
-          "name": "THIBERT Salome",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 17.1,
-          "total": 178,
-          "toPar": 36,
-          "roundScores": [
-            94,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709330",
-          "pos": 54,
-          "name": "BROUILLET Garance",
-          "country": "FR",
-          "club": "GOLF CLUB DE PERIGUEUX",
-          "hcp": 13.2,
-          "total": 179,
-          "toPar": 37,
-          "roundScores": [
-            96,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154880",
-          "pos": 55,
-          "name": "NGUYEN WILBAL Camille",
-          "country": "FR",
-          "club": "GOLF AIX-MARSEILLE",
-          "hcp": 14.7,
-          "total": 179,
-          "toPar": 37,
-          "roundScores": [
-            87,
-            92
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709321",
-          "pos": 56,
-          "name": "YANG Chloé Angelle",
-          "country": "FR",
-          "club": "GOLF DE BUSSY-GUERMANTES",
-          "hcp": 16.1,
-          "total": 181,
-          "toPar": 39,
-          "roundScores": [
-            92,
-            89
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154882",
-          "pos": 57,
-          "name": "PORTE Mindy",
-          "country": "FR",
-          "club": "GOLF INTERNATIONAL DE ROISSY",
-          "hcp": 18.1,
-          "total": 183,
-          "toPar": 41,
-          "roundScores": [
-            97,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709336",
-          "pos": 58,
-          "name": "GILOT Alix",
-          "country": "FR",
-          "club": "GOLF CLUB DE CABOURG LE HOME",
-          "hcp": 17.4,
-          "total": 185,
-          "toPar": 43,
-          "roundScores": [
-            97,
-            88
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155386",
-          "pos": 59,
-          "name": "BOIS Olivia",
-          "country": "FR",
-          "club": "WIMEREUX GOLF CLUB",
-          "hcp": 21.3,
-          "total": 187,
-          "toPar": 45,
-          "roundScores": [
-            95,
-            92
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155388",
-          "pos": 60,
-          "name": "LE GALL Inès",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN BADEN",
-          "hcp": 18.8,
-          "total": 189,
-          "toPar": 47,
-          "roundScores": [
-            103,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709320",
-          "pos": 61,
-          "name": "VIGNAUD Eleonore",
-          "country": "FR",
-          "club": "GOLF DE PRUNEVELLE",
-          "hcp": 15.2,
-          "total": 202,
-          "toPar": 60,
-          "roundScores": [
-            98,
-            104
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155385",
-          "pos": 62,
-          "name": "MOURLON Clarisse",
-          "country": "FR",
-          "club": "GOLF DE SAINT SYLVAIN D'ANJOU",
-          "hcp": 21.3,
-          "total": 203,
-          "toPar": 61,
-          "roundScores": [
-            102,
-            101
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        }
-      ],
-      "pairings": [],
-      "division": "Qualification CFJ 2025 - U12 Filles",
-      "scorecardsByPlayerId": {
-        "11851716319223263781": [
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              2,
-              4,
-              3,
-              3,
-              8,
-              3,
-              4,
-              4,
-              4,
-              3,
-              3,
-              4,
-              4,
-              4,
-              3
-            ],
-            "f9": 37,
-            "b9": 33,
-            "gross": 70
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              4,
-              4,
-              3,
-              4,
-              5,
-              7,
-              4,
-              3,
-              4,
-              3,
-              4,
-              4,
-              5,
-              3
-            ],
-            "f9": 36,
-            "b9": 37,
-            "gross": 73
-          }
-        ],
-        "11851716319223263772": [
-          {
-            "scores": [
-              4,
-              4,
-              4,
-              4,
-              4,
-              5,
-              2,
-              4,
-              3,
-              3,
-              3,
-              3,
-              4,
-              3,
-              4,
-              4,
-              7,
-              3
-            ],
-            "f9": 34,
-            "b9": 34,
-            "gross": 68
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              3,
-              8,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              6,
-              3,
-              4,
-              4,
-              3,
-              4
-            ],
-            "f9": 40,
-            "b9": 35,
-            "gross": 75
-          }
-        ],
-        "11851716319189709337": [
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              4,
-              5,
-              3,
-              4,
-              4,
-              3,
-              4,
-              4,
-              4,
-              3,
-              6,
-              4,
-              4,
-              3
-            ],
-            "f9": 36,
-            "b9": 35,
-            "gross": 71
-          },
-          {
-            "scores": [
-              4,
-              6,
-              4,
-              5,
-              4,
-              4,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              5,
-              3,
-              3,
-              4,
-              3,
-              4
-            ],
-            "f9": 38,
-            "b9": 34,
-            "gross": 72
-          }
-        ],
-        "11851716319256818224": [
-          {
-            "scores": [
-              6,
-              4,
-              5,
-              3,
-              4,
-              4,
-              3,
-              4,
-              3,
-              4,
-              3,
-              3,
-              5,
-              3,
-              4,
-              4,
-              5,
-              5
-            ],
-            "f9": 36,
-            "b9": 36,
-            "gross": 72
-          },
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              3,
-              4,
-              3,
-              4,
-              5,
-              4,
-              3,
-              4,
-              3,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4
-            ],
-            "f9": 37,
-            "b9": 34,
-            "gross": 71
-          }
-        ],
-        "11851716319223263773": [
-          {
-            "scores": [
-              4,
-              4,
-              4,
-              2,
-              5,
-              4,
-              3,
-              4,
-              4,
-              3,
-              4,
-              5,
-              5,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 34,
-            "b9": 37,
-            "gross": 71
-          },
-          {
-            "scores": [
-              4,
-              3,
-              6,
-              2,
-              5,
-              4,
-              6,
-              5,
-              4,
-              3,
-              4,
-              4,
-              4,
-              3,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 39,
-            "b9": 35,
-            "gross": 74
-          }
-        ],
-        "11851716319223263775": [
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              4,
-              4,
-              3,
-              4,
-              4,
-              3,
-              5,
-              5,
-              5,
-              4,
-              4,
-              4,
-              3,
-              3
-            ],
-            "f9": 37,
-            "b9": 36,
-            "gross": 73
-          },
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              3,
-              4,
-              5,
-              3,
-              4,
-              4,
-              2,
-              3,
-              4,
-              5,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 39,
-            "b9": 34,
-            "gross": 73
-          }
-        ],
-        "11851716319223263771": [
-          {
-            "scores": [
-              4,
-              6,
-              5,
-              3,
-              3,
-              4,
-              4,
-              4,
-              3,
-              2,
-              4,
-              4,
-              4,
-              4,
-              5,
-              3,
-              5,
-              3
-            ],
-            "f9": 36,
-            "b9": 34,
-            "gross": 70
-          },
-          {
-            "scores": [
-              4,
-              6,
-              5,
-              3,
-              5,
-              4,
-              3,
-              6,
-              4,
-              4,
-              4,
-              3,
-              5,
-              3,
-              5,
-              5,
-              5,
-              3
-            ],
-            "f9": 40,
-            "b9": 37,
-            "gross": 77
-          }
-        ],
-        "11851716319189709333": [
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              3,
-              5,
-              4,
-              3,
-              5,
-              4,
-              3,
-              3,
-              4,
-              5,
-              3,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 34,
-            "gross": 75
-          },
-          {
-            "scores": [
-              5,
-              3,
-              6,
-              4,
-              3,
-              4,
-              4,
-              5,
-              5,
-              3,
-              4,
-              4,
-              5,
-              3,
-              4,
-              5,
-              4,
-              3
-            ],
-            "f9": 39,
-            "b9": 35,
-            "gross": 74
-          }
-        ],
-        "11851716319189709338": [
-          {
-            "scores": [
-              4,
-              4,
-              6,
-              2,
-              4,
-              5,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4,
-              5,
-              4,
-              5,
-              3
-            ],
-            "f9": 38,
-            "b9": 37,
-            "gross": 75
-          },
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              3,
-              5,
-              3,
-              5,
-              4,
-              5,
-              4,
-              4,
-              4,
-              3,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 38,
-            "b9": 37,
-            "gross": 75
-          }
-        ],
-        "11851716319223263777": [
-          {
-            "scores": [
-              3,
-              5,
-              5,
-              3,
-              4,
-              4,
-              4,
-              5,
-              4,
-              3,
-              6,
-              3,
-              6,
-              3,
-              3,
-              7,
-              4,
-              3
-            ],
-            "f9": 37,
-            "b9": 38,
-            "gross": 75
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              4,
-              6,
-              3,
-              5,
-              5,
-              3,
-              3,
-              4,
-              6,
-              2,
-              5,
-              5,
-              4,
-              4
-            ],
-            "f9": 39,
-            "b9": 36,
-            "gross": 75
-          }
-        ],
-        "11851716319256818222": [
-          {
-            "scores": [
-              4,
-              4,
-              7,
-              3,
-              4,
-              6,
-              4,
-              5,
-              5,
-              3,
-              4,
-              4,
-              4,
-              3,
-              4,
-              3,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 34,
-            "gross": 76
-          },
-          {
-            "scores": [
-              4,
-              3,
-              4,
-              3,
-              4,
-              5,
-              4,
-              6,
-              5,
-              4,
-              7,
-              4,
-              4,
-              3,
-              5,
-              4,
-              4,
-              3
-            ],
-            "f9": 38,
-            "b9": 38,
-            "gross": 76
-          }
-        ],
-        "11851716319256818225": [
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              3,
-              4,
-              6,
-              3,
-              6,
-              5,
-              3,
-              5,
-              4,
-              5,
-              3,
-              4,
-              4,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 37,
-            "gross": 79
-          },
-          {
-            "scores": [
-              3,
-              4,
-              6,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4,
-              3,
-              6,
-              4,
-              5,
-              3,
-              4,
-              4,
-              4,
-              3
-            ],
-            "f9": 37,
-            "b9": 36,
-            "gross": 73
-          }
-        ],
-        "11851716319223263778": [
-          {
-            "scores": [
-              5,
-              4,
-              5,
-              3,
-              5,
-              6,
-              3,
-              5,
-              4,
-              3,
-              4,
-              4,
-              5,
-              3,
-              5,
-              3,
-              5,
-              4
-            ],
-            "f9": 40,
-            "b9": 36,
-            "gross": 76
-          },
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              3,
-              3,
-              6,
-              3,
-              5,
-              5,
-              4,
-              5,
-              4,
-              5,
-              3,
-              5,
-              4,
-              4,
-              3
-            ],
-            "f9": 40,
-            "b9": 37,
-            "gross": 77
-          }
-        ],
-        "11851716319223263780": [
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              4,
-              4,
-              4,
-              4,
-              5,
-              4,
-              3,
-              5,
-              3,
-              6,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 38,
-            "b9": 37,
-            "gross": 75
-          },
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              4,
-              4,
-              5,
-              3,
-              5,
-              4,
-              3,
-              5,
-              5,
-              7,
-              3,
-              4,
-              4,
-              5,
-              3
-            ],
-            "f9": 40,
-            "b9": 39,
-            "gross": 79
-          }
-        ],
-        "11851716319223263779": [
-          {
-            "scores": [
-              6,
-              4,
-              6,
-              2,
-              4,
-              5,
-              4,
-              5,
-              5,
-              3,
-              4,
-              4,
-              5,
-              3,
-              5,
-              3,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 35,
-            "gross": 76
-          },
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              4,
-              3,
-              5,
-              3,
-              5,
-              4,
-              3,
-              4,
-              4,
-              7,
-              3,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 39,
-            "b9": 39,
-            "gross": 78
-          }
-        ],
-        "11851716319256818214": [
-          {
-            "scores": [
-              5,
-              3,
-              7,
-              4,
-              3,
-              6,
-              3,
-              5,
-              4,
-              3,
-              4,
-              6,
-              5,
-              3,
-              5,
-              3,
-              4,
-              3
-            ],
-            "f9": 40,
-            "b9": 36,
-            "gross": 76
-          },
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              4,
-              5,
-              4,
-              4,
-              6,
-              3,
-              3,
-              4,
-              5,
-              3,
-              4,
-              5,
-              6,
-              4
-            ],
-            "f9": 41,
-            "b9": 37,
-            "gross": 78
-          }
-        ],
-        "11851716319256818223": [
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              6,
-              5,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              5,
-              3,
-              4,
-              5,
-              3,
-              3
-            ],
-            "f9": 40,
-            "b9": 34,
-            "gross": 74
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              4,
-              4,
-              5,
-              3,
-              8,
-              5,
-              3,
-              4,
-              4,
-              6,
-              2,
-              7,
-              5,
-              4,
-              4
-            ],
-            "f9": 42,
-            "b9": 39,
-            "gross": 81
-          }
-        ],
-        "11851716319189709334": [
-          {
-            "scores": [
-              6,
-              4,
-              6,
-              3,
-              4,
-              5,
-              3,
-              5,
-              5,
-              3,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 35,
-            "gross": 76
-          },
-          {
-            "scores": [
-              6,
-              5,
-              5,
-              4,
-              3,
-              7,
-              3,
-              5,
-              5,
-              3,
-              4,
-              4,
-              4,
-              4,
-              3,
-              4,
-              5,
-              5
-            ],
-            "f9": 43,
-            "b9": 36,
-            "gross": 79
-          }
-        ],
-        "11851716319256818217": [
-          {
-            "scores": [
-              5,
-              5,
-              7,
-              3,
-              4,
-              4,
-              3,
-              5,
-              3,
-              3,
-              5,
-              5,
-              4,
-              3,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 39,
-            "b9": 38,
-            "gross": 77
-          },
-          {
-            "scores": [
-              5,
-              4,
-              5,
-              3,
-              4,
-              5,
-              4,
-              4,
-              4,
-              3,
-              4,
-              5,
-              6,
-              3,
-              4,
-              5,
-              6,
-              4
-            ],
-            "f9": 38,
-            "b9": 40,
-            "gross": 78
-          }
-        ],
-        "11851716319156154881": [
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              5,
-              4,
-              4,
-              3,
-              5,
-              4,
-              2,
-              4,
-              6,
-              4,
-              3,
-              4,
-              5,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 36,
-            "gross": 77
-          },
-          {
-            "scores": [
-              5,
-              6,
-              5,
-              4,
-              3,
-              4,
-              4,
-              4,
-              5,
-              3,
-              5,
-              4,
-              8,
-              3,
-              4,
-              4,
-              5,
-              3
-            ],
-            "f9": 40,
-            "b9": 39,
-            "gross": 79
-          }
-        ],
-        "11851716319256818219": [
-          {
-            "scores": [
-              5,
-              4,
-              5,
-              3,
-              5,
-              5,
-              4,
-              5,
-              4,
-              4,
-              5,
-              4,
-              4,
-              3,
-              5,
-              4,
-              5,
-              3
-            ],
-            "f9": 40,
-            "b9": 37,
-            "gross": 77
-          },
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              4,
-              5,
-              5,
-              5,
-              4,
-              3,
-              5,
-              4,
-              5,
-              3,
-              5,
-              3,
-              6,
-              4
-            ],
-            "f9": 41,
-            "b9": 38,
-            "gross": 79
-          }
-        ],
-        "11851716319256818215": [
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              4,
-              5,
-              4,
-              3,
-              5,
-              3,
-              3,
-              5,
-              4,
-              5,
-              3,
-              4,
-              4,
-              5,
-              5
-            ],
-            "f9": 39,
-            "b9": 38,
-            "gross": 77
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              3,
-              4,
-              5,
-              4,
-              6,
-              5,
-              4,
-              4,
-              4,
-              5,
-              3,
-              5,
-              6,
-              5,
-              3
-            ],
-            "f9": 40,
-            "b9": 39,
-            "gross": 79
-          }
-        ],
-        "11851716319223263776": [
-          {
-            "scores": [
-              5,
-              7,
-              5,
-              3,
-              4,
-              4,
-              3,
-              5,
-              5,
-              3,
-              4,
-              4,
-              4,
-              2,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 33,
-            "gross": 74
-          },
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              2,
-              5,
-              5,
-              4,
-              5,
-              6,
-              3,
-              5,
-              4,
-              8,
-              3,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 41,
-            "gross": 83
-          }
-        ],
-        "11851716319223263774": [
-          {
-            "scores": [
-              4,
-              6,
-              5,
-              2,
-              4,
-              5,
-              3,
-              6,
-              5,
-              3,
-              4,
-              4,
-              5,
-              4,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 40,
-            "b9": 37,
-            "gross": 77
-          },
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              6,
-              5,
-              3,
-              5,
-              7,
-              3,
-              4,
-              4,
-              5,
-              2,
-              4,
-              5,
-              4,
-              5
-            ],
-            "f9": 44,
-            "b9": 36,
-            "gross": 80
-          }
-        ],
-        "11851716319256818221": [
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              3,
-              3,
-              5,
-              3,
-              5,
-              4,
-              2,
-              5,
-              4,
-              5,
-              3,
-              5,
-              4,
-              4,
-              3
-            ],
-            "f9": 38,
-            "b9": 35,
-            "gross": 73
-          },
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              4,
-              4,
-              5,
-              5,
-              5,
-              6,
-              4,
-              6,
-              4,
-              4,
-              3,
-              5,
-              6,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 41,
-            "gross": 85
-          }
-        ],
-        "11851716319256818218": [
-          {
-            "scores": [
-              4,
-              4,
-              8,
-              3,
-              4,
-              5,
-              3,
-              5,
-              4,
-              4,
-              4,
-              4,
-              6,
-              2,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 40,
-            "b9": 38,
-            "gross": 78
-          },
-          {
-            "scores": [
-              4,
-              5,
-              4,
-              4,
-              4,
-              5,
-              4,
-              5,
-              5,
-              4,
-              4,
-              4,
-              6,
-              3,
-              4,
-              5,
-              5,
-              5
-            ],
-            "f9": 40,
-            "b9": 40,
-            "gross": 80
-          }
-        ],
-        "11851716319189709322": [
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              4,
-              4,
-              5,
-              3,
-              6,
-              5,
-              3,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 36,
-            "gross": 78
-          },
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              4,
-              4,
-              5,
-              3,
-              5,
-              4,
-              4,
-              6,
-              3,
-              5,
-              2,
-              5,
-              5,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 39,
-            "gross": 81
-          }
-        ],
-        "11851716319256818228": [
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              3,
-              4,
-              5,
-              3,
-              5,
-              4,
-              3,
-              5,
-              4,
-              6,
-              4,
-              4,
-              5,
-              5,
-              4
-            ],
-            "f9": 40,
-            "b9": 40,
-            "gross": 80
-          },
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              3,
-              5,
-              4,
-              3,
-              5,
-              5,
-              4,
-              4,
-              4,
-              5,
-              4,
-              4,
-              5,
-              5,
-              3
-            ],
-            "f9": 41,
-            "b9": 38,
-            "gross": 79
-          }
-        ],
-        "11851716319189709328": [
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              3,
-              5,
-              4,
-              3,
-              5,
-              3,
-              3,
-              4,
-              4,
-              4,
-              3,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 38,
-            "b9": 36,
-            "gross": 74
-          },
-          {
-            "scores": [
-              5,
-              5,
-              7,
-              4,
-              4,
-              5,
-              3,
-              5,
-              7,
-              3,
-              4,
-              5,
-              5,
-              4,
-              5,
-              5,
-              6,
-              4
-            ],
-            "f9": 45,
-            "b9": 41,
-            "gross": 86
-          }
-        ],
-        "11851716319256818230": [
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              4,
-              5,
-              5,
-              4,
-              5,
-              5,
-              3,
-              4,
-              4,
-              5,
-              4,
-              4,
-              2,
-              4,
-              5
-            ],
-            "f9": 42,
-            "b9": 35,
-            "gross": 77
-          },
-          {
-            "scores": [
-              5,
-              5,
-              7,
-              4,
-              4,
-              5,
-              3,
-              6,
-              5,
-              4,
-              4,
-              3,
-              5,
-              3,
-              5,
-              6,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 39,
-            "gross": 83
-          }
-        ],
-        "11851716319189709326": [
-          {
-            "scores": [
-              5,
-              6,
-              5,
-              2,
-              4,
-              5,
-              4,
-              5,
-              4,
-              3,
-              5,
-              4,
-              7,
-              4,
-              4,
-              5,
-              5,
-              5
-            ],
-            "f9": 40,
-            "b9": 42,
-            "gross": 82
-          },
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              4,
-              4,
-              5,
-              4,
-              5,
-              4,
-              2,
-              5,
-              4,
-              5,
-              2,
-              5,
-              5,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 37,
-            "gross": 79
-          }
-        ],
-        "11851716319256818216": [
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              3,
-              5,
-              5,
-              3,
-              5,
-              5,
-              3,
-              4,
-              5,
-              5,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 37,
-            "gross": 78
-          },
-          {
-            "scores": [
-              6,
-              4,
-              5,
-              4,
-              4,
-              6,
-              5,
-              4,
-              5,
-              2,
-              5,
-              5,
-              5,
-              3,
-              7,
-              5,
-              5,
-              4
-            ],
-            "f9": 43,
-            "b9": 41,
-            "gross": 84
-          }
-        ],
-        "11851716319189709335": [
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              3,
-              5,
-              5,
-              4,
-              6,
-              3,
-              3,
-              4,
-              4,
-              4,
-              4,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 43,
-            "b9": 36,
-            "gross": 79
-          },
-          {
-            "scores": [
-              5,
-              4,
-              5,
-              4,
-              4,
-              5,
-              4,
-              6,
-              6,
-              3,
-              6,
-              5,
-              7,
-              4,
-              4,
-              4,
-              6,
-              4
-            ],
-            "f9": 43,
-            "b9": 43,
-            "gross": 86
-          }
-        ],
-        "11851716319256818220": [
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              4,
-              4,
-              6,
-              4,
-              7,
-              4,
-              3,
-              4,
-              4,
-              5,
-              4,
-              4,
-              4,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 37,
-            "gross": 81
-          },
-          {
-            "scores": [
-              6,
-              5,
-              4,
-              4,
-              4,
-              6,
-              4,
-              6,
-              4,
-              3,
-              5,
-              4,
-              5,
-              3,
-              5,
-              7,
-              4,
-              5
-            ],
-            "f9": 43,
-            "b9": 41,
-            "gross": 84
-          }
-        ],
-        "11851716319256818227": [
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              4,
-              4,
-              4,
-              4,
-              5,
-              5,
-              3,
-              4,
-              5,
-              5,
-              3,
-              4,
-              7,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 39,
-            "gross": 80
-          },
-          {
-            "scores": [
-              4,
-              6,
-              6,
-              4,
-              5,
-              6,
-              4,
-              5,
-              6,
-              3,
-              4,
-              6,
-              6,
-              4,
-              5,
-              5,
-              5,
-              3
-            ],
-            "f9": 46,
-            "b9": 41,
-            "gross": 87
-          }
-        ],
-        "11851716319156154885": [
-          {
-            "scores": [
-              5,
-              6,
-              6,
-              3,
-              4,
-              4,
-              3,
-              5,
-              4,
-              3,
-              5,
-              6,
-              5,
-              3,
-              4,
-              5,
-              7,
-              4
-            ],
-            "f9": 40,
-            "b9": 42,
-            "gross": 82
-          },
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              3,
-              3,
-              5,
-              4,
-              5,
-              5,
-              5,
-              6,
-              5,
-              3,
-              5,
-              4,
-              5,
-              5,
-              5
-            ],
-            "f9": 42,
-            "b9": 43,
-            "gross": 85
-          }
-        ],
-        "11851716319156155390": [
-          {
-            "scores": [
-              5,
-              6,
-              6,
-              3,
-              2,
-              5,
-              4,
-              4,
-              5,
-              3,
-              4,
-              6,
-              6,
-              3,
-              5,
-              5,
-              5,
-              5
-            ],
-            "f9": 40,
-            "b9": 42,
-            "gross": 82
-          },
-          {
-            "scores": [
-              6,
-              5,
-              8,
-              4,
-              5,
-              5,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              6,
-              3,
-              5,
-              5,
-              5,
-              5
-            ],
-            "f9": 46,
-            "b9": 40,
-            "gross": 86
-          }
-        ],
-        "11851716319156154883": [
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              4,
-              6,
-              6,
-              4,
-              6,
-              5,
-              3,
-              4,
-              4,
-              5,
-              4,
-              4,
-              4,
-              5,
-              4
-            ],
-            "f9": 46,
-            "b9": 37,
-            "gross": 83
-          },
-          {
-            "scores": [
-              6,
-              5,
-              4,
-              4,
-              4,
-              4,
-              5,
-              10,
-              4,
-              3,
-              6,
-              3,
-              6,
-              4,
-              4,
-              4,
-              5,
-              5
-            ],
-            "f9": 46,
-            "b9": 40,
-            "gross": 86
-          }
-        ],
-        "11851716319189709329": [
-          {
-            "scores": [
-              6,
-              6,
-              6,
-              3,
-              4,
-              5,
-              4,
-              5,
-              5,
-              3,
-              6,
-              5,
-              6,
-              3,
-              5,
-              4,
-              3,
-              4
-            ],
-            "f9": 44,
-            "b9": 39,
-            "gross": 83
-          },
-          {
-            "scores": [
-              6,
-              5,
-              5,
-              4,
-              4,
-              5,
-              4,
-              5,
-              6,
-              3,
-              5,
-              5,
-              8,
-              3,
-              4,
-              4,
-              6,
-              4
-            ],
-            "f9": 44,
-            "b9": 42,
-            "gross": 86
-          }
-        ],
-        "11851716319189709323": [
-          {
-            "scores": [
-              6,
-              4,
-              7,
-              3,
-              4,
-              6,
-              4,
-              5,
-              7,
-              3,
-              6,
-              3,
-              5,
-              3,
-              5,
-              4,
-              5,
-              5
-            ],
-            "f9": 46,
-            "b9": 39,
-            "gross": 85
-          },
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              3,
-              5,
-              6,
-              6,
-              5,
-              4,
-              4,
-              5,
-              4,
-              5,
-              4,
-              4,
-              5,
-              4,
-              5
-            ],
-            "f9": 44,
-            "b9": 40,
-            "gross": 84
-          }
-        ],
-        "11851716319256818229": [
-          {
-            "scores": [
-              5,
-              5,
-              5,
-              4,
-              6,
-              4,
-              3,
-              5,
-              4,
-              4,
-              7,
-              6,
-              7,
-              4,
-              5,
-              5,
-              4,
-              5
-            ],
-            "f9": 41,
-            "b9": 47,
-            "gross": 88
-          },
-          {
-            "scores": [
-              6,
-              5,
-              5,
-              5,
-              4,
-              5,
-              4,
-              5,
-              4,
-              3,
-              5,
-              4,
-              5,
-              3,
-              5,
-              4,
-              6,
-              3
-            ],
-            "f9": 43,
-            "b9": 38,
-            "gross": 81
-          }
-        ],
-        "11851716319189709332": [
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              4,
-              4,
-              5,
-              4,
-              5,
-              5,
-              5,
-              3,
-              6,
-              5,
-              4,
-              4,
-              4,
-              6,
-              3
-            ],
-            "f9": 42,
-            "b9": 40,
-            "gross": 82
-          },
-          {
-            "scores": [
-              4,
-              4,
-              5,
-              4,
-              5,
-              5,
-              3,
-              7,
-              5,
-              3,
-              7,
-              6,
-              7,
-              3,
-              7,
-              4,
-              5,
-              4
-            ],
-            "f9": 42,
-            "b9": 46,
-            "gross": 88
-          }
-        ],
-        "11851716319156155387": [
-          {
-            "scores": [
-              4,
-              5,
-              5,
-              3,
-              4,
-              5,
-              4,
-              5,
-              4,
-              3,
-              4,
-              4,
-              6,
-              5,
-              7,
-              5,
-              4,
-              6
-            ],
-            "f9": 39,
-            "b9": 44,
-            "gross": 83
-          },
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              4,
-              5,
-              5,
-              4,
-              7,
-              4,
-              3,
-              5,
-              4,
-              6,
-              6,
-              4,
-              5,
-              5,
-              5
-            ],
-            "f9": 44,
-            "b9": 43,
-            "gross": 87
-          }
-        ],
-        "11851716319156154884": [
-          {
-            "scores": [
-              5,
-              4,
-              5,
-              3,
-              4,
-              6,
-              4,
-              5,
-              5,
-              3,
-              4,
-              5,
-              6,
-              3,
-              5,
-              4,
-              4,
-              3
-            ],
-            "f9": 41,
-            "b9": 37,
-            "gross": 78
-          },
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              4,
-              5,
-              5,
-              4,
-              10,
-              4,
-              4,
-              6,
-              3,
-              7,
-              4,
-              5,
-              6,
-              4,
-              5
-            ],
-            "f9": 49,
-            "b9": 44,
-            "gross": 93
-          }
-        ],
-        "11851716319189709331": [
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              4,
-              4,
-              4,
-              4,
-              4,
-              5,
-              3,
-              5,
-              4,
-              6,
-              3,
-              7,
-              4,
-              6,
-              3
-            ],
-            "f9": 40,
-            "b9": 41,
-            "gross": 81
-          },
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              4,
-              4,
-              6,
-              4,
-              5,
-              5,
-              4,
-              6,
-              4,
-              7,
-              4,
-              6,
-              6,
-              5,
-              5
-            ],
-            "f9": 44,
-            "b9": 47,
-            "gross": 91
-          }
-        ],
-        "11851716319156155391": [
-          {
-            "scores": [
-              6,
-              7,
-              6,
-              3,
-              5,
-              6,
-              3,
-              5,
-              4,
-              3,
-              6,
-              5,
-              5,
-              4,
-              5,
-              4,
-              4,
-              3
-            ],
-            "f9": 45,
-            "b9": 39,
-            "gross": 84
-          },
-          {
-            "scores": [
-              4,
-              5,
-              4,
-              5,
-              5,
-              5,
-              4,
-              5,
-              4,
-              4,
-              5,
-              6,
-              6,
-              3,
-              7,
-              6,
-              6,
-              4
-            ],
-            "f9": 41,
-            "b9": 47,
-            "gross": 88
-          }
-        ],
-        "11851716319189709327": [
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              4,
-              6,
-              4,
-              3,
-              6,
-              4,
-              3,
-              6,
-              4,
-              5,
-              4,
-              6,
-              4,
-              6,
-              4
-            ],
-            "f9": 44,
-            "b9": 42,
-            "gross": 86
-          },
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              3,
-              3,
-              6,
-              3,
-              5,
-              6,
-              3,
-              5,
-              5,
-              6,
-              4,
-              6,
-              6,
-              4,
-              5
-            ],
-            "f9": 42,
-            "b9": 44,
-            "gross": 86
-          }
-        ],
-        "11851716319156155389": [
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              3,
-              5,
-              4,
-              2,
-              5,
-              4,
-              3,
-              5,
-              5,
-              6,
-              4,
-              7,
-              4,
-              4,
-              4
-            ],
-            "f9": 39,
-            "b9": 42,
-            "gross": 81
-          },
-          {
-            "scores": [
-              6,
-              5,
-              8,
-              4,
-              5,
-              5,
-              4,
-              4,
-              6,
-              3,
-              5,
-              6,
-              6,
-              5,
-              5,
-              5,
-              5,
-              5
-            ],
-            "f9": 47,
-            "b9": 45,
-            "gross": 92
-          }
-        ],
-        "11851716319189709324": [
-          {
-            "scores": [
-              6,
-              5,
-              7,
-              5,
-              6,
-              5,
-              5,
-              4,
-              5,
-              4,
-              7,
-              5,
-              5,
-              3,
-              4,
-              4,
-              6,
-              5
-            ],
-            "f9": 48,
-            "b9": 43,
-            "gross": 91
-          },
-          {
-            "scores": [
-              4,
-              5,
-              6,
-              3,
-              4,
-              5,
-              5,
-              4,
-              5,
-              3,
-              5,
-              5,
-              7,
-              3,
-              4,
-              7,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 42,
-            "gross": 83
-          }
-        ],
-        "11851716319256818226": [
-          {
-            "scores": [
-              5,
-              6,
-              5,
-              2,
-              4,
-              7,
-              4,
-              6,
-              5,
-              3,
-              5,
-              4,
-              5,
-              3,
-              7,
-              4,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 40,
-            "gross": 84
-          },
-          {
-            "scores": [
-              4,
-              5,
-              8,
-              4,
-              4,
-              5,
-              4,
-              7,
-              4,
-              4,
-              5,
-              6,
-              7,
-              4,
-              6,
-              5,
-              5,
-              4
-            ],
-            "f9": 45,
-            "b9": 46,
-            "gross": 91
-          }
-        ],
-        "11851716319156154887": [
-          {
-            "scores": [
-              6,
-              5,
-              8,
-              3,
-              5,
-              4,
-              3,
-              5,
-              4,
-              5,
-              6,
-              6,
-              7,
-              4,
-              5,
-              6,
-              4,
-              4
-            ],
-            "f9": 43,
-            "b9": 47,
-            "gross": 90
-          },
-          {
-            "scores": [
-              9,
-              4,
-              7,
-              6,
-              5,
-              5,
-              4,
-              6,
-              4,
-              3,
-              4,
-              4,
-              5,
-              5,
-              5,
-              3,
-              4,
-              4
-            ],
-            "f9": 50,
-            "b9": 37,
-            "gross": 87
-          }
-        ],
-        "11851716319189709325": [
-          {
-            "scores": [
-              4,
-              6,
-              6,
-              7,
-              5,
-              5,
-              4,
-              5,
-              5,
-              4,
-              4,
-              5,
-              5,
-              4,
-              8,
-              6,
-              5,
-              5
-            ],
-            "f9": 47,
-            "b9": 46,
-            "gross": 93
-          },
-          {
-            "scores": [
-              5,
-              5,
-              4,
-              3,
-              4,
-              5,
-              5,
-              5,
-              5,
-              4,
-              6,
-              5,
-              5,
-              4,
-              6,
-              5,
-              4,
-              4
-            ],
-            "f9": 41,
-            "b9": 43,
-            "gross": 84
-          }
-        ],
-        "11851716319156154886": [
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              4,
-              3,
-              5,
-              3,
-              5,
-              4,
-              4,
-              5,
-              5,
-              7,
-              4,
-              7,
-              4,
-              4,
-              4
-            ],
-            "f9": 40,
-            "b9": 44,
-            "gross": 84
-          },
-          {
-            "scores": [
-              5,
-              6,
-              7,
-              4,
-              8,
-              6,
-              4,
-              6,
-              4,
-              4,
-              6,
-              4,
-              6,
-              4,
-              5,
-              6,
-              5,
-              4
-            ],
-            "f9": 50,
-            "b9": 44,
-            "gross": 94
-          }
-        ],
-        "11851716319189709330": [
-          {
-            "scores": [
-              5,
-              7,
-              5,
-              3,
-              4,
-              5,
-              4,
-              4,
-              7,
-              3,
-              4,
-              5,
-              6,
-              4,
-              5,
-              3,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 39,
-            "gross": 83
-          },
-          {
-            "scores": [
-              5,
-              5,
-              7,
-              4,
-              7,
-              6,
-              4,
-              6,
-              5,
-              3,
-              9,
-              4,
-              6,
-              3,
-              5,
-              7,
-              5,
-              5
-            ],
-            "f9": 49,
-            "b9": 47,
-            "gross": 96
-          }
-        ],
-        "11851716319156154880": [
-          {
-            "scores": [
-              7,
-              5,
-              6,
-              5,
-              4,
-              5,
-              4,
-              7,
-              5,
-              3,
-              4,
-              4,
-              7,
-              4,
-              6,
-              7,
-              5,
-              4
-            ],
-            "f9": 48,
-            "b9": 44,
-            "gross": 92
-          },
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              3,
-              5,
-              5,
-              3,
-              6,
-              6,
-              3,
-              4,
-              4,
-              7,
-              3,
-              6,
-              7,
-              6,
-              4
-            ],
-            "f9": 43,
-            "b9": 44,
-            "gross": 87
-          }
-        ],
-        "11851716319189709321": [
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              4,
-              5,
-              6,
-              4,
-              4,
-              4,
-              5,
-              6,
-              6,
-              6,
-              4,
-              4,
-              5,
-              5,
-              4
-            ],
-            "f9": 44,
-            "b9": 45,
-            "gross": 89
-          },
-          {
-            "scores": [
-              4,
-              6,
-              5,
-              4,
-              5,
-              7,
-              6,
-              7,
-              6,
-              3,
-              6,
-              5,
-              7,
-              3,
-              5,
-              4,
-              5,
-              4
-            ],
-            "f9": 50,
-            "b9": 42,
-            "gross": 92
-          }
-        ],
-        "11851716319156154882": [
-          {
-            "scores": [
-              5,
-              4,
-              6,
-              4,
-              4,
-              5,
-              5,
-              5,
-              5,
-              4,
-              5,
-              5,
-              6,
-              3,
-              7,
-              5,
-              4,
-              4
-            ],
-            "f9": 43,
-            "b9": 43,
-            "gross": 86
-          },
-          {
-            "scores": [
-              6,
-              5,
-              7,
-              4,
-              7,
-              6,
-              4,
-              6,
-              6,
-              3,
-              4,
-              5,
-              6,
-              4,
-              8,
-              6,
-              7,
-              3
-            ],
-            "f9": 51,
-            "b9": 46,
-            "gross": 97
-          }
-        ],
-        "11851716319189709336": [
-          {
-            "scores": [
-              4,
-              7,
-              6,
-              3,
-              5,
-              5,
-              4,
-              6,
-              5,
-              3,
-              4,
-              5,
-              7,
-              4,
-              5,
-              4,
-              5,
-              6
-            ],
-            "f9": 45,
-            "b9": 43,
-            "gross": 88
-          },
-          {
-            "scores": [
-              4,
-              4,
-              6,
-              5,
-              4,
-              6,
-              4,
-              6,
-              6,
-              4,
-              7,
-              6,
-              5,
-              5,
-              6,
-              7,
-              6,
-              6
-            ],
-            "f9": 45,
-            "b9": 52,
-            "gross": 97
-          }
-        ],
-        "11851716319156155386": [
-          {
-            "scores": [
-              6,
-              4,
-              7,
-              4,
-              4,
-              5,
-              4,
-              6,
-              6,
-              5,
-              4,
-              5,
-              8,
-              4,
-              5,
-              5,
-              5,
-              5
-            ],
-            "f9": 46,
-            "b9": 46,
-            "gross": 92
-          },
-          {
-            "scores": [
-              6,
-              5,
-              7,
-              3,
-              6,
-              6,
-              5,
-              6,
-              5,
-              4,
-              5,
-              5,
-              7,
-              5,
-              5,
-              5,
-              4,
-              6
-            ],
-            "f9": 49,
-            "b9": 46,
-            "gross": 95
-          }
-        ],
-        "11851716319156155388": [
-          {
-            "scores": [
-              7,
-              4,
-              5,
-              4,
-              4,
-              5,
-              4,
-              6,
-              4,
-              5,
-              6,
-              4,
-              5,
-              4,
-              5,
-              5,
-              5,
-              4
-            ],
-            "f9": 43,
-            "b9": 43,
-            "gross": 86
-          },
-          {
-            "scores": [
-              7,
-              7,
-              7,
-              4,
-              8,
-              6,
-              5,
-              6,
-              7,
-              4,
-              6,
-              5,
-              5,
-              3,
-              8,
-              6,
-              5,
-              4
-            ],
-            "f9": 57,
-            "b9": 46,
-            "gross": 103
-          }
-        ],
-        "11851716319189709320": [
-          {
-            "scores": [
-              5,
-              8,
-              9,
-              8,
-              5,
-              8,
-              4,
-              7,
-              7,
-              4,
-              5,
-              6,
-              6,
-              5,
-              5,
-              4,
-              4,
-              4
-            ],
-            "f9": 61,
-            "b9": 43,
-            "gross": 104
-          },
-          {
-            "scores": [
-              6,
-              6,
-              6,
-              4,
-              5,
-              5,
-              5,
-              6,
-              6,
-              4,
-              5,
-              5,
-              7,
-              2,
-              9,
-              4,
-              9,
-              4
-            ],
-            "f9": 49,
-            "b9": 49,
-            "gross": 98
-          }
-        ],
-        "11851716319156155385": [
-          {
-            "scores": [
-              5,
-              5,
-              6,
-              5,
-              7,
-              8,
-              4,
-              8,
-              5,
-              4,
-              6,
-              7,
-              5,
-              5,
-              6,
-              4,
-              6,
-              5
-            ],
-            "f9": 53,
-            "b9": 48,
-            "gross": 101
-          },
-          {
-            "scores": [
-              6,
-              5,
-              6,
-              3,
-              5,
-              7,
-              6,
-              7,
-              5,
-              4,
-              9,
-              5,
-              7,
-              3,
-              7,
-              6,
-              5,
-              6
-            ],
-            "f9": 50,
-            "b9": 52,
-            "gross": 102
-          }
-        ]
-      }
-    },
-    {
-      "id": "11842482703284876203",
-      "name": "Qualification T2 (Mar, Jui...",
-      "format": "stroke",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11851716319223263781",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            73,
-            70
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263772",
-          "pos": 2,
-          "name": "ASSBAI Safaa",
-          "country": "FR",
-          "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
-          "hcp": 3.6,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            75,
-            68
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709337",
-          "pos": 3,
-          "name": "DIGUERHER Prune",
-          "country": "FR",
-          "club": "DOMAINE ET GOLF DU RONCEMAY",
-          "hcp": 2,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            72,
-            71
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818224",
-          "pos": 4,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "total": 143,
-          "toPar": 1,
-          "roundScores": [
-            71,
-            72
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263773",
-          "pos": 5,
-          "name": "BINET Liliane",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 3.6,
-          "total": 145,
-          "toPar": 3,
-          "roundScores": [
-            74,
-            71
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263775",
-          "pos": 6,
-          "name": "HUMBERT Moira",
-          "country": "FR",
-          "club": "GOLF DE L'ILE D'OR",
-          "hcp": 5.2,
-          "total": 146,
-          "toPar": 4,
-          "roundScores": [
-            73,
-            73
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263771",
-          "pos": 7,
-          "name": "BAUDY Aylin",
-          "country": "FR",
-          "club": "GOLF D'AIX LES BAINS",
-          "hcp": 2.8,
-          "total": 147,
-          "toPar": 5,
-          "roundScores": [
-            77,
-            70
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709333",
-          "pos": 8,
-          "name": "SOLANO Sarah",
-          "country": "FR",
-          "club": "GOLF DE BOURBON",
-          "hcp": 9.4,
-          "total": 149,
-          "toPar": 7,
-          "roundScores": [
-            74,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709338",
-          "pos": 9,
-          "name": "LANNE LEWINSKI Justine",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 4.6,
-          "total": 150,
-          "toPar": 8,
-          "roundScores": [
-            75,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263777",
-          "pos": 10,
-          "name": "CLAVERIE Lana",
-          "country": "FR",
-          "club": "GOLF DE MONT DE MARSAN",
-          "hcp": 6.5,
-          "total": 150,
-          "toPar": 8,
-          "roundScores": [
-            75,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818222",
-          "pos": 11,
-          "name": "PREVOST Jade",
-          "country": "FR",
-          "club": "GOLF CLUB DE TOULOUSE",
-          "hcp": 6.4,
-          "total": 152,
-          "toPar": 10,
-          "roundScores": [
-            76,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818225",
-          "pos": 12,
-          "name": "CAREMIER Ruby",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 9.9,
-          "total": 152,
-          "toPar": 10,
-          "roundScores": [
-            73,
-            79
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263778",
-          "pos": 13,
-          "name": "STREK-DEPLECHIN Rachel",
-          "country": "FR",
-          "club": "GOLF DE FOURQUEUX",
-          "hcp": 6.6,
-          "total": 153,
-          "toPar": 11,
-          "roundScores": [
-            77,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263780",
-          "pos": 14,
-          "name": "DETTINGER Eden",
-          "country": "FR",
-          "club": "GOLF DE VALESCURE",
-          "hcp": 7.5,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            79,
-            75
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263779",
-          "pos": 15,
-          "name": "SCHMOHL Anna",
-          "country": "FR",
-          "club": "GOLF DE CHIBERTA",
-          "hcp": 4.8,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            78,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818214",
-          "pos": 16,
-          "name": "DOREMUS Lou",
-          "country": "FR",
-          "club": "GOLF DU HAVRE / OCTEVILLE/MER",
-          "hcp": 7.8,
-          "total": 154,
-          "toPar": 12,
-          "roundScores": [
-            78,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818223",
-          "pos": 17,
-          "name": "BADATE Farah",
-          "country": "FR",
-          "club": "GOLF DU BASSIN BLEU",
-          "hcp": 9.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            81,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709334",
-          "pos": 18,
-          "name": "PILTERS Mattea",
-          "country": "FR",
-          "club": "GOLF ISABELLA",
-          "hcp": 12.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            79,
-            76
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818217",
-          "pos": 19,
-          "name": "DELGADO Margaux",
-          "country": "FR",
-          "club": "GOLF DE L'ECOLE DE L'AIR",
-          "hcp": 8.6,
-          "total": 155,
-          "toPar": 13,
-          "roundScores": [
-            78,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154881",
-          "pos": 20,
-          "name": "TERIITEHAU-PAQUIER Rokea",
-          "country": "FR",
-          "club": "AS FEI PI 1923",
-          "hcp": 5.9,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818219",
-          "pos": 21,
-          "name": "PICARD Pauline",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 9.3,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818215",
-          "pos": 22,
-          "name": "ALLEZOT Anne Sophie",
-          "country": "FR",
-          "club": "GOLF CLUB COMBLES EN BARROIS",
-          "hcp": 6.1,
-          "total": 156,
-          "toPar": 14,
-          "roundScores": [
-            79,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263776",
-          "pos": 23,
-          "name": "MARCINIAK Valentina",
-          "country": "FR",
-          "club": "UGOLF DU COUDRAY MONTCEAUX",
-          "hcp": 7.1,
-          "total": 157,
-          "toPar": 15,
-          "roundScores": [
-            83,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319223263774",
-          "pos": 24,
-          "name": "HUART-VESSIE Jeanne",
-          "country": "FR",
-          "club": "GOLF DE BRIGODE",
-          "hcp": 6.1,
-          "total": 157,
-          "toPar": 15,
-          "roundScores": [
-            80,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818221",
-          "pos": 25,
-          "name": "GRATTE Sarah",
-          "country": "FR",
-          "club": "GOLF DE MARCILLY-ORLEANS",
-          "hcp": 9.3,
-          "total": 158,
-          "toPar": 16,
-          "roundScores": [
-            85,
-            73
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818218",
-          "pos": 26,
-          "name": "CHABOT Anne-Constance",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN LA DOMANGERE",
-          "hcp": 9.2,
-          "total": 158,
-          "toPar": 16,
-          "roundScores": [
-            80,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709322",
-          "pos": 27,
-          "name": "VELLIEUX Jeanne",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 13.5,
-          "total": 159,
-          "toPar": 17,
-          "roundScores": [
-            81,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818228",
-          "pos": 28,
-          "name": "LEGOY Eloise",
-          "country": "FR",
-          "club": "GOLF DU HAVRE / OCTEVILLE/MER",
-          "hcp": 11.5,
-          "total": 159,
-          "toPar": 17,
-          "roundScores": [
-            79,
-            80
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709328",
-          "pos": 29,
-          "name": "DE LOS RIOS Emma",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 11.8,
-          "total": 160,
-          "toPar": 18,
-          "roundScores": [
-            86,
-            74
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818230",
-          "pos": 30,
-          "name": "BRIONES Capucine",
-          "country": "FR",
-          "club": "GOLF DE MONT DE MARSAN",
-          "hcp": 12.2,
-          "total": 160,
-          "toPar": 18,
-          "roundScores": [
-            83,
-            77
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709326",
-          "pos": 31,
-          "name": "CHATEL Colette",
-          "country": "FR",
-          "club": "GOLF DU PRIEURE",
-          "hcp": 10.7,
-          "total": 161,
-          "toPar": 19,
-          "roundScores": [
-            79,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818216",
-          "pos": 32,
-          "name": "FARRANDO Austine",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 8.7,
-          "total": 162,
-          "toPar": 20,
-          "roundScores": [
-            84,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709335",
-          "pos": 33,
-          "name": "DUNLOP Mila",
-          "country": "FR",
-          "club": "UGOLF DES TROIS VALLONS",
-          "hcp": 11,
-          "total": 165,
-          "toPar": 23,
-          "roundScores": [
-            86,
-            79
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818220",
-          "pos": 34,
-          "name": "CHASLES SCHNELL Aïkimi",
-          "country": "FR",
-          "club": "BAYEUX OMAHA BEACH GOLF",
-          "hcp": 12.4,
-          "total": 165,
-          "toPar": 23,
-          "roundScores": [
-            84,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818227",
-          "pos": 35,
-          "name": "LACOMBRADE Elea",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN BORDEAUX LAC",
-          "hcp": 11.5,
-          "total": 167,
-          "toPar": 25,
-          "roundScores": [
-            87,
-            80
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154885",
-          "pos": 36,
-          "name": "DAVID Diane",
-          "country": "FR",
-          "club": "GOLF DE LA NIVELLE",
-          "hcp": 16.6,
-          "total": 167,
-          "toPar": 25,
-          "roundScores": [
-            85,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155390",
-          "pos": 37,
-          "name": "GERMAIN Alix",
-          "country": "FR",
-          "club": "GOLF DE GUERANDE",
-          "hcp": 17.4,
-          "total": 168,
-          "toPar": 26,
-          "roundScores": [
-            86,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154883",
-          "pos": 38,
-          "name": "SHABAEV Eugenie",
-          "country": "FR",
-          "club": "LE GOLF NATIONAL",
-          "hcp": 16.5,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            86,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709329",
-          "pos": 39,
-          "name": "DAVY Zoé",
-          "country": "FR",
-          "club": "GOLF DE SAINT-MALO",
-          "hcp": 11.3,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            86,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709323",
-          "pos": 40,
-          "name": "VANDENPLAS Capucine",
-          "country": "FR",
-          "club": "GOLF CLUB DE TOULOUSE",
-          "hcp": 12.7,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            84,
-            85
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818229",
-          "pos": 41,
-          "name": "ROGER Louise",
-          "country": "FR",
-          "club": "RACING CLUB DE FRANCE",
-          "hcp": 11.8,
-          "total": 169,
-          "toPar": 27,
-          "roundScores": [
-            81,
-            88
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709332",
-          "pos": 42,
-          "name": "BERTROU Eloïse",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 10.7,
-          "total": 170,
-          "toPar": 28,
-          "roundScores": [
-            88,
-            82
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155387",
-          "pos": 43,
-          "name": "SCHWARZ Olivia",
-          "country": "FR",
-          "club": "GOLF DE VANNES-ATLANTHEIX",
-          "hcp": 20.8,
-          "total": 170,
-          "toPar": 28,
-          "roundScores": [
-            87,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154884",
-          "pos": 44,
-          "name": "DESSEMOND Lara",
-          "country": "FR",
-          "club": "GOLF&COUNTRY DE MAISON BLANCHE",
-          "hcp": 14.4,
-          "total": 171,
-          "toPar": 29,
-          "roundScores": [
-            93,
-            78
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709331",
-          "pos": 45,
-          "name": "FOUCHE Charlotte",
-          "country": "FR",
-          "club": "GOLF DE PORNIC",
-          "hcp": 12.9,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            91,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155391",
-          "pos": 46,
-          "name": "ICART Leïla",
-          "country": "FR",
-          "club": "GOLF DE L'ARIEGE",
-          "hcp": 15.9,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            88,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709327",
-          "pos": 47,
-          "name": "DEYRA Eugenie",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 13.3,
-          "total": 172,
-          "toPar": 30,
-          "roundScores": [
-            86,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155389",
-          "pos": 48,
-          "name": "JORAT Ombeline",
-          "country": "FR",
-          "club": "GOLF CLUB ESERY GRAND GENEVE",
-          "hcp": 18.1,
-          "total": 173,
-          "toPar": 31,
-          "roundScores": [
-            92,
-            81
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709324",
-          "pos": 49,
-          "name": "CHOUVIN Juliette",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 14.9,
-          "total": 174,
-          "toPar": 32,
-          "roundScores": [
-            83,
-            91
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319256818226",
-          "pos": 50,
-          "name": "ALFANDARI Eugenie",
-          "country": "FR",
-          "club": "CABOT BORDEAUX",
-          "hcp": 13.8,
-          "total": 175,
-          "toPar": 33,
-          "roundScores": [
-            91,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154887",
-          "pos": 51,
-          "name": "LATARD Louna",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 12.1,
-          "total": 177,
-          "toPar": 35,
-          "roundScores": [
-            87,
-            90
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709325",
-          "pos": 52,
-          "name": "PAINDAVOINE Céleste",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 15.9,
-          "total": 177,
-          "toPar": 35,
-          "roundScores": [
-            84,
-            93
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154886",
-          "pos": 53,
-          "name": "THIBERT Salome",
-          "country": "FR",
-          "club": "GOLF DE BONDUES",
-          "hcp": 17.1,
-          "total": 178,
-          "toPar": 36,
-          "roundScores": [
-            94,
-            84
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709330",
-          "pos": 54,
-          "name": "BROUILLET Garance",
-          "country": "FR",
-          "club": "GOLF CLUB DE PERIGUEUX",
-          "hcp": 13.2,
-          "total": 179,
-          "toPar": 37,
-          "roundScores": [
-            96,
-            83
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154880",
-          "pos": 55,
-          "name": "NGUYEN WILBAL Camille",
-          "country": "FR",
-          "club": "GOLF AIX-MARSEILLE",
-          "hcp": 14.7,
-          "total": 179,
-          "toPar": 37,
-          "roundScores": [
-            87,
-            92
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709321",
-          "pos": 56,
-          "name": "YANG Chloé Angelle",
-          "country": "FR",
-          "club": "GOLF DE BUSSY-GUERMANTES",
-          "hcp": 16.1,
-          "total": 181,
-          "toPar": 39,
-          "roundScores": [
-            92,
-            89
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156154882",
-          "pos": 57,
-          "name": "PORTE Mindy",
-          "country": "FR",
-          "club": "GOLF INTERNATIONAL DE ROISSY",
-          "hcp": 18.1,
-          "total": 183,
-          "toPar": 41,
-          "roundScores": [
-            97,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709336",
-          "pos": 58,
-          "name": "GILOT Alix",
-          "country": "FR",
-          "club": "GOLF CLUB DE CABOURG LE HOME",
-          "hcp": 17.4,
-          "total": 185,
-          "toPar": 43,
-          "roundScores": [
-            97,
-            88
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155386",
-          "pos": 59,
-          "name": "BOIS Olivia",
-          "country": "FR",
-          "club": "WIMEREUX GOLF CLUB",
-          "hcp": 21.3,
-          "total": 187,
-          "toPar": 45,
-          "roundScores": [
-            95,
-            92
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155388",
-          "pos": 60,
-          "name": "LE GALL Inès",
-          "country": "FR",
-          "club": "GOLF BLUEGREEN BADEN",
-          "hcp": 18.8,
-          "total": 189,
-          "toPar": 47,
-          "roundScores": [
-            103,
-            86
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319189709320",
-          "pos": 61,
-          "name": "VIGNAUD Eleonore",
-          "country": "FR",
-          "club": "GOLF DE PRUNEVELLE",
-          "hcp": 15.2,
-          "total": 202,
-          "toPar": 60,
-          "roundScores": [
-            98,
-            104
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        },
-        {
-          "id": "11851716319156155385",
-          "pos": 62,
-          "name": "MOURLON Clarisse",
-          "country": "FR",
-          "club": "GOLF DE SAINT SYLVAIN D'ANJOU",
-          "hcp": 21.3,
-          "total": 203,
-          "toPar": 61,
-          "roundScores": [
-            102,
-            101
-          ],
-          "division": "Qualification CFJ 2025 - U12 Filles"
-        }
-      ],
-      "pairings": [],
-      "division": "Qualification CFJ 2025 - U12 Filles",
-      "scorecardsByPlayerId": {}
-    },
-    {
-      "id": "11842482797639938988",
-      "name": "1/16e de Finale (Mer, Juil...",
-      "format": "match",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11859421447636169474",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "toPar": 5,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723908",
-          "pos": 2,
-          "name": "DOREMUS Lou",
-          "country": "FR",
-          "club": "GOLF DU HAVRE / OCTEVILLE/MER",
-          "hcp": 7.8,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723910",
-          "pos": 3,
-          "name": "SOLANO Sarah",
-          "country": "FR",
-          "club": "GOLF DE BOURBON",
-          "hcp": 9.4,
-          "toPar": 4,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723912",
-          "pos": 4,
-          "name": "LANNE LEWINSKI Justine",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 4.6,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723914",
-          "pos": 5,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "toPar": 4,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723916",
-          "pos": 6,
-          "name": "STREK-DEPLECHIN Rachel",
-          "country": "FR",
-          "club": "GOLF DE FOURQUEUX",
-          "hcp": 6.6,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723918",
-          "pos": 7,
-          "name": "BINET Liliane",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 3.6,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723920",
-          "pos": 8,
-          "name": "CAREMIER Ruby",
-          "country": "FR",
-          "club": "GOLF BASTIDE DE LA SALETTE",
-          "hcp": 9.9,
-          "toPar": 4,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723922",
-          "pos": 9,
-          "name": "ASSBAI Safaa",
-          "country": "FR",
-          "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
-          "hcp": 3.6,
-          "toPar": 6,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723924",
-          "pos": 10,
-          "name": "SCHMOHL Anna",
-          "country": "FR",
-          "club": "GOLF DE CHIBERTA",
-          "hcp": 4.8,
-          "toPar": 5,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723926",
-          "pos": 11,
-          "name": "BAUDY Aylin",
-          "country": "FR",
-          "club": "GOLF D'AIX LES BAINS",
-          "hcp": 2.8,
-          "toPar": 5,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723928",
-          "pos": 12,
-          "name": "CLAVERIE Lana",
-          "country": "FR",
-          "club": "GOLF DE MONT DE MARSAN",
-          "hcp": 6.5,
-          "toPar": 19,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723930",
-          "pos": 13,
-          "name": "DIGUERHER Prune",
-          "country": "FR",
-          "club": "DOMAINE ET GOLF DU RONCEMAY",
-          "hcp": 2,
-          "toPar": 4,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723932",
-          "pos": 14,
-          "name": "DETTINGER Eden",
-          "country": "FR",
-          "club": "GOLF DE VALESCURE",
-          "hcp": 7.5,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723934",
-          "pos": 15,
-          "name": "HUMBERT Moira",
-          "country": "FR",
-          "club": "GOLF DE L'ILE D'OR",
-          "hcp": 5.2,
-          "toPar": 6,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859421447669723936",
-          "pos": 16,
-          "name": "PREVOST Jade",
-          "country": "FR",
-          "club": "GOLF CLUB DE TOULOUSE",
-          "hcp": 6.4,
-          "toPar": 1,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        }
-      ],
-      "pairings": [],
-      "division": "Développer tout",
-      "scorecardsByPlayerId": {
-        "11859421447636169474": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "gross": 5,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723908": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "gross": 9,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723910": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723912": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723914": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723916": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723918": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723920": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723922": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              6,
-              6,
-              6
-            ],
-            "gross": 6,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723924": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723926": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723928": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              2,
-              2,
-              2,
-              2,
-              2,
-              2,
-              2
-            ],
-            "gross": 1,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723930": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723932": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "gross": 2,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723934": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "gross": 5,
-            "nineHole": true
-          }
-        ],
-        "11859421447669723936": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "gross": 1,
-            "nineHole": true
-          }
-        ]
-      }
-    },
-    {
-      "id": "11842482942897075117",
-      "name": "1/8e de Finale (Jeu, Juill...",
-      "format": "match",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11859424611986879266",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "toPar": 6,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612020433700",
-          "pos": 2,
-          "name": "SOLANO Sarah",
-          "country": "FR",
-          "club": "GOLF DE BOURBON",
-          "hcp": 9.4,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612020433702",
-          "pos": 3,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612020433704",
-          "pos": 4,
-          "name": "BINET Liliane",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 3.6,
-          "toPar": 19,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612020433706",
-          "pos": 5,
-          "name": "ASSBAI Safaa",
-          "country": "FR",
-          "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
-          "hcp": 3.6,
-          "toPar": 4,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612020433708",
-          "pos": 6,
-          "name": "BAUDY Aylin",
-          "country": "FR",
-          "club": "GOLF D'AIX LES BAINS",
-          "hcp": 2.8,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612053988142",
-          "pos": 7,
-          "name": "DIGUERHER Prune",
-          "country": "FR",
-          "club": "DOMAINE ET GOLF DU RONCEMAY",
-          "hcp": 2,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        },
-        {
-          "id": "11859424612053988144",
-          "pos": 8,
-          "name": "HUMBERT Moira",
-          "country": "FR",
-          "club": "GOLF DE L'ILE D'OR",
-          "hcp": 5.2,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play"
-        }
-      ],
-      "pairings": [],
-      "division": "Développer tout",
-      "scorecardsByPlayerId": {
-        "11859424611986879266": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859424612020433700": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859424612020433702": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 3,
-            "nineHole": true
-          }
-        ],
-        "11859424612020433704": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1,
-              1
-            ],
-            "gross": 9,
-            "nineHole": true
-          }
-        ],
-        "11859424612020433706": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "gross": 4,
-            "nineHole": true
-          }
-        ],
-        "11859424612020433708": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              4,
-              4,
-              4,
-              4,
-              4
-            ],
-            "gross": 5,
-            "nineHole": true
-          }
-        ],
-        "11859424612053988142": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859424612053988144": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3,
-              3
-            ],
-            "gross": 3,
-            "nineHole": true
-          }
-        ]
-      }
-    },
-    {
-      "id": "11842483037755454382",
-      "name": "1/4 de Finale (Ven, Juille...",
-      "format": "match",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11859550857517380529",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Quarterfinals"
-        },
-        {
-          "id": "11859550857550934963",
-          "pos": 2,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "toPar": 1,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Quarterfinals"
-        },
-        {
-          "id": "11859550857584489397",
-          "pos": 3,
-          "name": "ASSBAI Safaa",
-          "country": "FR",
-          "club": "EXCLUSIV GOLF DE CICE-BLOSSAC",
-          "hcp": 3.6,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Quarterfinals"
-        },
-        {
-          "id": "11859550857584489399",
-          "pos": 4,
-          "name": "DIGUERHER Prune",
-          "country": "FR",
-          "club": "DOMAINE ET GOLF DU RONCEMAY",
-          "hcp": 2,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Quarterfinals"
-        }
-      ],
-      "pairings": [],
-      "division": "Développer tout",
-      "scorecardsByPlayerId": {
-        "11859550857517380529": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859550857550934963": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11859550857584489397": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              2,
-              2,
-              2,
-              1,
-              1,
-              1,
-              1
-            ],
-            "gross": 1,
-            "nineHole": true
-          }
-        ],
-        "11859550857584489399": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ]
-      }
-    },
-    {
-      "id": "11842483115601736623",
-      "name": "1/2 Finale (Sam, Juillet 26)",
-      "format": "match",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11862312314860515948",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Semifinals"
-        },
-        {
-          "id": "11862312314894070382",
-          "pos": 2,
-          "name": "MARCINIAK Valentina",
-          "country": "FR",
-          "club": "UGOLF DU COUDRAY MONTCEAUX",
-          "hcp": 7.1,
-          "toPar": 2,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Semifinals"
-        }
-      ],
-      "pairings": [],
-      "division": "Développer tout",
-      "scorecardsByPlayerId": {
-        "11862312314860515948": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11862312314894070382": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          },
-          {
-            "scores": [
-              1,
-              2,
-              2,
-              2,
-              2,
-              2,
-              3,
-              4,
-              4
-            ],
-            "gross": 3,
-            "nineHole": true
-          }
-        ]
-      }
-    },
-    {
-      "id": "11842483186569360304",
-      "name": "Finale (Sam, Juillet 26)",
-      "format": "match",
-      "headers": [
-        ""
-      ],
-      "players": [
-        {
-          "id": "11863075075114709606",
-          "pos": 1,
-          "name": "GUILLOUX Zélie",
-          "country": "FR",
-          "club": "GOLF CLUB DE LYON",
-          "hcp": 6.1,
-          "toPar": 3,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Finals"
-        },
-        {
-          "id": "11863075075114709608",
-          "pos": 2,
-          "name": "HELSON Florence",
-          "country": "FR",
-          "club": "GOLF DE TERRE BLANCHE",
-          "hcp": 8.2,
-          "toPar": 19,
-          "roundScores": [],
-          "division": "U12 Filles - Match Play - Finals"
-        }
-      ],
-      "pairings": [],
-      "division": "Développer tout",
-      "scorecardsByPlayerId": {
-        "11863075075114709606": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ],
-        "11863075075114709608": [
-          {
-            "scores": [
-              1,
-              2,
-              3,
-              4,
-              5,
-              6,
-              7,
-              8,
-              9
-            ],
-            "gross": 10,
-            "nineHole": true
-          }
-        ]
-      }
-    }
-  ]
+  "events": []
 }

@@ -192,7 +192,9 @@ function jobfileToFfgolf(jf, t, lid) {
 
   // Cartão oficial (par + metros por buraco) ganha ao par inferido dos marcadores.
   const ov = applyCourseOverride(out);
-  if (ov) {
+  // Só é «cartão oficial» quando o override traz par/metros — um override só
+  // com CR/Slope/PCC (para o SD) não substitui o course_statistics do GG.
+  if (ov && ((Array.isArray(ov.par) && ov.par.length) || (Array.isArray(ov.meters) && ov.meters.length))) {
     out.course.parSource = "cartao-oficial";
     out.course.metersSource = "cartao-oficial";
     console.log(`     🗂  cartão oficial aplicado: ${out.course.tee || "?"} · par ${out.course.parTotal} · ${out.course.metersTotal}m`);
@@ -201,6 +203,28 @@ function jobfileToFfgolf(jf, t, lid) {
   }
 
   return out;
+}
+
+/**
+ * Página GG com VÁRIAS provas empilhadas em cada ronda (Internationaux U14 2025:
+ * «Boys - Garçons» e «Girls - Filles» no mesmo widget) — o discoverDivisions
+ * agrupa pelo <select> de rondas e fica só com o 1.º v2tid, e as raparigas
+ * saíam com os rapazes. Com `gg_event` no catálogo (texto do nome do evento GG)
+ * escolhe-se o v2tid certo pelo nome. 22/10/2026.
+ */
+async function pickEventByName(t, lid) {
+  const ua = { "User-Agent": "Mozilla/5.0" };
+  const w = await (await fetch(`${GG}/leagues/${lid}/widgets/tournament_results?page_id=${t.gg_page}`, { headers: ua })).text();
+  const v2s = [...new Set([...w.matchAll(/v2tournaments\/(\d+)/g)].map((m) => m[1]))];
+  const want = String(t.gg_event).toLowerCase();
+  for (const v2 of v2s) {
+    try {
+      const j = await (await fetch(`${GG}/v2tournaments/${v2}`, { headers: { ...ua, Accept: "application/json" } })).json();
+      const name = String(j?.event?.name || "").replace(/\s+/g, " ").trim();
+      if (name.toLowerCase().includes(want)) return { label: name, v2tid: v2 };
+    } catch { /* evento sem JSON → seguinte */ }
+  }
+  return null;
 }
 
 function needsFetch(outPath) {
@@ -229,7 +253,13 @@ function needsFetch(outPath) {
       // (Qualification R1/R2/Final) e todas resolvem para o MESMO v2tid (o leaderboard
       // agregado). Sem isto, scrapávamos 3× e contávamos os jogadores 3×.
       const seenV2 = new Set();
-      const divisions = disc.divisions.filter((d) => (seenV2.has(d.v2tid) ? false : seenV2.add(d.v2tid)));
+      let divisions = disc.divisions.filter((d) => (seenV2.has(d.v2tid) ? false : seenV2.add(d.v2tid)));
+      if (t.gg_event) {
+        const ev = await pickEventByName(t, disc.lid);
+        if (!ev) { console.log(`   ⚠ ${t.slug}: evento «${t.gg_event}» não encontrado na página`); empty++; continue; }
+        console.log(`   🎯 gg_event «${t.gg_event}» → ${ev.label} (${ev.v2tid})`);
+        divisions = [ev];
+      }
       const jf = await scrapeEdition(
         { name: t.title || disc.title, year: t.year, divisions },
         { skipScorecards }
