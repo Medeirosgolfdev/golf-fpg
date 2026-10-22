@@ -909,7 +909,13 @@ export default defineConfig({
     host: true,          // expõe na rede local (LAN) para o iPhone aceder
     https: devHttps(),   // HTTPS se .certs/ existir, senão HTTP
     watch: {
-      ignored: (p: string) => p.replace(/\\/g, '/').includes('/output/'),
+      // ⚠ `.claude/` tem worktrees das sessões do Claude (cópias INTEIRAS do
+      // projecto, com public/data e node_modules). Vigiá-las bloqueava o Vite:
+      // a 22/10/2026 os dois dev servers ficaram pendurados (10–25 s por módulo).
+      ignored: (p: string) => {
+        const s = p.replace(/\\/g, '/');
+        return s.includes('/output/') || s.includes('/.claude/');
+      },
     },
   },
 })

@@ -2677,6 +2677,19 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 .p-14-16  { padding: 14px 16px; }   /* padding canónico de card espaçoso */
 
 /* ─── Linha de info / análise dos leaderboards (Resumo + rondas) ─── */
+/* InfoLine (src/ui/InfoLine.tsx): grupos separados por traço vertical, número
+   a carregado, rótulo suave — 22/10/2026. */
+.info-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 0; font-weight: 400; }
+.info-grp { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; padding: 0 12px; }
+.info-grp:first-child { padding-left: 0; }
+.info-grp + .info-grp { border-left: 1px solid var(--border-light); }
+.info-it { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.info-v { font-weight: 700; color: var(--text-1); font-variant-numeric: tabular-nums; }
+.info-l { color: var(--text-3); font-weight: 500; }
+.info-it-muted .info-v { color: var(--text-2); }
+.info-sep { color: var(--border-light); font-weight: 700; }
+.info-swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+
 .lb-info-line {
   font-size: var(--fs-13);
   font-weight: 600;

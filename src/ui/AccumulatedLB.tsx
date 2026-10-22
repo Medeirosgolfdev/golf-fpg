@@ -11,7 +11,7 @@ import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInPr
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
+import { InfoGroup, InfoItem, TeeDistances } from "./InfoLine";
 import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
@@ -40,8 +40,13 @@ export function AccumulatedLB({
   const rawPlayers = tournament.players;
   const fedBirthdates = useFedBirthdates();
 
-  const complete = rawPlayers.filter((p) => !p._incomplete);
-  const incomplete = rawPlayers.filter((p) => p._incomplete);
+  // Classificados = quem acabou (sem cortados nem desistentes). Antes contava
+  // os cortados/WD como «classif.» e, por lhes faltar a última volta, como
+  // «a decorrer» num torneio já acabado (50 Anos de Autonomia: «13 a decorrer»).
+  const complete = rawPlayers.filter((p) => !p._incomplete && !p._cut && !p._wd);
+  const incomplete = rawPlayers.filter((p) => p._incomplete && !p._wd);
+  const nCut = rawPlayers.filter((p) => p._cut && !p._wd).length;
+  const nWd = rawPlayers.filter((p) => p._wd).length;
   // Par de uma volta: o par total ou a soma do par por buraco. Sem nenhum dos
   // dois (fonte sem par oficial) → sem par: nada de ±par nem «Par 72» inventado.
   const parOfPlayer = (p: (typeof rawPlayers)[number] | undefined): number | null =>
@@ -181,52 +186,37 @@ export function AccumulatedLB({
   }
   const holesPerRound = [...holesCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
 
-  const infoParts: (string | null)[] = [
-    `${complete.length} classif.`,
-    incomplete.length > 0 ? `${incomplete.length} inc.` : null,
-    nEmCurso > 0 ? `${nEmCurso} a decorrer` : null,
-    nRounds > 1 ? `__ROUND_PILL__` : null,
-    holesPerRound ? `__HOLES_PILL__` : null,
-    teeDist.size ? `__DIST__` : null,
-    parTorneio != null ? `Par ${parTorneio}` : null,
-    avgGross != null
-      ? `Média ${avgGross.toFixed(1)}` + (parTorneio != null ? ` (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})` : "")
-      : null,
-    // O campo só aqui quando cada escalão joga num campo diferente (o do
-    // torneio já está no cabeçalho) — 14/10/2026.
-    showCourse && tournament.campo ? `📍 ${tournament.campo}` : null,
-    cr ? `CR ${cr}` : null,
-    slope ? `Slope ${slope}${tournament._sdEstimate ? " (estimados)" : ""}` : null,
-  ];
-  const infoFiltered = infoParts.filter(Boolean) as string[];
+  const fmtDelta = (x: number) => `${x >= 0 ? "+" : ""}${x.toFixed(1)}`;
 
   // Early return seguro — useMemo já foi chamado acima
   if (!rawPlayers.length) return <EmptyState size="sm" message="Sem resultados." />;
 
   return (
     <div>
-      <div className="lb-info-line">
-        {infoFiltered.map((s, i) => (
-          <React.Fragment key={i}>
-            {i > 0 && " · "}
-            {s === "__ROUND_PILL__" ? <RoundPill nR={nRounds} />
-              : s === "__HOLES_PILL__" ? <HoleBadge hc={holesPerRound!} />
-              : s === "__DIST__" ? (teeDist.size === 1
-                ? `${[...teeDist.values()][0].toLocaleString("pt")} m`
-                : <span style={{ display: "inline-flex", alignItems: "center", gap: 6, verticalAlign: "middle" }}>
-                    {[...teeDist.entries()].map(([tn, m]) => {
-                      const hex = getTeeHex(tn);
-                      return (
-                        <span key={tn} title={tn} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
-                          <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,.18)", flexShrink: 0 }} />
-                          <span>{m.toLocaleString("pt")} m</span>
-                        </span>
-                      );
-                    })}
-                  </span>)
-              : s}
-          </React.Fragment>
-        ))}
+      <div className="lb-info-line info-line">
+        <InfoGroup>
+          <InfoItem v={complete.length} l="classif." />
+          {incomplete.length > 0 && <InfoItem v={incomplete.length} l="inc." muted />}
+          {nCut > 0 && <InfoItem v={nCut} l="cut" muted />}
+          {nWd > 0 && <InfoItem v={nWd} l="WD" muted />}
+          {nEmCurso > 0 && <InfoItem v={nEmCurso} l="a decorrer" muted />}
+        </InfoGroup>
+        <InfoGroup>
+          {nRounds > 1 && <RoundPill nR={nRounds} />}
+          {holesPerRound && <HoleBadge hc={holesPerRound} />}
+          {teeDist.size > 0 && <TeeDistances list={[...teeDist.entries()].map(([tee, meters]) => ({ tee, meters }))} />}
+          {parTorneio != null && <InfoItem pre="Par" v={parTorneio} />}
+        </InfoGroup>
+        <InfoGroup>
+          {avgGross != null && <InfoItem pre="Média" v={avgGross.toFixed(1)} l={parTorneio != null ? `(${fmtDelta(avgGross - parTorneio)})` : undefined} />}
+        </InfoGroup>
+        <InfoGroup>
+          {/* O campo só aqui quando cada escalão joga num campo diferente (o do
+              torneio já está no cabeçalho) — 14/10/2026. */}
+          {showCourse && tournament.campo && <InfoItem v={`📍 ${tournament.campo}`} />}
+          {cr && <InfoItem pre="CR" v={cr} />}
+          {slope && <InfoItem pre="Slope" v={slope} l={tournament._sdEstimate ? "(estimados)" : undefined} title={tournament._sdEstimate} />}
+        </InfoGroup>
       </div>
       <MultiRoundLeaderboard
         rows={rows}

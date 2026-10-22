@@ -730,6 +730,18 @@ export function expandMultiRound(t: Tournament): Tournament[] {
       }
     }
   }
+  // ⚠ Um cut a sério deixa de fora os PIORES: todos os que continuaram têm, nas
+  // primeiras `cutN` voltas, resultado igual ou melhor do que o melhor dos que
+  // pararam. Senão foram desistências — Torneio 50 Anos de Autonomia 2026: 10 só
+  // com a R1, espalhados do 50.º ao 119.º lugar, apareciam como «CUT» (22/10/2026).
+  if (cutN > 0) {
+    const firstN = (p: Player) => (p.roundScores ?? [])
+      .filter((rs) => typeof rs.round !== "number" || rs.round <= cutN)
+      .reduce((s, rs) => s + (rs.gross < 900 ? rs.gross : 0), 0);
+    const stopped = totalPlayers.filter((p) => (p as any)._incomplete && !p._wd && (p as any)._roundsPlayed === cutN).map(firstN);
+    const went = totalPlayers.filter((p) => !p._wd && ((p as any)._roundsPlayed ?? 0) > cutN).map(firstN);
+    if (stopped.length && went.length && Math.max(...went) > Math.min(...stopped)) cutN = -1;
+  }
   // Promover _incomplete -> _cut quando rondas batem com o cut detectado
   if (cutN > 0) {
     for (const p of totalPlayers) {

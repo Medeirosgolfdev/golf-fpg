@@ -11,7 +11,7 @@ import React, { useState, useMemo } from "react";
 import { normLoose } from "../utils/normName";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } from "../data/fpgTypes";
-import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles } from "../data/fpgUtils";
+import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles, isRoundInProgress } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
@@ -19,6 +19,7 @@ import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
+import { InfoGroup, InfoItem, TeeDistances, TeeSwatch } from "./InfoLine";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
@@ -32,7 +33,6 @@ import {
 } from "./tournamentPrimitives";
 import { PlayerFilterBar } from "./PlayerFilterBar";
 import { useFedBirthdates } from "./InscricoesComponents";
-import { getTeeHex, teeBorder } from "../utils/teeColors";
 import { displayFed } from "../utils/fedKeys";
 import ShareRoundPanel from "./ShareRoundPanel";
 import { shareOptionsForRound } from "./overlay/shareOptions";
@@ -250,10 +250,20 @@ export function ScorecardLB({
   // fez 9 buracos com quem fez 18 dava "Média 44.6 (−26)" numa ronda a decorrer.
   // "completa" = buracos com score, não o tamanho do array (os buracos por
   // jogar de uma volta a decorrer vêm a zero para as colunas não desalinharem).
-  const complete = byGross.filter((p) => holesOf(p) === nh);
+  // Buracos riscados (0 pancadas, gross oficial) NÃO são volta a decorrer — a
+  // regra é a do isRoundInProgress, a mesma do Resumo. Antes contavam-se os
+  // buracos com pancada e o 50 Anos de Autonomia dizia «63 a decorrer» na R2
+  // de um torneio acabado (22/10/2026).
+  const complete = byGross.filter((p) => {
+    const g = numGross(p);
+    if (!(g > 0) || g >= 900) return false; // sem gross ou «sem cartão» (WD)
+    return holesOf(p) === nh
+      || !isRoundInProgress({ gross: g, scores: p.roundScores?.[0]?.scores ?? p.scores, pars: p.roundScores?.[0]?.pars ?? p.par });
+  });
   const grosses = (complete.length ? complete : byGross).map((p) => numGross(p)).filter((g) => !isNaN(g));
   const avg = grosses.length ? grosses.reduce((a, b) => a + b, 0) / grosses.length : 0;
-  const nIncompletos = byGross.length - complete.length;
+  // Só as voltas mesmo a meio (sem contar os «sem cartão», que são WD).
+  const nIncompletos = byGross.filter((p) => { const g = numGross(p); return g > 0 && g < 900; }).length - complete.length;
 
   // Hooks têm de vir ANTES de qualquer return condicional
   const fedBirthdates = useFedBirthdates();
@@ -710,54 +720,37 @@ export function ScorecardLB({
       onToggleScorecard={() => setShowScorecard((v) => !v)}
       metaLine={
         <>
-          <span style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-            {rawPlayers.length} jog{hasPar ? ` · Par ${parTotal}` : ""} · <HoleBadge hc={nh} />
-          </span>
-          {/* Distância jogada (22/10/2026): um tee → total; vários → por tee, com a cor. */}
-          {teeMeters.length === 1 && (
-            <span>· {playedMeters(teeMeters[0].meters).toLocaleString("pt")} m</span>
-          )}
-          {teeMeters.length > 1 && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-              {" · "}
-              {teeMeters.map(({ teeName, meters }) => {
-                const hex = getTeeHex(teeName);
-                return (
-                  <span key={teeName} title={teeName} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
-                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,.18)", flexShrink: 0 }} />
-                    <span>{playedMeters(meters).toLocaleString("pt")} m</span>
-                  </span>
-                );
-              })}
-            </span>
-          )}
-          {avg > 0 && (
-            <span title={nIncompletos > 0 ? `Média só das ${grosses.length} voltas completas (${nIncompletos} ainda a decorrer)` : undefined}>
-              · Média {avg.toFixed(1)}{hasPar && <> ({fmtTP(Math.round(avg - parTotal))})</>}
-            </span>
-          )}
-          {nIncompletos > 0 && <span className="muted">· {nIncompletos} a decorrer</span>}
-          {/* Campo só se a volta foi noutro campo que não o do torneio (esse já
-              está no cabeçalho) — 14/10/2026: aparecia repetido. */}
-          {refP.course && (options?.showCourse || refP.course.trim() !== String(tournament.campo || "").trim()) && <span>· 📍 {refP.course}</span>}
-          {teeCrSlopes.length === 1 && (
-            <span title={tournament._sdEstimate ? `Estimados — ${tournament._sdEstimate}` : undefined}>· CR {teeCrSlopes[0][1].cr} · Slope {teeCrSlopes[0][1].slope}{tournament._sdEstimate ? " (estimados)" : ""}</span>
-          )}
-          {teeCrSlopes.length > 1 && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-              {" · "}
-              {teeCrSlopes.map(([tn, { cr, slope }]) => {
-                const hex = getTeeHex(tn);
-                const bdr = teeBorder(hex) || "1px solid rgba(0,0,0,.18)";
-                return (
-                  <span key={tn} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
-                    <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: bdr, flexShrink: 0 }} />
-                    <span>{cr}/{slope}</span>
-                  </span>
-                );
-              })}
-            </span>
-          )}
+          <InfoGroup>
+            <InfoItem v={rawPlayers.length} l="jog" />
+            {nIncompletos > 0 && <InfoItem v={nIncompletos} l="a decorrer" muted />}
+          </InfoGroup>
+          {/* Buracos e distância jogada (22/10/2026): um tee → total; vários → por tee, com a cor. */}
+          <InfoGroup>
+            <HoleBadge hc={nh} />
+            {teeMeters.length > 0 && <TeeDistances list={teeMeters.map(({ teeName, meters }) => ({ tee: teeName, meters: playedMeters(meters) }))} />}
+            {hasPar && <InfoItem pre="Par" v={parTotal} />}
+          </InfoGroup>
+          <InfoGroup>
+            {avg > 0 && (
+              <InfoItem pre="Média" v={avg.toFixed(1)} l={hasPar ? `(${fmtTP(Math.round(avg - parTotal))})` : undefined}
+                title={nIncompletos > 0 ? `Média só das ${grosses.length} voltas completas (${nIncompletos} ainda a decorrer)` : undefined} />
+            )}
+          </InfoGroup>
+          <InfoGroup>
+            {/* Campo só se a volta foi noutro campo que não o do torneio (esse já
+                está no cabeçalho) — 14/10/2026: aparecia repetido. */}
+            {refP.course && (options?.showCourse || refP.course.trim() !== String(tournament.campo || "").trim()) && <InfoItem v={`📍 ${refP.course}`} />}
+            {teeCrSlopes.length === 1 && <InfoItem pre="CR" v={teeCrSlopes[0][1].cr} />}
+            {teeCrSlopes.length === 1 && (
+              <InfoItem pre="Slope" v={teeCrSlopes[0][1].slope} l={tournament._sdEstimate ? "(estimados)" : undefined}
+                title={tournament._sdEstimate ? `Estimados — ${tournament._sdEstimate}` : undefined} />
+            )}
+            {teeCrSlopes.length > 1 && teeCrSlopes.map(([tn, { cr, slope }]) => (
+              <span key={tn} className="info-it" title={tn} style={{ gap: 3 }}>
+                <TeeSwatch tee={tn} /><b className="info-v">{cr}</b><span className="info-l">/</span><b className="info-v">{slope}</b>
+              </span>
+            ))}
+          </InfoGroup>
         </>
       }
       filterBar={
