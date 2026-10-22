@@ -18,7 +18,7 @@ import { normalizePlayer } from "../../utils/playerUtils";
 import { loadFpgPlayersDB } from "../fpgPlayersDB";
 import { loadPlayers } from "../loader";
 import { expandMultiRound } from "../../ui/driveUtils";
-import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, FPG_ADMISSIONS_DRIVE_URL } from "../nacional2026Loader";
+import { loadFpgAdmissionsDraws, indexFpgAdmissionsDraws, FPG_ADMISSIONS_DRIVE_URL, FPG_ADMISSIONS_URL } from "../nacional2026Loader";
 import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import type { DriveAdmissionsIndex } from "./driveSource";
 
@@ -140,9 +140,17 @@ export async function loadDriveEquipas(): Promise<Record<string, DriveEquipasDat
  *  torneios do Drive/AQUAPOR (`fpg-admissions-draws-drive.json`, ~1,5 MB, gerado
  *  no build) em vez do ficheiro de toda a FPG (~12 MB) — decisão I. */
 export async function loadDriveAdmissions(): Promise<{ idx: DriveAdmissionsIndex; meta: DataSource }> {
-  const path = FPG_ADMISSIONS_DRIVE_URL;
+  let path = FPG_ADMISSIONS_DRIVE_URL;
   try {
-    const f = await loadFpgAdmissionsDraws({ url: path });
+    let f = await loadFpgAdmissionsDraws({ url: path });
+    // O ficheiro só do Drive é gerado no `predev`/`prebuild`: um servidor de
+    // desenvolvimento ligado antes de ele existir não o tem, e o loader devolve
+    // a lista vazia — sem inscrições, a /drive perdia os torneios por jogar e a
+    // Final (22/10/2026). Nesse caso lê-se o ficheiro de toda a FPG.
+    if (!f?.tournaments?.length) {
+      path = FPG_ADMISSIONS_URL;
+      f = await loadFpgAdmissionsDraws({ url: path });
+    }
     return {
       idx: indexFpgAdmissionsDraws(f),
       meta: { path, status: "loaded", count: f?.tournaments?.length || 0, source: f?.source, lastUpdated: f?.scrapedAt ?? undefined, group: "admissions" },

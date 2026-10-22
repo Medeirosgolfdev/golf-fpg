@@ -38,6 +38,8 @@ import { teeRuleFor } from "../../utils/teeRegulation";
 import DrawTab, { buildDrawResults } from "../../ui/DrawTab";
 import { TOURNAMENT_EXTRA_LINKS } from "./constants";
 import { initialTabIndex } from "./detailTabs";
+import { crossApuradosInscritos } from "../../data/drive/driveCircuitData";
+import type { FpgAdmissions } from "../../data/nacional2026Loader";
 
 /** Junta listas de links extra removendo repetidos pelo URL (a mesma página do
  *  clube pode vir do synthetic FEATURED e da config ao mesmo tempo). */
@@ -119,12 +121,18 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   const liveEnabled = (featured ? featured.live !== false : syntheticAdm) && !hasAnyRounds && !admissionsClosed;
   const live = useLiveAdmissions(tournament.ccode, tournament.tcode, liveEnabled);
   const liveActive = live.status === "live" && live.players.length > 0;
+  // Lista de convocados (final Drive): a lista live cruza-se outra vez com os
+  // convocados — quem não está inscrito continua convocado, não «saiu».
+  const convocados = admissions?._apuradosBase;
   const effAdmissions = useMemo(() => (liveActive
-    ? { ...(admissions || {}), players: live.players, totalInscritos: live.players.length, reservas: 0, error: undefined }
-    : admissions), [liveActive, admissions, live.players]);
+    ? convocados
+      ? crossApuradosInscritos<FpgAdmissions>({ players: convocados }, { ...(admissions || {}), players: live.players, error: undefined })
+      : { ...(admissions || {}), players: live.players, totalInscritos: live.players.length, reservas: 0, error: undefined }
+    : admissions), [liveActive, admissions, convocados, live.players]);
   const admissionsDiff = useMemo(() => {
     if (!liveActive) return null;
-    const scraped = admissions?.players ?? [];
+    // Convocados: compara só com quem já estava inscrito no último scrape.
+    const scraped = (admissions?.players ?? []).filter(p => !convocados || p.status === "confirmed");
     if (scraped.length === 0) return null;
     const keyOf = (p: { fed: string | null; nome: string }) => p.fed || norm(p.nome || "");
     const liveKeys = new Set(live.players.map(keyOf));
@@ -133,7 +141,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
       novos: live.players.filter(p => !scrKeys.has(keyOf(p))),
       saidos: scraped.filter(p => !liveKeys.has(keyOf(p))),
     };
-  }, [liveActive, live.players, admissions]);
+  }, [liveActive, live.players, admissions, convocados]);
 
   const hasAdmissions = !!effAdmissions && !effAdmissions.error && (effAdmissions.players?.length ?? 0) > 0;
   const drawsByRound = useMemo(() => {

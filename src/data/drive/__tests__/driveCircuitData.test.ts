@@ -7,7 +7,7 @@ import { describe, it, expect } from "vitest";
 import type { Tournament as FPGTournament } from "../../../data/fpgTypes";
 import {
   buildDriveGroups,
-  mergeDrivePlaceholders,
+  mergeDrivePlaceholders, crossApuradosInscritos,
   buildDriveDivisions,
   buildDriveEntries,
   shortCampo,
@@ -235,5 +235,10 @@ describe("mergeDrivePlaceholders", () => {
     expect(adm.totalInscritos).toBe(2);
     expect(adm.reservas).toBe(1);
     expect(adm.status).toBe("Inscrições em curso");
+    // convocados guardados: refazer o cruzamento com uma lista nova (live) não perde ninguém
+    expect(adm._apurados).toBe(true);
+    expect(adm._apuradosBase).toHaveLength(2);
+    const again = crossApuradosInscritos({ players: adm._apuradosBase }, { ...adm, players: [{ pos: 1, fed: "1", nome: "A", hcp: 5, status: "confirmed" }] });
+    expect(again.players.map((p: any) => `${p.fed}:${p.status}`)).toEqual(["1:confirmed", "2:reserva"]);
   });
 });

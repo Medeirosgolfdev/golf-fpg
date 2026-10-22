@@ -397,11 +397,13 @@ function driveBaseName(name: string | undefined | null): string {
 /**
  * Cruza a lista de APURADOS (provisório) com os INSCRITOS da FPG (real) —
  * 22/10/2026: a Mariana quer ver, entre os apurados, quem já confirmou a
- * presença. Por federado: apurado inscrito → `confirmed` (ordem, HCP e registo
- * da FPG; escalão/região/pontos da lista de apurados); apurado ainda sem
- * inscrição → `reserva` (a tabela mostra «pendente»); inscrito que não está na
- * lista → `confirmed` com a marca «fora dos apurados». O cabeçalho (nome, data,
- * estado das inscrições) é o da FPG.
+ * presença. Os apurados são CONVOCADOS — não «saem» por não estarem inscritos.
+ * Por federado: convocado inscrito → `confirmed` (ordem, HCP e registo da FPG;
+ * escalão/região/pontos da lista de apurados); convocado ainda sem inscrição →
+ * `reserva` (a tabela mostra «por inscrever»); inscrito que não está na lista →
+ * `confirmed` com a marca «fora dos apurados». O cabeçalho (nome, data, estado
+ * das inscrições) é o da FPG. Guarda os convocados em `_apuradosBase` para o
+ * TournamentDetail refazer o cruzamento com a lista live.
  */
 export function crossApuradosInscritos<A extends Record<string, any>>(apur: A, insc: A): A {
   const inscPlayers: any[] = insc.players || [];
@@ -418,7 +420,8 @@ export function crossApuradosInscritos<A extends Record<string, any>>(apur: A, i
     if (!i.fed || !apFeds.has(String(i.fed))) players.push({ ...i, status: "confirmed", tags: [...(i.tags || []), "fora dos apurados"] });
   }
   const nConf = players.filter((p: any) => p.status === "confirmed").length;
-  return { ...apur, ...insc, players, totalInscritos: nConf, reservas: nPend } as A;
+  return { ...apur, ...insc, players, totalInscritos: nConf, reservas: nPend,
+    _apurados: true, _apuradosBase: apur._apuradosBase ?? apur.players ?? [] } as A;
 }
 
 /**

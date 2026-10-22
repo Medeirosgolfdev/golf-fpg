@@ -76,6 +76,8 @@ export default function AdmissionsTab({
   const confirmedCount = admissions.totalInscritos ?? players.filter(p => p.status === "confirmed").length;
   const reservasCount = admissions.reservas ?? players.filter(p => p.status === "reserva").length;
   const desistentesCount = players.filter(p => p.status === "desistente").length;
+  // Lista de convocados de uma final Drive: «inscritos» / «por inscrever».
+  const convocados = !!admissions._apurados;
   const teeName = teeNameFor(tournamentEscalao, tournamentSex);
 
   // Enriquecer clube a partir de playersDB (scraper nem sempre captura)
@@ -269,14 +271,14 @@ export default function AdmissionsTab({
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
                     style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
                 : isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>pendente</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{convocados ? "por inscrever" : "pendente"}</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts]);
+  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados]);
 
   if (admissions.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -319,7 +321,9 @@ export default function AdmissionsTab({
   const filterBar = (
     <>
       <div className="lb-info-line flex-wrap">
-        <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
+        {convocados
+          ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
+          : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
         {effDate && <span>· início {effDate.split("-").reverse().join("/")}</span>}
         {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
         {fpgUrl && (

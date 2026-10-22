@@ -90,6 +90,12 @@ export interface FpgAdmissions {
   reservas?: number;
   players?: FpgAdmissionPlayer[];
   error?: string;
+  /** Lista de CONVOCADOS (apurados de uma final Drive) cruzada com os inscritos:
+   *  `players` = convocados («confirmed» = já inscrito, «reserva» = por inscrever)
+   *  + inscritos de fora; `_apuradosBase` = a lista de convocados original, para
+   *  refazer o cruzamento com a lista live (ver `crossApuradosInscritos`). */
+  _apurados?: boolean;
+  _apuradosBase?: FpgAdmissionPlayer[];
 }
 
 export interface FpgTournamentData {
