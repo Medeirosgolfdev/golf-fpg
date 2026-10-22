@@ -158,9 +158,11 @@ export default function TabCampoDetalhe({ torneio: t }: { torneio: Torneio }) {
                 fontWeight:800, letterSpacing:"0.04em",
               }}>⭐ REGIONAL INVITATION</span>
             )}
-            {dias >= 0 && dias <= 14 && (
+            {/* Sempre visível nos torneios por disputar (22/10/2026, pedido dela;
+                antes só a 14 dias ou menos). 999 = data inválida. */}
+            {dias >= 0 && dias < 999 && (
               <span className="p p-sm" style={{ background:"var(--chart-5)", color:"#fff", borderColor:"var(--chart-5)" }}>
-                daqui a {dias}d
+                {dias === 0 ? "começa hoje" : `daqui a ${dias}d`}
               </span>
             )}
             {dias < 0 && !isTerminado(t.date_fim, t.date_inicio) && (
