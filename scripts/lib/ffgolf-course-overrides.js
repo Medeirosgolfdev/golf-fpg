@@ -59,6 +59,11 @@ function applyCourseOverride(out) {
     if (par) c.par = [...par], c.parTotal = ov.parTotal || sum(par);
     if (meters) c.meters = [...meters], c.metersTotal = ov.metersTotal || sum(meters);
     if (si.length) c.si = [...si];
+    // CR/Slope (e PCC por dia) para o SD — só quando a FFG não os publica e se
+    // tiram de outro lado (cartão FPG de uma jogadora PT); vão com a nota.
+    for (const k of ["courseRating", "slope", "pcc", "ratingEstimado", "ratingNota"]) {
+      if (ov[k] != null) c[k] = Array.isArray(ov[k]) ? [...ov[k]] : ov[k];
+    }
   };
 
   patch(out.course);

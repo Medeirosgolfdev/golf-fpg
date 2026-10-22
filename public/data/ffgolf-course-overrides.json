@@ -3,6 +3,7 @@
   "_porque": "O scrape-ffgolf-gg-fetch.js infere o par dos MARCADORES do scorecard (círculo=birdie, quadrado=bogey). Quando um buraco não tem marcador em nenhum jogador o par sai errado, e não há metros nenhuns. Estes overrides trazem o cartão real (par + metros por buraco) e ganham sempre ao inferido.",
   "_formato": "chave = \"{year}_{slug}\" (o mesmo nome do ficheiro em public/data/ffgolf/). si: [] quando o cartão publicado não traz stroke index.",
   "overrides": {
+    "2026_internationaux-de-france-u21-filles-championnat-de-france-cadettes-trophee-esmond-trophee-claude-roger-cartier-coupe-vilmorin-et-challenge-newman": {"courseRating": 75, "slope": 148, "pcc": [2, 2], "ratingEstimado": true, "ratingNota": "CR/Slope do cartão FPG de Nicole Sardinha (Saint-Cloud, azuis); PCC +2 nos dois dias deduzido dos SD oficiais dela e de Francisca Salgado (as 4 voltas batem)"},
     "2026_championnat-de-france-des-jeunes-u12-garcons-trophee-crocodile": {
       "course": "Golf du Gouverneur (Montaplan)",
       "tee": "Jaunes",

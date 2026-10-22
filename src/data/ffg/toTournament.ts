@@ -174,12 +174,15 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
   const ggTeeName = t.course.tee || null;
   const hasMeters = !!ggTeeName
     && Array.isArray(t.course.meters) && t.course.meters.length === t.course.par.length;
-  return buildFPGTournament(
+  const { courseRating, slope, pcc } = t.course;
+  const rated = courseRating != null && slope != null;
+  const out = buildFPGTournament(
     { name: `${t.year} // ${shortTitle(t)}`, tcode: `${t.year}_${t.slug}`, date: t.dateStart || "", campo: t.course.name, rounds: t.rounds },
     {
       par: t.course.par, si: t.course.si, meters: t.course.meters,
       teeName: hasMeters ? ggTeeName ?? undefined : undefined,
       holes: t.course.par.length, parTotal: t.course.parTotal,
+      ...(rated ? { courseRating, slope } : {}),
     },
     sorted.map((p, idx): IntlPlayerIn => ({
       id: p.id,
@@ -190,7 +193,10 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
       total: p.total,
       toPar: p.toPar,
       hcp: p.hcp,
-      rounds: p.rounds.map((r) => ({ round: r.round, gross: r.gross, scores: r.scores })),
+      rounds: p.rounds.map((r) => {
+        const dayPcc = pcc?.[r.round - 1];
+        return { round: r.round, gross: r.gross, scores: r.scores, ...(rated && typeof dayPcc === "number" ? { extra: { pcc: dayPcc } } : {}) };
+      }),
       // Marca conterrâneos (.row-portuguese) — o caminho FFG-resultats já o
       // fazia; sem isto os torneios GolfGenius não destacavam PT (o GG publica
       // country null, mas a excepção por nome — Ricardo Castro Ferreira — pega).
@@ -198,6 +204,10 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
     })),
     { keepNoRounds: true, raw: true },
   );
+  if (rated && t.course.ratingEstimado) {
+    out._sdEstimate = `CR ${courseRating.toFixed(1)} · Slope ${slope} estimados — ${t.course.ratingNota || "não publicados"}`;
+  }
+  return out;
 }
 
 export function ffgScorecardOptions(): ScorecardOptions {

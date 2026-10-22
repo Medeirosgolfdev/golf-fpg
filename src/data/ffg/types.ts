@@ -17,6 +17,13 @@ export interface CourseInfo {
   si: number[];
   parTotal: number;
   metersTotal: number;
+  /** CR/Slope para o SD quando a FFG não os publica (`ffgolf-course-overrides.json`). */
+  courseRating?: number;
+  slope?: number;
+  /** PCC por dia (índice = volta − 1). */
+  pcc?: (number | null)[];
+  ratingEstimado?: boolean;
+  ratingNota?: string;
 }
 export interface PlayerRound {
   round: number;
