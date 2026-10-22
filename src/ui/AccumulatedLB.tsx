@@ -10,6 +10,8 @@ import type { Tournament } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInProgress } from "../data/fpgUtils";
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
+import { HoleBadge } from "./tableCells";
+import { getTeeHex, teeBorder } from "../utils/teeColors";
 import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
@@ -161,11 +163,31 @@ export function AccumulatedLB({
     ? grosses.reduce((a, b) => a + b, 0) / grosses.length
     : null;
 
+  // Buracos de cada volta e distância por tee (como na linha da volta, 22/10/2026).
+  const holesCount = new Map<number, number>();
+  const teeDist = new Map<string, number>();
+  for (const p of rawPlayers) {
+    for (const rs of p.roundScores ?? []) {
+      const n = rs.pars?.length || rs.scores?.length || 0;
+      if (n) holesCount.set(n, (holesCount.get(n) ?? 0) + 1);
+      const tn = rs.teeName || p.teeName;
+      const m = rs.meters?.length ? rs.meters : p.meters;
+      if (tn && m && m.length >= n && n > 0 && !teeDist.has(tn)) {
+        const off = n === 9 && m.length >= 18 && rs.startHole === 10 ? 9 : 0;
+        const tot = m.slice(off, off + n).reduce((a, b) => a + (b || 0), 0);
+        if (tot > 0) teeDist.set(tn, tot);
+      }
+    }
+  }
+  const holesPerRound = [...holesCount.entries()].sort((a, b) => b[1] - a[1])[0]?.[0];
+
   const infoParts: (string | null)[] = [
     `${complete.length} classif.`,
     incomplete.length > 0 ? `${incomplete.length} inc.` : null,
     nEmCurso > 0 ? `${nEmCurso} a decorrer` : null,
     nRounds > 1 ? `__ROUND_PILL__` : null,
+    holesPerRound ? `__HOLES_PILL__` : null,
+    teeDist.size ? `__DIST__` : null,
     parTorneio != null ? `Par ${parTorneio}` : null,
     avgGross != null
       ? `Média ${avgGross.toFixed(1)}` + (parTorneio != null ? ` (${avgGross - parTorneio >= 0 ? "+" : ""}${(avgGross - parTorneio).toFixed(1)})` : "")
@@ -187,7 +209,22 @@ export function AccumulatedLB({
         {infoFiltered.map((s, i) => (
           <React.Fragment key={i}>
             {i > 0 && " · "}
-            {s === "__ROUND_PILL__" ? <RoundPill nR={nRounds} /> : s}
+            {s === "__ROUND_PILL__" ? <RoundPill nR={nRounds} />
+              : s === "__HOLES_PILL__" ? <HoleBadge hc={holesPerRound!} />
+              : s === "__DIST__" ? (teeDist.size === 1
+                ? `${[...teeDist.values()][0].toLocaleString("pt")} m`
+                : <span style={{ display: "inline-flex", alignItems: "center", gap: 6, verticalAlign: "middle" }}>
+                    {[...teeDist.entries()].map(([tn, m]) => {
+                      const hex = getTeeHex(tn);
+                      return (
+                        <span key={tn} title={tn} style={{ display: "inline-flex", alignItems: "center", gap: 3 }}>
+                          <span style={{ display: "inline-block", width: 9, height: 9, borderRadius: 2, background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,.18)", flexShrink: 0 }} />
+                          <span>{m.toLocaleString("pt")} m</span>
+                        </span>
+                      );
+                    })}
+                  </span>)
+              : s}
           </React.Fragment>
         ))}
       </div>
