@@ -1,0 +1,450 @@
+{
+  "_fonte": "Resultados dos jogos de match play lidos do GolfGenius de cada torneio (Live Scoring → cada eliminatória), quando o scraper não os apanhou. Só acrescenta: winner e result por par.",
+  "_formato": "chave = slug do ficheiro em public/data/ffgolf/ ({year}_{slug} sem .json). matches[] = { round (label da eliminatória como no draw, sem a data), a, b, result, winner }.",
+  "2026_internationaux-de-france-u21-filles-championnat-de-france-cadettes-trophee-esmond-trophee-claude-roger-cartier-coupe-vilmorin-et-challenge-newman": {
+    "fonte": "https://www.golfgenius.com/pages/12445548502493213204 (Live Scoring › Esmond), lido a 22/10/2026; final confirmada na FFGolf e na Wikipedia (7&6)",
+    "matches": [
+      {
+        "round": "Esmond - Round of 32",
+        "a": "LUDVOVA Anna",
+        "b": "PASSE Ludivine",
+        "result": "4 & 3",
+        "winner": "LUDVOVA Anna"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "BOERE Rosanne",
+        "b": "Rincón De La Torre Gabriela",
+        "result": "3 & 2",
+        "winner": "Rincón De La Torre Gabriela"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "MARTIN Axelle",
+        "b": "MAIER-BORST Sofia",
+        "result": "19 holes",
+        "winner": "MARTIN Axelle"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "APPENDINO Paris",
+        "b": "LOHNER HUTZLI Anahie",
+        "result": "2 & 1",
+        "winner": "LOHNER HUTZLI Anahie"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "PEREZ-TASSO RODRIGUEZ Carolina",
+        "b": "HEDLUND Lilly",
+        "result": "5 & 3",
+        "winner": "PEREZ-TASSO RODRIGUEZ Carolina"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "PEAFORD Annabel",
+        "b": "CRUMP Lauren",
+        "result": "19 holes",
+        "winner": "CRUMP Lauren"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "GUYOT Lana",
+        "b": "BAE Yoo Jin",
+        "result": "3 & 1",
+        "winner": "GUYOT Lana"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "PETITCOLAS Manon",
+        "b": "WILSON Elizabeth",
+        "result": "22 holes",
+        "winner": "WILSON Elizabeth"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "MARTINEZ Nagore",
+        "b": "VINKLER Barbora",
+        "result": "1 up",
+        "winner": "MARTINEZ Nagore"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "BRENT-PETERSEN Benedicte",
+        "b": "RENNER Sophie",
+        "result": "4 & 2",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "BOUQUET Charlotte",
+        "b": "ABOM Anna",
+        "result": "1 up",
+        "winner": "BOUQUET Charlotte"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "MARTA Muñoz Escudero",
+        "b": "LOCATELLI Carlotta",
+        "result": "5 & 4",
+        "winner": "MARTA Muñoz Escudero"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "LEE-MCNAMARA Hannah",
+        "b": "GARCIA TEROL Adriana",
+        "result": "4 & 3",
+        "winner": "GARCIA TEROL Adriana"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "RAHUSEN Floor",
+        "b": "GIRON Léa",
+        "result": "7 & 5",
+        "winner": "RAHUSEN Floor"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "STEINER Antonia",
+        "b": "BACK Anastasia",
+        "result": "4 & 3",
+        "winner": "STEINER Antonia"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "NIKOLOVSKI Téodora",
+        "b": "WOODHAM Lottie",
+        "result": "21 holes",
+        "winner": "NIKOLOVSKI Téodora"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "APARICIO Natalia",
+        "b": "INGHAM Mia",
+        "result": "1 up",
+        "winner": "APARICIO Natalia"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "FLEMING Emma",
+        "b": "MULLER Seraphine",
+        "result": "2 & 1",
+        "winner": "FLEMING Emma"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "GJELTEN Henriette Spilling",
+        "b": "SIMEONI Gemma",
+        "result": "5 & 4",
+        "winner": "SIMEONI Gemma"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "HOLMBERG Olivia",
+        "b": "NICOLAS Anaïs",
+        "result": "1 up",
+        "winner": "NICOLAS Anaïs"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "FAVRE Liliya",
+        "b": "KARDASIK Jurilayci",
+        "result": "3 & 1",
+        "winner": "FAVRE Liliya"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "BINGEL Sophie",
+        "b": "LEBLOND Eléna",
+        "result": "19 holes",
+        "winner": "LEBLOND Eléna"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "BERTERO Giulietta",
+        "b": "GARCIA TRIFU Ioana",
+        "result": "19 holes",
+        "winner": "GARCIA TRIFU Ioana"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "JANISCH Johanna",
+        "b": "SUEIRO Beatriz",
+        "result": "7 & 5",
+        "winner": "JANISCH Johanna"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "ZHAO Giselle",
+        "b": "DIAZ GARCIA Rut",
+        "result": "3 & 2",
+        "winner": "ZHAO Giselle"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "ALBINI Maria Sole",
+        "b": "VALENCIA MEJIA Luna Isabella",
+        "result": "3 & 2",
+        "winner": "VALENCIA MEJIA Luna Isabella"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "NAUGHTON Charlotte",
+        "b": "ZOCCO Noa",
+        "result": "4 & 3",
+        "winner": "NAUGHTON Charlotte"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "GUILLEMARD Axelle",
+        "b": "LICHTENHEIN Ellie",
+        "result": "7 & 6",
+        "winner": "LICHTENHEIN Ellie"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "LOPEZ MINGUELA Carlota",
+        "b": "JOACHIM Kim Lou",
+        "result": "19 holes",
+        "winner": "LOPEZ MINGUELA Carlota"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "NEGRONI Alice Alexandra",
+        "b": "LUMBACA Salome",
+        "result": "19 holes",
+        "winner": "NEGRONI Alice Alexandra"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "REVUELTA Amanda",
+        "b": "GEIER Lena",
+        "result": "7 & 6",
+        "winner": "REVUELTA Amanda"
+      },
+      {
+        "round": "Esmond - Round of 32",
+        "a": "REVUELTA Angela",
+        "b": "CARLON María",
+        "result": "3 & 1",
+        "winner": "REVUELTA Angela"
+      },
+      {
+        "round": "Esmond - Final",
+        "a": "BRENT-PETERSEN Benedicte",
+        "b": "APARICIO Natalia",
+        "result": "7 & 6",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Semi-finals",
+        "a": "GUYOT Lana",
+        "b": "BRENT-PETERSEN Benedicte",
+        "result": "2 & 1",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Semi-finals",
+        "a": "APARICIO Natalia",
+        "b": "REVUELTA Amanda",
+        "result": "2 & 1",
+        "winner": "APARICIO Natalia"
+      },
+      {
+        "round": "Esmond - Quarterfinals",
+        "a": "MARTIN Axelle",
+        "b": "GUYOT Lana",
+        "result": "7 & 6",
+        "winner": "GUYOT Lana"
+      },
+      {
+        "round": "Esmond - Quarterfinals",
+        "a": "BRENT-PETERSEN Benedicte",
+        "b": "NIKOLOVSKI Téodora",
+        "result": "1 up",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Quarterfinals",
+        "a": "APARICIO Natalia",
+        "b": "JANISCH Johanna",
+        "result": "1 up",
+        "winner": "APARICIO Natalia"
+      },
+      {
+        "round": "Esmond - Quarterfinals",
+        "a": "NAUGHTON Charlotte",
+        "b": "REVUELTA Amanda",
+        "result": "4 & 2",
+        "winner": "REVUELTA Amanda"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "LUDVOVA Anna",
+        "b": "MARTIN Axelle",
+        "result": "20 holes",
+        "winner": "MARTIN Axelle"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "CRUMP Lauren",
+        "b": "GUYOT Lana",
+        "result": "19 holes",
+        "winner": "GUYOT Lana"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "BRENT-PETERSEN Benedicte",
+        "b": "BOUQUET Charlotte",
+        "result": "1 up",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "GARCIA TEROL Adriana",
+        "b": "NIKOLOVSKI Téodora",
+        "result": "1 up",
+        "winner": "NIKOLOVSKI Téodora"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "APARICIO Natalia",
+        "b": "NICOLAS Anaïs",
+        "result": "1 up",
+        "winner": "APARICIO Natalia"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "FAVRE Liliya",
+        "b": "JANISCH Johanna",
+        "result": "4 & 3",
+        "winner": "JANISCH Johanna"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "VALENCIA MEJIA Luna Isabella",
+        "b": "NAUGHTON Charlotte",
+        "result": "2 & 1",
+        "winner": "NAUGHTON Charlotte"
+      },
+      {
+        "round": "Esmond - Round of 8",
+        "a": "NEGRONI Alice Alexandra",
+        "b": "REVUELTA Amanda",
+        "result": "3 & 2",
+        "winner": "REVUELTA Amanda"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "LUDVOVA Anna",
+        "b": "Rincón De La Torre Gabriela",
+        "result": "1 up",
+        "winner": "LUDVOVA Anna"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "MARTIN Axelle",
+        "b": "LOHNER HUTZLI Anahie",
+        "result": "22 holes",
+        "winner": "MARTIN Axelle"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "PEREZ-TASSO RODRIGUEZ Carolina",
+        "b": "CRUMP Lauren",
+        "result": "7 & 6",
+        "winner": "CRUMP Lauren"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "GUYOT Lana",
+        "b": "WILSON Elizabeth",
+        "result": "1 up",
+        "winner": "GUYOT Lana"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "MARTINEZ Nagore",
+        "b": "BRENT-PETERSEN Benedicte",
+        "result": "1 up",
+        "winner": "BRENT-PETERSEN Benedicte"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "BOUQUET Charlotte",
+        "b": "MUNOZ ESCUDERO Marta",
+        "result": "2 up",
+        "winner": "BOUQUET Charlotte"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "GARCIA TEROL Adriana",
+        "b": "RAHUSEN Floor",
+        "result": "4 & 3",
+        "winner": "GARCIA TEROL Adriana"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "STEINER Antonia",
+        "b": "NIKOLOVSKI Téodora",
+        "result": "21 holes",
+        "winner": "NIKOLOVSKI Téodora"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "APARICIO Natalia",
+        "b": "FLEMING Emma",
+        "result": "3 & 1",
+        "winner": "APARICIO Natalia"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "SIMEONI Gemma",
+        "b": "NICOLAS Anaïs",
+        "result": "2 & 1",
+        "winner": "NICOLAS Anaïs"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "FAVRE Liliya",
+        "b": "LEBLOND Eléna",
+        "result": "5 & 3",
+        "winner": "FAVRE Liliya"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "GARCIA TRIFU Ioana",
+        "b": "JANISCH Johanna",
+        "result": "5 & 4",
+        "winner": "JANISCH Johanna"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "ZHAO Giselle",
+        "b": "VALENCIA MEJIA Luna Isabella",
+        "result": "1 up",
+        "winner": "VALENCIA MEJIA Luna Isabella"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "NAUGHTON Charlotte",
+        "b": "LICHTENHEIN Ellie",
+        "result": "2 & 1",
+        "winner": "NAUGHTON Charlotte"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "LOPEZ MINGUELA Carlota",
+        "b": "NEGRONI Alice Alexandra",
+        "result": "4 & 3",
+        "winner": "NEGRONI Alice Alexandra"
+      },
+      {
+        "round": "Esmond - Round of 16",
+        "a": "REVUELTA Amanda",
+        "b": "REVUELTA Angela",
+        "result": "2 & 1",
+        "winner": "REVUELTA Amanda"
+      }
+    ]
+  }
+}

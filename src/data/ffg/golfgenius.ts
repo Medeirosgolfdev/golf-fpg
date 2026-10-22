@@ -37,7 +37,20 @@ export function ggDrawToFpgDraw(round: FFGDrawRound): FpgDraw {
    no match 1 da ronda seguinte (knockout standard). */
 const mpKey = (s: string) => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/\s+/g, " ").trim();
 const mpLabelBase = (s: string | null | undefined) => mpKey((s || "").replace(/\(.*$/, ""));
-const isKnockoutLabel = (s: string | null | undefined) => /finale|1\/\d+|demi|quart|match\s*play/i.test(s || "");
+/** Mesma pessoa? Tokens do nome sem ordem nem acentos («MARTA Muñoz Escudero» = «MUNOZ ESCUDERO Marta»). */
+const nameToks = (s: string | null | undefined) => mpKey(s || "").replace(/[^a-z ]/g, " ").split(/\s+/).filter(Boolean).sort().join(" ");
+const samePair = (a: string, b: string, x: string | null, y: string | null) => {
+  const [A, B, X, Y] = [a, b, x, y].map(nameToks);
+  return (A === X && B === Y) || (A === Y && B === X);
+};
+// Eliminatórias em francês e em inglês (o GG do U21 Filles 2026 escreve «Round of
+// 32/16/8», «Semi-finals», «Final» — só os «Quarterfinals» eram reconhecidos).
+const isKnockoutLabel = (s: string | null | undefined) =>
+  /finale?|\bfinals?\b|1\/\d+|demi|quart|semi|round of \d+|match\s*play|huiti[eè]me|seizi[eè]me/i.test(s || "")
+  && !/qualif/i.test(s || "");
+/** Quadro de uma eliminatória («Esmond - Round of 32» → «esmond»): torneios com
+ *  vários quadros (Esmond, Cartier, Vilmorin…) só se ligam dentro do mesmo. */
+const mpBracket = (s: string | null | undefined) => { const t = String(s || ""); return t.includes(" - ") ? mpKey(t.split(" - ")[0]) : ""; };
 
 /** Bracket do scraper com os nomes GG ("LE THEO Maxence") normalizados p/ display. */
 export function normalizeMpNames(mp: MatchplayFile): MatchplayFile {
@@ -78,10 +91,21 @@ export function buildFfgMatchplay(data: FFGTournament): MatchplayFile | undefine
   const rounds: MatchplayRound[] = [];
   let prevWinnersOrdered: (string | null)[] | null = null; // nomes crus, ordem do bracket
   let number = 0;
-  for (const dr of knockoutDraws) {
+  for (const [di, dr] of knockoutDraws.entries()) {
     number += 1;
     const ev = matchEvents.find((e) => mpLabelBase(e.name) === mpLabelBase(dr.label));
     const winners = new Set((ev?.players ?? []).map((p) => mpKey(p.name)));
+    // Resultados acrescentados à mão (ffgolf-matchplay-overrides.json): por PAR,
+    // em qualquer ordem e grafia dos nomes («MARTA Muñoz Escudero» = «MUNOZ ESCUDERO Marta»).
+    const ovRound = (data._mpResults ?? []).filter((m) => mpLabelBase(m.round) === mpLabelBase(dr.label));
+    const winTok = new Set(ovRound.map((m) => nameToks(m.winner)));
+    // Sem resultado publicado: ganhou quem aparece no draw da eliminatória
+    // SEGUINTE do mesmo quadro — os draws provam que o jogo houve e quem passou
+    // (pedido dela, 22/10/2026). A final fica sem vencedora (não há seguinte).
+    if (!winners.size) {
+      const next = knockoutDraws.slice(di + 1).find((r) => mpBracket(r.label) === mpBracket(dr.label) && r.groups.length);
+      for (const g of next?.groups ?? []) for (const p of g.players) if (p?.name) winners.add(mpKey(p.name));
+    }
     // Pares: tee sheet publicado > síntese pela ordem do bracket anterior.
     let pairs: Array<{ a: string | null; b: string | null; teeTime: string | null }> = [];
     if (dr.groups.length) {
@@ -97,15 +121,16 @@ export function buildFfgMatchplay(data: FFGTournament): MatchplayFile | undefine
     }
     const roundWinnersRaw: (string | null)[] = [];
     const matches: MatchplayTeamMatch[] = pairs.map((p, i) => {
-      const aWon = p.a != null && winners.has(mpKey(p.a));
-      const bWon = p.b != null && winners.has(mpKey(p.b));
+      const aWon = p.a != null && (winners.has(mpKey(p.a)) || winTok.has(nameToks(p.a)));
+      const bWon = p.b != null && (winners.has(mpKey(p.b)) || winTok.has(nameToks(p.b)));
       const winner = aWon && !bWon ? "home" : bWon && !aWon ? "away" : null;
+      const ovm = ovRound.find((m) => samePair(m.a, m.b, p.a, p.b));
       // Nomes CRUS na ordem do bracket (o display normaliza, mas o matching
       // da ronda seguinte precisa do nome tal como o GG o escreve).
       roundWinnersRaw.push(winner === "home" ? p.a : winner === "away" ? p.b : null);
       return {
         teamMatchId: null, matchNo: i + 1, startTime: p.teeTime,
-        result: null, isSettled: winner != null, isStarted: false,
+        result: ovm?.result ?? null, isSettled: winner != null, isStarted: false,
         home: side(p.a), away: side(p.b), winner, games: [],
       };
     });

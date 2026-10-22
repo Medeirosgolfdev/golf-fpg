@@ -373,9 +373,15 @@ export async function ffgListLoadDivisions(item: FfgListItem, R: FfgRenderers): 
     const data = await cachedFetchJson<LGPIDFTournament>(`/data/ffgolf/${meta.file}`);
     return data ? lgpidfEntry(meta, data, R).divisions ?? [] : [];
   }
-  const members = await Promise.all((item.gg ?? []).map(async (meta) => ({
-    meta, data: await cachedFetchJson<FFGTournament>(`/data/ffgolf/${meta.year}_${meta.slug}.json`),
-  })));
+  // Resultados de match play acrescentados à mão (o GG deixou de os listar ao
+  // scraper) — 22/10/2026, Internationaux de France U21 Filles.
+  let mpOv: Record<string, { matches?: FFGTournament["_mpResults"] }> = {};
+  try { mpOv = (await cachedFetchJson<typeof mpOv>("/data/ffgolf-matchplay-overrides.json")) ?? {}; } catch { /* opcional */ }
+  const members = await Promise.all((item.gg ?? []).map(async (meta) => {
+    const data = await cachedFetchJson<FFGTournament>(`/data/ffgolf/${meta.year}_${meta.slug}.json`);
+    const ov = mpOv[`${meta.year}_${meta.slug}`]?.matches;
+    return { meta, data: data && ov?.length ? { ...data, _mpResults: ov } : data };
+  }));
   const ok = members.filter((m): m is { meta: CatalogEntry; data: FFGTournament } => !!m.data);
   return ok.length ? ggGroupEntry(ok).divisions ?? [] : [];
 }

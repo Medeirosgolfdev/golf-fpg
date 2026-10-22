@@ -65,6 +65,9 @@ export interface FFGTournament {
   /** Bracket knockout completo (scrape-ffgolf.js — fetchBracket), já no schema
    *  MatchplayFile: winners, resultados ("2 & 1") e estado buraco-a-buraco. */
   matchplay?: MatchplayFile;
+  /** Resultados dos jogos de match play lidos à mão do GolfGenius quando o
+   *  scraper não os apanhou (`ffgolf-matchplay-overrides.json`). */
+  _mpResults?: { round: string; a: string; b: string; result: string; winner: string }[];
   scrapedAt?: string;
 }
 

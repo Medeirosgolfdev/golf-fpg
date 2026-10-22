@@ -77,8 +77,10 @@ export function AccumulatedLB({
           scores: rs.scores,
           par: rs.pars,
           si: rs.si,
-          courseRating: rs.courseRating,
-          slope: rs.slope,
+          // CR/Slope da volta ou, sem ele, o do jogador (FFG: vem da série) —
+          // senão o Resumo ficava sem SD que as abas das voltas têm (22/10/2026).
+          courseRating: rs.courseRating ?? p.courseRating,
+          slope: rs.slope ?? p.slope,
           // PCC é por ronda — sem fallback ao do jogador (= PCC da R1).
           pcc: rs.pcc,
           nholes: rs.pars?.length,
