@@ -204,6 +204,18 @@ async function main() {
     }
   }
 
+  // RFEG: hándicap oficial actual + ranking juvenil dos espanhóis (só
+  // enriquecer — junior.rfegOficial). Ver util/rfeg-oficial.js.
+  {
+    const { enrichWithRfegOficial } = require("./util/rfeg-oficial");
+    const r = enrichWithRfegOficial(matchResult);
+    if (r.disponivel) {
+      step("RFEG oficial — hándicap e rankings (só enriquecer)");
+      sub(`${r.espanhois} juniores com licença RFEG · ${r.comHcp} com hándicap oficial · ${r.comRanking} num ranking juvenil (${r.porNome} por nome + ano) · ${r.semNada} com licença sem nada · ${r.recusadas} linhas recusadas pela idade`);
+      console.log("");
+    }
+  }
+
   // Listas de inscritos com handicap (Entry Lists): só acrescentam um ponto ao
   // hcpHistory de quem já tem ficha. Ver util/hcp-listas.js. As ligações
   // (inscrito → ficha) gravam-se em hcp-listas-ligacoes.json para a página

@@ -15,7 +15,10 @@
  *                     c?: clube, p?: país,
  *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel], …],
  *                     mf?: confrontos no mesmo flight,
- *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição] } } }
+ *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
+ *                     hr?: [hcp, "AAAA-MM-DD"] — o «h» é o hándicap OFICIAL actual da RFEG, com a data,
+ *                     rk?: [posição, jogadores, "ranking curto", "AAAA-MM-DD" | null] — ranking juvenil RFEG } } }
+ * O hr/rk vêm de junior.rfegOficial (util/rfeg-oficial.js, 22/10/2026).
  * O `r` poupa ao browser o computeRanking sobre ~38 mil juniores (ficha do kids2
  * e /kids2/ranking; 21/10/2026).
  * Só entram juniores com alguma coisa para mostrar.
@@ -54,8 +57,15 @@ function buildScout(juniors, tournaments, generatedAt) {
     const t3 = countTop3(j, tById);
     if (t3) o.t3 = t3;
     const src = j.sources || {};
-    const h = src.fpg?.hcpExact ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
+    // HCP: o da FPG; senão o oficial actual da RFEG (com data); senão o da
+    // última inscrição RFEG; senão o da FFG.
+    const rfo = j.rfegOficial;
+    const hOficial = src.fpg?.hcpExact == null && typeof rfo?.hcp === "number" ? rfo.hcp : null;
+    const h = src.fpg?.hcpExact ?? hOficial ?? src.rfeg?.hcp ?? src.ffgolf?.hcp ?? null;
     if (typeof h === "number") o.h = h;
+    if (hOficial != null) o.hr = [hOficial, rfo.hcpData || null];
+    const rk = rfo?.rankings?.[0];
+    if (rk && rk.pos != null) o.rk = [rk.pos, rk.n, rk.curto, rk.f || null];
     if (j.dob) o.d = j.dob;
     const club = j.club || src.fpg?.club || src.rfeg?.club || src.ffgolf?.club || null;
     if (club) o.c = club;
@@ -83,7 +93,7 @@ function buildScout(juniors, tournaments, generatedAt) {
         if (mf) o.mf = mf;
       }
     }
-    if (o.t || o.w || o.m || o.h != null || o.r) players[j.id] = o;
+    if (o.t || o.w || o.m || o.h != null || o.r || o.rk) players[j.id] = o;
   }
   return { schemaVersion: 1, generatedAt, manuelId: MANUEL_ID, players };
 }

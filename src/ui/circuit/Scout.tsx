@@ -187,7 +187,7 @@ export default function Scout({
     ordemInicial?.key ?? (manuelNoField ? "nivel" : "tier"),
     ordemInicial?.dir ?? (manuelNoField ? "desc" : "asc"), {
     name: "asc", idade: "asc", hcp: "asc", tier: "asc", nivel: "desc", torn: "desc", vit: "desc", forma: "asc", ult: "desc",
-    n: "desc", best: "asc", vsm: "desc", vsmp: "asc", prox: "desc",
+    rfeg: "asc", n: "desc", best: "asc", vsm: "desc", vsmp: "asc", prox: "desc",
     ...Object.fromEntries(extras.map((c) => [c.key, c.dir ?? "asc"])),
   });
   const ordenadas = useMemo(() => {
@@ -202,6 +202,7 @@ export default function Scout({
         case "vit": return l.sc?.w ?? null;
         case "forma": return formaMedia(l.fm);
         case "ult": return l.fm?.r[0]?.[0] ?? null;
+        case "rfeg": return l.sc?.rk?.[0] ?? null;
         case "n": return l.rep?.n ?? null;
         case "best": return l.rep?.bestPos ?? null;
         case "vsm": return l.sc?.m?.length ? l.atras / l.sc.m.length : null;
@@ -250,12 +251,13 @@ export default function Scout({
     torn: linhas.some((l) => l.sc?.n),
     vit: linhas.some((l) => l.sc?.w),
     forma: linhas.some((l) => formaMedia(l.fm) != null),
+    rfeg: linhas.some((l) => l.sc?.rk),
     vsm: linhas.some((l) => l.sc?.m?.length),
     prox: linhas.some((l) => l.proximas.length),
   };
   const sameYear = (e: PastEdition) => eds.some((o) => o !== e && o.year === e.year);
   const hp = { sortKey, sortDir, onSort: toggleSort };
-  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0);
+  const nCarreira = 1 + (tem.idade ? 1 : 0) + (tem.hcp ? 1 : 0) + (tem.torn ? 1 : 0) + (tem.vit ? 1 : 0) + (tem.forma ? 1 : 0) + (tem.rfeg ? 1 : 0);
   const nProva = eds.length ? 2 + eds.length : 0;
   const nManuel = tem.vsm ? 2 : 0;
   const nCols = colsAntes.length + 1 + nCarreira + nProva + nManuel + (tem.prox ? 1 : 0) + colsDepois.length;
@@ -312,6 +314,7 @@ export default function Scout({
               {tem.torn && hdr("torn", "Torneios", "Torneios na carreira (todas as fontes)")}
               {tem.vit && hdr("vit", "Vitórias", "Vitórias na carreira")}
               {tem.forma && hdr("forma", "Forma", `±par médio por 18 buracos nos últimos ${N_FORMA} torneios (últimos 18 meses) — o último está no tooltip`)}
+              {tem.rfeg && hdr("rfeg", "Rk RFEG", "Lugar no ranking juvenil da Federação Espanhola (Infantil, Cadete ou de zona) — qual ranking e a data no tooltip")}
               {nProva > 0 && hdr("n", "Vezes", "Quantas edições anteriores desta prova jogou", true)}
               {nProva > 0 && hdr("best", "Melhor", "Melhor lugar numa edição anterior desta prova")}
               {eds.map((e) => (
@@ -352,7 +355,12 @@ export default function Scout({
                       {mostraClube && <span className="muted fs-11"> · {clube}</span>}
                     </td>
                     {tem.idade && <td style={SEP}>{l.idade ?? "–"}</td>}
-                    {tem.hcp && <td style={!tem.idade ? SEP : undefined}>{l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}</td>}
+                    {tem.hcp && (
+                      <td style={!tem.idade ? SEP : undefined}
+                          title={l.sc?.hr ? `Handicap oficial da Federação Espanhola${l.sc.hr[1] ? ` — actualizado a ${shortDateSlash(l.sc.hr[1], true)}` : ""}` : undefined}>
+                        {l.sc?.h != null ? l.sc.h.toFixed(1) : "–"}
+                      </td>
+                    )}
                     <td style={!tem.idade && !tem.hcp ? SEP : undefined}
                         title={!l.isManuel && l.threat.level !== "none" ? `Ameaça ${THREAT_LABEL[l.threat.level]} para o Manuel — ${l.threat.reasons.join(" · ")}` : undefined}>
                       {l.sc?.t ? getTierLabel(l.sc.t) : "–"}
@@ -365,6 +373,11 @@ export default function Scout({
                         ...(l.fm?.r.slice(0, N_FORMA).map((x) => `${shortDateSlash(x[0])} · ${fmtToPar(x[1])} (${x[2]} b.)${x[3] ? ` · ${x[3]}º/${x[4]}` : ""}`) ?? []),
                       ].filter(Boolean).join("\n") || undefined}>
                         {fmd != null ? fmtToPar(fmd) : "–"}
+                      </td>
+                    )}
+                    {tem.rfeg && (
+                      <td title={l.sc?.rk ? `${l.sc.rk[2]}${l.sc.rk[3] ? ` · ranking de ${shortDateSlash(l.sc.rk[3], true)}` : ""}` : undefined}>
+                        {l.sc?.rk ? `${l.sc.rk[0]}º/${l.sc.rk[1]}` : "–"}
                       </td>
                     )}
                     {nProva > 0 && (

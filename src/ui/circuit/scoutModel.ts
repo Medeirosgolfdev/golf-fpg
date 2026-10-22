@@ -29,6 +29,10 @@ export interface JuniorScout {
   mf?: number;
   /** Ranking da coorte (ano × sexo), compacto — `decodeRanking` do juniorCalc. */
   r?: RankingRow;
+  /** O `h` é o hándicap OFICIAL actual da RFEG: [hcp, "AAAA-MM-DD" da última actualização]. */
+  hr?: [number, string | null];
+  /** Ranking juvenil da RFEG: [posição, jogadores, "ranking curto", "AAAA-MM-DD" do ranking]. */
+  rk?: [number, number, string, string | null];
 }
 export interface ScoutFile { players: Record<string, JuniorScout> }
 

@@ -18,6 +18,7 @@ import { flag as flagOf } from "../../../utils/flagUtils";
 import { MANUEL_DOB } from "../../../constants/manuel";
 import { cachedFetchJson } from "../../../data/fetchCache";
 import HcpSparkline from "./HcpSparkline";
+import { shortDateSlash } from "../../../utils/format";
 
 /** Bandeira por federação — mostrada junto ao número de licença. */
 const SOURCE_FLAGS: Record<string, string> = {
@@ -123,9 +124,13 @@ export default function HeroIdentity({ data, junior }: Props) {
   const mainClub = junior.sources.fpg?.club || junior.sources.rfeg?.club || junior.sources.ffgolf?.club || junior.club || null;
   const mainClubSource = junior.sources.fpg?.club ? "FPG" : junior.sources.rfeg?.club ? "RFEG" : junior.sources.ffgolf?.club ? "FFG" : null;
 
-  const hcps: { source: string; value: number | undefined; date?: string }[] = [];
+  const hcps: { source: string; value: number | undefined; date?: string; oficial?: boolean }[] = [];
   if (junior.sources.fpg?.hcpExact != null) hcps.push({ source: "FPG", value: junior.sources.fpg.hcpExact, date: junior.sources.fpg.hcpDate });
-  if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp, date: junior.sources.rfeg.hcpDate });
+  // RFEG: o oficial actual (pesquisa de hándicap da RFEG) ganha ao da última inscrição.
+  const rfo = junior.rfegOficial;
+  if (rfo?.hcp != null) hcps.push({ source: "RFEG", value: rfo.hcp, date: rfo.hcpData ?? undefined, oficial: true });
+  else if (junior.sources.rfeg?.hcp != null) hcps.push({ source: "RFEG", value: junior.sources.rfeg.hcp, date: junior.sources.rfeg.hcpDate });
+  const rankingsRfeg = (rfo?.rankings ?? []).filter((r) => r.pos != null).slice(0, 2);
   if (junior.sources.ffgolf?.hcp != null) hcps.push({ source: "FFG", value: junior.sources.ffgolf.hcp });
   // Handicap tirado de uma lista de inscritos (Entry List) — o mais recente;
   // mostra-se sempre, com o mês, mesmo quando há o da FPG/RFEG/FFG.
@@ -396,14 +401,16 @@ export default function HeroIdentity({ data, junior }: Props) {
         )}
       </div>
 
-      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
+      {(escIntl || escUskids || escRfeg || escFpgTag || hcps.length > 0 || rankingsRfeg.length > 0 || hcpLista || (junior.hcpHistory && junior.hcpHistory.length >= 2) || totalRounds > 0) && (
         <div style={{ display: "flex", gap: 6, marginTop: 14, flexWrap: "wrap" }}>
           {escIntl && <EscPill label={escIntl} accent strong />}
           {escUskids && <EscPill label={`${escUskids} · USKids`} />}
           {escRfeg && <EscPill label={`${escRfeg} · RFEG`} />}
           {escFpgTag && <EscPill label={`${escFpgTag} · FPG`} />}
           {hcps.map((h, i) => (
-            <span key={i} title={`Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} style={{
+            <span key={i} title={h.oficial
+              ? `Handicap oficial da Federação Espanhola${h.date ? ` — actualizado a ${shortDateSlash(h.date, true)}` : ""}`
+              : `Handicap exacto (${h.source})${h.date ? " · " + h.date : ""}`} style={{
               background: "var(--bg-muted)",
               fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
               fontWeight: 600, color: "var(--text-2)",
@@ -411,10 +418,24 @@ export default function HeroIdentity({ data, junior }: Props) {
               display: "inline-flex", alignItems: "center", gap: 4,
             }}>
               {SOURCE_FLAGS[h.source] && <span style={{ fontSize: "var(--fs-12)", lineHeight: 1 }}>{SOURCE_FLAGS[h.source]}</span>}
-              🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}</span>
+              🎯 HCP {h.value?.toFixed(1)} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· {h.source}{h.oficial && h.date ? ` · ${shortDateSlash(h.date, true)}` : ""}</span>
               {i === hcps.length - 1 && junior.hcpHistory && junior.hcpHistory.length >= 2 && (
                 <HcpSparkline points={junior.hcpHistory} playerName={junior.canonicalName} />
               )}
+            </span>
+          ))}
+          {rankingsRfeg.map((r) => (
+            <span key={`${r.t}-${r.ano}`}
+                  title={`${r.t}${r.f ? ` — ranking de ${shortDateSlash(r.f, true)}` : ""}${r.pts != null ? ` · ${r.pts} pontos` : ""}${r.via === "nome" ? " · ligado por nome e ano de nascimento" : ""}`}
+                  style={{
+                    background: "var(--bg-muted)",
+                    fontSize: "var(--fs-11)", padding: "3px 9px", borderRadius: "var(--radius-pill)",
+                    fontWeight: 600, color: "var(--text-2)",
+                    border: "1px solid var(--border-light)",
+                    display: "inline-flex", alignItems: "center", gap: 4,
+                  }}>
+              <span style={{ fontSize: "var(--fs-12)", lineHeight: 1 }}>{SOURCE_FLAGS.RFEG}</span>
+              {r.pos}º de {r.n} <span style={{ color: "var(--text-3)", marginLeft: 3 }}>· Ranking {r.curto}</span>
             </span>
           ))}
           {hcpLista && (
