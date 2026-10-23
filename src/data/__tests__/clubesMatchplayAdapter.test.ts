@@ -56,7 +56,10 @@ describe("clubesMatchplayToFile — Regional de Clubes 2026", () => {
     expect(flight("Juniores").rounds.map(r => [r.number, r.name, r.date])).toEqual([
       [1, "Dia 1", "2026-06-20"], [2, "Dia 2", "2026-06-21"],
     ]);
-    expect(file.pendingNote).toBe(CLUBES_PENDING_NOTE);
+    // A prova traz o aviso dela (o organizador só publicou o 1.º dia); sem ele, o geral.
+    expect(file.pendingNote).toMatch(/só publicou os resultados do 1\.º dia/);
+    expect(clubesMatchplayToFile({ ...mp, pendingNote: undefined }, { categories: CLUBES_TEAM_FORMAT["059-10685"].categories }).pendingNote)
+      .toBe(CLUBES_PENDING_NOTE);
   });
 
   it("confronto 3-way → TeamMatch com os 3 clubes, pontos, jogador e hora de saída", () => {
@@ -135,7 +138,11 @@ describe("clubesTeamPoints — Regional de Clubes 2026", () => {
 
   it("pendentes por vista, classificação oficial e o clube do Manuel em destaque", () => {
     expect([tp.byRound["1"].pending, tp.byRound["2"].pending, tp.byRound.all.pending]).toEqual([0, 3, 3]);
-    expect(tp.officialPlaces).toEqual({ CPG: 1, PXO: 2, CGSS: 3 });
+    // A classificação final não foi publicada (23/10/2026: a que lá estava não tinha fonte).
+    expect(tp.officialPlaces).toBeUndefined();
+    const comLugares = clubesTeamPoints({ ...mp, grandTotal: { _places: { CPG: 1, CGSS: 2, PXO: 3 } } },
+      { categories: CLUBES_TEAM_FORMAT["059-10685"].categories });
+    expect(comLugares.officialPlaces).toEqual({ CPG: 1, CGSS: 2, PXO: 3 });
     expect(tp.highlight).toEqual(["CGSS"]);
   });
 

@@ -222,7 +222,7 @@ export function clubesMatchplayToFile(mp: MatchPlayData, opts: ClubesAdapterOpts
     parentCompetitionId: null,
     flights,
     scrapedAt: mp.lastUpdated ?? "",
-    pendingNote: CLUBES_PENDING_NOTE,
+    pendingNote: mp.pendingNote ?? CLUBES_PENDING_NOTE,
   };
 }
 
@@ -279,6 +279,6 @@ export function clubesTeamPoints(mp: MatchPlayData, opts: ClubesAdapterOpts = {}
     byRound,
     ...(places ? { officialPlaces: places } : {}),
     ...(highlight.length ? { highlight } : {}),
-    pendingNote: CLUBES_PENDING_NOTE,
+    pendingNote: mp.pendingNote ?? CLUBES_PENDING_NOTE,
   };
 }

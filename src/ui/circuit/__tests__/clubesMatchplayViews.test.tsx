@@ -38,7 +38,11 @@ describe("TeamPointsStandings", () => {
   const html = renderToStaticMarkup(<TeamPointsStandings data={clubesTeamPoints(mp, opts)} />);
 
   it("Total por defeito: pontos por categoria, total, classificação oficial e aviso dos pendentes", () => {
-    expect(html).toContain("Classif. oficial");
+    // Sem classificação final publicada, sem a coluna; com ela, aparece.
+    expect(html).not.toContain("Classif. oficial");
+    const comLugares = renderToStaticMarkup(<TeamPointsStandings data={clubesTeamPoints(
+      { ...mp, grandTotal: { _places: { CPG: 1, CGSS: 2, PXO: 3 } } }, opts)} />);
+    expect(comLugares).toContain("Classif. oficial");
     expect(html).toContain(">Homens<");
     expect(html).toContain(">Senhoras<");
     expect(html).toContain(">Juniores<");

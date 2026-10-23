@@ -33,6 +33,9 @@ export interface MatchPlayData {
   dia2?: MpDiaDraw;
   /** Total oficial por clube; `_places` = classificação final (clube → lugar). */
   grandTotal?: { _places?: Record<string, number>; [clubKey: string]: unknown };
+  /** Aviso próprio da prova para os confrontos sem resultado (ex.: o organizador
+   *  só publicou o 1.º dia). Sem ele, o aviso geral (`CLUBES_PENDING_NOTE`). */
+  pendingNote?: string;
 }
 
 /** Uma linha por JOGADOR (não por match): no modo Total um miúdo joga nos dois
