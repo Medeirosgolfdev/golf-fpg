@@ -25,6 +25,7 @@ import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
 import { escShort, fmtTime, anoEscalao, todayIso } from "../utils/format";
+import { MANUEL_FED } from "../constants/manuel";
 import { TORNEIOS_CONFIG } from "../constants/config";
 import SexBadge from "./SexBadge";
 import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
@@ -195,6 +196,8 @@ function PainelResumo({ torneios, nossosByFed }: {
 }) {
   const fedCountries = useFedCountries();
   const [clubeSel, setClubesSel] = React.useState<string | null>(null);
+  // A lista de clubes ocupava três linhas: fica fechada até se pedir.
+  const [clubesAbertos, setClubesAbertos] = React.useState(false);
 
   const carregados = torneios.filter(t => t.totalInscritos > 0 || t._status === "ok");
   const totalGeral = carregados.reduce((s, t) => s + t.totalInscritos, 0);
@@ -242,10 +245,10 @@ function PainelResumo({ torneios, nossosByFed }: {
   const selData = clubeSel ? clubeMap.get(clubeSel) : null;
 
   return (
-    <div style={{ padding: "8px 12px 6px", borderBottom: "1px solid var(--border)", background: "var(--bg-card)" }}>
-      {/* Linha 1: total + escalões + anos */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: clubes.length > 0 ? 5 : 0 }}>
-        <span className="fw-800 fs-14 shrink-0">{totalGeral} inscritos</span>
+    <div className="lb-info-line flex-wrap" style={{ padding: "6px 0 2px", display: "block" }}>
+      {/* Linha 1: total + escalões + anos + o botão dos clubes */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
+        <span className="fw-700 fs-13 shrink-0">{totalGeral} inscritos</span>
         <span className="muted fs-11" >·</span>
         {escaloes.flatMap((e, ei) => {
           const g = byEsc[e];
@@ -279,12 +282,20 @@ function PainelResumo({ torneios, nossosByFed }: {
             </span>
           </>
         )}
+        {clubes.length > 0 && (
+          <>
+            <span className="muted fs-11">·</span>
+            <button type="button" className="tourn-tab tourn-tab-sm" onClick={() => setClubesAbertos(v => !v)}
+              aria-expanded={clubesAbertos} title="Inscritos por clube">
+              Clubes ({clubes.length}) {clubesAbertos ? "▾" : "▸"}
+            </button>
+          </>
+        )}
       </div>
 
-      {/* Linha 2: clubes */}
-      {clubes.length > 0 && (
-        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-          <span className="muted fs-10 shrink-0" >Clubes:</span>
+      {/* Linha 2: clubes (só aberta a pedido) */}
+      {clubesAbertos && clubes.length > 0 && (
+        <div className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center", marginTop: 6 }}>
           {clubes.map(([c, d]) => (
             <button key={c}
               onClick={() => setClubesSel(prev => prev === c ? null : c)}
@@ -302,7 +313,7 @@ function PainelResumo({ torneios, nossosByFed }: {
       )}
 
       {/* Jogadores do clube seleccionado */}
-      {selData && clubeSel && (
+      {clubesAbertos && selData && clubeSel && (
         <div style={{ marginTop: 6, padding: "8px 10px", background: "var(--bg)",
           border: "1px solid var(--border)", borderRadius: 6 }}>
           <div className="fs-11 fw-700" style={{ marginBottom: 5, color: "var(--text-1)" }}>
@@ -356,43 +367,24 @@ function TorneioCard({ t, active, onClick }: {
       .map(([cc, n]) => `${FLAG[cc] ?? "🏳️"} ${cc} ${n}`);
     return ` · ${estrangeirosTotal} estrangeiro${estrangeirosTotal > 1 ? "s" : ""}: ${parts.join(", ")}`;
   }, [estrangeirosByCountry, estrangeirosTotal]);
-  // As 3 bandeiras mais frequentes (para mostrar inline no card)
-  const topCountries = useMemo(
-    () => [...estrangeirosByCountry.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3),
-    [estrangeirosByCountry]
-  );
+  // As mesmas pílulas dos escalões das outras páginas: «S12 ♂ (19 jog) ★».
+  // As bandeiras dos estrangeiros ficam no texto ao passar o rato.
+  const temManuel = t.jogadores.some(j => j.fed === MANUEL_FED);
   return (
     <button
-      className={"tourn-tab tourn-tab-sm" + (active ? " active" : " tourn-tab-muted")}
+      className={"tourn-tab tourn-tab-sm" + (active ? " active" : "")}
       onClick={onClick}
       title={`Campeonato Nacional de Jovens ${t.nome}${recentes ? ` · ${recentes} inscrito${recentes > 1 ? "s" : ""} nas últimas 48h` : ""}${estrangeirosTitle}`}
     >
       {escShort(t.escalao)}
       <SexBadge sex={t.sex} size="sm" />
-      {t._status === "loading" && <span style={{ opacity: 0.7 }}>⟳</span>}
-      {t._status === "error"   && <span className="fw-700" style={{ color: "var(--color-bad)" }}>!</span>}
+      {t._status === "loading" && <span style={{ opacity: 0.7 }}> ⟳</span>}
+      {t._status === "error"   && <span className="fw-700" style={{ color: "var(--color-bad)" }}> !</span>}
       {t._status === "ok" && t.totalInscritos > 0 && (
-        <span className="fs-11 fw-700" style={{
-          background: active ? "rgba(255,255,255,0.25)" : "var(--bg-card)",
-          border: "1px solid var(--border)",
-          borderRadius: 10, padding: "0px 5px",
-          color: active ? "inherit" : "var(--text-1)",
-          marginLeft: 2,
-        }}>{t.totalInscritos}</span>
+        <span className="fs-10" style={{ marginLeft: 3, opacity: 0.8 }}>({t.totalInscritos} jog)</span>
       )}
-      {estrangeirosTotal > 0 && (
-        <span className="fs-10 fw-700" style={{
-          marginLeft: 3, padding: "0 4px", borderRadius: 8,
-          background: active ? "rgba(255,255,255,0.18)" : "var(--bg-card)",
-          border: "1px solid var(--border)",
-          display: "inline-flex", alignItems: "center", gap: 2,
-        }}>
-          {topCountries.map(([cc]) => <span key={cc}>{FLAG[cc] ?? "🏳️"}</span>)}
-          {estrangeirosByCountry.size > topCountries.length && <span style={{ opacity: 0.7 }}>+</span>}
-          <span>{estrangeirosTotal}</span>
-        </span>
-      )}
-      {recentes > 0 && <span className="new-round-dot" style={{ marginLeft: 2 }} title={`${recentes} nas últimas 48h`} />}
+      {temManuel && <span style={{ color: "var(--color-good)" }}> ★</span>}
+      {recentes > 0 && <span className="new-round-dot" style={{ marginLeft: 3 }} title={`${recentes} nas últimas 48h`} />}
     </button>
   );
 }
@@ -437,14 +429,12 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       { key: "r3m", label: "R3m", title: "Voltas nos últimos 3 meses", dir: "desc", sort: p => st(p)?.roundsLast3m ?? null,
         cell: p => { const r = st(p)?.roundsLast3m;
           return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-bad)" : "inherit" }}>{r}</span> : <span className="muted">–</span>; } },
-      { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo, escalão, ano no escalão, clube",
+      { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo e 1.º/2.º ano no escalão (o escalão, o nascimento e o clube estão nas suas colunas)",
         sort: p => (p.fed && nossosByFed.get(p.fed)?.escalao) || null,
         cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;
           return b ? <span className="gap-4" style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
               <SexBadge sex={b.sex} size="sm" />
-              <span className={`p p-sm p-${escCls(b.escalao)} fs-10`}>{escShort(b.escalao)}</span>
               {b.dob && <AnoEscalaoPill dob={b.dob} escalao={t.escalao} />}
-              {b.clube && <span className="muted fs-11">{b.clube}</span>}
             </span>
             : <span className="muted fs-11">{p.fed ? "Nao na BD" : "–"}</span>; } },
     ];
@@ -469,7 +459,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
       {t.lastFetched && (
         <span className="fs-10 fw-700"
           style={{
-            padding: "2px 7px", borderRadius: 10,
+            padding: "2px 7px", borderRadius: 10, whiteSpace: "nowrap",
             background: t.fromCache ? "var(--bg-muted)" : "var(--bg-success-subtle)",
             color:      t.fromCache ? "var(--text-muted)" : "var(--color-good-dark)",
             border:     t.fromCache ? "1px solid var(--border)" : "1px solid var(--color-good)",
@@ -485,7 +475,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   );
 
   return (
-    <AdmissionsTab admissions={admissions} playersDB={players as unknown as PlayersDB} fpgUrl={t.fpgUrl} date={todayIso()} hideCols={SEM_TEE}
+    <AdmissionsTab admissions={admissions} playersDB={players as unknown as PlayersDB} fpgUrl={t.fpgUrl} date={todayIso()} hideStart hideCols={SEM_TEE}
       tournamentEscalao={t.escalao} tournamentSex={t.sex === "F" ? "F" : "M"}
       extraCols={extraCols} removidos={t.diff?.removed ?? []} infoExtra={infoExtra} />
   );
@@ -575,40 +565,30 @@ export function InscricoesPanel() {
 
   return (
     <div>
-      {/* Selector de escalão */}
-      <div style={{
-        display: "flex", alignItems: "center", gap: 5, flexWrap: "nowrap",
-        padding: "6px 12px", overflowX: "auto", scrollbarWidth: "none" as const,
-        borderBottom: "1px solid var(--border-light)", background: "var(--bg-card)",
-      }}>
+      {/* Escalões — as pílulas das outras páginas, por cima do título */}
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", padding: "8px 12px 6px" }}>
         {torneios.map(t => (
           <TorneioCard key={t.tcode} t={t} active={activeTcode === t.tcode} onClick={() => setActiveTcode(t.tcode)} />
         ))}
         <div style={{ flex: 1, minWidth: 8 }} />
-        {totalNossosInscritos > 0 && <span className="chip shrink-0" >{totalNossosInscritos} na BD</span>}
-        <button className="tourn-tab tourn-tab-sm tourn-tab-muted" onClick={refreshAll}
+        {totalNossosInscritos > 0 && <span className="chip shrink-0" title="Inscritos que estão na nossa base de dados">{totalNossosInscritos} na BD</span>}
+        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
           style={{ flexShrink: 0 }}
-          title="Actualizar inscrições da FPG">↺</button>
+          title="Actualizar inscrições da FPG">↺ Actualizar</button>
       </div>
-      <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
       <div style={{ padding: "0 12px" }}>
-        <div style={{ display: "flex", alignItems: "baseline", gap: 12, padding: "10px 0 8px",
-          borderBottom: "1px solid var(--border)", marginBottom: 8, flexWrap: "wrap" }}>
-          <span className="fw-700 fs-14">
-            Campeonato Nacional de Jovens — {torneioActivo.nome}
-          </span>
-          <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
-             target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>
-            inscrições datagolf ↗
-          </a>
-          <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
-             target="_blank" rel="noopener noreferrer"
-             className="fs-11 fw-700"
-             style={{ color: "var(--color-good-dark)",
-               background: "var(--bg-success-subtle)", border: "1px solid var(--color-good)",
-               borderRadius: 6, padding: "2px 8px", textDecoration: "none", whiteSpace: "nowrap" as const }}>
-            🏆 página oficial FPG ↗
-          </a>
+        {/* Cabeçalho como o do detalhe de torneio: título e links oficiais à direita */}
+        <div className="detail-header">
+          <div className="detail-header-top">
+            <h2 className="detail-title">Campeonato Nacional de Jovens — {escShort(torneioActivo.escalao).replace(/^S/, "Sub ")} {torneioActivo.sex === "F" ? "Feminino" : "Masculino"}</h2>
+            <div style={{ display: "flex", gap: 4, flexWrap: "wrap", alignItems: "center" }}>
+              <a href={`https://scoring.datagolf.pt/pt/tournAdmissions.aspx?ccode=000&tcode=${torneioActivo.tcode}`}
+                 target="_blank" rel="noopener noreferrer" className="tourn-ext-link">📋 Inscrições ↗</a>
+              <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
+                 target="_blank" rel="noopener noreferrer" className="tourn-ext-link">🏆 Página oficial ↗</a>
+            </div>
+          </div>
+          <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
         </div>
         <InscricoesView t={torneioActivo} nossosFedSet={nossosFedSet} nossosByFed={nossosByFed} statsDb={statsDb} />
       </div>
