@@ -74,7 +74,7 @@ const PAGE_SIZE = 100;
 type SortKey =
   | "nfed" | "name" | "club" | "country" | "dob" | "age"
   | "hcp" | "ppHcp" | "sex" | "escalao"
-  | "roundsTotal" | "roundsYear" | "lastSD" | "avgSD5" | "lastHcpDate";
+  | "roundsTotal" | "roundsYear" | "lastSD" | "avgSD5";
 
 type Row = {
   fed: string;
@@ -92,7 +92,6 @@ type Row = {
   sex: string;                  // "M" / "F"
   escalao: string;
   fedStatusId: number;
-  lastHcpDate: string | null;
   // Métricas locais (player-stats.json) — só ~396 jogadores
   roundsTotal: number | null;
   roundsYear: number | null;
@@ -184,7 +183,7 @@ export default function JogadoresListPage() {
   /* Sort + paginação */
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("name", "asc", {
     hcp: "asc", ppHcp: "asc", age: "asc", dob: "desc", roundsTotal: "desc", roundsYear: "desc",
-    lastSD: "asc", avgSD5: "asc", lastHcpDate: "desc",
+    lastSD: "asc", avgSD5: "asc",
   });
   const [page, setPage] = useState(1);
 
@@ -230,7 +229,6 @@ export default function JogadoresListPage() {
         sex: (p.sex === "M" || p.sex === "F") ? p.sex : (f?.gender === "F" ? "F" : "M"),
         escalao: p.escalao || "Absoluto",
         fedStatusId: f?.federated_status_id ?? 9,
-        lastHcpDate: f?.last_hcp_date || null,
         roundsTotal: ps?.roundsTotal ?? null,
         roundsYear: ps?.roundsCurrentYear ?? f?.rounds_current_year ?? null,
         lastSD: ps?.lastSD ?? null,
@@ -267,7 +265,6 @@ export default function JogadoresListPage() {
         sex: ppr.sex === "F" ? "F" : "M",
         escalao: normalizeAgeLevel(ppr.age),
         fedStatusId: 9,
-        lastHcpDate: null,
         roundsTotal: null,
         roundsYear: null,
         lastSD: null,
@@ -376,7 +373,6 @@ export default function JogadoresListPage() {
         case "roundsYear":   return (num(a.roundsYear) - num(b.roundsYear)) * dir;
         case "lastSD":       return (num(a.lastSD) - num(b.lastSD)) * dir;
         case "avgSD5":       return (num(a.avgSD5) - num(b.avgSD5)) * dir;
-        case "lastHcpDate":  return ((a.lastHcpDate || "") < (b.lastHcpDate || "") ? -1 : (a.lastHcpDate || "") > (b.lastHcpDate || "") ? 1 : 0) * dir;
         default:             return 0;
       }
     });
@@ -609,7 +605,6 @@ export default function JogadoresListPage() {
                   <SortableHdr k="roundsYear" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Rondas no ano corrente">🗓 Ano</SortableHdr>
                   <SortableHdr k="lastSD" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Último Score Differential">Últ. SD</SortableHdr>
                   <SortableHdr k="avgSD5" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Média dos últimos 5 SDs">Méd. 5 SD</SortableHdr>
-                  <SortableHdr k="lastHcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Última actualização HCP (FPG)">Últ. HCP</SortableHdr>
                 </tr>
               </thead>
               <tbody>
@@ -677,7 +672,6 @@ export default function JogadoresListPage() {
                     </td>
                     <td className="num">{fmtSD(r.lastSD)}</td>
                     <td className="num">{fmtSD(r.avgSD5)}</td>
-                    <td className="num">{r.lastHcpDate ? shortDate(r.lastHcpDate) : "—"}</td>
                   </tr>
                   );
                 })}

@@ -14,6 +14,7 @@
  * Renderiza nada se courseName não for um dos campos suportados.
  */
 import React from "react";
+import { courseDisplayName } from "../utils/courseAliases";
 
 interface Props {
   /** Nome canónico do campo (ex: "PGA  Aroeira No.2"). */
@@ -30,7 +31,7 @@ const ALIASES_NO1 = ["Aroeira I", "Aroeira Pines Classic", "Aroeira II (par No.1
 const ALIASES_NO2 = ["Aroeira II (par No.2)", "Aroeira Challenge", "PGA Aroeira No.2 (configuração antiga)", "PGA Aroeira No.2 — CNJ FPG"];
 
 /* Santo da Serra — todas as variantes que a FPG usa */
-const ALIASES_SDS_18H = ["F9 + B9 em qualquer ordem (Serras-Machico ≡ Machico-Serras → Machico+Serras)"];
+const ALIASES_SDS_18H = ["F9 + B9 em qualquer ordem (Serras-Machico ≡ Machico-Serras)"];
 const ALIASES_SDS_9H = ["Rondas mal-etiquetadas (par real ≠ nine no nome) re-distribuídas pelo nine correcto"];
 
 export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, compact }: Props) {
@@ -46,7 +47,7 @@ export default function AroeiraNotice({ courseName, rotatedCount, totalRounds, c
   if (isNo1) { title = "PGA Aroeira No.1"; aliases = ALIASES_NO1; }
   else if (isNo2) { title = "PGA Aroeira No.2"; aliases = ALIASES_NO2; }
   else {
-    title = trimmed;
+    title = courseDisplayName(trimmed);
     // Detectar 18H combination ("X+Y" / "X×2") vs 9H (single nine)
     aliases = /\+|×2/.test(trimmed) ? ALIASES_SDS_18H : ALIASES_SDS_9H;
   }

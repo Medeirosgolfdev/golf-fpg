@@ -259,6 +259,24 @@ export function resolveSantoDaSerraByPar(name: string, pars: number[] | null | u
   return canonicalSantoDaSerraNameOnly(name);
 }
 
+/** Percursos de 18 do Santo da Serra pela ordem em que se jogam (nomes da FPG). */
+const SDS_LAYOUTS = ["Machico-Desertas", "Desertas-Serras", "Serras-Machico"];
+
+/**
+ * Nome para MOSTRAR de um campo. O bucket do Santo da Serra é alfabético
+ * («Machico+Serras») porque serve de chave nos dados; no ecrã aparece pela
+ * ordem dos buracos, como a FPG o escreve («Serras-Machico»). Os outros campos
+ * ficam como estão.
+ */
+export function courseDisplayName(name: string): string {
+  const m = /^Santo da Serra - ([A-Za-z]+)(?:\+([A-Za-z]+)|×2)$/.exec(String(name || ""));
+  if (!m) return name;
+  const [, a, b] = m;
+  if (!b) return `${SDS_BASE} - ${a}-${a}`;
+  const layout = SDS_LAYOUTS.find(l => l === `${a}-${b}` || l === `${b}-${a}`);
+  return `${SDS_BASE} - ${layout ?? `${a}-${b}`}`;
+}
+
 /**
  * Fallback para rondas Santo da Serra sem par[]: canoniza só pelo nome,
  * ordenando os nines alfabeticamente em 18H. Não consegue corrigir nines

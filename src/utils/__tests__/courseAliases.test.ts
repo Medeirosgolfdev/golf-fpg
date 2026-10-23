@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { canonicalCourseName } from "../courseAliases";
+import { canonicalCourseName, courseDisplayName } from "../courseAliases";
 
 describe("canonicalCourseName — campos PT legados/genéricos", () => {
   const cases: Array<[string, string]> = [
@@ -27,5 +27,18 @@ describe("canonicalCourseName — campos PT legados/genéricos", () => {
     expect(canonicalCourseName("Montebelo Caramulo (1-18)")).toBe("Montebelo Caramulo (1-18)");
     expect(canonicalCourseName("O'Connor Jnr Course")).toBe("O'Connor Jnr Course");
     expect(canonicalCourseName("Pinheiros Altos-Olives/Pines")).toBe("Pinheiros Altos-Olives/Pines");
+  });
+});
+
+describe("courseDisplayName — Santo da Serra pela ordem dos buracos", () => {
+  it("mostra o percurso como a FPG o escreve", () => {
+    expect(courseDisplayName("Santo da Serra - Machico+Serras")).toBe("Santo da Serra - Serras-Machico");
+    expect(courseDisplayName("Santo da Serra - Desertas+Machico")).toBe("Santo da Serra - Machico-Desertas");
+    expect(courseDisplayName("Santo da Serra - Desertas+Serras")).toBe("Santo da Serra - Desertas-Serras");
+    expect(courseDisplayName("Santo da Serra - Serras×2")).toBe("Santo da Serra - Serras-Serras");
+  });
+  it("não mexe nos 9 buracos nem noutros campos", () => {
+    expect(courseDisplayName("Santo da Serra - Machico")).toBe("Santo da Serra - Machico");
+    expect(courseDisplayName("Palmares Golf Lagos - Praia")).toBe("Palmares Golf Lagos - Praia");
   });
 });

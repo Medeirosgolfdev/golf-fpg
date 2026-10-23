@@ -1083,7 +1083,7 @@ tr.cross-current { background: var(--bg-success); }
 .sc-table-ec .ec-bog    { color: var(--color-danger); font-weight: 700; min-width: 30px; }
 /* Colunas extra à direita do TOT (HCP / STB / SD) no scorecard do Eclético —
    sem fundo tingido, só um divisor a separá-las do scorecard. */
-.sc-table-ec .ec-extra { border-left: 1px solid var(--border-light); font-variant-numeric: tabular-nums; min-width: 40px; }
+.sc-table-ec .ec-extra { border-left: 1px solid var(--border-light); font-variant-numeric: tabular-nums; min-width: 32px; }
 
 /* Tabela-resumo do Eclético — cabeçalho harmonizado com o scorecard (caixa
    normal, leve, transparente) e densidade compacta para ocupar menos espaço. */
@@ -1130,6 +1130,10 @@ tr.cross-current { background: var(--bg-success); }
    a leitura tabular mas com respiração vertical, ao nível dos KPI cards. */
 .pa-content .dtable-lg th { padding: 7px 10px; }
 .pa-content .dtable-lg td { padding: 7px 10px; }
+/* O scorecard do Eclético vive DENTRO da linha de detalhe da tabela de campos
+   (.dtable-lg): sem isto, os 7px 10px de cima apanhavam cada buraco e a tabela
+   ficava com o dobro da largura (scroll horizontal). */
+.pa-content .dtable-lg .sc-table-ec :is(th, td) { padding: 3px 4px; }
 /* by_course tem 1 linha por célula → linhas mais altas p/ igualar by_date/federado */
 /* 2026-08-15: o padding vertical de 10px do .dtable-roomy saiu (linhas gordas)
    — a classe fica só pelo min-width (ver regra mais abaixo); a densidade vem

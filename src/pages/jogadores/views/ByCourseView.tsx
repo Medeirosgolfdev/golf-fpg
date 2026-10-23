@@ -23,6 +23,7 @@ import HoleStatsSection from "../../../ui/HoleStatsSection";
 import { ScorecardTable } from "../../../ui/ScorecardTable";
 import { EclecticSection } from "../../../ui/EclecticSection";
 import { findCourseKey } from "../../../ui/jogadoresHelpers";
+import { courseDisplayName } from "../../../utils/courseAliases";
 import { EventInfo, effectivePill } from "../eventInfo";
 import { scHostStyle, type CourseSort } from "../shared";
 import CoursePerformanceSection from "./CoursePerformanceSection";
@@ -74,7 +75,7 @@ function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
         </td>
         <td>
           <div className="rowHead">
-            <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{course.course}</button>
+            <button type="button" className="courseBtn" onClick={() => setOpen(v => !v)}>{courseDisplayName(course.course)}</button>
  {courseLinkKey && <a href={`/campos/${courseLinkKey}`} className="courseLink fs-10 ml-4" title="Ver campo" target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>↗</a>}
             <PillBadge pill={course.rounds.map(r => effectivePill(r, course.course)).find(Boolean) || ""} />
             <AroeiraNotice

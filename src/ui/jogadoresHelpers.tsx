@@ -1,5 +1,5 @@
 import { norm } from "../utils/format";
-import { canonicalCourseName } from "../utils/courseAliases";
+import { canonicalCourseName, courseDisplayName } from "../utils/courseAliases";
 
 /* —— Course key lookup: course display name → courseKey for /campos/:courseKey —— */
 let _courseKeyMap: Map<string, string> = new Map();
@@ -21,7 +21,8 @@ export function buildCourseKeyMap(courses: any[]): Map<string, string> {
 }
 
 export function findCourseKey(courseName: string): string | null {
-  return _courseKeyMap.get(ckNorm(courseName)) ?? null;
+  return _courseKeyMap.get(ckNorm(courseName))
+    ?? _courseKeyMap.get(ckNorm(courseDisplayName(courseName))) ?? null;
 }
 
 export function setCourseKeyMap(map: Map<string, string>) {
@@ -32,8 +33,9 @@ export function setCourseKeyMap(map: Map<string, string>) {
    O nome fica como texto normal; a seta ↗ é o único elemento clicável,
    para uniformizar com o padrão da ByCourseView e evitar conflitos com
    handlers de clique na linha/botão pai. */
-export function CourseLink({ name }: { name: string }) {
-  const key = findCourseKey(name);
+export function CourseLink({ name: rawName }: { name: string }) {
+  const key = findCourseKey(rawName);
+  const name = courseDisplayName(rawName);
   if (!key) return <>{name}</>;
   return (
     <>

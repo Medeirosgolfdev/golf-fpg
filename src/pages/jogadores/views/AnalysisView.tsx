@@ -16,6 +16,7 @@ import { RoundSimulator } from "../../../ui/RoundSimulator";
 import { Last20Table } from "../../../ui/Last20Table";
 import { CrossAnalysis } from "../../../ui/CrossAnalysis";
 import { historicExceptionalAdj, topRanks } from "../../../utils/whsCalc";
+import { courseDisplayName } from "../../../utils/courseAliases";
 
 export default function AnalysisView({ data }: { data: PlayerPageData }) {
   const [histPeriod, setHistPeriod] = useState(12);
@@ -360,7 +361,7 @@ function RecordsCard({ rounds, period, setPeriod }: {
     return (
       <div className="jog-field-line">
         <span>{label}</span>
-        <span><b>{val}</b> <span className="muted">({shortDate(r.date)} · {r.course})</span></span>
+        <span><b>{val}</b> <span className="muted">({shortDate(r.date)} · {courseDisplayName(r.course)})</span></span>
       </div>
     );
   }
