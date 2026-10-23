@@ -41,4 +41,7 @@ describe("courseDisplayName — Santo da Serra pela ordem dos buracos", () => {
     expect(courseDisplayName("Santo da Serra - Machico")).toBe("Santo da Serra - Machico");
     expect(courseDisplayName("Palmares Golf Lagos - Praia")).toBe("Palmares Golf Lagos - Praia");
   });
+  it("rondas importadas sem campo («NONE») mostram «—»", () => {
+    expect(courseDisplayName("NONE")).toBe("—");
+  });
 });

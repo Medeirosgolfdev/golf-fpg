@@ -266,9 +266,10 @@ const SDS_LAYOUTS = ["Machico-Desertas", "Desertas-Serras", "Serras-Machico"];
  * Nome para MOSTRAR de um campo. O bucket do Santo da Serra é alfabético
  * («Machico+Serras») porque serve de chave nos dados; no ecrã aparece pela
  * ordem dos buracos, como a FPG o escreve («Serras-Machico»). Os outros campos
- * ficam como estão.
+ * ficam como estão. «NONE» (rondas importadas sem campo) mostra-se «—».
  */
 export function courseDisplayName(name: string): string {
+  if (/^\s*none\s*$/i.test(String(name || ""))) return "—";
   const m = /^Santo da Serra - ([A-Za-z]+)(?:\+([A-Za-z]+)|×2)$/.exec(String(name || ""));
   if (!m) return name;
   const [, a, b] = m;

@@ -68,7 +68,9 @@ export default function ByDateView({ data, search }: {
     { key: "date", label: "Data", width: "68px", sortable: true, render: r => (
       <span title={`score #${r.scoreId}`}><TeeDate date={r.date} tee={r.tee || ""} /></span>
     ) },
-    { key: "course", label: "Campo", width: "190px", sortable: true, render: r => <CourseLink name={r.course} /> },
+    // Campo em % (não px): com a tabela estreita, Campo e Prova encolhem juntos
+    // em vez de a Prova ficar só com as sobras e partir em 4-5 linhas.
+    { key: "course", label: "Campo", width: "17%", sortable: true, render: r => <CourseLink name={r.course} /> },
     { key: "event", label: "Prova", sortable: true, cellClassName: "col-prova", render: r => (
       <EventInfo name={r.eventName} origin={r.scoreOrigin} pill={effectivePill(r)} links={r._links}
         fed={data.CURRENT_FED} tcode={r.tcode} ccode={r.ccode} course={r.course} />
