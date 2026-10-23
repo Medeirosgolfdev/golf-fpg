@@ -19,8 +19,12 @@ const { normName } = require("./names");
  *   rfegLic?: string,
  *   ffgolfLic?: string,
  *   canonicalName?: string,
- *   dob?: string
+ *   dob?: string,
+ *   salt?: string
  * }} ev
+ * `salt` (23/10/2026): só para separar dois juniores sem chave forte que
+ * dariam o mesmo hash (mesmo nome, sem data) mas que são pessoas diferentes —
+ * ver «Colisões de id» no identity-matcher. Sem ele, o id é o de sempre.
  */
 function juniorId(ev) {
   if (ev.uskidsMemberId) return `u${ev.uskidsMemberId}`;
@@ -28,7 +32,7 @@ function juniorId(ev) {
   if (ev.rfegLic) return `r${ev.rfegLic}`;
   if (ev.ffgolfLic) return `g${ev.ffgolfLic}`;
   // Sem ID forte: hash determinístico de nome+dob.
-  const seed = `${normName(ev.canonicalName || "")}|${ev.dob || ""}`;
+  const seed = `${normName(ev.canonicalName || "")}|${ev.dob || ""}${ev.salt ? `|${ev.salt}` : ""}`;
   const h = crypto.createHash("sha1").update(seed).digest("hex").slice(0, 10);
   return `x${h}`;
 }

@@ -270,6 +270,77 @@ function resolve(rawSources, overrides) {
   // automático une, usar notDuplicates — aplicado como veto no tryUnion).
 
   // ────────────────────────────────────────────────────────────────────
+  // 5.9 Colisões de id (23/10/2026)
+  // Sem chave forte nem data, o id é o hash do NOME. Dois grupos com o mesmo
+  // nome que o passo 5 não juntou (países diferentes) davam o MESMO id — os
+  // resultados ficavam juntos pelo id e a ficha aparecia duas vezes (191 casos).
+  // Junta-se quando há prova de que é a mesma pessoa: nunca no mesmo flight e
+  // idades compatíveis (um só ano de nascimento para todos os escalões). Os
+  // que falham são homónimos: ficam separados, com id próprio (passo 6).
+  // ────────────────────────────────────────────────────────────────────
+  const flightsByEntity = new Map(); // entityKey → [{ fk, y, ageMin, ageMax }]
+  for (const src of rawSources) {
+    for (const t of src.tournaments || []) {
+      const y = Number(String(t.date || "").slice(0, 4)) || null;
+      for (const f of t.flights || []) {
+        const fk = `${src.sourceId}|${t.sourceKey}|${f.flightKey}`;
+        for (const r of f.results || []) {
+          if (!r.playerSourceKey) continue;
+          const k = `${src.sourceId}:${r.playerSourceKey}`;
+          let arr = flightsByEntity.get(k);
+          if (!arr) flightsByEntity.set(k, (arr = []));
+          arr.push({ fk, y, ageMin: f.ageMin, ageMax: f.ageMax });
+        }
+      }
+    }
+  }
+  /** Flights e intervalo do ano de nascimento de um grupo. Idades acima de 30
+   *  são lixo da fonte (ano no lugar da idade) e não contam. */
+  function groupEvidence(group) {
+    const fks = new Set();
+    let lo = -Infinity, hi = Infinity;
+    for (const e of group) {
+      for (const f of flightsByEntity.get(e.entityKey) || []) {
+        fks.add(f.fk);
+        if (!f.y) continue;
+        if (typeof f.ageMax === "number" && f.ageMax <= 30) lo = Math.max(lo, f.y - f.ageMax - 1);
+        if (typeof f.ageMin === "number" && f.ageMin <= 30) hi = Math.min(hi, f.y - f.ageMin);
+      }
+    }
+    return { fks, lo, hi };
+  }
+  function samePerson(ga, gb) {
+    const a = groupEvidence(ga), b = groupEvidence(gb);
+    for (const fk of a.fks) if (b.fks.has(fk)) return false;           // jogaram um contra o outro
+    return Math.max(a.lo, b.lo) <= Math.min(a.hi, b.hi);                // um só ano de nascimento
+  }
+  let collisionMerges = 0;
+  {
+    const byProvId = new Map(); // id → [root]
+    for (const [root, group] of groupEntities) {
+      if (find(root) !== root) continue;
+      const id = buildJunior(group).id;
+      if (!id.startsWith("x")) continue; // só os ids por hash de nome colidem
+      let arr = byProvId.get(id);
+      if (!arr) byProvId.set(id, (arr = []));
+      arr.push(root);
+    }
+    for (const roots of byProvId.values()) {
+      if (roots.length < 2) continue;
+      // O grupo com mais entradas primeiro; os outros juntam-se a ele se forem a mesma pessoa.
+      roots.sort((a, b) => (groupEntities.get(b)?.length || 0) - (groupEntities.get(a)?.length || 0));
+      for (let i = 1; i < roots.length; i++) {
+        for (let k = 0; k < i; k++) {
+          const ra = find(roots[k]), rb = find(roots[i]);
+          if (ra === rb) break;
+          if (!samePerson(groupEntities.get(ra) || [], groupEntities.get(rb) || [])) continue;
+          if (tryUnion(ra, rb)) { collisionMerges++; break; }
+        }
+      }
+    }
+  }
+
+  // ────────────────────────────────────────────────────────────────────
   // 6. Materialize juniors: group entities by root
   // ────────────────────────────────────────────────────────────────────
   // Construir preferredEntityKeys: para grupos com override preferStrongKey,
@@ -301,6 +372,7 @@ function resolve(rawSources, overrides) {
   const entityToJuniorId = new Map();
   let juniors = [];
 
+  const built = []; // [entidades, junior] — para ligar os resultados depois dos ids finais
   for (const [root, group] of groups) {
     const prefs = preferredByRoot.get(root);
     // Sort entities: preferred entity comes LAST (last-write-wins in buildJunior)
@@ -311,8 +383,34 @@ function resolve(rawSources, overrides) {
     }) : group;
     const junior = buildJunior(sorted);
     juniors.push(junior);
-    for (const e of group) entityToJuniorId.set(e.entityKey, junior.id);
+    built.push([group, junior]);
   }
+  // Homónimos que ficaram separados (5.9) ainda têm o mesmo id: o grupo maior
+  // fica com o id de sempre, os outros levam o país (ou a 1.ª chave) no hash.
+  let collisionSplits = 0;
+  {
+    const byId = new Map();
+    for (const j of juniors) {
+      let arr = byId.get(j.id);
+      if (!arr) byId.set(j.id, (arr = []));
+      arr.push(j);
+    }
+    for (const same of byId.values()) {
+      if (same.length < 2) continue;
+      same.sort((a, b) => b._match.evidence.length - a._match.evidence.length);
+      const usados = new Set([same[0].id]);
+      for (let i = 1; i < same.length; i++) {
+        const j = same[i];
+        let salt = j.country || j._match.evidence[0];
+        let id = juniorId({ canonicalName: j.canonicalName, dob: j.dob, salt });
+        if (usados.has(id)) id = juniorId({ canonicalName: j.canonicalName, dob: j.dob, salt: (salt = j._match.evidence.join(",")) });
+        usados.add(id);
+        j.id = id;
+        collisionSplits++;
+      }
+    }
+  }
+  for (const [group, j] of built) for (const e of group) entityToJuniorId.set(e.entityKey, j.id);
 
   // ────────────────────────────────────────────────────────────────────
   // 7. Map tournaments — converter playerSourceKey → juniorId
@@ -437,7 +535,7 @@ function resolve(rawSources, overrides) {
     total: juniors.length,
     droppedNoTourn,
     strong: 0, probable: 0, manual: 0,
-    strongMerges, probableMerges, manualMerges,
+    strongMerges, probableMerges, manualMerges, collisionMerges, collisionSplits,
   };
   for (const j of juniors) {
     stats[j._match.confidence] = (stats[j._match.confidence] || 0) + 1;
@@ -462,8 +560,13 @@ function buildJunior(entities) {
   // Sex: idem
   const sex = mostFrequent(entities.map((e) => e.raw.sex).filter(Boolean));
 
-  // Country (ISO2): idem
-  const country = mostFrequent(entities.map((e) => e.raw.country).filter(Boolean));
+  // Country (ISO2): idem. «IG» (England Golf) = Irlanda (23/10/2026).
+  const countryOf = (e) => (e.raw.country === "IG" ? "IE" : e.raw.country);
+  const country = mostFrequent(entities.map(countryOf).filter(Boolean));
+  // Todos os países que as fontes dão (23/10/2026): um junior junto de dois
+  // registos (passo 5.9) pode ter o da nacionalidade e o da federação onde joga
+  // — as listas de inscritos (util/hcp-listas.js) aceitam qualquer um.
+  const countries = [...new Set(entities.map(countryOf).filter(Boolean))];
 
   // Club: pegar do mais "primary" (com tag primary=true em FPG) ou primeiro disponível
   const clubByPrimary = entities.find((e) => e.raw.extra?.primary);
@@ -556,6 +659,7 @@ function buildJunior(entities) {
     sex,
     nationality: country,
     country,
+    ...(countries.length > 1 ? { countries } : {}),
     region,
     club,
     sources,

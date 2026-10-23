@@ -31,7 +31,7 @@ const { normName, countryToIso2 } = require("./names");
 const LISTAS_DIR = path.join(DATA_DIR, "hcp-listas");
 
 const paisOk = (iso, j, exigir) => {
-  const da = [j.country, j.nationality].filter(Boolean).map((c) => String(c).toUpperCase());
+  const da = [j.country, j.nationality, ...(j.countries || [])].filter(Boolean).map((c) => String(c).toUpperCase());
   if (!da.length) return !exigir;
   if (!iso) return !exigir;
   return da.some((c) => c === iso || c.startsWith(iso + "-"));

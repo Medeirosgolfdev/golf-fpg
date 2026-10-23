@@ -152,6 +152,17 @@ function run(result, { previous = null, force = false } = {}) {
     detail: `${danglingTids} referências quebradas`,
   });
 
+  // 10. Um junior por id (23/10/2026): dois registos com o mesmo id juntavam os
+  // resultados e mostravam a ficha duas vezes (191 casos, ids por hash de nome).
+  const idCount = new Map();
+  for (const j of juniors) idCount.set(j.id, (idCount.get(j.id) || 0) + 1);
+  const dupIds = [...idCount].filter(([, n]) => n > 1).map(([id]) => id);
+  checks.push({
+    name: "Sem ids de junior repetidos",
+    pass: dupIds.length === 0,
+    detail: dupIds.length ? `${dupIds.length} repetidos (ex.: ${dupIds.slice(0, 3).join(", ")})` : "0 repetidos",
+  });
+
   // Imprimir resultados detalhados (sub)
   for (const c of checks) {
     if (c.pass) {
