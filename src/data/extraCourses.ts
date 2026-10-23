@@ -1131,6 +1131,46 @@ const golfParisValDEurope: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Zarapicos Golf & Country Club (Salamanca, Espanha) — Amarelas
+   Entrou a 23/10/2026 pelo cartão WHS do 6437 (29/05/2026, Tiger Trip
+   Salamanca), com os metros a zero. Metros por buraco da tarjeta do campo
+   (golfingrecord.com, «Amarillas», 6050 m; a GolfAdvisor dá 6042 m). Par e SI
+   iguais buraco a buraco aos do cartão FPG; CR/Slope ficam os do cartão
+   (69,1/136 — a tarjeta dá 69/136).
+   ───────────────────────────────────────────────────────────────────────── */
+
+const zarPar  = [5,4,4,3,5,4,4,3,4, 4,5,4,3,4,4,4,3,5];
+const zarSI   = [7,11,1,17,15,9,5,13,3, 10,6,8,4,14,12,16,18,2];
+const zarDistAmarelas = [484,304,399,150,439,357,375,168,365, 339,494,362,189,359,327,317,125,497];
+
+const zarapicos: Course = {
+  courseKey: "away-zarapicos-golf-country-club",
+  master: {
+    courseId: "away-zarapicos-golf-country-club",
+    name: "Zarapicos Golf & Country Club",
+    country: "Espanha",
+    links: {
+      fpg: null,
+      scorecards: "https://www.golfingrecord.com/golf-scorecard/f46cd596-e33f-48c9-8061-f92f5935bd74",
+    },
+    tees: [
+      {
+        teeId: "away-zarapicos-golf-country-club-0",
+        sex: "U",
+        teeName: "AMARELAS",
+        ratings: {
+          holes18: { par: 72, courseRating: 69.1, slopeRating: 136 },
+          holes9Front: { par: 36, courseRating: 34.5, slopeRating: 136 },
+          holes9Back: { par: 36, courseRating: 34.5, slopeRating: 136 },
+        },
+        holes: ltHoles(zarPar, zarSI, zarDistAmarelas),
+        distances: ltDist(zarDistAmarelas),
+      },
+    ],
+  },
+};
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -1149,5 +1189,6 @@ export function getExtraCourses(): Course[] {
     frassanelle,
     galzignano,
     golfParisValDEurope,
+    zarapicos,
   ];
 }
