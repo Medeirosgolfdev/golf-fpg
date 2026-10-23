@@ -50,7 +50,7 @@
 | Detalhe do torneio | `TournamentDetail` (via `division.renderFull`) + abas extra (`fpgPastEditions`, `fpgMatchplay`, `fpgOmRanking`) |
 | A página | `src/pages/FPGPage.tsx` (~800 linhas): barra, escolha da vista, itens da sidebar, rankings e painel de inscrições |
 
-- **Todas as vistas de torneios passam pelo `CircuitShell`** (Todos, STO, PJA, Jovens, Clubes). Ficam fora: Ranking PJA, Ranking Sub-12, Classificações (`PJARankingView`) e o painel de inscrições (`InscricoesPanel`).
+- **Todas as vistas de torneios passam pelo `CircuitShell`** (Todos, STO, PJA, Jovens, Clubes). Ficam fora: Ranking PJA, Ranking Sub-12 por SD, Classificações (`PJARankingView`, que usa a vista da capacidade `ranking` — `CircuitRankingView`: 📊 Tabela + 🏆 Ranking, contas em `src/data/ranking/fpgRanking.ts`) e o painel de inscrições (`InscricoesPanel`).
 - **O torneio aberto sai só do URL** (`/FPG/torneio/{ccode}-{tcode}`): `resolveFpgTkey` sobre as entradas da vista aberta dá `selectedId`/`selectedDivKey` ao shell; clicar na sidebar navega (`onSelectEntry`/`onSelectDivision`). Não há `selected`/`cur` nem efeitos URL↔estado do torneio (saíram no passo 8). O único estado é a vista (`seriesFilter`, `navMode`): um `/FPG/torneio/…` mantém a vista em que se estava.
 - Deep-link de um torneio que não está na vista aberta: match play de Clubes → passa para Clubes (`tkeyToClubes`); Drive/Aquapor → `/drive/torneio/…` (`tkeyDriveTarget`). Enquanto falta algum lote de dados o shell fica «a carregar» (`tkeyPending`), para não reescrever o URL com o torneio por omissão.
 

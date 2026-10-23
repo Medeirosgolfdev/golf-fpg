@@ -16,8 +16,9 @@ multiplicadores, pontos) vivem numa fonte ÚNICA: `ranking-pja/pja-rules.mjs`**
 (ESM puro sem dependências, tipos em `pja-rules.d.mts`), consumida por:
 - `src/pages/FPGPage.tsx` — `isPJACore()` no filtro do `pjaRankingList` (o
   wrapper local só acrescenta `_manual`/`_origin === "PJA"` e a exclusão SSerra);
-- `src/ui/PJARankingView.tsx` — `classifyPJAEvent`/`isGFTournament`/
-  `getTournMultiplier`/`pjaPts`;
+- `src/data/ranking/fpgRanking.ts` — `classifyPJAEvent`/`isGFTournament`/
+  `getTournMultiplier`/`pjaPts` (as contas dos três rankings da /FPG, com
+  testes; a `PJARankingView` só desenha — Tabela e Ranking, 23/10/2026);
 - `src/pages/fpg/constants.ts` — `TOURN_PILLS` deriva de `PJA_TCODES`;
 - `ranking-pja/index.html` — importa via `<script type="module">` (same-origin,
   a pasta é o root do projecto).
@@ -53,7 +54,8 @@ limpar quando houver decisão sobre cada um.
 
 O que o público lê sobre elegibilidade vive em `PJA_NOTAS` + `notasPJA(ano,
 hoje)` no `pja-rules.mjs`, e é renderizado por AMBAS as superfícies
-(`RankingNotas` na `PJARankingView`, `renderNotas()` na standalone). O texto
+(`RankingNotas` na `PJARankingView` — só no Ranking PJA, não no Sub-12 nem nas
+Classificações —, `renderNotas()` na standalone). O texto
 está na fonte única pela mesma razão que as regras: senão as duas páginas
 acabam a dizer coisas diferentes.
 

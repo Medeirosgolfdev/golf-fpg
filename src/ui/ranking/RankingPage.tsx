@@ -132,7 +132,7 @@ export interface RankingCol<T> {
   tdStyle?: React.CSSProperties;
 }
 
-export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, tieBreak, onRowClick, rowStyle, rowTitle, paged }: {
+export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, tieBreak, onRowClick, rowStyle, rowClassName, rowTitle, paged }: {
   rows: T[];
   cols: RankingCol<T>[];
   rowKey: (r: T) => string;
@@ -142,6 +142,8 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
   tieBreak?: (a: T, b: T) => number;
   onRowClick?: (r: T) => void;
   rowStyle?: (r: T) => React.CSSProperties | undefined;
+  /** Classes extra da linha (ex.: `row-manuel`, `row-selected`). */
+  rowClassName?: (r: T) => string | undefined;
   rowTitle?: string;
   /** Páginas de 100 (listas grandes). */
   paged?: boolean;
@@ -182,7 +184,7 @@ export function RankingTable<T>({ rows, cols, rowKey, defaultSort, defaultDir, t
           </thead>
           <tbody>
             {shown.map((r) => (
-              <tr key={rowKey(r)} className="player-list-row" title={rowTitle}
+              <tr key={rowKey(r)} className={"player-list-row" + (rowClassName?.(r) ? " " + rowClassName(r) : "")} title={rowTitle}
                 onClick={onRowClick ? () => onRowClick(r) : undefined}
                 style={{ cursor: onRowClick ? "pointer" : undefined, ...rowStyle?.(r) }}>
                 {cols.map((c) => <td key={c.key} className={c.tdClassName ?? c.className} style={c.tdStyle}>{c.cell(r)}</td>)}

@@ -21,8 +21,7 @@ import {
 } from "./data";
 import { getTournWeight, formatStars } from "./tournWeight";
 import { flag as flagOf } from "../../utils/flagUtils";
-import { useSort } from "../../hooks/useSort";
-import SortableHdr from "../../ui/SortableHdr";
+import { RankingTable, type RankingCol } from "../../ui/ranking/RankingPage";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
 import Kids2SubNav from "./Kids2SubNav";
@@ -33,7 +32,6 @@ import { useScoutRanking } from "./useScoutRanking";
 
 const YEARS = Array.from({ length: 12 }, (_, i) => 2019 - i); // 2019..2008
 type SexFilter = "M" | "F";
-type SortKey = "rank" | "name" | "score" | "tourneys" | "wins";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
@@ -155,90 +153,71 @@ function JourneyChip({ item }: { item: JourneyItem }) {
   );
 }
 
-// ── Linha de jogador ──────────────────────────────────────────────────────────
+// ── Colunas (a RankingTable partilhada, a do EGR/WAGR/Drive/FPG) ─────────────
 
-function PlayerRow({
-  rank, junior, entry, score, wins, top3, journey, isManuel,
-}: {
-  rank: number;
-  junior: Junior;
-  entry: RankingEntry;
-  score: number;
-  wins: number;
-  top3: number;
-  journey: JourneyItem[];
-  isManuel: boolean;
-}) {
-  const country = junior.country || junior.nationality || "";
-  const fl = flagOf(country) || "";
-  const MEDALS = ["🥇", "🥈", "🥉"];
+const MEDALS = ["🥇", "🥈", "🥉"];
 
+/** Nome + tier + vitórias + o percurso (chips dos torneios >3★). */
+function NameCell({ row }: { row: CohortRow }) {
+  const { junior, entry, wins, top3, journey, isManuel } = row;
   // journey já vem ordenado desc por data (buildJourney); só torneios >3★
   const topItems = journey.filter((i) => i.stars > 3).slice(0, 8);
-
   return (
-    <tr style={{ background: isManuel ? "var(--bg-success-subtle, #f0fdf4)" : undefined }}>
-      {/* rank */}
-      <td style={{ fontWeight: 800, fontSize: rank <= 3 ? "var(--fs-18)" : "var(--fs-14)", textAlign: "right", paddingRight: 6, whiteSpace: "nowrap" }}>
-        {rank <= 3 ? MEDALS[rank - 1] : rank}
-      </td>
-
-      {/* bandeira */}
-      <td style={{ textAlign: "center", fontSize: "var(--fs-16)" }}>{fl}</td>
-
-      {/* nome + tier + percurso */}
-      <td>
-        <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 4 }}>
-          <Link
-            to={`/kids2/${junior.id}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              fontWeight: 700, fontSize: "var(--fs-13)",
-              color: isManuel ? "var(--color-good-dark)" : "var(--color-info)",
-              textDecoration: "none",
-            }}
-          >
-            {junior.canonicalName || junior.id}
-            {isManuel && (
-              <span style={{ marginLeft: 5, fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--color-good-dark)" }}>← tu</span>
-            )}
-          </Link>
-          <TierBadge tier={entry.tier} />
-          {wins > 0 && (
-            <span style={{ fontSize: "var(--fs-11)", color: "#b45309", fontWeight: 600 }}>{wins}× 🏆</span>
+    <>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 4 }}>
+        <Link
+          to={`/kids2/${junior.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontWeight: 700, fontSize: "var(--fs-13)",
+            color: isManuel ? "var(--color-good-dark)" : "var(--color-info)",
+            textDecoration: "none",
+          }}
+        >
+          {junior.canonicalName || junior.id}
+          {isManuel && (
+            <span style={{ marginLeft: 5, fontSize: "var(--fs-10)", fontWeight: 600, color: "var(--color-good-dark)" }}>← tu</span>
           )}
-          {top3 > wins && (
-            <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>Top3: {top3}</span>
-          )}
-        </div>
-        <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-          {topItems.length === 0 && (
-            <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>sem resultados</span>
-          )}
-          {topItems.map((item, i) => <JourneyChip key={i} item={item} />)}
-          {journey.length > topItems.length && (
-            <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", alignSelf: "center" }}>
-              +{journey.length - topItems.length}
-            </span>
-          )}
-        </div>
-      </td>
-
-      {/* torneios */}
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>{journey.length}</td>
-
-      {/* vitórias */}
-      <td style={{ textAlign: "center", whiteSpace: "nowrap" }}>{wins > 0 ? wins : "—"}</td>
-
-      {/* score */}
-      <td style={{ textAlign: "right", fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
-        {score.toFixed(1)}
-        <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 400 }}>p{entry.percentile}</div>
-      </td>
-    </tr>
+        </Link>
+        <TierBadge tier={entry.tier} />
+        {wins > 0 && (
+          <span style={{ fontSize: "var(--fs-11)", color: "#b45309", fontWeight: 600 }}>{wins}× 🏆</span>
+        )}
+        {top3 > wins && (
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>Top3: {top3}</span>
+        )}
+      </div>
+      <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+        {topItems.length === 0 && (
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)" }}>sem resultados</span>
+        )}
+        {topItems.map((item, i) => <JourneyChip key={i} item={item} />)}
+        {journey.length > topItems.length && (
+          <span style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", alignSelf: "center" }}>
+            +{journey.length - topItems.length}
+          </span>
+        )}
+      </div>
+    </>
   );
 }
+
+const COLS: RankingCol<CohortRow>[] = [
+  { key: "rank", label: "#", className: "num", sort: (r) => r.entry.rank, firstDir: "asc",
+    cell: (r) => <span style={{ fontWeight: 800, fontSize: r.entry.rank <= 3 ? "var(--fs-18)" : "var(--fs-14)", whiteSpace: "nowrap" }}>
+      {r.entry.rank <= 3 ? MEDALS[r.entry.rank - 1] : r.entry.rank}</span> },
+  { key: "flag", label: "", cell: (r) => flagOf(r.junior.country || r.junior.nationality || "") || "",
+    tdStyle: { textAlign: "center", fontSize: "var(--fs-16)" } },
+  { key: "name", label: "Nome", sort: (r) => (r.junior.canonicalName || "").toLowerCase(), firstDir: "asc", cell: (r) => <NameCell row={r} /> },
+  { key: "tourneys", label: "Torn.", className: "num", sort: (r) => r.journey.length, firstDir: "desc", cell: (r) => r.journey.length },
+  { key: "wins", label: "Vit.", className: "num", sort: (r) => r.wins, firstDir: "desc", cell: (r) => r.wins > 0 ? r.wins : "—" },
+  { key: "score", label: "Score", className: "num", sort: (r) => r.score, firstDir: "desc",
+    cell: (r) => <span style={{ fontWeight: 700, fontVariantNumeric: "tabular-nums", whiteSpace: "nowrap" }}>
+      {r.score.toFixed(1)}
+      <div style={{ fontSize: "var(--fs-10)", color: "var(--text-3)", fontWeight: 400 }}>p{r.entry.percentile}</div>
+    </span> },
+];
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 
@@ -288,23 +267,12 @@ export default function RankingPage() {
     return rows;
   }, [status, rankingMap, year, sex]);
 
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("rank", "desc");
-
   const sorted = useMemo(() => {
     const needle = q.trim().toLowerCase();
-    let arr = needle
+    return needle
       ? cohort.filter((r) => (r.junior.canonicalName || "").toLowerCase().includes(needle))
-      : [...cohort];
-    arr.sort((a, b) => {
-      let cmp = 0;
-      if (sortKey === "rank" || sortKey === "score") cmp = b.score - a.score;
-      else if (sortKey === "name") cmp = (a.junior.canonicalName || "").localeCompare(b.junior.canonicalName || "");
-      else if (sortKey === "tourneys") cmp = b.journey.length - a.journey.length;
-      else if (sortKey === "wins") cmp = b.wins - a.wins;
-      return sortDir === "asc" ? -cmp : cmp;
-    });
-    return arr;
-  }, [cohort, sortKey, sortDir, q]);
+      : cohort;
+  }, [cohort, q]);
 
   const manuelRow = cohort.find((r) => r.isManuel);
 
@@ -390,33 +358,9 @@ export default function RankingPage() {
         {/* tabela */}
         {status.kind === "ready" && sorted.length > 0 && (
           <>
-            <table className="dtable">
-              <thead>
-                <tr>
-                  <SortableHdr<SortKey> k="rank" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right", width: 48 }}>#</SortableHdr>
-                  <th style={{ width: 28 }} />
-                  <SortableHdr<SortKey> k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
-                  <SortableHdr<SortKey> k="tourneys" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center", width: 64 }}>Torn.</SortableHdr>
-                  <SortableHdr<SortKey> k="wins" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center", width: 52 }}>Vit.</SortableHdr>
-                  <SortableHdr<SortKey> k="score" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right", width: 72 }}>Score</SortableHdr>
-                </tr>
-              </thead>
-              <tbody>
-                {sorted.map((row) => (
-                  <PlayerRow
-                    key={row.junior.id}
-                    rank={row.entry.rank}
-                    junior={row.junior}
-                    entry={row.entry}
-                    score={row.score}
-                    wins={row.wins}
-                    top3={row.top3}
-                    journey={row.journey}
-                    isManuel={row.isManuel}
-                  />
-                ))}
-              </tbody>
-            </table>
+            <RankingTable rows={sorted} cols={COLS} rowKey={(r) => r.junior.id}
+              defaultSort="score" defaultDir="desc"
+              rowClassName={(r) => r.isManuel ? "row-manuel" : undefined} />
 
             <p style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", marginTop: 8, lineHeight: 1.5 }}>
               Score = top-5 resultados ponderados por qualidade do torneio (★1–5 × campo × posição × distância).
