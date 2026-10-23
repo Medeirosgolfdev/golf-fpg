@@ -21,7 +21,9 @@ import { availEscaloes, countEvents, driveEntriesByEsc, resolveEscForTournament,
 import { useMasterDetail } from "../hooks/useMasterDetail";
 import LoadingState from "../ui/LoadingState";
 import type { PlayersDB } from "../ui/tournamentPrimitives";
-import DriveEquipasTab, { type DriveEquipasData } from "./drive/DriveEquipasTab";
+import type { DriveEquipasData } from "../data/drive/driveLoader";
+import TeamStrokeStandings from "../ui/circuit/TeamStrokeStandings";
+import { buildDriveEquipas } from "../data/teamStroke";
 import { driveRanking, SERIE_LABELS } from "./drive/driveRanking";
 import { calendarStatus, driveCalendar, type DriveCalEntry } from "../data/drive/driveCalendar";
 import { todayIso } from "../utils/format";
@@ -208,7 +210,8 @@ function DriveContent() {
         const t = d.results;
         if (!t) continue;  // as divisões do Drive trazem sempre `results`
         const eqData = equipasIdx[`${t.ccode}-${t.tcode}`];
-        const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <DriveEquipasTab data={eqData} /> } : null;
+        const equipasTab = eqData ? { key: "equipas", label: "Equipas", content: <TeamStrokeStandings model={buildDriveEquipas(eqData)}
+          footnote={<>Fonte: <a href={eqData.fonte} target="_blank" rel="noreferrer">PDF «Resultados» da FPG</a>.</>} /> } : null;
         d.renderFull = (extras) => <TournamentDetail tournament={t} escLookup={escLookup} playersDB={pdb}
           extraTabs={[equipasTab, extras?.seasonTab, extras?.pastEditionsTab, extras?.repeatersTab].filter(Boolean) as { key: string; label: string; content: React.ReactNode }[]} />;
       }

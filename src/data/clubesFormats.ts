@@ -12,7 +12,7 @@
 import type { Tournament, GrupoEntry, Player } from "./fpgTypes";
 import type { FpgDraw, FpgDrawFlight } from "./nacional2026Loader";
 import type { MatchPlayData, MpDia, MpMatch, MpRow } from "./clubesMatchplayTypes";
-import type { CategoriaCfg } from "../ui/ClubesCategoriasView";
+import type { CategoriaCfg } from "./teamStroke";
 import { isManuel } from "../constants/manuel";
 import { normName } from "../utils/normName";
 
@@ -21,7 +21,7 @@ export interface ClubesTeamFormat {
   defaultBestN?: number;
   note: string;
   /** Se presente, cada clube é dividido em sub-grupos por categoria
-   *  (ClubesCategoriasView) em vez de uma única equipa. */
+   *  (TeamStrokeStandings, com categorias) em vez de uma única equipa. */
   categories?: CategoriaCfg[];
   /** Torneio em MATCH PLAY (pontos por equipa), não strokeplay. As vistas de
    *  Grupos por pancadas não se aplicam — mostra-se placeholder até existir a
@@ -82,7 +82,7 @@ export function isClubesMatchPlay(t: { ccode?: string; tcode?: string }): boolea
  * Auto-constrói a composição de equipas (GrupoEntry[]) de um torneio de clubes
  * a partir dos próprios jogadores, agrupados pelo campo `club`. Usado para
  * torneios de clubes sem composição curada em CLUBES_GRUPOS_BY_YEAR (ex:
- * Campeonato Nacional de Clubes Mid-Amateur). A ClubesGruposView cruza por
+ * Campeonato Nacional de Clubes Mid-Amateur). A vista de grupos (src/data/teamStroke.ts) cruza por
  * `fed` e calcula o best-N por equipa, exactamente como nos juvenis.
  */
 export function autoGruposByClub(t: Tournament | null): GrupoEntry[] {

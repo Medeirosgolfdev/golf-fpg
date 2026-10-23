@@ -198,7 +198,7 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   (`CircuitConfig.ranking`, `ui/circuit/CircuitRanking.tsx`: vista «Ranking» com
   linhas calculadas dos torneios visíveis, `RankingTable` ordenável, e a
   classificação acumulada na aba «Época»; EGR/WAGR entram pela `RankingPage`
-  com `render` próprio); evolução ano-a-ano → `ui/evo`. Provas de fora da FPG:
+  com `render` próprio); evolução ano-a-ano → `ui/evo`; equipas em stroke play (Clubes FPG, Final Drive) → `ui/circuit/TeamStrokeStandings` (contas em `src/data/teamStroke.ts`; Cartões · Lista · Jogadores), equipas por pontos (match play) → `TeamPointsStandings`. Provas de fora da FPG:
   `intlScorecardOptions()` e `buildFPGTournament()` (`src/data/`).
 - **Modelo comum por tipo de torneio: `src/data/model/`** (fase 0, 22/10/2026).
   Formato (`stroke | totals | matchplay-ind | matchplay-team | stroke-team`),

@@ -4,8 +4,8 @@
  * Abas próprias dos torneios de clubes (/FPG/clubes) no TournamentDetail:
  *   - «🏅 Grupos»     — classificação por equipas: pontos do match play 3-way
  *                        (TeamPointsStandings), composição das equipas antes do
- *                        jogo, ou best-N por pancadas (ClubesGruposView /
- *                        ClubesCategoriasView) nos torneios strokeplay;
+ *                        jogo, ou best-N por pancadas (TeamStrokeStandings,
+ *                        contas em src/data/teamStroke.ts) nos torneios strokeplay;
  *   - «🆚 Match Play» — confrontos 3-way (MatchplayView), só quando há resultados.
  * As restantes abas (Inscrições, Draw, R1…, Resumo, Scorecards) são as normais
  * do TournamentDetail, a partir de `clubesIndividualTournament`. Abre em Grupos
@@ -17,8 +17,8 @@ import type { PlayersDB } from "../../ui/tournamentPrimitives";
 import { autoGruposByClub, clubesFormatOf } from "../../data/clubesFormats";
 import { clubesMatchplayToFile, clubesTeamPoints } from "../../data/clubesMatchplayAdapter";
 import { CLUBES_GRUPOS_BY_YEAR } from "../../data/clubesGruposData";
-import ClubesGruposView from "../../ui/ClubesGruposView";
-import ClubesCategoriasView from "../../ui/ClubesCategoriasView";
+import TeamStrokeStandings from "../../ui/circuit/TeamStrokeStandings";
+import { buildClubesGrupos, buildClubesCategorias } from "../../data/teamStroke";
 import MatchplayView from "../../ui/circuit/MatchplayView";
 import TeamPointsStandings from "../../ui/circuit/TeamPointsStandings";
 
@@ -98,14 +98,9 @@ function ClubesGruposTab({ t, playersDB }: { t: Tournament; playersDB: PlayersDB
       return (
         <>
           {banner}
-          <ClubesCategoriasView
-            tournament={t}
-            grupos={grupos}
-            playersDB={playersDB}
-            categories={fmt.categories}
-            rosterMode
-            bestNLabel={(n) => `máx. ${n} + 1 supl.`}
-            initialSort="hcp"
+          <TeamStrokeStandings
+            model={buildClubesCategorias(grupos, t, playersDB, fmt.categories,
+              { rosterMode: true, bestNLabel: (n) => `máx. ${n} + 1 supl.`, playerSort: "hcp" })}
             intro={<>Composição das equipas por clube — cada clube alinha em 3 campeonatos: <strong>Homens</strong>, <strong>Senhoras</strong> e <strong>Juniores</strong> (≤Sub-18). O número ao lado de cada categoria é o nº de inscritos; "máx." é o limite do regulamento (titulares + 1 suplente).</>}
           />
         </>
@@ -120,7 +115,7 @@ function ClubesGruposTab({ t, playersDB }: { t: Tournament; playersDB: PlayersDB
   // Torneios com categorias (ex: Regional Absoluto — Homens/Senhoras/Juniores)
   // → sub-grupos por categoria dentro do clube.
   if (fmt?.categories && grupos.length) {
-    return <ClubesCategoriasView tournament={t} grupos={grupos} playersDB={playersDB} categories={fmt.categories} />;
+    return <TeamStrokeStandings model={buildClubesCategorias(grupos, t, playersDB, fmt.categories)} />;
   }
   if (grupos.length) {
     // Clubes não-juvenis (midam): formato de pontuação por torneio
@@ -128,15 +123,12 @@ function ClubesGruposTab({ t, playersDB }: { t: Tournament; playersDB: PlayersDB
     // sem cap de pancadas por buraco.
     const isMidam = esc === "midam";
     return (
-      <ClubesGruposView
-        grupos={grupos}
-        tournament={t}
-        escKey={esc === "sub18" ? "sub18" : "sub14"}
-        bestNByRound={isMidam ? fmt?.bestNByRound : undefined}
-        defaultBestN={isMidam ? (fmt?.defaultBestN ?? 5) : undefined}
-        maxHoleScore={isMidam ? Infinity : undefined}
-        formatNote={isMidam ? (fmt?.note ?? "Cada dia: 5 melhores resultados por equipa") : undefined}
-      />
+      <TeamStrokeStandings model={buildClubesGrupos(grupos, t, {
+        bestNByRound: isMidam ? fmt?.bestNByRound : undefined,
+        defaultBestN: isMidam ? (fmt?.defaultBestN ?? 5) : undefined,
+        maxHoleScore: isMidam ? Infinity : undefined,
+        formatNote: isMidam ? (fmt?.note ?? "Cada dia: 5 melhores resultados por equipa") : undefined,
+      })} />
     );
   }
   return (
