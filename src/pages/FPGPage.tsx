@@ -631,7 +631,7 @@ function Content() {
             {([
               { key: "torneios",      label: "Torneios" },
               { key: "ranking-pja",   label: "📊 Ranking PJA" },
-              { key: "ranking-sub12", label: "🏅 Ranking Sub-12" },
+              { key: "ranking-sub12", label: "🏅 Ranking Sub-12 por SD" },
               { key: "classificacoes", label: "🏆 Classificações" },
             ] as const).map(({ key, label }) => (
               <button key={key} role="tab" aria-selected={navMode === key}

@@ -205,7 +205,7 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
   const escLabel = (esc: string) => esc === "all" ? "Todos os escalões" : esc;
   return {
     key: "ranking",
-    label: "🏅 Ranking",
+    label: "🏅 Ranking por pontos",
     rows: rowsOf,
     table: (rows, ctx) => ({
       cols: cols(rows, escOf(ctx) === "all", d.pdb),
@@ -230,7 +230,7 @@ export function driveRanking(d: DriveRankingDeps): CircuitRanking<Sub12Row> {
       return (
         <div className="drive-rank-head">
           {d.top?.(s)}
-          <div className="h-md mt-8">🏅 Ranking — {escLabel(d.esc)} {SERIE_LABELS[s]} {d.year ?? ""}</div>
+          <div className="h-md mt-8">🏅 Ranking por pontos — {escLabel(d.esc)} {SERIE_LABELS[s]} {d.year ?? ""}</div>
           <div className="muted fs-11 mb-8">
             {k.players} jogadores · {k.rounds} rondas
             {k.bestSD != null && <> · Best SD <span className={"drive-kpi" + (k.bestSD <= 25 ? " is-good" : "")}>{k.bestSD.toFixed(1)}</span></>}
