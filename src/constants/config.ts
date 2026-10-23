@@ -22,6 +22,11 @@ export interface TorneioConfig {
   sex: "M" | "F";
 }
 
+/** Datas da edição dos Nacionais de Jovens destes tcodes (2026, PGA Aroeira;
+ *  fpg-tournaments-tracking.json: início 01/05, 3 voltas). Depois do fim o
+ *  painel de inscrições deixa de oferecer «Actualizar». */
+export const CN_JOVENS_EDICAO = { inicio: "2026-05-01", fim: "2026-05-03" } as const;
+
 /** Torneios do circuito nacional juvenil FPG (Sub-10 a Sub-18, H e S) */
 export const TORNEIOS_CONFIG: TorneioConfig[] = [
   { tcode: "10935", nome: "Sub-18 H", escalao: "Sub-18", sex: "M" },

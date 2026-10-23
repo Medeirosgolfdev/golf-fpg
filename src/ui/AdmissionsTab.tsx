@@ -58,8 +58,6 @@ interface Props {
   infoExtra?: ReactNode;
   /** Etiqueta do estado «reserva» (default «pendente»; listas: «espera»). */
   reservaLabel?: string;
-  /** Não mostra «início dd/mm/aaaa» (quando a data passada serve só para as idades). */
-  hideStart?: boolean;
   /** Conteúdo da coluna # (default: o número na ordem confirmados → reservas). */
   posContent?: (p: FpgAdmissionPlayer) => ReactNode;
 }
@@ -101,7 +99,7 @@ const NO_NAMES: string[] = [];
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
   tournamentEscalao, tournamentSex, hidePostCols, teeRule,
-  extraCols = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent, hideStart,
+  extraCols = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent,
 }: Props) {
   // A MESMA barra de filtros do scorecard e do draw (13/10/2026 — «tudo igual»).
   const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -388,7 +386,7 @@ export default function AdmissionsTab({
         {convocados
           ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
           : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && (reservaLabel ? ` · ${reservasCount} em ${reservaLabel}` : ` · ${reservasCount} pendentes`)}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
-        {effDate && !hideStart && <span>· início {effDate.split("-").reverse().join("/")}</span>}
+        {effDate && <span>· início {effDate.split("-").reverse().join("/")}</span>}
         {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
         {infoExtra}
         {fpgUrl && (

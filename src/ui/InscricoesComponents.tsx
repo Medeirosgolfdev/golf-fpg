@@ -26,7 +26,7 @@ import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
 import { escShort, fmtTime, anoEscalao, todayIso } from "../utils/format";
 import { MANUEL_FED } from "../constants/manuel";
-import { TORNEIOS_CONFIG } from "../constants/config";
+import { TORNEIOS_CONFIG, CN_JOVENS_EDICAO } from "../constants/config";
 import SexBadge from "./SexBadge";
 import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
 import LoadingState from "./LoadingState";
@@ -475,7 +475,7 @@ function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   );
 
   return (
-    <AdmissionsTab admissions={admissions} playersDB={players as unknown as PlayersDB} fpgUrl={t.fpgUrl} date={todayIso()} hideStart hideCols={SEM_TEE}
+    <AdmissionsTab admissions={admissions} playersDB={players as unknown as PlayersDB} fpgUrl={t.fpgUrl} date={CN_JOVENS_EDICAO.inicio} hideCols={SEM_TEE}
       tournamentEscalao={t.escalao} tournamentSex={t.sex === "F" ? "F" : "M"}
       extraCols={extraCols} removidos={t.diff?.removed ?? []} infoExtra={infoExtra} />
   );
@@ -572,9 +572,12 @@ export function InscricoesPanel() {
         ))}
         <div style={{ flex: 1, minWidth: 8 }} />
         {totalNossosInscritos > 0 && <span className="chip shrink-0" title="Inscritos que estão na nossa base de dados">{totalNossosInscritos} na BD</span>}
-        <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
-          style={{ flexShrink: 0 }}
-          title="Actualizar inscrições da FPG">↺ Actualizar</button>
+        {/* Actualizar só faz sentido até ao fim do campeonato. */}
+        {todayIso() <= CN_JOVENS_EDICAO.fim && (
+          <button className="tourn-tab tourn-tab-sm" onClick={refreshAll}
+            style={{ flexShrink: 0 }}
+            title="Actualizar inscrições da FPG">↺ Actualizar</button>
+        )}
       </div>
       <div style={{ padding: "0 12px" }}>
         {/* Cabeçalho como o do detalhe de torneio: título e links oficiais à direita */}
@@ -587,6 +590,10 @@ export function InscricoesPanel() {
               <a href="https://competicoes.fpg.pt/evento/campeonato-nacional-de-jovens-sub10-12-14-16-18-pga-aroeira/"
                  target="_blank" rel="noopener noreferrer" className="tourn-ext-link">🏆 Página oficial ↗</a>
             </div>
+          </div>
+          <div className="detail-sub">
+            <span className="muted">📅 {CN_JOVENS_EDICAO.inicio.split("-").reverse().join("/")} → {CN_JOVENS_EDICAO.fim.split("-").reverse().join("/")}</span>
+            {todayIso() > CN_JOVENS_EDICAO.fim && <span className="muted ml-8">· terminado — inscritos finais</span>}
           </div>
           <PainelResumo torneios={torneios} nossosByFed={nossosByFed} />
         </div>
