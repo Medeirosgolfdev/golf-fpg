@@ -12,6 +12,7 @@
  * Chave da divisão = nome do escalão, que é o `esc=` do URL.
  */
 import { createContext, useContext } from "react";
+import LoadingState from "../../ui/LoadingState";
 import type { AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import type { FpgAdmissionPlayer, FpgAdmissions } from "../../data/nacional2026Loader";
 import { isManuelByName as isManuel } from "../../constants/manuel";
@@ -31,12 +32,14 @@ import {
 // Contexto das abas de análise (os dados chegam aos poucos — as abas lêem-nos
 // daqui, não do momento em que as divisões foram montadas)
 // ─────────────────────────────────────────────
-interface NextCtx { data: FieldRivaisData | null; autoRivals?: AutoRivalPlayer[]; onSelectPlayer?: (name: string) => void }
+interface NextCtx { data: FieldRivaisData | null; autoRivals?: AutoRivalPlayer[]; onSelectPlayer?: (name: string) => void; ready?: boolean }
 export const Kids2NextCtx = createContext<NextCtx>({ data: null });
 
 function NextSection({ t, escalao, section }: { t: number; escalao: string; section: (typeof FIELD_SECTIONS)[number]["key"] }) {
-  const { data, autoRivals, onSelectPlayer } = useContext(Kids2NextCtx);
+  const { data, autoRivals, onSelectPlayer, ready } = useContext(Kids2NextCtx);
   if (!data) return null;
+  // A página abre antes dos rivais e do histórico (23/10/2026); estas abas esperam por eles.
+  if (!ready) return <LoadingState message="A carregar os rivais e o histórico…" />;
   // O nome do escalão na lista da vista pode não ser o dos resultados
   // (ex.: «Boys 11-12» num JobFile) → o igual, senão o compatível.
   const torneio = data.futureTorneios.find(x => x.t === t);
@@ -218,6 +221,8 @@ export const NEXT_CONFIG: CircuitConfig = {
   title: "📅 Próximos torneios",
   grouping: "series-year",
   seriesOrder: [SERIES.proximos, SERIES.passados, ...FAMILIAS, SERIES.ffg, SERIES.intl],
+  // Próximos do mais próximo para o mais longe; o resto do mais recente para trás.
+  ascSeries: [SERIES.proximos],
   filters: { search: true },
   // Só os USKids têm edições (as famílias de fora já são uma entrada por ano).
   editionKey: (e) => (Number(e.id) > 0 ? tournamentFamilyKey(e.name) : null),

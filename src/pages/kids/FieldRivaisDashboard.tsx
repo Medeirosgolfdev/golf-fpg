@@ -175,7 +175,7 @@ export function escalaoMatches(userEsc: string, candEsc: string): boolean {
 interface JobIntlDivPlayer { name?: string; country?: string; pos?: number | string; total?: number; toPar?: number }
 interface JobIntlDivision { division?: string; players?: JobIntlDivPlayer[] }
 interface JobIntlFile { tournament?: string; year?: number; divisions?: JobIntlDivision[] }
-interface JobIntlDef { path: string; neg: number; name: string; dateUS: string }
+interface JobIntlDef { path: string; neg: number; name: string; dateUS: string; /** Entrada do major-catalog.json: a data vem de lá (a escrita aqui é a de recurso). */ catalogId?: string }
 // Resultado normalizado de uma coluna INTL: par por ronda, nº de rondas e
 // jogadores indexados por nome normalizado.
 interface IntlColCell { p: number | string; t: number | null; tp: number | null; rd: number[] }
@@ -282,17 +282,17 @@ const INTL_COLUMNS: IntlColDef[] = [
 ];
 
 const JOBFILE_INTL: JobIntlDef[] = [
-  { neg: -1001, path: "/data/ftm_fm_2026.json",     name: "Future Masters 2026",     dateUS: "8/12/2026" },
-  { neg: -1002, path: "/data/avtrophy_2026.json",   name: "AV Trophy U14 2026",      dateUS: "7/2/2026" },
+  { neg: -1001, path: "/data/ftm_fm_2026.json",     name: "Future Masters 2026",     dateUS: "6/21/2026", catalogId: "fm:2026" },
+  { neg: -1002, path: "/data/avtrophy_2026.json",   name: "AV Trophy U14 2026",      dateUS: "7/2/2026", catalogId: "avtrophy:2026" },
   { neg: -1003, path: "/data/orangebowl_2026.json", name: "Junior Orange Bowl 2026", dateUS: "12/27/2026" },
-  { neg: -1004, path: "/data/fsga_2026.json",       name: "FSGA Boys' Junior 2026",  dateUS: "6/23/2026" },
+  { neg: -1004, path: "/data/fsga_2026.json",       name: "FSGA Boys' Junior 2026",  dateUS: "6/30/2026", catalogId: "fsga:2026" },
   // Estonian Junior Tour 2026 — etapas por jogar (GolfBox). Antes da prova o
   // ficheiro traz o ROSTER de inscritos (scrape-golfbox.js `entries`); depois,
   // o cron update-golfbox substitui-o pelos resultados — a entrada continua
   // válida nos dois estados.
-  { neg: -1005, path: "/data/ejt4_2026.json", name: "Estonian Jr Tour 2026 IV (Saaremaa)",     dateUS: "8/11/2026" },
-  { neg: -1006, path: "/data/ejt5_2026.json", name: "Estonian Jr Tour 2026 V (Otepää)",        dateUS: "8/19/2026" },
-  { neg: -1007, path: "/data/ejt6_2026.json", name: "Estonian Jr Tour 2026 FINAL (Pärnu Bay)", dateUS: "8/24/2026" },
+  { neg: -1005, path: "/data/ejt4_2026.json", name: "Estonian Jr Tour 2026 IV (Saaremaa)",     dateUS: "8/11/2026", catalogId: "ejt:2026:4" },
+  { neg: -1006, path: "/data/ejt5_2026.json", name: "Estonian Jr Tour 2026 V (Otepää)",        dateUS: "8/19/2026", catalogId: "ejt:2026:5" },
+  { neg: -1007, path: "/data/ejt6_2026.json", name: "Estonian Jr Tour 2026 FINAL (Pärnu Bay)", dateUS: "8/24/2026", catalogId: "ejt:2026:6" },
 ];
 
 // Próximos torneios (UP) — onde os rivais podem aparecer inscritos.
@@ -545,7 +545,10 @@ export type { FieldTorneio, FieldEscalao, FieldPlayer };
  *  EOWAGR, FFG U14, JobFile). */
 export interface FieldRivaisData {
   field: FieldData;
+  /** Vazio até o histórico (~46 MB) chegar — ver `mhReady`. */
   mh: MHSlim;
+  /** O histórico USKids já chegou: os Passados e as abas de análise estão completos. */
+  mhReady: boolean;
   uskRes: USKResData | null;
   intlCols: Map<string, IntlColData>;
   upTorn: typeof UP_TORN;
@@ -555,6 +558,7 @@ export interface FieldRivaisData {
 }
 
 const toIso = usToIso;
+const MH_VAZIO = { torneios: {}, jogadores: {} } as unknown as MHSlim;
 
 /** Carrega os dados e monta a lista. `pedido` = torneio pedido no link (entra
  *  sempre, mesmo já jogado); `escalaoNome` = escalão de referência dos passados
@@ -569,6 +573,18 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
   const [ffgData, setFfgData] = useState<Map<number, FFGFile>>(new Map());
   // Map neg ID → JobFile internacional (Future Masters, AV Trophy, Orange Bowl, FSGA)
   const [jobIntl, setJobIntl] = useState<Map<number, JobIntlFile>>(new Map());
+  // Datas dos internacionais pelo catálogo da /major (as mesmas da página).
+  const [catDates, setCatDates] = useState<Map<string, string>>(new Map());
+  useEffect(() => {
+    let alive = true;
+    cachedFetchJson<{ id: string; dateStart?: string | null }[] | { entries?: { id: string; dateStart?: string | null }[] }>("/data/major-catalog.json")
+      .then((c) => {
+        if (!alive || !c) return;
+        const arr = Array.isArray(c) ? c : (c.entries ?? []);
+        setCatDates(new Map(arr.filter(e => e.dateStart).map(e => [e.id, e.dateStart as string])));
+      }).catch(() => {});
+    return () => { alive = false; };
+  }, []);
   // Colunas INTL normalizadas (id → dados), ver INTL_COLUMNS.
   const [intlCols, setIntlCols] = useState<Map<string, IntlColData>>(new Map());
   const pedidoT = useRef<number | null>(pedido);
@@ -949,14 +965,18 @@ export function useFieldRivaisData(autoRivals: AutoRivalPlayer[] | undefined, pe
       if (escaloes.length === 0) continue;
       const hasEscalao = escaloes.some(e => escalaoMatches(escalaoNome, e.nome) && (e.jogadores?.length ?? 0) > 0);
       if (!hasEscalao) continue;
-      out.push({ t: def.neg, name: def.name, date_inicio: def.dateUS, escaloes });
+      const iso = def.catalogId ? catDates.get(def.catalogId) : undefined;
+      const dateUS = iso ? `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}/${iso.slice(0, 4)}` : def.dateUS;
+      out.push({ t: def.neg, name: def.name, date_inicio: dateUS, escaloes });
     }
 
     return out;
-  }, [field, mh, autoRivals, ffgData, jobIntl, uskRes, escalaoNome]);
+  }, [field, mh, autoRivals, ffgData, jobIntl, uskRes, escalaoNome, catDates]);
 
-  return useMemo(() => (field && mh
-    ? { field, mh, uskRes, intlCols, upTorn, upTornFuture, futureTorneios, buildSyntheticTorneio }
+  // A página abre com os inscritos (23/10/2026): o histórico USKids (~46 MB)
+  // chega por trás e completa os Passados e as abas de análise.
+  return useMemo(() => (field
+    ? { field, mh: mh ?? MH_VAZIO, mhReady: !!mh, uskRes, intlCols, upTorn, upTornFuture, futureTorneios, buildSyntheticTorneio }
     : null),
   // buildSyntheticTorneio só lê mh/uskRes, que já estão nas dependências.
   // eslint-disable-next-line react-hooks/exhaustive-deps

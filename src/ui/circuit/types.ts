@@ -409,6 +409,10 @@ export interface CircuitConfig {
   /** Ordem da barra lateral: "desc" (mais recente primeiro, default) ou "asc"
    *  (o mais próximo primeiro — torneios por disputar). */
   sidebarOrder?: "asc" | "desc";
+  /** Séries (grouping "series-year") com a ordem ao contrário da `sidebarOrder`
+   *  — ex.: no Kids 2 os «Próximos» do mais próximo para o mais longe e os
+   *  passados do mais recente para trás. */
+  ascSeries?: string[];
   /** Com grouping "month-year": os anos anteriores ao corrente num bloco por
    *  ano em vez de um por mês. */
   olderYearsByYear?: boolean;

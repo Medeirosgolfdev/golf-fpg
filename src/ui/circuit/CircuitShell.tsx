@@ -1022,15 +1022,16 @@ function CircuitSidebar({
         if (!byBucket.has(bk)) byBucket.set(bk, { label, items: [] });
         byBucket.get(bk)!.items.push(e);
       }
+      const up = asc !== !!config.ascSeries?.includes(k);
       const buckets = [...byBucket.entries()]
-        .sort((a, b) => (asc ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0])))
+        .sort((a, b) => (up ? a[0].localeCompare(b[0]) : b[0].localeCompare(a[0])))
         .map(([bk, v]) => {
           const items = v.items.sort(entriesByDateDesc);
-          return { bk, label: v.label, items: asc ? items.reverse() : items };
+          return { bk, label: v.label, items: up ? items.reverse() : items };
         });
       return { key: k, buckets };
     });
-  }, [entries, l1Mode, config.seriesOrder, bucketOf, asc]);
+  }, [entries, l1Mode, config.seriesOrder, bucketOf, asc, config.ascSeries]);
 
   return (
     <>

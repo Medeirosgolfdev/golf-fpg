@@ -100,7 +100,7 @@ function NextTournamentsContent() {
     [entries, results, draws, edicoes]);
   const ids = useMemo(() => new Set(entries.map(e => e.id)), [entries]);
   // Enquanto a lista não está completa, o ?t= pedido fica (pode ainda chegar).
-  const completa = rivaisCompletos && results !== null;
+  const completa = rivaisCompletos && results !== null && !!data?.mhReady;
   const selectedId = tParam && (ids.has(tParam) || !completa) ? tParam : defaultEntryId(entries) ?? undefined;
 
   // ?t= de um torneio que não está na lista (ou nenhum): o do Manuel no URL.
@@ -120,8 +120,10 @@ function NextTournamentsContent() {
 
   const ctx = useMemo(() => ({
     data, autoRivals: autoRivals ?? undefined,
+    // As abas de análise precisam dos rivais e do histórico (chegam por trás).
+    ready: !!autoRivals && rivaisCompletos && !!data?.mhReady,
     onSelectPlayer: (name: string) => { navigate(kidsUrl({ name })); },
-  }), [data, autoRivals, navigate]);
+  }), [data, autoRivals, rivaisCompletos, navigate]);
 
   const lead = <Kids2Nav />;
   const trail = autoRivals
@@ -137,7 +139,7 @@ function NextTournamentsContent() {
           <CircuitShell
             entries={entries}
             config={NEXT_CONFIG}
-            loading={!data || !autoRivals}
+            loading={!data}
             pastEditionsPool={pool}
             selectedId={selectedId}
             onSelectEntry={onSelectEntry}
