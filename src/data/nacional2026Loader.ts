@@ -40,6 +40,9 @@ export interface FpgAdmissionPlayer {
   pts?: number | null;
   ptsRank?: string | null;
   ptsInfo?: string | null;
+  /** Id do kids2 (link ↗ para a ficha) quando a fonte o sabe — ex.: listas de inscritos.
+   *  Sem ele o TournPName procura pelo nome. */
+  juniorId?: string | null;
 }
 
 export interface FpgDrawFlight {

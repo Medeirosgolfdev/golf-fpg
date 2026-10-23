@@ -12,8 +12,8 @@
  * sabe ordenar pos/name/gross/toPar por ele próprio).
  */
 
-import { useMemo, useState } from "react";
-import type { FpgAdmissions } from "../data/nacional2026Loader";
+import { useMemo, useState, type ReactNode } from "react";
+import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
 import { MANUEL_FED } from "../constants/manuel";
@@ -44,6 +44,39 @@ interface Props {
    *  e mostrado como quadradinho de cor. Usado por torneios multi-escalão cujo
    *  regulamento define os tees (ex.: Miramar Open U25). */
   teeRule?: TeeRule;
+  /** Colunas próprias de uma página, depois do TEE (ex.: forma WHS dos
+   *  Nacionais; HCP actual e edição anterior das listas do kids2). */
+  extraCols?: AdmissionsExtraCol[];
+  /** Esconde colunas que a fonte não tem (sem afectar as outras páginas). */
+  hideCols?: { esc?: boolean; nasc?: boolean; fed?: boolean; tee?: boolean; vac?: boolean; registo?: boolean };
+  /** Inscrições recentes: linha destacada + «NOVO» + aviso por cima (default 48 h;
+   *  null desliga). Só conta quem traz `dataInscricao`. */
+  recentHours?: number | null;
+  /** Desistências recentes (nomes) para o mesmo aviso. */
+  removidos?: string[];
+  /** Mais coisas na linha de informação (contadores, estado da cache…). */
+  infoExtra?: ReactNode;
+  /** Etiqueta do estado «reserva» (default «pendente»; listas: «espera»). */
+  reservaLabel?: string;
+  /** Conteúdo da coluna # (default: o número na ordem confirmados → reservas). */
+  posContent?: (p: FpgAdmissionPlayer) => ReactNode;
+}
+
+/** Coluna própria (ordenável) da AdmissionsTab. */
+export interface AdmissionsExtraCol {
+  key: string;
+  label: ReactNode;
+  title?: string;
+  cell: (p: FpgAdmissionPlayer) => ReactNode;
+  sort?: (p: FpgAdmissionPlayer) => number | string | null;
+  dir?: "asc" | "desc";
+}
+
+/** «2026/04/03 09:14» (hora de Lisboa, como a FPG publica) nas últimas N horas? */
+function isRecentHours(s: string | null | undefined, hours: number): boolean {
+  if (!s) return false;
+  const d = new Date(s.replace(/\//g, "-"));
+  return !isNaN(d.getTime()) && (Date.now() - d.getTime()) < hours * 3600_000;
 }
 
 /** «2026/09/15 16:05» (FPG) → «15/09 16:05», o formato de datas do resto da
@@ -56,19 +89,27 @@ function fmtRegisto(s: string | null | undefined): string {
   return `${m[3]}/${m[2]}${ano}${m[4] ? ` ${m[4]}` : ""}`;
 }
 
-type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status";
+type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status" | `x:${string}`;
 
+
+const NO_COLS: AdmissionsExtraCol[] = [];
+const NO_HIDE: NonNullable<Props["hideCols"]> = {};
+const NO_NAMES: string[] = [];
 
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
   tournamentEscalao, tournamentSex, hidePostCols, teeRule,
+  extraCols = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent,
 }: Props) {
   // A MESMA barra de filtros do scorecard e do draw (13/10/2026 — «tudo igual»).
   const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
   const fedGenders = useFedGenders();
-  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", { pts: "desc" });
+  const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", {
+    pts: "desc", ...Object.fromEntries(extraCols.filter(c => c.dir).map(c => [`x:${c.key}`, c.dir!])),
+  });
+  const isNovo = (p: { dataInscricao?: string | null }) => recentHours != null && isRecentHours(p.dataInscricao, recentHours);
 
   const players = admissions.players || [];
   // Listas de apurados (finais Drive) trazem os pontos do ranking que os apurou.
@@ -165,10 +206,16 @@ export default function AdmissionsTab({
         case "vac":     v = (a.vac ?? INF) - (b.vac ?? INF); break;
         case "registo": v = (a.dataInscricao || "").localeCompare(b.dataInscricao || ""); break;
         case "status":  v = a.status.localeCompare(b.status); break;
+        default: {
+          const col = extraCols.find(c => `x:${c.key}` === sortKey);
+          const va = col?.sort?.(a) ?? null, vb = col?.sort?.(b) ?? null;
+          if (va == null || vb == null) return va == null && vb == null ? 0 : va == null ? 1 : -1; // vazios no fim
+          v = typeof va === "number" && typeof vb === "number" ? va - vb : String(va).localeCompare(String(vb), "pt");
+        }
       }
       return mult * v;
     });
-  }, [filtered, sortKey, sortDir]);
+  }, [filtered, sortKey, sortDir, extraCols]);
 
   const rows: ScorecardRow[] = useMemo(() => {
     // Posição contínua: confirmed 1..N, reservas N+1..N+M. Mostra números únicos
@@ -184,6 +231,7 @@ export default function AdmissionsTab({
       // Desistentes não ocupam número de posição (a inscrição foi anulada);
       // confirmed 1..N, reservas N+1.., desistentes fora da numeração.
       const numPos = isDesist ? null : isReserva ? nConf + (p.pos ?? i + 1) : (p.pos ?? i + 1);
+      const novo = isNovo(p);
       const nameNode = (
         // A bandeira é desenhada pelo TournPName (lookup country via playersDB).
         // NÃO adicionar CountryFlag aqui — senão estrangeiros ficam com bandeira a dobrar.
@@ -193,7 +241,7 @@ export default function AdmissionsTab({
           // Internacionais: id do agregador vindo da licenca federativa. O
           // match por nome falha aqui — o clube publica "Diego Gross", o
           // agregador tem "Diego Gross Paneque".
-          juniorId={(p as any)._rfeg?.juniorId}
+          juniorId={p.juniorId ?? (p as any)._rfeg?.juniorId}
           playersDB={playersDB}
           // País da própria fonte (circuitos estrangeiros marcam-no na linha) —
           // o playersDB só cobre quem tem federado nosso.
@@ -206,7 +254,7 @@ export default function AdmissionsTab({
         : nameNode;
       return {
         key: `${p.fed ?? p.nome}-${i}`,
-        pos: isDesist ? <span className="muted">–</span> : numPos,
+        pos: posContent ? posContent(p) : isDesist ? <span className="muted">–</span> : numPos,
         gross: 0,
         toPar: null,
         scores: [],
@@ -214,6 +262,7 @@ export default function AdmissionsTab({
         sortPos: numPos ?? (nConf + nRes + (p.pos ?? i + 1)),
         sortName: p._nomeFormatted,
         rowBg: manuel ? undefined
+          : novo ? "color-mix(in srgb, var(--score-eagle) 10%, transparent)"
           : isDesist ? "color-mix(in srgb, var(--text-muted) 10%, transparent)"
           : isReserva ? "color-mix(in srgb, var(--text-muted) 6%, transparent)" : undefined,
         nameContent: isDesist
@@ -221,31 +270,33 @@ export default function AdmissionsTab({
           : nameWithTags,
         prefixCells: (
           <>
-            <td className="lb-esc">
+            {!hideCols.esc && <td className="lb-esc">
               {p._escHist ? <EscPill esc={p._escHist} /> : <span className="muted">–</span>}
-            </td>
+            </td>}
             {/* Nasc. + Idade como no Resumo (pílulas neutras, colunas próprias). */}
+            {!hideCols.nasc && <>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
               {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : <span className="muted">–</span>}
             </td>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
               {age != null ? <BirthPill>{age}a</BirthPill> : <span className="muted">–</span>}
             </td>
+            </>}
             {/* Chaves virtuais (`kids:`/`intl:`) sao ids internos derivados do
                 nome — mostrar "–", que e a informacao verdadeira: sem federado.
                 O `fed` cru continua a ir para o TournPName, que precisa dele
                 para o perfil e para o link ↗. */}
-            <td className="lb-fed">{displayFed(p.fed) || "–"}</td>
+            {!hideCols.fed && <td className="lb-fed">{displayFed(p.fed) || "–"}</td>}
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
             <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
-            <td className="lb-tee">{
+            {!hideCols.tee && <td className="lb-tee">{
               // 1) tee do regulamento (escalão+sexo) → quadradinho de cor;
               // 2) teeName explícito (ex.: NextCaddy = distância "5498 m") → texto;
               // 3) fallback: tee genérico do escalão global → quadradinho.
               p._ruleTee ? <TeeDot teeName={p._ruleTee} />
                 : p.teeName ? <span className="fs-11" style={{ whiteSpace: "nowrap" }}>{p.teeName}</span>
                 : <TeeDot teeName={teeName} />
-            }</td>
+            }</td>}
             {hasPts && (
               <td title={p.ptsInfo || ""} style={{ textAlign: "center", whiteSpace: "nowrap" }}>
                 {/* Uma linha só (como o scorecard): «674 · 1º Madeira». */}
@@ -257,28 +308,31 @@ export default function AdmissionsTab({
                 ) : <span className="muted">–</span>}
               </td>
             )}
+            {extraCols.map(c => <td key={c.key} style={{ textAlign: "center" }}>{c.cell(p)}</td>)}
           </>
         ),
         postScorecardCells: hidePostCols ? undefined : (
           <>
-            <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>
-            <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
+            {!hideCols.vac && <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>}
+            {!hideCols.registo && <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
               {fmtRegisto(p.dataInscricao)}
-            </td>
+              {novo && <span className="p p-sm fs-10 fw-700" style={{ background: "var(--score-eagle)", color: "#fff", marginLeft: 4, padding: "1px 5px", borderRadius: 8 }}
+                title={`Inscrito nas últimas ${recentHours} h`}>NOVO</span>}
+            </td>}
             <td style={{ textAlign: "center" }}>
               {isDesist
                 ? <span
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
                     style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
                 : isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{convocados ? "por inscrever" : "pendente"}</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados]);
+  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados, extraCols, hideCols, recentHours, reservaLabel, posContent]);
 
   if (admissions.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -292,27 +346,35 @@ export default function AdmissionsTab({
   }
 
   const effDate = date ?? admissions.date ?? null;
+  const recentes = players.filter(p => p.status !== "desistente" && isNovo(p));
+  const nPost = hidePostCols ? 0 : 3 - (hideCols.vac ? 1 : 0) - (hideCols.registo ? 1 : 0);
 
   const prefixHeaderCells = (
     <>
       {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
-      <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>
+      {!hideCols.esc && <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
+      {!hideCols.nasc && <>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>
-      <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>
+      </>}
+      {!hideCols.fed && <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>
       <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      <th className="lb-tee">TEE</th>
+      {!hideCols.tee && <th className="lb-tee">TEE</th>}
       {hasPts && (
         <SortableHdr k="pts" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
           style={{ textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
       )}
+      {extraCols.map(c => (
+        <SortableHdr key={c.key} k={`x:${c.key}`} sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
+          style={{ textAlign: "center" }} title={c.title}>{c.label}</SortableHdr>
+      ))}
     </>
   );
   const postScorecardHeaderCells = (
     <>
-      <SortableHdr k="vac"     sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">VAC</SortableHdr>
-      <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Registo</SortableHdr>
+      {!hideCols.vac && <SortableHdr k="vac"     sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">VAC</SortableHdr>}
+      {!hideCols.registo && <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Registo</SortableHdr>}
       <SortableHdr k="status"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Status</SortableHdr>
     </>
   );
@@ -323,9 +385,10 @@ export default function AdmissionsTab({
       <div className="lb-info-line flex-wrap">
         {convocados
           ? <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} convocados · {confirmedCount} inscritos{reservasCount > 0 && ` · ${reservasCount} por inscrever`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>
-          : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && ` · ${reservasCount} pendentes`}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
+          : <span>{filtered.length !== players.length ? `${filtered.length}/${players.length}` : players.length} jog · {confirmedCount} confirmados{reservasCount > 0 && (reservaLabel ? ` · ${reservasCount} em ${reservaLabel}` : ` · ${reservasCount} pendentes`)}{desistentesCount > 0 && ` · ${desistentesCount} desistiram`}</span>}
         {effDate && <span>· início {effDate.split("-").reverse().join("/")}</span>}
         {admissions.status && <span className="chip" title="Estado FPG">{admissions.status}</span>}
+        {infoExtra}
         {fpgUrl && (
           <a href={fpgUrl} target="_blank" rel="noopener noreferrer"
             className="fs-11" style={{ color: "var(--chart-2)", marginLeft: "auto" }}>
@@ -333,6 +396,23 @@ export default function AdmissionsTab({
           </a>
         )}
       </div>
+      {/* Inscrições e desistências recentes (era o aviso do painel dos Nacionais). */}
+      {(recentes.length > 0 || removidos.length > 0) && (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px", background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
+          {recentes.length > 0 && (
+            <span style={{ color: "var(--color-good)" }}>
+              <span className="fw-700">+{recentes.length} inscrito{recentes.length > 1 ? "s" : ""} ({recentHours}h):</span>{" "}
+              {recentes.map(p => formatPlayerName(p.nome || "")).join(", ")}
+            </span>
+          )}
+          {removidos.length > 0 && (
+            <span style={{ color: "var(--color-bad)" }}>
+              <span className="fw-700">-{removidos.length} desistência{removidos.length > 1 ? "s" : ""}:</span>{" "}
+              {removidos.join(", ")}
+            </span>
+          )}
+        </div>
+      )}
       <RowsFilterBar rows={filterRowsAll} filter={pFilter} onChange={setPFilter} total={players.length} playersDB={playersDB} />
     </>
   );
@@ -344,7 +424,7 @@ export default function AdmissionsTab({
       rows={rows}
       prefixHeaderCells={prefixHeaderCells}
       postScorecardHeaderCells={hidePostCols ? undefined : postScorecardHeaderCells}
-      postScorecardColCount={hidePostCols ? 0 : 3}
+      postScorecardColCount={nPost}
       showScorecard={false}
       // Inscrições não têm resultados: as colunas ± e Tot estariam sempre vazias.
       hideTotals

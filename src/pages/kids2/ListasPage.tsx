@@ -13,8 +13,9 @@ import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
 import LoadingState from "../../ui/LoadingState";
 import EmptyState from "../../ui/EmptyState";
-import { flag } from "../../utils/flagUtils";
-import { isManuel } from "../../constants/manuel";
+import { isManuel, MANUEL_FED } from "../../constants/manuel";
+import AdmissionsTab, { type AdmissionsExtraCol } from "../../ui/AdmissionsTab";
+import type { FpgAdmissions, FpgAdmissionPlayer } from "../../data/nacional2026Loader";
 import Kids2SubNav from "./Kids2SubNav";
 
 interface Inscrito {
@@ -56,31 +57,62 @@ const nomeLista = (l: Lista) => (l.sexo === "M" ? "Rapazes" : l.sexo === "F" ? "
 const fmtHcp = (h: number | null | undefined) => (h == null ? "—" : h < 0 ? `+${(-h).toFixed(1)}` : h.toFixed(1));
 const ddmmaa = (iso: string | null) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}/${iso.slice(2, 4)}` : "");
 
+/** A lista de inscritos na tabela de inscrições partilhada (AdmissionsTab —
+ *  23/10/2026, fase 3 do plano), com as colunas próprias das listas: HCP à
+ *  data da lista, HCP actual e a edição anterior. Entrada/espera ficam no # e
+ *  no Status; repetidos no PDF, fichas ambíguas e sem ficha em etiquetas. */
 function TabelaLista({ lista }: { lista: Lista }) {
-  const { sortKey, sortDir, toggleSort } = useSort<string>("ordem", "asc", { hcp: "asc", atual: "asc" });
-  const rows = useMemo(() => {
-    const dir = sortDir === "asc" ? 1 : -1;
-    const num = (v: number | null | undefined) => (v == null ? Infinity : v);
-    return [...lista.players].sort((a, b) => {
-      switch (sortKey) {
-        case "name": return dir * a.name.localeCompare(b.name);
-        case "country": return dir * a.country.localeCompare(b.country) || a.ordem - b.ordem;
-        case "dob": return dir * (a.junior?.dob || "9999").localeCompare(b.junior?.dob || "9999") || a.ordem - b.ordem;
-        case "club": return dir * (a.junior?.club || "~").localeCompare(b.junior?.club || "~") || a.ordem - b.ordem;
-        case "hcp": return dir * (a.hcp - b.hcp) || a.ordem - b.ordem;
-        case "atual": return dir * (num(a.hcpAtual?.valor) - num(b.hcpAtual?.valor)) || a.ordem - b.ordem;
-        case "ant": return dir * (posAnt(a.anterior) - posAnt(b.anterior)) || a.ordem - b.ordem;
-        case "antg": return dir * (num(a.anterior?.gross) - num(b.anterior?.gross)) || a.ordem - b.ordem;
-        default: return dir * (a.ordem - b.ordem);
-      }
+  const ant = lista.edicaoAnterior ?? null;
+  // Cada inscrito no formato FPG; o original fica à mão pelas colunas extra,
+  // pela lista + posição + nome (a AdmissionsTab trabalha sobre cópias).
+  const chave = (status: string, pos: number | null, nome: string) => `${status}|${pos}|${nome}`;
+  const { admissions, porJog } = useMemo(() => {
+    const porJog = new Map<string, Inscrito>();
+    const players = [...lista.players].sort((a, b) => a.ordem - b.ordem).map((p): FpgAdmissionPlayer => {
+      const eu = isManuel({ name: p.name, memberId: p.junior?.id?.replace(/^u/, "") });
+      const nota = p.duplicadoDe ? `repetida no PDF (igual à ${p.duplicadoDe})` : p.junior ? null : p.ambiguo ? "ficha ambígua" : "sem ficha";
+      const a: FpgAdmissionPlayer = {
+        pos: p.pos, fed: eu ? MANUEL_FED : null, nome: p.name, clube: p.junior?.club ?? null,
+        hcp: p.hcp, vac: null, dataInscricao: null,
+        status: p.lista === "waiting" ? "reserva" : "confirmed",
+        dob: p.junior?.dob ?? null, country: p.country, juniorId: p.junior?.id ?? null,
+        tags: nota ? [nota] : undefined,
+      };
+      porJog.set(chave(a.status, a.pos, a.nome), p);
+      return a;
     });
-  }, [lista, sortKey, sortDir]);
+    const admissions: FpgAdmissions = { name: lista.label, date: lista.data, players };
+    return { admissions, porJog };
+  }, [lista]);
+  const extraCols = useMemo<AdmissionsExtraCol[]>(() => {
+    const I = (a: FpgAdmissionPlayer) => porJog.get(chave(a.status, a.pos, a.nome));
+    const cols: AdmissionsExtraCol[] = [
+      // País por extenso, como a tabela antiga (a bandeira está no nome).
+      { key: "pais", label: "País", sort: a => a.country ?? null,
+        cell: a => <span style={{ whiteSpace: "nowrap" }}>{a.country || "—"}</span> },
+      { key: "atual", label: "HCP actual", title: "Handicap mais recente na ficha (FPG, RFEG ou FFG)",
+        sort: a => I(a)?.hcpAtual?.valor ?? null,
+        cell: a => { const h = I(a)?.hcpAtual;
+          return h ? <span title={`${h.fonte}${h.data ? " · " + h.data : ""}`}>{fmtHcp(h.valor)} <span className="fs-11 p-muted">{h.fonte}</span></span> : "—"; } },
+    ];
+    if (ant) cols.push(
+      { key: "ant", label: ant.label, title: `Posição em ${ant.torneio}, no seu sexo, pelas pancadas`,
+        sort: a => posAnt(I(a)?.anterior), cell: a => <CelAnterior a={I(a)?.anterior} ano={ant.label} /> },
+      { key: "antg", label: `Pancadas ${ant.label}`, title: `Pancadas nas 3 voltas de ${ant.label}`,
+        sort: a => I(a)?.anterior?.gross ?? null, cell: a => I(a)?.anterior?.gross ?? "—" },
+    );
+    return cols;
+  }, [porJog, ant]);
+  const posContent = useMemo(() => (a: FpgAdmissionPlayer) => (
+    <span className={`p p-sm ${a.status === "reserva" ? "p-muted" : "p-tourn"}`} title={a.status === "reserva" ? "Lista de espera" : "Na lista"}>
+      {a.status === "reserva" ? "Espera" : "Lista"} {a.pos}
+    </span>
+  ), []);
 
   const nEntry = lista.players.filter(p => p.lista === "entry" && !p.duplicadoDe).length;
   const nWait = lista.players.filter(p => p.lista === "waiting" && !p.duplicadoDe).length;
   const nRep = lista.players.filter(p => p.duplicadoDe).length;
   const nFicha = lista.players.filter(p => p.junior).length;
-  const ant = lista.edicaoAnterior ?? null;
   const nRepet = lista.players.filter(p => p.anterior).length;
 
   return (
@@ -90,59 +122,14 @@ function TabelaLista({ lista }: { lista: Lista }) {
         {lista.label} · {nEntry} na lista{lista.wildcardsFpg ? ` (+ ${lista.wildcardsFpg} wild cards da FPG por nomear)` : ""}{nRep ? ` · ${nRep} nome(s) repetido(s) no PDF` : ""} · {nWait} em lista de espera
         {lista.nascidosDesde ? ` · nascidos em ${lista.nascidosDesde} ou depois` : ""} · {nFicha} com ficha no kids2
         {ant ? ` · ${nRepet} já jogaram em ${ant.label} (venceu ${ant.vencedor.name}, ${ant.vencedor.gross})` : ""}
+        {" · "}HCP = handicap na lista ({ddmmaa(lista.data)})
       </div>
-      <div style={{ overflowX: "auto" }}>
-        <table className="player-list-table" style={{ fontVariantNumeric: "tabular-nums" }}>
-          <thead>
-            <tr>
-              <SortableHdr k="ordem" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Posição na lista (entrada ou espera)">#</SortableHdr>
-              <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Jogador</SortableHdr>
-              <SortableHdr k="country" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>País</SortableHdr>
-              <SortableHdr k="dob" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nasc.</SortableHdr>
-              <SortableHdr k="club" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "left" }}>Clube</SortableHdr>
-              <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Handicap na lista (${ddmmaa(lista.data)})`}>HCP lista</SortableHdr>
-              <SortableHdr k="atual" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title="Handicap mais recente na ficha (FPG, RFEG ou FFG)">HCP actual</SortableHdr>
-              {ant && <>
-                <SortableHdr k="ant" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Posição em ${ant.torneio}, no seu sexo, pelas pancadas`}>{ant.label}</SortableHdr>
-                <SortableHdr k="antg" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} title={`Pancadas nas 3 voltas de ${ant.label}`}>Pancadas {ant.label}</SortableHdr>
-              </>}
-            </tr>
-          </thead>
-          <tbody>
-            {rows.map(p => {
-              const eu = isManuel({ name: p.name, memberId: p.junior?.id?.replace(/^u/, "") });
-              return (
-                <tr key={p.ordem} className={eu ? "row-manuel" : undefined}>
-                  <td style={{ whiteSpace: "nowrap" }}>
-                    <span className={`p p-sm ${p.lista === "waiting" ? "p-muted" : "p-tourn"}`} title={p.lista === "waiting" ? "Lista de espera" : "Na lista"}>
-                      {p.lista === "waiting" ? "Espera" : "Lista"} {p.pos}
-                    </span>
-                  </td>
-                  <td style={{ textAlign: "left", fontWeight: eu ? 700 : undefined }}>
-                    {p.junior
-                      ? <Link to={`/kids2/${p.junior.id}`} title={`Abrir a ficha de ${p.junior.name}`}>{p.name}</Link>
-                      : <span>{p.name} <span className="fs-11 p-muted">{p.duplicadoDe ? `· repetida no PDF (igual à ${p.duplicadoDe})` : p.ambiguo ? "· ficha ambígua" : "· sem ficha"}</span></span>}
-                  </td>
-                  <td style={{ textAlign: "left", whiteSpace: "nowrap" }}>{flag(p.country)} {p.country}</td>
-                  <td style={{ textAlign: "center" }}>{p.junior?.dob ? p.junior.dob.slice(0, 4) : "—"}</td>
-                  <td style={{ textAlign: "left" }} className="fs-12">{p.junior?.club ?? "—"}</td>
-                  <td style={{ textAlign: "center", fontWeight: 700 }}>{fmtHcp(p.hcp)}</td>
-                  <td style={{ textAlign: "center" }} title={p.hcpAtual ? `${p.hcpAtual.fonte}${p.hcpAtual.data ? " · " + p.hcpAtual.data : ""}` : undefined}>
-                    {p.hcpAtual ? <>{fmtHcp(p.hcpAtual.valor)} <span className="fs-11 p-muted">{p.hcpAtual.fonte}</span></> : "—"}
-                  </td>
-                  {ant && <>
-                    <td style={{ textAlign: "center", whiteSpace: "nowrap" }}><CelAnterior a={p.anterior} ano={ant.label} /></td>
-                    <td style={{ textAlign: "center" }}>{p.anterior?.gross ?? "—"}</td>
-                  </>}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <AdmissionsTab admissions={admissions} date={lista.data} hideCols={LISTA_HIDE}
+        extraCols={extraCols} posContent={posContent} reservaLabel="lista de espera" recentHours={null} />
     </section>
   );
 }
+const LISTA_HIDE = { fed: true, tee: true, vac: true, registo: true };
 
 /** Portugueses que a FPG pode nomear (wild cards), por handicap, com a linha dos N lugares. */
 function TabelaCandidatos({ lista }: { lista: Lista }) {

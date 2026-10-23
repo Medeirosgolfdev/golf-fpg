@@ -24,17 +24,16 @@ import type { TorneioData, BdPlayer, StatsDb } from "../pages/nacionais/types";
 import { useAppContext } from "../context/AppContext";
 import { sdClassByHcp } from "../utils/scoreDisplay";
 import { escCls } from "../utils/playerUtils";
-import { fmtHcp, escShort, fmtTime, fmtDataInscricao, anoEscalao, norm } from "../utils/format";
+import { escShort, fmtTime, anoEscalao, todayIso } from "../utils/format";
 import { TORNEIOS_CONFIG } from "../constants/config";
 import SexBadge from "./SexBadge";
 import { AnoEscalaoPill, TrendBadge } from "./AnoEscalaoPill";
-import PlayerLink from "./PlayerLink";
 import LoadingState from "./LoadingState";
-import EmptyState from "./EmptyState";
-import SortableHdr from "./SortableHdr";
-import { useSort } from "../hooks/useSort";
 import { FLAG } from "../utils/flagUtils";
 import { cachedFetchJson } from "../data/fetchCache";
+import AdmissionsTab, { type AdmissionsExtraCol } from "./AdmissionsTab";
+import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
+import type { PlayersDB } from "./tournamentPrimitives";
 
 /* ═══════════════════════════════════════════════════════
    HOOKS
@@ -399,184 +398,96 @@ function TorneioCard({ t, active, onClick }: {
 }
 
 /* ═══════════════════════════════════════════════════════
-   VISTA INSCRIÇÕES — tabela completa
+   VISTA INSCRIÇÕES — a tabela é a AdmissionsTab partilhada (23/10/2026, fase 3
+   do plano), com as colunas que só este painel tinha: SD5, tendência, voltas
+   nos últimos 3 meses e «Na BD» (sexo, escalão, 1.º/2.º ano, clube).
    ═══════════════════════════════════════════════════════ */
-type InscSortKey = "pos" | "nome" | "hcp" | "vac" | "sd5" | "data" | "trend" | "rondas";
+/** O painel não tem tee por jogador (a lista da FPG não o traz). */
+const SEM_TEE = { tee: true };
 
 function InscricoesView({ t, nossosFedSet, nossosByFed, statsDb }: {
   t: TorneioData; nossosFedSet: Set<string>; nossosByFed: Map<string, BdPlayer>; statsDb: StatsDb;
 }) {
+  const { players } = useAppContext();
   const fedCountries = useFedCountries();
-  const [search, setSearch] = useState("");
-  const { sortKey, sortDir, toggleSort } = useSort<InscSortKey>("pos");
-  const sortAsc = sortDir === "asc";
-  const term = norm(search);
-
   const nossosCount = useMemo(
     () => t.jogadores.filter(j => j.fed && nossosFedSet.has(j.fed)).length,
     [t.jogadores, nossosFedSet]
   );
-
-  /* ── Inscrições recentes (últimas 48h) e desinscrições ── */
-  const recentes48h = useMemo(
-    () => t.jogadores.filter(j => isRecentHours(j.dataInscricao, 48)),
-    [t.jogadores]
-  );
-  const removidos48h = useMemo(
-    () => t.diff?.removed ?? [],
-    [t.diff]
-  );
-  const lista = useMemo(() => {
-    let base = t.jogadores;
-    if (term) base = base.filter(j => norm(j.nome).includes(term) || (j.fed || "").includes(term));
-    if (sortKey === "pos") return sortAsc ? base : [...base].reverse();
-    return [...base].sort((a, b) => {
-      const sa = a.fed ? statsDb[a.fed] : null;
-      const sb = b.fed ? statsDb[b.fed] : null;
-      let v = 0;
-      if      (sortKey === "nome")   { const pa = a.fed ? nossosByFed.get(a.fed) : null; const pb = b.fed ? nossosByFed.get(b.fed) : null; v = (pa?.name ?? a.nome).localeCompare(pb?.name ?? b.nome, "pt"); }
-      else if (sortKey === "hcp")    { v = (a.hcp ?? 999) - (b.hcp ?? 999); }
-      else if (sortKey === "vac")    { v = (a.vac ?? 999) - (b.vac ?? 999); }
-      else if (sortKey === "sd5")    { v = (sa?.avgSD5 ?? 999) - (sb?.avgSD5 ?? 999); }
-      else if (sortKey === "data")   { v = (a.dataInscricao ?? "").localeCompare(b.dataInscricao ?? ""); }
-      else if (sortKey === "rondas") { v = (sb?.roundsLast3m ?? -1) - (sa?.roundsLast3m ?? -1); }
-      else if (sortKey === "trend")  { const ord = { improving: 0, stable: 1, worsening: 2 }; v = (ord[sa?.hcpTrend as keyof typeof ord] ?? 3) - (ord[sb?.hcpTrend as keyof typeof ord] ?? 3); }
-      return sortAsc ? v : -v;
-    });
-  }, [t.jogadores, term, sortKey, sortAsc, nossosByFed, statsDb]);
+  // Inscritos no formato da AdmissionsTab. O nome é o da nossa BD quando o
+  // temos (como na tabela antiga); a ordem é a da lista da FPG.
+  const admissions = useMemo<FpgAdmissions>(() => ({
+    name: t.nome, totalInscritos: t.totalInscritos, reservas: 0,
+    players: t.jogadores.map((j, i): FpgAdmissionPlayer => ({
+      pos: i + 1, fed: j.fed, nome: (j.fed ? nossosByFed.get(j.fed)?.name : undefined) ?? j.nome,
+      clube: j.clube || null, hcp: j.hcp, vac: j.vac, dataInscricao: j.dataInscricao, status: "confirmed",
+      // Bandeira dos estrangeiros (federados.json) — como a tabela antiga.
+      country: (j.fed ? fedCountries.get(j.fed) : null) ?? null,
+    })),
+  }), [t, nossosByFed, fedCountries]);
+  const extraCols = useMemo<AdmissionsExtraCol[]>(() => {
+    const st = (p: FpgAdmissionPlayer) => (p.fed ? statsDb[p.fed] : null);
+    const ordTrend: Record<string, number> = { improving: 0, stable: 1, worsening: 2 };
+    return [
+      { key: "sd5", label: "SD5", title: "Média dos últimos 5 SD", sort: p => st(p)?.avgSD5 ?? null,
+        cell: p => { const s = st(p); const sd5 = s?.avgSD5 ?? null;
+          return sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, s?.currentHcp ?? p.hcp ?? null)} fs-11`}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>; } },
+      { key: "trend", label: "T", title: "Tendência do HCP (3 meses)", sort: p => ordTrend[st(p)?.hcpTrend ?? ""] ?? null,
+        cell: p => <TrendBadge trend={st(p)?.hcpTrend ?? null} delta={st(p)?.hcpDelta3m ?? null} /> },
+      { key: "r3m", label: "R3m", title: "Voltas nos últimos 3 meses", dir: "desc", sort: p => st(p)?.roundsLast3m ?? null,
+        cell: p => { const r = st(p)?.roundsLast3m;
+          return r != null ? <span style={{ fontWeight: r >= 4 ? 600 : 400, color: r === 0 ? "var(--color-bad)" : "inherit" }}>{r}</span> : <span className="muted">–</span>; } },
+      { key: "bd", label: "Na BD", title: "Na nossa base de dados: sexo, escalão, ano no escalão, clube",
+        sort: p => (p.fed && nossosByFed.get(p.fed)?.escalao) || null,
+        cell: p => { const b = p.fed ? nossosByFed.get(p.fed) : undefined;
+          return b ? <span className="gap-4" style={{ display: "inline-flex", alignItems: "center", whiteSpace: "nowrap" }}>
+              <SexBadge sex={b.sex} size="sm" />
+              <span className={`p p-sm p-${escCls(b.escalao)} fs-10`}>{escShort(b.escalao)}</span>
+              {b.dob && <AnoEscalaoPill dob={b.dob} escalao={t.escalao} />}
+              {b.clube && <span className="muted fs-11">{b.clube}</span>}
+            </span>
+            : <span className="muted fs-11">{p.fed ? "Nao na BD" : "–"}</span>; } },
+    ];
+  }, [statsDb, nossosByFed, t.escalao]);
 
   if (t._status !== "ok" && t._status !== "loading") return null;
   if (t._status === "loading") return <LoadingState size="sm" />;
 
-  return (
-    <div>
-      <div className="detail-toolbar">
-        <input className="input" value={search} onChange={e => setSearch(e.target.value)}
-          placeholder="Nome, num fed..." style={{ maxWidth: 200 }} />
-        <span className="muted fs-12" >{nossosCount} da BD · {t.totalInscritos} total</span>
-        <div className="ml-auto gap-8 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-          {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
-            <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10 }}
-              title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
-              {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
-              {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
-              {t.diff.removed.length > 0 && `-${t.diff.removed.length} removido${t.diff.removed.length > 1 ? "s" : ""}`}
-            </span>
-          )}
-          {t.lastFetched && (
-            <span className="fs-10 fw-700"
-              style={{
-                padding: "2px 7px", borderRadius: 10,
-                background: t.fromCache ? "var(--bg-muted)" : "var(--bg-success-subtle)",
-                color:      t.fromCache ? "var(--text-muted)" : "var(--color-good-dark)",
-                border:     t.fromCache ? "1px solid var(--border)" : "1px solid var(--color-good)",
-              }}
-              title={t.fromCache
-                ? `Cache estática (public/data/inscricoes_nacionais.json) de ${t.lastFetched}${t.lastChanged && t.lastChanged !== t.lastFetched ? " · alterado " + t.lastChanged : ""}`
-                : `Dados frescos da FPG (scoring.fpg.pt/lists) às ${t.lastFetched}`}>
-              {t.fromCache ? "💾 cache" : "🟢 live FPG"} · {fmtTime(t.lastFetched)}
-            </span>
-          )}
-          {t.fetchError && <span className="fs-10 fw-700" style={{ color: "#fff", background: "var(--color-warn)", padding: "2px 7px", borderRadius: 10 }} title={t.fetchError}>⚠️ API falhou — só cache</span>}
-          {t.fpgUrl && <a href={t.fpgUrl} target="_blank" rel="noopener noreferrer" className="fs-11" style={{ color: "var(--chart-2)" }}>scoring.fpg.pt ↗</a>}
-        </div>
-      </div>
-      {/* ── Alerta inscrições/desinscrições últimas 48h ── */}
-      {(recentes48h.length > 0 || removidos48h.length > 0) && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px",
-          background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
-          {recentes48h.length > 0 && (
-            <span style={{ color: "var(--color-good)" }}>
-              <span className="fw-700">+{recentes48h.length} inscrito{recentes48h.length > 1 ? "s" : ""} (48h):</span>{" "}
-              {recentes48h.map((j, i) => {
-                const p = j.fed ? nossosByFed.get(j.fed) : undefined;
-                return <span key={j.fed ?? j.nome}>{i > 0 && ", "}<CountryFlag fed={j.fed} fedCountries={fedCountries} /><span className={p ? "fw-600" : ""}>{p?.name ?? j.nome}</span></span>;
-              })}
-            </span>
-          )}
-          {removidos48h.length > 0 && (
-            <span style={{ color: "var(--color-bad)" }}>
-              <span className="fw-700">-{removidos48h.length} desistência{removidos48h.length > 1 ? "s" : ""}:</span>{" "}
-              {removidos48h.join(", ")}
-            </span>
-          )}
-        </div>
+  // O que ficava na barra da tabela antiga: contagem da BD, novos/removidos
+  // desde a última leitura, cache × live, erro da API.
+  const infoExtra = (
+    <>
+      <span className="muted fs-12">· {nossosCount} da BD</span>
+      {t.diff && (t.diff.added.length > 0 || t.diff.removed.length > 0) && (
+        <span className="fs-10 fw-700" style={{ background: "var(--color-warn)", color: "#fff", padding: "2px 7px", borderRadius: 10 }}
+          title={[t.diff.added.length ? `+${t.diff.added.join(", ")}` : "", t.diff.removed.length ? `-${t.diff.removed.join(", ")}` : ""].filter(Boolean).join(" · ")}>
+          {t.diff.added.length > 0 && `+${t.diff.added.length} novo${t.diff.added.length > 1 ? "s" : ""}`}
+          {t.diff.added.length > 0 && t.diff.removed.length > 0 && " · "}
+          {t.diff.removed.length > 0 && `-${t.diff.removed.length} removido${t.diff.removed.length > 1 ? "s" : ""}`}
+        </span>
       )}
-      <div className="scroll-x">
-        <table className="dtable-lg">
-          <colgroup>
-            <col style={{ width: "4%" }} /><col style={{ width: "17%" }} />
-            <col style={{ width: "7%" }} /><col style={{ width: "5%" }} />
-            <col style={{ width: "5%" }} /><col style={{ width: "5%" }} />
-            <col style={{ width: "4%" }} /><col style={{ width: "4%" }} />
-            <col style={{ width: "9%" }} /><col style={{ width: "40%" }} />
-          </colgroup>
-          <thead>
-            <tr>
-              <SortableHdr k="pos"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>#</SortableHdr>
-              <SortableHdr k="nome"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Nome</SortableHdr>
-              <th className="r">Fed</th>
-              <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">HCP</SortableHdr>
-              <SortableHdr k="vac"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">VAC</SortableHdr>
-              <SortableHdr k="sd5"    sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">SD5</SortableHdr>
-              <SortableHdr k="trend"  sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">T</SortableHdr>
-              <SortableHdr k="rondas" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">R3m</SortableHdr>
-              <SortableHdr k="data"   sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="r">Insc</SortableHdr>
-              <th>Na BD</th>
-            </tr>
-          </thead>
-          <tbody>
-            {lista.map((j, i) => {
-              const p  = j.fed ? nossosByFed.get(j.fed) : undefined;
-              const st = j.fed ? statsDb[j.fed] : null;
-              const sd5 = st?.avgSD5 ?? null;
-              const recent = isRecentHours(j.dataInscricao, 48);
-              return (
-                <tr key={`${j.fed ?? j.nome}-${i}`}
-                  style={recent ? { background: "color-mix(in srgb, var(--score-eagle) 10%, transparent)" } : undefined}>
-                  <td className="muted r fs-11">{i + 1}</td>
-                  <td className="fs-13">
-                    <CountryFlag fed={j.fed} fedCountries={fedCountries} />
-                    {p ? <PlayerLink fed={j.fed} name={p.name} query="?view=by_date" className="fw-700" /> : <span className="muted">{j.nome || "–"}</span>}
-                  </td>
-                  <td className="r">
-                    {j.fed ? <PlayerLink fed={j.fed} name={j.fed} query="?view=by_date" className="fs-12" style={{ color: "var(--chart-2)" }} /> : <span className="muted">–</span>}
-                  </td>
-                  <td className="r muted fs-12" >{fmtHcp(j.hcp)}</td>
-                  <td className="r fs-12 fw-600" >{fmtHcp(j.vac)}</td>
-                  <td className="r fs-11" >
-                    {sd5 != null ? <span className={`p p-${sdClassByHcp(sd5, st?.currentHcp ?? j.hcp ?? null)} fs-11`}>{sd5.toFixed(1)}</span> : <span className="muted">–</span>}
-                  </td>
-                  <td className="r"><TrendBadge trend={st?.hcpTrend ?? null} delta={st?.hcpDelta3m ?? null} /></td>
-                  <td className="r fs-12" >
-                    {st?.roundsLast3m != null
-                      ? <span style={{ fontWeight: st.roundsLast3m >= 4 ? 600 : 400, color: st.roundsLast3m === 0 ? "var(--color-bad)" : "inherit" }}>{st.roundsLast3m}</span>
-                      : <span className="muted">–</span>}
-                  </td>
-                  <td className="r fs-11" style={{ whiteSpace: "nowrap" }}>
-                    <span className="muted">{fmtDataInscricao(j.dataInscricao)}</span>
-                    {recent && <span className="p p-sm fs-10 fw-700" style={{
-                      background: "var(--score-eagle)", color: "#fff",
-                      marginLeft: 4, padding: "1px 5px", borderRadius: 8,
-                    }} title="Inscrito nas últimas 48h">NOVO</span>}
-                  </td>
-                  <td>
-                    {p ? <span className="gap-4 flex-wrap" style={{ display: "flex", alignItems: "center" }}>
-                        <SexBadge sex={p.sex} size="sm" />
-                        <span className={`p p-sm p-${escCls(p.escalao)} fs-10`}>{escShort(p.escalao)}</span>
-                        {p.dob && <AnoEscalaoPill dob={p.dob} escalao={t.escalao} />}
-                        {p.clube && <span className="muted fs-11" >{p.clube}</span>}
-                      </span>
-                    : <span className="muted fs-11" >{j.fed ? "Nao na BD" : "–"}</span>}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        {lista.length === 0 && <EmptyState size="sm" message="Sem resultados" />}
-      </div>
-    </div>
+      {t.lastFetched && (
+        <span className="fs-10 fw-700"
+          style={{
+            padding: "2px 7px", borderRadius: 10,
+            background: t.fromCache ? "var(--bg-muted)" : "var(--bg-success-subtle)",
+            color:      t.fromCache ? "var(--text-muted)" : "var(--color-good-dark)",
+            border:     t.fromCache ? "1px solid var(--border)" : "1px solid var(--color-good)",
+          }}
+          title={t.fromCache
+            ? `Cache estática (public/data/inscricoes_nacionais.json) de ${t.lastFetched}${t.lastChanged && t.lastChanged !== t.lastFetched ? " · alterado " + t.lastChanged : ""}`
+            : `Dados frescos da FPG (scoring.fpg.pt/lists) às ${t.lastFetched}`}>
+          {t.fromCache ? "💾 cache" : "🟢 live FPG"} · {fmtTime(t.lastFetched)}
+        </span>
+      )}
+      {t.fetchError && <span className="fs-10 fw-700" style={{ color: "#fff", background: "var(--color-warn)", padding: "2px 7px", borderRadius: 10 }} title={t.fetchError}>⚠️ API falhou — só cache</span>}
+    </>
+  );
+
+  return (
+    <AdmissionsTab admissions={admissions} playersDB={players as unknown as PlayersDB} fpgUrl={t.fpgUrl} date={todayIso()} hideCols={SEM_TEE}
+      tournamentEscalao={t.escalao} tournamentSex={t.sex === "F" ? "F" : "M"}
+      extraCols={extraCols} removidos={t.diff?.removed ?? []} infoExtra={infoExtra} />
   );
 }
 
