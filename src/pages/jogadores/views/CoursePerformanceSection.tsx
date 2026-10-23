@@ -176,11 +176,11 @@ export default function CoursePerformanceSection({ rounds }: { rounds: RoundData
     }
     if (stbArr.length >= 2) {
       const avgStb = meanArr(stbArr)!;
-      if (avgStb >= 36) conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> mostra que joga <b className="c-par-ok">consistentemente bem</b> aqui. </span>);
+      if (avgStb >= 36) conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> mostra que joga <b className="c-good">consistentemente bem</b> aqui. </span>);
       else if (avgStb >= 30) conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> mostra um desempenho <b>sólido</b>. </span>);
       else conclusion.push(<span key="stb">A média Stableford de <b>{avgStb.toFixed(0)}</b> sugere <b className="c-eagle">espaço para melhorar</b> neste campo. </span>);
     }
-    if (trendCls === "trend-up") conclusion.push(<span key="trend">A tendência é <b className="c-par-ok">positiva</b> — está a melhorar neste campo. </span>);
+    if (trendCls === "trend-up") conclusion.push(<span key="trend">A tendência é <b className="c-good">positiva</b> — está a melhorar neste campo. </span>);
     else if (trendCls === "trend-down") conclusion.push(<span key="trend">A tendência é <b className="c-birdie">negativa</b> — os resultados recentes pioraram. </span>);
     if (teeArr.length > 1) {
       const bestTee = teeArr.reduce((a, b) => (meanArr(b.stbs) ?? 0) > (meanArr(a.stbs) ?? 0) ? b : a);

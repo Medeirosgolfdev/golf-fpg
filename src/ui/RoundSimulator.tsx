@@ -2177,7 +2177,7 @@ export function RoundSimulator({
                       </td>
                       <td className="fs-11">
                         {row.entersTop ? (
-                          <span className="c-par-ok fw-600">
+                          <span className="c-good fw-600">
                             ★ top-
                             {whsQtyCalc(
                               simResults!.finalPool.length
@@ -2385,7 +2385,7 @@ export function RoundSimulator({
                                   </span>
                                 </>
                               )}
-                              <span className="c-par-ok">★</span>
+                              <span className="c-good">★</span>
                               <span className="fw-700">#{nr}</span>
                             </span>
                           );

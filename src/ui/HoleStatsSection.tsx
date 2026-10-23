@@ -265,7 +265,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
           <summary className="details-summary">Pontos fortes e onde perde mais</summary>
         <div className="haTopWrap mt-6">
           <div className="haTopCol haTopStrength">
-            <div className="h-sm"><span className="c-par-ok">Pontos Fortes</span></div>
+            <div className="h-sm"><span className="c-good">Pontos Fortes</span></div>
             {strengths.length === 0
               ? <div className="haTopEmpty">Nenhum buraco consistentemente ao par ou melhor.</div>
               : strengths.map(bh => {
@@ -277,7 +277,7 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                       <div className="min-w-0">
                         <div><b>Bur. {bh.h}</b> · Par {bh.par}{bh.si ? ` · SI ${bh.si}` : ""}</div>
                         <div className="haTopMeta">
-                          <span className="cb-par-ok">{fD2(bh.diff)}</span> média vs par · <span className="c-par-ok">{pobPct}% par ou melhor</span>
+                          <span className="cb-good">{fD2(bh.diff)}</span> média vs par · <span className="c-good">{pobPct}% par ou melhor</span>
                         </div>
                       </div>
                     </div>

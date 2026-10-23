@@ -1829,14 +1829,14 @@
       "parentCompetitionId": null,
       "startDate": "2026-10-12",
       "endDate": "2026-10-13",
-      "champion": null,
+      "champion": "João Miguel Pereira",
       "flights": [
         {
           "competitionId": 1,
           "name": "Match Play",
           "format": "KnockOut",
           "parentId": null,
-          "isCompleted": false,
+          "isCompleted": true,
           "source": "https://scoring-pt.datagolf.pt/scripts/matchplay.asp?club=000&tourn=00022",
           "rounds": [
             {
@@ -2249,8 +2249,8 @@
                   "teamMatchId": null,
                   "matchNo": 15,
                   "startTime": "13:00 · Tee 10",
-                  "result": "2 (8)",
-                  "isSettled": false,
+                  "result": "4 & 3",
+                  "isSettled": true,
                   "isStarted": true,
                   "home": {
                     "teamId": null,
@@ -2268,7 +2268,7 @@
                     "points": null,
                     "isLead": false
                   },
-                  "winner": null,
+                  "winner": "away",
                   "games": []
                 }
               ]
@@ -2276,7 +2276,7 @@
           ]
         }
       ],
-      "scrapedAt": "2026-10-13T13:39:33.897Z"
+      "scrapedAt": "2026-10-23T12:42:27.852Z"
     },
     "000-10919": {
       "tournament": "40 Taça da Federação Portuguesa de Golfe BPI Senhoras",
@@ -2513,6 +2513,6 @@
       "scrapedAt": "2026-10-13T13:39:33.938Z"
     }
   },
-  "lastUpdated": "2026-10-13T13:39:33.939Z",
+  "lastUpdated": "2026-10-23T12:42:28.156Z",
   "source": "scoring-pt.datagolf.pt/scripts/matchplay.asp"
 }

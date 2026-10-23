@@ -140,6 +140,22 @@ jobs:
         env:
           DATAGOLF_SCORING_COOKIES: ${{ secrets.DATAGOLF_SCORING_COOKIES }}
 
+      # Quadros de match play da Taça FPG (scoring-pt.datagolf.pt/scripts/matchplay.asp,
+      # HTML público, sem cookies) → public/data/fpg-matchplay.json. A lista dos
+      # quadros está em SOURCES no script. 0 gravou · 2 nada de novo · 3 FPG em
+      # baixo (não é erro nosso) · 1 erro → vermelho no fim.
+      - name: Quadros de match play (Taça FPG)
+        id: matchplay
+        if: github.event_name == 'schedule' || github.event.inputs.tclub == ''
+        run: |
+          set +e
+          node scripts/scrape-fpg-matchplay.js
+          EC=$?
+          echo "exit_code=$EC" >> $GITHUB_OUTPUT
+          if [ "$EC" = "3" ]; then echo "ℹ️  FPG em baixo — fica para a próxima corrida."; fi
+          if [ "$EC" = "1" ]; then echo "::error::scrape-fpg-matchplay falhou"; fi
+          exit 0
+
       # PCC do próprio fim-de-semana. Este workflow corre à 01:00 UTC, 55 min
       # depois do update-data.yml ter descarregado o WHS (00:05) — que é quem
       # traz o `cba` oficial. Os torneios acabados de scrapar aqui apanham logo
@@ -163,7 +179,7 @@ jobs:
         run: node scripts/build-tournaments-tracking.js
 
       - name: Commit e push (se houver novos dados)
-        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0') || github.event.inputs.force_commit == 'true'
+        if: steps.scrape.outputs.exit_code == '0' || (steps.scrape_recent.outcome == 'success' && steps.scrape_recent.outputs.exit_code == '0') || steps.matchplay.outputs.exit_code == '0' || github.event.inputs.force_commit == 'true'
         # O fpg-tournaments-tracking.json é gerado por mais do que um workflow:
         # -f tracking regenera-o por cima do main mais recente em vez de o fundir.
         # drive/aquapor entram porque o backfill-pcc também lhes toca (fusão a 3
@@ -173,12 +189,12 @@ jobs:
           bash scripts/ci/push-generated.sh -m "data: update classif FPG $(date +'%Y-%m-%d %H:%M')" \
             -f tracking \
             -- "$OUT" 'public/data/pull-torneios*.json' \
-               'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json'
+               'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json'                public/data/fpg-matchplay.json
 
       # Falhas que não travaram o commit não podem ficar verdes.
       - name: Falhar se algum passo falhou
-        if: always() && (steps.pcc.outputs.failed == '1' || (steps.scrape_recent.outputs.exit_code != '' && steps.scrape_recent.outputs.exit_code != '0' && steps.scrape_recent.outputs.exit_code != '2'))
+        if: always() && (steps.pcc.outputs.failed == '1' || steps.matchplay.outputs.exit_code == '1' || (steps.scrape_recent.outputs.exit_code != '' && steps.scrape_recent.outputs.exit_code != '0' && steps.scrape_recent.outputs.exit_code != '2'))
         run: |
-          echo "❌ Falhou: scrape de recentes (exit ${{ steps.scrape_recent.outputs.exit_code }}) / backfill-pcc (${{ steps.pcc.outputs.failed }})"
+          echo "❌ Falhou: scrape de recentes (exit ${{ steps.scrape_recent.outputs.exit_code }}) / backfill-pcc (${{ steps.pcc.outputs.failed }}) / match play (exit ${{ steps.matchplay.outputs.exit_code }})"
           echo "O que correu bem já foi publicado — ver os ::error:: acima."
           exit 1

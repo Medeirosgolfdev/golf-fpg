@@ -181,7 +181,7 @@ export function Last20Table({ data, last20Table, best8, whsPosMap, bare }: {
                     <td className="r"><SdCell round={r} /></td>
                     <td className="r">
                       {isBest8 && (
-                        <><span className="c-par-ok">★</span>{" "}<span className="fw-700">#{rank}</span></>
+                        <><span className="c-good">★</span>{" "}<span className="fw-700">#{rank}</span></>
                       )}
                     </td>
                   </tr>

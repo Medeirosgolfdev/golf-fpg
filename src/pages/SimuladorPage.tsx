@@ -672,7 +672,7 @@ function AgsSection({
 
                 {/* Ajustado */}
                 <tr>
-                  <td className="row-label c-par-ok-11">Ajust.</td>
+                  <td className="row-label c-good-11">Ajust.</td>
                   {front.map((h, i) => {
                     const capped = h.actual !== null && h.actual > h.maxScore;
                     return (
@@ -682,7 +682,7 @@ function AgsSection({
                           {capped && <span className="fs-10">✂</span>}
                         </td>
                         {is18 && i === 8 && (
-                          <td className="col-out cb-par-ok">{adjOut ?? "–"}</td>
+                          <td className="col-out cb-good">{adjOut ?? "–"}</td>
                         )}
                       </React.Fragment>
                     );
@@ -696,8 +696,8 @@ function AgsSection({
                       </td>
                     );
                   })}
-                  <td className={`col-${is18 ? "in" : "total"} cb-par-ok`}>{is18 ? (adjIn ?? "–") : (adjTotal ?? "–")}</td>
-                  {is18 && <td className="col-total fw-900 c-par-ok">{adjTotal ?? "–"}</td>}
+                  <td className={`col-${is18 ? "in" : "total"} cb-good`}>{is18 ? (adjIn ?? "–") : (adjTotal ?? "–")}</td>
+                  {is18 && <td className="col-total fw-900 c-good">{adjTotal ?? "–"}</td>}
                 </tr>
               </>
             )}

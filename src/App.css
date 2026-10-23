@@ -2588,13 +2588,12 @@ button.tourn-pname:focus-visible { outline: 2px solid var(--link-color); outline
 /* ─── Score Colors (semantic — used across all pages) ─── */
 .c-birdie  { color: var(--color-danger); }
 .c-eagle  { color: var(--color-warn); }
-.c-par-ok  { color: var(--color-good); }
 .c-blue   { color: var(--color-info-alt); }
 .c-amber  { color: var(--color-warn-dark); }
 
 /* Score color + bold combos */
 .cb-birdie { color: var(--color-danger); font-weight: 700; }
-.cb-par-ok { color: var(--color-good); font-weight: 700; }
+.cb-good { color: var(--color-good); font-weight: 700; }
 .cb-blue  { color: var(--color-info-alt); font-weight: 700; }
 .cb-blue-10 { color: var(--color-info-alt); font-weight: 700; font-size: var(--fs-10); }
 .cb-blue-800 { color: var(--color-info-alt); font-weight: 800; }
@@ -3020,7 +3019,7 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
 .c-blue-2563 { color: var(--chart-2); }
 .c-blue-2563-10 { color: var(--chart-2); font-size: var(--fs-10); font-weight: 600; }
 .c-amber-11 { color: var(--color-warn-dark); font-weight: 700; font-size: var(--fs-11); }
-.c-par-ok-11 { color: var(--color-good); font-weight: 700; font-size: var(--fs-11); }
+.c-good-11 { color: var(--color-good); font-weight: 700; font-size: var(--fs-11); }
 .c-teal { color: var(--color-teal); font-weight: 600; text-decoration: underline; }
 
 /* ─── Borders ─── */

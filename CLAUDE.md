@@ -135,8 +135,9 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 
 - `BJGTPage.tsx` e `DORALPage.tsx` são módulos usados pela `/major` (as rotas
   antigas redireccionam); os dados da `/major` vivem em `src/data/major/`.
-- `ScotlandPage.tsx` está completa mas **desligada de propósito** (os dados não
-  são fiáveis) — não é bug.
+- A página da Escócia (Junior Tour Scotland) está no arquivo
+  (`scripts/_archive/ScotlandPage_v1_ate-2026-10-23.tsx`, ver o `LEIA-ME.md` lá):
+  os dados não são fiáveis — só volta com uma fonte boa.
 - **Calendário**: os eventos vivem em `src/data/calendarEvents.ts` (fora da
   página, porque o `scripts/build-ics.js` também os lê). O `prebuild` gera
   `public/calendario-{golfe,andebol,viagens,familia,aniversarios}.ics`
