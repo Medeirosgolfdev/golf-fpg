@@ -39,6 +39,19 @@ if (Test-Path -LiteralPath $vistosFile) {
     foreach ($k in (Get-Content -LiteralPath $vistosFile -Raw -Encoding UTF8 | ConvertFrom-Json)) { $vistos[$k] = $true }
 }
 
+# --- se o Outlook clássico estava fechado, é esta tarefa que o abre — e fecha-o no fim
+# (22/10/2026: ficava aberto o dia todo). A regra (só fecha se mais nenhuma tarefa o
+# estiver a usar; Quit primeiro, à força só passados 90 s) vive no script da loja.
+$outlookJaEstava = [bool](Get-Process OUTLOOK -ErrorAction SilentlyContinue)
+$fecharOutlook = 'C:\Users\Mariana\OneDrive - BetaSol SGPS\BETASOL_mango\ANALISES\_Ferramentas_e_Dados\Scripts\fechar_outlook.ps1'
+function Sair($codigo) {
+    if (-not $script:outlookJaEstava -and (Test-Path -LiteralPath $script:fecharOutlook)) {
+        try { . $script:fecharOutlook; Fechar-Outlook | ForEach-Object { Log $_ } }
+        catch { Log "AVISO: não consegui fechar o Outlook: $($_.Exception.Message)" }
+    }
+    exit $codigo
+}
+
 # --- ligação ao Outlook, com repetição (o COM recusa chamadas enquanto arranca/fecha)
 $outlook = $null
 for ($try = 1; $try -le 5; $try++) {
@@ -48,7 +61,7 @@ for ($try = 1; $try -le 5; $try++) {
         $null = $ns.Stores.Count
         break
     } catch {
-        if ($try -eq 5) { Log "ERRO: não consegui falar com o Outlook: $($_.Exception.Message)"; exit 1 }
+        if ($try -eq 5) { Log "ERRO: não consegui falar com o Outlook: $($_.Exception.Message)"; Sair 1 }
         Start-Sleep -Seconds (5 * $try)
     }
 }
@@ -99,9 +112,9 @@ foreach ($store in $ns.Stores) {
 }
 ($vistos.Keys | Sort-Object) | ConvertTo-Json | Set-Content -LiteralPath $vistosFile -Encoding UTF8
 
-if ($novos.Count -eq 0) { Log "sem draws novos nos últimos $Dias dias."; exit 0 }
+if ($novos.Count -eq 0) { Log "sem draws novos nos últimos $Dias dias."; Sair 0 }
 Log "$($novos.Count) PDF(s) de draw novos."
-if ($SoGravar) { exit 0 }
+if ($SoGravar) { Sair 0 }
 
 Set-Location -LiteralPath $repo
 # a saída do node vem em UTF-8; sem isto o log fica com os acentos trocados
@@ -109,4 +122,4 @@ Set-Location -LiteralPath $repo
 $out = & node scripts\process-draw-inbox.js 2>&1
 $out | ForEach-Object { Add-Content -LiteralPath $logFile -Value "    $_" -Encoding UTF8 }
 Log "process-draw-inbox terminou (saída $LASTEXITCODE)."
-exit $LASTEXITCODE
+Sair $LASTEXITCODE
