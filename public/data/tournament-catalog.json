@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-23T15:20:14.903Z",
+  "generatedAt": "2026-10-23T17:30:16.878Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -28700,6 +28700,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-us-kids-teen-world-championship",
+      "label": "US Kids - Teen World Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271027",
+        "wagr-259236",
+        "wagr-224882",
+        "wagr-234795",
+        "wagr-75555"
+      ],
+      "firstDate": "2022-07-28",
+      "lastDate": "2026-07-23",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-southern-india-junior-boys",
       "label": "Southern India Junior Boys",
       "sourceId": "wagr",
@@ -29210,6 +29225,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-scottish-boys-open-championship",
+      "label": "Scottish Boys Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269088",
+        "wagr-256697",
+        "wagr-232420",
+        "wagr-222716",
+        "wagr-77509"
+      ],
+      "firstDate": "2022-04-06",
+      "lastDate": "2026-04-08",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-kaohsiung-junior-tour",
       "label": "Kaohsiung Junior Tour",
       "sourceId": "wagr",
@@ -29507,21 +29537,6 @@
       ],
       "firstDate": "2022-08-23",
       "lastDate": "2026-08-25",
-      "editionsCount": 5
-    },
-    {
-      "id": "wagr-scottish-boys-open-championship",
-      "label": "Scottish Boys Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269088",
-        "wagr-256697",
-        "wagr-232420",
-        "wagr-222716",
-        "wagr-77509"
-      ],
-      "firstDate": "2022-04-06",
-      "lastDate": "2026-04-08",
       "editionsCount": 5
     },
     {
@@ -35693,6 +35708,20 @@
       "editionsCount": 4
     },
     {
+      "id": "wagr-sgf-fairmont-boys-open",
+      "label": "SGF Fairmont Boys Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-272212",
+        "wagr-260836",
+        "wagr-226167",
+        "wagr-220979"
+      ],
+      "firstDate": "2022-09-28",
+      "lastDate": "2026-09-30",
+      "editionsCount": 4
+    },
+    {
       "id": "wagr-slovak-junior-championship",
       "label": "Slovak Junior Championship",
       "sourceId": "wagr",
@@ -35704,20 +35733,6 @@
       ],
       "firstDate": "2023-06-23",
       "lastDate": "2026-08-25",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-us-kids-teen-world-championship",
-      "label": "US Kids - Teen World Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271027",
-        "wagr-259236",
-        "wagr-224882",
-        "wagr-75555"
-      ],
-      "firstDate": "2022-07-28",
-      "lastDate": "2026-07-23",
       "editionsCount": 4
     },
     {
@@ -36155,6 +36170,20 @@
       "editionsCount": 4
     },
     {
+      "id": "wagr-st-andrews-boys-open-merchants-cup",
+      "label": "St Andrews Boys' Open - Merchants' Cup",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-235043",
+        "wagr-259608",
+        "wagr-225133",
+        "wagr-75957"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2025-08-04",
+      "editionsCount": 4
+    },
+    {
       "id": "wagr-junior-masters-invitational-final",
       "label": "Junior Masters Invitational - Final",
       "sourceId": "wagr",
@@ -36320,6 +36349,20 @@
       ],
       "firstDate": "2023-08-08",
       "lastDate": "2026-08-05",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-scottish-boys-amateur-championship",
+      "label": "Scottish Boys' Amateur Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270849",
+        "wagr-259024",
+        "wagr-234586",
+        "wagr-224591"
+      ],
+      "firstDate": "2023-07-19",
+      "lastDate": "2026-07-15",
       "editionsCount": 4
     },
     {
@@ -46147,19 +46190,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-sgf-fairmont-boys-open",
-      "label": "SGF Fairmont Boys Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272212",
-        "wagr-226167",
-        "wagr-220979"
-      ],
-      "firstDate": "2022-09-28",
-      "lastDate": "2026-09-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-junior-tour-portpatrick",
       "label": "Junior Tour Portpatrick",
       "sourceId": "wagr",
@@ -46784,19 +46814,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-st-andrews-boys-open-merchants-cup",
-      "label": "St Andrews Boys' Open - Merchants' Cup",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-235043",
-        "wagr-225133",
-        "wagr-75957"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2024-08-05",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-junior-golf-bastad",
       "label": "Junior Golf @ Bastad",
       "sourceId": "wagr",
@@ -47044,6 +47061,32 @@
       "editionsCount": 3
     },
     {
+      "id": "wagr-sgf-trophy",
+      "label": "SGF Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270144",
+        "wagr-258155",
+        "wagr-74732"
+      ],
+      "firstDate": "2022-06-11",
+      "lastDate": "2026-06-15",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-barrie-douglas-scottish-junior-masters",
+      "label": "Barrie Douglas Scottish Junior Masters",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269905",
+        "wagr-257842",
+        "wagr-74540"
+      ],
+      "firstDate": "2022-05-27",
+      "lastDate": "2026-06-05",
+      "editionsCount": 3
+    },
+    {
       "id": "wagr-future-challenge-2",
       "label": "Future Challenge #2",
       "sourceId": "wagr",
@@ -47080,6 +47123,19 @@
       ],
       "firstDate": "2026-02-24",
       "lastDate": "2026-07-21",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-chang-thailand-junior-golf-circuit-international-championship",
+      "label": "Chang Thailand Junior Golf Circuit  International Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271544",
+        "wagr-259917",
+        "wagr-254059"
+      ],
+      "firstDate": "2024-08-15",
+      "lastDate": "2026-09-03",
       "editionsCount": 3
     },
     {
@@ -68021,6 +68077,30 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-scottish-boys-u16-open-championship",
+      "label": "Scottish Boys U16 Open Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258807",
+        "wagr-224391"
+      ],
+      "firstDate": "2023-07-11",
+      "lastDate": "2025-07-08",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-junior-tour-elgin",
+      "label": "Junior Tour Elgin",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-257357",
+        "wagr-228607"
+      ],
+      "firstDate": "2023-09-23",
+      "lastDate": "2025-05-03",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-mccracken-sports-junior-championship-presented-by-paducah-cvb",
       "label": "McCracken Sports Junior Championship presented by Paducah CVB",
       "sourceId": "wagr",
@@ -68066,18 +68146,6 @@
       ],
       "firstDate": "2025-07-29",
       "lastDate": "2026-07-28",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-chang-thailand-junior-golf-circuit-international-championship",
-      "label": "Chang Thailand Junior Golf Circuit  International Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-271544",
-        "wagr-259917"
-      ],
-      "firstDate": "2025-09-10",
-      "lastDate": "2026-09-03",
       "editionsCount": 2
     },
     {
@@ -68942,6 +69010,18 @@
       ],
       "firstDate": "2024-04-12",
       "lastDate": "2025-06-06",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-gira-del-club-los-chillos",
+      "label": "Gira del Club Los Chillos",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-221990",
+        "wagr-73608"
+      ],
+      "firstDate": "2022-02-02",
+      "lastDate": "2023-10-20",
       "editionsCount": 2
     },
     {
@@ -70070,18 +70150,6 @@
       ],
       "firstDate": "2023-08-08",
       "lastDate": "2024-08-05",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-scottish-boys-amateur-championship",
-      "label": "Scottish Boys' Amateur Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234586",
-        "wagr-224591"
-      ],
-      "firstDate": "2023-07-19",
-      "lastDate": "2024-07-17",
       "editionsCount": 2
     },
     {
@@ -110115,6 +110183,39 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-the-foundations-trophy",
+      "label": "The Foundations Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269545"
+      ],
+      "firstDate": "2026-05-01",
+      "lastDate": "2026-05-01",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-15th-golf-mad-turkish-junior-open",
+      "label": "15th Golf Mad Turkish Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-254806"
+      ],
+      "firstDate": "2025-12-13",
+      "lastDate": "2025-12-13",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-junior-tour-portlethen",
+      "label": "Junior Tour Portlethen",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-260662"
+      ],
+      "firstDate": "2025-09-20",
+      "lastDate": "2025-09-20",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-jm-champ-foundation-lola-blankets-junior-championship",
       "label": "JM Champ Foundation / Lola Blankets Junior Championship",
       "sourceId": "wagr",
@@ -112381,17 +112482,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-gira-del-club-los-chillos",
-      "label": "Gira del Club Los Chillos",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-221990"
-      ],
-      "firstDate": "2023-10-20",
-      "lastDate": "2023-10-20",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-clasificatorio-sudamericano-prejuvenil",
       "label": "Clasificatorio Sudamericano Prejuvenil",
       "sourceId": "wagr",
@@ -113448,6 +113538,72 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-6th-tjgga-open-championships-3",
+      "label": "6th TJGGA Open Championships  #3",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-266678"
+      ],
+      "firstDate": "2026-07-31",
+      "lastDate": "2026-07-31",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-sat-gps-junior-tour-2",
+      "label": "SAT-GPS JUNIOR TOUR #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-264053"
+      ],
+      "firstDate": "2025-04-04",
+      "lastDate": "2025-04-04",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-tga-singha-upper-north-junior-golf-ranking-4",
+      "label": "TGA-SINGHA Upper North Junior Golf Ranking - #4",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253101"
+      ],
+      "firstDate": "2024-09-07",
+      "lastDate": "2024-09-07",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-ntjgc-junior-golf-championships-final",
+      "label": "NTJGC Junior Golf Championships Final",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-252139"
+      ],
+      "firstDate": "2024-07-06",
+      "lastDate": "2024-07-06",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-tga-singha-upper-north-junior-golf-ranking-2",
+      "label": "TGA-SINGHA Upper North Junior Golf Ranking - #2",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253097"
+      ],
+      "firstDate": "2024-06-29",
+      "lastDate": "2024-06-29",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-tga-singha-upper-north-junior-golf-ranking-1",
+      "label": "TGA-SINGHA Upper North Junior Golf Ranking - #1",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-253095"
+      ],
+      "firstDate": "2024-05-25",
+      "lastDate": "2024-05-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-asb-boys-club-championship-isgt",
       "label": "ASB Boys Club Championship (ISGT)",
       "sourceId": "wagr",
@@ -114086,6 +114242,28 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-louth-county-close-u19-boys",
+      "label": "Louth County Close U19 Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276748"
+      ],
+      "firstDate": "2026-08-17",
+      "lastDate": "2026-08-17",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-nancy-gannon-wagr-boys-u19-trophy-byrne-cup",
+      "label": "Nancy Gannon WAGR Boys U19 - (Trophy Byrne Cup)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-276747"
+      ],
+      "firstDate": "2026-08-05",
+      "lastDate": "2026-08-05",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-brian-wilkins-memorial-match-play-championships",
       "label": "Brian Wilkins Memorial Match Play Championships",
       "sourceId": "wagr",
@@ -114306,17 +114484,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-scottish-boys-u16-open-championship",
-      "label": "Scottish Boys U16 Open Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-224391"
-      ],
-      "firstDate": "2023-07-11",
-      "lastDate": "2023-07-11",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-the-3-foundations-trophy",
       "label": "The 3 Foundations Trophy",
       "sourceId": "wagr",
@@ -114515,17 +114682,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-nancy-gannon-wagr-boys-u19-trophy-byrne-cup",
-      "label": "Nancy Gannon WAGR Boys U19 - (Trophy Byrne Cup)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-276747"
-      ],
-      "firstDate": "2026-08-05",
-      "lastDate": "2026-08-05",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-west-junior-youth-event-spring",
       "label": "West Junior Youth Event - Spring",
       "sourceId": "wagr",
@@ -114699,28 +114855,6 @@
       ],
       "firstDate": "2025-08-07",
       "lastDate": "2025-08-07",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-15th-golf-mad-turkish-junior-open",
-      "label": "15th Golf Mad Turkish Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-254806"
-      ],
-      "firstDate": "2025-12-13",
-      "lastDate": "2025-12-13",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-6th-tjgga-open-championships-3",
-      "label": "6th TJGGA Open Championships  #3",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-266678"
-      ],
-      "firstDate": "2026-07-31",
-      "lastDate": "2026-07-31",
       "editionsCount": 1
     },
     {
@@ -116275,17 +116409,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-tga-singha-upper-north-junior-golf-ranking-4",
-      "label": "TGA-SINGHA Upper North Junior Golf Ranking - #4",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-253101"
-      ],
-      "firstDate": "2024-09-07",
-      "lastDate": "2024-09-07",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-harvey-norman-a-c-t-week-of-golf",
       "label": "Harvey Norman A.C.T Week of Golf",
       "sourceId": "wagr",
@@ -117056,17 +117179,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-tga-singha-upper-north-junior-golf-ranking-1",
-      "label": "TGA-SINGHA Upper North Junior Golf Ranking - #1",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-253095"
-      ],
-      "firstDate": "2024-05-25",
-      "lastDate": "2024-05-25",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-chiangmai-apjga-international",
       "label": "Chiangmai  APJGA International",
       "sourceId": "wagr",
@@ -117273,6 +117385,28 @@
       ],
       "firstDate": "2022-10-21",
       "lastDate": "2022-10-21",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-bank-mandiri-ciputra-golfpreneur-junior-world-championship",
+      "label": "Bank Mandiri - Ciputra Golfpreneur Junior World Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-229415"
+      ],
+      "firstDate": "2023-05-30",
+      "lastDate": "2023-05-30",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-hsbc-youth-golf-challenge-3rd-leg-cum-1st-national-ranking-game",
+      "label": "HSBC Youth Golf Challenge  (3rd Leg) cum 1st National Ranking Game",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-222402"
+      ],
+      "firstDate": "2023-03-13",
+      "lastDate": "2023-03-13",
       "editionsCount": 1
     },
     {
@@ -117570,17 +117704,6 @@
       ],
       "firstDate": "2022-06-17",
       "lastDate": "2022-06-17",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-junior-tour-elgin",
-      "label": "Junior Tour Elgin",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-228607"
-      ],
-      "firstDate": "2023-09-23",
-      "lastDate": "2023-09-23",
       "editionsCount": 1
     },
     {
@@ -118123,17 +118246,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-sgf-trophy",
-      "label": "SGF Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-74732"
-      ],
-      "firstDate": "2022-06-11",
-      "lastDate": "2022-06-11",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-junior-tour-royal-dornoch",
       "label": "Junior Tour Royal Dornoch",
       "sourceId": "wagr",
@@ -118178,14 +118290,14 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-barrie-douglas-scottish-junior-masters",
-      "label": "Barrie Douglas Scottish Junior Masters",
+      "id": "wagr-bwgv-junior-invitational",
+      "label": "BWGV Junior Invitational",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-74540"
+        "wagr-219847"
       ],
-      "firstDate": "2022-05-27",
-      "lastDate": "2022-05-27",
+      "firstDate": "2022-03-11",
+      "lastDate": "2022-03-11",
       "editionsCount": 1
     },
     {
@@ -119674,6 +119786,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-doral-junior-open",
+      "label": "Doral Junior Open",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-75864"
+      ],
+      "firstDate": "2022-08-03",
+      "lastDate": "2022-08-03",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-sir-henry-cooper-junior-masters",
       "label": "Sir Henry Cooper Junior Masters",
       "sourceId": "wagr",
@@ -120089,17 +120212,6 @@
       ],
       "firstDate": "2022-03-28",
       "lastDate": "2022-03-28",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-doral-junior-open",
-      "label": "Doral Junior Open",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-75864"
-      ],
-      "firstDate": "2022-08-03",
-      "lastDate": "2022-08-03",
       "editionsCount": 1
     },
     {

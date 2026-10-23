@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-23T15:20:14.887Z",
+  "generatedAt": "2026-10-23T17:30:16.859Z",
   "listas": [
     {
       "id": "fpg-entry-list-girls-2026-10-01",
@@ -1338,11 +1338,21 @@
           "name": "Leo Taylor",
           "country": "Slovakia",
           "hcp": -0.6,
-          "junior": null,
+          "junior": {
+            "id": "u552079",
+            "name": "Leo Taylor",
+            "dob": "2012-11-09",
+            "club": "Hillside",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 0.5,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 18,
@@ -1801,11 +1811,21 @@
           "name": "William Harran",
           "country": "France",
           "hcp": 1.3,
-          "junior": null,
+          "junior": {
+            "id": "u565559",
+            "name": "William Harran",
+            "dob": null,
+            "club": "Esery",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 1.3,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 39,
@@ -2147,11 +2167,21 @@
           "name": "Leo Tunney",
           "country": "France",
           "hcp": 3.6,
-          "junior": null,
+          "junior": {
+            "id": "g511861355",
+            "name": "Leo Tunney",
+            "dob": null,
+            "club": "Maison Blanche",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 5.5,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 55,
@@ -2183,11 +2213,21 @@
           "name": "William Gao",
           "country": "USA",
           "hcp": 3.8,
-          "junior": null,
+          "junior": {
+            "id": "f51524",
+            "name": "William Gao",
+            "dob": "2012-11-14",
+            "club": "Quinta do Peru",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 3.7,
+            "fonte": "FPG",
+            "data": "2026-10-11"
+          }
         },
         {
           "ordem": 57,
@@ -6350,7 +6390,7 @@
             "id": "x8b67e98e6c",
             "name": "Richard Schmer",
             "dob": null,
-            "club": "Hamburg",
+            "club": "GC Syke",
             "via": "nome"
           },
           "ambiguo": null,
@@ -6460,7 +6500,13 @@
           "name": "Jonas Müller",
           "country": "Germany",
           "hcp": 2.1,
-          "junior": null,
+          "junior": {
+            "id": "x5ace8903cf",
+            "name": "Jonas Müller",
+            "dob": "2010-08-29",
+            "club": "SWITZERLAND",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
@@ -8093,7 +8139,7 @@
             "id": "xace07659ec",
             "name": "Nicole Zhang",
             "dob": null,
-            "club": "Kölner GC",
+            "club": "Köln",
             "via": "nome"
           },
           "ambiguo": null,
@@ -8108,11 +8154,21 @@
           "name": "Greta Grohs",
           "country": "Germany",
           "hcp": 0.6,
-          "junior": null,
+          "junior": {
+            "id": "gE80085280",
+            "name": "Greta Grohs",
+            "dob": null,
+            "club": "LUX",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
-          "hcpAtual": null
+          "hcpAtual": {
+            "valor": 10.3,
+            "fonte": "FFG",
+            "data": null
+          }
         },
         {
           "ordem": 48,
@@ -8267,7 +8323,13 @@
           "name": "Lena Szymanska",
           "country": "Germany",
           "hcp": 2.5,
-          "junior": null,
+          "junior": {
+            "id": "xcae345877b",
+            "name": "Lena Szymanska",
+            "dob": null,
+            "club": "Berliner Golfclub Stolper Heide",
+            "via": "nome"
+          },
           "ambiguo": null,
           "duplicadoDe": null,
           "anterior": null,
