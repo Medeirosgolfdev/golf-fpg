@@ -285,20 +285,15 @@ async function main() {
       sub(`juniors-links.json: ${links.j.length} juniores`);
     }
 
-    // Forma recente + confrontos com o Manuel (aba «Quem repete» dos circuitos):
-    // resumo de ~1 MB para a página não carregar os shards.
+    // Resumo do Scout (aba «Scout» dos circuitos e da /uskids, Ranking e ficha do
+    // kids2, Próximos torneios): nível, vitórias, HCP, clube, provas em comum com
+    // o Manuel — mesmas contas do kids2 —, a forma recente (util/form.js; era o
+    // juniors-form.json) e os resultados WJGC/Doral/EOWAGR. Um ficheiro só.
     {
       const { buildForm } = require("./util/form");
-      const form = buildForm(matchResult.tournaments, generatedAt);
-      writeAtomic(path.join(DATA_DIR, "juniors-form.json"), JSON.stringify(form), "utf-8");
-      sub(`juniors-form.json: ${Object.keys(form.players).length} juniores`);
-    }
-
-    // Resumo do Scout (aba «Scout» dos circuitos e da /uskids): nível, vitórias,
-    // HCP, clube e provas em comum com o Manuel — mesmas contas do kids2.
-    {
       const { buildScout } = require("./util/scout");
-      const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt);
+      const form = buildForm(matchResult.tournaments, generatedAt);
+      const scout = buildScout(matchResult.juniors, matchResult.tournaments, generatedAt, form);
       writeAtomic(path.join(DATA_DIR, "juniors-scout.json"), JSON.stringify(scout), "utf-8");
       sub(`juniors-scout.json: ${Object.keys(scout.players).length} juniores`);
     }

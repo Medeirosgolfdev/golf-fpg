@@ -8,8 +8,11 @@
  *
  * Saída (`public/data/juniors-links.json`, compacta):
  *   { schemaVersion, generatedAt,
- *     j: [[id, nome canónico, aliases?, memberId USKids?, fed FPG?, licença FFG?], …] }
+ *     j: [[id, nome canónico, aliases?, memberId USKids?, fed FPG?, licença FFG?, país?, sexo?], …] }
  * Os campos opcionais vêm a 0 quando faltam e os zeros do fim são cortados.
+ * O país e o sexo (23/10/2026) servem a /FPG (bandeira e sexo de quem não é
+ * federado — `fpgPlayersDB.ts`), que antes os lia de dois ficheiros à parte
+ * (kids-links.json, à mão, e kids-tracked-names.json, parado desde Maio).
  */
 
 function buildLinks(juniors, generatedAt) {
@@ -24,6 +27,8 @@ function buildLinks(juniors, generatedAt) {
       x.sources?.uskids?.memberId ? String(x.sources.uskids.memberId) : 0,
       x.sources?.fpg?.fed ? String(x.sources.fpg.fed) : 0,
       x.sources?.ffgolf?.lic ? String(x.sources.ffgolf.lic) : 0,
+      x.country || x.nationality || 0,
+      x.sex === "M" || x.sex === "F" ? x.sex : 0,
     ];
     while (row.length > 2 && !row[row.length - 1]) row.pop();
     j.push(row);

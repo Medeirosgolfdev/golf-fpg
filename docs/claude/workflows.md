@@ -117,7 +117,7 @@ guarda a cache antes do 1.º push e repõe-na para o 2.º.
 
 | Família (`-f`) | Ficheiros | Regenera com | Usada em |
 |---|---|---|---|
-| `agregador` | `juniors.json`, `juniors-tournaments*.json`, `tournament-catalog.json`, `hcp-listas-ligacoes.json`, `juniors-form.json`, `juniors-scout.json`, `juniors-links.json` | `scripts/aggregator/index.js` | build-juniors, dgv, egr, gjgl, golfbox, golfgenius, england |
+| `agregador` | `juniors.json`, `juniors-tournaments*.json`, `tournament-catalog.json`, `hcp-listas-ligacoes.json`, `juniors-scout.json`, `juniors-links.json` | `scripts/aggregator/index.js` | build-juniors, dgv, egr, gjgl, golfbox, golfgenius, england |
 | `major` | `major-catalog.json`, `major-veterans.json` | `build-major-catalog.js` | build-major-catalog, golfbox, golfgenius |
 | `tracking` | `fpg-tournaments-tracking.json` | `build-tournaments-tracking.js` | classif, admissions-draws |
 | `ffgolf` | `ffgolf-resultats-index.json`, `ffgolf-juniors-slim.json`, `france-players.json`, `ffgolf-gg-twins.json`, `ffgolf-player-tournaments.json` | os 3 builders FFG | as 4 FFG |

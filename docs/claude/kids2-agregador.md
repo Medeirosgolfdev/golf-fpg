@@ -235,9 +235,12 @@ As classificações dos eventos EGR continuam publicadas depois dos 2 anos (só 
 ## Resumos leves para as páginas dos circuitos (2026-10-20)
 
 As páginas dos circuitos não podem carregar o canónico (~180 MB). O agregador
-escreve dois resumos, carregados só quando se abre a aba **Scout** (`src/ui/circuit/Scout.tsx`,
-ex-«Quem repete» — CircuitShell, /uskids e Kids 2 «Próximos torneios»):
-- `juniors-form.json` (`util/form.js`) — últimos torneios e confrontos com o Manuel no mesmo escalão.
+escreve um resumo só (desde 23/10/2026; o `juniors-form.json` entrou nele), lido pela aba **Scout**
+(`src/ui/circuit/Scout.tsx`, ex-«Quem repete» — CircuitShell, /uskids e Kids 2 «Próximos torneios»),
+pelo Ranking e ficha do kids2 e pelos Próximos torneios (`buildExtraRivals`, sem a base de ~188 MB):
+- `f` — a forma (`util/form.js`): últimos torneios e confrontos com o Manuel no mesmo escalão.
+- `x` — resultados WJGC/Doral/EOWAGR por junior (tids de `src/data/kidsTid.ts`, partilhado com o
+  browser) e, no topo, a ficha desses torneios.
 - `juniors-scout.json` (`util/scout.js`, ~3 MB) — nível (tier), vitórias, top-3, HCP, data de nascimento,
   clube, país e provas em comum com o Manuel `[data, torneio, lugar, lugar do Manuel, pancadas − Manuel]`.
   Desde 21/10/2026 também `r: [ano de nascimento, sexo, posição]` — o ranking por coorte do `computeRanking`;

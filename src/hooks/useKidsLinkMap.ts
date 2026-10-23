@@ -15,8 +15,8 @@ import { cachedFetchJson } from "../data/fetchCache";
 import { normName } from "../utils/normName";
 import type { KidsLinkEntry } from "../ui/KidsLink";
 
-/** Linha do índice: [id, nome canónico, aliases?, memberId?, fed?, licença FFG?] (0 = falta). */
-type LinkRow = [string, string, (string[] | 0)?, (string | 0)?, (string | 0)?, (string | 0)?];
+/** Linha do índice: [id, nome canónico, aliases?, memberId?, fed?, licença FFG?, país?, sexo?] (0 = falta). */
+export type LinkRow = [string, string, (string[] | 0)?, (string | 0)?, (string | 0)?, (string | 0)?, (string | 0)?, ("M" | "F" | 0)?];
 
 export interface LinkJunior {
   id: string;

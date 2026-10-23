@@ -168,7 +168,7 @@ export function useFedGenders(): Map<string, "M" | "F"> {
 
 /** Renderiza bandeira só se o jogador for não-PT (PT é default sem bandeira).
  *  Aceita `country` directo (override) — usado para jogadores internacionais sem
- *  fedCode português, onde a info vem de kids-links.json / playersDB entry virtual. */
+ *  fedCode português, onde a info vem do juniors-links.json (entrada virtual do playersDB). */
 function CountryFlag({ fed, fedCountries, country }: { fed: string | null; fedCountries: Map<string, string>; country?: string | null }) {
   const cc = country || (fed ? fedCountries.get(fed) : null);
   if (!cc) return null;

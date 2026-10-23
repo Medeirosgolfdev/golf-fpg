@@ -189,7 +189,7 @@ export default function DrawTab({
   // Fed REAL por nome a partir das admissões — fonte autoritativa para este
   // torneio. Tem de ter prioridade sobre `nameToFed` (playersDB global), porque
   // o playersDB pode conter entradas virtuais `intl:...` (vindas de
-  // kids-links.json para internacionais) que mascaram o fed português real
+  // juniors-links.json para internacionais) que mascaram o fed português real
   // com que o jogador se inscreveu. Ex: Joe Short (GB) tem entrada
   // `intl:joe_short` no playersDB, mas inscreveu-se com fed 51804 — só as
   // admissões sabem disso. Sem este mapa, o draw mostrava `intl:joe_short`
@@ -209,7 +209,7 @@ export default function DrawTab({
   //      Sub-10 fed 48052, o adulto fed 21118, o sénior fed 54075) — o que era
   //      inserido por último ganhava, mesmo que fosse o errado para o
   //      escalão do torneio.
-  //   2. Entradas virtuais `kids:*` criadas por kids-tracked-names.json
+  //   2. Entradas virtuais `kids:*` criadas a partir do juniors-links.json
   //      (Sabrina, Ricardo, etc. — portugueses que jogam internacionais)
   //      sobrescreviam o fed numérico real do players.json, deixando a
   //      coluna FED a mostrar `kids:nome_normalizado` e ESC/Nasc. vazios.

@@ -5,15 +5,15 @@
  * jogador: as edições anteriores desta prova (o antigo «Quem repete») MAIS os
  * extras que viviam no Scout do kids2 — nível, vitórias, HCP, idade, confrontos
  * com o Manuel e próximas inscrições. Os dados vêm de dois resumos pequenos do
- * agregador (juniors-scout.json e juniors-form.json), nunca dos ~180 MB do kids2.
+ * agregador (juniors-scout.json, que traz também a forma), nunca dos ~180 MB do kids2.
  * O modelo de ameaça veio do kids2/ScoutView.tsx sem mudar a lógica.
  */
 import { getTierLabel, type TierKey, type RankingRow } from "../../pages/kids2/juniorCalc";
 
-/** juniors-form.json — últimos torneios [data, ±par, buracos, lugar, field] e
- *  confrontos com o Manuel no mesmo escalão [à frente, atrás]. */
+/** A forma (`f` do juniors-scout.json; era o juniors-form.json) — últimos
+ *  torneios [data, ±par, buracos, lugar, field] e confrontos com o Manuel no
+ *  mesmo escalão [à frente, atrás]. */
 export interface JuniorForm { r: [string, number, number, number | null, number][]; m?: [number, number] }
-export interface FormFile { players: Record<string, JuniorForm> }
 
 /** Uma prova em comum com o Manuel: [data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel]. */
 export type ScoutComManuel = [string, string, number | null, number | null, number];
@@ -29,6 +29,8 @@ export interface JuniorScout {
   mf?: number;
   /** Ranking da coorte (ano × sexo), compacto — `decodeRanking` do juniorCalc. */
   r?: RankingRow;
+  /** A forma recente. */
+  f?: JuniorForm;
 }
 export interface ScoutFile { players: Record<string, JuniorScout> }
 

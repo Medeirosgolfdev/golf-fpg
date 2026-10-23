@@ -6,8 +6,11 @@
  * (~180 MB), por isso o agregador escreve aqui o que o Scout mostra, com as
  * MESMAS contas do kids2 (src/pages/kids2/juniorCalc.ts, carregado pelo Node —
  * nada copiado): nível (tier), vitórias, top-3, HCP, data de nascimento, clube,
- * país e as provas em comum com o Manuel. A forma recente continua no
- * juniors-form.json (util/form.js).
+ * país e as provas em comum com o Manuel. Desde 23/10/2026 leva também a forma
+ * recente (`f`, de util/form.js — era o juniors-form.json, que o Scout lia
+ * sempre junto com este) e os resultados WJGC/Doral/EOWAGR (`x`), para os
+ * Próximos torneios do kids2 não carregarem a base inteira: um ficheiro só em
+ * vez de três.
  *
  * Saída (`public/data/juniors-scout.json`, compacta):
  *   { schemaVersion, generatedAt, manuelId, players: {
@@ -15,7 +18,11 @@
  *                     c?: clube, p?: país,
  *                     m?: [[data, torneio, lugar dele, lugar do Manuel, pancadas dele − Manuel], …],
  *                     mf?: confrontos no mesmo flight,
- *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição] } } }
+ *                     r?: ranking da coorte — RankingRow do juniorCalc: [ano de nascimento, sexo, posição],
+ *                     f?: forma — { r: [[data, ±par, buracos, lugar, field], …], m?: [Manuel à frente, atrás] },
+ *                     x?: { [tid]: [lugar, gross, ±par, voltas[], escalão, buracos] } } },
+ *     x: { [tid]: [nome, data ISO, link] } }   ← os torneios WJGC/Doral/EOWAGR
+ * Os tids e os resultados saem de src/data/kidsTid.ts (o mesmo do browser).
  * O `r` poupa ao browser o computeRanking sobre ~38 mil juniores (ficha do kids2
  * e /kids2/ranking; 21/10/2026).
  * Só entram juniores com alguma coisa para mostrar.
@@ -23,7 +30,11 @@
 const path = require("path");
 const { MANUEL_ID } = require("./form");
 
-let calc;
+let calc, tidLib;
+function loadTid() {
+  if (!tidLib) tidLib = require(path.join(__dirname, "..", "..", "..", "src", "data", "kidsTid.ts"));
+  return tidLib;
+}
 function loadCalc() {
   if (calc) return calc;
   try {
@@ -35,9 +46,40 @@ function loadCalc() {
   return calc;
 }
 
-function buildScout(juniors, tournaments, generatedAt) {
+/** Os resultados WJGC/Doral/EOWAGR de cada junior (tid → resultado compacto) e
+ *  a ficha de cada torneio (tid → [nome, data, link]). */
+function buildExtra(tournaments) {
+  const { legacyTid, toAutoResult, keepBetter, EXTRA_SOURCES } = loadTid();
+  const meta = {};
+  const byJunior = new Map();
+  for (const t of tournaments) {
+    if (!EXTRA_SOURCES.includes(t.sourceId)) continue;
+    for (const f of t.flights || []) {
+      const tid = legacyTid(t, f);
+      if (!tid) continue;
+      if (!meta[tid]) meta[tid] = [t.name || tid, t.date || "", t.links && t.links[0] ? t.links[0].url : null];
+      for (const r of f.results || []) {
+        if (!r.juniorId) continue;
+        let m = byJunior.get(r.juniorId);
+        if (!m) byJunior.set(r.juniorId, (m = {}));
+        m[tid] = keepBetter(m[tid], toAutoResult(r, f, t));
+      }
+    }
+  }
+  const players = new Map();
+  for (const [id, m] of byJunior) {
+    const o = {};
+    for (const [tid, a] of Object.entries(m)) o[tid] = [a.p, a.t, a.tp, a.rd, a.ageGroup, a.nholes];
+    players.set(id, o);
+  }
+  return { meta, players };
+}
+
+function buildScout(juniors, tournaments, generatedAt, form) {
   const { computeRanking, encodeRankingEntry, computeTier, countWins, countTop3, getSharedTournamentIds, getSharedFlightTids } = loadCalc();
   const tById = new Map(tournaments.map((t) => [t.id, t]));
+  const extra = buildExtra(tournaments);
+  const formPlayers = form?.players || {};
   const ranking = computeRanking(juniors, tById);
   const manuel = juniors.find((j) => j.id === MANUEL_ID) || null;
   const players = {};
@@ -83,9 +125,12 @@ function buildScout(juniors, tournaments, generatedAt) {
         if (mf) o.mf = mf;
       }
     }
-    if (o.t || o.w || o.m || o.h != null || o.r) players[j.id] = o;
+    if (formPlayers[j.id]) o.f = formPlayers[j.id];
+    const x = extra.players.get(j.id);
+    if (x) o.x = x;
+    if (o.t || o.w || o.m || o.h != null || o.r || o.f || o.x || o.d || o.p) players[j.id] = o;
   }
-  return { schemaVersion: 1, generatedAt, manuelId: MANUEL_ID, players };
+  return { schemaVersion: 2, generatedAt, manuelId: MANUEL_ID, keep: form?.keep, x: extra.meta, players };
 }
 
 module.exports = { buildScout };

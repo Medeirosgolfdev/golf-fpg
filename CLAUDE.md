@@ -172,8 +172,11 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **Arranque leve:** o App só espera pelo `players.json` e pelo `melhorias.json`.
   Os campos (~13 MB) carregam-se nas páginas que os usam — `<CoursesGate>` +
   `useCourses()` (`src/context/CoursesContext.tsx`); não os voltar a pôr no
-  `AppContext`. As setas ↗ dos circuitos leem o `juniors-links.json` (~1,5 MB),
-  nunca o `juniors.json` (~52 MB).
+  `AppContext`. As setas ↗ dos circuitos (e da /FPG) leem o `juniors-links.json`
+  (~2 MB: id, nome, aliases, memberId, fed, país, sexo), nunca o `juniors.json`
+  (~52 MB). Resumos dos juniores = **um só** `juniors-scout.json` (Scout, Ranking
+  e ficha do kids2, Próximos torneios: nível, nascimento, forma, provas com o
+  Manuel, resultados WJGC/Doral/EOWAGR) — acrescentar lá, não criar outro.
   Nascimento/sexo/país/HCP por federado → `federados-lite.json` (~0,9 MB, gerado
   no build), nunca o `federados.json` (~19 MB) só para isso; inscrições da /drive
   → `fpg-admissions-draws-drive.json` (só Drive/AQUAPOR).
@@ -314,13 +317,13 @@ isso um `git pull` depois de um push nosso dá conflito quase sempre nestes:
 |---|---|
 | `public/data/major-catalog.json` | `node scripts/build-major-catalog.js` |
 | `public/analise-percurso-juniores.html` (blocos `const P` e `const PATH`) | `node scripts/build-analise-percurso.js && node scripts/build-percurso-path.js` |
-| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-form.json` · `juniors-scout.json` · `juniors-links.json` | `node scripts/aggregator/index.js` |
+| `public/data/juniors.json` · `juniors-tournaments*.json` · `tournament-catalog.json` · `hcp-listas-ligacoes.json` · `juniors-scout.json` · `juniors-links.json` | `node scripts/aggregator/index.js` |
 
 São output de scripts: nenhum dos lados do conflito está certo e fundir à mão só
 produz lixo. Resolução:
 
 ```bash
-git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-form.json public/data/juniors-scout.json public/data/juniors-links.json
+git checkout --theirs public/data/major-catalog.json public/data/juniors.json public/data/juniors-tournaments*.json public/data/tournament-catalog.json public/data/juniors-scout.json public/data/juniors-links.json
 node scripts/build-major-catalog.js && node scripts/aggregator/index.js
 git add public/data/major-catalog.json public/data/juniors*.json public/data/tournament-catalog.json && git commit
 ```

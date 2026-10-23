@@ -6,8 +6,8 @@
  * do nome, para que a app os consiga ligar às fontes /kids (USKids, WJGC,
  * Doral) e mostrar bandeira, escalão e o link ↗:
  *
- *   "intl:" + nome  ← kids-links.json      (curado)
- *   "kids:" + nome  ← kids-tracked-names.json (índice de nomes)
+ *   "intl:" + nome  ← kids-links.json (curado; saiu a 23/10/2026)
+ *   "kids:" + nome  ← juniors-links.json (juniores do kids2; até 23/10/2026 kids-tracked-names.json)
  *
  * Essas chaves são identificadores INTERNOS. Servem para procurar no
  * `playersDB` e para construir links — nunca para mostrar ao utilizador, que

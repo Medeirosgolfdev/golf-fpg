@@ -7,7 +7,8 @@
  * resumo pequeno: os últimos torneios de cada junior (data, ±par, buracos,
  * lugar, tamanho do field) e os confrontos com o Manuel no mesmo escalão.
  *
- * Saída (`public/data/juniors-form.json`, compacta):
+ * Vai dentro do juniors-scout.json (campo `f`, util/scout.js) desde 23/10/2026;
+ * antes era o juniors-form.json. Forma:
  *   { schemaVersion, generatedAt, manuelId, keep, players: {
  *       [juniorId]: { r: [[data, toPar, buracos, pos, field], …mais recente primeiro],
  *                     m?: [Manuel à frente, Manuel atrás] } } }

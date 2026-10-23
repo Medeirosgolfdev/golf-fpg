@@ -2,7 +2,7 @@
  * fpgPageLoader.ts — Dados da /FPG (FPGPage)
  *
  * Tudo o que a página lê e junta antes de desenhar:
- *   - playersDB: players.json + players-nationality + kids-links + kids-tracked-names
+ *   - playersDB: players.json + players-nationality + juniors-links (juniores do kids2)
  *   - pull-torneios*.json (em lotes) + Clubes (CLUBES{ano}, clubes_sub_14&18_{ano})
  *     enriquecidos com inscrições/draws do fpg-admissions-draws.json
  *   - Jovens: jovens_{ano}.json + fpg-nacionais-historico.json + torneios em

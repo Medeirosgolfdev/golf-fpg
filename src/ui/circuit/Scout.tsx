@@ -5,7 +5,7 @@
  * da prova: o que cada um fez NESTA prova nas edições anteriores (era a aba
  * «Quem repete») e a carreira — nível, vitórias, HCP, idade, forma, confrontos
  * com o Manuel e próximas inscrições (era o Scout do kids2, que carregava
- * ~180 MB; agora lê os resumos juniors-scout.json e juniors-form.json).
+ * ~180 MB; agora lê o resumo juniors-scout.json, que traz também a forma).
  * Clicar numa linha abre as provas em comum com o Manuel e as próximas.
  *
  * Usado no CircuitShell (todas as provas dos circuitos), na /uskids e no kids2
@@ -27,7 +27,7 @@ import { buildRepeaters, type FieldPlayer, type RepeaterRow } from "./repeaters"
 import type { PastEdition } from "./PastEditionsTable";
 import {
   computeThreat, formaMedia, idade, N_FORMA, THREAT_LABEL,
-  type FormFile, type JuniorForm, type JuniorScout, type ScoutComManuel, type ScoutFile, type ThreatInfo,
+  type JuniorForm, type JuniorScout, type ScoutComManuel, type ScoutFile, type ThreatInfo,
 } from "./scoutModel";
 
 interface UskFieldFile {
@@ -124,13 +124,11 @@ export default function Scout({
   provasComManuel?: (p: FieldPlayer) => ScoutComManuel[] | null | undefined;
 }) {
   const kidsMap = useContext(KidsLinkCtx);
-  const [form, setForm] = useState<FormFile | null>(null);
   const [scout, setScout] = useState<ScoutFile | null>(null);
   const proximas = useProximas();
   const [aberto, setAberto] = useState<string | null>(null);
   useEffect(() => {
     let vivo = true;
-    cachedFetchJson<FormFile>("/data/juniors-form.json").then((d) => { if (vivo) setForm(d ?? { players: {} }); }).catch(() => { if (vivo) setForm({ players: {} }); });
     cachedFetchJson<ScoutFile>("/data/juniors-scout.json").then((d) => { if (vivo) setScout(d ?? { players: {} }); }).catch(() => { if (vivo) setScout({ players: {} }); });
     return () => { vivo = false; };
   }, []);
@@ -139,7 +137,7 @@ export default function Scout({
   const manuelNoField = field.some(eManuel);
 
   const linhas = useMemo<Linha[]>(() => {
-    if (!form || !scout) return [];
+    if (!scout) return [];
     const repByName = new Map(rep.rows.map((r) => [normName(r.name), r]));
     const vistos = new Set<string>();
     const out: Linha[] = [];
@@ -153,7 +151,7 @@ export default function Scout({
       const outraPessoa = !!(p.fed && kid?.fed && kid.fed !== p.fed);
       const id = kid && !outraPessoa ? kid.id : undefined;
       const scBase = id ? scout.players[id] : undefined;
-      const fm = id ? form.players[id] : undefined;
+      const fm = scBase?.f;
       const rr = repByName.get(k);
       const isManuel = eManuel(p);
       const extraM = !isManuel ? provasComManuel?.(p) : null;
@@ -180,7 +178,7 @@ export default function Scout({
       });
     }
     return out;
-  }, [field, form, scout, rep, kidsMap, proximas, tCode, provasComManuel]);
+  }, [field, scout, rep, kidsMap, proximas, tCode, provasComManuel]);
 
   const extras = useMemo(() => [...colsAntes, ...colsDepois], [colsAntes, colsDepois]);
   const { sortKey, sortDir, toggleSort } = useSort<string>(
@@ -225,7 +223,7 @@ export default function Scout({
     });
   }, [linhas, sortKey, sortDir, extras]);
 
-  if (!form || !scout || !proximas) return <LoadingState />;
+  if (!scout || !proximas) return <LoadingState />;
   if (!field.length) return <EmptyState size="md" message="Ainda não há jogadores conhecidos nesta prova." />;
 
   // Só as edições onde algum dos jogadores de hoje jogou (as outras seriam

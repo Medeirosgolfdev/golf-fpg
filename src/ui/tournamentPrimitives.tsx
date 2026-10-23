@@ -92,12 +92,18 @@ export interface PlayersDBEntry {
   hcpExact?: number;
   region?: string;
   kidsHash?: string;
+  /** Id do junior no kids2 (entradas virtuais `kids:` do juniors-links.json):
+   *  a seta ↗ vai directa a /kids2/{id}. */
+  kidsId?: string;
+  /** Federado FPG desse junior — um homónimo com outro federado (o pai do
+   *  Manuel) não liga à ficha. */
+  kidsFed?: string;
   /** Código ISO-2 da nacionalidade (vem de players-nationality.json para
-   *  federados FPG, ou de kids-links.json para internacionais). Se preenchido
+   *  federados FPG, ou do juniors-links.json para internacionais). Se preenchido
    *  e ≠ "PT", o TournPName prepende a bandeira ao nome. */
   country?: string;
   /** Data de nascimento (YYYY-MM-DD). Vem de players.json, players-nationality
-   *  info ou kids-links. Usado para calcular idade exacta na data do torneio. */
+   *  info ou juniors-links. Usado para calcular idade exacta na data do torneio. */
   dob?: string;
 }
 export type PlayersDB = Record<string, PlayersDBEntry>;
@@ -115,7 +121,7 @@ const _nameIndexCache = new WeakMap<PlayersDB, Map<string, PlayersDBEntry[]>>();
 /** Constrói (ou devolve cached) índice {normName → [entries com esse nome]}.
  *  Por que array: múltiplos entries podem partilhar o mesmo normName (ex:
  *  Joe Short tem o entry "51804" do players.json E o entry "intl:joe_short"
- *  do kids-links). Devolvemos todos para o caller escolher por campo. */
+ *  do juniors-links). Devolvemos todos para o caller escolher por campo. */
 function getNameIndex(playersDB: PlayersDB): Map<string, PlayersDBEntry[]> {
   let idx = _nameIndexCache.get(playersDB);
   if (idx) return idx;
@@ -168,7 +174,7 @@ export function TournPName({
 
   // Lookup duplo independente: por fedKey directo (federados FPG → sex+country
   // de players.json + players-nationality.json) e por nome normalizado
-  // (entries virtuais "intl:..." de kids-links.json → kidsHash). Para um
+  // (entries virtuais "kids:..." do juniors-links.json → kidsHash). Para um
   // federado FPG estrangeiro como Joe Short (51804), ambos resolvem:
   // directo → country=GB; nome → kidsHash="Joe%20Short".
   //
@@ -187,6 +193,8 @@ export function TournPName({
   // FPG sem kidsHash quando há um intl: com kidsHash).
   const sex = directEntry?.sex ?? candidates.find(e => e.sex)?.sex ?? sexProp;
   const kidsHash = directEntry?.kidsHash ?? candidates.find(e => e.kidsHash)?.kidsHash;
+  // A ficha do kids2 por nome só vale se o federado bater (como no KidsLink).
+  const kidsEntry = candidates.find(e => e.kidsId && !(fedKey && e.kidsFed && e.kidsFed !== fedKey));
   const country = directEntry?.country ?? candidates.find(e => e.country)?.country ?? countryProp;
   // PT não leva bandeira por defeito — num site português seria ruído em todas
   // as linhas. A excepção é o país vir por PROP: só as páginas de circuitos
@@ -209,6 +217,9 @@ export function TournPName({
   const kidsLink =
     juniorId ? kidsUrl({ id: juniorId })
     : ctxEntry ? kidsUrl({ id: ctxEntry.id, memberId: ctxEntry.memberId, name: ctxEntry.n })
+    : directEntry?.kidsHash ? `/kids2#${directEntry.kidsHash}`
+    : kidsEntry ? kidsUrl({ id: kidsEntry.kidsId })
+    : candidates.some(e => e.kidsId) ? null   // só homónimos com outro federado (o pai do Manuel)
     : kidsHash ? `/kids2#${kidsHash}`   // ja vem codificado pelo FPGPage
     : null;
 

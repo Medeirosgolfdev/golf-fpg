@@ -21,7 +21,7 @@ import PasswordGate from "../../ui/PasswordGate";
 import CircuitShell from "../../ui/circuit/CircuitShell";
 import { CircuitToolbarSlotCtx } from "../../ui/circuit/toolbarSlot";
 import type { CircuitDivision, CircuitEntry } from "../../ui/circuit/types";
-import { buildAutoRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
+import { buildExtraRivals, type AutoRivalPlayer } from "../../data/KIDSdataLoader";
 import { cachedFetchJson } from "../../data/fetchCache";
 import { loadUskidsResults } from "../../data/uskidsResultsLoader";
 import { escalaoManuelParaData } from "../../constants/manuel";
@@ -65,16 +65,14 @@ function NextTournamentsContent() {
 
   const [autoRivals, setAutoRivals] = useState<AutoRivalPlayer[] | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
-  // Os torneios WJGC/Doral/EOWAGR saem dos rivais, que chegam aos poucos.
+  // Os torneios WJGC/Doral/EOWAGR e as datas de nascimento saem dos resumos do
+  // agregador (juniors-links + juniors-scout, ~6 MB), não da base inteira
+  // (~188 MB do buildAutoRivals) — 23/10/2026.
   const [rivaisCompletos, setRivaisCompletos] = useState(false);
   useEffect(() => {
     let alive = true;
-    buildAutoRivals(
-      (p) => { if (alive) setProgress({ done: p.done, total: p.total }); },
-      { onUpdate: (players) => { if (alive) setAutoRivals(players); } },
-    )
-      .then((players) => { if (alive) { setAutoRivals([...players]); setRivaisCompletos(true); } })
+    buildExtraRivals()
+      .then((players) => { if (alive) { setAutoRivals(players); setRivaisCompletos(true); } })
       .catch((e) => { if (alive) setError(String(e?.message || e)); });
     return () => { alive = false; };
   }, []);
@@ -128,7 +126,7 @@ function NextTournamentsContent() {
   const lead = <Kids2Nav />;
   const trail = autoRivals
     ? <span className="toolbar-meta shrink-0">{autoRivals.length.toLocaleString("pt-PT")} rivais</span>
-    : !error && progress ? <span className="toolbar-meta shrink-0">A carregar… {progress.done}/{progress.total}</span> : null;
+    : !error ? <span className="toolbar-meta shrink-0">A carregar…</span> : null;
 
   if (error) return <EmptyState size="md" message={"Falhou: " + error} />;
 

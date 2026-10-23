@@ -16,6 +16,7 @@ import { MONTHS_PT } from "../utils/format";
 import { cachedFetchJson } from "../data/fetchCache";
 import { normPaisDisplay } from "../utils/flagUtils";
 import { normName } from "../utils/normName";
+import { legacyTid, toAutoResult, keepBetter, type AutoTournResult } from "./kidsTid";
 
 // ═════════════════════════════════════════════════════════════════════
 // Helpers de string
@@ -62,15 +63,6 @@ export { normName };
 // ═════════════════════════════════════════════════════════════════════
 // Tipos públicos
 // ═════════════════════════════════════════════════════════════════════
-
-interface AutoTournResult {
-  p: number | "WD" | null;
-  t: number | null;
-  tp: number | null;
-  rd: number[];
-  ageGroup?: string;
-  nholes?: number;
-}
 
 /** Um snapshot de HCP exacto numa data específica, vindo de uma fonte concreta
  *  (tipicamente um torneio). Usado para construir sparklines + timeline. */
@@ -197,26 +189,6 @@ export function getLoadedKidsFiles(): KidsFileMeta[] {
 // Mantém-se o formato.
 // ═════════════════════════════════════════════════════════════════════
 
-/** WJGC/EOWAGR/Doral usavam tids hardcoded por sourceKey de ficheiro. */
-const FILE_TO_LEGACY_TID: Record<string, string> = {
-  "wjgc_2025_b89": "wjgc25_b89",
-  "wjgc_2025_b1011": "wjgc25_b1011",
-  "wjgc_2026_b1011": "wjgc26",
-  "wjgc_2026_b1213": "wjgc26_1213",
-  "eowagr25_contest121": "eowagr25_b78",
-  "eowagr25_contest13": "eowagr25_b910",
-  "eowagr25_contest21": "eowagr25",
-  "eowagr25_contest77": "eowagr25_b1314",
-  "ftm_doral_2018": "doral18",
-  "ftm_doral_2019": "doral19",
-  "ftm_doral_2020": "doral20",
-  "ftm_doral_2021": "doral21",
-  "ftm_doral_2022": "doral22",
-  "ftm_doral_2023": "doral23",
-  "ftm_doral_2024": "doral24",
-  "ftm_doral_2025": "doral25",
-};
-
 interface CanonicalTournament {
   id: string;
   sourceId: string;
@@ -263,38 +235,6 @@ interface CanonicalJunior {
   club?: string;
   sources?: any;
   tournamentIds?: string[];
-}
-
-function legacyTid(t: CanonicalTournament, f: CanonicalFlight): string | null {
-  const sid = t.sourceId;
-  const skey = t.sourceKey;
-
-  if (sid === "uskids") {
-    if (f.ageMin == null && f.ageMax == null) return `usk${skey}`;
-    const sexCh = f.sex === "F" ? "g" : "b";
-    const age = f.ageMin ?? f.ageMax;
-    return `usk${skey}_${sexCh}${age}`;
-  }
-  if (sid === "wjgc" || sid === "eowagr") {
-    return FILE_TO_LEGACY_TID[skey] || `${sid}-${skey}`;
-  }
-  if (sid === "doral") {
-    const base = FILE_TO_LEGACY_TID[skey] || `doral${(t.date || "").slice(2, 4)}`;
-    if (f.ageMin == null && f.ageMax == null) return base;
-    const ages = `${f.ageMin || ""}${f.ageMax && f.ageMax !== f.ageMin ? f.ageMax : ""}`;
-    return `${base}_b${ages}`;
-  }
-  if (sid === "fpg") {
-    // sourceKey: "ccode-tcode-date-escSlug" → tid: "fpg{tcode}_{date}_{escSlug}"
-    const parts = String(skey).split("-");
-    const tcode = parts[1] || parts[0] || skey;
-    const date = parts[2] || "";
-    const esc = parts[3] || "";
-    return `fpg${tcode}${date ? "_" + date : ""}${esc && esc !== "all" ? "_" + esc : ""}`;
-  }
-  if (sid === "rfeg") return String(skey); // já vem no formato "nc{id}_{escalão}" ou "lgs{id}"
-  if (sid === "ffgolf") return `ff-${skey}`;
-  return `${sid}-${skey}`;
 }
 
 function shortNameOf(name: string): string {
@@ -504,29 +444,7 @@ async function _buildAutoRivalsInternal(
 
     const results = juniorResults.get(j.id) || [];
     for (const { tid, result, flight, tournament } of results) {
-      const grossTotal = typeof result.totalGross === "number" ? result.totalGross : null;
-      const toPar = typeof result.toPar === "number" ? result.toPar : null;
-      const rd: number[] = [];
-      for (const r of result.rounds || []) {
-        if (typeof r.gross === "number") rd.push(r.gross);
-      }
-      const status = result.status;
-      let pos: number | "WD" | null;
-      if (status === "WD" || status === "DNS" || status === "DQ" || status === "IE") pos = "WD";
-      else if (typeof result.pos === "number") pos = result.pos;
-      else pos = null;
-
-      const tr: AutoTournResult = {
-        p: pos,
-        t: grossTotal,
-        tp: toPar,
-        rd,
-        ageGroup: flight.label,
-        nholes: tournament.holesPerRound || 18,
-      };
-      const existing = p.r[tid];
-      if (!existing) p.r[tid] = tr;
-      else if (tr.rd.length >= (existing.rd?.length || 0)) p.r[tid] = tr;
+      p.r[tid] = keepBetter(p.r[tid], toAutoResult(result, flight, tournament));
 
       for (const round of result.rounds || []) {
         if (!Array.isArray(round.strokes) || round.strokes.length < 9) continue;
@@ -561,4 +479,52 @@ async function _buildAutoRivalsInternal(
 
   onUpdate?.(players);
   return players;
+}
+
+// ═════════════════════════════════════════════════════════════════════
+// Rivais leves — os Próximos torneios do kids2 (23/10/2026)
+// ═════════════════════════════════════════════════════════════════════
+
+/** juniors-links.json: [id, nome canónico, aliases | 0, memberId?, fed?]. */
+interface LinksFile { j: [string, string, string[] | 0, string?, string?][] }
+/** juniors-scout.json — só o que os rivais leves usam. `x` (no topo) = ficha
+ *  dos torneios WJGC/Doral/EOWAGR: tid → [nome, data ISO, link]; `x` (por
+ *  junior) = os resultados dele nesses torneios: tid → [p, t, tp, rd, escalão, buracos]. */
+interface ScoutLite {
+  x?: Record<string, [string, string, string | null]>;
+  players: Record<string, { d?: string; p?: string; x?: Record<string, [number | "WD" | null, number | null, number | null, number[], string, number]> }>;
+}
+
+let _extraRivalsCache: Promise<AutoRivalPlayer[]> | null = null;
+
+/** Os rivais que os Próximos torneios precisam — os resultados WJGC/Doral/EOWAGR
+ *  e a data de nascimento — a partir dos resumos do agregador
+ *  (juniors-links.json + juniors-scout.json, ~6 MB), em vez da base inteira
+ *  (~188 MB) do `buildAutoRivals`. Os tids e os resultados saem do mesmo
+ *  `kidsTid.ts`, por isso são iguais aos do `buildAutoRivals`; enche também o
+ *  `extraTidMeta`. */
+export function buildExtraRivals(): Promise<AutoRivalPlayer[]> {
+  if (_extraRivalsCache) return _extraRivalsCache;
+  _extraRivalsCache = Promise.all([
+    cachedFetchJson<LinksFile>("/data/juniors-links.json"),
+    cachedFetchJson<ScoutLite>("/data/juniors-scout.json"),
+  ]).then(([links, scout]) => {
+    if (!links || !scout) throw new Error("juniors-links.json ou juniors-scout.json em falta");
+    for (const [tid, [name, dateISO, url]] of Object.entries(scout.x ?? {})) {
+      if (!extraTidMeta.has(tid)) extraTidMeta.set(tid, { name: name || tid, short: shortNameOf(name || tid), dateISO: dateISO || "", url });
+    }
+    const players: AutoRivalPlayer[] = [];
+    for (const [id, nome] of links.j) {
+      const s = scout.players[id];
+      const p: AutoRivalPlayer = { n: nome, co: s?.p ? co(s.p) : "", r: {} };
+      if (s?.d) p.dob = s.d;
+      for (const [tid, [pp, t, tp, rd, ageGroup, nholes]] of Object.entries(s?.x ?? {})) {
+        p.r[tid] = { p: pp, t, tp, rd, ageGroup, nholes };
+      }
+      players.push(p);
+    }
+    return players;
+  });
+  _extraRivalsCache.catch(() => { _extraRivalsCache = null; });
+  return _extraRivalsCache;
 }
