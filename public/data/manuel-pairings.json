@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-10-24T22:07:19.068Z",
+  "geradoEm": "2026-10-25T17:12:35.300Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 160,
-  "totalCompanheirosUnicos": 191,
+  "totalRondas": 161,
+  "totalCompanheirosUnicos": 193,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 139,
-      "rondasComDraw": 125,
+      "rondasComDraw": 126,
       "torneiosJogados": 103,
-      "torneiosComDraw": 97,
+      "torneiosComDraw": 98,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "988-10307",
@@ -669,6 +669,39 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-11081",
+      "torneioNome": "V ABERTO CGSS",
+      "data": "2026-10-25",
+      "ronda": 1,
+      "teeTime": "09:26",
+      "startHole": 1,
+      "campo": "Santo da Serra - Machico-Desertas",
+      "manuelScore": {
+        "gross": 90,
+        "toPar": 18
+      },
+      "companheiros": [
+        {
+          "nome": "Luis Fraga",
+          "fed": null,
+          "clube": "Internacional",
+          "pais": null,
+          "score": {
+            "gross": 87,
+            "toPar": 15
+          }
+        },
+        {
+          "nome": "João Mackereth",
+          "fed": null,
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "Intl",
       "torneioId": "gg-faldomadeira_2026",
