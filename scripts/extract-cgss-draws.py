@@ -234,6 +234,14 @@ def parse_player_line(seg):
     m = re.match(r"^(.+?)\s+([+-]?\d+)\s*$", tokens)
     if m and len(m.group(1).strip()) > 2:
         return {"name": m.group(1).strip(), "club": None, "hcp": None, "tee": tee, "jogo": int(m.group(2))}
+    # Sem coluna de jogo, a acabar no HCP (V Aberto CGSS 2026-10-25:
+    # "Saída Tee Jogador HomeClub HCP", tee por cor). HCP plus "+1,8" → -1.8,
+    # como no federados.json.
+    m = re.match(r"^(.+?)(?:\s{2,}([A-Za-zÇç].+?))?\s+([+-]?\d{1,2},\d)\s*$", tokens)
+    if m:
+        h = m.group(3).replace(",", ".")
+        hcp = -float(h[1:]) if h.startswith("+") else float(h)
+        return {"name": m.group(1).strip(), "club": (m.group(2) or "").strip() or None, "hcp": hcp, "tee": tee, "jogo": None}
     return None
 
 

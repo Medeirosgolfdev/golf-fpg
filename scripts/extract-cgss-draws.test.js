@@ -10,6 +10,8 @@
  *   - cgss-draw-2026-08-29-om-nos-8  — 8º OM NOS (007/11057), 2 tees, 15 grupos.
  *   - cgss-draw-2026-01-31-pares-t1  — T1 Pares Greensomes (007/10989): 3 pares
  *     por grupo = 6 jogadores, legítimo (a guarda conta lugares, não jogadores).
+ *   - cgss-draw-2026-10-25-v-aberto   — V Aberto CGSS: sem coluna de jogo, tee
+ *     por cor, linha a acabar no HCP ("+1,8"). Antes davam 0 grupos.
  *
  * Os testes do extractor precisam de python + pdfplumber; sem eles são saltados.
  */
@@ -78,6 +80,16 @@ describe.skipIf(!hasPdfplumber)("extract-cgss-draws.py — layouts DataGolf", ()
     expect(groups.filter((g) => g.teeTime === "09:10").map((g) => g.startHole)).toEqual([1, 8, 10, 15, 18]);
     const manuel = groups.find((g) => g.players.some((p) => p.fed === "52884"));
     expect([manuel.teeTime, manuel.startHole]).toEqual(["09:10", 10]);
+  }, 60000);
+
+  it("V Aberto: sem coluna de jogo, tee por cor, HCP no fim (plus = negativo)", () => {
+    const groups = extract("2026-10-25-v-aberto")[0].draws["1"].groups;
+    expect(groups).toHaveLength(6);
+    expect(groups.reduce((s, g) => s + g.players.length, 0)).toBe(16);
+    const first = groups[0].players.find((p) => p.nome === "Pedro Araújo");
+    expect([first.clube, first.hcp, first.tee]).toEqual(["Santo da Serra", -1.8, "Douradas"]);
+    const manuel = groups.find((g) => g.players.some((p) => p.fed === "52884"));
+    expect(manuel.teeTime).toBe("09:26");
   }, 60000);
 });
 
