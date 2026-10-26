@@ -51,7 +51,7 @@ export function buildDriveSource(raw: Tournament[], idx: DriveAdmissionsIndex): 
   if (idx.size > 0) {
     const have = new Set(src.map(t => `${t.ccode}/${t.tcode}`));
     for (const ft of FEATURED_TOURNAMENTS) {
-      if (!ft.series || ft.series === "jovens") continue;  // jovens → FPGPage
+      if (!ft.series || ft.series === "jovens" || ft.series === "clube") continue;  // jovens/clube → FPGPage
       const key = `${ft.ccode}/${ft.tcode}`;
       if (have.has(key)) continue;
       const ad = idx.get(`${ft.ccode}-${ft.tcode}`);

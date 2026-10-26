@@ -259,7 +259,8 @@ export function useFpgMainData(): FpgMainData {
         if (pulled.tournaments.length === 0) setError("Sem torneios: nenhum pull-torneios*.json no índice /data/fpg-files-index.json");
         const [{ idx }, clubes] = await Promise.all([admP, clubesP]);
         if (alive) {
-          setTournaments([...pulled.tournaments.map(t => enrichAdmDraws(t, idx)), ...clubes]);
+          const base = [...pulled.tournaments.map(t => enrichAdmDraws(t, idx)), ...clubes];
+          setTournaments([...base, ...featuredClubeSynthetics(base, idx)]);
           setLoading(false);
         }
       } catch {
@@ -292,6 +293,22 @@ const HISTORICO_URL = "/data/fpg-nacionais-historico.json";
 
 /** Nome de um torneio jovem nas inscrições (para injectar os só-inscrições). */
 const ADM_JOVEM_RE = /\b(juniors?|júniors?|juvenil|juvenis|sub[\s\-_]?\d{1,2}|u\d{1,2}|jovens?)\b/i;
+
+/** Provas de CLUBE em destaque (`series: "clube"` em FEATURED_TOURNAMENTS) que
+ *  ainda não têm resultados: entram na lista principal (Todos e o separador do
+ *  clube) com as inscrições/draws scraped e as «Edições anteriores» do shell.
+ *  Quando a prova chega aos pull-torneios, o sintético deixa de entrar. */
+export function featuredClubeSynthetics(existing: Tournament[], admIdx: Map<string, FpgTournamentData>): Tournament[] {
+  const have = new Set(existing.map(t => `${t.ccode}/${t.tcode}`));
+  const out: Tournament[] = [];
+  for (const ft of FEATURED_TOURNAMENTS) {
+    if (ft.series !== "clube" || have.has(`${ft.ccode}/${ft.tcode}`)) continue;
+    const ad = admIdx.get(`${ft.ccode}-${ft.tcode}`);
+    if (!ad) continue;  // sem dados scraped, não injecta
+    out.push(buildFeaturedSynthetic(ft, ad) as unknown as Tournament);
+  }
+  return out;
+}
 
 /**
  * Junta os torneios jovens lidos dos ficheiros com o fpg-admissions-draws.json:

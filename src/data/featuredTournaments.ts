@@ -39,10 +39,12 @@ import { NACIONAL_2026_META, type FpgTournamentData } from "./nacional2026Loader
 export interface FeaturedTournament {
   ccode: string;
   tcode: string;
-  /** Onde o torneio vive: "jovens" (default — secção Jovens da FPGPage) ou
-   *  uma série Drive ("tour" | "challenge" | "aquapor" — sidebar da DrivePage).
+  /** Onde o torneio vive: "jovens" (default — secção Jovens da FPGPage),
+   *  "clube" (prova de clube para todos — lista principal da FPGPage: «Todos»
+   *  e o separador do clube, ex. Santo da Serra; 26/10/2026) ou uma série
+   *  Drive ("tour" | "challenge" | "aquapor" — sidebar da DrivePage).
    *  Determina QUAL página injecta o sintético. */
-  series?: "jovens" | "tour" | "challenge" | "aquapor";
+  series?: "jovens" | "clube" | "tour" | "challenge" | "aquapor";
   /** Override do nome (default: nome scraped da página de admissions FPG). */
   name?: string;
   /** Override do escalão (default: inferido do nome — "Sub N"/"Escalão X"). */
@@ -199,5 +201,19 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
       { label: "Termos de Competição PDF", url: "https://www.cgm.pt/client/files/0000000001/regulamento-mjo-2026_1461.pdf", icon: "📋" },
     ],
     live: false,            // /api/inscricoes: a prova já decorre, resultados vêm do scrape
+  },
+
+  // ── Taça Presidente CGSS 2026 — 31/10/2026 (CGSS, ccode 007) ──
+  // OM NOS Nível A, Desertas–Serras, Stableford Net 100 %. Inscrições até
+  // 29/10 12:00. ⚠ O tcode 11084 também existe no clube 107 (Par 3 de Julho).
+  // Resultados: scoring.datagolf.pt/pt/Classifications.aspx?ccode=007&tcode=11084
+  {
+    ccode: "007",
+    tcode: "11084",
+    series: "clube",
+    name: "Taça Presidente CGSS 2026",
+    escalao: null,
+    date: "2026-10-31",
+    campo: "Santo da Serra",
   },
 ];
