@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-25T04:42:31.573Z",
+  "generated": "2026-10-26T04:47:04.723Z",
   "year": "2026",
   "source": "build-classificacoes.js",
   "anchors": [
@@ -18,6 +18,363 @@
   ],
   "maxJuniorAge": 21,
   "tournaments": [
+    {
+      "name": "Taça Fernando Nicolau de Almeida",
+      "ccode": "001",
+      "tcode": "10591",
+      "date": "2026-10-24",
+      "campo": "Oporto",
+      "clube": "001",
+      "circuit": "tour",
+      "series": "tour",
+      "region": "outro",
+      "escalao": null,
+      "num": 1,
+      "rounds": 1,
+      "playerCount": 125,
+      "players": [
+        {
+          "scoreId": "49150",
+          "pos": 1,
+          "name": "Luis António Silva",
+          "grossTotal": 63,
+          "toPar": -8,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": -4.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 63,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42845",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2008-05-31"
+        },
+        {
+          "scoreId": "49151",
+          "pos": 2,
+          "name": "Santiago Dias",
+          "grossTotal": 68,
+          "toPar": -3,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": -2.1,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42908",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2012-05-29"
+        },
+        {
+          "scoreId": "49153",
+          "pos": 3,
+          "name": "Guilherme Grabner Moreira",
+          "grossTotal": 68,
+          "toPar": -3,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": -1.7,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 68,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "42205",
+          "escalao": "Sub 18",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2009-04-11"
+        },
+        {
+          "scoreId": "49160",
+          "pos": 6,
+          "name": "Jorge Xavier Graça Silva",
+          "grossTotal": 77,
+          "toPar": 6,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 3.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "48705",
+          "escalao": "Sub 16",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2010-06-17"
+        },
+        {
+          "scoreId": "49154",
+          "pos": 9,
+          "name": "Eva Silva",
+          "grossTotal": 77,
+          "toPar": 6,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": -0.1,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 77,
+              "parTotal": 71,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "46437",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Oporto",
+          "_dob": "2010-12-21"
+        },
+        {
+          "scoreId": "49172",
+          "pos": 13,
+          "name": "Afonso de Sousa Pinto",
+          "grossTotal": 80,
+          "toPar": 9,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 5.9,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 80,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "46480",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2013-04-16"
+        },
+        {
+          "scoreId": "49156",
+          "pos": 14,
+          "name": "Maria Francisca Santos",
+          "grossTotal": 80,
+          "toPar": 9,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 2.9,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 80,
+              "parTotal": 71,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "46853",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Oporto",
+          "_dob": "2011-09-17"
+        },
+        {
+          "scoreId": "49162",
+          "pos": 15,
+          "name": "Teresa Ferreira",
+          "grossTotal": 81,
+          "toPar": 10,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 4.6,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 81,
+              "parTotal": 71,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "46589",
+          "escalao": "Sub 18",
+          "sex": "F",
+          "club": "Oporto",
+          "_dob": "2009-03-28"
+        },
+        {
+          "scoreId": "49175",
+          "pos": 23,
+          "name": "Miguel Teles de Menezes",
+          "grossTotal": 83,
+          "toPar": 12,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 6.4,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 83,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "52487",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2007-01-10"
+        },
+        {
+          "scoreId": "49167",
+          "pos": 36,
+          "name": "Francisco Saraiva",
+          "grossTotal": 86,
+          "toPar": 15,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 5.2,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 86,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "39097",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2012-04-20"
+        },
+        {
+          "scoreId": "49284",
+          "pos": 37,
+          "name": "Miguel Dinis Ferreira",
+          "grossTotal": 87,
+          "toPar": 16,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 87,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "41744",
+          "escalao": "Sub 21",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2006-08-01"
+        },
+        {
+          "scoreId": "49177",
+          "pos": 39,
+          "name": "Sebastião Soares",
+          "grossTotal": 89,
+          "toPar": 18,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 6.6,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 89,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "47341",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2012-02-15"
+        },
+        {
+          "scoreId": "49195",
+          "pos": 60,
+          "name": "Diogo Guilherme",
+          "grossTotal": 96,
+          "toPar": 25,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 10.9,
+          "teeName": "BRANCAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 96,
+              "parTotal": 71,
+              "teeName": "BRANCAS"
+            }
+          ],
+          "fedCode": "56632",
+          "escalao": "Sub 14",
+          "sex": "M",
+          "club": "Oporto",
+          "_dob": "2013-01-21"
+        },
+        {
+          "scoreId": "49158",
+          "pos": "ND",
+          "name": "Maria Loureiro",
+          "grossTotal": null,
+          "toPar": null,
+          "parTotal": 71,
+          "nholes": 18,
+          "hcpExact": 3.4,
+          "teeName": "VERMELHAS",
+          "roundScores": [
+            {
+              "round": 1,
+              "gross": 998,
+              "parTotal": 71,
+              "teeName": "VERMELHAS"
+            }
+          ],
+          "fedCode": "46489",
+          "escalao": "Sub 16",
+          "sex": "F",
+          "club": "Oporto",
+          "_dob": "2010-10-30"
+        }
+      ],
+      "_anchors": [
+        "42908"
+      ],
+      "_sourceFile": "pull-torneios006.json"
+    },
     {
       "name": "5º Torneio do Circuito Aquapor - Estela",
       "ccode": "000",
