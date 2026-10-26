@@ -1,8 +1,156 @@
 {
-  "generatedAt": "2026-10-26T06:45:49.786Z",
+  "generatedAt": "2026-10-26T07:31:41.597Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1268,
+  "total": 1272,
   "tournaments": [
+    {
+      "file": "03-07-2601455589.json",
+      "trnId": "2601455589",
+      "partKey": "0dd78e6f302cd2392b613d9ec3aa7c25",
+      "name": "GPJ HDF BENJ MINIMES 2026",
+      "formule": "Simple",
+      "date": "27/10/2026",
+      "dateIso": "2026-10-27",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 4,
+      "totalPlayers": 84,
+      "course": "La Mer",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "BG",
+          "players": 55
+        },
+        {
+          "serieId": "19",
+          "label": "MG",
+          "players": 16
+        },
+        {
+          "serieId": "27",
+          "label": "BF",
+          "players": 8
+        },
+        {
+          "serieId": "211",
+          "label": "MF",
+          "players": 5
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "07"
+      ]
+    },
+    {
+      "file": "03-07-2601455590.json",
+      "trnId": "2601455590",
+      "partKey": "0dd78e6f302cd2392b613d9ec3aa7c25",
+      "name": "GPJ HDF U12 2026",
+      "formule": "Simple",
+      "date": "27/10/2026",
+      "dateIso": "2026-10-27",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "07",
+      "seriesCount": 2,
+      "totalPlayers": 87,
+      "course": "La Forêt",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "U12G",
+          "players": 66
+        },
+        {
+          "serieId": "27",
+          "label": "U12F",
+          "players": 21
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "07"
+      ]
+    },
+    {
+      "file": "01-00-2601484428.json",
+      "trnId": "2601484428",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "Championnat de France Minimes Garçons",
+      "formule": "Simple",
+      "date": "17/10/2026",
+      "dateIso": "2026-10-17",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 82,
+      "course": "Saint Emilion",
+      "sex": "M",
+      "roundsPlayed": 4,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 82
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "01-00-2601484433.json",
+      "trnId": "2601484433",
+      "partKey": "572da5febaee10b7e85bab9c6205c587",
+      "name": "Championnat de France Minimes Filles",
+      "formule": "Simple",
+      "date": "17/10/2026",
+      "dateIso": "2026-10-17",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 75,
+      "course": "Biarritz",
+      "sex": "F",
+      "roundsPlayed": 4,
+      "divisions": [
+        {
+          "serieId": "21",
+          "label": "Dames",
+          "players": 75
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "03-06-2601405352.json",
       "trnId": "2601405352",
