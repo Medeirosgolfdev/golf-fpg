@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-25T21:03:45.589Z",
-  "total": 1236,
+  "scrapedAt": "2026-10-26T17:58:11.080Z",
+  "total": 1237,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -401728,6 +401728,36 @@
           ]
         }
       }
+    },
+    {
+      "ccode": "007",
+      "tcode": "11084",
+      "name": "TAÇA PRESIDENTE CGSS 2026",
+      "date": "2026-10-31",
+      "expectedYear": 2026,
+      "admissions": {
+        "name": "TAÇA PRESIDENTE CGSS 2026",
+        "date": "2026-10-31",
+        "totalInscritos": 1,
+        "reservas": 0,
+        "status": "Inscrições em curso",
+        "rounds": 1,
+        "tcode": "11084",
+        "ccode": "007",
+        "players": [
+          {
+            "pos": 1,
+            "fed": "52884",
+            "nome": "Manuel Goulartt Medeiros",
+            "clube": "Santo da Serra",
+            "hcp": 6.4,
+            "vacf": null,
+            "registo": "2026/10/26 15:57",
+            "status": "confirmed"
+          }
+        ]
+      },
+      "draws": {}
     },
     {
       "ccode": "988",

@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-10-26T05:59:31.661Z",
+  "lastUpdated": "2026-10-26T17:58:12.098Z",
   "generatedBy": "scripts/build-tournaments-tracking.js",
   "today": "2026-10-26",
   "summary": {
-    "total": 1797,
+    "total": 1798,
     "complete": 829,
     "in_progress": 0,
-    "future": 3,
+    "future": 4,
     "stale": 10,
     "excluded": 954,
     "missing_admissions": 0,
@@ -188,6 +188,27 @@
       "has_manuel": false,
       "status": "excluded",
       "excluded_reason": "Drive sem Manuel — coberto pelo pipeline drive-data"
+    },
+    {
+      "ccode": "007",
+      "tcode": "11084",
+      "name": "TAÇA PRESIDENTE CGSS 2026",
+      "date": "2026-10-31",
+      "rounds": 1,
+      "has_admissions": true,
+      "admissions_count": 1,
+      "has_draws": false,
+      "draws_rounds_with_data": 0,
+      "draws_players_total": 0,
+      "has_classif": false,
+      "player_count": 0,
+      "players_with_scorecards": 0,
+      "players_with_full_scorecards": 0,
+      "scorecards_source": null,
+      "scorecards_ratio": 0,
+      "full_scorecards_ratio": 0,
+      "has_manuel": true,
+      "status": "future"
     },
     {
       "ccode": "985",
