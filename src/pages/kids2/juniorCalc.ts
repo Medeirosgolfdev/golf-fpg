@@ -14,6 +14,27 @@
 // Types canónicos (espelham scripts/aggregator/types.js)
 // ═════════════════════════════════════════════════════════════════════
 
+/** Uma linha de ranking juvenil da RFEG casada com o júnior. */
+export interface RfegRankingLinha {
+  /** Título do ranking e a versão curta («Nacional Infantil M 2026»). */
+  t: string; curto: string; ano: number;
+  pos: number | null; n: number; pts: number | null;
+  /** Data do ranking (AAAA-MM-DD). */
+  f: string | null;
+  nac: boolean;
+  /** Como casou: licença igual, 6 dígitos finais da licença, ou nome + ano de nascimento. */
+  via: "licenca" | "sufixo" | "nome";
+}
+export interface RfegOficial {
+  lic?: string;
+  hcp?: number;
+  /** Data da última actualização do hándicap na RFEG. */
+  hcpData?: string | null;
+  hcpClube?: string;
+  hcpVia?: "licenca" | "sufixo";
+  rankings?: RfegRankingLinha[];
+}
+
 export interface HcpPoint {
   date: string;          // "YYYY-MM-DD"
   hcpExact: number;
@@ -40,6 +61,8 @@ export interface Junior {
   tournamentIds: string[];
   /** Série temporal de HCP — um snapshot por participação. Ordenada desc por date. */
   hcpHistory?: HcpPoint[];
+  /** Hándicap oficial actual e ranking juvenil da RFEG (agregador, util/rfeg-oficial.js). */
+  rfegOficial?: RfegOficial;
   _match: {
     confidence: "strong" | "probable" | "manual";
     evidence: string[];

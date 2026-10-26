@@ -17,6 +17,9 @@ on:
       - 'public/data/aquapor-data-*.json'
       - 'public/data/spain-players.json'
       - 'public/data/rfegolf-rivals.json'
+      # RFEG oficial (util/rfeg-oficial.js) — só enriquece.
+      - 'public/data/rfeg-hcp.json'
+      - 'public/data/rfeg-rankings/**'
       - 'public/data/fcg-rivals.json'
       - 'public/data/england_*.json'
       - 'public/data/gjgl/**'

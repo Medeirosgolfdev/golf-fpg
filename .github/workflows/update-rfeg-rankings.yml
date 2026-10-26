@@ -1,0 +1,95 @@
+name: Actualizar RFEG — hándicap oficial e rankings juvenis
+
+# Os espanhóis que jogam contra o Manuel: hándicap oficial actual e lugar nos
+# rankings juvenis da RFEG (Node puro, sem secrets nem cookies em disco).
+#   1. scrape-rfeg-ranking.js   → public/data/rfeg-rankings/*.json (+ índice)
+#      (site novo da RFEG: lista + «CSV» por ajax + licenças do PDF)
+#   2. scrape-federados-es.js   → public/data/rfeg-hcp.json
+#      (pesquisa pública de hándicap; ~1,1 mil licenças do kids2, uma de cada
+#      vez com pausa — 25 a 40 min)
+#   3. agregador                → junior.rfegOficial no juniors.json e hr/rk no
+#      juniors-scout.json (Scout dos circuitos, ficha do kids2)
+# Push com GITHUB_TOKEN não dispara o build-juniors.yml → o agregador corre AQUI.
+# Doc: docs/claude/ffg-rfeg.md («Espanha — hándicap oficial e rankings RFEG»).
+on:
+  workflow_dispatch:
+    inputs:
+      anos:
+        description: 'Anos dos rankings (ex.: "2026,2025"). Vazio = ano corrente.'
+        required: false
+        default: ''
+  schedule:
+    # Terça 05:00 UTC — depois do update-spain (segunda 04:00), que actualiza
+    # as licenças dos inscritos.
+    - cron: '0 5 * * 2'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update-rfeg:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Scrape RFEG (rankings + hándicap)
+        id: rfeg
+        timeout-minutes: 90
+        run: |
+          set +e
+          ANOS="${{ github.event.inputs.anos }}"
+          # Nenhum passo trava os outros nem o commit (exit 2 = nada de novo),
+          # mas uma falha real fica registada e o job acaba vermelho no fim.
+          FAILED=""
+          node() { command node "$@"; local rc=$?; if [ $rc != 0 ] && [ $rc != 2 ]; then echo "::error::node $* → exit $rc"; FAILED="$FAILED $(basename "$1" .js)"; fi; return 0; }
+          echo "▸ rankings juvenis"; node scripts/scrape-rfeg-ranking.js ${ANOS:+--years "$ANOS"}
+          echo "▸ hándicap oficial"; node scripts/scrape-federados-es.js
+          echo "failed=$FAILED" >> $GITHUB_OUTPUT
+          exit 0
+
+      - name: Detectar alterações
+        id: diff
+        run: |
+          if [ -z "$(git status --porcelain -- public/data/rfeg-rankings public/data/rfeg-rankings-index.json public/data/rfeg-hcp.json)" ]; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "ℹ️  Sem alterações RFEG — a saltar agregador e commit"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Regenerar juniores canónicos (agregador)
+        if: steps.diff.outputs.changed == 'true'
+        run: node scripts/aggregator/index.js
+
+      - name: Commit e push (se houve alterações)
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: RFEG hándicap oficial + rankings juvenis $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -f agregador -o 'public/data/rfeg-hcp.json' -- \
+            public/data/rfeg-rankings public/data/rfeg-rankings-index.json public/data/rfeg-hcp.json public/data
+
+      - name: Falhar se algum passo falhou
+        if: always() && steps.rfeg.outputs.failed != ''
+        run: |
+          echo "❌ Falharam:${{ steps.rfeg.outputs.failed }} — o que correu bem já foi publicado."
+          exit 1
