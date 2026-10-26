@@ -300,9 +300,56 @@ function parseAdmissionsTable(html) {
 }
 
 // ═════════════════════════════════════════════════════════════════════
+// Sessão PÚBLICA completa (sem cookies) — a 1.ª tentativa desde 26/10/2026
+// ═════════════════════════════════════════════════════════════════════
+/* Desde 22/10/2026 o `admissions.asp` público só devolve o gate JavaScript e o
+   linkpage.aspx dá «Link address inválido» sem cookies — a verificação live
+   respondia «todas-as-fontes-falharam» em todos os torneios. O browser faz:
+   lista de torneios (cookie ASP) → `1PreparePage.aspx?page=admissions` (emite
+   a sessão e redirecciona para a própria `tournAdmissions.aspx`, a MESMA página
+   das cookies, com todos os campos). É o que o scraper faz desde 22/10
+   (`fetchAdmissionsSessaoPublica` em scripts/scrape-fpg-admissions-draws-node.js,
+   sessão como a `Sessao` de scripts/lib/fpg-session.js). Redirects seguidos à
+   mão para não perder os cookies pelo caminho. */
+async function fetchSessaoPublica(ccode, tcode) {
+  const jar = new Map();
+  const get = async (url) => {
+    let actual = url;
+    for (let hop = 0; hop < 6; hop++) {
+      const headers = { "User-Agent": UA, "Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8", "Accept-Language": "pt-PT,pt;q=0.9" };
+      if (jar.size) headers.Cookie = [...jar].map(([k, v]) => k + "=" + v).join("; ");
+      const r = await fetch(actual, { headers, redirect: "manual" });
+      const set = typeof r.headers.getSetCookie === "function" ? r.headers.getSetCookie() : [r.headers.get("set-cookie")].filter(Boolean);
+      for (const linha of set) {
+        const par = String(linha).split(";")[0];
+        const i = par.indexOf("=");
+        if (i > 0) jar.set(par.slice(0, i).trim(), par.slice(i + 1).trim());
+      }
+      const loc = r.headers.get("location");
+      if (r.status >= 300 && r.status < 400 && loc) { await r.text(); actual = new URL(loc, actual).toString(); continue; }
+      return { status: r.status, url: actual, html: await r.text() };
+    }
+    return { status: 0, url: actual, html: "" };
+  };
+  try {
+    await get("https://scoring-pt.datagolf.pt/scripts/tournaments.asp?club=ALL&ack=XH256YF45T");
+    const r = await get("https://scoring.datagolf.pt/pt/1PreparePage.aspx?user=fpguser&page=admissions&ccode=" + ccode + "&tcode=" + tcode + "&pagelang=PT");
+    const ok = r.status === 200 && /tournAdmissions\.aspx/i.test(r.url) && !/Runtime Error|Server Error in|Param_Errors|Err=999/i.test(r.html);
+    console.log("[inscricoes] " + ccode + "/" + tcode + " [sessao publica] HTTP=" + r.status + " ok=" + ok + " len=" + r.html.length);
+    return ok ? { ok: true, html: r.html, status: r.status, via: "sessao-publica" } : null;
+  } catch (e) {
+    console.error("[inscricoes] erro sessao publica:", e.message);
+    return null;
+  }
+}
+
+// ═════════════════════════════════════════════════════════════════════
 // Fetch com várias estratégias de cookie (em ordem de preferência)
 // ═════════════════════════════════════════════════════════════════════
 async function fetchAdmissionsHTML(ccode, tcode) {
+  const publica = await fetchSessaoPublica(ccode, tcode);
+  if (publica) return publica;
+
   // Gateway canónico linkpage.aspx (ack universal XH256YF450) — ir directo a
   // tournAdmissions.aspx é frágil ("Param Error" com sessão fria). O linkpage
   // aquece a sessão e redirecciona; redirect:"follow" apanha a resposta final.

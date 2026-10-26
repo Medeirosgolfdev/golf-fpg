@@ -144,6 +144,9 @@ const TERMOS = {
   "11075": { prova: "Troféu João Sousa", ficheiro: "2026-10-10_CGSS_Termos_Competicao_Trofeu_Joao_Sousa.pdf", juniores: null,
     texto: "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A).",
     desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
+  "11084": { prova: "Taça Presidente", ficheiro: "2026-10-31_CGSS_Termos_Competicao_Taca_Presidente.pdf", juniores: null,
+    texto: "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A; Desertas–Serras, 31/10/2026).",
+    desempate: "Últimos 9 (o Serras conta sempre como últimos 9), 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
 };
 
 /* Cartões da prova (pull-torneios001 = só CGSS), para o «máximo de 10 pancadas
