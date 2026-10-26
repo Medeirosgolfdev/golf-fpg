@@ -11,7 +11,7 @@ describe("featuredClubeSynthetics", () => {
   it("injecta a prova de clube quando há scrape e ainda não há resultados", () => {
     const out = featuredClubeSynthetics([], new Map([["007-11084", ad as never]]));
     expect(out.map((t) => [t.ccode, t.tcode, t.name, t.date, t.campo])).toEqual([
-      ["007", "11084", "Taça Presidente CGSS 2026", "2026-10-31", "Santo da Serra"],
+      ["007", "11084", "Taça Presidente CGSS 2026", "2026-10-31", "Santo da Serra - Desertas-Serras"],
     ]);
   });
   it("não injecta sem scrape nem quando a prova já chegou aos resultados", () => {

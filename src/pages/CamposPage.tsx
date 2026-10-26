@@ -29,7 +29,7 @@ import { isTournamentCourse } from "../constants/tournamentCourses";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
-import { canonicalCourseName } from "../utils/courseAliases";
+import { canonicalCourseName, resolveCourseKeyByPar } from "../utils/courseAliases";
 import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
 import TeeBars from "../ui/TeeBars";
@@ -1045,6 +1045,24 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
   );
 }
 
+/** O «Como jogou» de um campo: KPIs por cor de tee (com o recorde do Manuel),
+ *  quem jogou por tee e a média por buraco do Manuel. Peça única — também é a
+ *  aba «⛳ O campo» das provas da /FPG (pages/fpg/fpgCourseTab.tsx, 26/10/2026). */
+export function CourseComoJogou({ course, sexFilter = "ALL", teeLabel = null, onSelectPlayer }: {
+  course: Course; sexFilter?: SexFilter; teeLabel?: string | null; onSelectPlayer?: (fed: string) => void;
+}) {
+  return (
+    <>
+      {/* KPIs por cor de tee: nº jogadores + melhor Sub-12/14/16… */}
+      <CourseTeeKpis course={course} sexFilter={sexFilter} teeLabel={teeLabel} onSelectPlayer={onSelectPlayer} />
+      {/* Quem jogou + scores, partido por tee (Brancas, Amarelas, …) */}
+      <CoursePlayersByTee course={course} teeLabel={teeLabel} onSelectPlayer={onSelectPlayer} />
+      {/* Média por buraco do Manuel — em baixo, secundário */}
+      <CourseHoleAverages course={course} />
+    </>
+  );
+}
+
 /* ——— Componente: "Como jogou" — média por buraco do Manuel neste campo ———
  * Cruza as voltas do Manuel (data.json) com o campo seleccionado por nome
  * canónico e calcula a média de pancadas por buraco (formato scorecard,
@@ -1076,27 +1094,48 @@ function CourseHoleAverages({ course }: { course: Course }) {
   const stats = useMemo(() => {
     if (!data) return null;
     const target = _ckey(course.master.name);
-    // Voltas do Manuel cujo campo (canónico) bate com o campo seleccionado
-    const scoreIds: string[] = [];
+    // Par do campo pela ordem da página (1.º tee com os 18 buracos).
+    const masterPar = (() => {
+      for (const t of course.master.tees ?? []) {
+        const hs = (t.holes ?? []).filter((h) => h.hole >= 1 && h.hole <= 18).sort((a, b) => a.hole - b.hole);
+        if (hs.length === 18 && hs.every((h) => h.par != null)) return hs.map((h) => Number(h.par));
+      }
+      return null;
+    })();
+    // Voltas do Manuel neste campo: pelo par[] quando decide (Santo da Serra e
+    // outros multi-loop — a FPG escreve «Machico+Serras» numa página que é
+    // «Serras-Machico»; é o que os recordes por tee já fazem, via
+    // build-course-players.js), senão pelo nome canónico. 26/10/2026.
+    // `swap`: a volta foi jogada com os nines pela ordem inversa da página.
+    const picked: { sid: string; swap: boolean }[] = [];
     for (const c of data.DATA) {
-      if (_ckey(c.course) !== target) continue;
       for (const r of c.rounds) {
-        if (r.holeCount === 18 && data.HOLES[r.scoreId]) scoreIds.push(r.scoreId);
+        if (r.holeCount !== 18) continue;
+        const h = data.HOLES[r.scoreId];
+        if (!h) continue;
+        const pars = (h.p ?? []).map(Number);
+        const key = pars.length === 18 ? resolveCourseKeyByPar(c.course, pars) : null;
+        if (key ? key !== course.courseKey : _ckey(c.course) !== target) continue;
+        const same = !!masterPar && pars.every((p, i) => p === masterPar[i]);
+        const swap = !!masterPar && !same && pars.every((p, i) => p === masterPar[(i + 9) % 18]);
+        picked.push({ sid: r.scoreId, swap });
       }
     }
+    const scoreIds = picked.map((p) => p.sid);
     if (scoreIds.length === 0) return { nRounds: 0, holes: [] as { hole: number; par: number | null; si: number | null; avg: number | null; n: number }[] };
 
     const sum = new Array(18).fill(0);
     const cnt = new Array(18).fill(0);
     const parArr = new Array<number | null>(18).fill(null);
     const siArr = new Array<number | null>(18).fill(null);
-    for (const sid of scoreIds) {
+    for (const { sid, swap } of picked) {
       const h = data.HOLES[sid];
       for (let i = 0; i < 18; i++) {
-        const g = h.g?.[i];
+        const j = swap ? (i + 9) % 18 : i; // buraco i da página = buraco j da volta
+        const g = h.g?.[j];
         if (g != null && Number(g) > 0) { sum[i] += Number(g); cnt[i]++; }
-        if (parArr[i] == null && h.p?.[i] != null) parArr[i] = Number(h.p[i]);
-        if (siArr[i] == null && h.si?.[i] != null) siArr[i] = Number(h.si[i]);
+        if (parArr[i] == null && h.p?.[j] != null) parArr[i] = Number(h.p[j]);
+        if (siArr[i] == null && h.si?.[j] != null) siArr[i] = Number(h.si[j]);
       }
     }
     const holes = Array.from({ length: 18 }, (_, i) => ({
@@ -1640,21 +1679,12 @@ export default function CamposPage() {
                 </>
               ) : (
                 <>
-                  {/* KPIs por cor de tee: nº jogadores + melhor Sub-12/14/16… */}
-                  <CourseTeeKpis
+                  <CourseComoJogou
                     course={selected}
                     sexFilter={sexFilter}
                     teeLabel={teeFilterLabel}
                     onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
                   />
-                  {/* Quem jogou + scores, partido por tee (Brancas, Amarelas, …) */}
-                  <CoursePlayersByTee
-                    course={selected}
-                    teeLabel={teeFilterLabel}
-                    onSelectPlayer={(fed) => navigate(`/jogadores/${fed}`)}
-                  />
-                  {/* Média por buraco do Manuel — em baixo, secundário */}
-                  <CourseHoleAverages course={selected} />
                 </>
               )}
             </>

@@ -503,6 +503,20 @@ export function resolveSantoDaSerraKeyByName(name: string | null | undefined): s
   return null;
 }
 
+/** O courseKey do master para uma volta de 18/9 buracos pelo par[] (Santo da
+ *  Serra, multi-loop, Ribagolfe) — a ordem dos nines não conta. Mesma ordem
+ *  do scripts/build-course-players.js; null quando o par não decide. */
+export function resolveCourseKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
+  return resolveSantoDaSerraKeyByPar(name, pars) || resolveMultiloopKeyByPar(name, pars) || resolveRibagolfeKeyByPar(name, pars);
+}
+
+/** O courseKey do master só pelo NOME (Santo da Serra «Desertas-Serras»,
+ *  multi-loop, Ribagolfe I/II), para quando não há par[] — ex. uma prova que
+ *  ainda não se jogou. null quando o nome não decide. */
+export function resolveCourseKeyByName(name: string | null | undefined): string | null {
+  return resolveSantoDaSerraKeyByName(name) || resolveMultiloopKeyByName(name) || resolveRibagolfeKeyByName(name);
+}
+
 /* Campos multi-loop PT (Vila Sol, Pinheiros Altos, Castro Marim): a FPG nomeia
  * por UM nine ou por um combo cuja ordem não bate com o master. Resolve-se o
  * combo pelo par[] dos DOIS nines. Assinaturas extraídas de master-courses.json. */

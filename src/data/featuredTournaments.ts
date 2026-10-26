@@ -214,6 +214,6 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     name: "Taça Presidente CGSS 2026",
     escalao: null,
     date: "2026-10-31",
-    campo: "Santo da Serra",
+    campo: "Santo da Serra - Desertas-Serras",
   },
 ];

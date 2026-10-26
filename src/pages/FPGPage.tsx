@@ -52,6 +52,7 @@ import {
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { buildFpgEditionsIndex, fpgPastEditionsTabs } from "./fpg/fpgPastEditions";
 import { fpgOmRankingTabs } from "./fpg/fpgOmRanking";
+import { fpgCourseTabs } from "./fpg/fpgCourseTab";
 import { fpgMatchplayTabs, useFpgMatchplay, type FpgMatchplayData } from "./fpg/fpgMatchplay";
 import { clubesLeadingTabs, CLUBES_DEFAULT_TAB } from "./fpg/fpgClubes";
 import CircuitShell from "../ui/circuit/CircuitShell";
@@ -61,10 +62,11 @@ import {
   FPG_CONFIG, CLUBES_CONFIG,
 } from "./fpg/fpgCircuitData";
 
-/** Junta o tab do Match Play (Taça da Federação) e o da Ordem de Mérito (CGSS)
- *  aos tabs de "Edições anteriores". */
+/** Junta o tab do Match Play (Taça da Federação), o da Ordem de Mérito (CGSS)
+ *  e o do campo («⛳ O campo», o «Como jogou» da /campos) aos tabs de "Edições
+ *  anteriores". */
 function fpgExtraTabs(editionsIndex: Parameters<typeof fpgPastEditionsTabs>[0], t: Parameters<typeof fpgOmRankingTabs>[0], playersDB?: Parameters<typeof fpgPastEditionsTabs>[2], matchplay?: FpgMatchplayData | null) {
-  const tabs = [...(fpgMatchplayTabs(matchplay ?? null, t) ?? []), ...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? [])];
+  const tabs = [...(fpgMatchplayTabs(matchplay ?? null, t) ?? []), ...(fpgOmRankingTabs(t) ?? []), ...(fpgPastEditionsTabs(editionsIndex, t, playersDB) ?? []), ...(fpgCourseTabs(t) ?? [])];
   return tabs.length ? tabs : undefined;
 }
 
