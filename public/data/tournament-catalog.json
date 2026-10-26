@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-25T10:31:26.366Z",
+  "generatedAt": "2026-10-26T11:05:48.351Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -709,6 +709,11 @@
         "rfeg-nc74574_infantil_hcp",
         "rfeg-nc74577_infantil_hcp",
         "rfeg-nc74578_infantil_hcp",
+        "rfeg-nc74708_junior_hcp",
+        "rfeg-nc74824_infantil",
+        "rfeg-nc74825_infantil",
+        "rfeg-nc74826_infantil",
+        "rfeg-nc74827_infantil",
         "rfeg-rfeg14306_juvenil_m",
         "rfeg-rfeg14308_cadete_m",
         "rfeg-rfeg14500_junior_m",
@@ -717,8 +722,8 @@
         "rfeg-rfeg15923_girlsboys_m"
       ],
       "firstDate": "2020-10-29",
-      "lastDate": "2026-10-18",
-      "editionsCount": 708
+      "lastDate": "2026-10-25",
+      "editionsCount": 713
     },
     {
       "id": "ffgolf-gp-jeunes",
@@ -1302,6 +1307,7 @@
         "rfeg-lgs385",
         "rfeg-lgs386",
         "rfeg-lgs387",
+        "rfeg-lgs393",
         "rfeg-nc50113_benjamín_sc",
         "rfeg-nc50113_benjamín_hcp",
         "rfeg-rfeg13959_junior_f",
@@ -1326,13 +1332,15 @@
       ],
       "firstDate": "2021-03-18",
       "lastDate": "2026-08-08",
-      "editionsCount": 70
+      "editionsCount": 71
     },
     {
       "id": "ffgolf-championnats-france",
       "label": "Championnats de France",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601484428",
+        "ffgolf-2601484433",
         "ffgolf-2601481214",
         "ffgolf-2601444238",
         "ffgolf-2601441226",
@@ -1393,8 +1401,8 @@
         "ffgolf-2200805209"
       ],
       "firstDate": "2022-03-04",
-      "lastDate": "2026-10-04",
-      "editionsCount": 58
+      "lastDate": "2026-10-17",
+      "editionsCount": 60
     },
     {
       "id": "uskids-laurel-island-links",
@@ -34924,7 +34932,7 @@
         "england-england_english-girls-u16-u14-2026_div2"
       ],
       "firstDate": "2025-07-29",
-      "lastDate": "2026-08-18",
+      "lastDate": "2026-07-01",
       "editionsCount": 4
     },
     {
@@ -34938,7 +34946,7 @@
         "england-england_reid-trophy-2026"
       ],
       "firstDate": "2023-08-08",
-      "lastDate": "2026-08-04",
+      "lastDate": "2026-07-01",
       "editionsCount": 4
     },
     {
@@ -35009,6 +35017,20 @@
       ],
       "firstDate": "2025-07-24",
       "lastDate": "2026-07-23",
+      "editionsCount": 4
+    },
+    {
+      "id": "egr-english-u18-carris-trophy",
+      "label": "English U18 (Carris Trophy)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11777",
+        "egr-egr9770",
+        "egr-egr6661",
+        "egr-egr4684"
+      ],
+      "firstDate": "2020-08-25",
+      "lastDate": "2026-07-21",
       "editionsCount": 4
     },
     {
@@ -36395,6 +36417,20 @@
       ],
       "firstDate": "2023-08-08",
       "lastDate": "2026-08-05",
+      "editionsCount": 4
+    },
+    {
+      "id": "wagr-english-boys-open-amateur-stroke-play-championship-carris-trophy",
+      "label": "English Boys' Open Amateur Stroke Play Championship (Carris Trophy)",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271001",
+        "wagr-259210",
+        "wagr-234763",
+        "wagr-75584"
+      ],
+      "firstDate": "2022-07-19",
+      "lastDate": "2026-07-21",
       "editionsCount": 4
     },
     {
@@ -44958,7 +44994,7 @@
         "england-england_carris-trophy-2026"
       ],
       "firstDate": "2023-07-25",
-      "lastDate": "2026-07-21",
+      "lastDate": "2026-07-01",
       "editionsCount": 3
     },
     {
@@ -44984,7 +45020,7 @@
         "england-england_mcgregor-trophy-2026"
       ],
       "firstDate": "2024-07-16",
-      "lastDate": "2026-07-14",
+      "lastDate": "2026-07-01",
       "editionsCount": 3
     },
     {
@@ -45024,6 +45060,19 @@
       ],
       "firstDate": "2026-08-29",
       "lastDate": "2026-08-29",
+      "editionsCount": 3
+    },
+    {
+      "id": "egr-english-girls-open-stroke-play-championship",
+      "label": "English Girls' Open Stroke Play Championship",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11780",
+        "egr-egr8363",
+        "egr-egr6678"
+      ],
+      "firstDate": "2022-07-19",
+      "lastDate": "2026-07-21",
       "editionsCount": 3
     },
     {
@@ -45635,19 +45684,6 @@
       ],
       "firstDate": "2024-09-14",
       "lastDate": "2026-08-29",
-      "editionsCount": 3
-    },
-    {
-      "id": "egr-english-u18-carris-trophy",
-      "label": "English U18 (Carris Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr9770",
-        "egr-egr6661",
-        "egr-egr4684"
-      ],
-      "firstDate": "2020-08-25",
-      "lastDate": "2024-07-23",
       "editionsCount": 3
     },
     {
@@ -47897,19 +47933,6 @@
       ],
       "firstDate": "2022-10-07",
       "lastDate": "2025-04-18",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-english-boys-open-amateur-stroke-play-championship-carris-trophy",
-      "label": "English Boys' Open Amateur Stroke Play Championship (Carris Trophy)",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259210",
-        "wagr-234763",
-        "wagr-75584"
-      ],
-      "firstDate": "2022-07-19",
-      "lastDate": "2025-07-22",
       "editionsCount": 3
     },
     {
@@ -60790,6 +60813,18 @@
       "editionsCount": 2
     },
     {
+      "id": "egr-english-u16-mcgregor-trophy",
+      "label": "English U16 (McGregor Trophy)",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11776",
+        "egr-egr8315"
+      ],
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-14",
+      "editionsCount": 2
+    },
+    {
       "id": "egr-swiss-golf-national-championship-u14-u12-erlen",
       "label": "Swiss Golf National Championship U14-U12 (Erlen)",
       "sourceId": "egr",
@@ -62707,18 +62742,6 @@
       ],
       "firstDate": "2023-08-01",
       "lastDate": "2023-08-01",
-      "editionsCount": 2
-    },
-    {
-      "id": "egr-english-girls-open-stroke-play-championship",
-      "label": "English Girls' Open Stroke Play Championship",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8363",
-        "egr-egr6678"
-      ],
-      "firstDate": "2022-07-19",
-      "lastDate": "2023-07-25",
       "editionsCount": 2
     },
     {
@@ -67006,18 +67029,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
-      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270494",
-        "wagr-234100"
-      ],
-      "firstDate": "2024-07-02",
-      "lastDate": "2026-06-30",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-italian-national-u18-team-championship-emilio-pallavicino-trophy",
       "label": "Italian National U18 Team Championship - Emilio Pallavicino Trophy",
       "sourceId": "wagr",
@@ -67027,6 +67038,18 @@
       ],
       "firstDate": "2025-08-22",
       "lastDate": "2026-08-26",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-italian-national-championship-cadetti-g-agnelli-trophy",
+      "label": "Italian National Championship Cadetti G. Agnelli Trophy",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234100",
+        "wagr-270494"
+      ],
+      "firstDate": "2024-07-02",
+      "lastDate": "2026-06-30",
       "editionsCount": 2
     },
     {
@@ -96044,8 +96067,8 @@
       "tournamentIds": [
         "england-england_english-girls-open-stroke-play-2026"
       ],
-      "firstDate": "2026-07-21",
-      "lastDate": "2026-07-21",
+      "firstDate": "2026-07-01",
+      "lastDate": "2026-07-01",
       "editionsCount": 1
     },
     {
@@ -100402,17 +100425,6 @@
       ],
       "firstDate": "2023-07-19",
       "lastDate": "2023-07-19",
-      "editionsCount": 1
-    },
-    {
-      "id": "egr-english-u16-mcgregor-trophy",
-      "label": "English U16 (McGregor Trophy)",
-      "sourceId": "egr",
-      "tournamentIds": [
-        "egr-egr8315"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2023-07-18",
       "editionsCount": 1
     },
     {
@@ -107137,6 +107149,17 @@
       "editionsCount": 1
     },
     {
+      "id": "egr-english-girls-u16-stroke-play",
+      "label": "English Girls U16 Stroke Play",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11781"
+      ],
+      "firstDate": "2026-08-18",
+      "lastDate": "2026-08-18",
+      "editionsCount": 1
+    },
+    {
       "id": "egr-faldo-junior-tour-lithuania",
       "label": "Faldo Junior Tour (Lithuania)",
       "sourceId": "egr",
@@ -107321,6 +107344,17 @@
       ],
       "firstDate": "2026-08-08",
       "lastDate": "2026-08-08",
+      "editionsCount": 1
+    },
+    {
+      "id": "egr-english-girls-u14-stroke-play",
+      "label": "English Girls U14 Stroke Play",
+      "sourceId": "egr",
+      "tournamentIds": [
+        "egr-egr11782"
+      ],
+      "firstDate": "2026-08-18",
+      "lastDate": "2026-08-18",
       "editionsCount": 1
     },
     {
@@ -112348,17 +112382,6 @@
       ],
       "firstDate": "2026-08-16",
       "lastDate": "2026-08-16",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-west-virginia-junior-amateur-championship",
-      "label": "West Virginia Junior Amateur Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-274544"
-      ],
-      "firstDate": "2026-06-30",
-      "lastDate": "2026-06-30",
       "editionsCount": 1
     },
     {
