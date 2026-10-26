@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-26T11:05:48.333Z",
+  "generatedAt": "2026-10-26T11:31:40.518Z",
   "juniors": [
     {
       "id": "u391389",
@@ -93169,16 +93169,22 @@
       "canonicalName": "Tobias Barton",
       "aliases": [],
       "dob": null,
-      "sex": null,
+      "sex": "M",
       "nationality": "CZ",
       "country": "CZ",
       "region": null,
-      "club": null,
+      "club": "Golf Hodkovicky",
       "sources": {
         "uskids": {
           "memberId": "524316",
           "ageGroupCurrent": "Boys 14"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Tobias_Barton"
+          }
+        ]
       },
       "tournamentIds": [
         "uskids-6713",
@@ -93192,15 +93198,18 @@
         "uskids-11605",
         "uskids-13568",
         "uskids-11865",
-        "uskids-10728"
+        "uskids-10728",
+        "gjgl-bogogno-international-junior-open-2026-italy"
       ],
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "uskids:524316"
+          "uskids:524316",
+          "gjgl:Tobias_Barton"
         ],
         "mergedFromSources": [
-          "uskids"
+          "uskids",
+          "gjgl"
         ]
       }
     },
@@ -127404,6 +127413,7 @@
         "uskids-7735",
         "fpg-000-10854-20250212-all",
         "england-england_carris-trophy-2026",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-french-junior-classics-2026-france",
         "gjgl-gjg-portuguese-juniors-international-2026-portugal",
         "egr-egr12876",
@@ -128840,13 +128850,17 @@
       "nationality": "RO",
       "country": "RO",
       "region": null,
-      "club": "Theodora",
+      "club": "THEODORA GOLF CLUB",
       "sources": {
         "uskids": {
           "memberId": "582297",
           "ageGroupCurrent": "Boys 13-14"
         },
         "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Calin Mihai_Muresan"
+          },
           {
             "sourceId": "egr",
             "key": "calin mihai muresan|RO"
@@ -128866,6 +128880,7 @@
         "uskids-20832",
         "uskids-20833",
         "uskids-20836",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "egr-egr11253"
       ],
       "_match": {
@@ -128873,10 +128888,12 @@
         "evidence": [
           "uskids:533076",
           "uskids:582297",
+          "gjgl:Calin Mihai_Muresan",
           "egr:calin mihai muresan|RO"
         ],
         "mergedFromSources": [
           "uskids",
+          "gjgl",
           "egr"
         ]
       }
@@ -149085,6 +149102,7 @@
         "uskids-7270",
         "uskids-16619",
         "uskids-16617",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-rb-german-junior-2026-germany",
         "gjgl-wilson-juniors-international-2025-germany",
         "egr-egr10437",
@@ -359033,6 +359051,7 @@
         "uskids-22220",
         "uskids-14925",
         "gjgl-bogogno-international-junior-open-2025-italy",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-italian-junior-classics-2025-italy",
         "coc-coc_2024",
         "coc-coc_2025",
@@ -395583,6 +395602,7 @@
         "uskids-14925",
         "uskids-21400",
         "gjgl-junior-golf-challenge-schwabisch-hall-2026-germany",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "coc-coc_2026",
         "egr-egr10475",
         "egr-egr10473",
@@ -429289,6 +429309,7 @@
         "uskids-18129",
         "uskids-18130",
         "gjgl-bogogno-international-junior-open-2025-italy",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-bogogno-junior-games-2026-italy",
         "gjgl-gjg-italian-junior-classics-2025-italy",
         "gjgl-gjg-italian-juniors-international-2026",
@@ -601003,6 +601024,10 @@
             "key": "doral-1595517042"
           },
           {
+            "sourceId": "gjgl",
+            "key": "Celeste_Darloy"
+          },
+          {
             "sourceId": "egr",
             "key": "celeste darloy|FR"
           }
@@ -601042,6 +601067,7 @@
         "ffgolf-2200809631",
         "ffgolf-2200803311",
         "doral-ftm_doral_2023",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "egr-egr12388",
         "egr-egr10387",
         "egr-egr10626",
@@ -601233,6 +601259,7 @@
           "fpg:anon|celeste darloy|FR",
           "ffgolf:530929283",
           "doral:doral-1595517042",
+          "gjgl:Celeste_Darloy",
           "egr:celeste darloy|FR",
           "dob:2009-08-05"
         ],
@@ -601240,6 +601267,7 @@
           "fpg",
           "ffgolf",
           "doral",
+          "gjgl",
           "egr"
         ]
       }
@@ -760755,6 +760783,7 @@
         "rfeg-rfeg15923_girlsboys_m",
         "england-england_carris-trophy-2026",
         "gjgl-bogogno-international-junior-open-2025-italy",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-italian-junior-classics-2025-italy",
         "gjgl-gjg-oom-junior-open-2026-portugal",
         "gjgl-gjg-portuguese-juniors-international-2026-portugal",
@@ -761510,6 +761539,7 @@
       "tournamentIds": [
         "rfeg-lgs388",
         "rfeg-rfeg15923_girlsboys_m",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-danish-junior-games-2026-denmark",
         "gjgl-danish-junior-internationals-2026-denmark",
         "gjgl-gjg-season-kickoff-2026-spain",
@@ -933528,6 +933558,7 @@
         "gjgl-european-spring-junior-2026-spain",
         "gjgl-gjg-algarve-juniors-international-2025-portugal",
         "gjgl-gjg-spanish-juniors-international-2026-spain",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "egr-egr11843",
         "egr-egr9461",
         "egr-egr12073",
@@ -992397,7 +992428,13 @@
           "region": "PARIS-ILE-DE-FRANCE",
           "sex": "M",
           "glfLic": "0749"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Axel_Demarets"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2601484428",
@@ -992417,7 +992454,8 @@
         "ffgolf-2300979843",
         "ffgolf-2200930217",
         "ffgolf-2200891116",
-        "ffgolf-2200851839"
+        "ffgolf-2200851839",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -992550,10 +992588,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:047322326"
+          "ffgolf:047322326",
+          "gjgl:Axel_Demarets"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1004685,6 +1004725,10 @@
         },
         "_secondary": [
           {
+            "sourceId": "gjgl",
+            "key": "Esteban_Castellon"
+          },
+          {
             "sourceId": "egr",
             "key": "esteban castellon|FR"
           }
@@ -1004716,6 +1004760,7 @@
         "ffgolf-2300988558",
         "ffgolf-2200855333",
         "ffgolf-2200815824",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "egr-egr10462",
         "egr-egr12149",
         "egr-egr12127",
@@ -1004903,11 +1004948,13 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:538300295",
+          "gjgl:Esteban_Castellon",
           "egr:esteban castellon|FR",
           "dob:2011-11-04"
         ],
         "mergedFromSources": [
           "ffgolf",
+          "gjgl",
           "egr"
         ]
       }
@@ -1028811,6 +1028858,7 @@
         "ffgolf-2200909351",
         "england-england_mcgregor-trophy-2025",
         "england-england_reid-trophy-2023",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-season-kickoff-2026-spain",
         "evianjc-evianjc_2022",
         "evianjc-evianjc_2023",
@@ -1030688,6 +1030736,7 @@
       "tournamentIds": [
         "ffgolf-2301099390",
         "ffgolf-2200909351",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-season-kickoff-2026-spain",
         "evianjc-evianjc_2022",
         "evianjc-evianjc_2023",
@@ -1088241,6 +1088290,7 @@
         "ffgolf-2200819825",
         "gjgl-european-spring-junior-2026-spain",
         "gjgl-gjg-algarve-juniors-international-2025-portugal",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "egr-egr8854",
         "egr-egr11768",
         "egr-egr12792",
@@ -1134927,7 +1134977,13 @@
           "region": "NORMANDIE",
           "sex": "M",
           "glfLic": "0075"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Achille_Ader"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2601451797",
@@ -1134948,7 +1135004,8 @@
         "ffgolf-2401208865",
         "ffgolf-2401169038",
         "ffgolf-2300991197",
-        "ffgolf-2300948157"
+        "ffgolf-2300948157",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1135088,10 +1135145,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:043670315"
+          "ffgolf:043670315",
+          "gjgl:Achille_Ader"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1135113,7 +1135172,13 @@
           "region": "NORMANDIE",
           "sex": "M",
           "glfLic": "0075"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Lourenzo_Gaston"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2601451797",
@@ -1135129,7 +1135194,8 @@
         "ffgolf-2401279328",
         "ffgolf-2401263664",
         "ffgolf-2401246704",
-        "ffgolf-2401208865"
+        "ffgolf-2401208865",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1135234,10 +1135300,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:531088323"
+          "ffgolf:531088323",
+          "gjgl:Lourenzo_Gaston"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1188851,6 +1188919,10 @@
             "key": "lisa huszar|AT"
           },
           {
+            "sourceId": "gjgl",
+            "key": "Lisa_Huszar"
+          },
+          {
             "sourceId": "evianjc",
             "key": "lisa huszar|AT"
           },
@@ -1188871,6 +1188943,7 @@
       "tournamentIds": [
         "ffgolf-2401276441",
         "england-england_english-girls-u16-u14-2025_div1",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "evianjc-evianjc_2024",
         "egtc-egtc_2026",
         "eym-eym_2026",
@@ -1188916,6 +1188989,7 @@
         "evidence": [
           "ffgolf:E77995969",
           "england:lisa huszar|AT",
+          "gjgl:Lisa_Huszar",
           "evianjc:lisa huszar|AT",
           "egtc:egtc-gb48738088",
           "eym:eym-gb49107266",
@@ -1188925,6 +1188999,7 @@
         "mergedFromSources": [
           "ffgolf",
           "england",
+          "gjgl",
           "evianjc",
           "egtc",
           "eym",
@@ -1229382,7 +1229457,8 @@
         "ffgolf-2300991753",
         "ffgolf-2200855333",
         "ffgolf-2200859087",
-        "gjgl-gjg-mauritius-juniors-internationals-2026-mauritius"
+        "gjgl-gjg-mauritius-juniors-internationals-2026-mauritius",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1274699,14 +1274775,21 @@
           "region": "NORMANDIE",
           "sex": "M",
           "glfLic": "0075"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Maxence_Breton"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2601451797",
         "ffgolf-2601405919",
         "ffgolf-2601402929",
         "ffgolf-2501342552",
-        "ffgolf-2401263664"
+        "ffgolf-2401263664",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1274748,10 +1274831,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:512013304"
+          "ffgolf:512013304",
+          "gjgl:Maxence_Breton"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1275829,10 +1275914,17 @@
           "region": "NORMANDIE",
           "sex": "M",
           "glfLic": "0570"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Kenzo_Benamara"
+          }
+        ]
       },
       "tournamentIds": [
-        "ffgolf-2601402929"
+        "ffgolf-2601402929",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1275846,10 +1275938,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:046515344"
+          "ffgolf:046515344",
+          "gjgl:Kenzo_Benamara"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1322817,12 +1322911,19 @@
           "region": "NORMANDIE",
           "sex": "M",
           "glfLic": "0247"
-        }
+        },
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Jules_Larconnier"
+          }
+        ]
       },
       "tournamentIds": [
         "ffgolf-2601412558",
         "ffgolf-2601405919",
-        "ffgolf-2601402929"
+        "ffgolf-2601402929",
+        "gjgl-vaudreuil-junior-challenge-2026-france"
       ],
       "hcpHistory": [
         {
@@ -1322850,10 +1322951,12 @@
       "_match": {
         "confidence": "strong",
         "evidence": [
-          "ffgolf:046719392"
+          "ffgolf:046719392",
+          "gjgl:Jules_Larconnier"
         ],
         "mergedFromSources": [
-          "ffgolf"
+          "ffgolf",
+          "gjgl"
         ]
       }
     },
@@ -1540939,7 +1541042,6 @@
         "gjgl-bad-saarow-junior-trophy-2025-germany",
         "gjgl-berlin-juniors-international-2026-germany",
         "gjgl-gjg-paderborner-land-juniors-international-2026-germany",
-        "gjgl-magix-moments-junior-international-2026-germany",
         "gjgl-rhein-main-junior-golf-open-2025-germany",
         "egr-egr12857",
         "egr-egr12828",
@@ -1543397,6 +1543499,7 @@
       },
       "tournamentIds": [
         "gjgl-bang-golf-city-juniors-international-cologne-2025-germany",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-season-kickoff-2026-spain",
         "gjgl-gjg-spanish-juniors-international-2026-spain",
         "gjgl-tulip-golf-challenge-2025-netherlands"
@@ -1543631,6 +1543734,7 @@
       },
       "tournamentIds": [
         "gjgl-bang-golf-city-juniors-international-cologne-2025-germany",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-dortmund-juniors-international-2026-germany",
         "gjgl-gjg-mulheim-junior-open-2026-germany",
         "gjgl-holbox-junior-open-2025-netherlands",
@@ -1543974,6 +1544078,7 @@
       },
       "tournamentIds": [
         "gjgl-bang-golf-city-juniors-international-cologne-2025-germany",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "egr-egr12806",
         "egr-egr12494",
         "egr-egr11589",
@@ -1548124,6 +1548229,7 @@
       },
       "tournamentIds": [
         "gjgl-bogogno-international-junior-open-2025-italy",
+        "gjgl-bogogno-international-junior-open-2026-italy",
         "gjgl-gjg-season-kickoff-2026-spain",
         "gjgl-portuguese-intercollegiate-open-2026-portugal",
         "egr-egr12704",
@@ -1548542,6 +1548648,1112 @@
         ],
         "mergedFromSources": [
           "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x82fe6d04e0",
+      "canonicalName": "Oscar Sundvor",
+      "aliases": [],
+      "dob": "2012-05-28",
+      "sex": "M",
+      "nationality": "NO",
+      "country": "NO",
+      "region": null,
+      "club": "Sola Golfklub",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Oscar_Sundvor"
+          },
+          {
+            "sourceId": "egr",
+            "key": "oscar sundvor|NO"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-danish-junior-games-2026-denmark",
+        "egr-egr12755",
+        "egr-egr10869",
+        "egr-egr10850",
+        "egr-egr10834",
+        "egr-egr12325"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Oscar_Sundvor",
+          "egr:oscar sundvor|NO",
+          "dob:2012-05-28"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x82b0e23b51",
+      "canonicalName": "Loore Filipjev",
+      "aliases": [],
+      "dob": "2012-04-04",
+      "sex": "F",
+      "nationality": "EE",
+      "country": "EE",
+      "region": null,
+      "club": "Estonian Golf & Country Club",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Loore_Filipjev"
+          },
+          {
+            "sourceId": "ejo",
+            "key": "ejo-gb38040605"
+          },
+          {
+            "sourceId": "ejo",
+            "key": "ejo-gb43180326"
+          },
+          {
+            "sourceId": "ejo",
+            "key": "ejo-gb49233301"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb29076447"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb33089408"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb37287404"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb41405188"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb47692310"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb37665596"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb48230062"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb34079164"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb38040169"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb42184906"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb48230091"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb29040562"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb34079166"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb38040222"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb43177658"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb48230113"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb29040516"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb34079170"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb38040810"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb43178066"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb48230138"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb29874491"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb34079173"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb38554807"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb43178126"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb49660603"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb29040568"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb44855372"
+          },
+          {
+            "sourceId": "egr",
+            "key": "loore filipjev|EE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-gjg-latvia-juniors-international-2026-latvia",
+        "gjgl-next-golf-estonian-challenge-2026",
+        "ejo-ejo_2024",
+        "ejo-ejo_2025",
+        "ejo-ejo_2026",
+        "ejt-ejt1_2022",
+        "ejt-ejt1_2023",
+        "ejt-ejt1_2024",
+        "ejt-ejt1_2025",
+        "ejt-ejt1_2026",
+        "ejt-ejt2_2024",
+        "ejt-ejt2_2026",
+        "ejt-ejt3_2023",
+        "ejt-ejt3_2024",
+        "ejt-ejt3_2025",
+        "ejt-ejt3_2026",
+        "ejt-ejt4_2022",
+        "ejt-ejt4_2023",
+        "ejt-ejt4_2024",
+        "ejt-ejt4_2025",
+        "ejt-ejt4_2026",
+        "ejt-ejt5_2022",
+        "ejt-ejt5_2023",
+        "ejt-ejt5_2024",
+        "ejt-ejt5_2025",
+        "ejt-ejt5_2026",
+        "ejt-ejt6_2022",
+        "ejt-ejt6_2023",
+        "ejt-ejt6_2024",
+        "ejt-ejt6_2025",
+        "ejt-ejt6_2026",
+        "ejt-ejt7_2022",
+        "ejt-ejt7_2025"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Loore_Filipjev",
+          "ejo:ejo-gb38040605",
+          "ejo:ejo-gb43180326",
+          "ejo:ejo-gb49233301",
+          "ejt:ejt-gb29076447",
+          "ejt:ejt-gb33089408",
+          "ejt:ejt-gb37287404",
+          "ejt:ejt-gb41405188",
+          "ejt:ejt-gb47692310",
+          "ejt:ejt-gb37665596",
+          "ejt:ejt-gb48230062",
+          "ejt:ejt-gb34079164",
+          "ejt:ejt-gb38040169",
+          "ejt:ejt-gb42184906",
+          "ejt:ejt-gb48230091",
+          "ejt:ejt-gb29040562",
+          "ejt:ejt-gb34079166",
+          "ejt:ejt-gb38040222",
+          "ejt:ejt-gb43177658",
+          "ejt:ejt-gb48230113",
+          "ejt:ejt-gb29040516",
+          "ejt:ejt-gb34079170",
+          "ejt:ejt-gb38040810",
+          "ejt:ejt-gb43178066",
+          "ejt:ejt-gb48230138",
+          "ejt:ejt-gb29874491",
+          "ejt:ejt-gb34079173",
+          "ejt:ejt-gb38554807",
+          "ejt:ejt-gb43178126",
+          "ejt:ejt-gb49660603",
+          "ejt:ejt-gb29040568",
+          "ejt:ejt-gb44855372",
+          "egr:loore filipjev|EE",
+          "dob:2012-04-04"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "ejo",
+          "ejt",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xa4db5c5a8d",
+      "canonicalName": "Stylianos Kavvadas",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "GR",
+      "country": "GR",
+      "region": null,
+      "club": "Golf Club Glifadas",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Stylianos_Kavvadas"
+          },
+          {
+            "sourceId": "egr",
+            "key": "stylianos kavvadas|GR"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-migros-golfcard-gjg-international-2026-switzerland",
+        "egr-egr12428"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Stylianos_Kavvadas",
+          "egr:stylianos kavvadas|GR"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x4fe16be9d4",
+      "canonicalName": "Theo Verse",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "GC Mannheim Viernheim",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Theo_Verse"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Theo_Verse"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "x102b0ecccd",
+      "canonicalName": "Isabella Rainalter",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "IT",
+      "country": "IT",
+      "countries": [
+        "IT",
+        "CH"
+      ],
+      "region": null,
+      "club": "Ascona",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Isabella_Rainalter"
+          },
+          {
+            "sourceId": "egr",
+            "key": "isabella rainalter|CH"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "egr-egr12465",
+        "egr-egr12452",
+        "egr-egr12444"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Isabella_Rainalter",
+          "egr:isabella rainalter|CH"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x248fc36a9c",
+      "canonicalName": "Carl Verse",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Golfclub Mannheim Viernheim",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Carl_Verse"
+          },
+          {
+            "sourceId": "egr",
+            "key": "carl verse|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001508926"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "egr-egr12707",
+        "egr-egr12703",
+        "egr-egr12737",
+        "egr-egr11030",
+        "egr-egr11026",
+        "egr-egr11022",
+        "egr-egr9683",
+        "egr-egr9680",
+        "egr-egr8187",
+        "egr-egr11538",
+        "egr-egr12713",
+        "egr-egr12855",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002281617",
+        "dgv-dgv_490002401234",
+        "dgv-dgv_490002401280",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002871320",
+        "dgv-dgv_490002871328"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Carl_Verse",
+          "egr:carl verse|DE",
+          "dgv:dgv-dgv490001508926"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x735e7abe3d",
+      "canonicalName": "Margherita Di Martino",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": "Olgiata Golf Club",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Margherita_Di Martino"
+          },
+          {
+            "sourceId": "egr",
+            "key": "margherita di martino|IT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "egr-egr11970",
+        "egr-egr12786",
+        "egr-egr11934",
+        "egr-egr10323",
+        "egr-egr11384",
+        "egr-egr10270",
+        "egr-egr10405",
+        "egr-egr9455",
+        "egr-egr9567",
+        "egr-egr7583",
+        "egr-egr11766",
+        "egr-egr11657",
+        "egr-egr11902",
+        "egr-egr11910",
+        "egr-egr10228",
+        "egr-egr10318",
+        "egr-egr11957",
+        "egr-egr11981",
+        "egr-egr11950",
+        "egr-egr11980",
+        "egr-egr12003",
+        "egr-egr11918",
+        "egr-egr11912",
+        "egr-egr10232",
+        "egr-egr11994",
+        "egr-egr11930",
+        "egr-egr11916"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Margherita_Di Martino",
+          "egr:margherita di martino|IT"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x2d61c921ba",
+      "canonicalName": "Maximilian Mc Kinney",
+      "aliases": [],
+      "dob": "2009-01-05",
+      "sex": "M",
+      "nationality": "BE",
+      "country": "BE",
+      "region": null,
+      "club": "The National Golf Brussels",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Maximilian_Mc Kinney"
+          },
+          {
+            "sourceId": "egr",
+            "key": "maximilian mc kinney|BE"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "egr-egr10475",
+        "egr-egr10473",
+        "egr-egr10467",
+        "egr-egr10463",
+        "egr-egr11758",
+        "egr-egr11756",
+        "egr-egr12917"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Maximilian_Mc Kinney",
+          "egr:maximilian mc kinney|BE",
+          "dob:2009-01-05"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x168889a8c5",
+      "canonicalName": "Emma Mandelli",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": "Golf Club Monticello",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Emma_Mandelli"
+          },
+          {
+            "sourceId": "egr",
+            "key": "emma mandelli|IT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "egr-egr12786",
+        "egr-egr11932",
+        "egr-egr10323",
+        "egr-egr11384",
+        "egr-egr10270",
+        "egr-egr10267",
+        "egr-egr10257",
+        "egr-egr9453",
+        "egr-egr9567",
+        "egr-egr7583",
+        "egr-egr11956",
+        "egr-egr11902",
+        "egr-egr11962",
+        "egr-egr11935",
+        "egr-egr11894",
+        "egr-egr11977",
+        "egr-egr11918",
+        "egr-egr11999",
+        "egr-egr11908"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Emma_Mandelli",
+          "egr:emma mandelli|IT"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "x8850b47154",
+      "canonicalName": "Truls Skrettingland",
+      "aliases": [],
+      "dob": "2010-06-25",
+      "sex": "M",
+      "nationality": "NO",
+      "country": "NO",
+      "region": null,
+      "club": "Jæren golfklubb",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Truls_Skrettingland"
+          },
+          {
+            "sourceId": "egr",
+            "key": "truls skrettingland|NO"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-desert-springs-junior-championship-2026-spain",
+        "gjgl-gjg-algarve-juniors-international-2025-portugal",
+        "gjgl-lubker-junior-open-2025-denmark",
+        "egr-egr10869",
+        "egr-egr10850",
+        "egr-egr10834",
+        "egr-egr8925",
+        "egr-egr7461"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Truls_Skrettingland",
+          "egr:truls skrettingland|NO",
+          "dob:2010-06-25"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xfd09861735",
+      "canonicalName": "Tommaso Testori",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "IT",
+      "country": "IT",
+      "region": null,
+      "club": "Bogogno",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Tommaso_Testori"
+          },
+          {
+            "sourceId": "egr",
+            "key": "tommaso testori|IT"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-gjg-italian-junior-classics-2025-italy",
+        "egr-egr10271"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Tommaso_Testori",
+          "egr:tommaso testori|IT"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xbd6805fe18",
+      "canonicalName": "Margrét Jóna Eysteinsdóttir",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "IS",
+      "country": "IS",
+      "region": null,
+      "club": "Golfklúbbur Reykjavíkur",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Margrét Jóna_Eysteinsdóttir"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-desert-springs-junior-championship-2026-spain",
+        "gjgl-gjg-juniors-international-2026-portugal",
+        "gjgl-gjg-spring-junior-games-2026-portugal"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Margrét Jóna_Eysteinsdóttir"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "x9f68c35af1",
+      "canonicalName": "Leo Wrba",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "DGC Düsseldorfer Golfclub",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Leo_Wrba"
+          },
+          {
+            "sourceId": "egr",
+            "key": "leo wrba|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001174660"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-gjg-spanish-juniors-international-2026-spain",
+        "gjgl-golflodge-junior-open-2025-netherlands",
+        "gjgl-tulip-golf-challenge-2025-netherlands",
+        "egr-egr12858",
+        "egr-egr12808",
+        "egr-egr12679",
+        "egr-egr11013",
+        "egr-egr11007",
+        "egr-egr9573",
+        "egr-egr8424",
+        "egr-egr12692",
+        "egr-egr12874",
+        "egr-egr12717",
+        "egr-egr11420",
+        "egr-egr12784",
+        "dgv-dgv_490002154940",
+        "dgv-dgv_490002154955",
+        "dgv-dgv_490002281734",
+        "dgv-dgv_490002401237",
+        "dgv-dgv_490002518529",
+        "dgv-dgv_490002715694",
+        "dgv-dgv_490002751938",
+        "dgv-dgv_490002813297",
+        "dgv-dgv_490002871321",
+        "dgv-dgv_490002871324",
+        "dgv-dgv_490003047175"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-10",
+          "hcpExact": -1.1,
+          "source": "entry-list",
+          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
+        }
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Leo_Wrba",
+          "egr:leo wrba|DE",
+          "dgv:dgv-dgv490001174660"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xdd9fd32cc7",
+      "canonicalName": "Eloise Falster",
+      "aliases": [
+        "Eloise Martine Falster"
+      ],
+      "dob": "2009-11-02",
+      "sex": "F",
+      "nationality": "NO",
+      "country": "NO",
+      "region": null,
+      "club": "Oslo Golf Klubb",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Eloise Martine_Falster"
+          },
+          {
+            "sourceId": "egr",
+            "key": "eloise falster|NO"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-lubker-junior-open-2026-denmark",
+        "egr-egr8924",
+        "egr-egr8916",
+        "egr-egr8909",
+        "egr-egr8886",
+        "egr-egr7470",
+        "egr-egr7460",
+        "egr-egr12289",
+        "egr-egr12305",
+        "egr-egr12330",
+        "egr-egr12324",
+        "egr-egr12335",
+        "egr-egr12321"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Eloise Martine_Falster",
+          "egr:eloise falster|NO",
+          "dob:2009-11-02"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xff6d6264b8",
+      "canonicalName": "Anika Huang",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "DE",
+      "country": "DE",
+      "region": null,
+      "club": "Golf-Club Hamburg Walddörfer",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Anika_Huang"
+          },
+          {
+            "sourceId": "egr",
+            "key": "anika huang|DE"
+          },
+          {
+            "sourceId": "dgv",
+            "key": "dgv-dgv490001757658"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-gjg-spring-junior-games-2026-portugal",
+        "egr-egr12944",
+        "egr-egr12794",
+        "egr-egr12764",
+        "egr-egr12037",
+        "egr-egr11590",
+        "egr-egr11090",
+        "egr-egr11075",
+        "egr-egr10960",
+        "egr-egr9623",
+        "egr-egr12852",
+        "egr-egr11569",
+        "dgv-dgv_490002715693",
+        "dgv-dgv_490002871319",
+        "dgv-dgv_490002871325"
+      ],
+      "_match": {
+        "confidence": "probable",
+        "evidence": [
+          "gjgl:Anika_Huang",
+          "egr:anika huang|DE",
+          "dgv:dgv-dgv490001757658"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr",
+          "dgv"
+        ]
+      }
+    },
+    {
+      "id": "x239649200d",
+      "canonicalName": "Oliver Nymoen Stub",
+      "aliases": [],
+      "dob": "2009-09-05",
+      "sex": "M",
+      "nationality": "NO",
+      "country": "NO",
+      "region": null,
+      "club": "Gjerdrum Golfklubb",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Oliver Nymoen_Stub"
+          },
+          {
+            "sourceId": "egr",
+            "key": "oliver nymoen stub|NO"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-lubker-junior-open-2026-denmark",
+        "gjgl-lubker-juniors-international-2026-denmark",
+        "egr-egr8925",
+        "egr-egr7461",
+        "egr-egr12319",
+        "egr-egr12317",
+        "egr-egr12308",
+        "egr-egr12327",
+        "egr-egr12316",
+        "egr-egr12311",
+        "egr-egr12298",
+        "egr-egr12288",
+        "egr-egr12286",
+        "egr-egr10871",
+        "egr-egr12304",
+        "egr-egr12323",
+        "egr-egr12294",
+        "egr-egr12333",
+        "egr-egr12329"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Oliver Nymoen_Stub",
+          "egr:oliver nymoen stub|NO",
+          "dob:2009-09-05"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "egr"
+        ]
+      }
+    },
+    {
+      "id": "xae836e463b",
+      "canonicalName": "Ella Ryen-Jern",
+      "aliases": [],
+      "dob": "2009-09-13",
+      "sex": "F",
+      "nationality": "SE",
+      "country": "SE",
+      "region": null,
+      "club": "Karlskoga GK",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Ella_Ryen-Jern"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-european-spring-junior-2026-spain",
+        "gjgl-gjg-spanish-juniors-international-2026-spain",
+        "gjgl-ljunghusen-junior-games-2026-sweden"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Ella_Ryen-Jern",
+          "dob:2009-09-13"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "xdddecfdbc8",
+      "canonicalName": "Erna Steina Eysteinsdóttir",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "IS",
+      "country": "IS",
+      "region": null,
+      "club": "Golfklúbbur Reykjavíkur",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Erna Steina_Eysteinsdóttir"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "gjgl-gjg-icelandic-juniors-international-2025-iceland",
+        "gjgl-gjg-juniors-international-2026-portugal",
+        "gjgl-gjg-oom-junior-open-2026-portugal",
+        "gjgl-gjg-portuguese-juniors-international-2026-portugal",
+        "gjgl-gjg-spring-junior-games-2026-portugal",
+        "gjgl-icelandic-junior-midnight-challenge-2025-iceland"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Erna Steina_Eysteinsdóttir"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "x29b86eed23",
+      "canonicalName": "Patriks Ciaguns",
+      "aliases": [],
+      "dob": "2011-01-19",
+      "sex": "M",
+      "nationality": "LV",
+      "country": "LV",
+      "region": null,
+      "club": "Reinis Golf Club",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Patriks_Ciaguns"
+          },
+          {
+            "sourceId": "ejo",
+            "key": "ejo-gb49176610"
+          },
+          {
+            "sourceId": "ejt",
+            "key": "ejt-gb49559467"
+          },
+          {
+            "sourceId": "egr",
+            "key": "patriks ciaguns|LV"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-bogogno-international-junior-open-2026-italy",
+        "ejo-ejo_2026",
+        "ejt-ejt5_2026",
+        "egr-egr12414",
+        "egr-egr12422",
+        "egr-egr12880",
+        "egr-egr12870"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Patriks_Ciaguns",
+          "ejo:ejo-gb49176610",
+          "ejt:ejt-gb49559467",
+          "egr:patriks ciaguns|LV",
+          "dob:2011-01-19"
+        ],
+        "mergedFromSources": [
+          "gjgl",
+          "ejo",
+          "ejt",
           "egr"
         ]
       }
@@ -1550341,49 +1551553,6 @@
         "evidence": [
           "gjgl:Albert Lose_Burgaard",
           "egr:albert lose burgaard|DK"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x82fe6d04e0",
-      "canonicalName": "Oscar Sundvor",
-      "aliases": [],
-      "dob": "2012-05-28",
-      "sex": "M",
-      "nationality": "NO",
-      "country": "NO",
-      "region": null,
-      "club": "Sola Golfklub",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Oscar_Sundvor"
-          },
-          {
-            "sourceId": "egr",
-            "key": "oscar sundvor|NO"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-danish-junior-games-2026-denmark",
-        "egr-egr12755",
-        "egr-egr10869",
-        "egr-egr10850",
-        "egr-egr10834",
-        "egr-egr12325"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Oscar_Sundvor",
-          "egr:oscar sundvor|NO",
-          "dob:2012-05-28"
         ],
         "mergedFromSources": [
           "gjgl",
@@ -1555611,51 +1556780,6 @@
       }
     },
     {
-      "id": "x8850b47154",
-      "canonicalName": "Truls Skrettingland",
-      "aliases": [],
-      "dob": "2010-06-25",
-      "sex": "M",
-      "nationality": "NO",
-      "country": "NO",
-      "region": null,
-      "club": "Jæren golfklubb",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Truls_Skrettingland"
-          },
-          {
-            "sourceId": "egr",
-            "key": "truls skrettingland|NO"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-desert-springs-junior-championship-2026-spain",
-        "gjgl-gjg-algarve-juniors-international-2025-portugal",
-        "gjgl-lubker-junior-open-2025-denmark",
-        "egr-egr10869",
-        "egr-egr10850",
-        "egr-egr10834",
-        "egr-egr8925",
-        "egr-egr7461"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Truls_Skrettingland",
-          "egr:truls skrettingland|NO",
-          "dob:2010-06-25"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x7b790b390c",
       "canonicalName": "Axel Lenander",
       "aliases": [],
@@ -1555691,39 +1556815,6 @@
         "mergedFromSources": [
           "gjgl",
           "coc"
-        ]
-      }
-    },
-    {
-      "id": "xbd6805fe18",
-      "canonicalName": "Margrét Jóna Eysteinsdóttir",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "IS",
-      "country": "IS",
-      "region": null,
-      "club": "Golfklúbbur Reykjavíkur",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Margrét Jóna_Eysteinsdóttir"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-desert-springs-junior-championship-2026-spain",
-        "gjgl-gjg-juniors-international-2026-portugal",
-        "gjgl-gjg-spring-junior-games-2026-portugal"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Margrét Jóna_Eysteinsdóttir"
-        ],
-        "mergedFromSources": [
-          "gjgl"
         ]
       }
     },
@@ -1559709,40 +1560800,6 @@
       }
     },
     {
-      "id": "xae836e463b",
-      "canonicalName": "Ella Ryen-Jern",
-      "aliases": [],
-      "dob": "2009-09-13",
-      "sex": "F",
-      "nationality": "SE",
-      "country": "SE",
-      "region": null,
-      "club": "Karlskoga GK",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Ella_Ryen-Jern"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-european-spring-junior-2026-spain",
-        "gjgl-gjg-spanish-juniors-international-2026-spain",
-        "gjgl-ljunghusen-junior-games-2026-sweden"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Ella_Ryen-Jern",
-          "dob:2009-09-13"
-        ],
-        "mergedFromSources": [
-          "gjgl"
-        ]
-      }
-    },
-    {
       "id": "x318def09d4",
       "canonicalName": "Oscar Tegeback",
       "aliases": [],
@@ -1561778,6 +1562835,7 @@
         "gjgl-gjg-italian-juniors-international-2026",
         "gjgl-gjg-season-kickoff-2026-spain",
         "gjgl-lubker-junior-open-2025-denmark",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "ejo-ejo_2024",
         "ejo-ejo_2025",
         "ejo-ejo_2026",
@@ -1569726,42 +1570784,6 @@
       }
     },
     {
-      "id": "xdddecfdbc8",
-      "canonicalName": "Erna Steina Eysteinsdóttir",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "IS",
-      "country": "IS",
-      "region": null,
-      "club": "Golfklúbbur Reykjavíkur",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Erna Steina_Eysteinsdóttir"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-gjg-icelandic-juniors-international-2025-iceland",
-        "gjgl-gjg-juniors-international-2026-portugal",
-        "gjgl-gjg-oom-junior-open-2026-portugal",
-        "gjgl-gjg-portuguese-juniors-international-2026-portugal",
-        "gjgl-gjg-spring-junior-games-2026-portugal",
-        "gjgl-icelandic-junior-midnight-challenge-2025-iceland"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Erna Steina_Eysteinsdóttir"
-        ],
-        "mergedFromSources": [
-          "gjgl"
-        ]
-      }
-    },
-    {
       "id": "x7c9d127da4",
       "canonicalName": "Tryggvi Jonsson",
       "aliases": [
@@ -1571434,6 +1572456,7 @@
         "gjgl-gjg-junior-trophy-2025-portugal",
         "gjgl-gjg-portuguese-junior-classics-2025-portugal",
         "gjgl-mid-summer-juniors-international-2026-germany",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "gjgl-weareglobaljuniorgolf-open-2026-portugal",
         "eym-eym_2025",
         "egr-egr10397",
@@ -1572088,44 +1573111,6 @@
       }
     },
     {
-      "id": "xfd09861735",
-      "canonicalName": "Tommaso Testori",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "IT",
-      "country": "IT",
-      "region": null,
-      "club": "Bogogno",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Tommaso_Testori"
-          },
-          {
-            "sourceId": "egr",
-            "key": "tommaso testori|IT"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-gjg-italian-junior-classics-2025-italy",
-        "egr-egr10271"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "gjgl:Tommaso_Testori",
-          "egr:tommaso testori|IT"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "xc12324a3b2",
       "canonicalName": "Laurin Meusel",
       "aliases": [],
@@ -1572535,6 +1573520,7 @@
         "gjgl-gjg-italian-juniors-international-2026",
         "gjgl-lubker-junior-open-2025-denmark",
         "gjgl-next-golf-estonian-challenge-2026",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "ejo-ejo_2023",
         "ejo-ejo_2024",
         "ejo-ejo_2026",
@@ -1572688,6 +1573674,7 @@
       "tournamentIds": [
         "gjgl-gjg-italian-juniors-international-2026",
         "gjgl-holbox-junior-open-2025-netherlands",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "egr-egr12471",
         "egr-egr12462",
         "egr-egr12447",
@@ -1574470,233 +1575457,6 @@
         ],
         "mergedFromSources": [
           "gjgl"
-        ]
-      }
-    },
-    {
-      "id": "x82b0e23b51",
-      "canonicalName": "Loore Filipjev",
-      "aliases": [],
-      "dob": "2012-04-04",
-      "sex": "F",
-      "nationality": "EE",
-      "country": "EE",
-      "region": null,
-      "club": "Estonian Golf & Country Club",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Loore_Filipjev"
-          },
-          {
-            "sourceId": "ejo",
-            "key": "ejo-gb38040605"
-          },
-          {
-            "sourceId": "ejo",
-            "key": "ejo-gb43180326"
-          },
-          {
-            "sourceId": "ejo",
-            "key": "ejo-gb49233301"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb29076447"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb33089408"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb37287404"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb41405188"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb47692310"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb37665596"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb48230062"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb34079164"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb38040169"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb42184906"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb48230091"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb29040562"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb34079166"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb38040222"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb43177658"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb48230113"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb29040516"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb34079170"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb38040810"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb43178066"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb48230138"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb29874491"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb34079173"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb38554807"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb43178126"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb49660603"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb29040568"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb44855372"
-          },
-          {
-            "sourceId": "egr",
-            "key": "loore filipjev|EE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-gjg-latvia-juniors-international-2026-latvia",
-        "gjgl-next-golf-estonian-challenge-2026",
-        "ejo-ejo_2024",
-        "ejo-ejo_2025",
-        "ejo-ejo_2026",
-        "ejt-ejt1_2022",
-        "ejt-ejt1_2023",
-        "ejt-ejt1_2024",
-        "ejt-ejt1_2025",
-        "ejt-ejt1_2026",
-        "ejt-ejt2_2024",
-        "ejt-ejt2_2026",
-        "ejt-ejt3_2023",
-        "ejt-ejt3_2024",
-        "ejt-ejt3_2025",
-        "ejt-ejt3_2026",
-        "ejt-ejt4_2022",
-        "ejt-ejt4_2023",
-        "ejt-ejt4_2024",
-        "ejt-ejt4_2025",
-        "ejt-ejt4_2026",
-        "ejt-ejt5_2022",
-        "ejt-ejt5_2023",
-        "ejt-ejt5_2024",
-        "ejt-ejt5_2025",
-        "ejt-ejt5_2026",
-        "ejt-ejt6_2022",
-        "ejt-ejt6_2023",
-        "ejt-ejt6_2024",
-        "ejt-ejt6_2025",
-        "ejt-ejt6_2026",
-        "ejt-ejt7_2022",
-        "ejt-ejt7_2025"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Loore_Filipjev",
-          "ejo:ejo-gb38040605",
-          "ejo:ejo-gb43180326",
-          "ejo:ejo-gb49233301",
-          "ejt:ejt-gb29076447",
-          "ejt:ejt-gb33089408",
-          "ejt:ejt-gb37287404",
-          "ejt:ejt-gb41405188",
-          "ejt:ejt-gb47692310",
-          "ejt:ejt-gb37665596",
-          "ejt:ejt-gb48230062",
-          "ejt:ejt-gb34079164",
-          "ejt:ejt-gb38040169",
-          "ejt:ejt-gb42184906",
-          "ejt:ejt-gb48230091",
-          "ejt:ejt-gb29040562",
-          "ejt:ejt-gb34079166",
-          "ejt:ejt-gb38040222",
-          "ejt:ejt-gb43177658",
-          "ejt:ejt-gb48230113",
-          "ejt:ejt-gb29040516",
-          "ejt:ejt-gb34079170",
-          "ejt:ejt-gb38040810",
-          "ejt:ejt-gb43178066",
-          "ejt:ejt-gb48230138",
-          "ejt:ejt-gb29874491",
-          "ejt:ejt-gb34079173",
-          "ejt:ejt-gb38554807",
-          "ejt:ejt-gb43178126",
-          "ejt:ejt-gb49660603",
-          "ejt:ejt-gb29040568",
-          "ejt:ejt-gb44855372",
-          "egr:loore filipjev|EE",
-          "dob:2012-04-04"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "ejo",
-          "ejt",
-          "egr"
         ]
       }
     },
@@ -1580759,6 +1581519,7 @@
         "gjgl-gjg-season-kickoff-2026-spain",
         "gjgl-lubker-junior-open-2025-denmark",
         "gjgl-next-golf-estonian-challenge-2026",
+        "gjgl-vaudreuil-junior-challenge-2026-france",
         "ejo-ejo_2023",
         "ejo-ejo_2025",
         "ejo-ejo_2026",
@@ -1581876,82 +1582637,6 @@
       }
     },
     {
-      "id": "x9f68c35af1",
-      "canonicalName": "Leo Wrba",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "DGC Düsseldorfer Golfclub",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Leo_Wrba"
-          },
-          {
-            "sourceId": "egr",
-            "key": "leo wrba|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001174660"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-gjg-spanish-juniors-international-2026-spain",
-        "gjgl-golflodge-junior-open-2025-netherlands",
-        "gjgl-tulip-golf-challenge-2025-netherlands",
-        "egr-egr12858",
-        "egr-egr12808",
-        "egr-egr12679",
-        "egr-egr11013",
-        "egr-egr11007",
-        "egr-egr9573",
-        "egr-egr8424",
-        "egr-egr12692",
-        "egr-egr12874",
-        "egr-egr12717",
-        "egr-egr11420",
-        "egr-egr12784",
-        "dgv-dgv_490002154940",
-        "dgv-dgv_490002154955",
-        "dgv-dgv_490002281734",
-        "dgv-dgv_490002401237",
-        "dgv-dgv_490002518529",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002751938",
-        "dgv-dgv_490002813297",
-        "dgv-dgv_490002871321",
-        "dgv-dgv_490002871324",
-        "dgv-dgv_490003047175"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-10-10",
-          "hcpExact": -1.1,
-          "source": "entry-list",
-          "label": "DMM AK 18 Jungen — Rapazes (DGV, Startliste 10/10/2026)"
-        }
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "gjgl:Leo_Wrba",
-          "egr:leo wrba|DE",
-          "dgv:dgv-dgv490001174660"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
       "id": "x1a0e7654e7",
       "canonicalName": "Linda Wöhler-Moorhoff",
       "aliases": [],
@@ -1582053,63 +1582738,6 @@
         ],
         "mergedFromSources": [
           "gjgl"
-        ]
-      }
-    },
-    {
-      "id": "xff6d6264b8",
-      "canonicalName": "Anika Huang",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Golf-Club Hamburg Walddörfer",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Anika_Huang"
-          },
-          {
-            "sourceId": "egr",
-            "key": "anika huang|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001757658"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-gjg-spring-junior-games-2026-portugal",
-        "egr-egr12944",
-        "egr-egr12794",
-        "egr-egr12764",
-        "egr-egr12037",
-        "egr-egr11590",
-        "egr-egr11090",
-        "egr-egr11075",
-        "egr-egr10960",
-        "egr-egr9623",
-        "egr-egr12852",
-        "egr-egr11569",
-        "dgv-dgv_490002715693",
-        "dgv-dgv_490002871319",
-        "dgv-dgv_490002871325"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "gjgl:Anika_Huang",
-          "egr:anika huang|DE",
-          "dgv:dgv-dgv490001757658"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr",
-          "dgv"
         ]
       }
     },
@@ -1591359,62 +1591987,6 @@
       }
     },
     {
-      "id": "x239649200d",
-      "canonicalName": "Oliver Nymoen Stub",
-      "aliases": [],
-      "dob": "2009-09-05",
-      "sex": "M",
-      "nationality": "NO",
-      "country": "NO",
-      "region": null,
-      "club": "Gjerdrum Golfklubb",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Oliver Nymoen_Stub"
-          },
-          {
-            "sourceId": "egr",
-            "key": "oliver nymoen stub|NO"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-lubker-junior-open-2026-denmark",
-        "gjgl-lubker-juniors-international-2026-denmark",
-        "egr-egr8925",
-        "egr-egr7461",
-        "egr-egr12319",
-        "egr-egr12317",
-        "egr-egr12308",
-        "egr-egr12327",
-        "egr-egr12316",
-        "egr-egr12311",
-        "egr-egr12298",
-        "egr-egr12288",
-        "egr-egr12286",
-        "egr-egr10871",
-        "egr-egr12304",
-        "egr-egr12323",
-        "egr-egr12294",
-        "egr-egr12333",
-        "egr-egr12329"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Oliver Nymoen_Stub",
-          "egr:oliver nymoen stub|NO",
-          "dob:2009-09-05"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "xd7d1ff2187",
       "canonicalName": "Thomas Lauridsen",
       "aliases": [],
@@ -1591508,58 +1592080,6 @@
         ],
         "mergedFromSources": [
           "gjgl"
-        ]
-      }
-    },
-    {
-      "id": "xdd9fd32cc7",
-      "canonicalName": "Eloise Falster",
-      "aliases": [
-        "Eloise Martine Falster"
-      ],
-      "dob": "2009-11-02",
-      "sex": "F",
-      "nationality": "NO",
-      "country": "NO",
-      "region": null,
-      "club": "Oslo Golf Klubb",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Eloise Martine_Falster"
-          },
-          {
-            "sourceId": "egr",
-            "key": "eloise falster|NO"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-lubker-junior-open-2026-denmark",
-        "egr-egr8924",
-        "egr-egr8916",
-        "egr-egr8909",
-        "egr-egr8886",
-        "egr-egr7470",
-        "egr-egr7460",
-        "egr-egr12289",
-        "egr-egr12305",
-        "egr-egr12330",
-        "egr-egr12324",
-        "egr-egr12335",
-        "egr-egr12321"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Eloise Martine_Falster",
-          "egr:eloise falster|NO",
-          "dob:2009-11-02"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
         ]
       }
     },
@@ -1592401,37 +1592921,6 @@
       }
     },
     {
-      "id": "xaa4918bb11",
-      "canonicalName": "Charlota Kozáková",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "CZ",
-      "country": "CZ",
-      "region": null,
-      "club": "Galerie Hostivař",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Charlota_Kozáková"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-magix-moments-junior-international-2026-germany"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "gjgl:Charlota_Kozáková"
-        ],
-        "mergedFromSources": [
-          "gjgl"
-        ]
-      }
-    },
-    {
       "id": "xf04868f38f",
       "canonicalName": "Charlotte Wilhelm",
       "aliases": [],
@@ -1592474,6 +1592963,37 @@
           "gjgl",
           "egr",
           "dgv"
+        ]
+      }
+    },
+    {
+      "id": "xaa4918bb11",
+      "canonicalName": "Charlota Kozáková",
+      "aliases": [],
+      "dob": null,
+      "sex": "F",
+      "nationality": "CZ",
+      "country": "CZ",
+      "region": null,
+      "club": "Galerie Hostivař",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Charlota_Kozáková"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-magix-moments-junior-international-2026-germany"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Charlota_Kozáková"
+        ],
+        "mergedFromSources": [
+          "gjgl"
         ]
       }
     },
@@ -1592868,44 +1593388,6 @@
         "evidence": [
           "gjgl:Gabriel Arthur_Kurt",
           "egr:gabriel arthur kurt|CH"
-        ],
-        "mergedFromSources": [
-          "gjgl",
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "xa4db5c5a8d",
-      "canonicalName": "Stylianos Kavvadas",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "GR",
-      "country": "GR",
-      "region": null,
-      "club": "Golf Club Glifadas",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "gjgl",
-            "key": "Stylianos_Kavvadas"
-          },
-          {
-            "sourceId": "egr",
-            "key": "stylianos kavvadas|GR"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "gjgl-migros-golfcard-gjg-international-2026-switzerland",
-        "egr-egr12428"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "gjgl:Stylianos_Kavvadas",
-          "egr:stylianos kavvadas|GR"
         ],
         "mergedFromSources": [
           "gjgl",
@@ -1598202,6 +1598684,131 @@
         "mergedFromSources": [
           "gjgl",
           "egr"
+        ]
+      }
+    },
+    {
+      "id": "xd3d68591ad",
+      "canonicalName": "Paul Maissonneuve",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Vaudreuil",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Paul_Maissonneuve"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-vaudreuil-junior-challenge-2026-france"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Paul_Maissonneuve"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "x7b226c769e",
+      "canonicalName": "Clara Gervoson",
+      "aliases": [],
+      "dob": "2008-10-30",
+      "sex": "F",
+      "nationality": "SE",
+      "country": "SE",
+      "region": null,
+      "club": "Lidingö Golf Club",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Clara_Gervoson"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-vaudreuil-junior-challenge-2026-france"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Clara_Gervoson",
+          "dob:2008-10-30"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "xe731058492",
+      "canonicalName": "Mathis Lesieur",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "golf des Yvelines",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Mathis_Lesieur"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-vaudreuil-junior-challenge-2026-france"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Mathis_Lesieur"
+        ],
+        "mergedFromSources": [
+          "gjgl"
+        ]
+      }
+    },
+    {
+      "id": "x245078381b",
+      "canonicalName": "Martin Demarez",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": null,
+      "club": "Le Vaudreuil",
+      "sources": {
+        "_secondary": [
+          {
+            "sourceId": "gjgl",
+            "key": "Martin_Demarez"
+          }
+        ]
+      },
+      "tournamentIds": [
+        "gjgl-vaudreuil-junior-challenge-2026-france"
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "gjgl:Martin_Demarez"
+        ],
+        "mergedFromSources": [
+          "gjgl"
         ]
       }
     },
@@ -1714541,55 +1715148,6 @@
       }
     },
     {
-      "id": "x29b86eed23",
-      "canonicalName": "Patriks Ciaguns",
-      "aliases": [],
-      "dob": "2011-01-19",
-      "sex": "M",
-      "nationality": "LV",
-      "country": "LV",
-      "region": null,
-      "club": "Reinis Golf Club",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "ejo",
-            "key": "ejo-gb49176610"
-          },
-          {
-            "sourceId": "ejt",
-            "key": "ejt-gb49559467"
-          },
-          {
-            "sourceId": "egr",
-            "key": "patriks ciaguns|LV"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "ejo-ejo_2026",
-        "ejt-ejt5_2026",
-        "egr-egr12414",
-        "egr-egr12422",
-        "egr-egr12880",
-        "egr-egr12870"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ejo:ejo-gb49176610",
-          "ejt:ejt-gb49559467",
-          "egr:patriks ciaguns|LV",
-          "dob:2011-01-19"
-        ],
-        "mergedFromSources": [
-          "ejo",
-          "ejt",
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "xb428ca83d2",
       "canonicalName": "Max Ingman",
       "aliases": [],
@@ -1734356,62 +1734914,6 @@
         "evidence": [
           "egr:eashaan gaur|DE",
           "dgv:dgv-dgv490001369847"
-        ],
-        "mergedFromSources": [
-          "egr",
-          "dgv"
-        ]
-      }
-    },
-    {
-      "id": "x248fc36a9c",
-      "canonicalName": "Carl Verse",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "DE",
-      "country": "DE",
-      "region": null,
-      "club": "Mannheim-Viernheim",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "carl verse|DE"
-          },
-          {
-            "sourceId": "dgv",
-            "key": "dgv-dgv490001508926"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12707",
-        "egr-egr12703",
-        "egr-egr12737",
-        "egr-egr11030",
-        "egr-egr11026",
-        "egr-egr11022",
-        "egr-egr9683",
-        "egr-egr9680",
-        "egr-egr8187",
-        "egr-egr11538",
-        "egr-egr12713",
-        "egr-egr12855",
-        "dgv-dgv_490002154940",
-        "dgv-dgv_490002281617",
-        "dgv-dgv_490002401234",
-        "dgv-dgv_490002401280",
-        "dgv-dgv_490002715694",
-        "dgv-dgv_490002751938",
-        "dgv-dgv_490002871320",
-        "dgv-dgv_490002871328"
-      ],
-      "_match": {
-        "confidence": "probable",
-        "evidence": [
-          "egr:carl verse|DE",
-          "dgv:dgv-dgv490001508926"
         ],
         "mergedFromSources": [
           "egr",
@@ -1807100,63 +1807602,6 @@
       }
     },
     {
-      "id": "x735e7abe3d",
-      "canonicalName": "Margherita Di Martino",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "IT",
-      "country": "IT",
-      "region": null,
-      "club": "Olgiata",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "margherita di martino|IT"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr11970",
-        "egr-egr12786",
-        "egr-egr11934",
-        "egr-egr10323",
-        "egr-egr11384",
-        "egr-egr10270",
-        "egr-egr10405",
-        "egr-egr9455",
-        "egr-egr9567",
-        "egr-egr7583",
-        "egr-egr11766",
-        "egr-egr11657",
-        "egr-egr11902",
-        "egr-egr11910",
-        "egr-egr10228",
-        "egr-egr10318",
-        "egr-egr11957",
-        "egr-egr11981",
-        "egr-egr11950",
-        "egr-egr11980",
-        "egr-egr12003",
-        "egr-egr11918",
-        "egr-egr11912",
-        "egr-egr10232",
-        "egr-egr11994",
-        "egr-egr11930",
-        "egr-egr11916"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:margherita di martino|IT"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
       "id": "x3eb82396f4",
       "canonicalName": "Aisha Nouioui",
       "aliases": [],
@@ -1807566,39 +1808011,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:aita schenk|CH"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x102b0ecccd",
-      "canonicalName": "Isabella Rainalter",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "CH",
-      "country": "CH",
-      "region": null,
-      "club": "Ascona",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "isabella rainalter|CH"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12465",
-        "egr-egr12452",
-        "egr-egr12444"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:isabella rainalter|CH"
         ],
         "mergedFromSources": [
           "egr"
@@ -1822472,55 +1822884,6 @@
         "confidence": "strong",
         "evidence": [
           "egr:costanza severina chiono|IT"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x168889a8c5",
-      "canonicalName": "Emma Mandelli",
-      "aliases": [],
-      "dob": null,
-      "sex": "F",
-      "nationality": "IT",
-      "country": "IT",
-      "region": null,
-      "club": "Monticello",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "emma mandelli|IT"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr12786",
-        "egr-egr11932",
-        "egr-egr10323",
-        "egr-egr11384",
-        "egr-egr10270",
-        "egr-egr10267",
-        "egr-egr10257",
-        "egr-egr9453",
-        "egr-egr9567",
-        "egr-egr7583",
-        "egr-egr11956",
-        "egr-egr11902",
-        "egr-egr11962",
-        "egr-egr11935",
-        "egr-egr11894",
-        "egr-egr11977",
-        "egr-egr11918",
-        "egr-egr11999",
-        "egr-egr11908"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:emma mandelli|IT"
         ],
         "mergedFromSources": [
           "egr"
@@ -1874900,44 +1875263,6 @@
         "evidence": [
           "egr:hugo livin|BE",
           "dob:2007-07-26"
-        ],
-        "mergedFromSources": [
-          "egr"
-        ]
-      }
-    },
-    {
-      "id": "x2d61c921ba",
-      "canonicalName": "Maximilian Mc Kinney",
-      "aliases": [],
-      "dob": "2009-01-05",
-      "sex": "M",
-      "nationality": "BE",
-      "country": "BE",
-      "region": null,
-      "club": "National Brussels",
-      "sources": {
-        "_secondary": [
-          {
-            "sourceId": "egr",
-            "key": "maximilian mc kinney|BE"
-          }
-        ]
-      },
-      "tournamentIds": [
-        "egr-egr10475",
-        "egr-egr10473",
-        "egr-egr10467",
-        "egr-egr10463",
-        "egr-egr11758",
-        "egr-egr11756",
-        "egr-egr12917"
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "egr:maximilian mc kinney|BE",
-          "dob:2009-01-05"
         ],
         "mergedFromSources": [
           "egr"
@@ -2223111,15 +2223436,15 @@
     }
   ],
   "stats": {
-    "total": 38537,
+    "total": 38542,
     "droppedNoTourn": 32575,
-    "strong": 34806,
-    "probable": 3731,
+    "strong": 34808,
+    "probable": 3734,
     "manual": 0,
-    "strongMerges": 9001,
-    "probableMerges": 16802,
+    "strongMerges": 9006,
+    "probableMerges": 16813,
     "manualMerges": 856,
-    "collisionMerges": 190,
+    "collisionMerges": 191,
     "collisionSplits": 4
   }
 }
