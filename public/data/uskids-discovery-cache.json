@@ -1,17 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22959,
-      "name": "International Teen Series at Somabay Golf (EG)",
-      "date_inicio": "9/25/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 3,
-      "campo": "Somabay Golf",
-      "fee_18": "205.00",
-      "tour": "International Teen Series Tour",
-      "type": 13
-    },
-    {
       "t": 22480,
       "name": "Belgium Invitational 2026",
       "date_inicio": "9/26/2026",
@@ -2113,6 +2102,17 @@
       "type": 6
     },
     {
+      "t": 23855,
+      "name": "Uganda Golf Club (Tour Championship)",
+      "date_inicio": "2/28/2027",
+      "date_fim": "2/28/2027",
+      "rondas": 1,
+      "campo": "Uganda Golf Club",
+      "fee_18": "35.00",
+      "tour": "Uganda (UG) Tour",
+      "type": 6
+    },
+    {
       "t": 23816,
       "name": "Club Campestre de Puebla (Tour Championship)",
       "date_inicio": "3/6/2027",
@@ -2190,19 +2190,19 @@
       "type": 8
     }
   ],
-  "gerado_em": "2026-10-25T12:25:20.779Z",
-  "varredura_max_t": 23849,
+  "gerado_em": "2026-10-26T13:59:12.642Z",
+  "varredura_max_t": 23855,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 40,
-    "novos": 0,
+    "pedidos": 46,
+    "novos": 1,
     "buracos_revistos": 0,
-    "catalogo": 1543,
+    "catalogo": 1549,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23849,
-  "fronteira_avancou_em": "2026-10-24",
-  "dias_sem_descoberta": 1,
-  "dias_sem_avanco": 1,
-  "ultima_descoberta": "2026-10-24"
+  "fronteira_max_t_visto": 23855,
+  "fronteira_avancou_em": "2026-10-26",
+  "dias_sem_descoberta": 0,
+  "dias_sem_avanco": 0,
+  "ultima_descoberta": "2026-10-26"
 }
