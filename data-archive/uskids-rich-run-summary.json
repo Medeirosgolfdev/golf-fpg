@@ -1,13 +1,15 @@
 {
-  "generatedAt": "2026-10-19T12:18:28.441Z",
-  "midsProcessed": 4719,
-  "careersFetched": 4630,
-  "tcodesEnriched": 4741,
-  "filesWritten": 2501,
-  "filesUnchanged": 2129,
+  "generatedAt": "2026-10-26T12:19:50.305Z",
+  "midsProcessed": 3085,
+  "careersFetched": 3058,
+  "tcodesEnriched": 9914,
+  "filesWritten": 446,
+  "filesUnchanged": 398,
+  "filesSkippedIncomplete": 2213,
+  "filesRefusedShrink": 1,
+  "stoppedByRefusal": null,
   "config": {
     "sinceDays": 14,
-    "concurrency": 4,
     "forceRebuild": false
   }
 }
