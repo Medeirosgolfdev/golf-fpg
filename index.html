@@ -5,8 +5,8 @@
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>%F0%9F%8F%8C%EF%B8%8F</text></svg>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Golf Junior</title>
-    <!-- Preload critical data files (start download before JS parses) -->
-    <link rel="preload" href="/data/master-courses.json" as="fetch" crossorigin />
+    <!-- Preload critical data files (start download before JS parses).
+         Só o players.json: os campos saíram do arranque a 21/10 (3a980d98a6). -->
     <link rel="preload" href="/data/players.json" as="fetch" crossorigin />
   </head>
   <body>
