@@ -15,8 +15,8 @@
  *
  * `preserveTeesheet(outPath, fresh)` lê o ficheiro existente em outPath e
  * copia para `fresh` o que o scrape novo não traz. Mutação in-place; devolve
- * `{ draws, hcps }` (nº de rondas de draw preservadas e hcps re-aplicados)
- * para logging — ambos 0 quando não havia nada a preservar.
+ * `{ draws, hcps, nome?, divisions?, datas? }` (o que foi preservado) para
+ * logging — 0/ausente quando não havia nada a preservar.
  */
 const fs = require("fs");
 
@@ -56,6 +56,33 @@ function preserveTeesheet(outPath, fresh) {
   if (existing.course && existing.course.name && (!fresh.course || !fresh.course.name)) {
     fresh.course = fresh.course || {};
     fresh.course.name = existing.course.name;
+  }
+
+  // Nome do escalão, fases e datas das voltas (26/10/2026): a rota Playwright
+  // (scrape-ffgolf.js) não os lê em todos os eventos — gravava o slug como nome
+  // («championnat-de-france-des-jeunes-u12-garcons…» em vez de «CFJ - U12
+  // Garçons»), `divisions` vazio e voltas sem data, até a rota fetch da noite
+  // os repor. Ficam os do ficheiro anterior quando o scrape novo não os tem.
+  if (existing.tournament && (!fresh.tournament || fresh.tournament === fresh.slug) && existing.tournament !== existing.slug) {
+    fresh.tournament = existing.tournament;
+    stats.nome = 1;
+  }
+  if (Array.isArray(existing.divisions) && existing.divisions.length && !(Array.isArray(fresh.divisions) && fresh.divisions.length)) {
+    fresh.divisions = existing.divisions;
+    stats.divisions = existing.divisions.length;
+  }
+  const prevById = new Map((existing.players || []).map((p) => [p.id || nameKey(p.name), p]));
+  for (const p of fresh.players || []) {
+    const prev = prevById.get(p.id || nameKey(p.name)) || prevById.get(nameKey(p.name));
+    if (!prev) continue;
+    for (const r of p.rounds || []) {
+      if (r.dateIso) continue;
+      const pr = (prev.rounds || []).find((x) => x.round === r.round);
+      if (!pr || !pr.dateIso) continue;
+      if (!r.date && pr.date) r.date = pr.date;
+      r.dateIso = pr.dateIso;
+      stats.datas = (stats.datas || 0) + 1;
+    }
   }
 
   // hcp por nome normalizado: dos players antigos E dos draws (a tee sheet é

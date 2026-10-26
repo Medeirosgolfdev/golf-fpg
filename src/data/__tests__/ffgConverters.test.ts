@@ -119,11 +119,15 @@ describe("GolfGenius — Championnat de France des Jeunes 2026", () => {
 
   it("U12 Garçons: leaderboard, bracket e draw", () => {
     const g = members.find((m) => m.meta.slug.includes("u12-garcons"))!.data;
+    // Quem só jogou a 1.ª volta (Arthur Boue, 85) vai para o fim e sem lugar —
+    // até 26/10/2026 aparecia em 1.º, acima do vencedor (140 em duas voltas).
+    const boue = toFPGTournament(g).players.find((p) => /boue/i.test(p.name));
+    expect([boue?.pos ?? null, boue?.roundScores?.length]).toEqual([null, 1]);
     expect(top(toFPGTournament(g))).toMatchInlineSnapshot(`
       [
-        "1 | Arthur Boue | GOLF DE L'ECOLE DE L'AIR | 85 | null | 18 | 71 | Jaunes | 1",
         "1 | Maxence Le Theo | GOLF BORDELAIS | 140 | -2 | 18 | 71 | Jaunes | 2",
         "2 | Arthur Rolland | GOLF DE VALESCURE | 141 | -1 | 18 | 71 | Jaunes | 2",
+        "3 | Guilain Houssais | GOLF DE PRUNEVELLE | 142 | 0 | 18 | 71 | Jaunes | 2",
       ]
     `);
     const mp = buildFfgMatchplay(g);

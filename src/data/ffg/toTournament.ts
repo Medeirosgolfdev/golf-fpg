@@ -161,9 +161,14 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
 
 /* ── Adaptador FFG → FPGTournament (para reusar IntlTournView) ── */
 export function toFPGTournament(t: FFGTournament): FPGTournament {
-  // Ordenar primeiro por total ascendente (pode estar fora de ordem nos JSONs antigos)
-  // e atribuir pos sequencial se vier null
+  // Ordenar: primeiro quem jogou mais voltas, depois o total ascendente (pode
+  // estar fora de ordem nos JSONs antigos). Só pelo total, quem desistiu depois
+  // da 1.ª volta ficava à frente do vencedor (CFJ 2026 U12 Garçons: Arthur Boue,
+  // 85 numa volta, aparecia em 1.º acima de 140 em duas — 26/10/2026).
+  const nVoltas = (p: FFGTournament["players"][number]) => (p.rounds || []).length;
+  const maxVoltas = Math.max(0, ...t.players.map(nVoltas));
   const sorted = [...t.players].sort((a, b) => {
+    if (nVoltas(a) !== nVoltas(b)) return nVoltas(b) - nVoltas(a);
     if (a.total == null) return 1;
     if (b.total == null) return -1;
     return a.total - b.total;
@@ -190,8 +195,9 @@ export function toFPGTournament(t: FFGTournament): FPGTournament {
     },
     sorted.map((p, idx): IntlPlayerIn => ({
       id: p.id,
-      // Position: usar p.pos se válido, senão idx+1
-      pos: (typeof p.pos === "number" && p.pos > 0) ? p.pos : (idx + 1),
+      // Position: usar p.pos se válido; sem ele, a ordem só para quem jogou
+      // todas as voltas — quem não as acabou fica sem lugar (não «1.º»).
+      pos: (typeof p.pos === "number" && p.pos > 0) ? p.pos : (nVoltas(p) === maxVoltas ? idx + 1 : null),
       name: normalizeName(p.name),
       club: p.country ? intlCountryCell(p.country, p.club || normPaisDisplay(p.country)) : p.club,
       total: p.total,

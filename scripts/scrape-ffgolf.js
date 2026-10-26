@@ -1420,6 +1420,7 @@ function parseArgs(argv) {
         // re-scrape do leaderboard não os traz e apagava-os (caso CFJ U12 2026).
         const kept = preserveTeesheet(outPath, result);
         if (kept.draws || kept.hcps) console.log("   tee sheet preservado: " + kept.draws + " ronda(s) de draw, " + kept.hcps + " hcp(s)");
+        if (kept.nome || kept.divisions || kept.datas) console.log("   do ficheiro anterior: " + [kept.nome && "nome", kept.divisions && kept.divisions + " fase(s)", kept.datas && kept.datas + " data(s) de volta"].filter(Boolean).join(", "));
         // dateStart/dateEnd — a rota Playwright não os traz (só a rota fetch).
         // Derivar dos draws preservados (dateIso) e, à falta deles, herdar do
         // ficheiro anterior — sem data o torneio cai para o fundo da sidebar.
