@@ -1,0 +1,256 @@
+{
+  "tourId": 74803,
+  "url": "https://www.nextcaddy.com/tour/74803",
+  "scrapedAt": "2026-10-26T09:52:46.287Z",
+  "meta": {
+    "name": "ESCUELA COMPETICIÓN 9 HOYOS",
+    "organizer": null,
+    "course": "Real Club Pineda de Sevilla",
+    "courseCode": "AM02",
+    "dateStart": "2026-10-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "categories": [
+      "Caballeros",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-25",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucas Garcia Garcia",
+          "licencia": "AM02478496",
+          "hcp": 47.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": -11,
+          "inscribedId": 2433790
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "licencia": "AM02488032",
+          "hcp": 48.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2433792
+        },
+        {
+          "pos": 3,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "licencia": "AM02466106",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2433789
+        },
+        {
+          "pos": 4,
+          "name": "Clara Sanchez Paredes",
+          "licencia": "AM02998408",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2433794
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Salido Maesso",
+          "licencia": "AM02169809",
+          "hcp": 50.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2433793
+        },
+        {
+          "pos": null,
+          "name": "Pablo Solis Toro",
+          "licencia": "AM02490990",
+          "hcp": 46,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2433791
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jeronimo Rodriguez Astolfi",
+      "licencia": "AM02466106",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Lucas Garcia Garcia",
+      "licencia": "AM02478496",
+      "hcp": 47.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Solis Toro",
+      "licencia": "AM02490990",
+      "hcp": 46,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Rafael Muñoz-Rojas Salinas",
+      "licencia": "AM02488032",
+      "hcp": 48.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Carlos Salido Maesso",
+      "licencia": "AM02169809",
+      "hcp": 50.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Clara Sanchez Paredes",
+      "licencia": "AM02998408",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Pablo Solis Toro",
+          "hcp": 46,
+          "ins": "2433791",
+          "jid": "80166",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Lucas Garcia Garcia",
+          "hcp": 47.5,
+          "ins": "2433790",
+          "jid": "80166",
+          "nivel": "B"
+        },
+        {
+          "time": "12:50",
+          "tee": 1,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "hcp": 48.5,
+          "ins": "2433792",
+          "jid": "80166",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Carlos Salido Maesso",
+          "hcp": 50.5,
+          "ins": "2433793",
+          "jid": "80166",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Jeronimo Rodriguez Astolfi",
+          "hcp": 54,
+          "ins": "2433789",
+          "jid": "80166",
+          "nivel": "B"
+        },
+        {
+          "time": "13:00",
+          "tee": 1,
+          "name": "Clara Sanchez Paredes",
+          "hcp": 54,
+          "ins": "2433794",
+          "jid": "80166",
+          "nivel": "A"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80166
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/3259047874_74803-escuela-competicion-9-hoyos.pdf",
+    "/uploads/competiciones/pdf/3245713768_reglas_locales_pineda_08.10.26.pdf"
+  ]
+}

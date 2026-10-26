@@ -1,0 +1,516 @@
+{
+  "tourId": 74714,
+  "url": "https://www.nextcaddy.com/tour/74714",
+  "scrapedAt": "2026-10-26T09:52:37.482Z",
+  "meta": {
+    "name": "torneo viernes tarde",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-10-20",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-20",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Teddie Topping",
+          "licencia": "AM83067739",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": -11,
+          "inscribedId": 2430251
+        },
+        {
+          "pos": 2,
+          "name": "Daniele Planell Nuziale",
+          "licencia": "AM83988829",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -10,
+          "inscribedId": 2430252
+        },
+        {
+          "pos": 3,
+          "name": "Carla Oca Acosta",
+          "licencia": "AM83492502",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2430256
+        },
+        {
+          "pos": 4,
+          "name": "George Nelmes",
+          "licencia": "AM83475714",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2430254
+        },
+        {
+          "pos": 5,
+          "name": "Elena Martin Del Moral",
+          "licencia": "AM83979924",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2430257
+        },
+        {
+          "pos": 6,
+          "name": "Marta Oca Acosta",
+          "licencia": "AM83492501",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2430255
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Teddie Topping",
+      "licencia": "AM83067739",
+      "hcp": 43.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Daniele Planell Nuziale",
+      "licencia": "AM83988829",
+      "hcp": 51.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "George Nelmes",
+      "licencia": "AM83475714",
+      "hcp": 34.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Marta Oca Acosta",
+      "licencia": "AM83492501",
+      "hcp": 54,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Carla Oca Acosta",
+      "licencia": "AM83492502",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Elena Martin Del Moral",
+      "licencia": "AM83979924",
+      "hcp": 21.8,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 162222,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            12
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            13
+          ],
+          [
+            "Peor",
+            29
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162223,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            10
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            14
+          ],
+          [
+            "5",
+            13
+          ],
+          [
+            "6",
+            7
+          ],
+          [
+            "7",
+            7
+          ],
+          [
+            "8",
+            9
+          ],
+          [
+            "9",
+            15
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162224,
+        "datos": [
+          [
+            "Hoyo",
+            "TEDDIE TOPPING",
+            "DANIELLE  PLANELL NUZIALE",
+            "CARLA OCA ACOSTA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -6,
+            -2
+          ],
+          [
+            "Hoyo 3",
+            -5,
+            -7,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -5,
+            -6,
+            -5
+          ],
+          [
+            "Hoyo 5",
+            -5,
+            -6,
+            -6
+          ],
+          [
+            "Hoyo 6",
+            -6,
+            -9,
+            -8
+          ],
+          [
+            "Hoyo 7",
+            -8,
+            -10,
+            -8
+          ],
+          [
+            "Hoyo 8",
+            -10,
+            -11,
+            -8
+          ],
+          [
+            "Hoyo 9",
+            -11,
+            -10,
+            -8
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162225,
+        "datos": [
+          [
+            "Hoyo",
+            "TEDDIE TOPPING",
+            "DANIELLE  PLANELL NUZIALE",
+            "CARLA OCA ACOSTA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 3",
+            -3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80038
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-26T09:53:38.859Z"
+}

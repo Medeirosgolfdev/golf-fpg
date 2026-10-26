@@ -1,0 +1,283 @@
+{
+  "tourId": 74827,
+  "url": "https://www.nextcaddy.com/tour/74827",
+  "scrapedAt": "2026-10-26T09:54:19.876Z",
+  "meta": {
+    "name": "CIRCUITO INFANTIL MCDONALD´S 2026 2027 (4 HOYOS).",
+    "organizer": null,
+    "course": null,
+    "courseCode": null,
+    "dateStart": "2026-10-25",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Especial",
+    "categories": [
+      "INFANTIL",
+      "Señoras",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-25",
+    "year": 2026
+  },
+  "course": {
+    "par": [
+      4,
+      3,
+      4,
+      4,
+      5,
+      3,
+      4,
+      4,
+      5
+    ],
+    "si": [
+      5,
+      17,
+      7,
+      13,
+      1,
+      15,
+      3,
+      9,
+      11
+    ],
+    "meters": [
+      307,
+      95,
+      300,
+      269,
+      438,
+      146,
+      329,
+      282,
+      400
+    ],
+    "parTotal": 36
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación 4 Hoyos",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mercedes Ibañez Ramirez",
+          "licencia": "4401015087",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2434199,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                5,
+                8,
+                6,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 2,
+          "name": "Javier Zuloaga Valencia",
+          "licencia": "4401498182",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2434200,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                10,
+                5,
+                6,
+                8,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400
+              ]
+            }
+          ]
+        },
+        {
+          "pos": 3,
+          "name": "Nicolas Garde Bermejo",
+          "licencia": "4400523063",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2434201,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                11,
+                11,
+                9,
+                9,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "total": null,
+              "meters": [
+                307,
+                95,
+                300,
+                269,
+                438,
+                146,
+                329,
+                282,
+                400
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación 4 Hoyos",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mercedes Ibañez Ramirez",
+      "licencia": "4401015087",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Javier Zuloaga Valencia",
+      "licencia": "4401498182",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Nicolas Garde Bermejo",
+      "licencia": "4400523063",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Mercedes Ibañez Ramirez",
+          "hcp": 54,
+          "ins": "2434199",
+          "jid": "80191",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Javier Zuloaga Valencia",
+          "hcp": 54,
+          "ins": "2434200",
+          "jid": "80191",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Nicolas Garde Bermejo",
+          "hcp": 54,
+          "ins": "2434201",
+          "jid": "80191",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
+  "estadisticas": {
+    "0": {},
+    "1": {},
+    "2": {},
+    "3": {},
+    "4": {},
+    "5": {},
+    "6": {}
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80191
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
+}

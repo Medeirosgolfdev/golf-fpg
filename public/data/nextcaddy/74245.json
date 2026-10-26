@@ -34,7 +34,49 @@
       "nivel": "Mid"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Amit Thadani Vashi",
+          "hcp": 36,
+          "ins": "2420188",
+          "jid": "79540",
+          "nivel": "M"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Francisco Manuel Rios Mayorga",
+          "hcp": 36,
+          "ins": "2432386",
+          "jid": "79540",
+          "nivel": "S"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Manuel Bocanegra Bolivar",
+          "hcp": 38,
+          "ins": "2432323",
+          "jid": "79540",
+          "nivel": "M"
+        },
+        {
+          "time": "12:10",
+          "tee": 1,
+          "name": "Ramona Ruiz Padilla",
+          "hcp": 41,
+          "ins": "2430961",
+          "jid": "79540",
+          "nivel": "S"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -54,5 +96,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
   ],
-  "horariosScrapedAt": "2026-10-19T09:49:48.043Z"
+  "horariosScrapedAt": "2026-10-26T09:53:35.639Z"
 }
