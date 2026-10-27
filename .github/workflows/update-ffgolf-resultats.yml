@@ -1,7 +1,7 @@
 name: Actualizar FFGolf — Portal Resultats (Node puro)
 
 # Corre:
-#   - Automaticamente Segunda-feira às 02:00 UTC (madrugada Lisboa)
+#   - Automaticamente todos os dias às 21:30 UTC (até 27/10/2026, só à Segunda)
 #   - A pedido (botão "Run workflow" no GitHub)
 #
 # Scrape do portal central FFG (pages.ffgolf.org/resultats/) — 22 ligas × tipos
@@ -12,7 +12,7 @@ name: Actualizar FFGolf — Portal Resultats (Node puro)
 #   01 = Compétitions Fédérales (filtradas para juvenis pelo orquestrador)
 #   03 = Grands Prix Jeunes (regional, todas as 22 ligas)
 #   --since 2025: anos 2025 + 2026 (Manuel-relevant)
-#   --skip-existing: não re-fetch torneios já em disco
+#   --skip-existing: não re-fetch torneios já em disco, menos os dos últimos 7 dias
 #
 # Para histórico completo: workflow_dispatch com `force_rebuild=true`.
 on:
@@ -38,10 +38,13 @@ on:
         options: ['false', 'true']
 
   schedule:
-    # Segunda 02:00 UTC ≈ 02:00 Lisboa (inverno) / 03:00 (BST verão)
-    # Madrugada de segunda-feira como pedido. Antes do GolfGenius (03:00 UTC)
-    # para evitar colisões no git push.
-    - cron: '0 2 * * 1'
+    # Todos os dias 21:30 UTC = 22:30/23:30 em França, com as voltas do dia já
+    # publicadas. Com --skip-existing só se pedem os torneios novos e os dos
+    # últimos 7 dias (scripts/lib/ffgolf-refresh.js). Até 27/10/2026 era só à
+    # Segunda e um GP Jeunes recolhido na véspera (só horários) ficava uma
+    # semana sem scores (GPJ HDF 2026). Corridas ao mesmo tempo que outros
+    # workflows: resolve o push-generated.sh.
+    - cron: '30 21 * * *'
 
 permissions:
   contents: write
