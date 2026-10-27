@@ -1,8 +1,60 @@
 {
-  "generatedAt": "2026-10-27T19:16:18.910Z",
+  "generatedAt": "2026-10-27T19:49:54.990Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1272,
+  "total": 1273,
   "tournaments": [
+    {
+      "file": "03-04-2601483468.json",
+      "trnId": "2601483468",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Grand Prix Jeunes de Digne les Bains",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "04",
+      "seriesCount": 5,
+      "totalPlayers": 50,
+      "course": "Digne les Bains",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 7
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 16
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 21
+        },
+        {
+          "serieId": "117",
+          "label": "MG",
+          "players": 3
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 3
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "04"
+      ]
+    },
     {
       "file": "03-07-2601455589.json",
       "trnId": "2601455589",
