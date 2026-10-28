@@ -1,105 +1,6 @@
 {
   "torneios": [
     {
-      "t": 22627,
-      "name": "Country Club Culiacan (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Country Club Culiacan",
-      "fee_18": "45.00",
-      "tour": "Culiacan (MX) Tour",
-      "type": 6
-    },
-    {
-      "t": 22841,
-      "name": "Qingdao Huashan International Country Club - Masters Course (Tour Champs)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Qingdao Huashan International Country Club - Masters Course",
-      "fee_18": "0.00",
-      "tour": "Qingdao (CN) Tour",
-      "type": 6
-    },
-    {
-      "t": 22864,
-      "name": "Rockway Vineyards Golf Course (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Rockway Vineyards Golf Course",
-      "fee_18": "77.00",
-      "tour": "Niagara (CA) Tour",
-      "type": 6
-    },
-    {
-      "t": 22993,
-      "name": "Pueblo Viejo Country Club (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Pueblo Viejo Country Club",
-      "fee_18": "47.00",
-      "tour": "Bogota (CO) Tour",
-      "type": 6
-    },
-    {
-      "t": 22922,
-      "name": "Lurgan Golf Club (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Lurgan Golf Club",
-      "fee_18": "45.00",
-      "tour": "North of Ireland (NIR) Tour",
-      "type": 6
-    },
-    {
-      "t": 22788,
-      "name": "Lakewood Ranch Golf and Country Club - The Legacy (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Lakewood Ranch Golf and Country Club - The Legacy",
-      "fee_18": "67.00",
-      "tour": "Sarasota Tour",
-      "type": 6
-    },
-    {
-      "t": 22757,
-      "name": "The Classic Club (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Classic Club",
-      "fee_18": "69.00",
-      "tour": "Coachella Valley, CA Tour",
-      "type": 6
-    },
-    {
-      "t": 22727,
-      "name": "Colonial Country Club (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Colonial Country Club",
-      "fee_18": "53.00",
-      "tour": "Naples Tour",
-      "type": 6
-    },
-    {
-      "t": 22520,
-      "name": "Latah Creek Golf Course (Tour Championship)",
-      "date_inicio": "9/27/2026",
-      "date_fim": "9/27/2026",
-      "rondas": 1,
-      "campo": "Latah Creek Golf Course",
-      "fee_18": "75.00",
-      "tour": "Spokane Tour",
-      "type": 6
-    },
-    {
       "t": 22858,
       "name": "German Masters 2026",
       "date_inicio": "10/3/2026",
@@ -2091,6 +1992,17 @@
       "type": 6
     },
     {
+      "t": 23863,
+      "name": "Eagle Springs Golf Course (Tour Championship)",
+      "date_inicio": "3/7/2027",
+      "date_fim": "3/7/2027",
+      "rondas": 1,
+      "campo": "Eagle Springs Golf Course",
+      "fee_18": "83.00",
+      "tour": "Emerald Coast Tour",
+      "type": 6
+    },
+    {
       "t": 23608,
       "name": "Marco Simone Invitational 2027",
       "date_inicio": "3/13/2027",
@@ -2157,19 +2069,19 @@
       "type": 13
     }
   ],
-  "gerado_em": "2026-10-27T13:03:35.626Z",
-  "varredura_max_t": 23857,
+  "gerado_em": "2026-10-28T13:55:04.818Z",
+  "varredura_max_t": 23863,
   "varredura": {
     "fim": "fronteira",
-    "pedidos": 42,
-    "novos": 2,
+    "pedidos": 46,
+    "novos": 1,
     "buracos_revistos": 0,
-    "catalogo": 1551,
+    "catalogo": 1557,
     "backfill_falta": 0
   },
-  "fronteira_max_t_visto": 23857,
-  "fronteira_avancou_em": "2026-10-27",
+  "fronteira_max_t_visto": 23863,
+  "fronteira_avancou_em": "2026-10-28",
   "dias_sem_descoberta": 0,
   "dias_sem_avanco": 0,
-  "ultima_descoberta": "2026-10-27"
+  "ultima_descoberta": "2026-10-28"
 }
