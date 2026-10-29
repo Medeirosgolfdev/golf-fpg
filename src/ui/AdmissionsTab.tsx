@@ -21,7 +21,7 @@ import { TournPName, TeeDot } from "./tournamentPrimitives";
 import type { PlayersDB } from "./tournamentPrimitives";
 import { EscPill } from "./PillBadge";
 import BirthPill from "./BirthPill";
-import { useFedCountries, useFedBirthdates, useFedGenders } from "./InscricoesComponents";
+import { useFedCountries, useFedBirthdates, useFedGenders, useFedHcp } from "./InscricoesComponents";
 import { parseSubNumber, teeNameFor, type TeeRule } from "../utils/teeRegulation";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { useSort } from "../hooks/useSort";
@@ -60,6 +60,10 @@ interface Props {
   reservaLabel?: string;
   /** Conteúdo da coluna # (default: o número na ordem confirmados → reservas). */
   posContent?: (p: FpgAdmissionPlayer) => ReactNode;
+  /** Coluna «HCP actual»: o handicap de hoje na FPG (federados-lite) de quem
+   *  traz federado — para comparar com o HCP da inscrição (listas em PDF de
+   *  semanas atrás; 29/10/2026). */
+  hcpActual?: boolean;
 }
 
 /** Coluna própria (ordenável) da AdmissionsTab. */
@@ -99,13 +103,20 @@ const NO_NAMES: string[] = [];
 export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
   tournamentEscalao, tournamentSex, hidePostCols, teeRule,
-  extraCols = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent,
+  extraCols: extraColsProp = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent,
+  hcpActual = false,
 }: Props) {
   // A MESMA barra de filtros do scorecard e do draw (13/10/2026 — «tudo igual»).
   const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
   const fedCountries = useFedCountries();
   const fedBirthdates = useFedBirthdates();
   const fedGenders = useFedGenders();
+  const fedHcp = useFedHcp();
+  const extraCols = useMemo<AdmissionsExtraCol[]>(() => !hcpActual ? extraColsProp : [...extraColsProp, {
+    key: "hcpActual", label: "HCP actual", title: "Handicap de hoje na FPG (só quem tem federado)",
+    sort: (p) => (p.fed ? fedHcp.get(p.fed) : undefined) ?? null,
+    cell: (p) => fmtHcp(p.fed ? fedHcp.get(p.fed) : undefined),
+  }], [hcpActual, extraColsProp, fedHcp]);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", {
     pts: "desc", ...Object.fromEntries(extraCols.filter(c => c.dir).map(c => [`x:${c.key}`, c.dir!])),
   });

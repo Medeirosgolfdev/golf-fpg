@@ -69,6 +69,8 @@ export interface FeaturedTournament {
   semLinksFpg?: boolean;
   /** Etiqueta do estado «reserva» na tab Inscrições (default «pendente»). */
   reservaLabel?: string;
+  /** Coluna «HCP actual» (FPG) na tab Inscrições — listas lidas de PDF. */
+  hcpActual?: boolean;
 }
 
 /** Links arquivados do antigo painel "📋 Inscrições 2026" (desactivado
@@ -244,5 +246,6 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     live: false,
     semLinksFpg: true,
     reservaLabel: "lista de espera",
+    hcpActual: true,
   },
 ];

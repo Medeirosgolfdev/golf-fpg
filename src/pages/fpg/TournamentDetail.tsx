@@ -612,6 +612,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
               date={tournament.date}
               fpgUrl={tournament.ccode && tournament.tcode && !featured?.semLinksFpg ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
               reservaLabel={featured?.reservaLabel}
+              hcpActual={featured?.hcpActual}
               tournamentEscalao={tournament.escalao || undefined}
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
               teeRule={teeRuleFor(tournament.ccode, tournament.tcode)}
