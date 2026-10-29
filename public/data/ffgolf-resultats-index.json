@@ -1,8 +1,206 @@
 {
-  "generatedAt": "2026-10-28T00:44:58.755Z",
+  "generatedAt": "2026-10-29T01:14:45.328Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1273,
+  "total": 1277,
   "tournaments": [
+    {
+      "file": "01-00-2601483470.json",
+      "trnId": "2601483470",
+      "partKey": "fd9c456407cc4e6114f6c03bce53ac6e",
+      "name": "Mini Tour U10 PACA - Etape 9 (Digne les Bains)",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 6,
+      "totalPlayers": 23,
+      "course": "Digne les Bains - Aller",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "15",
+          "label": "U8 Mixte",
+          "players": 3
+        },
+        {
+          "serieId": "17",
+          "label": "U9 Mixte",
+          "players": 5
+        },
+        {
+          "serieId": "19",
+          "label": "U10G",
+          "players": 9
+        },
+        {
+          "serieId": "26",
+          "label": "U8 Mixte",
+          "players": 2
+        },
+        {
+          "serieId": "28",
+          "label": "U9 Mixte",
+          "players": 2
+        },
+        {
+          "serieId": "210",
+          "label": "U10F",
+          "players": 2
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "00"
+      ]
+    },
+    {
+      "file": "03-01-2601405026.json",
+      "trnId": "2601405026",
+      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
+      "name": "Grand Prix Jeunes U12 de la Ligue Paris Ile-de-France 5",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "01",
+      "seriesCount": 2,
+      "totalPlayers": 80,
+      "course": "Jaune",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 23
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 57
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "01"
+      ]
+    },
+    {
+      "file": "03-01-2601405027.json",
+      "trnId": "2601405027",
+      "partKey": "fcf5c73189b92c41a3faecdfed94a489",
+      "name": "Grand Prix Jeunes Benjamins / Minimes de la Ligue Paris Ile-de-France 5",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "01",
+      "seriesCount": 4,
+      "totalPlayers": 74,
+      "course": "Grand Parcours",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "BENF",
+          "players": 17
+        },
+        {
+          "serieId": "111",
+          "label": "BENG",
+          "players": 39
+        },
+        {
+          "serieId": "115",
+          "label": "MING",
+          "players": 12
+        },
+        {
+          "serieId": "213",
+          "label": "MINF",
+          "players": 6
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "01"
+      ]
+    },
+    {
+      "file": "03-02-2601414323.json",
+      "trnId": "2601414323",
+      "partKey": "e7751dd13172e9cd8a1322bf9a9325c0",
+      "name": "Grand Prix Jeunes Golf Vichy Montpensier",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "03",
+      "ligue": "02",
+      "seriesCount": 6,
+      "totalPlayers": 59,
+      "course": "Forêt de Montpensier",
+      "sex": "MF",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "29",
+          "label": "U12F",
+          "players": 5
+        },
+        {
+          "serieId": "111",
+          "label": "U12G",
+          "players": 26
+        },
+        {
+          "serieId": "115",
+          "label": "BG",
+          "players": 19
+        },
+        {
+          "serieId": "119",
+          "label": "MG",
+          "players": 3
+        },
+        {
+          "serieId": "213",
+          "label": "BF",
+          "players": 5
+        },
+        {
+          "serieId": "217",
+          "label": "MF",
+          "players": 1
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "ligues": [
+        "02"
+      ]
+    },
     {
       "file": "03-04-2601483468.json",
       "trnId": "2601483468",
@@ -70,7 +268,7 @@
       "totalPlayers": 84,
       "course": "La Mer",
       "sex": "MF",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
           "serieId": "15",
@@ -117,7 +315,7 @@
       "totalPlayers": 87,
       "course": "La Forêt",
       "sex": "MF",
-      "roundsPlayed": 1,
+      "roundsPlayed": 2,
       "divisions": [
         {
           "serieId": "15",
