@@ -403537,7 +403537,7 @@
       "date": "2026-12-03",
       "campo": "Quinta do Vale",
       "_manual": true,
-      "_note": "Rapazes. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring; as inscrições são pelo formulário do fpg.pt). Lido do PDF Entry List Boys de 28/10/2026 — OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-28_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = wild cards FPG por nomear; aqui a posição 1 = 13.º lugar da lista. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts.",
+      "_note": "Rapazes. tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring; as inscrições são pelo formulário do fpg.pt). Lido do PDF Entry List Boys de 28/10/2026 — OneDrive/Golfe/Arquivo_GOLF/2026/2026-10-28_FPG_Entry_List_Boys_Castro_Marim_U14.pdf. Lugares 1-12 = wild cards FPG por nomear; aqui a posição 1 = 13.º lugar da lista. Quando a FPG publicar o tcode real, trocar aqui e no featuredTournaments.ts. Federados FPG ligados por nome + nascimento (federados.json de 28/10): 20 de 23 portugueses/residentes; sem federado claro: Tiago Araujo, Miguel Ferreira (só há Miguel Maria Neves Ferreira, 15,4).",
       "admissions": {
         "name": "2nd Castro Marim Portuguese Int. U14 Championship — Rapazes",
         "date": "2026-12-03",
@@ -403658,14 +403658,15 @@
           },
           {
             "pos": 11,
-            "fed": null,
+            "fed": "42908",
             "nome": "Santiago Dias",
-            "clube": null,
+            "clube": "Oporto",
             "hcp": -2.1,
             "vac": null,
             "dataInscricao": null,
             "status": "confirmed",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-05-29"
           },
           {
             "pos": 12,
@@ -403955,14 +403956,15 @@
           },
           {
             "pos": 8,
-            "fed": null,
+            "fed": "51612",
             "nome": "Oliver Smith",
-            "clube": null,
+            "clube": "Vila Sol",
             "hcp": 0,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "United Kingdom"
+            "country": "United Kingdom",
+            "dob": "2013-05-03"
           },
           {
             "pos": 9,
@@ -404131,14 +404133,15 @@
           },
           {
             "pos": 24,
-            "fed": null,
+            "fed": "46299",
             "nome": "Francisco Nunes",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 1,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-12-28"
           },
           {
             "pos": 25,
@@ -404175,14 +404178,15 @@
           },
           {
             "pos": 28,
-            "fed": null,
+            "fed": "49124",
             "nome": "Nuno Palmares",
-            "clube": null,
+            "clube": "Estoril",
             "hcp": 1.4,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-04-28"
           },
           {
             "pos": 29,
@@ -404258,25 +404262,27 @@
           },
           {
             "pos": 35,
-            "fed": null,
+            "fed": "55269",
             "nome": "Finn Gordon",
-            "clube": null,
+            "clube": "Vilamoura, C. G",
             "hcp": 2.7,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-09-25"
           },
           {
             "pos": 36,
-            "fed": null,
+            "fed": "49085",
             "nome": "Ricardo Castro Ferreira",
-            "clube": null,
+            "clube": "Estoril",
             "hcp": 2.7,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2015-07-02"
           },
           {
             "pos": 37,
@@ -404335,14 +404341,15 @@
           },
           {
             "pos": 42,
-            "fed": null,
+            "fed": "46038",
             "nome": "João Balixa",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 3.3,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-08-10"
           },
           {
             "pos": 43,
@@ -404357,14 +404364,15 @@
           },
           {
             "pos": 44,
-            "fed": null,
+            "fed": "48297",
             "nome": "João Rocha",
-            "clube": null,
+            "clube": "Estoril",
             "hcp": 3.5,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-09-02"
           },
           {
             "pos": 45,
@@ -404401,14 +404409,15 @@
           },
           {
             "pos": 48,
-            "fed": null,
+            "fed": "51524",
             "nome": "William Gao",
-            "clube": null,
+            "clube": "Quinta do Peru",
             "hcp": 3.8,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "USA"
+            "country": "USA",
+            "dob": "2012-11-14"
           },
           {
             "pos": 49,
@@ -404423,42 +404432,45 @@
           },
           {
             "pos": 50,
-            "fed": null,
+            "fed": "43968",
             "nome": "Salvador Ivo de Carvalho",
-            "clube": null,
+            "clube": "Estoril",
             "hcp": 4,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-01-23"
           },
           {
             "pos": 51,
-            "fed": null,
+            "fed": "46311",
             "nome": "Tomás Rente",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 4,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-10-04"
           },
           {
             "pos": 52,
-            "fed": null,
+            "fed": "39097",
             "nome": "Francisco Saraiva",
-            "clube": null,
+            "clube": "Oporto",
             "hcp": 4.1,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-04-20"
           },
           {
             "pos": 53,
-            "fed": null,
+            "fed": "46038",
             "nome": "João Balixa",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 4.3,
             "vac": null,
             "dataInscricao": null,
@@ -404466,18 +404478,20 @@
             "country": "Portugal",
             "tags": [
               "repetido no PDF"
-            ]
+            ],
+            "dob": "2012-08-10"
           },
           {
             "pos": 54,
-            "fed": null,
+            "fed": "58937",
             "nome": "Alfie Dunbar",
-            "clube": null,
+            "clube": "Vila Sol",
             "hcp": 5.2,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-02-18"
           },
           {
             "pos": 55,
@@ -404492,25 +404506,27 @@
           },
           {
             "pos": 56,
-            "fed": null,
+            "fed": "46480",
             "nome": "Afonso Pinto",
-            "clube": null,
+            "clube": "Oporto",
             "hcp": 5.9,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2013-04-16"
           },
           {
             "pos": 57,
-            "fed": null,
+            "fed": "46296",
             "nome": "Raul Pazos",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 6,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2013-02-08"
           },
           {
             "pos": 58,
@@ -404525,25 +404541,27 @@
           },
           {
             "pos": 59,
-            "fed": null,
+            "fed": "52856",
             "nome": "Francisco Carvalho",
-            "clube": null,
+            "clube": "Vale Pisão",
             "hcp": 6.7,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2013-03-20"
           },
           {
             "pos": 60,
             "fed": "52884",
             "nome": "Manuel Medeiros",
-            "clube": null,
+            "clube": "Santo da Serra",
             "hcp": 6.8,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2014-04-29"
           },
           {
             "pos": 61,
@@ -404569,14 +404587,15 @@
           },
           {
             "pos": 63,
-            "fed": null,
+            "fed": "47341",
             "nome": "Sebastião Soares",
-            "clube": null,
+            "clube": "Oporto",
             "hcp": 6.1,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2012-02-15"
           },
           {
             "pos": 64,
@@ -404591,25 +404610,27 @@
           },
           {
             "pos": 65,
-            "fed": null,
+            "fed": "51180",
             "nome": "Ricardo Ferreira",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 11.3,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2015-09-24"
           },
           {
             "pos": 66,
-            "fed": null,
+            "fed": "51182",
             "nome": "Eduardo Ferreira",
-            "clube": null,
+            "clube": "Miramar",
             "hcp": 14.9,
             "vac": null,
             "dataInscricao": null,
             "status": "reserva",
-            "country": "Portugal"
+            "country": "Portugal",
+            "dob": "2014-01-13"
           },
           {
             "pos": 67,
