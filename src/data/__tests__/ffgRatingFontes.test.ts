@@ -1,6 +1,9 @@
 import { describe, it, expect, vi, beforeAll } from "vitest";
 import rennesRaw from "../../../public/data/ffgolf-resultats/03-11-2601477509.json?raw";
 import overridesRaw from "../../../public/data/ffgolf-course-overrides.json?raw";
+import vichyRaw from "../../../public/data/ffgolf-resultats/03-02-2601414323.json?raw";
+import rms9TeesRaw from "../../../public/data/ffgolf-rms9-tees.json?raw";
+import rms9HcpRaw from "../../../public/data/ffgolf-rms9-hcp.json?raw";
 import { ratingFontes } from "../ffg/toTournament";
 import { ffgResLoadDivisions, ffgResEntry } from "../ffg/ffgEntries";
 import type { FFGResIndexEntry } from "../ffg/types";
@@ -31,6 +34,9 @@ describe("Rennes 2026 — CR/Slope por fonte e links", () => {
   const FILES: Record<string, string> = {
     "/data/ffgolf-resultats/03-11-2601477509.json": rennesRaw,
     "/data/ffgolf-course-overrides.json": overridesRaw,
+    "/data/ffgolf-resultats/03-02-2601414323.json": vichyRaw,
+    "/data/ffgolf-rms9-tees.json": rms9TeesRaw,
+    "/data/ffgolf-rms9-hcp.json": rms9HcpRaw,
   };
   beforeAll(() => {
     vi.stubGlobal("fetch", async (url: string) => {
@@ -51,5 +57,12 @@ describe("Rennes 2026 — CR/Slope por fonte e links", () => {
     const links = ffgResEntry(meta).links ?? [];
     expect(links.map((l) => l.label)).toEqual(["Resultados FFG", "Partidas FFG", "Live FFG", "RMS9"]);
     expect(links[3].url).toBe("https://9411.rms9.fr/a9online/#/tournaments/view/4602246/");
+  });
+
+  it("prova sem override (GPJ Vichy 2026): tee, metros e CR/Slope só do RMS9", async () => {
+    const divs = await ffgResLoadDivisions({ trnId: "2601414323", file: "03-02-2601414323.json", year: 2026 } as FFGResIndexEntry);
+    const u12g = divs.find((d) => d.results?._ratingFontes?.some((f) => f.cr === "67,0" && f.slope === "125"))?.results;
+    expect(u12g?._ratingFontes?.map((f) => `${f.fonte} ${f.cr}/${f.slope}`)).toEqual(["RMS9 67,0/125", "HCP de jogo 67,0–67,2/124–125"]);
+    expect(u12g?._sdEstimate).toBeUndefined();
   });
 });

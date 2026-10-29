@@ -47,12 +47,21 @@ const isIntlName = (name?: string | null) => /\binternationa(l|ux?)\b/i.test(nam
 
 /** Distâncias por série de um torneio do portal FFG, se publicadas (null = não há). */
 async function loadFfgSerieCourses(trnId: string): Promise<Record<string, FFGSerieCourse> | null> {
-  try {
-    const o = await cachedFetchJson<{ resultats?: Record<string, { series?: Record<string, FFGSerieCourse> }> }>("/data/ffgolf-course-overrides.json");
-    return o?.resultats?.[trnId]?.series ?? null;
-  } catch {
-    return null;
-  }
+  type Series = Record<string, FFGSerieCourse>;
+  const get = async <T,>(url: string): Promise<T | null> => { try { return await cachedFetchJson<T>(url); } catch { return null; } };
+  // Por ordem de força: tees do RMS9 do organizador (scrape-ffgolf-rms9-tees.js),
+  // o CR/Slope deduzido do HCP de jogo (ffgolf-rms9-hcp.json) e, por cima, os
+  // overrides escritos à mão (misto, PCC, notas).
+  const [rms, hcp, ov] = await Promise.all([
+    get<{ tournaments?: Record<string, { series?: Series }> }>("/data/ffgolf-rms9-tees.json"),
+    get<{ tournaments?: Record<string, Record<string, FFGSerieCourse["ratingHcp"]>> }>("/data/ffgolf-rms9-hcp.json"),
+    get<{ resultats?: Record<string, { series?: Series }> }>("/data/ffgolf-course-overrides.json"),
+  ]);
+  const out: Series = {};
+  for (const [k, s] of Object.entries(rms?.tournaments?.[trnId]?.series ?? {})) out[k] = { ...s };
+  for (const [k, h] of Object.entries(hcp?.tournaments?.[trnId] ?? {})) if (out[k] && h) out[k] = { ...out[k], ratingHcp: h };
+  for (const [k, s] of Object.entries(ov?.resultats?.[trnId]?.series ?? {})) out[k] = { ...(out[k] ?? {}), ...s };
+  return Object.keys(out).length ? out : null;
 }
 
 /** Carrega o detalhe de UM torneio FFG-Resultats (lazy) + enriquecimento GG. */

@@ -125,6 +125,11 @@ jobs:
         continue-on-error: true
         run: node scripts/scrape-ffgolf-rms9.js
 
+      # Tees oficiais (CR/Slope, metros, SI) de cada série dos torneios ligados ao RMS9.
+      - name: Ler tees do RMS9 (scrape-ffgolf-rms9-tees.js)
+        continue-on-error: true
+        run: node scripts/scrape-ffgolf-rms9-tees.js
+
       - name: Regenerar índice agregado
         run: node scripts/build-ffgolf-resultats-index.js
 
@@ -137,4 +142,4 @@ jobs:
       - name: Commit e push (se houver mudanças)
         run: |
           bash scripts/ci/push-generated.sh -m "data: update FFGolf resultats $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -f ffgolf -- public/data/ffgolf-resultats/ public/data/ffgolf-catalog.json public/data/ffgolf-rms9.json
+            -f ffgolf -- public/data/ffgolf-resultats/ public/data/ffgolf-catalog.json public/data/ffgolf-rms9.json public/data/ffgolf-rms9-tees.json
