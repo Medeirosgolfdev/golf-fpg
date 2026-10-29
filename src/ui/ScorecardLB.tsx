@@ -19,7 +19,7 @@ import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
 import { EscPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
-import { InfoGroup, InfoItem, TeeDistances, TeeSwatch } from "./InfoLine";
+import { InfoGroup, InfoItem, RatingFontes, TeeDistances, TeeSwatch } from "./InfoLine";
 import SexBadge from "./SexBadge";
 import SortableHdr from "./SortableHdr";
 import EmptyState from "./EmptyState";
@@ -751,6 +751,7 @@ export function ScorecardLB({
               </span>
             ))}
           </InfoGroup>
+          <RatingFontes list={tournament._ratingFontes} />
         </>
       }
       filterBar={

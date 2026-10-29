@@ -12,7 +12,7 @@ import type { Tournament as FPGTournament, ScorecardOptions } from "../fpgTypes"
 import { intlScorecardOptions } from "../intlScorecard";
 import { buildFPGTournament, type IntlPlayerIn, type IntlRoundIn } from "../intlTournament";
 import { normalizeName, ffgPlayerName, ffgCountry } from "./names";
-import type { FFGTournament, CatalogEntry, FFGResTournament, FFGResSerie } from "./types";
+import type { FFGTournament, CatalogEntry, FFGResTournament, FFGResSerie, FFGSerieCourse } from "./types";
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,
  *  MG/MF = Minimes = U16 — os GP Jeunes usam as duas grafias). */
@@ -21,6 +21,24 @@ const serieCourseKey = (label: string): string => {
   const alias: Record<string, string> = { BG: "U14G", BF: "U14F", MG: "U16G", MF: "U16F" };
   return alias[k] || k;
 };
+
+const fmtCr = (v: number) => v.toFixed(1).replace(".", ",");
+const faixa = (a: number, b: number, f: (v: number) => string) => (a === b ? f(a) : `${f(a)}–${f(b)}`);
+
+/** CR/Slope do tee por fonte: o do organizador (RMS9) e o que se deduz do
+ *  handicap de jogo de todos os jogadores da lista de partidas. Uma faixa larga
+ *  (poucos jogadores) não diz nada e não se mostra. */
+export function ratingFontes(sc: FFGSerieCourse | null | undefined): NonNullable<FPGTournament["_ratingFontes"]> {
+  const out: NonNullable<FPGTournament["_ratingFontes"]> = [];
+  if (!sc) return out;
+  if (sc.ratingRms9) out.push({ fonte: "RMS9", cr: fmtCr(sc.ratingRms9.cr), slope: String(sc.ratingRms9.slope),
+    title: "CR/Slope do tee no RMS9 do organizador (course-assignments do torneio)" });
+  const h = sc.ratingHcp;
+  if (h && h.slope[1] - h.slope[0] <= 15 && h.cr[1] - h.cr[0] <= 1.5) out.push({ fonte: "HCP de jogo",
+    cr: faixa(h.cr[0], h.cr[1], fmtCr), slope: faixa(h.slope[0], h.slope[1], String),
+    title: `Deduzido do handicap de jogo dos ${h.n} jogadores (por volta) da lista de partidas do RMS9: só estes CR/Slope dão o HCP de todos` });
+  return out;
+}
 
 /* ── Categoria/título amigável a partir do nome do torneio ────── */
 function shortTitle(t: FFGTournament | CatalogEntry): string {
@@ -156,6 +174,8 @@ export function ffgResToFPGTournament(data: FFGResTournament, serieFilter?: stri
   if (serieCourse?.ratingEstimado && rating.courseRating != null) {
     t._sdEstimate = `CR ${rating.courseRating.toFixed(1)} · Slope ${rating.slope} estimados — ${serieCourse.ratingNota || "não publicados"}`;
   }
+  const fontes = ratingFontes(serieCourse);
+  if (fontes.length) t._ratingFontes = fontes;
   return t;
 }
 

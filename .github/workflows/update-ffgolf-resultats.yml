@@ -119,6 +119,12 @@ jobs:
           echo "Calendar args: $CAL_ARGS"
           node scripts/scrape-ffgolf-calendar-jeunes.js $CAL_ARGS
 
+      # Liga cada torneio novo ao do RMS9 do organizador (botão «RMS9» e CR/Slope
+      # oficiais). Incremental; uma falha do RMS9 não pára o resto.
+      - name: Ligar torneios ao RMS9 (scrape-ffgolf-rms9.js)
+        continue-on-error: true
+        run: node scripts/scrape-ffgolf-rms9.js
+
       - name: Regenerar índice agregado
         run: node scripts/build-ffgolf-resultats-index.js
 
@@ -131,4 +137,4 @@ jobs:
       - name: Commit e push (se houver mudanças)
         run: |
           bash scripts/ci/push-generated.sh -m "data: update FFGolf resultats $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -f ffgolf -- public/data/ffgolf-resultats/ public/data/ffgolf-catalog.json
+            -f ffgolf -- public/data/ffgolf-resultats/ public/data/ffgolf-catalog.json public/data/ffgolf-rms9.json

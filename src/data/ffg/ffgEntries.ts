@@ -91,6 +91,11 @@ export function ffgResEntry(meta: FFGResIndexEntry, hasManuel?: boolean, hasPt?:
   // Deep-link directo aos resultados deste torneio no portal FFG (rota GET
   // com partKey — a mesma que o kids2 usa via agregador).
   if (meta.partKey) links.push({ label: "Resultados FFG", url: `https://pages.ffgolf.org/resultats/resultats-details/${meta.partKey}/${meta.trnId}`, icon: "🏁", title: "Resultados oficiais deste torneio no portal FFG" });
+  // Os outros links conhecidos de uma prova do portal FFG (docs/links-conhecidos.html → França).
+  links.push({ label: "Partidas FFG", url: `https://pages.ffgolf.org/departs/competition/${meta.trnId}`, icon: "🕗", title: "Lista de partidas no portal FFG (Index e repère de cada jogador)" });
+  if (meta.partKey) links.push({ label: "Live FFG", url: `https://pages.ffgolf.org/live-recording/${meta.partKey}/${meta.trnId}`, icon: "📡", title: "Marcação ao vivo no portal FFG" });
+  if (meta.rms9) links.push({ label: "RMS9", url: `https://${meta.rms9.tenant}.rms9.fr/a9online/#/tournaments/view/${meta.rms9.id}/`, icon: "📋",
+    title: "Torneio no RMS9 do organizador: tees com CR/Slope, partidas com handicap de jogo, live e resultados" });
   if (meta.ffgolfOfficialUrl) links.push({ label: "Página FFG", url: meta.ffgolfOfficialUrl, icon: "🔗" });
   if (!meta.partKey && !meta.ffgolfOfficialUrl) links.push({ label: "Portal FFG", url: meta.pagesFfgolfUrl || "https://pages.ffgolf.org/resultats/", icon: "🔗" });
   return {

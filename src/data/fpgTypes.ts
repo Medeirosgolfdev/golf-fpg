@@ -116,6 +116,9 @@ export interface Tournament extends BaseTournament, TournamentModel {
   /** CR/Slope ESTIMADOS (não publicados): o SD calculado mostra-se a vermelho,
    *  com esta nota no tooltip (FFG Rennes 2026, U12 Garçons — 22/10/2026). */
   _sdEstimate?: string;
+  /** De onde vem o CR/Slope e o que outras fontes dizem (FFG: RMS9 do
+   *  organizador e o deduzido do handicap de jogo dos jogadores). */
+  _ratingFontes?: { fonte: string; cr: string; slope: string; title?: string }[];
   /** Torneio manual (pull-torneios003.json) e a sua origem ("PJA", …). */
   _manual?: boolean;
   _origin?: string;

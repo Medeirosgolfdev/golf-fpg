@@ -68,3 +68,14 @@ export function TeeDistances({ list }: { list: { tee: string; meters: number }[]
     </span>
   );
 }
+
+/** CR/Slope por fonte (FFG: o do organizador no RMS9 e o deduzido do handicap
+ *  de jogo dos jogadores), para se ver de onde vem o rating usado no SD. */
+export function RatingFontes({ list }: { list?: { fonte: string; cr: string; slope: string; title?: string }[] }) {
+  if (!list?.length) return null;
+  return (
+    <InfoGroup>
+      {list.map((f) => <InfoItem key={f.fonte} pre={f.fonte} v={`${f.cr} / ${f.slope}`} title={f.title} />)}
+    </InfoGroup>
+  );
+}

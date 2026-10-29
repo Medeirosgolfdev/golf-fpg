@@ -17,7 +17,8 @@
  *   tournaments: [{
  *     file, trnId, partKey, name, formule, date, dateIso, year,
  *     typeCompetition, ligue, ligues, seriesCount, totalPlayers, divisions,
- *     pagesFfgolfUrl, ffgolfOfficialUrl, ggPage, ffgolfSlug, ffgolfSection
+ *     pagesFfgolfUrl, ffgolfOfficialUrl, ggPage, ffgolfSlug, ffgolfSection,
+ *     rms9 { tenant, id } (de ffgolf-rms9.json)
  *   }]
  * }
  *
@@ -35,6 +36,9 @@ const path = require("path");
 const ROOT = path.resolve(__dirname, "../public/data/ffgolf-resultats");
 const OUT = path.resolve(__dirname, "../public/data/ffgolf-resultats-index.json");
 const CATALOG_FILE = path.resolve(__dirname, "../public/data/ffgolf-catalog.json");
+// trnId → torneio no RMS9 do organizador (scrape-ffgolf-rms9.js); opcional.
+const RMS9_FILE = path.resolve(__dirname, "../public/data/ffgolf-rms9.json");
+const RMS9 = fs.existsSync(RMS9_FILE) ? (JSON.parse(fs.readFileSync(RMS9_FILE, "utf8")).tournaments || {}) : {};
 
 if (!fs.existsSync(ROOT)) {
   console.error("public/data/ffgolf-resultats nao existe.");
@@ -166,6 +170,7 @@ for (const file of files) {
       ggPage: j.ggPage || (cm ? cm.gg_page : null) || null,
       ffgolfSlug: j.ffgolfSlug || (cm ? cm.slug : null) || null,
       ffgolfSection: j.ffgolfSection || (cm ? cm.section : null) || null,
+      rms9: RMS9[trnId] && RMS9[trnId].id ? { tenant: RMS9[trnId].tenant, id: RMS9[trnId].id } : null,
     });
   } catch (e) {
     console.error(`${file}: ${e.message}`);

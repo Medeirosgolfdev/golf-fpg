@@ -308,6 +308,11 @@ export interface FFGSerieCourse {
   /** PCC por dia (índice = volta − 1), quando se sabe (deduzido dos SD oficiais). */
   pcc?: (number | null)[];
   pccNota?: string;
+  /** CR/Slope do tee segundo o organizador (RMS9, `course-assignments`). */
+  ratingRms9?: { cr: number; slope: number };
+  /** CR/Slope que cabem no handicap de jogo de TODOS os `n` jogadores da lista
+   *  de partidas do RMS9: HCP = arred.(Index × Slope/113 + CR − Par). */
+  ratingHcp?: { cr: [number, number]; slope: [number, number]; n: number };
 }
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,
@@ -368,6 +373,8 @@ export interface FFGResIndexEntry {
   ggPage?: string | null;
   ffgolfSlug?: string | null;
   ffgolfSection?: string | null;
+  /** Torneio no RMS9/A9online do organizador (scrape-ffgolf-rms9.js). */
+  rms9?: { tenant: string; id: number } | null;
 }
 export interface FFGResIndex {
   generatedAt: string;

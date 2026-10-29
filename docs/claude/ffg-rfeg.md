@@ -67,6 +67,13 @@ O live scoring da FFG é o RMS9/A9online do **organizador** (tenant 9401 Ligue P
 
 Os valores vão para `public/data/ffgolf-course-overrides.json` → `resultats.{trnId}.series.{chave}` (chave = `serieCourseKey`), com `pcc` por volta deduzido dos SD oficiais de um jogador conhecido (com NDB): em 2025 deu +1, em 2026 +2. Não estão no RMS9: Evian 2021/2024 e Internacionais U14 2021/2024. Nos Internacionais U14 fica o CR/Slope que a FPG usou nos SD oficiais (o RMS9 dá 71/137 em 2025 e 71,4/136 · 74,4/142 em 2026) — do RMS9 só os metros.
 
+### Botões da prova FFG e CR/Slope por fonte (29/10/2026)
+
+- `ffgResEntry` (`src/data/ffg/ffgEntries.ts`) põe os links conhecidos: Resultados FFG, **Partidas FFG** (`pages.ffgolf.org/departs/competition/{trnId}`), **Live FFG** (`live-recording/{partKey}/{trnId}`), **RMS9** (`{tenant}.rms9.fr/a9online/#/tournaments/view/{id}/`), mais GolfGenius/Página FFG quando há.
+- O RMS9 de cada prova vem de `public/data/ffgolf-rms9.json`, feito por `scripts/scrape-ffgolf-rms9.js` (tenant = `glfOrg` do torneio, depois 94+liga, depois 8023; casa por data ±1 dia e nome). Corre no `update-ffgolf-resultats.yml` antes do índice; o `build-ffgolf-resultats-index.js` copia-o para `rms9` de cada entrada. Cobertura (29/10/2026): nacionais quase todas desde 2024; GP Jeunes ~40% (os outros clubes não usam RMS9). Antes de 2024 o RMS9 quase não tem provas.
+- Em `ffgolf-course-overrides.json`, cada série pode ter `ratingRms9 {cr, slope}` e `ratingHcp {cr:[min,max], slope:[min,max], n}` — este deduzido do HCP de jogo de todos os jogadores da lista de partidas do RMS9 (HCP = arred.(Index × Slope/113 + CR − Par)). A página mostra os dois ao lado do CR/Slope usado (`_ratingFontes`, `RatingFontes` em `InfoLine.tsx`); uma faixa larga (Slope > 15 ou CR > 1,5) não se mostra.
+- ⚠️ A lista de partidas do RMS9 (`tournaments/rounds/{roundId}/start-list`) só responde a um browser (a pedidos de script dá 401) — o `ratingHcp` foi tirado pelo browser, só para as provas com override. As provas nacionais da FFG (8023) não publicam a lista no RMS9.
+
 ### Torneios+resultados por jogador — `ffgolf-player-tournaments.json` (2026-07-23)
 
 Clicar numa linha da `/ffg/info/joueurs` expande a lista de **todos os torneios

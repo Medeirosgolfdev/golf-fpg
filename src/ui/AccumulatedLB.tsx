@@ -11,7 +11,7 @@ import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInPr
 import { MultiRoundLeaderboard } from "./MultiRoundLeaderboard";
 import { RoundPill } from "./PillBadge";
 import { HoleBadge } from "./tableCells";
-import { InfoGroup, InfoItem, TeeDistances } from "./InfoLine";
+import { InfoGroup, InfoItem, RatingFontes, TeeDistances } from "./InfoLine";
 import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
@@ -217,6 +217,7 @@ export function AccumulatedLB({
           {cr && <InfoItem pre="CR" v={cr} />}
           {slope && <InfoItem pre="Slope" v={slope} l={tournament._sdEstimate ? "(estimados)" : undefined} title={tournament._sdEstimate} />}
         </InfoGroup>
+        <RatingFontes list={tournament._ratingFontes} />
       </div>
       <MultiRoundLeaderboard
         rows={rows}

@@ -92,7 +92,11 @@
             1
           ],
           "ratingEstimado": true,
-          "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e Gaspard Maes perante a FPG (lançada pelo clube Miramar; só um clube, é o que há); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 71 / Slope 137 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9."
+          "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e Gaspard Maes perante a FPG (lançada pelo clube Miramar; só um clube, é o que há); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 71 / Slope 137 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9.",
+          "ratingRms9": {
+            "cr": 71,
+            "slope": 137
+          }
         }
       },
       "fonte": "https://8023.rms9.fr/a9online/#/tournaments/view/5163729/ (RMS9 da FFG — metros)"
@@ -175,7 +179,11 @@
             2
           ],
           "ratingEstimado": true,
-          "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e João Rocha perante a FPG (lançada pelo clube Oporto e Estoril); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 71.4 / Slope 136 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9."
+          "ratingNota": "CR/Slope obtidos da pontuação de Santiago Dias e João Rocha perante a FPG (lançada pelo clube Oporto e Estoril); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 71.4 / Slope 136 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9.",
+          "ratingRms9": {
+            "cr": 71.4,
+            "slope": 136
+          }
         },
         "DAMES": {
           "tee": "Repères Bleus",
@@ -248,12 +256,172 @@
             2
           ],
           "ratingEstimado": true,
-          "ratingNota": "CR/Slope obtidos da pontuação de Laura Santos e Margarida Silva Pinto perante a FPG (lançada pelo clube PXO e Miramar); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 74.4 / Slope 142 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9."
+          "ratingNota": "CR/Slope obtidos da pontuação de Laura Santos e Margarida Silva Pinto perante a FPG (lançada pelo clube PXO e Miramar); PCC deduzido dos SD oficiais. O organizador (RMS9 da FFG) publica CR 74.4 / Slope 142 para este tee; fica o da FPG, porque é o que dá os SD oficiais. Metros do RMS9.",
+          "ratingRms9": {
+            "cr": 74.4,
+            "slope": 142
+          }
         }
       },
       "fonte": "https://8023.rms9.fr/a9online/#/tournaments/view/7456813/ (RMS9 da FFG — metros)"
     },
-    "2601480823": {"_torneio": "The Amundi Evian Juniors Cup 2026", "series": {"MESSIEURS": {"tee": "White", "courseRating": 73, "slope": 149, "pcc": [2, 2, 2], "pccNota": "CR/Slope do organizador (iguais aos da FPG); PCC +2 nos 3 dias deduzido dos SD oficiais de Santiago Dias e Nuno Palmares", "par": [4, 3, 4, 4, 3, 4, 5, 3, 5, 4, 4, 4, 4, 3, 5, 3, 4, 5], "meters": [361, 153, 317, 340, 156, 347, 477, 176, 458, 370, 323, 367, 399, 180, 471, 145, 308, 433], "si": [3, 17, 13, 7, 11, 1, 5, 15, 9, 6, 10, 2, 18, 14, 8, 16, 4, 12], "metersTotal": 5781}, "DAMES": {"tee": "Blue", "courseRating": 76, "slope": 145, "pcc": [2, 2, 2], "pccNota": "CR/Slope do organizador (iguais aos da FPG); PCC +2 nos 3 dias deduzido dos SD oficiais de Santiago Dias e Nuno Palmares", "par": [4, 3, 4, 4, 3, 4, 5, 3, 5, 4, 4, 4, 4, 3, 5, 3, 4, 5], "meters": [350, 133, 294, 325, 146, 305, 433, 136, 408, 334, 283, 331, 369, 143, 434, 111, 265, 414], "si": [3, 17, 13, 7, 11, 1, 5, 15, 9, 6, 10, 2, 18, 14, 8, 16, 4, 12], "metersTotal": 5214}}},
+    "2601480823": {
+      "_torneio": "The Amundi Evian Juniors Cup 2026",
+      "series": {
+        "MESSIEURS": {
+          "tee": "White",
+          "courseRating": 73,
+          "slope": 149,
+          "pcc": [
+            2,
+            2,
+            2
+          ],
+          "pccNota": "CR/Slope do organizador (iguais aos da FPG); PCC +2 nos 3 dias deduzido dos SD oficiais de Santiago Dias e Nuno Palmares",
+          "par": [
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "meters": [
+            361,
+            153,
+            317,
+            340,
+            156,
+            347,
+            477,
+            176,
+            458,
+            370,
+            323,
+            367,
+            399,
+            180,
+            471,
+            145,
+            308,
+            433
+          ],
+          "si": [
+            3,
+            17,
+            13,
+            7,
+            11,
+            1,
+            5,
+            15,
+            9,
+            6,
+            10,
+            2,
+            18,
+            14,
+            8,
+            16,
+            4,
+            12
+          ],
+          "metersTotal": 5781,
+          "ratingRms9": {
+            "cr": 73.1,
+            "slope": 149
+          }
+        },
+        "DAMES": {
+          "tee": "Blue",
+          "courseRating": 76,
+          "slope": 145,
+          "pcc": [
+            2,
+            2,
+            2
+          ],
+          "pccNota": "CR/Slope do organizador (iguais aos da FPG); PCC +2 nos 3 dias deduzido dos SD oficiais de Santiago Dias e Nuno Palmares",
+          "par": [
+            4,
+            3,
+            4,
+            4,
+            3,
+            4,
+            5,
+            3,
+            5,
+            4,
+            4,
+            4,
+            4,
+            3,
+            5,
+            3,
+            4,
+            5
+          ],
+          "meters": [
+            350,
+            133,
+            294,
+            325,
+            146,
+            305,
+            433,
+            136,
+            408,
+            334,
+            283,
+            331,
+            369,
+            143,
+            434,
+            111,
+            265,
+            414
+          ],
+          "si": [
+            3,
+            17,
+            13,
+            7,
+            11,
+            1,
+            5,
+            15,
+            9,
+            6,
+            10,
+            2,
+            18,
+            14,
+            8,
+            16,
+            4,
+            12
+          ],
+          "metersTotal": 5214,
+          "ratingRms9": {
+            "cr": 76,
+            "slope": 145
+          }
+        }
+      }
+    },
     "2501308499": {
       "torneio": "Grand Prix Jeunes U12 de la Ligue Paris Ile-de-France 5 (29/10/2025)",
       "series": {
@@ -326,7 +494,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 13/01/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 13/01/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 64.5,
+            "slope": 115
+          },
+          "ratingHcp": {
+            "cr": [
+              64.5,
+              64.5
+            ],
+            "slope": [
+              115,
+              115
+            ],
+            "n": 107
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -397,7 +580,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 13/01/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 13/01/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 66.2,
+            "slope": 110
+          },
+          "ratingHcp": {
+            "cr": [
+              66.2,
+              66.6
+            ],
+            "slope": [
+              106,
+              110
+            ],
+            "n": 42
+          }
         }
       },
       "fonte": "https://9401.rms9.fr/a9online/#/tournaments/view/4802337/ (RMS9 do organizador, tenant 9401, course-assignments do torneio)",
@@ -475,7 +673,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 68.6,
+            "slope": 132
+          },
+          "ratingHcp": {
+            "cr": [
+              68.5,
+              68.8
+            ],
+            "slope": [
+              131,
+              133
+            ],
+            "n": 70
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -546,7 +759,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.8,
+            "slope": 127
+          },
+          "ratingHcp": {
+            "cr": [
+              70.4,
+              71.7
+            ],
+            "slope": [
+              121,
+              131
+            ],
+            "n": 12
+          }
         },
         "BENG": {
           "tee": "Repères Benjamins Garçons",
@@ -617,7 +845,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.6,
+            "slope": 137
+          },
+          "ratingHcp": {
+            "cr": [
+              70.6,
+              70.6
+            ],
+            "slope": [
+              137,
+              137
+            ],
+            "n": 81
+          }
         },
         "BENF": {
           "tee": "Repères Benjamins Filles",
@@ -688,7 +931,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 72.8,
+            "slope": 132
+          },
+          "ratingHcp": {
+            "cr": [
+              72.7,
+              73.2
+            ],
+            "slope": [
+              130,
+              132
+            ],
+            "n": 22
+          }
         },
         "MING": {
           "tee": "Repères Minimes Garçons",
@@ -759,7 +1017,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 71.9,
+            "slope": 140
+          },
+          "ratingHcp": {
+            "cr": [
+              71.9,
+              71.9
+            ],
+            "slope": [
+              140,
+              140
+            ],
+            "n": 32
+          }
         },
         "MINF": {
           "tee": "Repères Minimes Filles",
@@ -830,7 +1103,22 @@
             1,
             1
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 15/09/2025). PCC +1 / +1 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 74.3,
+            "slope": 135
+          },
+          "ratingHcp": {
+            "cr": [
+              74.1,
+              75.2
+            ],
+            "slope": [
+              122,
+              139
+            ],
+            "n": 6
+          }
         }
       },
       "fonte": "https://9406.rms9.fr/a9online/#/tournaments/view/3619255/ (RMS9 do organizador, tenant 9406, course-assignments do torneio)",
@@ -908,7 +1196,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 67.9,
+            "slope": 122
+          },
+          "ratingHcp": {
+            "cr": [
+              67.9,
+              67.9
+            ],
+            "slope": [
+              122,
+              122
+            ],
+            "n": 78
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -979,7 +1282,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 68.2,
+            "slope": 120
+          },
+          "ratingHcp": {
+            "cr": [
+              67.6,
+              68.4
+            ],
+            "slope": [
+              119,
+              123
+            ],
+            "n": 29
+          }
         },
         "BENG": {
           "tee": "Repères Benjamins Garçons",
@@ -1050,7 +1368,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 69.9,
+            "slope": 127
+          },
+          "ratingHcp": {
+            "cr": [
+              69.9,
+              69.9
+            ],
+            "slope": [
+              127,
+              127
+            ],
+            "n": 82
+          }
         },
         "BENF": {
           "tee": "Repères Benjamins Filles",
@@ -1121,7 +1454,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 20/02/2024). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.2,
+            "slope": 125
+          },
+          "ratingHcp": {
+            "cr": [
+              70.2,
+              70.3
+            ],
+            "slope": [
+              124,
+              125
+            ],
+            "n": 24
+          }
         }
       },
       "fonte": "https://9401.rms9.fr/a9online/#/tournaments/view/6425529/ (RMS9 do organizador, tenant 9401, course-assignments do torneio)",
@@ -1199,7 +1547,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 68,
+            "slope": 128
+          },
+          "ratingHcp": {
+            "cr": [
+              68,
+              68
+            ],
+            "slope": [
+              128,
+              128
+            ],
+            "n": 66
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -1270,7 +1633,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 68.6,
+            "slope": 120
+          },
+          "ratingHcp": {
+            "cr": [
+              68.6,
+              68.6
+            ],
+            "slope": [
+              120,
+              120
+            ],
+            "n": 27
+          }
         },
         "BENG": {
           "tee": "Repères Benjamins Garçons",
@@ -1341,7 +1719,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70,
+            "slope": 133
+          },
+          "ratingHcp": {
+            "cr": [
+              70,
+              70
+            ],
+            "slope": [
+              133,
+              133
+            ],
+            "n": 79
+          }
         },
         "BENF": {
           "tee": "Repères Benjamins Filles",
@@ -1412,7 +1805,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 03/04/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.6,
+            "slope": 125
+          },
+          "ratingHcp": {
+            "cr": [
+              70.4,
+              71
+            ],
+            "slope": [
+              123,
+              127
+            ],
+            "n": 26
+          }
         }
       },
       "fonte": "https://9401.rms9.fr/a9online/#/tournaments/view/6428417/ (RMS9 do organizador, tenant 9401, course-assignments do torneio)",
@@ -1488,7 +1896,22 @@
           "metersTotal": 4473,
           "courseRating": 64.5,
           "slope": 115,
-          "ratingNota": "CR/Slope, metros e SI do organizador (RMS9 do clube, tee válido desde 13/01/2025). Assume PCC 0."
+          "ratingNota": "CR/Slope, metros e SI do organizador (RMS9 do clube, tee válido desde 13/01/2025). Assume PCC 0.",
+          "ratingRms9": {
+            "cr": 64.5,
+            "slope": 115
+          },
+          "ratingHcp": {
+            "cr": [
+              64.5,
+              64.5
+            ],
+            "slope": [
+              115,
+              115
+            ],
+            "n": 113
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -1555,7 +1978,22 @@
           "metersTotal": 3940,
           "courseRating": 66.2,
           "slope": 110,
-          "ratingNota": "CR/Slope, metros e SI do organizador (RMS9 do clube, tee válido desde 13/01/2025). Assume PCC 0."
+          "ratingNota": "CR/Slope, metros e SI do organizador (RMS9 do clube, tee válido desde 13/01/2025). Assume PCC 0.",
+          "ratingRms9": {
+            "cr": 66.2,
+            "slope": 110
+          },
+          "ratingHcp": {
+            "cr": [
+              65.9,
+              66.2
+            ],
+            "slope": [
+              110,
+              112
+            ],
+            "n": 45
+          }
         }
       }
     },
@@ -1631,7 +2069,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 67,
+            "slope": 120
+          },
+          "ratingHcp": {
+            "cr": [
+              67,
+              67.1
+            ],
+            "slope": [
+              119,
+              120
+            ],
+            "n": 88
+          }
         },
         "U12F": {
           "tee": "Repères U12 Filles",
@@ -1702,7 +2155,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 68.3,
+            "slope": 120
+          },
+          "ratingHcp": {
+            "cr": [
+              68.2,
+              68.5
+            ],
+            "slope": [
+              118,
+              121
+            ],
+            "n": 36
+          }
         },
         "BENG": {
           "tee": "Repères Benjamins Garçons",
@@ -1773,7 +2241,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 69,
+            "slope": 125
+          },
+          "ratingHcp": {
+            "cr": [
+              69,
+              69.1
+            ],
+            "slope": [
+              124,
+              125
+            ],
+            "n": 82
+          }
         },
         "BENF": {
           "tee": "Repères Benjamins Filles",
@@ -1844,7 +2327,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.3,
+            "slope": 125
+          },
+          "ratingHcp": {
+            "cr": [
+              70.2,
+              70.5
+            ],
+            "slope": [
+              121,
+              126
+            ],
+            "n": 24
+          }
         },
         "MING": {
           "tee": "Repères Minimes Garçons",
@@ -1915,7 +2413,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 70.8,
+            "slope": 130
+          },
+          "ratingHcp": {
+            "cr": [
+              70.5,
+              72.3
+            ],
+            "slope": [
+              110,
+              135
+            ],
+            "n": 18
+          }
         },
         "MINF": {
           "tee": "Repères Minimes Filles",
@@ -1986,7 +2499,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 08/11/2018). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 72.3,
+            "slope": 130
+          },
+          "ratingHcp": {
+            "cr": [
+              71.4,
+              72.6
+            ],
+            "slope": [
+              128,
+              138
+            ],
+            "n": 12
+          }
         }
       },
       "fonte": "https://9401.rms9.fr/a9online/#/tournaments/view/6431300/ (RMS9 do organizador, tenant 9401, course-assignments do torneio)",
@@ -2064,7 +2592,11 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 22/07/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 22/07/2025). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 69,
+            "slope": 120
+          }
         }
       },
       "fonte": "https://8023.rms9.fr/a9online/#/tournaments/view/8431419/ (RMS9 do organizador, tenant 8023, course-assignments do torneio)",
@@ -2168,7 +2700,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 73,
+            "slope": 140
+          },
+          "ratingHcp": {
+            "cr": [
+              72.7,
+              74.3
+            ],
+            "slope": [
+              118,
+              151
+            ],
+            "n": 12
+          }
         },
         "U14G": {
           "tee": "Benjamins (#11) — misto: Amarelas + Azuis",
@@ -2261,7 +2808,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 71,
+            "slope": 135
+          },
+          "ratingHcp": {
+            "cr": [
+              70.9,
+              71.1
+            ],
+            "slope": [
+              132,
+              136
+            ],
+            "n": 40
+          }
         },
         "U12G": {
           "tee": "U12 Garçons / Poussins (#12) — misto: Azuis + Vermelhas",
@@ -2355,7 +2917,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 69,
+            "slope": 130
+          },
+          "ratingHcp": {
+            "cr": [
+              69,
+              69
+            ],
+            "slope": [
+              130,
+              130
+            ],
+            "n": 94
+          }
         },
         "U16F": {
           "tee": "Minimes Filles (#20) — misto: Azuis + Vermelhas",
@@ -2448,7 +3025,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 73.6,
+            "slope": 130
+          },
+          "ratingHcp": {
+            "cr": [
+              70.9,
+              81.9
+            ],
+            "slope": [
+              55,
+              155
+            ],
+            "n": 2
+          }
         },
         "U14F": {
           "tee": "Benjamines (#21) — misto: Vermelhas + partidas no fairway",
@@ -2541,7 +3133,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 71.6,
+            "slope": 125
+          },
+          "ratingHcp": {
+            "cr": [
+              71.4,
+              71.8
+            ],
+            "slope": [
+              124,
+              128
+            ],
+            "n": 16
+          }
         },
         "U12F": {
           "tee": "U12 Filles / Poussines (#22) — misto: Vermelhas + partidas no fairway",
@@ -2634,7 +3241,22 @@
             2,
             2
           ],
-          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees."
+          "ratingNota": "CR/Slope, metros e SI oficiais do organizador (RMS9, tee válido desde 21/09/2026). PCC +2 / +2 deduzido dos SD oficiais do Ricardo Castro Ferreira (49085), com o NDB; o PCC é do dia e vale para todos os tees.",
+          "ratingRms9": {
+            "cr": 69.6,
+            "slope": 120
+          },
+          "ratingHcp": {
+            "cr": [
+              69.3,
+              69.8
+            ],
+            "slope": [
+              117,
+              122
+            ],
+            "n": 24
+          }
         }
       }
     }
