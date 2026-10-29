@@ -64,6 +64,11 @@ export interface FeaturedTournament {
    *  /api/inscricoes?ccode=X&tcode=Y e mostra "+N novos / −N saíram" face ao
    *  último scrape. Pôr `live: false` para desligar (ex.: evento terminado). */
   live?: boolean;
+  /** tcode PROVISÓRIO (a FPG ainda não abriu o torneio no scoring): esconde o
+   *  tcode e os links Inscrições/Draw da Federação, que dariam páginas vazias. */
+  semLinksFpg?: boolean;
+  /** Etiqueta do estado «reserva» na tab Inscrições (default «pendente»). */
+  reservaLabel?: string;
 }
 
 /** Links arquivados do antigo painel "📋 Inscrições 2026" (desactivado
@@ -215,5 +220,29 @@ export const FEATURED_TOURNAMENTS: FeaturedTournament[] = [
     escalao: null,
     date: "2026-10-31",
     campo: "Santo da Serra - Desertas-Serras",
+  },
+
+  // ── 2nd Castro Marim Portuguese International U14 — 3-6/12/2026 (Quinta do Vale) ──
+  // A FPG ainda não abriu o torneio no scoring (as inscrições são pelo
+  // formulário do fpg.pt), por isso o tcode 90872 é PROVISÓRIO e os inscritos
+  // são os da Entry List Boys em PDF de 28/10/2026, curados à mão
+  // (`_manual` em fpg-admissions-draws.json). A 1.ª edição é 000/10872.
+  // Quando a FPG publicar o tcode real, trocar aqui e no JSON.
+  {
+    ccode: "000",
+    tcode: "90872",
+    name: "2nd Castro Marim Portuguese Int. U14 Championship",
+    escalao: "Sub 14",
+    date: "2026-12-03",
+    campo: "Quinta do Vale",
+    rounds: 3,
+    extraLinks: [
+      { label: "página oficial FPG", url: "https://competicoes.fpg.pt/evento/2nd-portuguese-international-u14-championship/", icon: "🏆" },
+      { label: "Termos PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Term-Of-Competition-2nd-Castro-Marim-2026.pdf", icon: "📋" },
+      { label: "Entry List Boys 28/10 PDF", url: "https://competicoes.fpg.pt/wp-content/uploads/2025/09/Entry-List_Boys28_10.pdf", icon: "📝" },
+    ],
+    live: false,
+    semLinksFpg: true,
+    reservaLabel: "lista de espera",
   },
 ];

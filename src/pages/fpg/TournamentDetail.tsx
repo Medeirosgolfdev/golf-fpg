@@ -404,7 +404,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                 {tournament.ccode}
               </span>
             )}
-            {tournament.tcode && (
+            {tournament.tcode && !featured?.semLinksFpg && (
               <span title="tcode" className="fs-10 fw-700 mono" style={{
                 background: "var(--accent)", color: "#fff",
                 borderRadius: 4, padding: "1px 6px", letterSpacing: "0.02em",
@@ -444,7 +444,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
                       </React.Fragment>
                     : null
                 ))
-              : tournament.ccode && tournament.tcode && (
+              : tournament.ccode && tournament.tcode && !featured?.semLinksFpg && (
                   <>
                     <a href={fpgAdmissionsUrl(tournament.ccode, tournament.tcode)}
                       target="_blank" rel="noopener noreferrer"
@@ -610,7 +610,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
               admissions={effAdmissions}
               playersDB={playersDB as any}
               date={tournament.date}
-              fpgUrl={tournament.ccode && tournament.tcode ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
+              fpgUrl={tournament.ccode && tournament.tcode && !featured?.semLinksFpg ? `https://scoring.fpg.pt/lists/tournAdmissions.aspx?ccode=${tournament.ccode}&tcode=${tournament.tcode}` : undefined}
+              reservaLabel={featured?.reservaLabel}
               tournamentEscalao={tournament.escalao || undefined}
               tournamentSex={/\bF\b|\bS\b|Feminino/i.test(tournament.name || "") ? "F" : /\bM\b|\bH\b|Masculino/i.test(tournament.name || "") ? "M" : undefined}
               teeRule={teeRuleFor(tournament.ccode, tournament.tcode)}

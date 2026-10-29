@@ -81,6 +81,10 @@ const EDITION_ALIASES: EditionAlias[] = [
   // os resultados saírem). Uma regra colada ao nome fazia a tab desaparecer
   // nessa altura, em silêncio. Quem manda é o `course`.
   { match: /^pja\b|\btorre\b|\brace to dunas\b/, course: /\btorre\b/i, canon: "pja comporta torre" },
+  // Castro Marim Portuguese International U14 (ccode 000). O ordinal vem em
+  // inglês — "1st" (2025, 10872) e "2nd" (2026) — e o family key só tira os
+  // portugueses ("3º"), por isso cada edição ficava singleton.
+  { match: /\bcastro marim portuguese int\w*\b.*\bu14\b/, canon: "castro marim portuguese int u14", deriveEscFromName: true },
 ];
 function editionAliasFor(rawFamKey: string | null, campo?: string | null): EditionAlias | null {
   if (!rawFamKey) return null;
