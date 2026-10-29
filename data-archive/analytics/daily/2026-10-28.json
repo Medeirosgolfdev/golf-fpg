@@ -1,0 +1,462 @@
+{
+  "tipo": "day",
+  "periodo": "2026-10-28",
+  "since": "2026-10-28T00:00:00.000Z",
+  "until": "2026-10-28T23:59:59.999Z",
+  "projeto": "prj_e5dXWDKRiKaiVD8fYxOMQAnCEfpE",
+  "fonte": "Vercel Web Analytics (v1/query/web-analytics/visits)",
+  "nota": "Visitantes e páginas vistas do golf-fpg. Dados agregados — a API não expõe IPs nem identifica pessoas.",
+  "geradoEm": "2026-10-29T10:02:45.902Z",
+  "total": {
+    "visitors": 0,
+    "pageviews": 0
+  },
+  "dimensoes": {
+    "hour": [
+      {
+        "timestamp": "2026-10-28T00:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T01:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T02:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T03:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T04:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T05:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T06:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T07:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 5
+      },
+      {
+        "timestamp": "2026-10-28T08:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T09:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T10:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "timestamp": "2026-10-28T11:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T12:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 4
+      },
+      {
+        "timestamp": "2026-10-28T13:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "timestamp": "2026-10-28T14:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T15:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T16:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T17:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T18:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 4
+      },
+      {
+        "timestamp": "2026-10-28T19:00:00.000Z",
+        "visitors": 1,
+        "pageviews": 4
+      },
+      {
+        "timestamp": "2026-10-28T20:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T21:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T22:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      },
+      {
+        "timestamp": "2026-10-28T23:00:00.000Z",
+        "visitors": 0,
+        "pageviews": 0
+      }
+    ],
+    "requestPath": [
+      {
+        "requestPath": "/drive",
+        "visitors": 2,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores",
+        "visitors": 2,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/FPG",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/FPG/sto",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/FPG/torneio/007-11081",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/campos",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores/12314",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/38006",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/52884",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/uskids",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "route": [
+      {
+        "route": "",
+        "visitors": 2,
+        "pageviews": 22
+      }
+    ],
+    "country": [
+      {
+        "country": "PT",
+        "visitors": 2,
+        "pageviews": 22
+      }
+    ],
+    "deviceType": [
+      {
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 14
+      },
+      {
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 8
+      }
+    ],
+    "browserName": [
+      {
+        "browserName": "Firefox",
+        "visitors": 1,
+        "pageviews": 14
+      },
+      {
+        "browserName": "Mobile Safari",
+        "visitors": 1,
+        "pageviews": 8
+      }
+    ],
+    "osName": [
+      {
+        "osName": "Windows",
+        "visitors": 1,
+        "pageviews": 14
+      },
+      {
+        "osName": "iOS",
+        "visitors": 1,
+        "pageviews": 8
+      }
+    ],
+    "referrerHostname": [
+      {
+        "referrerHostname": "",
+        "visitors": 2,
+        "pageviews": 22
+      }
+    ],
+    "utmSource": null,
+    "utmMedium": null,
+    "utmCampaign": null,
+    "utmContent": null,
+    "utmTerm": null
+  },
+  "cruzamentos": {
+    "requestPath x country": [
+      {
+        "requestPath": "/drive",
+        "country": "PT",
+        "visitors": 2,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores",
+        "country": "PT",
+        "visitors": 2,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/FPG",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/FPG/sto",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/FPG/torneio/007-11081",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/campos",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores/12314",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/38006",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/52884",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/uskids",
+        "country": "PT",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "requestPath x deviceType": [
+      {
+        "requestPath": "/FPG",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/FPG/sto",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/FPG/torneio/007-11081",
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/campos",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/drive",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/drive",
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/jogadores",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores",
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores/12314",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/38006",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/52884",
+        "deviceType": "desktop",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/uskids",
+        "deviceType": "mobile",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ],
+    "requestPath x referrerHostname": [
+      {
+        "requestPath": "/drive",
+        "referrerHostname": "",
+        "visitors": 2,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores",
+        "referrerHostname": "",
+        "visitors": 2,
+        "pageviews": 6
+      },
+      {
+        "requestPath": "/FPG",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/FPG/sto",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/FPG/torneio/007-11081",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 2
+      },
+      {
+        "requestPath": "/campos",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 3
+      },
+      {
+        "requestPath": "/jogadores/12314",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/38006",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/jogadores/52884",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      },
+      {
+        "requestPath": "/uskids",
+        "referrerHostname": "",
+        "visitors": 1,
+        "pageviews": 1
+      }
+    ]
+  },
+  "avisos": [
+    "Indisponíveis no plano actual do Vercel (as dimensões UTM exigem Enterprise ou o add-on Web Analytics Plus): utmSource, utmMedium, utmCampaign, utmContent, utmTerm."
+  ],
+  "indisponiveis": [
+    "utmSource",
+    "utmMedium",
+    "utmCampaign",
+    "utmContent",
+    "utmTerm"
+  ]
+}
