@@ -58,6 +58,15 @@ filtros leem (★ `hasManuel`, PT `hasPt`, 🕳️ `hasAce`, `escalao`, `sex`…
 Cada ficheiro só se pede ao abrir o torneio (`ffgListLoadDivisions`). Teste:
 `src/data/__tests__/ffgListIndex.test.ts` (entrada lazy = eager).
 
+### CR/Slope, metros e SI oficiais — RMS9 do organizador (29/10/2026)
+
+O live scoring da FFG é o RMS9/A9online do **organizador** (tenant 9401 Ligue PIDF, 9406 Occitanie, 9411 Bretagne, 8023 FFG). A API é pública com cabeçalhos `x-tenant-id: fr_{tenant}`, `x-access-token` vazio e `Accept-Language: fr_FR`:
+
+- `GET https://{tenant}.rms9.fr/a9online/v1/rs/cs/tournaments?archived={true|false}&page=0&size=2000&sort=startDate,asc&startDateFrom=YYYY-MM-01&startDateTo=YYYY-MM-31` (perguntar com os dois `archived`);
+- `GET …/tournaments/{id}/course-assignments` → por tee: `cr`, `slope`, `par`, `length`, `holes[]` (par, si, length), `ageClasses` (série) e `courseValidFrom`.
+
+Os valores vão para `public/data/ffgolf-course-overrides.json` → `resultats.{trnId}.series.{chave}` (chave = `serieCourseKey`), com `pcc` por volta deduzido dos SD oficiais de um jogador conhecido (com NDB): em 2025 deu +1, em 2026 +2. Não estão no RMS9: Evian 2021/2024 e Internacionais U14 2021/2024. Nos Internacionais U14 fica o CR/Slope que a FPG usou nos SD oficiais (o RMS9 dá 71/137 em 2025 e 71,4/136 · 74,4/142 em 2026) — do RMS9 só os metros.
+
 ### Torneios+resultados por jogador — `ffgolf-player-tournaments.json` (2026-07-23)
 
 Clicar numa linha da `/ffg/info/joueurs` expande a lista de **todos os torneios
