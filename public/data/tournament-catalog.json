@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-27T19:19:55.559Z",
+  "generatedAt": "2026-10-29T13:41:08.965Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -730,6 +730,9 @@
       "label": "GP Jeunes",
       "sourceId": "ffgolf",
       "tournamentIds": [
+        "ffgolf-2601405026",
+        "ffgolf-2601405027",
+        "ffgolf-2601414323",
         "ffgolf-2601405352",
         "ffgolf-2601477509",
         "ffgolf-2601454326",
@@ -1050,8 +1053,8 @@
         "ffgolf-2200792232"
       ],
       "firstDate": "2022-02-15",
-      "lastDate": "2026-10-10",
-      "editionsCount": 318
+      "lastDate": "2026-10-28",
+      "editionsCount": 321
     },
     {
       "id": "dgv-jugend",
@@ -44726,19 +44729,6 @@
       "editionsCount": 3
     },
     {
-      "id": "uskids-golf-club-rotana-palmeraie-marrakech",
-      "label": "Golf Club Rotana Palmeraie - Marrakech",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-15982",
-        "uskids-15984",
-        "uskids-15986"
-      ],
-      "firstDate": "2024-01-14",
-      "lastDate": "2024-04-27",
-      "editionsCount": 3
-    },
-    {
       "id": "uskids-palmgolf-country-club",
       "label": "PalmGolf Country Club",
       "sourceId": "uskids",
@@ -44749,6 +44739,19 @@
       ],
       "firstDate": "2024-11-17",
       "lastDate": "2026-04-26",
+      "editionsCount": 3
+    },
+    {
+      "id": "uskids-golf-club-rotana-palmeraie-marrakech",
+      "label": "Golf Club Rotana Palmeraie - Marrakech",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-15982",
+        "uskids-15984",
+        "uskids-15986"
+      ],
+      "firstDate": "2024-01-14",
+      "lastDate": "2024-04-27",
       "editionsCount": 3
     },
     {
@@ -93264,6 +93267,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-royal-golf-de-mohammedia-tour-championship",
+      "label": "Royal Golf de Mohammedia (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-18157"
+      ],
+      "firstDate": "2024-12-01",
+      "lastDate": "2024-12-01",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-australian-open-parent-child",
       "label": "Australian Open Parent/Child",
       "sourceId": "uskids",
@@ -93305,17 +93319,6 @@
       ],
       "firstDate": "2024-04-28",
       "lastDate": "2024-04-28",
-      "editionsCount": 1
-    },
-    {
-      "id": "uskids-royal-golf-de-mohammedia-tour-championship",
-      "label": "Royal Golf de Mohammedia (Tour Championship)",
-      "sourceId": "uskids",
-      "tournamentIds": [
-        "uskids-18157"
-      ],
-      "firstDate": "2024-12-01",
-      "lastDate": "2024-12-01",
       "editionsCount": 1
     },
     {
@@ -94650,6 +94653,17 @@
       "editionsCount": 1
     },
     {
+      "id": "uskids-golfclub-schonfeld-tour-championship",
+      "label": "Golfclub Schönfeld (Tour Championship)",
+      "sourceId": "uskids",
+      "tournamentIds": [
+        "uskids-23789"
+      ],
+      "firstDate": "2026-10-29",
+      "lastDate": "2026-10-29",
+      "editionsCount": 1
+    },
+    {
       "id": "uskids-double-black-diamond-golf-course-tour-championship",
       "label": "Double Black Diamond Golf Course (Tour Championship)",
       "sourceId": "uskids",
@@ -94878,6 +94892,17 @@
       ],
       "firstDate": "2024-06-24",
       "lastDate": "2024-06-24",
+      "editionsCount": 1
+    },
+    {
+      "id": "ffgolf-mini-tour-u10-paca-etape-9-digne-les-bains",
+      "label": "Mini Tour U10 PACA - Etape 9 (Digne les Bains)",
+      "sourceId": "ffgolf",
+      "tournamentIds": [
+        "ffgolf-2601483470"
+      ],
+      "firstDate": "2026-10-28",
+      "lastDate": "2026-10-28",
       "editionsCount": 1
     },
     {
