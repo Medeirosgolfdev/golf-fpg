@@ -344,7 +344,7 @@ function writeCache(data: CacheFile): void {
 const ADM_FILE = join(process.cwd(), 'public', 'data', 'fpg-admissions-draws.json')
 
 function persistLiveAdmissions(
-  ccode: string, tcode: string, jogadores: Jogador[], meta: { nome?: string }
+  ccode: string, tcode: string, jogadores: Jogador[], meta: { nome?: string }, estado: string | null
 ): void {
   if (!jogadores.length) return
   try {
@@ -368,7 +368,8 @@ function persistLiveAdmissions(
         + ' < ' + antes + ' gravados — NÃO gravado (suspeito de fonte parcial)')
       return
     }
-    if (jogadores.length === antes) return  // nada de novo, evita reescrever o ficheiro
+    // nada de novo, evita reescrever o ficheiro
+    if (jogadores.length === antes && (!estado || estado === prev?.admissions?.status)) return
 
     const players = jogadores.map((j, i) => ({
       pos: i + 1, fed: j.fed, nome: j.nome, clube: j.clube,
@@ -377,6 +378,7 @@ function persistLiveAdmissions(
     const admissions = {
       ...(prev?.admissions || {}),
       name: prev?.admissions?.name || meta.nome || prev?.name,
+      ...(estado ? { status: estado } : {}),
       totalInscritos: players.length,
       players,
       _liveUpdatedAt: new Date().toISOString(),
@@ -879,7 +881,7 @@ export default defineConfig({
             writeCache(prevCache)
             // Gravar também na BASE que as páginas lêem — senão o live mostra
             // N mas a página continua a dizer o número do último scrape.
-            persistLiveAdmissions(ccode, tcode, jogadores, meta)
+            persistLiveAdmissions(ccode, tcode, jogadores, meta, parseTournStatus(html))
             const liveSource = diagnostics.find(d => d.parsed > 0)?.label || '?'
             console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado (fonte viva: ' + liveSource + ')')
 
