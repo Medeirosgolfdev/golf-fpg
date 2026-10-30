@@ -1,13 +1,13 @@
 {
   "tourId": 61134,
   "url": "https://www.nextcaddy.com/tour/61134",
-  "scrapedAt": "2026-06-24T14:58:46.728Z",
+  "scrapedAt": "2026-10-30T14:29:50.228Z",
   "meta": {
-    "name": "Campeonato Huelva",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": null,
+    "dateStart": "2026-11-14",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -17,13 +17,86 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-14",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lucia Escamez Marin",
+      "licencia": "AM95952636",
+      "hcp": 4.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Joaquin Iglesias Prieto",
+      "licencia": "AM00327933",
+      "hcp": 0.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Nardiz Martinez",
+      "licencia": "AMG8360893",
+      "hcp": 2.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Cañas Bartivas",
+      "licencia": "AM00262856",
+      "hcp": 0.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Juan Santos Conde",
+      "licencia": "AM95963072",
+      "hcp": 4.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "William North",
+      "licencia": "AMA2506786",
+      "hcp": 13.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Julio Benjumea Ordoñez",
+      "licencia": "AM85968089",
+      "hcp": 9.9,
+      "nivel": "J"
+    },
+    {
+      "orden": 7,
+      "name": "Bruno Chouamier",
+      "licencia": "AM51975375",
+      "hcp": 10.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Aitor Medina Enkler",
+      "licencia": "AM85900322",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Gonzalo Guillen Carmona",
+      "licencia": "AM85914437",
+      "hcp": null,
+      "nivel": "C"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -45,6 +118,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:49.402Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1987329433_reglamento_42_campeonato_de_huelva_de_golf_14_y_15_de_noviembre_2026.pdf"
+  ]
 }

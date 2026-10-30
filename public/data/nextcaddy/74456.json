@@ -1,9 +1,9 @@
 {
   "tourId": 74456,
   "url": "https://www.nextcaddy.com/tour/74456",
-  "scrapedAt": "2026-10-12T12:09:15.816Z",
+  "scrapedAt": "2026-10-30T14:29:08.835Z",
   "meta": {
-    "name": null,
+    "name": "8ª PRUEBA LIGA INFANTIL 5 HOYOS",
     "organizer": null,
     "course": "Real Club Sevilla Golf",
     "courseCode": "AM85",
@@ -23,35 +23,126 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "5 Hoyos",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Javier Larrea Clemente",
+          "licencia": "AM85523992",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2422599
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier Torollo De La Escalera",
+          "licencia": "AM85491699",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2428532
+        },
+        {
+          "pos": 3,
+          "name": "Irene Barrio Garcia",
+          "licencia": "AM85348758",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2422598
+        },
+        {
+          "pos": 4,
+          "name": "Lucas Rosell Carrasco",
+          "licencia": "AM85020282",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2428364
+        },
+        {
+          "pos": 5,
+          "name": "Ana Rincon Sanchez",
+          "licencia": "AM85416142",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2428363
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "5 Hoyos",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Victor Manuel Torollo De La Escalera",
-      "licencia": "AM85475937",
-      "hcp": 45.7,
+      "name": "Irene Barrio Garcia",
+      "licencia": "AM85348758",
+      "hcp": 54,
       "nivel": "B"
     },
     {
       "orden": 2,
-      "name": "Javier Cañada Leña",
-      "licencia": "AM15884684",
-      "hcp": 48.4,
-      "nivel": "I"
+      "name": "Ana Rincon Sanchez",
+      "licencia": "AM85416142",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
-      "orden": 3,
+      "orden": 1,
       "name": "Javier Larrea Clemente",
       "licencia": "AM85523992",
       "hcp": 54,
       "nivel": "B"
     },
     {
-      "orden": 1,
-      "name": "Irene Barrio Garcia",
-      "licencia": "AM85348758",
+      "orden": 2,
+      "name": "Lucas Rosell Carrasco",
+      "licencia": "AM85020282",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Javier Torollo De La Escalera",
+      "licencia": "AM85491699",
       "hcp": 54,
       "nivel": "B"
     }
@@ -127,6 +218,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1897574478_74456-8-prueba-liga-infantil-5-hoyos.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:49.963Z"
+  ]
 }

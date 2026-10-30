@@ -1,7 +1,7 @@
 {
   "tourId": 72536,
   "url": "https://www.nextcaddy.com/tour/72536",
-  "scrapedAt": "2026-07-24T23:48:33.204Z",
+  "scrapedAt": "2026-10-30T14:27:12.082Z",
   "meta": {
     "name": "SATURDAY COMP 25/07",
     "organizer": null,
@@ -21,20 +21,1130 @@
     "dateIso": "2026-07-25",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 38,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Thomas Keenan Mcmillan",
+          "licencia": "AM76488968",
+          "hcp": 10.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2368101
+        },
+        {
+          "pos": 2,
+          "name": "Sarah Stewart",
+          "licencia": "AM76901048",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2368129
+        },
+        {
+          "pos": 3,
+          "name": "Jessica Welter",
+          "licencia": "AM76482636",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2368115
+        },
+        {
+          "pos": 4,
+          "name": "Jeannine Rehlinger",
+          "licencia": "AM76903264",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2368150
+        },
+        {
+          "pos": 5,
+          "name": "Shawn Mudie",
+          "licencia": "AM76185453",
+          "hcp": 11.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2368097
+        },
+        {
+          "pos": 6,
+          "name": "Ni Li",
+          "licencia": "AM76937265",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2368085
+        },
+        {
+          "pos": 7,
+          "name": "Andrew Philip West",
+          "licencia": "AM76485663",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2368100
+        },
+        {
+          "pos": 8,
+          "name": "Stephen Elsworth",
+          "licencia": "AM76099395",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2368136
+        },
+        {
+          "pos": 9,
+          "name": "Ute Hakman",
+          "licencia": "AM76801467",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2368131
+        },
+        {
+          "pos": 10,
+          "name": "Lesley Brown",
+          "licencia": "AM76984723",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2368096
+        },
+        {
+          "pos": 11,
+          "name": "Lippens Philippe Marcel",
+          "licencia": "AM76478287",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368141
+        },
+        {
+          "pos": 12,
+          "name": "Oyvind Froysaa",
+          "licencia": "AM76951476",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368151
+        },
+        {
+          "pos": 13,
+          "name": "Paula Jayne Monaghan",
+          "licencia": "AM76033183",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368138
+        },
+        {
+          "pos": 14,
+          "name": "Kevin Burke",
+          "licencia": "AM76913697",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368083
+        },
+        {
+          "pos": 15,
+          "name": "Kevin Packebusch",
+          "licencia": "AM76187036",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2368124
+        },
+        {
+          "pos": 16,
+          "name": "Patrick Brown",
+          "licencia": "AM76984721",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2368095
+        },
+        {
+          "pos": 17,
+          "name": "Paul Barrett",
+          "licencia": "AM76943935",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2368116
+        },
+        {
+          "pos": 18,
+          "name": "Marc Antoine Enlart",
+          "licencia": "AM76965471",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2368132
+        },
+        {
+          "pos": 19,
+          "name": "Brendan Monaghan",
+          "licencia": "AM76481985",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2368143
+        },
+        {
+          "pos": 20,
+          "name": "Dominic Michael Packwood",
+          "licencia": "AM76530407",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2368118
+        },
+        {
+          "pos": 21,
+          "name": "Allan Watts",
+          "licencia": "AM76168571",
+          "hcp": 27,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2368117
+        },
+        {
+          "pos": 22,
+          "name": "David Leonard Jones",
+          "licencia": "AM76695366",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2368134
+        },
+        {
+          "pos": 23,
+          "name": "Aneel Singh Sohal",
+          "licencia": "AM76060131",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2368082
+        },
+        {
+          "pos": 24,
+          "name": "Michael Ball",
+          "licencia": "AM76412062",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2368144
+        },
+        {
+          "pos": 25,
+          "name": "Olivier Katz",
+          "licencia": "AM76421011",
+          "hcp": 14.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2368102
+        },
+        {
+          "pos": 26,
+          "name": "Shaun James",
+          "licencia": "AM76517674",
+          "hcp": 26.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2368098
+        },
+        {
+          "pos": 27,
+          "name": "Ross O`sullivan",
+          "licencia": "AM76416779",
+          "hcp": 3.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2368094
+        },
+        {
+          "pos": 28,
+          "name": "Graham Blackburn",
+          "licencia": "AM76777364",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2368114
+        },
+        {
+          "pos": 29,
+          "name": "Deborah Packebusch",
+          "licencia": "AM76187026",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2368121
+        },
+        {
+          "pos": 30,
+          "name": "Derek Cooper",
+          "licencia": "AM76946225",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2368119
+        },
+        {
+          "pos": 31,
+          "name": "Christine Una Jones",
+          "licencia": "AM76696579",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2368133
+        },
+        {
+          "pos": 32,
+          "name": "Michael Partridge",
+          "licencia": "AM76951885",
+          "hcp": 8.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2368140
+        },
+        {
+          "pos": 33,
+          "name": "Melissa Jane Lindley",
+          "licencia": "AM76001976",
+          "hcp": 14,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2368122
+        },
+        {
+          "pos": 34,
+          "name": "Tracy Smith Mallabar",
+          "licencia": "AM76924290",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2368139
+        },
+        {
+          "pos": 35,
+          "name": "John Greenaway",
+          "licencia": "AM76977650",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2368120
+        },
+        {
+          "pos": null,
+          "name": "Neil Ingram",
+          "licencia": "AM76927634",
+          "hcp": 18.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2368149
+        },
+        {
+          "pos": null,
+          "name": "Yann Simonon",
+          "licencia": "AM76903258",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2368146
+        },
+        {
+          "pos": null,
+          "name": "David Lomax",
+          "licencia": "AM76508703",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2368137
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 38
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Aneel Singh Sohal",
+      "licencia": "AM76060131",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Kevin Burke",
+      "licencia": "AM76913697",
+      "hcp": 9.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ross O`sullivan",
+      "licencia": "AM76416779",
+      "hcp": 3.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Patrick Brown",
+      "licencia": "AM76984721",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Shawn Mudie",
+      "licencia": "AM76185453",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Shaun James",
+      "licencia": "AM76517674",
+      "hcp": 26.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Andrew Philip West",
+      "licencia": "AM76485663",
+      "hcp": 9.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Thomas Keenan Mcmillan",
+      "licencia": "AM76488968",
+      "hcp": 10.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Olivier Katz",
+      "licencia": "AM76421011",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Graham Blackburn",
+      "licencia": "AM76777364",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Paul Barrett",
+      "licencia": "AM76943935",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Allan Watts",
+      "licencia": "AM76168571",
+      "hcp": 27,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Dominic Michael Packwood",
+      "licencia": "AM76530407",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Derek Cooper",
+      "licencia": "AM76946225",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "John Greenaway",
+      "licencia": "AM76977650",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Kevin Packebusch",
+      "licencia": "AM76187036",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Marc Antoine Enlart",
+      "licencia": "AM76965471",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "David Leonard Jones",
+      "licencia": "AM76695366",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Stephen Elsworth",
+      "licencia": "AM76099395",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "David Lomax",
+      "licencia": "AM76508703",
+      "hcp": 29.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Michael Partridge",
+      "licencia": "AM76951885",
+      "hcp": 8.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Lippens Philippe Marcel",
+      "licencia": "AM76478287",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Brendan Monaghan",
+      "licencia": "AM76481985",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Michael Ball",
+      "licencia": "AM76412062",
+      "hcp": 21.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Yann Simonon",
+      "licencia": "AM76903258",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Neil Ingram",
+      "licencia": "AM76927634",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Oyvind Froysaa",
+      "licencia": "AM76951476",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ni Li",
+      "licencia": "AM76937265",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Lesley Brown",
+      "licencia": "AM76984723",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jessica Welter",
+      "licencia": "AM76482636",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Deborah Packebusch",
+      "licencia": "AM76187026",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Melissa Jane Lindley",
+      "licencia": "AM76001976",
+      "hcp": 14,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Sarah Stewart",
+      "licencia": "AM76901048",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Ute Hakman",
+      "licencia": "AM76801467",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Christine Una Jones",
+      "licencia": "AM76696579",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Paula Jayne Monaghan",
+      "licencia": "AM76033183",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Tracy Smith Mallabar",
+      "licencia": "AM76924290",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.7,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161122,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            128
+          ],
+          [
+            "Birdie",
+            13
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            244
+          ],
+          [
+            "Peor",
+            152
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161123,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            17
+          ],
+          [
+            "2",
+            32
+          ],
+          [
+            "3",
+            49
+          ],
+          [
+            "4",
+            38
+          ],
+          [
+            "5",
+            25
+          ],
+          [
+            "6",
+            41
+          ],
+          [
+            "7",
+            33
+          ],
+          [
+            "8",
+            26
+          ],
+          [
+            "9",
+            22
+          ],
+          [
+            "10",
+            21
+          ],
+          [
+            "11",
+            43
+          ],
+          [
+            "12",
+            33
+          ],
+          [
+            "13",
+            31
+          ],
+          [
+            "14",
+            30
+          ],
+          [
+            "15",
+            43
+          ],
+          [
+            "16",
+            20
+          ],
+          [
+            "17",
+            35
+          ],
+          [
+            "18",
+            24
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161124,
+        "datos": [
+          [
+            "Hoyo",
+            "TOMMY MCMILLAN",
+            "Jessica Welter",
+            "SARAH STEWART"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            3
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            3
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -3,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -4,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -4,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -3,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -5,
+            1,
+            2
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            1,
+            1
+          ],
+          [
+            "Hoyo 14",
+            -4,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -4,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -4,
+            -2,
+            -2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161125,
+        "datos": [
+          [
+            "Hoyo",
+            "TOMMY MCMILLAN",
+            "Jessica Welter",
+            "SARAH STEWART"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            2,
+            2
+          ],
+          [
+            "Hoyo 13",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -47,44 +1157,9 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Ballesteros Blanco, Alvaro",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 08:50:49"
-        },
-        {
-          "playerName": "Albasanz Saiz, Francisco",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 09:26:24"
-        },
-        {
-          "playerName": "Redondo Verdejo, Juan Carlos",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 09:34:28"
-        },
-        {
-          "playerName": "Suanzes Lopez, Ignacio",
-          "holeNumber": 4,
-          "createdAt": "08/04/26 09:45:07"
-        },
-        {
-          "playerName": "Segura Collado, Tomas",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 09:47:07"
-        },
-        {
-          "playerName": "Suanzes Lopez, Ignacio",
-          "holeNumber": 5,
-          "createdAt": "08/04/26 09:59:05"
-        },
-        {
-          "playerName": "Gongora Escriva De Romani, Cesar De",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 10:04:21"
-        },
-        {
-          "playerName": "González Alonso, Vicente",
-          "holeNumber": 4,
-          "createdAt": "08/04/26 10:05:46"
+          "playerName": "Cerron Reina, Juan  Jose",
+          "holeNumber": 18,
+          "createdAt": "08/04/26 14:13:20"
         },
         {
           "playerName": "Leiva Lopez, Oscar",
@@ -92,74 +1167,9 @@
           "createdAt": "08/04/26 10:06:09"
         },
         {
-          "playerName": "Mendoza Rivero, Jorge",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 10:07:10"
-        },
-        {
-          "playerName": "Rodriguez Sacristan, Jesus",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 10:14:24"
-        },
-        {
-          "playerName": "Chico Zamorano, Jose Ramon",
-          "holeNumber": 1,
-          "createdAt": "08/04/26 10:15:11"
-        },
-        {
-          "playerName": "Lliso Aranguren, Jorge",
-          "holeNumber": 5,
-          "createdAt": "08/04/26 10:19:04"
-        },
-        {
-          "playerName": "Prieto Pineda, Cesar",
-          "holeNumber": 6,
-          "createdAt": "08/04/26 10:19:21"
-        },
-        {
-          "playerName": "Albert Reig, Jose Vicente",
-          "holeNumber": 7,
-          "createdAt": "08/04/26 10:20:30"
-        },
-        {
-          "playerName": "Rihuete Rihuete, Angel Luis",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 10:25:24"
-        },
-        {
-          "playerName": "Sefton, Mark Andrew",
-          "holeNumber": 7,
-          "createdAt": "08/04/26 10:31:34"
-        },
-        {
-          "playerName": "Prieto Pineda, Cesar",
-          "holeNumber": 7,
-          "createdAt": "08/04/26 10:32:08"
-        },
-        {
-          "playerName": "Riñon Sanchez, Juan Ignacio",
-          "holeNumber": 7,
-          "createdAt": "08/04/26 10:43:02"
-        },
-        {
-          "playerName": "Sefton, Mark Andrew",
-          "holeNumber": 8,
-          "createdAt": "08/04/26 10:46:59"
-        },
-        {
-          "playerName": "Mendoza Rivero, Jorge",
-          "holeNumber": 4,
-          "createdAt": "08/04/26 10:53:02"
-        },
-        {
-          "playerName": "Roldan Almunia, Raul",
-          "holeNumber": 4,
-          "createdAt": "08/04/26 10:53:57"
-        },
-        {
-          "playerName": "Talavante Madroñal, Jose Luis",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 10:54:27"
+          "playerName": "Leiva Lopez, Oscar",
+          "holeNumber": 18,
+          "createdAt": "08/04/26 13:58:32"
         },
         {
           "playerName": "De La Iglesia Cervera, Javier",
@@ -167,19 +1177,104 @@
           "createdAt": "08/04/26 11:31:36"
         },
         {
-          "playerName": "Marti Quintana, Miguel",
+          "playerName": "Mendoza Rivero, Jorge",
           "holeNumber": 1,
-          "createdAt": "08/04/26 11:33:54"
+          "createdAt": "08/04/26 10:07:10"
         },
         {
-          "playerName": "Marti Quintana, Miguel",
-          "holeNumber": 11,
-          "createdAt": "08/04/26 11:33:54"
+          "playerName": "Mendoza Rivero, Jorge",
+          "holeNumber": 4,
+          "createdAt": "08/04/26 10:53:02"
         },
         {
-          "playerName": "Ballesteros Blanco, Alvaro",
+          "playerName": "Redondo Verdejo, Juan Carlos",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 09:34:28"
+        },
+        {
+          "playerName": "Garcia Guerrero, Guillermo",
           "holeNumber": 11,
-          "createdAt": "08/04/26 11:33:55"
+          "createdAt": "08/04/26 16:07:33"
+        },
+        {
+          "playerName": "Suanzes Lopez, Ignacio",
+          "holeNumber": 4,
+          "createdAt": "08/04/26 09:45:07"
+        },
+        {
+          "playerName": "Suanzes Lopez, Ignacio",
+          "holeNumber": 5,
+          "createdAt": "08/04/26 09:59:05"
+        },
+        {
+          "playerName": "Talavante Madroñal, Jose Luis",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 10:54:27"
+        },
+        {
+          "playerName": "Gongora Escriva De Romani, Cesar De",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 10:04:21"
+        },
+        {
+          "playerName": "Carrero Perez, Jesus Carlos",
+          "holeNumber": 2,
+          "createdAt": "08/04/26 12:58:16"
+        },
+        {
+          "playerName": "Fernandez Puigdomenech, Oscar",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 12:43:27"
+        },
+        {
+          "playerName": "Prieto Pineda, Cesar",
+          "holeNumber": 6,
+          "createdAt": "08/04/26 10:19:21"
+        },
+        {
+          "playerName": "Prieto Pineda, Cesar",
+          "holeNumber": 7,
+          "createdAt": "08/04/26 10:32:08"
+        },
+        {
+          "playerName": "Lliso Aranguren, Jorge",
+          "holeNumber": 5,
+          "createdAt": "08/04/26 10:19:04"
+        },
+        {
+          "playerName": "Segura Collado, Tomas",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 09:47:07"
+        },
+        {
+          "playerName": "Jimenez Vazquez, Juan Carlos",
+          "holeNumber": 5,
+          "createdAt": "08/04/26 12:21:04"
+        },
+        {
+          "playerName": "Jimenez Vazquez, Juan Carlos",
+          "holeNumber": 15,
+          "createdAt": "08/04/26 15:36:16"
+        },
+        {
+          "playerName": "Martull Fariñas, Fernando",
+          "holeNumber": 5,
+          "createdAt": "08/04/26 11:48:30"
+        },
+        {
+          "playerName": "González Alonso, Vicente",
+          "holeNumber": 4,
+          "createdAt": "08/04/26 10:05:46"
+        },
+        {
+          "playerName": "Gonzalez-Carvajal Ramirez, Carlos",
+          "holeNumber": 11,
+          "createdAt": "08/04/26 13:48:45"
+        },
+        {
+          "playerName": "Cabañas Fernandez, Alvaro",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 12:15:59"
         },
         {
           "playerName": "Diaz Barral, Juan Manuel",
@@ -192,24 +1287,19 @@
           "createdAt": "08/04/26 11:40:21"
         },
         {
-          "playerName": "Martull Fariñas, Fernando",
-          "holeNumber": 5,
-          "createdAt": "08/04/26 11:48:30"
+          "playerName": "Cruz De Diego, Luis",
+          "holeNumber": 17,
+          "createdAt": "08/04/26 14:09:17"
         },
         {
-          "playerName": "Riñon Sanchez, Juan Ignacio",
-          "holeNumber": 11,
-          "createdAt": "08/04/26 11:52:16"
+          "playerName": "Prieto Del Portillo, Isidro",
+          "holeNumber": 17,
+          "createdAt": "08/04/26 16:23:46"
         },
         {
-          "playerName": "Cabañas Fernandez, Alvaro",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 12:15:59"
-        },
-        {
-          "playerName": "Jimenez Vazquez, Juan Carlos",
-          "holeNumber": 5,
-          "createdAt": "08/04/26 12:21:04"
+          "playerName": "Albert Reig, Jose Vicente",
+          "holeNumber": 7,
+          "createdAt": "08/04/26 10:20:30"
         },
         {
           "playerName": "Albert Reig, Jose Vicente",
@@ -217,60 +1307,79 @@
           "createdAt": "08/04/26 12:36:41"
         },
         {
-          "playerName": "Fernandez Puigdomenech, Oscar",
-          "holeNumber": 3,
-          "createdAt": "08/04/26 12:43:27"
-        },
-        {
-          "playerName": "Carrero Perez, Jesus Carlos",
-          "holeNumber": 2,
-          "createdAt": "08/04/26 12:58:16"
-        },
-        {
           "playerName": "Blazquez Casillas, Pedro",
           "holeNumber": 7,
           "createdAt": "08/04/26 13:14:16"
         },
         {
-          "playerName": "Gonzalez-Carvajal Ramirez, Carlos",
+          "playerName": "Riñon Sanchez, Juan Ignacio",
+          "holeNumber": 7,
+          "createdAt": "08/04/26 10:43:02"
+        },
+        {
+          "playerName": "Riñon Sanchez, Juan Ignacio",
           "holeNumber": 11,
-          "createdAt": "08/04/26 13:48:45"
+          "createdAt": "08/04/26 11:52:16"
         },
         {
-          "playerName": "Leiva Lopez, Oscar",
-          "holeNumber": 18,
-          "createdAt": "08/04/26 13:58:32"
+          "playerName": "Roldan Almunia, Raul",
+          "holeNumber": 4,
+          "createdAt": "08/04/26 10:53:57"
         },
         {
-          "playerName": "Cruz De Diego, Luis",
-          "holeNumber": 17,
-          "createdAt": "08/04/26 14:09:17"
+          "playerName": "Marti Quintana, Miguel",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 11:33:54"
         },
         {
-          "playerName": "Cerron Reina, Juan  Jose",
-          "holeNumber": 18,
-          "createdAt": "08/04/26 14:13:20"
-        },
-        {
-          "playerName": "Jimenez Vazquez, Juan Carlos",
-          "holeNumber": 15,
-          "createdAt": "08/04/26 15:36:16"
-        },
-        {
-          "playerName": "Garcia Guerrero, Guillermo",
+          "playerName": "Marti Quintana, Miguel",
           "holeNumber": 11,
-          "createdAt": "08/04/26 16:07:33"
+          "createdAt": "08/04/26 11:33:54"
         },
         {
-          "playerName": "Prieto Del Portillo, Isidro",
-          "holeNumber": 17,
-          "createdAt": "08/04/26 16:23:46"
+          "playerName": "Sefton, Mark Andrew",
+          "holeNumber": 7,
+          "createdAt": "08/04/26 10:31:34"
+        },
+        {
+          "playerName": "Sefton, Mark Andrew",
+          "holeNumber": 8,
+          "createdAt": "08/04/26 10:46:59"
+        },
+        {
+          "playerName": "Chico Zamorano, Jose Ramon",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 10:15:11"
+        },
+        {
+          "playerName": "Rihuete Rihuete, Angel Luis",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 10:25:24"
+        },
+        {
+          "playerName": "Albasanz Saiz, Francisco",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 09:26:24"
+        },
+        {
+          "playerName": "Ballesteros Blanco, Alvaro",
+          "holeNumber": 1,
+          "createdAt": "08/04/26 08:50:49"
+        },
+        {
+          "playerName": "Ballesteros Blanco, Alvaro",
+          "holeNumber": 11,
+          "createdAt": "08/04/26 11:33:55"
+        },
+        {
+          "playerName": "Rodriguez Sacristan, Jesus",
+          "holeNumber": 3,
+          "createdAt": "08/04/26 10:14:24"
         }
       ]
     }
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.761Z"
+  ]
 }

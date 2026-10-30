@@ -1,29 +1,138 @@
 {
   "tourId": 61235,
   "url": "https://www.nextcaddy.com/tour/61235",
-  "scrapedAt": "2026-06-24T14:59:07.341Z",
+  "scrapedAt": "2026-10-30T14:30:00.191Z",
   "meta": {
-    "name": "Torneo Senior Otoño Costa del Sol",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
-    "dateStart": null,
+    "dateStart": "2026-11-28",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
-      "Señoras",
       "Caballeros",
+      "Señoras",
+      "SENIOR",
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-28",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ignacio Iturbe Escolano",
+      "licencia": "AM58192896",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alvaro Tellez Garcia",
+      "licencia": "AM15205802",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ernesto Ruiz Martinez",
+      "licencia": "AM58149384",
+      "hcp": 11.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Olivier Katz",
+      "licencia": "AM76421011",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Orla Martin Joergensen",
+      "licencia": "AM76914987",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Yann Simonon",
+      "licencia": "AM76903258",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Jose Gimilio Amate",
+      "licencia": "AM01136700",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "David Reynolds",
+      "licencia": "AMI5927437",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jason Howard Thackray",
+      "licencia": "AM61349574",
+      "hcp": 6.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Fernando Ramirez Vega",
+      "licencia": "AMG6003584",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Joaquin Alberto Morales Martinez",
+      "licencia": "AM06168882",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Joelle Loiret",
+      "licencia": "AM76420986",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "AM76809386",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Ni Li",
+      "licencia": "AM76937265",
+      "hcp": 11.9,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -41,6 +150,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:49.882Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/2138557329_61235-torneo-senior-otono-costa-del-sol.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf"
+  ]
 }

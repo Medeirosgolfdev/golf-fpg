@@ -1,15 +1,15 @@
 {
   "tourId": 68326,
   "url": "https://www.nextcaddy.com/tour/68326",
-  "scrapedAt": "2026-06-24T14:58:48.171Z",
+  "scrapedAt": "2026-10-30T14:28:53.635Z",
   "meta": {
     "name": "Torneo por Equipos Amateur",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": null,
+    "dateStart": "2026-10-11",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
       "Señoras",
@@ -17,13 +17,865 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-10-11",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Equipos Scratch",
+      "jugadores": 24
+    },
+    "2": {
+      "name": "Equipos Handicap",
+      "jugadores": 24
+    }
+  },
+  "inscritos": [
+    {
+      "orden": null,
+      "name": "Albatross Golf",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Gustavo Malo Rodriguez",
+      "licencia": "CMA8486507",
+      "hcp": 7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jose Alejandro Barrios Anzola",
+      "licencia": "CMA8005386",
+      "hcp": 7.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Christian Vorbeck Crohare",
+      "licencia": "CM05070208",
+      "hcp": 5.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Andres Garcia Torres",
+      "licencia": "CM60902377",
+      "hcp": 15.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Los Cañoneros",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Mario Martinez Sanz",
+      "licencia": "CMD4899314",
+      "hcp": 5,
+      "nivel": "M"
+    },
+    {
+      "orden": null,
+      "name": "Alejandro Laguna Galindo",
+      "licencia": "8816300373",
+      "hcp": 12.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Cendra Santamaria",
+      "licencia": "CM01820670",
+      "hcp": 7.5,
+      "nivel": "M"
+    },
+    {
+      "orden": null,
+      "name": "Gonzalo Vaca Arozarena",
+      "licencia": "CM18778297",
+      "hcp": 9.4,
+      "nivel": "M"
+    },
+    {
+      "orden": null,
+      "name": "MadridSur",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Francisco Javier Sanchez Martinez",
+      "licencia": "CM17813417",
+      "hcp": 11.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Jose De Pablo Olivares",
+      "licencia": "CM17820245",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Muñoz Castillo",
+      "licencia": "CM00885993",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Elena Manzanero Carrasco",
+      "licencia": "CM66962674",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Allstars",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Willy De Brabanter",
+      "licencia": "CM60631311",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Guillermo De Brabanter Quiroga",
+      "licencia": "CM60515068",
+      "hcp": 20.6,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Oscar Fernandez Puigdomenech",
+      "licencia": "CM41304379",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Jose Rodero Samaniego",
+      "licencia": "CM00250957",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Las simpaticas",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Maria Cervera Fernandez",
+      "licencia": "CM81297137",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carmen Buesa Galiano",
+      "licencia": "CM81211788",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Del Mar Cansado Comas",
+      "licencia": "CM04082189",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Isabel Verdeja Lizama",
+      "licencia": "CM52082907",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Las Elegidas",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Maria Jesus Rodriguez Ortiz",
+      "licencia": "CM41308179",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Raquel Sanchez Cantarino",
+      "licencia": "CM41932709",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Elena Delgado Palomar",
+      "licencia": "CMD3933144",
+      "hcp": 13.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Agustina Maria Olarra Goiriena",
+      "licencia": "CM00253430",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Los Dropping Zone",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Daniel Ricardo De Lima De Menezes",
+      "licencia": "CM07088274",
+      "hcp": 6.2,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "Eduardo Sanchez Martin",
+      "licencia": "CM33985133",
+      "hcp": 15.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Andres Eduardo Ruiz Del Vizo Villalaba",
+      "licencia": "CM18959862",
+      "hcp": 8.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Ricardo De Lima Ginnari",
+      "licencia": "CM22060850",
+      "hcp": 9.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "GOLFERAS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Daniel Barriopedro Garnacho",
+      "licencia": "CM00506239",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Alberto Ibañez Freire",
+      "licencia": "8833795200",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Alex Ibañez Gil Ortega",
+      "licencia": "CM00161464",
+      "hcp": 23.5,
+      "nivel": "J"
+    },
+    {
+      "orden": null,
+      "name": "David Rodriguez-Madridejos Medina",
+      "licencia": "CME4519675",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Los Perfumistas",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jose Luis Talavante Madroñal",
+      "licencia": "CM33984673",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Gonzalez-Carvajal Ramirez",
+      "licencia": "CM00267040",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Augusto Diaz-Ordoñez Melgarejo",
+      "licencia": "CMA8907078",
+      "hcp": 14.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Fatima Izaguirre Vizcaya",
+      "licencia": "VB07728107",
+      "hcp": 23.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Los Gripaos",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Ruben Sanchez Lopez",
+      "licencia": "CM22629533",
+      "hcp": 14.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jose Maria Jimenez Carbonell",
+      "licencia": "8808812009",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Luis Hernando Helguero",
+      "licencia": "CM02636352",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Bernardou Casadonet",
+      "licencia": "CM00696134",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "19 hoyos y 500 golpes",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Juan Miguel Redondo Toral",
+      "licencia": "CM17182250",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Alberto Castor Rodriguez",
+      "licencia": "CM17183703",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Clara Isabel Alonso De Pablo",
+      "licencia": "CM17259075",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Belen Sacristan Marcos",
+      "licencia": "CM17171065",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "DRIVERS DEL AVERNO",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Pablo De Heras Garcia",
+      "licencia": "CM00054668",
+      "hcp": 11.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Sergio Del Corral Vicente",
+      "licencia": "CM61981759",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Rafael Valenzuela Yrazusta",
+      "licencia": "CM61759713",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Oscar Molina",
+      "licencia": "CM00496364",
+      "hcp": 14.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Air Birdies",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Alvaro Sanz Alvarez",
+      "licencia": "CM68984044",
+      "hcp": 7.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Rodrigo Royo Lopez",
+      "licencia": "CM12374879",
+      "hcp": 10.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Adrian Horcajada Garcia",
+      "licencia": "CM12887602",
+      "hcp": 6.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Daniel Calzada Cabrejas",
+      "licencia": "CM41069177",
+      "hcp": 16.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Los Buscabolas",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Pablo Sanchez Martin",
+      "licencia": "CM00794676",
+      "hcp": 19.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Javier Lopez Arias",
+      "licencia": "CME4904188",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Alejandro Iglesias Prieto",
+      "licencia": "CM05353405",
+      "hcp": 7.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Rafael Sanchiz De La Infiesta",
+      "licencia": "CME4217412",
+      "hcp": 20.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "TEAM VENEZUELA",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Juan Salvador Sanz Rojas",
+      "licencia": "CM00413083",
+      "hcp": 3.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Hector Arciniegas Bolivar",
+      "licencia": "CMA8940880",
+      "hcp": 14,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Ivan Jose Castellanos Daza",
+      "licencia": "CMA8516388",
+      "hcp": 14.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Carlos Enrique Lezama De Laurentiis",
+      "licencia": "CM18965363",
+      "hcp": 21.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Golftail",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Pedro Bustamante Ybarra",
+      "licencia": "CM01212508",
+      "hcp": 6.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jaime Garcia Curran",
+      "licencia": "CM81917363",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Santiago Martinez Santiago",
+      "licencia": "CM02950201",
+      "hcp": 6.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Juan Carlos Couret Siljestrom",
+      "licencia": "CM02069572",
+      "hcp": 14.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Mulligans",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jaime Lopez-Seoane Puente",
+      "licencia": "GC00195193",
+      "hcp": 20,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Roman Merino Castells",
+      "licencia": "CM00969165",
+      "hcp": 21.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Pablo Mingote Llado",
+      "licencia": "AM17495668",
+      "hcp": 18.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jesus Paz-Albo Prieto",
+      "licencia": "CM00985178",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Las damas chinas felices en green",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Liqin Chen Zhou",
+      "licencia": "CM05966799",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Qing Ye",
+      "licencia": "CM33159967",
+      "hcp": 17.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jihong He",
+      "licencia": "CM07477908",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Zhenrong Zhang Wang",
+      "licencia": "CM07909226",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "La Serie 3.0",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Jorge Israel Cañamares Ledesma",
+      "licencia": "CM81748108",
+      "hcp": 18.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Eduardo Navarro Sabariegos",
+      "licencia": "9919977646",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Jose Manuel Sanchez Herreros",
+      "licencia": "CMD1799972",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Gaston Kürlander Arigon",
+      "licencia": "CM41983878",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Bolaaaaaaa",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Maria Del Pilar Sanchez Garcia",
+      "licencia": "CM33959845",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Maria Herminia Ballesteros Martinez-Blanco",
+      "licencia": "CM05782223",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ilaria Cereda Tanzi",
+      "licencia": "CM00149195",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Rocio Lorenzo-Arroyo Poullet",
+      "licencia": "CM41633399",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "GREEN JACKETS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Joaquin Sainz De Vicuña Gortazar",
+      "licencia": "CM02074791",
+      "hcp": 12.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Pablo Sainz De Vicuña Gortazar",
+      "licencia": "CM02132074",
+      "hcp": 19.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Beltran Ocio Segovia",
+      "licencia": "CM01061133",
+      "hcp": 17.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Luis Otamendi Rodriguez",
+      "licencia": "VB02056309",
+      "hcp": 19.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "THE FORRESSS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Susana Calle Rodriguez",
+      "licencia": "CM41691369",
+      "hcp": 17.1,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Francisco Hernandez Peña",
+      "licencia": "CM41673703",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ivan Arnaiz Arranz",
+      "licencia": "CM09791630",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Juan Pablo Crespo Sanchez",
+      "licencia": "CM41040489",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Ni par ni nones",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Antonio Roldan Miguelañez",
+      "licencia": "CM33808392",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Zebenzui Hernandez Trujillo",
+      "licencia": "CME4885616",
+      "hcp": 16.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Emilio Garcia De Madrid",
+      "licencia": "CM33165593",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Higinio Garcia Nuñez",
+      "licencia": "CM33366561",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "AMIGOLFS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Fco. Javier Fernandez Alvaro",
+      "licencia": "CME8303595",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Francisco Javier Gomez Portela",
+      "licencia": "CME4470780",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Jose Maria Olalla Camin",
+      "licencia": "CME4480899",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Isidro Montoro Castro",
+      "licencia": "CM33003227",
+      "hcp": 24.2,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -918,6 +1770,9 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-12T12:09:47.601Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3466421796_290459881_condiciones_competicion_torneos_por_equipos_2026.pdf",
+    "/uploads/competiciones/pdf/715247224_rrll_gs.pdf"
+  ]
 }

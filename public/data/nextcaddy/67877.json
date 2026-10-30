@@ -1,7 +1,7 @@
 {
   "tourId": 67877,
   "url": "https://www.nextcaddy.com/tour/67877",
-  "scrapedAt": "2026-10-12T12:09:25.435Z",
+  "scrapedAt": "2026-10-30T14:29:53.641Z",
   "meta": {
     "name": null,
     "organizer": null,
@@ -29,86 +29,632 @@
   "inscritos": [
     {
       "orden": 1,
+      "name": "Casper Soudant",
+      "licencia": "AM11098835",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Mateo Muñoz-Rojas Salinas",
+      "licencia": "AM02924055",
+      "hcp": 1.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Dominguez Jurado",
+      "licencia": "AMJ7930322",
+      "hcp": 3.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Roberto Gonzalez Muñoz",
+      "licencia": "AM05959942",
+      "hcp": 3.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Pablo Moreno Jimenez",
+      "licencia": "AM11885803",
+      "hcp": 4,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Guillermo Gelma Labarga",
+      "licencia": "AM15960599",
+      "hcp": 4.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Amelia Toquero Flores",
+      "licencia": "AMF7900309",
+      "hcp": 4.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Andres Lara Robles",
+      "licencia": "AM15888507",
+      "hcp": 4.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
       "name": "Sergio Rubiales Dominguez",
       "licencia": "AM51169290",
       "hcp": 4.8,
       "nivel": "A"
     },
     {
-      "orden": 2,
+      "orden": 10,
       "name": "Kira Gonzalez Bernases",
       "licencia": "AM85964619",
       "hcp": 4.9,
       "nivel": "C"
     },
     {
-      "orden": 3,
+      "orden": 11,
+      "name": "Daniel Aguilar Cid",
+      "licencia": "AMJ7987076",
+      "hcp": 6.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Pablo Mena Chaparro",
+      "licencia": "AM11915425",
+      "hcp": 6.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 13,
+      "name": "Jaime Fernandez De Bobadilla Diaz",
+      "licencia": "AM02975531",
+      "hcp": 6.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Dylan Dedaj Ungureanu",
+      "licencia": "AM51995519",
+      "hcp": 6.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Casasola Perez",
+      "licencia": "AM03177119",
+      "hcp": 6.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
       "name": "Borja Enriquez Sáinz De La Flor",
       "licencia": "AM05946296",
       "hcp": 7.2,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 17,
+      "name": "Juan Fernandez De Cordova Garrido",
+      "licencia": "AMB9943756",
+      "hcp": 7.5,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "Lis Ferreiro Luciano",
+      "licencia": "AM15486673",
+      "hcp": 9.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 19,
+      "name": "Juan Muñoz Lozano",
+      "licencia": "AM11884846",
+      "hcp": 9.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 20,
+      "name": "Manuel Luis Arjona Serrano",
+      "licencia": "AMD5984026",
+      "hcp": 9.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 21,
+      "name": "Juan Garrido Mena",
+      "licencia": "AM11353969",
+      "hcp": 9.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 22,
+      "name": "Martina Parra Gonzalez",
+      "licencia": "AM00069655",
+      "hcp": 10,
+      "nivel": "A"
+    },
+    {
+      "orden": 23,
+      "name": "Jaime Guillen Carmona",
+      "licencia": "AM85972709",
+      "hcp": 10.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 24,
+      "name": "Alejandro Corbacho Vazquez",
+      "licencia": "AM02925781",
+      "hcp": 11.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 25,
+      "name": "Felipe Fernandez Pina",
+      "licencia": "AM02072859",
+      "hcp": 11.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 26,
+      "name": "Bruno Utrera Carracao",
+      "licencia": "AM11978667",
+      "hcp": 11.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 27,
+      "name": "Gonzalo Rojo Dominguez",
+      "licencia": "AM02506545",
+      "hcp": 11.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 28,
+      "name": "Pedro Ortega Peinado",
+      "licencia": "AMF7090571",
+      "hcp": 11.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 29,
       "name": "Alejandro Gomez Morillo",
       "licencia": "AMF7965735",
       "hcp": 11.8,
       "nivel": "I"
     },
     {
-      "orden": 5,
+      "orden": 30,
+      "name": "Miguel Sedeño Martin",
+      "licencia": "AM95967511",
+      "hcp": 12.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 31,
+      "name": "Hermes Stuart Cañizares Plaja",
+      "licencia": "AM83155360",
+      "hcp": 12.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 32,
+      "name": "Pablo De La Torre Guisado",
+      "licencia": "AMG3099560",
+      "hcp": 12.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 33,
+      "name": "Joaquin Piñar De La Paz",
+      "licencia": "AM02948582",
+      "hcp": 12.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 34,
+      "name": "Lucia Grimaldi Ferrer",
+      "licencia": "AM95949848",
+      "hcp": 12.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 35,
+      "name": "Juan Jose Rodriguez Lopez",
+      "licencia": "AMI5998051",
+      "hcp": 13.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 36,
+      "name": "Asuncion Lopez-Obrero Pommarez",
+      "licencia": "AM02967073",
+      "hcp": 13.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 37,
+      "name": "Elena Holgado Requena",
+      "licencia": "AM51996386",
+      "hcp": 13.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 38,
       "name": "Hugo Lopez Diaz",
       "licencia": "AM71373692",
       "hcp": 13.9,
       "nivel": "A"
     },
     {
-      "orden": 6,
+      "orden": 39,
+      "name": "Miguel De La Rosa Tassara",
+      "licencia": "AM02082594",
+      "hcp": 14.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 40,
+      "name": "Pablo Espino Santizo",
+      "licencia": "AM02977502",
+      "hcp": 14.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 41,
+      "name": "Javier Aguado Medina",
+      "licencia": "AM02969011",
+      "hcp": 14.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 42,
+      "name": "Juan Ignacio Saenz Vidau",
+      "licencia": "AM05983533",
+      "hcp": 15.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 43,
+      "name": "Daniel Espinosa Gutierrez",
+      "licencia": "AMG3482010",
+      "hcp": 15.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 44,
+      "name": "Maria Marin Fernandez",
+      "licencia": "AM15889249",
+      "hcp": 15.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 45,
+      "name": "Eduardo Miralles Serra",
+      "licencia": "AM02978900",
+      "hcp": 15.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 46,
       "name": "Jose Pascual Carrasco",
       "licencia": "AMC3060217",
       "hcp": 16,
       "nivel": "A"
     },
     {
-      "orden": 7,
+      "orden": 47,
+      "name": "Noa Quel Gallardo",
+      "licencia": "AM15415977",
+      "hcp": 16.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 48,
+      "name": "Ramon Charlo Cruz-Guzman",
+      "licencia": "AM02969008",
+      "hcp": 17.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 49,
       "name": "Marta Breijo Cegarra",
       "licencia": "AMC3984693",
       "hcp": 17.8,
       "nivel": "I"
     },
     {
-      "orden": 8,
+      "orden": 50,
+      "name": "Pepe Capitan Noguera",
+      "licencia": "AM11159788",
+      "hcp": 17.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 51,
+      "name": "Jose Maria Vega Ortega",
+      "licencia": "AM11058990",
+      "hcp": 17.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 52,
       "name": "Carlos Breijo Cegarra",
       "licencia": "AMC3984695",
       "hcp": 18,
       "nivel": "A"
     },
     {
-      "orden": 9,
+      "orden": 53,
+      "name": "Carlos Arriaga Sanchez",
+      "licencia": "AMD5084300",
+      "hcp": 18,
+      "nivel": "A"
+    },
+    {
+      "orden": 54,
+      "name": "Jaime Gonzalez Muñoz",
+      "licencia": "AM05987385",
+      "hcp": 18.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 55,
+      "name": "Mateo Pablo De La Lastra Romero",
+      "licencia": "AM02084464",
+      "hcp": 18.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 56,
+      "name": "Sara Sanchez Navas",
+      "licencia": "AM15989194",
+      "hcp": 19.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 57,
+      "name": "Alfonso Mas Gonzalez",
+      "licencia": "AMD5466082",
+      "hcp": 20.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 58,
       "name": "Fermin Elizburu Mostaza",
       "licencia": "AMC3061797",
       "hcp": 20.6,
       "nivel": "A"
     },
     {
-      "orden": 10,
+      "orden": 59,
       "name": "Santiago Amaya Cozzi",
       "licencia": "AM11254047",
       "hcp": 20.6,
       "nivel": "A"
     },
     {
-      "orden": 11,
+      "orden": 60,
+      "name": "Fernando Medina Caliz",
+      "licencia": "AM02969006",
+      "hcp": 20.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 61,
+      "name": "Nikita Dellwig Ilchenko",
+      "licencia": "AM51469846",
+      "hcp": 20.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 62,
+      "name": "Juan Olid Del Rio",
+      "licencia": "AM11895757",
+      "hcp": 21.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 63,
+      "name": "Lucia Valle Calvente",
+      "licencia": "AM51069656",
+      "hcp": 21.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 64,
+      "name": "Carlos Montenegro Arias",
+      "licencia": "AMD5467086",
+      "hcp": 21.7,
+      "nivel": "J"
+    },
+    {
+      "orden": 65,
       "name": "Miguel Arejola Garzon",
       "licencia": "CM22051868",
       "hcp": 21.8,
       "nivel": "C"
     },
     {
-      "orden": 12,
+      "orden": 66,
+      "name": "Ignacio De Villalonga Fernandez De Heredia",
+      "licencia": "CM41505476",
+      "hcp": 23,
+      "nivel": "C"
+    },
+    {
+      "orden": 67,
+      "name": "Miguel Cotan Mendez",
+      "licencia": "AM95252670",
+      "hcp": 23.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 68,
+      "name": "Rodrigo Rojo Navarro",
+      "licencia": "AM02492223",
+      "hcp": 24.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 69,
+      "name": "Pedro Pablo Bononato Terry",
+      "licencia": "AM05099558",
+      "hcp": 25.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 70,
+      "name": "Ignacio De Leon Y Aroca",
+      "licencia": "AMJ7072681",
+      "hcp": 25.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 71,
+      "name": "Jaime Haya Pereyra",
+      "licencia": "AM02169765",
+      "hcp": 25.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 72,
+      "name": "Maria Salido Maesso",
+      "licencia": "AM02169811",
+      "hcp": 26,
+      "nivel": "A"
+    },
+    {
+      "orden": 73,
+      "name": "Nicolas Prieto Segura",
+      "licencia": "AM05896207",
+      "hcp": 26.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 74,
+      "name": "Alejandro Capitan Noguera",
+      "licencia": "AM11159963",
+      "hcp": 26.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 75,
+      "name": "Alfonso Moreno Quintero",
+      "licencia": "AM05896240",
+      "hcp": 26.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 76,
       "name": "Malena Viera Villalba",
       "licencia": "AM11026370",
       "hcp": 27.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 77,
+      "name": "Javier Cerezo Reina",
+      "licencia": "AM02998601",
+      "hcp": 27.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 78,
+      "name": "Pablo Caruz Ladron De Guevara",
+      "licencia": "AM02091782",
+      "hcp": 29.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 79,
+      "name": "Daniel Olid Del Rio",
+      "licencia": "AM11895760",
+      "hcp": 31.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 80,
+      "name": "Alvaro Brey Alvarez",
+      "licencia": "AM02971264",
+      "hcp": 32,
+      "nivel": "A"
+    },
+    {
+      "orden": 81,
+      "name": "Agata Jannone Bonilla",
+      "licencia": "AM02070527",
+      "hcp": 32.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 82,
+      "name": "Gonzalo Muñoz Lozano",
+      "licencia": "AM11982897",
+      "hcp": 32.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 83,
+      "name": "Ignacio Fernandez De Bobadilla Diaz",
+      "licencia": "AM02413274",
+      "hcp": 32.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 84,
+      "name": "Alvaro Perez Santiago",
+      "licencia": "AMF7069261",
+      "hcp": 33.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 85,
+      "name": "Alejandra Gutierrez-Alviz Garate",
+      "licencia": "AM02998874",
+      "hcp": 34.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 86,
+      "name": "Andres De La Rosa Tassara",
+      "licencia": "AM02082590",
+      "hcp": 35.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 87,
+      "name": "Fernando Ruiz-Cabello Galobart",
+      "licencia": "AM02069324",
+      "hcp": 36,
+      "nivel": "A"
+    },
+    {
+      "orden": 88,
+      "name": "Nicolas Martinez Fontan",
+      "licencia": "AM02184547",
+      "hcp": 36,
+      "nivel": "I"
+    },
+    {
+      "orden": 89,
+      "name": "Ignacio Ladron De Guevara Pablo-Romero",
+      "licencia": "AM02091534",
+      "hcp": 39.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 90,
+      "name": "Nicolas Gomez Brage",
+      "licencia": "AMD5984031",
+      "hcp": 41.4,
       "nivel": "A"
     }
   ],
@@ -417,6 +963,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:53:55.588Z"
+  ]
 }

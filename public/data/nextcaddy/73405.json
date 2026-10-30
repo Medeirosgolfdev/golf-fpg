@@ -1,9 +1,9 @@
 {
   "tourId": 73405,
   "url": "https://www.nextcaddy.com/tour/73405",
-  "scrapedAt": "2026-08-31T10:51:00.628Z",
+  "scrapedAt": "2026-10-30T14:28:05.550Z",
   "meta": {
-    "name": null,
+    "name": "DANESES GOLF 3/9",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
@@ -21,20 +21,522 @@
     "dateIso": "2026-09-03",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jens Schroder",
+          "licencia": "AM76326533",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2397150
+        },
+        {
+          "pos": 2,
+          "name": "Bjarne Plahn",
+          "licencia": "AM68981578",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2397154
+        },
+        {
+          "pos": 3,
+          "name": "Anita Due",
+          "licencia": "AM76896953",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2397151
+        },
+        {
+          "pos": 4,
+          "name": "Alexander Walsoe",
+          "licencia": "AM76198382",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2397153
+        },
+        {
+          "pos": 5,
+          "name": "Peter Bundgard",
+          "licencia": "AM76946855",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2397152
+        },
+        {
+          "pos": null,
+          "name": "Tage Potoker",
+          "licencia": "AM76769742",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2397149
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Tage Potoker",
+      "licencia": "AM76769742",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jens Schroder",
+      "licencia": "AM76326533",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Peter Bundgard",
+      "licencia": "AM76946855",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Alexander Walsoe",
+      "licencia": "AM76198382",
+      "hcp": 12.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Bjarne Plahn",
+      "licencia": "AM68981578",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Anita Due",
+      "licencia": "AM76896953",
+      "hcp": 37,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161666,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            13
+          ],
+          [
+            "Birdie",
+            0
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            38
+          ],
+          [
+            "Peor",
+            32
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161667,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            2
+          ],
+          [
+            "2",
+            6
+          ],
+          [
+            "3",
+            9
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            5
+          ],
+          [
+            "6",
+            10
+          ],
+          [
+            "7",
+            8
+          ],
+          [
+            "8",
+            3
+          ],
+          [
+            "9",
+            5
+          ],
+          [
+            "10",
+            7
+          ],
+          [
+            "11",
+            4
+          ],
+          [
+            "12",
+            11
+          ],
+          [
+            "13",
+            5
+          ],
+          [
+            "14",
+            5
+          ],
+          [
+            "15",
+            6
+          ],
+          [
+            "16",
+            4
+          ],
+          [
+            "17",
+            2
+          ],
+          [
+            "18",
+            9
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161668,
+        "datos": [
+          [
+            "Hoyo",
+            "JENS SCHRODER ",
+            "BJARNE PLAHN",
+            "ANITA DUE "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 9",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 11",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 13",
+            2,
+            0,
+            3
+          ],
+          [
+            "Hoyo 14",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 15",
+            2,
+            1,
+            3
+          ],
+          [
+            "Hoyo 16",
+            1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 17",
+            1,
+            1,
+            4
+          ],
+          [
+            "Hoyo 18",
+            1,
+            2,
+            4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161669,
+        "datos": [
+          [
+            "Hoyo",
+            "JENS SCHRODER ",
+            "BJARNE PLAHN",
+            "ANITA DUE "
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 13",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            1,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -45,6 +547,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:19.558Z"
+  ]
 }

@@ -1,29 +1,196 @@
 {
   "tourId": 68715,
   "url": "https://www.nextcaddy.com/tour/68715",
-  "scrapedAt": "2026-06-24T14:58:20.392Z",
+  "scrapedAt": "2026-10-30T14:27:58.246Z",
   "meta": {
     "name": "VII Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Golf Club Fuerteventura",
     "courseCode": "CP20",
-    "dateStart": null,
+    "dateStart": "2026-08-29",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Profesional C. Téc",
+    "format": "Medal Play (Scratch)  Profesional  Señor",
     "categories": [
       "PROFESIONAL",
       "Profesional",
+      "Señoras",
       "Juvenil",
       "profesional",
       "Infantil",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-08-29",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alvaro Hernandez Cabezuela",
+          "licencia": "CP143545-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -3,
+          "inscribedId": 2391623
+        },
+        {
+          "pos": 2,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2386208
+        },
+        {
+          "pos": 3,
+          "name": "Alicia Fajardo Monzon",
+          "licencia": "CP033850-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2391024
+        },
+        {
+          "pos": 4,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2388591
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP050677-P",
+          "hcp": 1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2386054
+        },
+        {
+          "pos": 6,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2387988
+        },
+        {
+          "pos": null,
+          "name": "Francisco Javier Amatriain Perallon",
+          "licencia": "CP200493-P",
+          "hcp": 2.7,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2391619
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francisco Cea Bermudez",
+      "licencia": "CP050677-P",
+      "hcp": 1,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Javier Amatriain Perallon",
+      "licencia": "CP200493-P",
+      "hcp": 2.7,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Hernandez Cabezuela",
+      "licencia": "CP143545-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 1,
+      "name": "Alicia Fajardo Monzon",
+      "licencia": "CP033850-P",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -316,6 +483,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-08-31T10:51:20.877Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

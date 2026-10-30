@@ -1,9 +1,9 @@
 {
   "tourId": 74245,
   "url": "https://www.nextcaddy.com/tour/74245",
-  "scrapedAt": "2026-10-12T12:09:19.287Z",
+  "scrapedAt": "2026-10-30T14:29:24.026Z",
   "meta": {
-    "name": null,
+    "name": "LIGAS MAJ - 9 Hoyos - Octubre",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
@@ -22,9 +22,81 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Categoría 9 Hoyos",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Manuel Rios Mayorga",
+          "licencia": "AMI5948504",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2432386
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Bocanegra Bolivar",
+          "licencia": "AMI5037404",
+          "hcp": 38,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2432323
+        },
+        {
+          "pos": 3,
+          "name": "Amit Thadani Vashi",
+          "licencia": "AM11528698",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2420188
+        },
+        {
+          "pos": null,
+          "name": "Ramona Ruiz Padilla",
+          "licencia": "AM04983130",
+          "hcp": 41,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2430961
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoría 9 Hoyos",
+      "jugadores": 4
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -32,6 +104,27 @@
       "licencia": "AM11528698",
       "hcp": 36,
       "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Manuel Bocanegra Bolivar",
+      "licencia": "AMI5037404",
+      "hcp": 38,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Manuel Rios Mayorga",
+      "licencia": "AMI5948504",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ramona Ruiz Padilla",
+      "licencia": "AM04983130",
+      "hcp": 41,
+      "nivel": "S"
     }
   ],
   "horarios": [
@@ -95,6 +188,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:35.639Z"
+  ]
 }

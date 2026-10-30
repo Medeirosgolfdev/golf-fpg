@@ -354,6 +354,9 @@ export function ncToFPGTournament(
     : parOrNone(detail.coursePar, holeCount);
   const parTotal = par18.reduce((a, b) => a + b, 0);   // 0 = sem par
   const si18 = (detail._ncCourseSi && detail._ncCourseSi.length === holeCount) ? detail._ncCourseSi : [];
+  // Em Stableford o NextCaddy põe PONTOS nas colunas J1/J2… (e no total), não
+  // pancadas — aí uma volta sem cartão não pode entrar só com o total.
+  const ncStableford = /stableford/i.test(String((detail.meta as { style?: string | null })?.style ?? ""));
 
   const norm = normEs;
   const lookupByName = dobLookupByName(dobLookup, norm);
@@ -393,21 +396,26 @@ export function ncToFPGTournament(
     })();
     const playerMetersTotal = playerMeters.reduce((a, b) => a + (b || 0), 0);
     const teeLabel = playerMetersTotal > 0 ? `${playerMetersTotal} m` : (meters18.length ? "Tour" : undefined);
+    const temCartao = (r: { scores?: number[] }) =>
+      Array.isArray(r.scores) && r.scores.length === holeCount && r.scores.some((x) => x > 0);
     const roundScores: IntlRoundIn[] = (p.rounds || [])
       // Exigir pelo menos um buraco com golpes > 0: um inscrito que NÃO jogou (WD/
       // DNS) traz o cartão a zeros (18×0), que passava o teste de comprimento e dava
       // gross 0 → ± = 0−72 = −72 na vista de ronda. Rondas a zeros = não jogadas.
-      .filter((r) => {
-        const s = (r as { scores?: number[] }).scores;
-        return Array.isArray(s) && s.length === holeCount && s.some((x) => x > 0);
-      })
+      // Sem cartão (a 2.ª passagem do scraper só traz ~80 torneios por semana),
+      // a volta entra com o total oficial da classificação e o cartão em branco —
+      // como no LGS. Sem isto toda a gente aparecia WD (Campeonato de Andalucía
+      // Sub 16/Sub 18 2026, 30/10). Gross ≥ 900 = sem cartão (regra comum).
+      .filter((r) => temCartao(r as { scores?: number[] })
+        || (!ncStableford && typeof r.gross === "number" && r.gross > 0 && !isNoCardGross(r.gross)))
       .map((r) => {
         const rm = (r as { meters?: number[] | null }).meters;
         const mm = (Array.isArray(rm) && rm.length === holeCount) ? rm : playerMeters;
+        const cartao = temCartao(r as { scores?: number[] });
         return {
           round: r.round,
           gross: (r.gross != null) ? r.gross : ((r as any).scores.reduce((a: number, b: number) => a + b, 0) || 0),
-          scores: (r as any).scores,
+          scores: cartao ? (r as any).scores : [],
           card: { meters: mm },
         };
       });
@@ -419,8 +427,10 @@ export function ncToFPGTournament(
     // continua correcta mesmo em Stableford (o pos não vem do gross).
     const grossSum = roundScores.reduce((s, r) => s + (r.gross || 0), 0);
     const grossTotal = grossSum > 0 ? grossSum : (typeof p.total === "number" ? p.total : null);
-    // Sem par: sem ±par calculado (o toPar da fonte só vale sem cartões).
-    const toPar = grossSum > 0 ? (parTotal > 0 ? grossSum - parTotal * roundScores.length : null) : (p.toPar ?? null);
+    // Sem par: sem ±par calculado (o toPar da fonte só vale sem cartões — e
+    // também quando as voltas entraram só com o total da classificação).
+    const todasComCartao = roundScores.length > 0 && roundScores.every((r) => (r.scores || []).length > 0);
+    const toPar = todasComCartao ? (parTotal > 0 ? grossSum - parTotal * roundScores.length : null) : (p.toPar ?? null);
     return {
       id: `nc-${detail.compId}-${idx}`,
       pos: p.pos ?? idx + 1,

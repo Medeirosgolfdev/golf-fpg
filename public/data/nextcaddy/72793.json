@@ -1,9 +1,9 @@
 {
   "tourId": 72793,
   "url": "https://www.nextcaddy.com/tour/72793",
-  "scrapedAt": "2026-08-10T05:45:18.646Z",
+  "scrapedAt": "2026-10-30T14:27:43.706Z",
   "meta": {
-    "name": null,
+    "name": "Pool Amigos Mariano Posadas",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,10 +21,280 @@
     "dateIso": "2026-08-17",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mariano Posadas Jimenez",
+          "licencia": "CM02189431",
+          "hcp": 5.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2377009
+        },
+        {
+          "pos": 2,
+          "name": "Angel Mirat Gonzalez",
+          "licencia": "9901960755",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2377385
+        },
+        {
+          "pos": 3,
+          "name": "Moises Hermida Luna",
+          "licencia": "AMF7942905",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2385268
+        },
+        {
+          "pos": 4,
+          "name": "Alberto Romero Gago",
+          "licencia": "CM00280809",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2377357
+        },
+        {
+          "pos": 5,
+          "name": "Eduardo Lafuente Perez",
+          "licencia": "CM41951107",
+          "hcp": 9.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2385750
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Javier Torrella Fernandez",
+          "licencia": "CB00069478",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2378858
+        },
+        {
+          "pos": 7,
+          "name": "Felipe Garcia Ramos",
+          "licencia": "9901323282",
+          "hcp": 11.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2377481
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Perez Hereza",
+          "licencia": "CM18277672",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2379625
+        },
+        {
+          "pos": 9,
+          "name": "Juan Carlos Matesanz Santiago",
+          "licencia": "CM15052998",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2377226
+        },
+        {
+          "pos": 10,
+          "name": "Jose Antonio Ortega Martinez",
+          "licencia": "CMF3296167",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2385254
+        },
+        {
+          "pos": 11,
+          "name": "Lucas Garcia Calvo",
+          "licencia": "CMB2692660",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2385879
+        },
+        {
+          "pos": 12,
+          "name": "Sergio Aguirre Vila-Coro",
+          "licencia": "CM02620949",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2375839
+        },
+        {
+          "pos": 13,
+          "name": "Mariano Posadas Arosa",
+          "licencia": "CM05160628",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2379633
+        },
+        {
+          "pos": 14,
+          "name": "Maria Jesus Acedo Grande",
+          "licencia": "9901397432",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2377483
+        },
+        {
+          "pos": 15,
+          "name": "Miguel Angel Barquero Bravo",
+          "licencia": "AM25357304",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2379415
+        },
+        {
+          "pos": 16,
+          "name": "Francisco Javier Santos Morala",
+          "licencia": "7707288945",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2375525
+        },
+        {
+          "pos": 17,
+          "name": "Alberto Angulo Pinedo",
+          "licencia": "CM33344651",
+          "hcp": 33.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2375493
+        },
+        {
+          "pos": 18,
+          "name": "Maria Jose Guerra Garcia",
+          "licencia": "CB00154892",
+          "hcp": 38.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2379009
+        },
+        {
+          "pos": 19,
+          "name": "Ana Maria Garcia-Castaño Gandiaga",
+          "licencia": "7709993199",
+          "hcp": 41.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2375521
+        },
+        {
+          "pos": null,
+          "name": "Juan Galiana Calero",
+          "licencia": "AM07901549",
+          "hcp": 5.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2385808
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -37,7 +307,7 @@
       "orden": 2,
       "name": "Francisco Javier Santos Morala",
       "licencia": "7707288945",
-      "hcp": 15.3,
+      "hcp": 15.7,
       "nivel": "S"
     },
     {
@@ -51,7 +321,7 @@
       "orden": 4,
       "name": "Mariano Posadas Jimenez",
       "licencia": "CM02189431",
-      "hcp": 5.7,
+      "hcp": 5.9,
       "nivel": "Mid"
     },
     {
@@ -65,14 +335,14 @@
       "orden": 6,
       "name": "Alberto Romero Gago",
       "licencia": "CM00280809",
-      "hcp": 23.3,
+      "hcp": 23.1,
       "nivel": "S"
     },
     {
       "orden": 7,
       "name": "Angel Mirat Gonzalez",
       "licencia": "9901960755",
-      "hcp": 20.5,
+      "hcp": 20.3,
       "nivel": "S"
     },
     {
@@ -86,7 +356,7 @@
       "orden": 9,
       "name": "Francisco Javier Torrella Fernandez",
       "licencia": "CB00069478",
-      "hcp": 23.1,
+      "hcp": 22.8,
       "nivel": "S"
     },
     {
@@ -108,6 +378,41 @@
       "name": "Mariano Posadas Arosa",
       "licencia": "CM05160628",
       "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Antonio Ortega Martinez",
+      "licencia": "CMF3296167",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Moises Hermida Luna",
+      "licencia": "AMF7942905",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Eduardo Lafuente Perez",
+      "licencia": "CM41951107",
+      "hcp": 9.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Juan Galiana Calero",
+      "licencia": "AM07901549",
+      "hcp": 5.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Lucas Garcia Calvo",
+      "licencia": "CMB2692660",
+      "hcp": 26.4,
       "nivel": "S"
     },
     {
@@ -1799,6 +2104,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4147226815_72793-pool-mariano-posadas.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:58:01.244Z"
+  ]
 }

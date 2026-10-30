@@ -1,9 +1,9 @@
 {
   "tourId": 72197,
   "url": "https://www.nextcaddy.com/tour/72197",
-  "scrapedAt": "2026-07-13T07:09:49.925Z",
+  "scrapedAt": "2026-10-30T14:27:47.325Z",
   "meta": {
-    "name": null,
+    "name": "Real Club de Golf Castiello 3ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
@@ -25,7 +25,92 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Hugo Zambrano Gonzalez",
+      "licencia": "AMI5989569",
+      "hcp": 34.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Santiago Orejas Menendez-Abascal",
+      "licencia": "0202374416",
+      "hcp": 37,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Filip Ramos Klinecky",
+      "licencia": "0201004072",
+      "hcp": 30.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Caso Lopez De Haro",
+      "licencia": "0201177645",
+      "hcp": 52.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Pablo Guardado Moro",
+      "licencia": "0201998371",
+      "hcp": 38.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Alejandra Massana Arias",
+      "licencia": "CMA8354339",
+      "hcp": 28.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Tamargo Carretero",
+      "licencia": "0201182227",
+      "hcp": 42.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Blanca Diaz Cuervo",
+      "licencia": "0201998384",
+      "hcp": 44.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Alejandra Rodriguez Garcia",
+      "licencia": "0201306225",
+      "hcp": 35.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Cecilia Menendez Wang",
+      "licencia": "0201051867",
+      "hcp": 36.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alicia Perez Glodeanu",
+      "licencia": "0201003910",
+      "hcp": 51.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Lola Mosquera Fernandez",
+      "licencia": "RL04965985",
+      "hcp": 22.1,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -47,14 +132,14 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Daroca Bruño, Purificacion",
-          "holeNumber": 4,
-          "createdAt": "22/01/26 12:21:07"
-        },
-        {
           "playerName": "Pastor Ramos, Maria Teresa",
           "holeNumber": 8,
           "createdAt": "22/01/26 13:07:10"
+        },
+        {
+          "playerName": "Daroca Bruño, Purificacion",
+          "holeNumber": 4,
+          "createdAt": "22/01/26 12:21:07"
         },
         {
           "playerName": "Avecilla Torres, Mª Fernanda",
@@ -66,7 +151,6 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/1540371600_rrll_castiello.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:15.149Z"
+    "/uploads/competiciones/pdf/3240755880_reglas-locales.pdf"
+  ]
 }

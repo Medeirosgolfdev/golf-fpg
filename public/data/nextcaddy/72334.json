@@ -1,13 +1,13 @@
 {
   "tourId": 72334,
   "url": "https://www.nextcaddy.com/tour/72334",
-  "scrapedAt": "2026-07-20T07:01:13.492Z",
+  "scrapedAt": "2026-10-30T14:27:37.896Z",
   "meta": {
-    "name": null,
+    "name": "II Pool Fiction 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": "2026-08-11",
+    "dateStart": "2026-08-13",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -20,14 +20,625 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-08-11",
+    "dateIso": "2026-08-13",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Borja Garay Gomez-A.",
+          "licencia": "CM01051440",
+          "hcp": 9.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2377380
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier De Juan Valero",
+          "licencia": "CM02161852",
+          "hcp": 4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2383641
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Javier De Juan Uriarte",
+          "licencia": "CM11511240",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2383642
+        },
+        {
+          "pos": 4,
+          "name": "Pablo Enrile Mora-Figueroa",
+          "licencia": "CM02061322",
+          "hcp": 6.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2378826
+        },
+        {
+          "pos": 5,
+          "name": "Bruno De Las Barcenas Soto",
+          "licencia": "CM01074860",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2377375
+        },
+        {
+          "pos": 6,
+          "name": "Jose Luis Mallo De Vargas",
+          "licencia": "7705159872",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2377146
+        },
+        {
+          "pos": 7,
+          "name": "Pablo Enrile Olleros",
+          "licencia": "CM02926923",
+          "hcp": 26,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2378825
+        },
+        {
+          "pos": 8,
+          "name": "Maria Merry Del Val Mariategui",
+          "licencia": "CM01051486",
+          "hcp": 22.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2383448
+        },
+        {
+          "pos": 9,
+          "name": "Alfonso Segovia Utrera",
+          "licencia": "CM00613055",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2383352
+        },
+        {
+          "pos": 10,
+          "name": "Mercedes Satrustegui Carvajal",
+          "licencia": "CM01971629",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2377145
+        },
+        {
+          "pos": 11,
+          "name": "Pedro Luis Gutierrez Moreno",
+          "licencia": "CM00783701",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2383718
+        },
+        {
+          "pos": 12,
+          "name": "Iñigo De Arteaga Pascual",
+          "licencia": "CM01798210",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2383446
+        },
+        {
+          "pos": 13,
+          "name": "Jaime Lopez De Carrizosa Mora - Figueroa",
+          "licencia": "CM11927272",
+          "hcp": 25.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2383764
+        },
+        {
+          "pos": 14,
+          "name": "Carlos Acha Garcia-Noblejas",
+          "licencia": "CM00500731",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2377376
+        },
+        {
+          "pos": 15,
+          "name": "Alfonso Enrile Olleros",
+          "licencia": "CM02926924",
+          "hcp": 45.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2378822
+        },
+        {
+          "pos": 16,
+          "name": "Sol Sanchez Blanco",
+          "licencia": "CM00922560",
+          "hcp": 32.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2377342
+        },
+        {
+          "pos": 17,
+          "name": "Victor Domenech Ibañez-Martin",
+          "licencia": "CM01908075",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2383728
+        },
+        {
+          "pos": 18,
+          "name": "Pedro Enrile Ruiz De Salazar",
+          "licencia": "CM02941302",
+          "hcp": 39.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2383606
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Enrile Olleros",
+          "licencia": "CM02926923",
+          "hcp": 26,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2378825
+        },
+        {
+          "pos": 2,
+          "name": "Borja Garay Gomez-A.",
+          "licencia": "CM01051440",
+          "hcp": 9.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2377380
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Javier De Juan Uriarte",
+          "licencia": "CM11511240",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2383642
+        },
+        {
+          "pos": 4,
+          "name": "Maria Merry Del Val Mariategui",
+          "licencia": "CM01051486",
+          "hcp": 22.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2383448
+        },
+        {
+          "pos": 5,
+          "name": "Alfonso Enrile Olleros",
+          "licencia": "CM02926924",
+          "hcp": 45.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2378822
+        },
+        {
+          "pos": 6,
+          "name": "Alfonso Segovia Utrera",
+          "licencia": "CM00613055",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2383352
+        },
+        {
+          "pos": 7,
+          "name": "Sol Sanchez Blanco",
+          "licencia": "CM00922560",
+          "hcp": 32.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2377342
+        },
+        {
+          "pos": 8,
+          "name": "Mercedes Satrustegui Carvajal",
+          "licencia": "CM01971629",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2377145
+        },
+        {
+          "pos": 9,
+          "name": "Francisco Javier De Juan Valero",
+          "licencia": "CM02161852",
+          "hcp": 4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2383641
+        },
+        {
+          "pos": 10,
+          "name": "Bruno De Las Barcenas Soto",
+          "licencia": "CM01074860",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2377375
+        },
+        {
+          "pos": 11,
+          "name": "Jose Luis Mallo De Vargas",
+          "licencia": "7705159872",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2377146
+        },
+        {
+          "pos": 12,
+          "name": "Jaime Lopez De Carrizosa Mora - Figueroa",
+          "licencia": "CM11927272",
+          "hcp": 25.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2383764
+        },
+        {
+          "pos": 13,
+          "name": "Victor Domenech Ibañez-Martin",
+          "licencia": "CM01908075",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2383728
+        },
+        {
+          "pos": 14,
+          "name": "Pablo Enrile Mora-Figueroa",
+          "licencia": "CM02061322",
+          "hcp": 6.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2378826
+        },
+        {
+          "pos": 15,
+          "name": "Iñigo De Arteaga Pascual",
+          "licencia": "CM01798210",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2383446
+        },
+        {
+          "pos": 16,
+          "name": "Pedro Luis Gutierrez Moreno",
+          "licencia": "CM00783701",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2383718
+        },
+        {
+          "pos": 17,
+          "name": "Pedro Enrile Ruiz De Salazar",
+          "licencia": "CM02941302",
+          "hcp": 39.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2383606
+        },
+        {
+          "pos": 18,
+          "name": "Carlos Acha Garcia-Noblejas",
+          "licencia": "CM00500731",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2377376
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 18
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mercedes Satrustegui Carvajal",
+      "licencia": "CM01971629",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Sol Sanchez Blanco",
+      "licencia": "CM00922560",
+      "hcp": 32.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Merry Del Val Mariategui",
+      "licencia": "CM01051486",
+      "hcp": 22.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Jose Luis Mallo De Vargas",
+      "licencia": "7705159872",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Bruno De Las Barcenas Soto",
+      "licencia": "CM01074860",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Acha Garcia-Noblejas",
+      "licencia": "CM00500731",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Borja Garay Gomez-A.",
+      "licencia": "CM01051440",
+      "hcp": 9.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Alfonso Enrile Olleros",
+      "licencia": "CM02926924",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Pablo Enrile Olleros",
+      "licencia": "CM02926923",
+      "hcp": 26,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Pablo Enrile Mora-Figueroa",
+      "licencia": "CM02061322",
+      "hcp": 6.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Alfonso Segovia Utrera",
+      "licencia": "CM00613055",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Iñigo De Arteaga Pascual",
+      "licencia": "CM01798210",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Pedro Enrile Ruiz De Salazar",
+      "licencia": "CM02941302",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Francisco Javier De Juan Valero",
+      "licencia": "CM02161852",
+      "hcp": 4,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Francisco Javier De Juan Uriarte",
+      "licencia": "CM11511240",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Pedro Luis Gutierrez Moreno",
+      "licencia": "CM00783701",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Victor Domenech Ibañez-Martin",
+      "licencia": "CM01908075",
+      "hcp": 28.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jaime Lopez De Carrizosa Mora - Figueroa",
+      "licencia": "CM11927272",
+      "hcp": 25.9,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -217,9 +828,24 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Andres Diego, Carlos",
-          "holeNumber": 3,
-          "createdAt": "10/05/26 09:48:56"
+          "playerName": "Martinez Rodriguez, Esteban Guillermo",
+          "holeNumber": 1,
+          "createdAt": "10/05/26 12:42:27"
+        },
+        {
+          "playerName": "Orgaz Escalera, Francisco",
+          "holeNumber": 4,
+          "createdAt": "10/05/26 12:40:23"
+        },
+        {
+          "playerName": "Romero Perez, Carlos",
+          "holeNumber": 15,
+          "createdAt": "10/05/26 10:59:45"
+        },
+        {
+          "playerName": "Flores Cerdan, Enrique",
+          "holeNumber": 13,
+          "createdAt": "10/05/26 13:59:50"
         },
         {
           "playerName": "Dominguez Cabrera, Jose Luis",
@@ -232,54 +858,9 @@
           "createdAt": "10/05/26 09:56:57"
         },
         {
-          "playerName": "Gonzalez Gonzalez, Carlos",
-          "holeNumber": 4,
-          "createdAt": "10/05/26 10:04:42"
-        },
-        {
-          "playerName": "Ruiz Cano, Jose Antonio",
-          "holeNumber": 6,
-          "createdAt": "10/05/26 10:04:53"
-        },
-        {
-          "playerName": "Cuervo Gurumeta, Jose Ramon",
-          "holeNumber": 12,
-          "createdAt": "10/05/26 10:10:19"
-        },
-        {
-          "playerName": "Bravo Hernandez, Jose",
-          "holeNumber": 10,
-          "createdAt": "10/05/26 10:35:54"
-        },
-        {
           "playerName": "Delgado Aymat, Jose Maria",
           "holeNumber": 8,
           "createdAt": "10/05/26 10:45:37"
-        },
-        {
-          "playerName": "Romero Perez, Carlos",
-          "holeNumber": 15,
-          "createdAt": "10/05/26 10:59:45"
-        },
-        {
-          "playerName": "Ferreiro Del Rio, Manuel",
-          "holeNumber": 10,
-          "createdAt": "10/05/26 11:02:17"
-        },
-        {
-          "playerName": "Mendez Ruiz, Jesus",
-          "holeNumber": 11,
-          "createdAt": "10/05/26 11:10:47"
-        },
-        {
-          "playerName": "Hernanz Hernandez, Mario",
-          "holeNumber": 14,
-          "createdAt": "10/05/26 11:12:08"
-        },
-        {
-          "playerName": "Ferreiro Del Rio, Manuel",
-          "holeNumber": 13,
-          "createdAt": "10/05/26 11:25:56"
         },
         {
           "playerName": "Jimenez Atance, Alfonso",
@@ -292,79 +873,9 @@
           "createdAt": "10/05/26 12:21:53"
         },
         {
-          "playerName": "Obispo De Torres, Maria Cruz",
-          "holeNumber": 18,
-          "createdAt": "10/05/26 12:25:02"
-        },
-        {
-          "playerName": "Ruiz Cano, Jose Antonio",
-          "holeNumber": 1,
-          "createdAt": "10/05/26 12:33:00"
-        },
-        {
-          "playerName": "Orgaz Escalera, Francisco",
-          "holeNumber": 4,
-          "createdAt": "10/05/26 12:40:23"
-        },
-        {
-          "playerName": "Martinez Rodriguez, Esteban Guillermo",
-          "holeNumber": 1,
-          "createdAt": "10/05/26 12:42:27"
-        },
-        {
-          "playerName": "Flores Cerdan, Enrique",
-          "holeNumber": 13,
-          "createdAt": "10/05/26 13:59:50"
-        },
-        {
-          "playerName": "De Blas Arribas, Felix",
-          "holeNumber": 12,
-          "createdAt": "10/05/26 14:13:52"
-        },
-        {
-          "playerName": "Pueyo Martinez, David",
-          "holeNumber": 18,
-          "createdAt": "10/05/26 14:21:54"
-        },
-        {
-          "playerName": "Nula Navarrete, Juan Jose",
-          "holeNumber": 15,
-          "createdAt": "10/05/26 14:24:47"
-        },
-        {
           "playerName": "Melgar Zaragoza, Manuel",
           "holeNumber": 1,
           "createdAt": "10/05/26 14:30:39"
-        },
-        {
-          "playerName": "De Luis Herrero, Juan Carlos",
-          "holeNumber": 14,
-          "createdAt": "10/05/26 14:31:26"
-        },
-        {
-          "playerName": "Ferrandez Del Cacho, Mercedes",
-          "holeNumber": 4,
-          "createdAt": "10/05/26 14:34:37"
-        },
-        {
-          "playerName": "Porro Alonso, Francisco",
-          "holeNumber": 1,
-          "createdAt": "10/05/26 14:43:26"
-        },
-        {
-          "playerName": "De La Madriz Gonzalez, Jesus",
-          "holeNumber": 1,
-          "createdAt": "10/05/26 14:56:47"
-        },
-        {
-          "playerName": "Porro Alonso, Francisco",
-          "holeNumber": 4,
-          "createdAt": "10/05/26 15:05:41"
-        },
-        {
-          "playerName": "De Luis Herrero, Juan Carlos",
-          "holeNumber": 18,
-          "createdAt": "10/05/26 15:09:32"
         },
         {
           "playerName": "Melgar Zaragoza, Manuel",
@@ -372,9 +883,109 @@
           "createdAt": "10/05/26 15:15:23"
         },
         {
+          "playerName": "De Luis Herrero, Juan Carlos",
+          "holeNumber": 14,
+          "createdAt": "10/05/26 14:31:26"
+        },
+        {
+          "playerName": "De Luis Herrero, Juan Carlos",
+          "holeNumber": 18,
+          "createdAt": "10/05/26 15:09:32"
+        },
+        {
+          "playerName": "Pueyo Martinez, David",
+          "holeNumber": 18,
+          "createdAt": "10/05/26 14:21:54"
+        },
+        {
+          "playerName": "Porro Alonso, Francisco",
+          "holeNumber": 1,
+          "createdAt": "10/05/26 14:43:26"
+        },
+        {
+          "playerName": "Porro Alonso, Francisco",
+          "holeNumber": 4,
+          "createdAt": "10/05/26 15:05:41"
+        },
+        {
+          "playerName": "Ruiz Cano, Jose Antonio",
+          "holeNumber": 6,
+          "createdAt": "10/05/26 10:04:53"
+        },
+        {
+          "playerName": "Ruiz Cano, Jose Antonio",
+          "holeNumber": 1,
+          "createdAt": "10/05/26 12:33:00"
+        },
+        {
+          "playerName": "Nula Navarrete, Juan Jose",
+          "holeNumber": 15,
+          "createdAt": "10/05/26 14:24:47"
+        },
+        {
           "playerName": "Nula Navarrete, Juan Jose",
           "holeNumber": 4,
           "createdAt": "10/05/26 15:25:03"
+        },
+        {
+          "playerName": "Mendez Ruiz, Jesus",
+          "holeNumber": 11,
+          "createdAt": "10/05/26 11:10:47"
+        },
+        {
+          "playerName": "De La Madriz Gonzalez, Jesus",
+          "holeNumber": 1,
+          "createdAt": "10/05/26 14:56:47"
+        },
+        {
+          "playerName": "De Blas Arribas, Felix",
+          "holeNumber": 12,
+          "createdAt": "10/05/26 14:13:52"
+        },
+        {
+          "playerName": "Obispo De Torres, Maria Cruz",
+          "holeNumber": 18,
+          "createdAt": "10/05/26 12:25:02"
+        },
+        {
+          "playerName": "Bravo Hernandez, Jose",
+          "holeNumber": 10,
+          "createdAt": "10/05/26 10:35:54"
+        },
+        {
+          "playerName": "Cuervo Gurumeta, Jose Ramon",
+          "holeNumber": 12,
+          "createdAt": "10/05/26 10:10:19"
+        },
+        {
+          "playerName": "Hernanz Hernandez, Mario",
+          "holeNumber": 14,
+          "createdAt": "10/05/26 11:12:08"
+        },
+        {
+          "playerName": "Gonzalez Gonzalez, Carlos",
+          "holeNumber": 4,
+          "createdAt": "10/05/26 10:04:42"
+        },
+        {
+          "playerName": "Ferreiro Del Rio, Manuel",
+          "holeNumber": 10,
+          "createdAt": "10/05/26 11:02:17"
+        },
+        {
+          "playerName": "Ferreiro Del Rio, Manuel",
+          "holeNumber": 13,
+          "createdAt": "10/05/26 11:25:56"
+        },
+        {
+          "playerName": "Ferrandez Del Cacho, Mercedes",
+          "holeNumber": 4,
+          "createdAt": "10/05/26 14:34:37"
+        },
+        {
+          "playerName": "Andres Diego, Carlos",
+          "holeNumber": 3,
+          "createdAt": "10/05/26 09:48:56"
         }
       ]
     },
@@ -382,20 +993,19 @@
       "scoreTypeKey": "hole_in_one",
       "players": [
         {
-          "playerName": "Gonzalez Gonzalez, Carlos",
-          "holeNumber": 15,
-          "createdAt": "10/05/26 11:43:02"
-        },
-        {
           "playerName": "Camara Parra, Sergio",
           "holeNumber": 13,
           "createdAt": "10/05/26 14:14:23"
+        },
+        {
+          "playerName": "Gonzalez Gonzalez, Carlos",
+          "holeNumber": 15,
+          "createdAt": "10/05/26 11:43:02"
         }
       ]
     }
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:57:59.080Z"
+  ]
 }

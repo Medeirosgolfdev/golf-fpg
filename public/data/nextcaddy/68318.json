@@ -1,13 +1,13 @@
 {
   "tourId": 68318,
   "url": "https://www.nextcaddy.com/tour/68318",
-  "scrapedAt": "2026-06-24T14:58:39.173Z",
+  "scrapedAt": "2026-10-30T14:28:33.318Z",
   "meta": {
     "name": "Torneo Alevín y Benjamín MAJ",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf Aranjuez",
     "courseCode": "CM66",
-    "dateStart": null,
+    "dateStart": "2026-09-26",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
@@ -16,14 +16,14 @@
       "Juvenil",
       "Caballeros",
       "Señoras",
-      "Benjamín Femenino",
-      "Benjamín Masculino",
-      "Alevín Femenino",
-      "Alevín Masculino",
+      "Benjamin",
+      "Alevin",
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-26",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -88,6 +88,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:58.556Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/3636384306_scratch_pdf_merged.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/3636384306_scratch_pdf_merged.pdf"
+  ]
 }

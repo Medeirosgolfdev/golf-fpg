@@ -1,9 +1,9 @@
 {
   "tourId": 73429,
   "url": "https://www.nextcaddy.com/tour/73429",
-  "scrapedAt": "2026-08-31T10:51:00.440Z",
+  "scrapedAt": "2026-10-30T14:28:04.785Z",
   "meta": {
-    "name": null,
+    "name": "LADIES DAY 2/9",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
@@ -20,20 +20,712 @@
     "dateIso": "2026-09-02",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sarah Stewart",
+          "licencia": "AM76901048",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2396380
+        },
+        {
+          "pos": 2,
+          "name": "Jeannine Rehlinger",
+          "licencia": "AM76903264",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2396382
+        },
+        {
+          "pos": 3,
+          "name": "Lindsey Hill",
+          "licencia": "AM76170011",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2396378
+        },
+        {
+          "pos": 4,
+          "name": "Paula Jayne Monaghan",
+          "licencia": "AM76033183",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2396390
+        },
+        {
+          "pos": 5,
+          "name": "Astrid Holst Beatrix",
+          "licencia": "AM76475090",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2396391
+        },
+        {
+          "pos": 6,
+          "name": "Jainne Griggs",
+          "licencia": "AM76145013",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2396395
+        },
+        {
+          "pos": 7,
+          "name": "Klaudia Luise Ilg",
+          "licencia": "AM76809386",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2396392
+        },
+        {
+          "pos": 8,
+          "name": "Deborah Packebusch",
+          "licencia": "AM76187026",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2396386
+        },
+        {
+          "pos": 9,
+          "name": "Ni Li",
+          "licencia": "AM76937265",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2396377
+        },
+        {
+          "pos": 10,
+          "name": "Catharina Afzellus",
+          "licencia": "AM76135394",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2396397
+        },
+        {
+          "pos": 11,
+          "name": "Christina Waker",
+          "licencia": "AM76033787",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2396379
+        },
+        {
+          "pos": 12,
+          "name": "Lesley Brown",
+          "licencia": "AM76984723",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2396384
+        },
+        {
+          "pos": 13,
+          "name": "Anna Visser",
+          "licencia": "AM76519033",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2396398
+        },
+        {
+          "pos": 14,
+          "name": "Noreen Lorraine Bramley",
+          "licencia": "AM76886459",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2396396
+        },
+        {
+          "pos": null,
+          "name": "Tracy Smith Mallabar",
+          "licencia": "AM76924290",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2396383
+        },
+        {
+          "pos": null,
+          "name": "Elyane Stuart",
+          "licencia": "AM76183162",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2396381
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ni Li",
+      "licencia": "AM76937265",
+      "hcp": 11.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Lindsey Hill",
+      "licencia": "AM76170011",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Christina Waker",
+      "licencia": "AM76033787",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Sarah Stewart",
+      "licencia": "AM76901048",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Elyane Stuart",
+      "licencia": "AM76183162",
+      "hcp": 27.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Tracy Smith Mallabar",
+      "licencia": "AM76924290",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Lesley Brown",
+      "licencia": "AM76984723",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Deborah Packebusch",
+      "licencia": "AM76187026",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Paula Jayne Monaghan",
+      "licencia": "AM76033183",
+      "hcp": 30.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Astrid Holst Beatrix",
+      "licencia": "AM76475090",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "AM76809386",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jainne Griggs",
+      "licencia": "AM76145013",
+      "hcp": 34.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Noreen Lorraine Bramley",
+      "licencia": "AM76886459",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Catharina Afzellus",
+      "licencia": "AM76135394",
+      "hcp": 31.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Anna Visser",
+      "licencia": "AM76519033",
+      "hcp": 39.7,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161646,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            37
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            67
+          ],
+          [
+            "Peor",
+            83
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161647,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            12
+          ],
+          [
+            "2",
+            16
+          ],
+          [
+            "3",
+            16
+          ],
+          [
+            "4",
+            25
+          ],
+          [
+            "5",
+            15
+          ],
+          [
+            "6",
+            13
+          ],
+          [
+            "7",
+            11
+          ],
+          [
+            "8",
+            16
+          ],
+          [
+            "9",
+            17
+          ],
+          [
+            "10",
+            15
+          ],
+          [
+            "11",
+            15
+          ],
+          [
+            "12",
+            15
+          ],
+          [
+            "13",
+            14
+          ],
+          [
+            "14",
+            10
+          ],
+          [
+            "15",
+            14
+          ],
+          [
+            "16",
+            8
+          ],
+          [
+            "17",
+            7
+          ],
+          [
+            "18",
+            16
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161648,
+        "datos": [
+          [
+            "Hoyo",
+            "SARAH STEWART",
+            "JEANNINE REHLINGER",
+            "LINDSAY HILL"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            2,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            3,
+            1,
+            2
+          ],
+          [
+            "Hoyo 5",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 6",
+            2,
+            1,
+            4
+          ],
+          [
+            "Hoyo 7",
+            1,
+            0,
+            3
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            6
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -1,
+            5
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -1,
+            5
+          ],
+          [
+            "Hoyo 13",
+            -3,
+            -1,
+            4
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -2,
+            4
+          ],
+          [
+            "Hoyo 15",
+            -4,
+            -4,
+            3
+          ],
+          [
+            "Hoyo 16",
+            -5,
+            -5,
+            3
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -4,
+            4
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -4,
+            3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161649,
+        "datos": [
+          [
+            "Hoyo",
+            "SARAH STEWART",
+            "JEANNINE REHLINGER",
+            "LINDSAY HILL"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 3",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            -1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -70,6 +762,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:19.643Z"
+  ]
 }

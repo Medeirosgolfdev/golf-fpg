@@ -1,7 +1,7 @@
 {
   "tourId": 72576,
   "url": "https://www.nextcaddy.com/tour/72576",
-  "scrapedAt": "2026-07-27T07:46:14.265Z",
+  "scrapedAt": "2026-10-30T14:27:15.149Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
@@ -21,10 +21,208 @@
     "dateIso": "2026-07-27",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2368410
+        },
+        {
+          "pos": 2,
+          "name": "Mark Oakley Alan",
+          "licencia": "AMD5492066",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2368396
+        },
+        {
+          "pos": 3,
+          "name": "Tony Pearse",
+          "licencia": "AMD5344094",
+          "hcp": 12.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2368394
+        },
+        {
+          "pos": 4,
+          "name": "Paul Monks",
+          "licencia": "AMD5980718",
+          "hcp": 17.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368408
+        },
+        {
+          "pos": 5,
+          "name": "Glynn Rodgers",
+          "licencia": "AM29975464",
+          "hcp": 4.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368391
+        },
+        {
+          "pos": 6,
+          "name": "Robert Edward Jewell",
+          "licencia": "AM25603729",
+          "hcp": 8.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368400
+        },
+        {
+          "pos": 7,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368407
+        },
+        {
+          "pos": 8,
+          "name": "Morgan Matthew",
+          "licencia": "AMD5518776",
+          "hcp": 12.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2368401
+        },
+        {
+          "pos": 9,
+          "name": "Mickey Allen Padron",
+          "licencia": "AMD5030872",
+          "hcp": 13.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2368403
+        },
+        {
+          "pos": 10,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2368402
+        },
+        {
+          "pos": 11,
+          "name": "Michael Marney",
+          "licencia": "AMD5492062",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2368399
+        },
+        {
+          "pos": 12,
+          "name": "John Collins",
+          "licencia": "AMD5492691",
+          "hcp": 31.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2368395
+        },
+        {
+          "pos": 13,
+          "name": "David James Corston",
+          "licencia": "AMD5033553",
+          "hcp": 13.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2368404
+        },
+        {
+          "pos": 14,
+          "name": "Barry Fennelly",
+          "licencia": "AM66412924",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2368406
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -278,149 +476,9 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Del Vado Cerrillo, David",
-          "holeNumber": 17,
-          "createdAt": "08/03/26 10:08:46"
-        },
-        {
-          "playerName": "Gutierrez De Teran Gonzalez, Alfonso",
-          "holeNumber": 16,
-          "createdAt": "08/03/26 10:15:33"
-        },
-        {
-          "playerName": "Oroz Suarez, Daniel",
-          "holeNumber": 3,
-          "createdAt": "08/03/26 10:17:56"
-        },
-        {
-          "playerName": "Garcia Lopez, Gabriel",
-          "holeNumber": 12,
-          "createdAt": "08/03/26 10:21:25"
-        },
-        {
-          "playerName": "Garcia-Junceda Garcia, Javier",
-          "holeNumber": 16,
-          "createdAt": "08/03/26 10:23:58"
-        },
-        {
-          "playerName": "Morales Portillo, Santiago",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 10:40:55"
-        },
-        {
-          "playerName": "Espinosa Gila, Roberto",
-          "holeNumber": 14,
-          "createdAt": "08/03/26 10:46:44"
-        },
-        {
           "playerName": "Aguilera Rivas, Miguel Angel",
           "holeNumber": 11,
           "createdAt": "08/03/26 10:57:05"
-        },
-        {
-          "playerName": "Roldan Almunia, Raul",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 10:58:49"
-        },
-        {
-          "playerName": "Garcia Lopez, Gabriel",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 11:04:44"
-        },
-        {
-          "playerName": "Dominguez Araujo, Carlos",
-          "holeNumber": 18,
-          "createdAt": "08/03/26 11:26:09"
-        },
-        {
-          "playerName": "Posadas Jimenez, Mariano",
-          "holeNumber": 1,
-          "createdAt": "08/03/26 11:32:07"
-        },
-        {
-          "playerName": "Vicente Diaz, Jose Carlos",
-          "holeNumber": 3,
-          "createdAt": "08/03/26 11:51:19"
-        },
-        {
-          "playerName": "Moya Catena, Antonio",
-          "holeNumber": 6,
-          "createdAt": "08/03/26 11:54:48"
-        },
-        {
-          "playerName": "Morcillo Moreno, Julian",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 11:56:39"
-        },
-        {
-          "playerName": "Aranda Aranda, Ignacio",
-          "holeNumber": 2,
-          "createdAt": "08/03/26 11:57:36"
-        },
-        {
-          "playerName": "Barahona Fraguas, Juan Luis",
-          "holeNumber": 14,
-          "createdAt": "08/03/26 12:00:57"
-        },
-        {
-          "playerName": "Lopez Garcia, Javier",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 12:08:37"
-        },
-        {
-          "playerName": "Bellisco Gonzalez, Julian",
-          "holeNumber": 1,
-          "createdAt": "08/03/26 12:13:11"
-        },
-        {
-          "playerName": "Pastor Camacho, Jesus",
-          "holeNumber": 4,
-          "createdAt": "08/03/26 12:25:27"
-        },
-        {
-          "playerName": "Cordoba Torrente, Roberto",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 12:25:32"
-        },
-        {
-          "playerName": "Cardenal Palomar, Jaime",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 12:28:22"
-        },
-        {
-          "playerName": "Posadas Jimenez, Mariano",
-          "holeNumber": 5,
-          "createdAt": "08/03/26 12:33:27"
-        },
-        {
-          "playerName": "Espinosa Gila, Roberto",
-          "holeNumber": 2,
-          "createdAt": "08/03/26 12:38:05"
-        },
-        {
-          "playerName": "Gomez Bravo, Luis Felipe",
-          "holeNumber": 11,
-          "createdAt": "08/03/26 12:42:06"
-        },
-        {
-          "playerName": "Jimeno Zaragoza, Angel Luis",
-          "holeNumber": 11,
-          "createdAt": "08/03/26 12:53:50"
-        },
-        {
-          "playerName": "Cañizares Garrido, Abraham",
-          "holeNumber": 11,
-          "createdAt": "08/03/26 12:56:20"
-        },
-        {
-          "playerName": "Galan Gomez, Fernando",
-          "holeNumber": 3,
-          "createdAt": "08/03/26 13:16:09"
-        },
-        {
-          "playerName": "Saguar Fernandez, Antonio",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 13:18:14"
         },
         {
           "playerName": "Aguilera Rivas, Miguel Angel",
@@ -428,9 +486,154 @@
           "createdAt": "08/03/26 13:23:33"
         },
         {
+          "playerName": "Barahona Fraguas, Juan Luis",
+          "holeNumber": 14,
+          "createdAt": "08/03/26 12:00:57"
+        },
+        {
+          "playerName": "Cardenal Palomar, Jaime",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 12:28:22"
+        },
+        {
+          "playerName": "Cardenal Palomar, Jaime",
+          "holeNumber": 5,
+          "createdAt": "08/03/26 14:43:47"
+        },
+        {
+          "playerName": "Morales Portillo, Santiago",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 10:40:55"
+        },
+        {
+          "playerName": "Roldan Almunia, Raul",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 10:58:49"
+        },
+        {
+          "playerName": "Dominguez Araujo, Carlos",
+          "holeNumber": 18,
+          "createdAt": "08/03/26 11:26:09"
+        },
+        {
+          "playerName": "Espinosa Gila, Roberto",
+          "holeNumber": 14,
+          "createdAt": "08/03/26 10:46:44"
+        },
+        {
+          "playerName": "Espinosa Gila, Roberto",
+          "holeNumber": 2,
+          "createdAt": "08/03/26 12:38:05"
+        },
+        {
+          "playerName": "Cordoba Torrente, Roberto",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 12:25:32"
+        },
+        {
+          "playerName": "Lopez Garcia, Javier",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 12:08:37"
+        },
+        {
+          "playerName": "Galan Gomez, Fernando",
+          "holeNumber": 3,
+          "createdAt": "08/03/26 13:16:09"
+        },
+        {
+          "playerName": "Posadas Jimenez, Mariano",
+          "holeNumber": 1,
+          "createdAt": "08/03/26 11:32:07"
+        },
+        {
+          "playerName": "Posadas Jimenez, Mariano",
+          "holeNumber": 5,
+          "createdAt": "08/03/26 12:33:27"
+        },
+        {
+          "playerName": "Posadas Jimenez, Mariano",
+          "holeNumber": 11,
+          "createdAt": "08/03/26 14:21:40"
+        },
+        {
+          "playerName": "Posadas Jimenez, Mariano",
+          "holeNumber": 12,
+          "createdAt": "08/03/26 14:43:50"
+        },
+        {
+          "playerName": "Del Vado Cerrillo, David",
+          "holeNumber": 17,
+          "createdAt": "08/03/26 10:08:46"
+        },
+        {
+          "playerName": "Herrera Rubio, Georgina",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 14:32:50"
+        },
+        {
+          "playerName": "Garcia-Junceda Garcia, Javier",
+          "holeNumber": 16,
+          "createdAt": "08/03/26 10:23:58"
+        },
+        {
+          "playerName": "Hernandez Rilova, Angel",
+          "holeNumber": 1,
+          "createdAt": "08/03/26 14:17:34"
+        },
+        {
           "playerName": "Diaz  Dominguez, Santiago",
           "holeNumber": 17,
           "createdAt": "08/03/26 13:26:41"
+        },
+        {
+          "playerName": "Oroz Suarez, Daniel",
+          "holeNumber": 3,
+          "createdAt": "08/03/26 10:17:56"
+        },
+        {
+          "playerName": "Jimeno Zaragoza, Angel Luis",
+          "holeNumber": 11,
+          "createdAt": "08/03/26 12:53:50"
+        },
+        {
+          "playerName": "Gomez Bravo, Luis Felipe",
+          "holeNumber": 11,
+          "createdAt": "08/03/26 12:42:06"
+        },
+        {
+          "playerName": "Cañizares Garrido, Abraham",
+          "holeNumber": 11,
+          "createdAt": "08/03/26 12:56:20"
+        },
+        {
+          "playerName": "Dueñas Rivera, Diego",
+          "holeNumber": 8,
+          "createdAt": "08/03/26 14:25:31"
+        },
+        {
+          "playerName": "Garcia Lopez, Gabriel",
+          "holeNumber": 12,
+          "createdAt": "08/03/26 10:21:25"
+        },
+        {
+          "playerName": "Garcia Lopez, Gabriel",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 11:04:44"
+        },
+        {
+          "playerName": "Morcillo Moreno, Julian",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 11:56:39"
+        },
+        {
+          "playerName": "Saguar Fernandez, Antonio",
+          "holeNumber": 15,
+          "createdAt": "08/03/26 13:18:14"
+        },
+        {
+          "playerName": "Saguar Fernandez, Antonio",
+          "holeNumber": 2,
+          "createdAt": "08/03/26 14:40:50"
         },
         {
           "playerName": "Chia Luna, Juan Carlos",
@@ -438,9 +641,49 @@
           "createdAt": "08/03/26 13:30:41"
         },
         {
+          "playerName": "Hierro Martin, Jose Miguel",
+          "holeNumber": 1,
+          "createdAt": "08/03/26 14:09:38"
+        },
+        {
+          "playerName": "Aranda Aranda, Ignacio",
+          "holeNumber": 2,
+          "createdAt": "08/03/26 11:57:36"
+        },
+        {
+          "playerName": "Gutierrez De Teran Gonzalez, Alfonso",
+          "holeNumber": 16,
+          "createdAt": "08/03/26 10:15:33"
+        },
+        {
+          "playerName": "Vicente Diaz, Jose Carlos",
+          "holeNumber": 3,
+          "createdAt": "08/03/26 11:51:19"
+        },
+        {
           "playerName": "Calzada Cabrejas, Daniel",
           "holeNumber": 1,
           "createdAt": "08/03/26 13:43:23"
+        },
+        {
+          "playerName": "Romo Martinez, Javier",
+          "holeNumber": 5,
+          "createdAt": "08/03/26 15:00:48"
+        },
+        {
+          "playerName": "Bellisco Gonzalez, Julian",
+          "holeNumber": 1,
+          "createdAt": "08/03/26 12:13:11"
+        },
+        {
+          "playerName": "Ruiz Morales, Juan Carlos",
+          "holeNumber": 11,
+          "createdAt": "08/03/26 14:59:35"
+        },
+        {
+          "playerName": "Sancho Colmenarejo, Felix",
+          "holeNumber": 17,
+          "createdAt": "08/03/26 14:30:22"
         },
         {
           "playerName": "Egido Sanchez, Fernando",
@@ -453,59 +696,14 @@
           "createdAt": "08/03/26 13:57:24"
         },
         {
-          "playerName": "Hierro Martin, Jose Miguel",
-          "holeNumber": 1,
-          "createdAt": "08/03/26 14:09:38"
+          "playerName": "Pastor Camacho, Jesus",
+          "holeNumber": 4,
+          "createdAt": "08/03/26 12:25:27"
         },
         {
-          "playerName": "Hernandez Rilova, Angel",
-          "holeNumber": 1,
-          "createdAt": "08/03/26 14:17:34"
-        },
-        {
-          "playerName": "Posadas Jimenez, Mariano",
-          "holeNumber": 11,
-          "createdAt": "08/03/26 14:21:40"
-        },
-        {
-          "playerName": "Dueñas Rivera, Diego",
-          "holeNumber": 8,
-          "createdAt": "08/03/26 14:25:31"
-        },
-        {
-          "playerName": "Sancho Colmenarejo, Felix",
-          "holeNumber": 17,
-          "createdAt": "08/03/26 14:30:22"
-        },
-        {
-          "playerName": "Herrera Rubio, Georgina",
-          "holeNumber": 15,
-          "createdAt": "08/03/26 14:32:50"
-        },
-        {
-          "playerName": "Saguar Fernandez, Antonio",
-          "holeNumber": 2,
-          "createdAt": "08/03/26 14:40:50"
-        },
-        {
-          "playerName": "Cardenal Palomar, Jaime",
-          "holeNumber": 5,
-          "createdAt": "08/03/26 14:43:47"
-        },
-        {
-          "playerName": "Posadas Jimenez, Mariano",
-          "holeNumber": 12,
-          "createdAt": "08/03/26 14:43:50"
-        },
-        {
-          "playerName": "Ruiz Morales, Juan Carlos",
-          "holeNumber": 11,
-          "createdAt": "08/03/26 14:59:35"
-        },
-        {
-          "playerName": "Romo Martinez, Javier",
-          "holeNumber": 5,
-          "createdAt": "08/03/26 15:00:48"
+          "playerName": "Moya Catena, Antonio",
+          "holeNumber": 6,
+          "createdAt": "08/03/26 11:54:48"
         }
       ]
     }

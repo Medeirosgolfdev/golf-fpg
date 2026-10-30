@@ -1,9 +1,9 @@
 {
   "tourId": 73905,
   "url": "https://www.nextcaddy.com/tour/73905",
-  "scrapedAt": "2026-09-21T09:55:36.776Z",
+  "scrapedAt": "2026-10-30T14:28:36.519Z",
   "meta": {
-    "name": null,
+    "name": "CIRCUITO INFANTIL MCDONALD´S 2026 2027 9 hoyos",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -13,7 +13,6 @@
     "categories": [
       "INFANTIL",
       "Señoras",
-      "Caballeros",
       "Infantil",
       "Profesional",
       "Senior",
@@ -22,39 +21,281 @@
     "dateIso": "2026-09-26",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasif Mcdonald´s 9 Hoyos + 9 Cortos",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victoria Manrique Serrano",
+          "licencia": "4400492866",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": -11,
+          "inscribedId": 2408832
+        },
+        {
+          "pos": 2,
+          "name": "Carolina Lazaro La Orden",
+          "licencia": "4401507879",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": -9,
+          "inscribedId": 2408814
+        },
+        {
+          "pos": 3,
+          "name": "Anton Oficialdegui De Araoz",
+          "licencia": "4401997810",
+          "hcp": 52.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2409407
+        },
+        {
+          "pos": 4,
+          "name": "Eva Alonso Erro",
+          "licencia": "4400518477",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2411072
+        },
+        {
+          "pos": 5,
+          "name": "Candela Sanmartin Bolado",
+          "licencia": "4401889014",
+          "hcp": 50.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2409593
+        },
+        {
+          "pos": 6,
+          "name": "Javier Marquez De Prado Pascal",
+          "licencia": "4401997814",
+          "hcp": 50.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2409482
+        },
+        {
+          "pos": 7,
+          "name": "Valentina Marquez De Prado Fernandez",
+          "licencia": "4401997813",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2408118
+        },
+        {
+          "pos": 8,
+          "name": "Alba Hernandez Acedo",
+          "licencia": "4400028885",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2409479
+        },
+        {
+          "pos": 9,
+          "name": "Martin Zuloaga Valencia",
+          "licencia": "4401158012",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2408836
+        },
+        {
+          "pos": 10,
+          "name": "Luisa Bailly-Bailliere Fraile",
+          "licencia": "4401992428",
+          "hcp": 52.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2407934
+        },
+        {
+          "pos": 11,
+          "name": "Urbi Haritz Arregi Alonso",
+          "licencia": "4400492869",
+          "hcp": 46.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2408435
+        },
+        {
+          "pos": 12,
+          "name": "Javier Alfonso Zhan",
+          "licencia": "4400028329",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2408826
+        },
+        {
+          "pos": 13,
+          "name": "Alejandra Ibañez Ramirez",
+          "licencia": "4402491179",
+          "hcp": 48,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2408117
+        },
+        {
+          "pos": 14,
+          "name": "Adrian Alvarez Peña",
+          "licencia": "4400492858",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2409616
+        },
+        {
+          "pos": 15,
+          "name": "Gonzalo Muñoz Navascues",
+          "licencia": "4401940415",
+          "hcp": 46.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2412834
+        },
+        {
+          "pos": 16,
+          "name": "Bruno Bandres Aragoneses",
+          "licencia": "4401005317",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2412141
+        },
+        {
+          "pos": 17,
+          "name": "Laia Alvarez Peña",
+          "licencia": "4400039662",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2409617
+        },
+        {
+          "pos": 18,
+          "name": "Mario Martinez Ruiz",
+          "licencia": "4400490634",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2408028
+        },
+        {
+          "pos": 19,
+          "name": "Jeronimo Giral Lopez",
+          "licencia": "4400031891",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2412838
+        },
+        {
+          "pos": 20,
+          "name": "Jaime Martinez Ruiz",
+          "licencia": "4400490625",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2408032
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasif Mcdonald´s 9 Hoyos + 9 Cortos",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
-    {
-      "orden": 1,
-      "name": "Gonzalo Muñoz Navascues",
-      "licencia": "4401940415",
-      "hcp": 46.6,
-      "nivel": "I"
-    },
-    {
-      "orden": 2,
-      "name": "Mario Martinez Ruiz",
-      "licencia": "4400490634",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 3,
-      "name": "Jaime Martinez Ruiz",
-      "licencia": "4400490625",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 4,
-      "name": "Urbi Haritz Arregi Alonso",
-      "licencia": "4400492869",
-      "hcp": 46.7,
-      "nivel": "B"
-    },
     {
       "orden": 1,
       "name": "Luisa Bailly-Bailliere Fraile",
@@ -64,24 +305,136 @@
     },
     {
       "orden": 2,
-      "name": "Mercedes Ibañez Ramirez",
-      "licencia": "4401015087",
-      "hcp": 99,
-      "nivel": "B"
-    },
-    {
-      "orden": 3,
       "name": "Alejandra Ibañez Ramirez",
       "licencia": "4402491179",
       "hcp": 48,
       "nivel": "A"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Valentina Marquez De Prado Fernandez",
       "licencia": "4401997813",
       "hcp": 54,
       "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Carolina Lazaro La Orden",
+      "licencia": "4401507879",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Victoria Manrique Serrano",
+      "licencia": "4400492866",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alba Hernandez Acedo",
+      "licencia": "4400028885",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Candela Sanmartin Bolado",
+      "licencia": "4401889014",
+      "hcp": 50.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Laia Alvarez Peña",
+      "licencia": "4400039662",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Eva Alonso Erro",
+      "licencia": "4400518477",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Mario Martinez Ruiz",
+      "licencia": "4400490634",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Jaime Martinez Ruiz",
+      "licencia": "4400490625",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Urbi Haritz Arregi Alonso",
+      "licencia": "4400492869",
+      "hcp": 46.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Alfonso Zhan",
+      "licencia": "4400028329",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Martin Zuloaga Valencia",
+      "licencia": "4401158012",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Anton Oficialdegui De Araoz",
+      "licencia": "4401997810",
+      "hcp": 52.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Marquez De Prado Pascal",
+      "licencia": "4401997814",
+      "hcp": 50.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Adrian Alvarez Peña",
+      "licencia": "4400492858",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Bruno Bandres Aragoneses",
+      "licencia": "4401005317",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Gonzalo Muñoz Navascues",
+      "licencia": "4401940415",
+      "hcp": 46.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Jeronimo Giral Lopez",
+      "licencia": "4400031891",
+      "hcp": 54,
+      "nivel": "B"
     }
   ],
   "horarios": [],
@@ -103,6 +456,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:20.801Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 74201,
   "url": "https://www.nextcaddy.com/tour/74201",
-  "scrapedAt": "2026-10-12T12:09:19.719Z",
+  "scrapedAt": "2026-10-30T14:29:29.141Z",
   "meta": {
-    "name": null,
+    "name": "POOL DE SENIORS  OTOÑO (28/10/2026)",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,11 +22,251 @@
     "dateIso": "2026-10-28",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Angel Saenz Garcia",
+          "licencia": "VB14734386",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2435030
+        },
+        {
+          "pos": 2,
+          "name": "Cesar Ayesta Otano",
+          "licencia": "4401926793",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436251
+        },
+        {
+          "pos": 3,
+          "name": "Jose Manuel Echevarria Salaverria",
+          "licencia": "4401262357",
+          "hcp": 14.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435938
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Llarena Gonzalez",
+          "licencia": "4401924165",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435187
+        },
+        {
+          "pos": 5,
+          "name": "Jose Maria Bariain Satrustegui",
+          "licencia": "4401188006",
+          "hcp": 17.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435450
+        },
+        {
+          "pos": 6,
+          "name": "Javier Inchausti Estomba",
+          "licencia": "4401722753",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435065
+        },
+        {
+          "pos": 7,
+          "name": "Josetxo Iturralde Adrian",
+          "licencia": "4401329054",
+          "hcp": 26.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435253
+        },
+        {
+          "pos": 8,
+          "name": "Julio De Pablos Fernandez",
+          "licencia": "4401059883",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435695
+        },
+        {
+          "pos": 9,
+          "name": "Fco. Javier Molina Garicano",
+          "licencia": "4401052517",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435520
+        },
+        {
+          "pos": 10,
+          "name": "Miguel Torrea Larralde",
+          "licencia": "4401696255",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2435215
+        },
+        {
+          "pos": 11,
+          "name": "Jesús Antonio Munilla Martinez",
+          "licencia": "4401789557",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2435028
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jesús Antonio Munilla Martinez",
+      "licencia": "4401789557",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Angel Saenz Garcia",
+      "licencia": "VB14734386",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Javier Inchausti Estomba",
+      "licencia": "4401722753",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Torrea Larralde",
+      "licencia": "4401696255",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Maria Bariain Satrustegui",
+      "licencia": "4401188006",
+      "hcp": 17.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Fco. Javier Molina Garicano",
+      "licencia": "4401052517",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Julio De Pablos Fernandez",
+      "licencia": "4401059883",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Manuel Echevarria Salaverria",
+      "licencia": "4401262357",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Cesar Ayesta Otano",
+      "licencia": "4401926793",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Fernando Llarena Gonzalez",
+      "licencia": "4401924165",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Josetxo Iturralde Adrian",
+      "licencia": "4401329054",
+      "hcp": 26.3,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -203,6 +443,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:22.099Z"
+  ]
 }

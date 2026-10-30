@@ -1,13 +1,13 @@
 {
   "tourId": 68592,
   "url": "https://www.nextcaddy.com/tour/68592",
-  "scrapedAt": "2026-06-24T14:57:58.529Z",
+  "scrapedAt": "2026-10-30T14:26:48.969Z",
   "meta": {
     "name": "V Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": null,
+    "dateStart": "2026-07-05",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,33 +17,231 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-05",
+    "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Noveles",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Adriel Sosa Sosa",
+          "licencia": "CP26003572",
+          "hcp": 51.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2352989
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Bagan Marquez",
+          "licencia": "CP26006568",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2354088
+        },
+        {
+          "pos": 3,
+          "name": "Lucas Herrera Hernandez",
+          "licencia": "CP26015786",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2353775
+        },
+        {
+          "pos": 4,
+          "name": "Alba Medina Canalejo",
+          "licencia": "CP26978243",
+          "hcp": 48.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2354207
+        },
+        {
+          "pos": 5,
+          "name": "Andrés Robaina Yáñez",
+          "licencia": "CP26016238",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2354237
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación 3ª Categoría",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rodrigo Vega Garcia",
+          "licencia": "CP26172346",
+          "hcp": 45.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2353448
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Lopez-Mingo Aguirre",
+          "licencia": "CP26485166",
+          "hcp": 45,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2353597
+        },
+        {
+          "pos": 3,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2344616
+        },
+        {
+          "pos": 4,
+          "name": "Mariam Gonzalez Jimenez",
+          "licencia": "CP26962412",
+          "hcp": 33.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2353774
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Noveles",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificación 3ª Categoría",
+      "jugadores": 4
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Quim Rosales Grau",
       "licencia": "CP26003513",
-      "hcp": 30.1,
+      "hcp": 29,
       "nivel": "B"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 2,
+      "name": "Adriel Sosa Sosa",
+      "licencia": "CP26003572",
+      "hcp": 51.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Rodrigo Vega Garcia",
+      "licencia": "CP26172346",
+      "hcp": 45.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Daniel Lopez-Mingo Aguirre",
+      "licencia": "CP26485166",
+      "hcp": 45,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Lucas Herrera Hernandez",
+      "licencia": "CP26015786",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alejandro Bagan Marquez",
+      "licencia": "CP26006568",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Andrés Robaina Yáñez",
+      "licencia": "CP26016238",
+      "hcp": 54,
+      "nivel": "I"
     },
     {
       "orden": 1,
-      "name": "Quim Rosales Grau",
-      "licencia": "CP26003513",
-      "hcp": 30.1,
-      "nivel": "B"
+      "name": "Mariam Gonzalez Jimenez",
+      "licencia": "CP26962412",
+      "hcp": 33.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alba Medina Canalejo",
+      "licencia": "CP26978243",
+      "hcp": 48.4,
+      "nivel": "A"
     }
   ],
   "horarios": [],
@@ -74,6 +272,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.059Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

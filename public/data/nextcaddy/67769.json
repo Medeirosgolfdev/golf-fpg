@@ -1,13 +1,13 @@
 {
   "tourId": 67769,
   "url": "https://www.nextcaddy.com/tour/67769",
-  "scrapedAt": "2026-06-24T14:58:09.504Z",
+  "scrapedAt": "2026-10-30T14:27:12.284Z",
   "meta": {
     "name": "Torneo por equipos de Golf Adaptado \"ASR\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-07-26",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,231 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-07-26",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Handicap Parejas",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alberto Nuñez Escobedo",
+      "licencia": "CMD1509033",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Macarena Dovermans Luaces",
+      "licencia": "CMD1633788",
+      "hcp": 38.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Gabriel Fontes Muñoz",
+      "licencia": "CMD1929821",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Gabriel Vallve Amat",
+      "licencia": "CM41077354",
+      "hcp": 43,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Rafael Peñafiel Montenegro",
+      "licencia": "CMD1793030",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Felipe Villa Tejero",
+      "licencia": "CMD1065158",
+      "hcp": 35.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Sanchez Avila",
+      "licencia": "CM00956312",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Elvira Sanchez Nieto",
+      "licencia": "CMD1054134",
+      "hcp": 37.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Manuel Sanchez Herreros",
+      "licencia": "CMD1799972",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Martinez Fernandez",
+      "licencia": "CMA8281526",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Hector Ortin Ramon",
+      "licencia": "CM00413908",
+      "hcp": 26.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jaime Bailon Galindo",
+      "licencia": "CM41093218",
+      "hcp": 33,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "David Tejedor Herrero",
+      "licencia": "CM00273894",
+      "hcp": 32.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Adelaida Herrero Gutierrez",
+      "licencia": "CMD1778774",
+      "hcp": 32.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Antonio Arcis Gomez",
+      "licencia": "CM81514705",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jacinto Carbajosa Fermoso",
+      "licencia": "CM02073188",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Francisco Javier Reyes Nuñez",
+      "licencia": "CMD1673521",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Angel España Herranz",
+      "licencia": "CMD1134822",
+      "hcp": 32.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Servando Correa Barril",
+      "licencia": "CM74128846",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Ricardo Gomez Rodriguez",
+      "licencia": "CM74190063",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Manuel Palero Gonzalez",
+      "licencia": "CM00969925",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Maria Alonso Iriarte",
+      "licencia": "8810632040",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Guillermo Alarcon Mohedano",
+      "licencia": "8810632323",
+      "hcp": 8.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Maria Del Pilar Lucas Viejo",
+      "licencia": "CM00620648",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jesus Nofuentes Garcia",
+      "licencia": "CM14213948",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Mª Lopez Perez",
+      "licencia": "CM41397106",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Carlos Salinas Sanchez",
+      "licencia": "CM12081098",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Salinas Cabello",
+      "licencia": "CMA8952163",
+      "hcp": 21.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Ricardo Robles Orozco",
+      "licencia": "CM41816928",
+      "hcp": 29.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jorge Robles Chafer",
+      "licencia": "CM41805921",
+      "hcp": 31.5,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -863,6 +1081,9 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-24T23:48:50.443Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/344645731_scramble.pdf",
+    "/uploads/competiciones/pdf/3059751711_rrll_ada.pdf"
+  ]
 }

@@ -1,23 +1,25 @@
 {
   "tourId": 61251,
   "url": "https://www.nextcaddy.com/tour/61251",
-  "scrapedAt": "2026-06-24T14:59:09.222Z",
+  "scrapedAt": "2026-10-30T14:30:03.934Z",
   "meta": {
-    "name": "Final Circuito Juvenil",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Real Federacion Andaluza de Golf",
-    "courseCode": "AM00",
-    "dateStart": null,
+    "course": "Alborán Golf",
+    "courseCode": "AMC7",
+    "dateStart": "2026-12-05",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-12-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -41,6 +43,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.347Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

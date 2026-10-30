@@ -1,9 +1,9 @@
 {
   "tourId": 72742,
   "url": "https://www.nextcaddy.com/tour/72742",
-  "scrapedAt": "2026-08-03T07:23:11.039Z",
+  "scrapedAt": "2026-10-30T14:27:26.610Z",
   "meta": {
-    "name": null,
+    "name": "IX Torneo Escafandra (Equipos) - Grupo Privado",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -462,16 +462,16 @@
     },
     {
       "orden": null,
-      "name": "Miguel Antoñanzas Alvear",
-      "licencia": "VB02016261",
-      "hcp": 14.3,
+      "name": "Ramon Suanzes Fernandez De Cañete",
+      "licencia": "CM11255836",
+      "hcp": 22.9,
       "nivel": "S"
     },
     {
       "orden": null,
-      "name": "Ramon Suanzes Fernandez De Cañete",
-      "licencia": "CM11255836",
-      "hcp": 22.9,
+      "name": "Miguel Terry Osborne",
+      "licencia": "AMC3002473",
+      "hcp": 31.6,
       "nivel": "S"
     },
     {
@@ -529,6 +529,13 @@
       "licencia": "CMA8449001",
       "hcp": 13.3,
       "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Miguel Antoñanzas Alvear",
+      "licencia": "VB02016261",
+      "hcp": 14.3,
+      "nivel": "S"
     },
     {
       "orden": null,
@@ -1107,9 +1114,29 @@
       "roundId": 77951
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Stein Muro, Cristina",
+          "holeNumber": 1,
+          "createdAt": "13/09/26 11:50:47"
+        },
+        {
+          "playerName": "Triguero Fernandez, Manuela",
+          "holeNumber": 3,
+          "createdAt": "13/09/26 11:49:03"
+        },
+        {
+          "playerName": "Osaba Rohleder, Barbara",
+          "holeNumber": 8,
+          "createdAt": "13/09/26 11:50:11"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-10T05:45:55.865Z"
+  ]
 }

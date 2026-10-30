@@ -1,13 +1,13 @@
 {
   "tourId": 68596,
   "url": "https://www.nextcaddy.com/tour/68596",
-  "scrapedAt": "2026-06-24T14:58:29.660Z",
+  "scrapedAt": "2026-10-30T14:28:19.370Z",
   "meta": {
     "name": "VI Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Golf La Rosaleda",
     "organizer": null,
     "course": "Golf la Rosaleda S L",
     "courseCode": "CP15",
-    "dateStart": null,
+    "dateStart": "2026-09-13",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,58 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-13",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Roberto Real Rodriguez",
+      "licencia": "CP00522589",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Rodrigo Cano Ruiz",
+      "licencia": "CP05507298",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Sanchez Gonzalez De Chaves",
+      "licencia": "CP05481539",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Alfred Joseph Burgess",
+      "licencia": "CP05526549",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Albert Philip Burgess",
+      "licencia": "CP05526550",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Lucas Damas Hernandez",
+      "licencia": "CP02480938",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -52,6 +97,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.159Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

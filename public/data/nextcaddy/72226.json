@@ -1,9 +1,9 @@
 {
   "tourId": 72226,
   "url": "https://www.nextcaddy.com/tour/72226",
-  "scrapedAt": "2026-07-13T07:09:50.500Z",
+  "scrapedAt": "2026-10-30T14:28:19.945Z",
   "meta": {
-    "name": null,
+    "name": "Final Autonómica 5ª Categoría",
     "organizer": null,
     "course": "Meloneras Golf",
     "courseCode": "CP27",
@@ -21,11 +21,539 @@
     "dateIso": "2026-09-13",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Handicap Caballeros",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mikhail Zaytsev",
+          "licencia": "CP09507476",
+          "hcp": 28.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2394108
+        },
+        {
+          "pos": 2,
+          "name": "Fabio Gonzalez-Machado Camacho",
+          "licencia": "CP02467984",
+          "hcp": 20.1,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2394114
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Mesa Lima",
+          "licencia": "CP15983716",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2394065
+        },
+        {
+          "pos": 4,
+          "name": "Xabier Revuelta Manzano",
+          "licencia": "CP37026624",
+          "hcp": 22.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2394062
+        },
+        {
+          "pos": 5,
+          "name": "Juan Jose Perez Lujan",
+          "licencia": "CP01510852",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2394075
+        },
+        {
+          "pos": 6,
+          "name": "Juan Glorioso",
+          "licencia": "CP20949709",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2394100
+        },
+        {
+          "pos": 7,
+          "name": "Javier Garces Herrero",
+          "licencia": "CP04072630",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2394076
+        },
+        {
+          "pos": 8,
+          "name": "David Hernandez Gonzalez",
+          "licencia": "CP09036744",
+          "hcp": 31.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2394069
+        },
+        {
+          "pos": 9,
+          "name": "Maximo Morales Escobar",
+          "licencia": "CP41490218",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2394066
+        },
+        {
+          "pos": 10,
+          "name": "Williams Machin Barbuzano",
+          "licencia": "CP02939227",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2394115
+        },
+        {
+          "pos": 11,
+          "name": "Ernesto Rodriguez Perez",
+          "licencia": "CP00981922",
+          "hcp": 28.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2394095
+        },
+        {
+          "pos": 12,
+          "name": "Emilio Ramirez Viu",
+          "licencia": "CP36151639",
+          "hcp": 33.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2394096
+        },
+        {
+          "pos": 13,
+          "name": "Juan Francisco Hernandez Lopez",
+          "licencia": "CP02996083",
+          "hcp": 30.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2394116
+        },
+        {
+          "pos": 14,
+          "name": "Samuel López Ruz",
+          "licencia": "CP00011775",
+          "hcp": 25.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2394071
+        },
+        {
+          "pos": 15,
+          "name": "Luis Gonzalez Munguira",
+          "licencia": "CP00946540",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2394094
+        },
+        {
+          "pos": 16,
+          "name": "Francisco J. Ronda Martinez",
+          "licencia": "CP39975272",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2394074
+        },
+        {
+          "pos": 17,
+          "name": "Arsenio Leon Ojeda",
+          "licencia": "CP41492605",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2394072
+        },
+        {
+          "pos": null,
+          "name": "Oleksandr Suyazov",
+          "licencia": "CP24518265",
+          "hcp": 33.1,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2394085
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Handicap Señoras",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Anastasia Shevchenko Mosina",
+          "licencia": "CP06474888",
+          "hcp": 22.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2394064
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Rosa Caceres Delgado",
+          "licencia": "CP04376712",
+          "hcp": 34.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2394067
+        },
+        {
+          "pos": 3,
+          "name": "Raquel Villasante Rdriguez",
+          "licencia": "CP02926507",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2394112
+        },
+        {
+          "pos": 4,
+          "name": "Sylvia Feill Giese",
+          "licencia": "CP02113952",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2394111
+        },
+        {
+          "pos": 5,
+          "name": "Elena Montero Barreto",
+          "licencia": "CP04305169",
+          "hcp": 27.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2394073
+        },
+        {
+          "pos": 6,
+          "name": "Maria Del Rosario Pedrajas Arboleda",
+          "licencia": "CP02236115",
+          "hcp": 31,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2394110
+        },
+        {
+          "pos": 7,
+          "name": "Alicia Pedrajas Arboleda",
+          "licencia": "CP02265689",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2394113
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Handicap Caballeros",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Clasificación Final Handicap Señoras",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Xabier Revuelta Manzano",
+      "licencia": "CP37026624",
+      "hcp": 22.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Mesa Lima",
+      "licencia": "CP15983716",
+      "hcp": 30.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maximo Morales Escobar",
+      "licencia": "CP41490218",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "David Hernandez Gonzalez",
+      "licencia": "CP09036744",
+      "hcp": 31.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Samuel López Ruz",
+      "licencia": "CP00011775",
+      "hcp": 25.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Arsenio Leon Ojeda",
+      "licencia": "CP41492605",
+      "hcp": 34.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco J. Ronda Martinez",
+      "licencia": "CP39975272",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Jose Perez Lujan",
+      "licencia": "CP01510852",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Garces Herrero",
+      "licencia": "CP04072630",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Oleksandr Suyazov",
+      "licencia": "CP24518265",
+      "hcp": 33.1,
+      "nivel": "M"
+    },
+    {
+      "orden": 11,
+      "name": "Luis Gonzalez Munguira",
+      "licencia": "CP00946540",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Ernesto Rodriguez Perez",
+      "licencia": "CP00981922",
+      "hcp": 28.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Emilio Ramirez Viu",
+      "licencia": "CP36151639",
+      "hcp": 33.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Juan Glorioso",
+      "licencia": "CP20949709",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Mikhail Zaytsev",
+      "licencia": "CP09507476",
+      "hcp": 28.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Fabio Gonzalez-Machado Camacho",
+      "licencia": "CP02467984",
+      "hcp": 20.1,
+      "nivel": "M"
+    },
+    {
+      "orden": 17,
+      "name": "Williams Machin Barbuzano",
+      "licencia": "CP02939227",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Juan Francisco Hernandez Lopez",
+      "licencia": "CP02996083",
+      "hcp": 30.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Anastasia Shevchenko Mosina",
+      "licencia": "CP06474888",
+      "hcp": 22.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Carmen Rosa Caceres Delgado",
+      "licencia": "CP04376712",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Elena Montero Barreto",
+      "licencia": "CP04305169",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Del Rosario Pedrajas Arboleda",
+      "licencia": "CP02236115",
+      "hcp": 31,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Sylvia Feill Giese",
+      "licencia": "CP02113952",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Raquel Villasante Rdriguez",
+      "licencia": "CP02926507",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alicia Pedrajas Arboleda",
+      "licencia": "CP02265689",
+      "hcp": 25.2,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -276,6 +804,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-09-14T09:54:09.484Z"
+  ]
 }

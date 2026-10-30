@@ -1,29 +1,1005 @@
 {
   "tourId": 61221,
   "url": "https://www.nextcaddy.com/tour/61221",
-  "scrapedAt": "2026-06-24T14:58:51.771Z",
+  "scrapedAt": "2026-10-30T14:29:05.823Z",
   "meta": {
     "name": "Circuito Juvenil Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf Playa Serena",
     "courseCode": "AM62",
-    "dateStart": null,
+    "dateStart": "2026-10-18",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Alevín Masculino E",
     "categories": [
       "Juvenil",
-      "Señoras",
-      "Caballeros",
+      "Alevín Masculino",
+      "Cadete",
       "Infantil",
+      "Señoras",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-10-18",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Femenino Scratch General",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucia Escamez Marin",
+          "licencia": "AM95952636",
+          "hcp": 4.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2417219
+        },
+        {
+          "pos": 2,
+          "name": "Carolina Muñoz Zamorano",
+          "licencia": "AM23899762",
+          "hcp": 7.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2421800
+        },
+        {
+          "pos": 3,
+          "name": "Irene Lavilla Marti",
+          "licencia": "AM62931932",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2400918
+        },
+        {
+          "pos": 4,
+          "name": "Agata Gonzalez Galvez",
+          "licencia": "AMC7968513",
+          "hcp": 8.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 95,
+          "toPar": 23,
+          "inscribedId": 2408051
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Femenino Handicap General",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carolina Muñoz Zamorano",
+          "licencia": "AM23899762",
+          "hcp": 7.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2421800
+        },
+        {
+          "pos": 2,
+          "name": "Lucia Escamez Marin",
+          "licencia": "AM95952636",
+          "hcp": 4.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2417219
+        },
+        {
+          "pos": 3,
+          "name": "Irene Lavilla Marti",
+          "licencia": "AM62931932",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2400918
+        },
+        {
+          "pos": 4,
+          "name": "Agata Gonzalez Galvez",
+          "licencia": "AMC7968513",
+          "hcp": 8.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2408051
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Individual Femenino Scratch General",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Natalia Lavilla Marti",
+          "licencia": "AM62955024",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2400920
+        },
+        {
+          "pos": 2,
+          "name": "Jessica Roskosch",
+          "licencia": "AM63910777",
+          "hcp": 26.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 102,
+          "toPar": 30,
+          "inscribedId": 2413618
+        },
+        {
+          "pos": 3,
+          "name": "Eugenia Gutierrez Belando",
+          "licencia": "AM23913860",
+          "hcp": 34.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 110,
+          "toPar": 38,
+          "inscribedId": 2413000
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Individual Femenino Handicap General",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jessica Roskosch",
+          "licencia": "AM63910777",
+          "hcp": 26.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2413618
+        },
+        {
+          "pos": 2,
+          "name": "Eugenia Gutierrez Belando",
+          "licencia": "AM23913860",
+          "hcp": 34.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2413000
+        },
+        {
+          "pos": 3,
+          "name": "Natalia Lavilla Marti",
+          "licencia": "AM62955024",
+          "hcp": 4.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2400920
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Handicap Individual Cadete Edad Entre 15 Y 16 Hcp Entre -9 Y 99",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ismael Garcia Amat",
+          "licencia": "AM59911188",
+          "hcp": 9.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2422350
+        },
+        {
+          "pos": 2,
+          "name": "Ivan Diaz Betin",
+          "licencia": "AM67913244",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2401131
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Garcia Chaves",
+          "licencia": "AMC7922647",
+          "hcp": 5.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2394200
+        },
+        {
+          "pos": 4,
+          "name": "Luis Fernando Hidalgo Rejon",
+          "licencia": "AM65979236",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2398798
+        },
+        {
+          "pos": 5,
+          "name": "Ruben Berenguer Lopez",
+          "licencia": "AM59982056",
+          "hcp": 3.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2409477
+        },
+        {
+          "pos": 6,
+          "name": "Alberto Perez Gonzalez",
+          "licencia": "AM62922100",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2405810
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap Individual Infantil Edad Entre 13 Y 14 Hcp Entre -9 Y 99 Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Diego Torres Gallardo",
+          "licencia": "AMC7933775",
+          "hcp": 9.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2401546
+        },
+        {
+          "pos": 2,
+          "name": "Lucas Martin Alvarez",
+          "licencia": "AM23918308",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2406196
+        },
+        {
+          "pos": 3,
+          "name": "Nicolas Muñoz Aragon",
+          "licencia": "AMA2344657",
+          "hcp": 14.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2408422
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Cenarro Puga",
+          "licencia": "AM65075812",
+          "hcp": 7.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2408047
+        },
+        {
+          "pos": 5,
+          "name": "Marcos Fernandez Alferez",
+          "licencia": "AM59949270",
+          "hcp": 4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2398064
+        },
+        {
+          "pos": 6,
+          "name": "Hugo Fuentes Luque",
+          "licencia": "AM58915391",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2406978
+        },
+        {
+          "pos": 7,
+          "name": "Sebastian Perez Ruiz",
+          "licencia": "AM59949141",
+          "hcp": 4.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2391634
+        },
+        {
+          "pos": 8,
+          "name": "Julio Martin Sabiote",
+          "licencia": "AMA2494730",
+          "hcp": 24.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2423784
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Scratch Individual Infantil Edad Entre 13 Y 14 Hcp Entre -9 Y 99 Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucas Martin Alvarez",
+          "licencia": "AM23918308",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2406196
+        },
+        {
+          "pos": 2,
+          "name": "Hugo Fuentes Luque",
+          "licencia": "AM58915391",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2406978
+        },
+        {
+          "pos": 3,
+          "name": "Diego Torres Gallardo",
+          "licencia": "AMC7933775",
+          "hcp": 9.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2401546
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Cenarro Puga",
+          "licencia": "AM65075812",
+          "hcp": 7.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2408047
+        },
+        {
+          "pos": 5,
+          "name": "Marcos Fernandez Alferez",
+          "licencia": "AM59949270",
+          "hcp": 4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2398064
+        },
+        {
+          "pos": 6,
+          "name": "Nicolas Muñoz Aragon",
+          "licencia": "AMA2344657",
+          "hcp": 14.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2408422
+        },
+        {
+          "pos": 7,
+          "name": "Sebastian Perez Ruiz",
+          "licencia": "AM59949141",
+          "hcp": 4.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2391634
+        },
+        {
+          "pos": 8,
+          "name": "Julio Martin Sabiote",
+          "licencia": "AMA2494730",
+          "hcp": 24.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 112,
+          "toPar": 40,
+          "inscribedId": 2423784
+        }
+      ]
+    },
+    {
+      "category": 8,
+      "categoryName": "Scratch Individual Cadete Edad Entre 15 Y 16 Hcp Entre -9 Y 99 Masculino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ivan Diaz Betin",
+          "licencia": "AM67913244",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2401131
+        },
+        {
+          "pos": 2,
+          "name": "Luis Fernando Hidalgo Rejon",
+          "licencia": "AM65979236",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2398798
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Garcia Chaves",
+          "licencia": "AMC7922647",
+          "hcp": 5.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2394200
+        },
+        {
+          "pos": 4,
+          "name": "Ismael Garcia Amat",
+          "licencia": "AM59911188",
+          "hcp": 9.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2422350
+        },
+        {
+          "pos": 5,
+          "name": "Ruben Berenguer Lopez",
+          "licencia": "AM59982056",
+          "hcp": 3.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2409477
+        },
+        {
+          "pos": 6,
+          "name": "Alberto Perez Gonzalez",
+          "licencia": "AM62922100",
+          "hcp": 2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2405810
+        }
+      ]
+    },
+    {
+      "category": 9,
+      "categoryName": "Handicap Individual Alevín Masculino Edad Entre 11 Y 12 Hcp Entre -9 Y 99 Masculino",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Peinado Padilla",
+          "licencia": "AMC7966801",
+          "hcp": 6.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2401042
+        },
+        {
+          "pos": 2,
+          "name": "Adria Amaya Esteras",
+          "licencia": "AM63983145",
+          "hcp": 13.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2405187
+        },
+        {
+          "pos": null,
+          "name": "Martin Soriano Perez",
+          "licencia": "AM67410649",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423059
+        }
+      ]
+    },
+    {
+      "category": 10,
+      "categoryName": "Scratch Individual Alevín Masculino Edad Entre 11 Y 12 Hcp Entre -9 Y 99 Masculino",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Peinado Padilla",
+          "licencia": "AMC7966801",
+          "hcp": 6.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2401042
+        },
+        {
+          "pos": 2,
+          "name": "Adria Amaya Esteras",
+          "licencia": "AM63983145",
+          "hcp": 13.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2405187
+        },
+        {
+          "pos": null,
+          "name": "Martin Soriano Perez",
+          "licencia": "AM67410649",
+          "hcp": 33.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423059
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Femenino Scratch General",
+      "jugadores": 4
+    },
+    "2": {
+      "name": "Individual Femenino Handicap General",
+      "jugadores": 4
+    },
+    "3": {
+      "name": "Individual Femenino Scratch General",
+      "jugadores": 3
+    },
+    "4": {
+      "name": "Individual Femenino Handicap General",
+      "jugadores": 3
+    },
+    "5": {
+      "name": "Handicap Individual Cadete Edad Entre 15 Y 16 Hcp Entre -9 Y 99",
+      "jugadores": 6
+    },
+    "6": {
+      "name": "Handicap Individual Infantil Edad Entre 13 Y 14 Hcp Entre -9 Y 99 Masculino",
+      "jugadores": 8
+    },
+    "7": {
+      "name": "Scratch Individual Infantil Edad Entre 13 Y 14 Hcp Entre -9 Y 99 Masculino",
+      "jugadores": 8
+    },
+    "8": {
+      "name": "Scratch Individual Cadete Edad Entre 15 Y 16 Hcp Entre -9 Y 99 Masculino",
+      "jugadores": 6
+    },
+    "9": {
+      "name": "Handicap Individual Alevín Masculino Edad Entre 11 Y 12 Hcp Entre -9 Y 99 Masculino",
+      "jugadores": 3
+    },
+    "10": {
+      "name": "Scratch Individual Alevín Masculino Edad Entre 11 Y 12 Hcp Entre -9 Y 99 Masculino",
+      "jugadores": 3
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Sebastian Perez Ruiz",
+      "licencia": "AM59949141",
+      "hcp": 4.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Marcos Fernandez Alferez",
+      "licencia": "AM59949270",
+      "hcp": 4,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Diego Torres Gallardo",
+      "licencia": "AMC7933775",
+      "hcp": 9.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Lucas Martin Alvarez",
+      "licencia": "AM23918308",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Hugo Fuentes Luque",
+      "licencia": "AM58915391",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Ignacio Cenarro Puga",
+      "licencia": "AM65075812",
+      "hcp": 7.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Nicolas Muñoz Aragon",
+      "licencia": "AMA2344657",
+      "hcp": 14.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Julio Martin Sabiote",
+      "licencia": "AMA2494730",
+      "hcp": 24.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Ignacio Garcia Chaves",
+      "licencia": "AMC7922647",
+      "hcp": 5.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Luis Fernando Hidalgo Rejon",
+      "licencia": "AM65979236",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Ivan Diaz Betin",
+      "licencia": "AM67913244",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Alberto Perez Gonzalez",
+      "licencia": "AM62922100",
+      "hcp": 2,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Ruben Berenguer Lopez",
+      "licencia": "AM59982056",
+      "hcp": 3.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Ismael Garcia Amat",
+      "licencia": "AM59911188",
+      "hcp": 9.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Irene Lavilla Marti",
+      "licencia": "AM62931932",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Natalia Lavilla Marti",
+      "licencia": "AM62955024",
+      "hcp": 4.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Agata Gonzalez Galvez",
+      "licencia": "AMC7968513",
+      "hcp": 8.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Eugenia Gutierrez Belando",
+      "licencia": "AM23913860",
+      "hcp": 34.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Jessica Roskosch",
+      "licencia": "AM63910777",
+      "hcp": 26.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Lucia Escamez Marin",
+      "licencia": "AM95952636",
+      "hcp": 4.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Carolina Muñoz Zamorano",
+      "licencia": "AM23899762",
+      "hcp": 7.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Gonzalo Peinado Padilla",
+      "licencia": "AMC7966801",
+      "hcp": 6.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Adria Amaya Esteras",
+      "licencia": "AM63983145",
+      "hcp": 13.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Martin Soriano Perez",
+      "licencia": "AM67410649",
+      "hcp": 33.2,
+      "nivel": "A"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -40,15 +1016,6 @@
         {
           "time": "10:10",
           "tee": 1,
-          "name": "Luis Fernando Hidalgo Rejon",
-          "hcp": 0.6,
-          "ins": "2398798",
-          "jid": "64901",
-          "nivel": "C"
-        },
-        {
-          "time": "10:10",
-          "tee": 1,
           "name": "Lucas Martin Alvarez",
           "hcp": 0.6,
           "ins": "2406196",
@@ -56,13 +1023,13 @@
           "nivel": "I"
         },
         {
-          "time": "10:20",
+          "time": "10:10",
           "tee": 1,
-          "name": "Hugo Fuentes Luque",
-          "hcp": 0.4,
-          "ins": "2406978",
+          "name": "Luis Fernando Hidalgo Rejon",
+          "hcp": 0.6,
+          "ins": "2398798",
           "jid": "64901",
-          "nivel": "I"
+          "nivel": "C"
         },
         {
           "time": "10:20",
@@ -72,6 +1039,15 @@
           "ins": "2401131",
           "jid": "64901",
           "nivel": "C"
+        },
+        {
+          "time": "10:20",
+          "tee": 1,
+          "name": "Hugo Fuentes Luque",
+          "hcp": 0.4,
+          "ins": "2406978",
+          "jid": "64901",
+          "nivel": "I"
         },
         {
           "time": "10:20",
@@ -263,6 +1239,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-19T09:49:13.447Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
+  ]
 }

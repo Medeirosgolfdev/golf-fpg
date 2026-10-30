@@ -1,9 +1,9 @@
 {
   "tourId": 73154,
   "url": "https://www.nextcaddy.com/tour/73154",
-  "scrapedAt": "2026-08-24T04:59:50.350Z",
+  "scrapedAt": "2026-10-30T14:27:57.748Z",
   "meta": {
-    "name": null,
+    "name": "Torneo El Cepo (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,10 +21,208 @@
     "dateIso": "2026-08-28",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Javier Toribio Jimenez",
+          "licencia": "AM02746887",
+          "hcp": 35.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2391688
+        },
+        {
+          "pos": 2,
+          "name": "Luis Rozados Perez",
+          "licencia": "AM85247963",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2391594
+        },
+        {
+          "pos": 3,
+          "name": "Fcº Borja Rios Quiralte",
+          "licencia": "AM00616401",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2391011
+        },
+        {
+          "pos": 4,
+          "name": "Gonzalo Blanco Fernandez-Castaño",
+          "licencia": "AM02061517",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2390975
+        },
+        {
+          "pos": 5,
+          "name": "Jose Juan Bocarando Gutierrez",
+          "licencia": "AM85357348",
+          "hcp": 13.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2390384
+        },
+        {
+          "pos": 6,
+          "name": "Pablo Trancoso Navarro",
+          "licencia": "AMG3897790",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2391193
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Casas Pascual",
+          "licencia": "AM02605894",
+          "hcp": 33.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390380
+        },
+        {
+          "pos": 8,
+          "name": "Rafael Prieto Garcia",
+          "licencia": "AM85958724",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2391707
+        },
+        {
+          "pos": 9,
+          "name": "Jesus Borjabad Garcia",
+          "licencia": "AM85615427",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2392404
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Javier Ramirez Encinas",
+          "licencia": "AM85279031",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2390032
+        },
+        {
+          "pos": 11,
+          "name": "Pedro Torres Bofill",
+          "licencia": "AM00747728",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2390874
+        },
+        {
+          "pos": 12,
+          "name": "Miguel Gonzalez Rojas",
+          "licencia": "AME7345590",
+          "hcp": 46.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2392531
+        },
+        {
+          "pos": 13,
+          "name": "J.beltran Romero Cervilla",
+          "licencia": "CM41931176",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2390382
+        },
+        {
+          "pos": null,
+          "name": "Rufino Garcia Otero Reina",
+          "licencia": "AM02952851",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2393160
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -59,6 +257,69 @@
       "name": "Pedro Torres Bofill",
       "licencia": "AM00747728",
       "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Gonzalo Blanco Fernandez-Castaño",
+      "licencia": "AM02061517",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Fcº Borja Rios Quiralte",
+      "licencia": "AM00616401",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Pablo Trancoso Navarro",
+      "licencia": "AMG3897790",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Rozados Perez",
+      "licencia": "AM85247963",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Javier Toribio Jimenez",
+      "licencia": "AM02746887",
+      "hcp": 35.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Rafael Prieto Garcia",
+      "licencia": "AM85958724",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jesus Borjabad Garcia",
+      "licencia": "AM85615427",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Miguel Gonzalez Rojas",
+      "licencia": "AME7345590",
+      "hcp": 46.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Rufino Garcia Otero Reina",
+      "licencia": "AM02952851",
+      "hcp": 36,
       "nivel": "S"
     }
   ],
@@ -213,6 +474,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-31T10:51:32.171Z"
+  ]
 }

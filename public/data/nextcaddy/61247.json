@@ -1,23 +1,24 @@
 {
   "tourId": 61247,
   "url": "https://www.nextcaddy.com/tour/61247",
-  "scrapedAt": "2026-06-24T14:59:07.562Z",
+  "scrapedAt": "2026-10-30T14:30:00.331Z",
   "meta": {
-    "name": "Campeonato Andalucía  MASC Categoría MId Amateur",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Real Federacion Andaluza de Golf",
-    "courseCode": "AM00",
-    "dateStart": null,
+    "course": "Montecastillo Barceló Golf Club",
+    "courseCode": "AM29",
+    "dateStart": "2026-11-28",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "format": "Medal Play (Scratch)  Caballeros C. Masc",
     "categories": [
       "Caballeros",
-      "Señoras",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-28",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -45,6 +46,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.321Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

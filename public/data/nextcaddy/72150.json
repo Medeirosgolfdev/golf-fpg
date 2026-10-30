@@ -1,9 +1,9 @@
 {
   "tourId": 72150,
   "url": "https://www.nextcaddy.com/tour/72150",
-  "scrapedAt": "2026-07-13T07:09:47.410Z",
+  "scrapedAt": "2026-10-30T14:27:03.117Z",
   "meta": {
-    "name": null,
+    "name": "Torneo Dobles de Verano 18 de julio Fourball y 19 de julio Greensome · 9:00 ·",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
@@ -23,8 +23,25 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 18
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Pareja Scratch General",
+      "jugadores": 18
+    },
+    "4": {
+      "name": "Pareja Handicap General",
+      "jugadores": 18
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -39,6 +56,13 @@
       "licencia": "CM41063031",
       "hcp": 24.9,
       "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "ALIADOS",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
     },
     {
       "orden": 2,
@@ -121,7 +145,7 @@
       "orden": 7,
       "name": "Jose Luis Moreno Suarez",
       "licencia": "CMD9973532",
-      "hcp": 11.7,
+      "hcp": 11.4,
       "nivel": "S"
     },
     {
@@ -170,7 +194,7 @@
       "orden": 11,
       "name": "Sinesio Paniagua Sarria",
       "licencia": "CM41817163",
-      "hcp": 10.3,
+      "hcp": 10.1,
       "nivel": "S"
     },
     {
@@ -207,6 +231,76 @@
       "licencia": "CMD9647698",
       "hcp": 21.1,
       "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Miguel Garcia Hernandez",
+      "licencia": "CM41766837",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Antonio Redondo Vazquez",
+      "licencia": "CM41419408",
+      "hcp": 29.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Cristina Echevarria De Rada",
+      "licencia": "CM41034817",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Ana Maria Gonzalez Candanedo",
+      "licencia": "CM41308668",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Maria Del Valle Martinez Martinez",
+      "licencia": "CM41907569",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Nicolas Martin Martinez",
+      "licencia": "CM41091358",
+      "hcp": 51.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Manuel Alvarez Garcia",
+      "licencia": "CMA8792467",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Lilou Alvarez Solana",
+      "licencia": "CMA8355638",
+      "hcp": 41.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Roberto Martin Figueruelo",
+      "licencia": "CM22252262",
+      "hcp": 35.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Rodrigo Martin Martin",
+      "licencia": "CM41515136",
+      "hcp": 42,
+      "nivel": "I"
     }
   ],
   "horarios": [
@@ -900,6 +994,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3860855751_72150-torneo-dobles-de-verano-18-de-julio-fourball-y-19-de-julio-greensome-9-00.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-20T07:01:41.639Z"
+  ]
 }

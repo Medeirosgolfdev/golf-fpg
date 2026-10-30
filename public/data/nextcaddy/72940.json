@@ -1,15 +1,15 @@
 {
   "tourId": 72940,
   "url": "https://www.nextcaddy.com/tour/72940",
-  "scrapedAt": "2026-08-17T04:57:34.284Z",
+  "scrapedAt": "2026-10-30T14:28:34.750Z",
   "meta": {
-    "name": null,
+    "name": "Final Pequecircuito (Jugadores/as con Hcp mayor de 36)",
     "organizer": null,
     "course": null,
     "courseCode": null,
     "dateStart": "2026-09-26",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "format": "Medal Play (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
       "Caballeros",
@@ -21,11 +21,346 @@
     "dateIso": "2026-09-26",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual (Hcp Mayor De 36)",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Javier Ovejero Portillo",
+          "licencia": "7706071587",
+          "hcp": 39.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2409646
+        },
+        {
+          "pos": 2,
+          "name": "Nuño Gil Garcia",
+          "licencia": "7712474827",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2408464
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 43.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2408567
+        },
+        {
+          "pos": 4,
+          "name": "Manuel Basconcillos Rodriguez",
+          "licencia": "7712092248",
+          "hcp": 38.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2409428
+        },
+        {
+          "pos": 5,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 39.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2408848
+        },
+        {
+          "pos": 6,
+          "name": "Martina Gil Garcia",
+          "licencia": "7712474820",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2408461
+        },
+        {
+          "pos": 7,
+          "name": "Mateo Pretel Martin",
+          "licencia": "7744007411",
+          "hcp": 43.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2403838
+        },
+        {
+          "pos": 8,
+          "name": "Beltran Santos Chavarri",
+          "licencia": "7706474938",
+          "hcp": 52.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2395795
+        },
+        {
+          "pos": 9,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2410802
+        },
+        {
+          "pos": 10,
+          "name": "Alejandro Sanchez Garcia",
+          "licencia": "7759349253",
+          "hcp": 53.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2403809
+        },
+        {
+          "pos": 11,
+          "name": "Leonardo Sousa Parkhonenko",
+          "licencia": "1110000631",
+          "hcp": 48.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2409517
+        },
+        {
+          "pos": 12,
+          "name": "Valeria Rosiña Alfonso",
+          "licencia": "7760322318",
+          "hcp": 49.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2407525
+        },
+        {
+          "pos": 13,
+          "name": "Leo Diez Llorente",
+          "licencia": "7770531868",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2404105
+        },
+        {
+          "pos": 14,
+          "name": "Mark Bautista Musina",
+          "licencia": "7700354373",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2408564
+        },
+        {
+          "pos": 15,
+          "name": "Martin Postigo Calabuig",
+          "licencia": "7707498061",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2411779
+        },
+        {
+          "pos": 16,
+          "name": "Gabriel Postigo Calabuig",
+          "licencia": "7707498060",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2411778
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual (Hcp Mayor De 36)",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Beltran Santos Chavarri",
+      "licencia": "7706474938",
+      "hcp": 52.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Alejandro Sanchez Garcia",
+      "licencia": "7759349253",
+      "hcp": 53.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mateo Pretel Martin",
+      "licencia": "7744007411",
+      "hcp": 43.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Leo Diez Llorente",
+      "licencia": "7770531868",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Nuño Gil Garcia",
+      "licencia": "7712474827",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Mark Bautista Musina",
+      "licencia": "7700354373",
+      "hcp": 36.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 39.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Basconcillos Rodriguez",
+      "licencia": "7712092248",
+      "hcp": 38.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Ovejero Portillo",
+      "licencia": "7706071587",
+      "hcp": 39.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "David Cerezal Criado",
+      "licencia": "7759968499",
+      "hcp": 36.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Gabriel Postigo Calabuig",
+      "licencia": "7707498060",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Martin Postigo Calabuig",
+      "licencia": "7707498061",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Leonardo Sousa Parkhonenko",
+      "licencia": "1110000631",
+      "hcp": 48.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Valeria Rosiña Alfonso",
+      "licencia": "7760322318",
+      "hcp": 49.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Martina Gil Garcia",
+      "licencia": "7712474820",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 43.2,
+      "nivel": "A"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -194,7 +529,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:06.691Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1770645479_listado_jugadores_derecho_sorteo.pdf",
+    "/uploads/circulares/cirfgcyl3126.pdf",
+    "/uploads/competiciones/pdf/573938649_reglas_locales_y_plan_suspensiorn.pdf"
+  ]
 }

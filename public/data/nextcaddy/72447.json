@@ -1,9 +1,9 @@
 {
   "tourId": 72447,
   "url": "https://www.nextcaddy.com/tour/72447",
-  "scrapedAt": "2026-07-20T07:01:10.784Z",
+  "scrapedAt": "2026-10-30T14:27:07.254Z",
   "meta": {
-    "name": null,
+    "name": "JUEGOS DEPORTIVOS NAVARROS 2026.",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,107 +22,519 @@
     "dateIso": "2026-07-22",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Saioa Ozcoidi Martinez",
+          "licencia": "4405922391",
+          "hcp": 3.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2363928
+        },
+        {
+          "pos": 2,
+          "name": "Lucas Delgado Urricelqui",
+          "licencia": "4402924168",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2363927
+        },
+        {
+          "pos": 3,
+          "name": "Aingeru Ozcoidi Martinez",
+          "licencia": "4405922392",
+          "hcp": 1.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2363929
+        },
+        {
+          "pos": 4,
+          "name": "Joan Sagastibelza Badiola",
+          "licencia": "4405085316",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2363919
+        },
+        {
+          "pos": 5,
+          "name": "Edurne Sagastibelza Badiola",
+          "licencia": "4405085299",
+          "hcp": 13.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2363920
+        },
+        {
+          "pos": 6,
+          "name": "Ander Sagastibelza Badiola",
+          "licencia": "4405085307",
+          "hcp": 9.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2363918
+        },
+        {
+          "pos": 7,
+          "name": "Nicolas Alegria Franco",
+          "licencia": "4402926951",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2363921
+        },
+        {
+          "pos": 8,
+          "name": "Iranzu Ramirez Diaz De Rada",
+          "licencia": "4405089809",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 19,
+          "inscribedId": 2363935
+        },
+        {
+          "pos": 9,
+          "name": "Miguel Frauca Araquistain",
+          "licencia": "4401476516",
+          "hcp": 32.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 96,
+          "toPar": 24,
+          "inscribedId": 2364728
+        },
+        {
+          "pos": 10,
+          "name": "Fermin Ugarte Arrondo",
+          "licencia": "4400375203",
+          "hcp": 24.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 98,
+          "toPar": 26,
+          "inscribedId": 2363933
+        },
+        {
+          "pos": 11,
+          "name": "Mikel Arilla Tabar",
+          "licencia": "4402918581",
+          "hcp": 11.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 99,
+          "toPar": 27,
+          "inscribedId": 2363934
+        },
+        {
+          "pos": 12,
+          "name": "Rodrigo Calvo Gonzalez",
+          "licencia": "4402969043",
+          "hcp": 15.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 102,
+          "toPar": 30,
+          "inscribedId": 2363922
+        },
+        {
+          "pos": 13,
+          "name": "Uma Urbiola Doucede",
+          "licencia": "4405187536",
+          "hcp": 33.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 107,
+          "toPar": 35,
+          "inscribedId": 2363925
+        },
+        {
+          "pos": 14,
+          "name": "Mia Urbiola Doucede",
+          "licencia": "4405490075",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 113,
+          "toPar": 41,
+          "inscribedId": 2363926
+        },
+        {
+          "pos": 15,
+          "name": "Pablo Moriano Delgado",
+          "licencia": "4401926702",
+          "hcp": 27.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 116,
+          "toPar": 44,
+          "inscribedId": 2363947
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Frauca Araquistain",
+          "licencia": "4401476516",
+          "hcp": 32.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": -14,
+          "inscribedId": 2364728
+        },
+        {
+          "pos": 2,
+          "name": "Fermin Ugarte Arrondo",
+          "licencia": "4400375203",
+          "hcp": 24.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": -4,
+          "inscribedId": 2363933
+        },
+        {
+          "pos": 3,
+          "name": "Joan Sagastibelza Badiola",
+          "licencia": "4405085316",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -3,
+          "inscribedId": 2363919
+        },
+        {
+          "pos": 4,
+          "name": "Edurne Sagastibelza Badiola",
+          "licencia": "4405085299",
+          "hcp": 13.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2363920
+        },
+        {
+          "pos": 5,
+          "name": "Uma Urbiola Doucede",
+          "licencia": "4405187536",
+          "hcp": 33.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2363925
+        },
+        {
+          "pos": 6,
+          "name": "Saioa Ozcoidi Martinez",
+          "licencia": "4405922391",
+          "hcp": 3.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2363928
+        },
+        {
+          "pos": 7,
+          "name": "Ander Sagastibelza Badiola",
+          "licencia": "4405085307",
+          "hcp": 9.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2363918
+        },
+        {
+          "pos": 8,
+          "name": "Mia Urbiola Doucede",
+          "licencia": "4405490075",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2363926
+        },
+        {
+          "pos": 9,
+          "name": "Lucas Delgado Urricelqui",
+          "licencia": "4402924168",
+          "hcp": 1.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2363927
+        },
+        {
+          "pos": 10,
+          "name": "Aingeru Ozcoidi Martinez",
+          "licencia": "4405922392",
+          "hcp": 1.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2363929
+        },
+        {
+          "pos": 11,
+          "name": "Iranzu Ramirez Diaz De Rada",
+          "licencia": "4405089809",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2363935
+        },
+        {
+          "pos": 12,
+          "name": "Nicolas Alegria Franco",
+          "licencia": "4402926951",
+          "hcp": 6.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2363921
+        },
+        {
+          "pos": 13,
+          "name": "Rodrigo Calvo Gonzalez",
+          "licencia": "4402969043",
+          "hcp": 15.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2363922
+        },
+        {
+          "pos": 14,
+          "name": "Pablo Moriano Delgado",
+          "licencia": "4401926702",
+          "hcp": 27.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2363947
+        },
+        {
+          "pos": 15,
+          "name": "Mikel Arilla Tabar",
+          "licencia": "4402918581",
+          "hcp": 11.5,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2363934
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Ander Sagastibelza Badiola",
       "licencia": "4405085307",
-      "hcp": 9.4,
+      "hcp": 9.3,
       "nivel": "I"
     },
     {
       "orden": 2,
       "name": "Joan Sagastibelza Badiola",
       "licencia": "4405085316",
-      "hcp": 14,
+      "hcp": 13.8,
       "nivel": "I"
     },
     {
       "orden": 3,
       "name": "Nicolas Alegria Franco",
       "licencia": "4402926951",
-      "hcp": 6.5,
+      "hcp": 6.6,
       "nivel": "C"
     },
     {
       "orden": 4,
       "name": "Rodrigo Calvo Gonzalez",
       "licencia": "4402969043",
-      "hcp": 15.9,
+      "hcp": 15.1,
       "nivel": "C"
     },
     {
       "orden": 5,
-      "name": "Telmo Jun Oficialdegui De Araoz",
-      "licencia": "4401997809",
-      "hcp": 54,
-      "nivel": "A"
-    },
-    {
-      "orden": 6,
       "name": "Lucas Delgado Urricelqui",
       "licencia": "4402924168",
       "hcp": 1.9,
       "nivel": "C"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Aingeru Ozcoidi Martinez",
       "licencia": "4405922392",
       "hcp": 1.1,
       "nivel": "C"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Fermin Ugarte Arrondo",
       "licencia": "4400375203",
       "hcp": 24.9,
       "nivel": "I"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Mikel Arilla Tabar",
       "licencia": "4402918581",
       "hcp": 11.5,
       "nivel": "J"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Pablo Moriano Delgado",
       "licencia": "4401926702",
       "hcp": 27.1,
       "nivel": "C"
     },
     {
+      "orden": 10,
+      "name": "Miguel Frauca Araquistain",
+      "licencia": "4401476516",
+      "hcp": 32.1,
+      "nivel": "I"
+    },
+    {
       "orden": 1,
       "name": "Edurne Sagastibelza Badiola",
       "licencia": "4405085299",
-      "hcp": 13.5,
+      "hcp": 13.3,
       "nivel": "I"
     },
     {
       "orden": 2,
       "name": "Uma Urbiola Doucede",
       "licencia": "4405187536",
-      "hcp": 33.9,
+      "hcp": 33.3,
       "nivel": "I"
     },
     {
       "orden": 3,
       "name": "Mia Urbiola Doucede",
       "licencia": "4405490075",
-      "hcp": 39.1,
+      "hcp": 35,
       "nivel": "A"
     },
     {
       "orden": 4,
       "name": "Saioa Ozcoidi Martinez",
       "licencia": "4405922391",
-      "hcp": 3.4,
+      "hcp": 3.5,
       "nivel": "J"
     },
     {
@@ -303,6 +715,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.465Z"
+  ]
 }

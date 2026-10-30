@@ -1,9 +1,9 @@
 {
   "tourId": 74396,
   "url": "https://www.nextcaddy.com/tour/74396",
-  "scrapedAt": "2026-10-12T12:09:19.903Z",
+  "scrapedAt": "2026-10-30T14:29:29.823Z",
   "meta": {
-    "name": null,
+    "name": "VI CAMPEONATO DE CASTILLA Y LEÓN DE PROFESIONALES 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,10 +22,1451 @@
     "dateIso": "2026-10-28",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 33,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David Salgado Chacon",
+          "licencia": "CM113143-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 66
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 136,
+          "toPar": -8,
+          "inscribedId": 2424886
+        },
+        {
+          "pos": 2,
+          "name": "Javier Sainz Delgado",
+          "licencia": "VB043311-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 139,
+          "toPar": -5,
+          "inscribedId": 2436041
+        },
+        {
+          "pos": 3,
+          "name": "Luis Gregorio Ferrandez",
+          "licencia": "CM003600-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 139,
+          "toPar": -5,
+          "inscribedId": 2429207
+        },
+        {
+          "pos": 4,
+          "name": "David George Schneider Jerez",
+          "licencia": "AMI53920-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 67
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 140,
+          "toPar": -4,
+          "inscribedId": 2430845
+        },
+        {
+          "pos": 5,
+          "name": "Daniel Berna Manzanares",
+          "licencia": "77533091-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 67
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 140,
+          "toPar": -4,
+          "inscribedId": 2421663
+        },
+        {
+          "pos": 6,
+          "name": "Asier Aguirre Izcue",
+          "licencia": "44053510-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 69
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 142,
+          "toPar": -2,
+          "inscribedId": 2432079
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Lagarto Alonso",
+          "licencia": "77091285-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 143,
+          "toPar": -1,
+          "inscribedId": 2424756
+        },
+        {
+          "pos": 8,
+          "name": "Esteban Vazquez Martin",
+          "licencia": "02083798-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 70
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 144,
+          "toPar": null,
+          "inscribedId": 2427530
+        },
+        {
+          "pos": 9,
+          "name": "Jose Manuel Pardo Benitez",
+          "licencia": "88343574-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 144,
+          "toPar": null,
+          "inscribedId": 2432093
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Balmaseda Sanchez",
+          "licencia": "CM020523-P",
+          "hcp": null,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 68
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": -2
+            },
+            {
+              "round": 2,
+              "ch": -2
+            }
+          ],
+          "total": 144,
+          "toPar": null,
+          "inscribedId": 2425013
+        },
+        {
+          "pos": 11,
+          "name": "Alvaro Morales Aparicio",
+          "licencia": "77393801-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 70
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 145,
+          "toPar": 1,
+          "inscribedId": 2425735
+        },
+        {
+          "pos": 12,
+          "name": "Sigot Lopez",
+          "licencia": "CMA83438-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 147,
+          "toPar": 3,
+          "inscribedId": 2433985
+        },
+        {
+          "pos": 13,
+          "name": "Marcelo Altonaga De Carlos",
+          "licencia": "11013554-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 148,
+          "toPar": 4,
+          "inscribedId": 2432973
+        },
+        {
+          "pos": 14,
+          "name": "Javier Garrido-Lestache Lopez",
+          "licencia": "CM113852-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 72
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2432490
+        },
+        {
+          "pos": 15,
+          "name": "Hugo Esposito Menard",
+          "licencia": "CM113508-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2424374
+        },
+        {
+          "pos": 16,
+          "name": "Daniel Alonso Drljevic",
+          "licencia": "11013900-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 72
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 149,
+          "toPar": 5,
+          "inscribedId": 2433068
+        },
+        {
+          "pos": 17,
+          "name": "Scott William Fernandez Salmon",
+          "licencia": "AM653130-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 150,
+          "toPar": 6,
+          "inscribedId": 2421561
+        },
+        {
+          "pos": 18,
+          "name": "Bruno Lazaro Hernandez",
+          "licencia": "0102941468",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 71
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 151,
+          "toPar": 7,
+          "inscribedId": 2430893
+        },
+        {
+          "pos": 19,
+          "name": "Nicolas Moreno Lopez",
+          "licencia": "11283783-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2434255
+        },
+        {
+          "pos": 20,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 152,
+          "toPar": 8,
+          "inscribedId": 2433932
+        },
+        {
+          "pos": 21,
+          "name": "Jorge Junquera Sevillano",
+          "licencia": "CM003674-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 71
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 154,
+          "toPar": 10,
+          "inscribedId": 2424885
+        },
+        {
+          "pos": 22,
+          "name": "Raul Pascual Aragones",
+          "licencia": "77533756-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2421689
+        },
+        {
+          "pos": 23,
+          "name": "Angel Soria Casaponsa",
+          "licencia": "88193919-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 155,
+          "toPar": 11,
+          "inscribedId": 2427470
+        },
+        {
+          "pos": 24,
+          "name": "Leopoldo Moreno De La Cova Ybarra",
+          "licencia": "AM023417-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 80
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 157,
+          "toPar": 13,
+          "inscribedId": 2428932
+        },
+        {
+          "pos": 25,
+          "name": "Ana Carlon Obregon",
+          "licencia": "7712914056",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 4
+            },
+            {
+              "round": 2,
+              "ch": 4
+            }
+          ],
+          "total": 158,
+          "toPar": 14,
+          "inscribedId": 2432394
+        },
+        {
+          "pos": 26,
+          "name": "David Valls Marco",
+          "licencia": "RL040647-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 159,
+          "toPar": 15,
+          "inscribedId": 2428587
+        },
+        {
+          "pos": 27,
+          "name": "Cristina Carlon Obregon",
+          "licencia": "77123683-P",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 75
+            },
+            {
+              "round": 2,
+              "gross": 85
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 160,
+          "toPar": 16,
+          "inscribedId": 2430407
+        },
+        {
+          "pos": 28,
+          "name": "Enetz Roman Ganuza",
+          "licencia": "VB163930-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 86
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 161,
+          "toPar": 17,
+          "inscribedId": 2434339
+        },
+        {
+          "pos": 29,
+          "name": "Miguel Lopez Sanz",
+          "licencia": "7753162326",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 80
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 0
+            },
+            {
+              "round": 2,
+              "ch": 0
+            }
+          ],
+          "total": 161,
+          "toPar": 17,
+          "inscribedId": 2430302
+        },
+        {
+          "pos": 30,
+          "name": "Jose Luis Garcia Jimenez",
+          "licencia": "AM653747-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 81
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 162,
+          "toPar": 18,
+          "inscribedId": 2421535
+        },
+        {
+          "pos": 31,
+          "name": "David Bedia Reventun",
+          "licencia": "11010504-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 84
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 163,
+          "toPar": 19,
+          "inscribedId": 2428610
+        },
+        {
+          "pos": 32,
+          "name": "Jose Javier Sainz Largo",
+          "licencia": "7753163948",
+          "hcp": 1.3,
+          "nivel": "S",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 84
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": 167,
+          "toPar": 23,
+          "inscribedId": 2433933
+        },
+        {
+          "pos": null,
+          "name": "Daniel Del Pozo Grande",
+          "licencia": "77121499-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2431713
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 33,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David Salgado Chacon",
+          "licencia": "CM113143-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": -6,
+          "inscribedId": 2424886
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Berna Manzanares",
+          "licencia": "77533091-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 67,
+          "toPar": -5,
+          "inscribedId": 2421663
+        },
+        {
+          "pos": 3,
+          "name": "Javier Sainz Delgado",
+          "licencia": "VB043311-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2436041
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Morales Aparicio",
+          "licencia": "77393801-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2425735
+        },
+        {
+          "pos": 5,
+          "name": "Luis Gregorio Ferrandez",
+          "licencia": "CM003600-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -2,
+          "inscribedId": 2429207
+        },
+        {
+          "pos": 6,
+          "name": "Jorge Junquera Sevillano",
+          "licencia": "CM003674-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": -1,
+          "inscribedId": 2424885
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Lagarto Alonso",
+          "licencia": "77091285-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2424756
+        },
+        {
+          "pos": 8,
+          "name": "Daniel Alonso Drljevic",
+          "licencia": "11013900-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2433068
+        },
+        {
+          "pos": 9,
+          "name": "David George Schneider Jerez",
+          "licencia": "AMI53920-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2430845
+        },
+        {
+          "pos": 10,
+          "name": "Jose Manuel Pardo Benitez",
+          "licencia": "88343574-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2432093
+        },
+        {
+          "pos": 11,
+          "name": "Asier Aguirre Izcue",
+          "licencia": "44053510-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2432079
+        },
+        {
+          "pos": 12,
+          "name": "Ana Carlon Obregon",
+          "licencia": "7712914056",
+          "hcp": 2.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2432394
+        },
+        {
+          "pos": 13,
+          "name": "Sigot Lopez",
+          "licencia": "CMA83438-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2433985
+        },
+        {
+          "pos": 14,
+          "name": "Hugo Esposito Menard",
+          "licencia": "CM113508-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2424374
+        },
+        {
+          "pos": 15,
+          "name": "Esteban Vazquez Martin",
+          "licencia": "02083798-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2427530
+        },
+        {
+          "pos": 16,
+          "name": "Cristina Carlon Obregon",
+          "licencia": "77123683-P",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2430407
+        },
+        {
+          "pos": 17,
+          "name": "Scott William Fernandez Salmon",
+          "licencia": "AM653130-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2421561
+        },
+        {
+          "pos": 18,
+          "name": "Marcelo Altonaga De Carlos",
+          "licencia": "11013554-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2432973
+        },
+        {
+          "pos": 19,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2433932
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Balmaseda Sanchez",
+          "licencia": "CM020523-P",
+          "hcp": null,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2425013
+        },
+        {
+          "pos": 21,
+          "name": "Javier Garrido-Lestache Lopez",
+          "licencia": "CM113852-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 5,
+          "inscribedId": 2432490
+        },
+        {
+          "pos": 22,
+          "name": "Raul Pascual Aragones",
+          "licencia": "77533756-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2421689
+        },
+        {
+          "pos": 23,
+          "name": "Angel Soria Casaponsa",
+          "licencia": "88193919-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 6,
+          "inscribedId": 2427470
+        },
+        {
+          "pos": 24,
+          "name": "Nicolas Moreno Lopez",
+          "licencia": "11283783-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2434255
+        },
+        {
+          "pos": 25,
+          "name": "David Bedia Reventun",
+          "licencia": "11010504-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2428610
+        },
+        {
+          "pos": 26,
+          "name": "Leopoldo Moreno De La Cova Ybarra",
+          "licencia": "AM023417-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2428932
+        },
+        {
+          "pos": 27,
+          "name": "Bruno Lazaro Hernandez",
+          "licencia": "0102941468",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2430893
+        },
+        {
+          "pos": 28,
+          "name": "Jose Luis Garcia Jimenez",
+          "licencia": "AM653747-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2421535
+        },
+        {
+          "pos": 29,
+          "name": "Miguel Lopez Sanz",
+          "licencia": "7753162326",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2430302
+        },
+        {
+          "pos": 30,
+          "name": "David Valls Marco",
+          "licencia": "RL040647-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2428587
+        },
+        {
+          "pos": 31,
+          "name": "Daniel Del Pozo Grande",
+          "licencia": "77121499-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2431713
+        },
+        {
+          "pos": 32,
+          "name": "Jose Javier Sainz Largo",
+          "licencia": "7753163948",
+          "hcp": 1.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2433933
+        },
+        {
+          "pos": 33,
+          "name": "Enetz Roman Ganuza",
+          "licencia": "VB163930-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2434339
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 33
+    },
+    "2": {
+      "name": "Scratch Individual",
+      "jugadores": 33
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -57,10 +1498,206 @@
     },
     {
       "orden": 5,
-      "name": "Jose Manuel Garzon Escobosa",
-      "licencia": "AM590909-P",
+      "name": "Hugo Esposito Menard",
+      "licencia": "CM113508-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Lagarto Alonso",
+      "licencia": "77091285-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Jorge Junquera Sevillano",
+      "licencia": "CM003674-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "David Salgado Chacon",
+      "licencia": "CM113143-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Carlos Balmaseda Sanchez",
+      "licencia": "CM020523-P",
       "hcp": null,
       "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Alvaro Morales Aparicio",
+      "licencia": "77393801-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 11,
+      "name": "Angel Soria Casaponsa",
+      "licencia": "88193919-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 12,
+      "name": "Esteban Vazquez Martin",
+      "licencia": "02083798-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 13,
+      "name": "David Valls Marco",
+      "licencia": "RL040647-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 14,
+      "name": "David Bedia Reventun",
+      "licencia": "11010504-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 15,
+      "name": "Leopoldo Moreno De La Cova Ybarra",
+      "licencia": "AM023417-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 16,
+      "name": "Luis Gregorio Ferrandez",
+      "licencia": "CM003600-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 17,
+      "name": "Miguel Lopez Sanz",
+      "licencia": "7753162326",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "David George Schneider Jerez",
+      "licencia": "AMI53920-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 19,
+      "name": "Bruno Lazaro Hernandez",
+      "licencia": "0102941468",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 20,
+      "name": "Daniel Del Pozo Grande",
+      "licencia": "77121499-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 21,
+      "name": "Asier Aguirre Izcue",
+      "licencia": "44053510-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 22,
+      "name": "Jose Manuel Pardo Benitez",
+      "licencia": "88343574-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 23,
+      "name": "Javier Garrido-Lestache Lopez",
+      "licencia": "CM113852-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 24,
+      "name": "Marcelo Altonaga De Carlos",
+      "licencia": "11013554-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 25,
+      "name": "Daniel Alonso Drljevic",
+      "licencia": "11013900-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 26,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "7753983104",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 27,
+      "name": "Jose Javier Sainz Largo",
+      "licencia": "7753163948",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Sigot Lopez",
+      "licencia": "CMA83438-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 29,
+      "name": "Nicolas Moreno Lopez",
+      "licencia": "11283783-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 30,
+      "name": "Enetz Roman Ganuza",
+      "licencia": "VB163930-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 31,
+      "name": "Javier Sainz Delgado",
+      "licencia": "VB043311-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 1,
+      "name": "Cristina Carlon Obregon",
+      "licencia": "77123683-P",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Carlon Obregon",
+      "licencia": "7712914056",
+      "hcp": null,
+      "nivel": "C"
     }
   ],
   "horarios": [
@@ -691,8 +2328,8 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/130321231_74396-vi-campeonato-de-castilla-y-leon-de-profesionales-2026.pdf",
-    "/uploads/competiciones/pdf/3673008120_c.43.26_campeonato_de_castilla_y_leon_2026..pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:23.775Z"
+    "/uploads/competiciones/pdf/3059379903_5_procedimiento_de_suspension_del_juego_soria.pdf",
+    "/uploads/2026/10/cirfgcyl4326-2.pdf",
+    "/uploads/competiciones/pdf/712841505_merged.pdf"
+  ]
 }

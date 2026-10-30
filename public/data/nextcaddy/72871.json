@@ -1,9 +1,9 @@
 {
   "tourId": 72871,
   "url": "https://www.nextcaddy.com/tour/72871",
-  "scrapedAt": "2026-08-10T05:45:18.113Z",
+  "scrapedAt": "2026-10-30T14:27:42.863Z",
   "meta": {
-    "name": null,
+    "name": "Pool el Yugo Dobles Mejor Bola VH (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -23,14 +23,19 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Handicap General",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Jose Sarasola Jaudenes",
       "licencia": "CM01130080",
-      "hcp": 5.2,
+      "hcp": 5.4,
       "nivel": "S"
     },
     {
@@ -38,6 +43,76 @@
       "name": "Cristina Ysasi-Ysasmendi Peman",
       "licencia": "CM01185418",
       "hcp": 10.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Luisa Olazabal Magdalena",
+      "licencia": "CM01023264",
+      "hcp": 6.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Gabriel Ximenez De Embun Monjardin",
+      "licencia": "CM01212781",
+      "hcp": 14.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Felipe Santiago Mestanza Iturmendi",
+      "licencia": "CM01026760",
+      "hcp": 6.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "M. Teresa De Chavarri Navasques",
+      "licencia": "CM01071368",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Felipe Diez Domecq",
+      "licencia": "AM05138941",
+      "hcp": 5.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Ana Moreno Giraldo",
+      "licencia": "CM02305036",
+      "hcp": 16.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Luis Alvarez De Las Asturias Bohorques",
+      "licencia": "CM01016352",
+      "hcp": 5.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Cristina De Donesteve Goyoaga",
+      "licencia": "CM01055710",
+      "hcp": 10.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jaime Diez De Rivera Oriol",
+      "licencia": "CM01027184",
+      "hcp": 13.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Gloria Juste Picon",
+      "licencia": "CM01289919",
+      "hcp": 17.5,
       "nivel": "S"
     }
   ],
@@ -286,6 +361,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1677286954_72871-pool-dobles-mejor-bola-vh-grupo-privado.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:58:01.647Z"
+  ]
 }

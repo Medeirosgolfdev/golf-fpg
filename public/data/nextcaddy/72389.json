@@ -1,9 +1,9 @@
 {
   "tourId": 72389,
   "url": "https://www.nextcaddy.com/tour/72389",
-  "scrapedAt": "2026-07-20T07:01:10.338Z",
+  "scrapedAt": "2026-10-30T14:27:05.718Z",
   "meta": {
-    "name": null,
+    "name": "T. INFANTIL GOLF ESTUDIO 9P3 HOYOS 21-07-26",
     "organizer": null,
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
@@ -23,10 +23,244 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luis Del Cuvillo Ordas",
+          "licencia": "AM05483073",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2364274
+        },
+        {
+          "pos": 2,
+          "name": "Gonzalo Guerrero Argudo",
+          "licencia": "AM05372158",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2364279
+        },
+        {
+          "pos": 3,
+          "name": "Enrique Osborne Loring",
+          "licencia": "AM02488226",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2364282
+        },
+        {
+          "pos": 4,
+          "name": "Juan Fernandez-Cancio Hervas",
+          "licencia": "AM05489390",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2364276
+        },
+        {
+          "pos": 5,
+          "name": "Gonzalo Martinez Gonzalez",
+          "licencia": "AM05374716",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2364280
+        },
+        {
+          "pos": 6,
+          "name": "Gabriela Navarro Urbano",
+          "licencia": "CM41509121",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2364281
+        },
+        {
+          "pos": 7,
+          "name": "Felipe Merello Lloret",
+          "licencia": "AM25490112",
+          "hcp": 44.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2364275
+        },
+        {
+          "pos": 8,
+          "name": "Jorge Gomez Murillo",
+          "licencia": "AM05519140",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2364278
+        },
+        {
+          "pos": 9,
+          "name": "Eugenio Sanchez-Ramade Gil-Fournier",
+          "licencia": "AM05484561",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2364284
+        },
+        {
+          "pos": 10,
+          "name": "Pablo Salazar Toscano",
+          "licencia": "AM02491731",
+          "hcp": 51.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2364283
+        },
+        {
+          "pos": 11,
+          "name": "Andres Gomez Murillo",
+          "licencia": "AM05519139",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2364277
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Luis Del Cuvillo Ordas",
+      "licencia": "AM05483073",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Felipe Merello Lloret",
+      "licencia": "AM25490112",
+      "hcp": 44.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Fernandez-Cancio Hervas",
+      "licencia": "AM05489390",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Andres Gomez Murillo",
+      "licencia": "AM05519139",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Jorge Gomez Murillo",
+      "licencia": "AM05519140",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Gonzalo Guerrero Argudo",
+      "licencia": "AM05372158",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Gonzalo Martinez Gonzalez",
+      "licencia": "AM05374716",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Enrique Osborne Loring",
+      "licencia": "AM02488226",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Pablo Salazar Toscano",
+      "licencia": "AM02491731",
+      "hcp": 51.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Eugenio Sanchez-Ramade Gil-Fournier",
+      "licencia": "AM05484561",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Gabriela Navarro Urbano",
+      "licencia": "CM41509121",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -167,6 +401,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-07-24T23:49:09.660Z"
+  ]
 }

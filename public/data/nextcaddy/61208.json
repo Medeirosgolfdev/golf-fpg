@@ -1,32 +1,1012 @@
 {
   "tourId": 61208,
   "url": "https://www.nextcaddy.com/tour/61208",
-  "scrapedAt": "2026-06-24T14:58:34.043Z",
+  "scrapedAt": "2026-10-30T14:29:01.177Z",
   "meta": {
     "name": "Torneo Interescolar de Andalucía Oriental",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-10-17",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Benjamin",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
+      "Caballeros",
       "Señoras",
-      "Benjamin",
-      "Alevin Masculino",
-      "Infantil Masculino",
-      "Cadete Masculino",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-10-17",
+    "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 2,
+      "categoryName": "Scratch Clasificacion Scratch",
+      "expectedJugadores": 30,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Casasola Perez",
+          "licencia": "AM03177119",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2408913
+        },
+        {
+          "pos": 2,
+          "name": "Pau Caceres Gago",
+          "licencia": "AM11352016",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2408914
+        },
+        {
+          "pos": 3,
+          "name": "Martin Quiros Lopez",
+          "licencia": "AM11056975",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2423158
+        },
+        {
+          "pos": 4,
+          "name": "Jaime Martin-Montalvo Diaz",
+          "licencia": "AM04986826",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2414117
+        },
+        {
+          "pos": 5,
+          "name": "Marcos Sanchez Navas",
+          "licencia": "AM15988831",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2407343
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Quiros Lopez",
+          "licencia": "AM11056968",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2423391
+        },
+        {
+          "pos": 7,
+          "name": "Hermes Stuart Cañizares Plaja",
+          "licencia": "AM83155360",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2413589
+        },
+        {
+          "pos": 8,
+          "name": "Juan Jose Rodriguez Lopez",
+          "licencia": "AMI5998051",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2414185
+        },
+        {
+          "pos": 9,
+          "name": "Malena Viera Villalba",
+          "licencia": "AM11026370",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2423287
+        },
+        {
+          "pos": 10,
+          "name": "Pablo Martin-Montalvo Diaz",
+          "licencia": "AM04986828",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2425428
+        },
+        {
+          "pos": 11,
+          "name": "Alonso De La Macorra Escobar",
+          "licencia": "AM15986924",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2414118
+        },
+        {
+          "pos": 12,
+          "name": "Santiago Viera Villalba",
+          "licencia": "AM11354257",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2423392
+        },
+        {
+          "pos": 13,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2414184
+        },
+        {
+          "pos": 14,
+          "name": "Nacho Bustos Nieto",
+          "licencia": "AM04516676",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2425427
+        },
+        {
+          "pos": 15,
+          "name": "Jose Harras Diaz",
+          "licencia": "AMI5517647",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2413588
+        },
+        {
+          "pos": 16,
+          "name": "Alejandro Gomez-Salas Cortes",
+          "licencia": "AM15172064",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2409661
+        },
+        {
+          "pos": 17,
+          "name": "Bruno Utrera Carracao",
+          "licencia": "AM11978667",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2423157
+        },
+        {
+          "pos": 18,
+          "name": "Javier Perez-Bryan Del Castillo",
+          "licencia": "AM15471469",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2413925
+        },
+        {
+          "pos": 19,
+          "name": "Carlos Jimenez Pachon",
+          "licencia": "AMI5968707",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2425425
+        },
+        {
+          "pos": 20,
+          "name": "Anais Castañeda Supiot",
+          "licencia": "AM55028493",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2411897
+        },
+        {
+          "pos": 21,
+          "name": "Jose Luis Garcia-Hirchfeld De Las Heras",
+          "licencia": "AM15486630",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2421376
+        },
+        {
+          "pos": 22,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2423286
+        },
+        {
+          "pos": 23,
+          "name": "Aroa Garcia Reyes",
+          "licencia": "AM55517360",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2411896
+        },
+        {
+          "pos": 24,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2425426
+        },
+        {
+          "pos": 25,
+          "name": "Martin Mendez Molina",
+          "licencia": "AM01355398",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2414616
+        },
+        {
+          "pos": 26,
+          "name": "Mario Morillo Gonzalez",
+          "licencia": "AMI5091408",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2414617
+        },
+        {
+          "pos": 27,
+          "name": "Manuel Mena Gutierrez",
+          "licencia": "AMI5488760",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2407344
+        },
+        {
+          "pos": 28,
+          "name": "Carlos Cerdan Ruiz",
+          "licencia": "AM15477315",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 15,
+          "inscribedId": 2409660
+        },
+        {
+          "pos": 29,
+          "name": "Gonzalo Navarro Duran",
+          "licencia": "AM15420289",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2413926
+        },
+        {
+          "pos": 30,
+          "name": "Félix Garcia-Hirschfeld De Las Heras",
+          "licencia": "AM15025011",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2421377
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Clasificacion Handicap",
+      "expectedJugadores": 30,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2414184
+        },
+        {
+          "pos": 2,
+          "name": "Pau Caceres Gago",
+          "licencia": "AM11352016",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2408914
+        },
+        {
+          "pos": 3,
+          "name": "Martin Quiros Lopez",
+          "licencia": "AM11056975",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2423158
+        },
+        {
+          "pos": 4,
+          "name": "Pablo Martin-Montalvo Diaz",
+          "licencia": "AM04986828",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2425428
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Quiros Lopez",
+          "licencia": "AM11056968",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2423391
+        },
+        {
+          "pos": 6,
+          "name": "Malena Viera Villalba",
+          "licencia": "AM11026370",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2423287
+        },
+        {
+          "pos": 7,
+          "name": "Anais Castañeda Supiot",
+          "licencia": "AM55028493",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2411897
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Casasola Perez",
+          "licencia": "AM03177119",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2408913
+        },
+        {
+          "pos": 9,
+          "name": "Jaime Martin-Montalvo Diaz",
+          "licencia": "AM04986826",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2414117
+        },
+        {
+          "pos": 10,
+          "name": "Aroa Garcia Reyes",
+          "licencia": "AM55517360",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2411896
+        },
+        {
+          "pos": 11,
+          "name": "Marcos Sanchez Navas",
+          "licencia": "AM15988831",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2407343
+        },
+        {
+          "pos": 12,
+          "name": "Hermes Stuart Cañizares Plaja",
+          "licencia": "AM83155360",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2413589
+        },
+        {
+          "pos": 13,
+          "name": "Juan Jose Rodriguez Lopez",
+          "licencia": "AMI5998051",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2414185
+        },
+        {
+          "pos": 14,
+          "name": "Nacho Bustos Nieto",
+          "licencia": "AM04516676",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2425427
+        },
+        {
+          "pos": 15,
+          "name": "Jose Harras Diaz",
+          "licencia": "AMI5517647",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2413588
+        },
+        {
+          "pos": 16,
+          "name": "Carlos Jimenez Pachon",
+          "licencia": "AMI5968707",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2425425
+        },
+        {
+          "pos": 17,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2423286
+        },
+        {
+          "pos": 18,
+          "name": "Mario Morillo Gonzalez",
+          "licencia": "AMI5091408",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2414617
+        },
+        {
+          "pos": 19,
+          "name": "Alonso De La Macorra Escobar",
+          "licencia": "AM15986924",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2414118
+        },
+        {
+          "pos": 20,
+          "name": "Santiago Viera Villalba",
+          "licencia": "AM11354257",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2423392
+        },
+        {
+          "pos": 21,
+          "name": "Javier Perez-Bryan Del Castillo",
+          "licencia": "AM15471469",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2413925
+        },
+        {
+          "pos": 22,
+          "name": "Martin Mendez Molina",
+          "licencia": "AM01355398",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2414616
+        },
+        {
+          "pos": 23,
+          "name": "Alejandro Gomez-Salas Cortes",
+          "licencia": "AM15172064",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2409661
+        },
+        {
+          "pos": 24,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2425426
+        },
+        {
+          "pos": 25,
+          "name": "Jose Luis Garcia-Hirchfeld De Las Heras",
+          "licencia": "AM15486630",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2421376
+        },
+        {
+          "pos": 26,
+          "name": "Manuel Mena Gutierrez",
+          "licencia": "AMI5488760",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2407344
+        },
+        {
+          "pos": 27,
+          "name": "Gonzalo Navarro Duran",
+          "licencia": "AM15420289",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2413926
+        },
+        {
+          "pos": 28,
+          "name": "Bruno Utrera Carracao",
+          "licencia": "AM11978667",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2423157
+        },
+        {
+          "pos": 29,
+          "name": "Carlos Cerdan Ruiz",
+          "licencia": "AM15477315",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2409660
+        },
+        {
+          "pos": 30,
+          "name": "Félix Garcia-Hirschfeld De Las Heras",
+          "licencia": "AM15025011",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2421377
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja Clasificacion Equipos Handicap",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Scratch Clasificacion Scratch",
+      "jugadores": 30
+    },
+    "3": {
+      "name": "Handicap Clasificacion Handicap",
+      "jugadores": 30
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Marcos Sanchez Navas",
+      "licencia": "AM15988831",
+      "hcp": 15.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Manuel Mena Gutierrez",
+      "licencia": "AMI5488760",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Manuel Casasola Perez",
+      "licencia": "AM03177119",
+      "hcp": 6.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Pau Caceres Gago",
+      "licencia": "AM11352016",
+      "hcp": 21.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Alejandro Gomez-Salas Cortes",
+      "licencia": "AM15172064",
+      "hcp": 21.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Cerdan Ruiz",
+      "licencia": "AM15477315",
+      "hcp": 33.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Anais Castañeda Supiot",
+      "licencia": "AM55028493",
+      "hcp": 45.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Aroa Garcia Reyes",
+      "licencia": "AM55517360",
+      "hcp": 50,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Hermes Stuart Cañizares Plaja",
+      "licencia": "AM83155360",
+      "hcp": 12.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Harras Diaz",
+      "licencia": "AMI5517647",
+      "hcp": 22.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Perez-Bryan Del Castillo",
+      "licencia": "AM15471469",
+      "hcp": 33.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Gonzalo Navarro Duran",
+      "licencia": "AM15420289",
+      "hcp": 53.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Alonso De La Macorra Escobar",
+      "licencia": "AM15986924",
+      "hcp": 16,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Jaime Martin-Montalvo Diaz",
+      "licencia": "AM04986826",
+      "hcp": 16.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Jose Rodriguez Lopez",
+      "licencia": "AMI5998051",
+      "hcp": 13.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Leo Rodriguez Lopez",
+      "licencia": "AMI5416477",
+      "hcp": 40.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Martin Mendez Molina",
+      "licencia": "AM01355398",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Mario Morillo Gonzalez",
+      "licencia": "AMI5091408",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Luis Garcia-Hirchfeld De Las Heras",
+      "licencia": "AM15486630",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Félix Garcia-Hirschfeld De Las Heras",
+      "licencia": "AM15025011",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Bruno Utrera Carracao",
+      "licencia": "AM11978667",
+      "hcp": 11.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Martin Quiros Lopez",
+      "licencia": "AM11056975",
+      "hcp": 19.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Malena Viera Villalba",
+      "licencia": "AM11026370",
+      "hcp": 27.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Fabio Utrera Carracao",
+      "licencia": "AM11012935",
+      "hcp": 47.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Santiago Viera Villalba",
+      "licencia": "AM11354257",
+      "hcp": 17,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Alvaro Quiros Lopez",
+      "licencia": "AM11056968",
+      "hcp": 22.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Carlos Jimenez Pachon",
+      "licencia": "AMI5968707",
+      "hcp": 40.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Daniel Jimenez Pachon",
+      "licencia": "AMI5322414",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Nacho Bustos Nieto",
+      "licencia": "AM04516676",
+      "hcp": 22.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Martin-Montalvo Diaz",
+      "licencia": "AM04986828",
+      "hcp": 34.4,
+      "nivel": "I"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -286,18 +1266,18 @@
         {
           "time": "09:00",
           "tee": 8,
-          "name": "Mario Morillo Gonzalez",
+          "name": "Martin Mendez Molina",
           "hcp": 54,
-          "ins": "2414617",
+          "ins": "2414616",
           "jid": "64885",
           "nivel": "B"
         },
         {
           "time": "09:00",
           "tee": 8,
-          "name": "Martin Mendez Molina",
+          "name": "Mario Morillo Gonzalez",
           "hcp": 54,
-          "ins": "2414616",
+          "ins": "2414617",
           "jid": "64885",
           "nivel": "B"
         }
@@ -321,7 +1301,8 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "/uploads/competiciones/pdf/2963801507_interescolar_maj_19092026_.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:13.139Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/4250101683_cartel_maj.pdf",
+    "/uploads/circular/2026/25edf6830fec09cd98c6f39be9507611.pdf"
+  ]
 }

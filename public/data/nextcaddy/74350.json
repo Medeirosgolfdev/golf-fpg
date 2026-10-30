@@ -1,9 +1,9 @@
 {
   "tourId": 74350,
   "url": "https://www.nextcaddy.com/tour/74350",
-  "scrapedAt": "2026-10-12T12:09:08.050Z",
+  "scrapedAt": "2026-10-30T14:28:55.903Z",
   "meta": {
-    "name": null,
+    "name": "LIGUILLA DAMAS 13/10/2026 ",
     "organizer": null,
     "course": "Real Club de Campo de Cordoba",
     "courseCode": "AM06",
@@ -23,8 +23,25 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja 3A Categoria Liguilla Damas",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Handicap Pareja 2A Categoria Liguilla Damas",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Handicap Pareja 1A Categoria Liguilla Damas",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Handicap Pareja Todos",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -140,114 +157,128 @@
     },
     {
       "orden": 9,
-      "name": "M Carmen Lopez Del Campo",
-      "licencia": "AM06923151",
-      "hcp": 21.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 9,
-      "name": "Carmen Cañete Leyva",
-      "licencia": "AM06957945",
-      "hcp": 21.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 10,
       "name": "Maria Del Mar Romero Garcia",
       "licencia": "AM06050625",
       "hcp": 21.6,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Maria Jose Carrion Muñoz",
       "licencia": "AM06903492",
       "hcp": 23.7,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Concepcion Rodriguez Herrero",
       "licencia": "AM06959143",
       "hcp": 26.3,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Maria Del Mar Ribes Bautista",
       "licencia": "AM06965342",
       "hcp": 27.6,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Mª Antonia Ramirez Ramirez",
       "licencia": "AM06189198",
       "hcp": 26.5,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Lourdes Muñoz Alarcon",
       "licencia": "AM06262699",
       "hcp": 27.1,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Carolina Peña Algaba",
       "licencia": "AM06979099",
       "hcp": 21.6,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 12,
       "name": "Pilar Martinez Uceda",
       "licencia": "AM06360141",
       "hcp": 25.7,
       "nivel": "S"
     },
     {
-      "orden": 14,
-      "name": "Cristina Martinez-Sagrera Eguilaz",
-      "licencia": "AM06895240",
-      "hcp": 24.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 14,
-      "name": "Enriqueta Cañete Leyva",
-      "licencia": "AM06054091",
-      "hcp": 27,
-      "nivel": "S"
-    },
-    {
-      "orden": 15,
+      "orden": 13,
       "name": "Belen Fernandez Robledo",
       "licencia": "AM06471795",
       "hcp": 36,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Silvia Delgado-Brackenbury Ferrer",
       "licencia": "AM06799715",
       "hcp": 38.4,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Carmen Maria Gomez Gomez De Tejada",
       "licencia": "AM25963208",
       "hcp": 37.8,
       "nivel": "Mid"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Esther Gonzalez Martinez",
       "licencia": "AMJ7347872",
       "hcp": 42.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Carmen Dominguez Ares",
+      "licencia": "AM17615191",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pilar Fernandez Gomez",
+      "licencia": "AM06031929",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "M Carmen Lopez Del Campo",
+      "licencia": "AM06923151",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Cristina Martinez-Sagrera Eguilaz",
+      "licencia": "AM06895240",
+      "hcp": 24.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Carmen Molina Lapachet",
+      "licencia": "AM06342191",
+      "hcp": 34.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Estrella Dominguez De La Concha-Castañeda",
+      "licencia": "AM06985113",
+      "hcp": 37.1,
       "nivel": "S"
     }
   ],
@@ -618,6 +649,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:48.665Z"
+  ]
 }

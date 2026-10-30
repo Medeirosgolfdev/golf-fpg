@@ -1,9 +1,9 @@
 {
   "tourId": 73961,
   "url": "https://www.nextcaddy.com/tour/73961",
-  "scrapedAt": "2026-09-21T09:55:38.219Z",
+  "scrapedAt": "2026-10-30T14:28:43.481Z",
   "meta": {
-    "name": null,
+    "name": "Campeonato Puntuable Ranking Sub14 - Golf Olímpico de León",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -13,8 +13,6 @@
     "categories": [
       "Caballeros",
       "Señoras",
-      "Benjamin Masculino",
-      "Alevin Masculino",
       "Juvenil",
       "Infantil",
       "Profesional",
@@ -23,11 +21,719 @@
     "dateIso": "2026-10-03",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 68,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Benjamín",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 10.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 5,
+          "inscribedId": 2414017
+        },
+        {
+          "pos": 2,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 5,
+          "inscribedId": 2416182
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Alevín",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 10.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 65,
+          "toPar": -3,
+          "inscribedId": 2416376
+        },
+        {
+          "pos": 2,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 11.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": 1,
+          "inscribedId": 2412824
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 3.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 4,
+          "inscribedId": 2412031
+        },
+        {
+          "pos": 4,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 7.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 8,
+          "inscribedId": 2413626
+        },
+        {
+          "pos": 5,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 6.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 9,
+          "inscribedId": 2413596
+        },
+        {
+          "pos": 6,
+          "name": "Jaime Aparicio Gonzalez",
+          "licencia": "7707094526",
+          "hcp": 15,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 9,
+          "inscribedId": 2416181
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Individual Infantil",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": null,
+          "inscribedId": 2413553
+        },
+        {
+          "pos": 2,
+          "name": "Oliver Fraile Saenz",
+          "licencia": "7752071342",
+          "hcp": 9.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": null,
+          "inscribedId": 2412873
+        },
+        {
+          "pos": 3,
+          "name": "Teresa Basconcillos Rodriguez",
+          "licencia": "7712095904",
+          "hcp": 5.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": 2,
+          "inscribedId": 2414501
+        },
+        {
+          "pos": 4,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 2.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 3,
+          "inscribedId": 2413975
+        },
+        {
+          "pos": 5,
+          "name": "Joaquin Aparicio Gonzalez",
+          "licencia": "7707917692",
+          "hcp": 6.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 3,
+          "inscribedId": 2414121
+        },
+        {
+          "pos": 6,
+          "name": "Gonzalo Diaz Polo",
+          "licencia": "7706967685",
+          "hcp": 13.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 3,
+          "inscribedId": 2416383
+        },
+        {
+          "pos": 7,
+          "name": "Maria Casas Fernandez",
+          "licencia": "7770078318",
+          "hcp": 5.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 4,
+          "inscribedId": 2414015
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Cano De Manuel",
+          "licencia": "7707906552",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 5,
+          "inscribedId": 2413518
+        },
+        {
+          "pos": 9,
+          "name": "Irene Elias Gonzalez",
+          "licencia": "7772981136",
+          "hcp": 1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 6,
+          "inscribedId": 2416211
+        },
+        {
+          "pos": 10,
+          "name": "Carmen Manuela Calvo Crespo",
+          "licencia": "7770346991",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 6,
+          "inscribedId": 2414475
+        },
+        {
+          "pos": 11,
+          "name": "Mateo Fernandez Arteaga",
+          "licencia": "7760479307",
+          "hcp": 5.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 17,
+          "inscribedId": 2411674
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Scratch Individual Femenino",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Irene Elias Gonzalez",
+          "licencia": "7772981136",
+          "hcp": 1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 7,
+          "inscribedId": 2416211
+        },
+        {
+          "pos": 2,
+          "name": "Teresa Basconcillos Rodriguez",
+          "licencia": "7712095904",
+          "hcp": 5.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 8,
+          "inscribedId": 2414501
+        },
+        {
+          "pos": 3,
+          "name": "Maria Casas Fernandez",
+          "licencia": "7770078318",
+          "hcp": 5.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 9,
+          "inscribedId": 2414015
+        },
+        {
+          "pos": 4,
+          "name": "Carmen Manuela Calvo Crespo",
+          "licencia": "7770346991",
+          "hcp": 8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 14,
+          "inscribedId": 2414475
+        },
+        {
+          "pos": 5,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 10.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 15,
+          "inscribedId": 2414017
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Scratch Individual Masculino",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Cano De Manuel",
+          "licencia": "7707906552",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": 2,
+          "inscribedId": 2413518
+        },
+        {
+          "pos": 2,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 3,
+          "inscribedId": 2413553
+        },
+        {
+          "pos": 3,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 2.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 3,
+          "inscribedId": 2413975
+        },
+        {
+          "pos": 4,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 10.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 5,
+          "inscribedId": 2416376
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 3.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 5,
+          "inscribedId": 2412031
+        },
+        {
+          "pos": 6,
+          "name": "Oliver Fraile Saenz",
+          "licencia": "7752071342",
+          "hcp": 9.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 6,
+          "inscribedId": 2412873
+        },
+        {
+          "pos": 7,
+          "name": "Joaquin Aparicio Gonzalez",
+          "licencia": "7707917692",
+          "hcp": 6.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 6,
+          "inscribedId": 2414121
+        },
+        {
+          "pos": 8,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 11.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 9,
+          "inscribedId": 2412824
+        },
+        {
+          "pos": 9,
+          "name": "Gonzalo Diaz Polo",
+          "licencia": "7706967685",
+          "hcp": 13.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 13,
+          "inscribedId": 2416383
+        },
+        {
+          "pos": 10,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 7.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 13,
+          "inscribedId": 2413626
+        },
+        {
+          "pos": 11,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 6.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 13,
+          "inscribedId": 2413596
+        },
+        {
+          "pos": 12,
+          "name": "Jaime Aparicio Gonzalez",
+          "licencia": "7707094526",
+          "hcp": 15,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 20,
+          "inscribedId": 2416181
+        },
+        {
+          "pos": 13,
+          "name": "Mateo Fernandez Arteaga",
+          "licencia": "7760479307",
+          "hcp": 5.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 20,
+          "inscribedId": 2411674
+        },
+        {
+          "pos": 14,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 20.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 22,
+          "inscribedId": 2416182
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Benjamín",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Handicap Individual Alevín",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Handicap Individual Infantil",
+      "jugadores": 11
+    },
+    "4": {
+      "name": "Scratch Individual Femenino",
+      "jugadores": 5
+    },
+    "5": {
+      "name": "Scratch Individual Masculino",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mateo Fernandez Arteaga",
+      "licencia": "7760479307",
+      "hcp": 5.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Herguedas Sanz",
+      "licencia": "7752053507",
+      "hcp": 3.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Rodriguez Molina",
+      "licencia": "7706966959",
+      "hcp": 11.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Oliver Fraile Saenz",
+      "licencia": "7752071342",
+      "hcp": 9.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Cano De Manuel",
+      "licencia": "7707906552",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Beltran Diez Sillero",
+      "licencia": "7706962379",
+      "hcp": 6,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 6.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 7.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "7753983104",
+      "hcp": 2.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Joaquin Aparicio Gonzalez",
+      "licencia": "7707917692",
+      "hcp": 6.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Jaime Aparicio Gonzalez",
+      "licencia": "7707094526",
+      "hcp": 15,
+      "nivel": "A"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "7707094609",
+      "hcp": 20.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Jaime Pardo Gonzalez",
+      "licencia": "7706966957",
+      "hcp": 10.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Gonzalo Diaz Polo",
+      "licencia": "7706967685",
+      "hcp": 13.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Casas Fernandez",
+      "licencia": "7770078318",
+      "hcp": 5.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 10.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Manuela Calvo Crespo",
+      "licencia": "7770346991",
+      "hcp": 8,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Teresa Basconcillos Rodriguez",
+      "licencia": "7712095904",
+      "hcp": 5.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Irene Elias Gonzalez",
+      "licencia": "7772981136",
+      "hcp": 1,
+      "nivel": "I"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -240,8 +946,7 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/3960677904_campeonato_juvenil_del_leon.pdf",
-    "/uploads/competiciones/pdf/3006767974_reglas_locales_fresnillo.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:10.788Z"
+    "/uploads/competiciones/pdf/1539771151_campeonato_juvenil_del_o._leon.pdf",
+    "/uploads/competiciones/pdf/2939434731_reglas_locales_y_suspensiorn.pdf"
+  ]
 }

@@ -1,13 +1,13 @@
 {
   "tourId": 74613,
   "url": "https://www.nextcaddy.com/tour/74613",
-  "scrapedAt": "2026-10-19T09:48:51.157Z",
+  "scrapedAt": "2026-10-30T14:29:29.757Z",
   "meta": {
     "name": "LIGA PRINZIPIANTE OCTUBRE",
     "organizer": null,
     "course": "Baviera Golf",
     "courseCode": "AM58",
-    "dateStart": "2026-10-15",
+    "dateStart": "2026-10-28",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,13 +18,241 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-10-15",
+    "dateIso": "2026-10-28",
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marnix Leo Teunis Willem Kroom",
+          "licencia": "AM58000492",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2430563
+        },
+        {
+          "pos": 2,
+          "name": "Jose Manuel Gonzalez Lafuente",
+          "licencia": "AM58966566",
+          "hcp": 33.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2436461
+        },
+        {
+          "pos": 3,
+          "name": "Antonio Jesus Delgado Utrera",
+          "licencia": "AM58816308",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2430558
+        },
+        {
+          "pos": 4,
+          "name": "Rafael Belmonte Soria",
+          "licencia": "AM58001943",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2434630
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Salado Cano",
+          "licencia": "AM58034806",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2430571
+        },
+        {
+          "pos": 6,
+          "name": "Raul Pendon Nebro",
+          "licencia": "AM58517063",
+          "hcp": 35.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2426599
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Javier Oliver Palacios",
+          "licencia": "AM58469065",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2430543
+        },
+        {
+          "pos": 8,
+          "name": "Myriam Gomez Bech",
+          "licencia": "AM04189643",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2431633
+        },
+        {
+          "pos": 9,
+          "name": "Aurora Del Rio Garces",
+          "licencia": "AM58974559",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2426601
+        },
+        {
+          "pos": 10,
+          "name": "Martin Carlos Martin Garcia",
+          "licencia": "AM58000244",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2430553
+        },
+        {
+          "pos": 11,
+          "name": "Christyan De La Cruz Santaolalla",
+          "licencia": "AM58520221",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2430550
+        },
+        {
+          "pos": 12,
+          "name": "Federico Gutierrez Cabrera",
+          "licencia": "AMI5079519",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2431630
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Javier Garcia Varela",
+          "licencia": "AM58525456",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2430548
+        },
+        {
+          "pos": 14,
+          "name": "Jose Manuel Torres Rivero",
+          "licencia": "AM58525305",
+          "hcp": 44,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2430560
+        },
+        {
+          "pos": 15,
+          "name": "Joris Van Riel",
+          "licencia": "AM58525112",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2430552
+        },
+        {
+          "pos": 16,
+          "name": "Fernando Moran Calvo-Sotelo",
+          "licencia": "AM00789086",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2430574
+        },
+        {
+          "pos": 17,
+          "name": "Margaret Faba",
+          "licencia": "AM58524581",
+          "hcp": 44,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2430485
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 17
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -34,11 +262,151 @@
       "nivel": "Mid"
     },
     {
+      "orden": 2,
+      "name": "Francisco Javier Oliver Palacios",
+      "licencia": "AM58469065",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Javier Garcia Varela",
+      "licencia": "AM58525456",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Doña Flores",
+      "licencia": "AM58992242",
+      "hcp": 34,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Christyan De La Cruz Santaolalla",
+      "licencia": "AM58520221",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Inocencio Villar Chicano",
+      "licencia": "AM58490950",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Joris Van Riel",
+      "licencia": "AM58525112",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Martin Carlos Martin Garcia",
+      "licencia": "AM58000244",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Antonio Jesus Delgado Utrera",
+      "licencia": "AM58816308",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Manuel Torres Rivero",
+      "licencia": "AM58525305",
+      "hcp": 44,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Marnix Leo Teunis Willem Kroom",
+      "licencia": "AM58000492",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Carlos Lupiañez Lopez",
+      "licencia": "AM58606624",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Antonio Salado Cano",
+      "licencia": "AM58034806",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Fernando Moran Calvo-Sotelo",
+      "licencia": "AM00789086",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Federico Gutierrez Cabrera",
+      "licencia": "AMI5079519",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Manuel Cadenas Cortes",
+      "licencia": "AM581915-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 17,
+      "name": "Rafael Belmonte Soria",
+      "licencia": "AM58001943",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Manuel Gonzalez Lafuente",
+      "licencia": "AM58966566",
+      "hcp": 33.9,
+      "nivel": "S"
+    },
+    {
       "orden": 1,
       "name": "Aurora Del Rio Garces",
       "licencia": "AM58974559",
       "hcp": 36,
       "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Margaret Faba",
+      "licencia": "AM58524581",
+      "hcp": 44,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Angelina Madeleine Plouzeau",
+      "licencia": "AM58518193",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Myriam Gomez Bech",
+      "licencia": "AM04189643",
+      "hcp": 36,
+      "nivel": "S"
     }
   ],
   "horarios": [
@@ -241,6 +609,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3163764954_74613-liga-prinzipiante-octubre.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:24.365Z"
+  ]
 }

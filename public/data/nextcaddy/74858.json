@@ -1,9 +1,9 @@
 {
   "tourId": 74858,
   "url": "https://www.nextcaddy.com/tour/74858",
-  "scrapedAt": "2026-10-26T09:52:51.352Z",
+  "scrapedAt": "2026-10-30T14:29:28.361Z",
   "meta": {
-    "name": null,
+    "name": "DAMAS 18 HOYOS STBLEFORD",
     "organizer": null,
     "course": "Real Club de Golf Guadalmina",
     "courseCode": "AM51",
@@ -20,10 +20,184 @@
     "dateIso": "2026-10-27",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Camilla Fearon",
+          "licencia": "AM51812983",
+          "hcp": 30.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2435197
+        },
+        {
+          "pos": 2,
+          "name": "Elena Santos Martinez",
+          "licencia": "0202066797",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435195
+        },
+        {
+          "pos": 3,
+          "name": "Rhona Teehan",
+          "licencia": "AM57612368",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435188
+        },
+        {
+          "pos": 4,
+          "name": "Suzanne Norell",
+          "licencia": "AM51066597",
+          "hcp": 22.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435190
+        },
+        {
+          "pos": 5,
+          "name": "Anne Okeeffe",
+          "licencia": "AM51353677",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435191
+        },
+        {
+          "pos": 6,
+          "name": "Araceli Rios Alvarez",
+          "licencia": "AM51349803",
+          "hcp": 23.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435189
+        },
+        {
+          "pos": 7,
+          "name": "Anette Gross",
+          "licencia": "AM51348787",
+          "hcp": 29.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435199
+        },
+        {
+          "pos": 8,
+          "name": "Maria Cleffi",
+          "licencia": "AM51894497",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435194
+        },
+        {
+          "pos": 9,
+          "name": "Leslie Sondra Weber",
+          "licencia": "AM51773020",
+          "hcp": 28.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435201
+        },
+        {
+          "pos": 10,
+          "name": "Maria Eugenia Urra Huarte",
+          "licencia": "AM51058147",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435198
+        },
+        {
+          "pos": 11,
+          "name": "Juana Moreno Quiros",
+          "licencia": "AM51617094",
+          "hcp": 33.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435200
+        },
+        {
+          "pos": 12,
+          "name": "Marie Fahey",
+          "licencia": "AM51064684",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2435193
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -55,69 +229,55 @@
     },
     {
       "orden": 5,
-      "name": "Helen Cosgrove",
-      "licencia": "AM51945042",
-      "hcp": 22.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 6,
       "name": "Marie Fahey",
       "licencia": "AM51064684",
       "hcp": 23.5,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Maria Cleffi",
       "licencia": "AM51894497",
       "hcp": 25.2,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Elena Santos Martinez",
       "licencia": "0202066797",
       "hcp": 26.5,
       "nivel": "S"
     },
     {
-      "orden": 9,
-      "name": "Mª Vic De Urtizberea Garcia-Andoin",
-      "licencia": "AM51055801",
-      "hcp": 28.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 10,
+      "orden": 8,
       "name": "Camilla Fearon",
       "licencia": "AM51812983",
       "hcp": 30.2,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 9,
       "name": "Maria Eugenia Urra Huarte",
       "licencia": "AM51058147",
       "hcp": 27.5,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 10,
       "name": "Anette Gross",
       "licencia": "AM51348787",
       "hcp": 29.7,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Juana Moreno Quiros",
       "licencia": "AM51617094",
       "hcp": 33.1,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Leslie Sondra Weber",
       "licencia": "AM51773020",
       "hcp": 28.7,
@@ -167,15 +327,6 @@
         {
           "time": "09:50",
           "tee": 1,
-          "name": "Helen Cosgrove",
-          "hcp": 22.9,
-          "ins": "2435192",
-          "jid": "80222",
-          "nivel": "S"
-        },
-        {
-          "time": "09:50",
-          "tee": 1,
           "name": "Marie Fahey",
           "hcp": 23.2,
           "ins": "2435193",
@@ -197,15 +348,6 @@
           "name": "Elena Santos Martinez",
           "hcp": 26.5,
           "ins": "2435195",
-          "jid": "80222",
-          "nivel": "S"
-        },
-        {
-          "time": "10:00",
-          "tee": 1,
-          "name": "Mª Vic De Urtizberea Garcia-Andoin",
-          "hcp": 28.1,
-          "ins": "2435196",
           "jid": "80222",
           "nivel": "S"
         },

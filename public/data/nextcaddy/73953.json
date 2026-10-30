@@ -1,9 +1,9 @@
 {
   "tourId": 73953,
   "url": "https://www.nextcaddy.com/tour/73953",
-  "scrapedAt": "2026-09-21T09:55:35.112Z",
+  "scrapedAt": "2026-10-30T14:28:30.458Z",
   "meta": {
-    "name": null,
+    "name": "TUESDAY LADIES 22/09/2026",
     "organizer": null,
     "course": "Santa María Golf & Country Club",
     "courseCode": "AM86",
@@ -20,10 +20,160 @@
     "dateIso": "2026-09-22",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Eva Maria Weber",
+          "licencia": "AM86884542",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2407970
+        },
+        {
+          "pos": 2,
+          "name": "Liz Boyle",
+          "licencia": "AM24700376",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2407967
+        },
+        {
+          "pos": 3,
+          "name": "Marian Martin",
+          "licencia": "AM86190263",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2407979
+        },
+        {
+          "pos": 4,
+          "name": "Eileen Tobin",
+          "licencia": "AM86931826",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2407975
+        },
+        {
+          "pos": 5,
+          "name": "Karin Lawrenz",
+          "licencia": "AM68888955",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2407969
+        },
+        {
+          "pos": 6,
+          "name": "Laila Mennad",
+          "licencia": "AM86063931",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2407974
+        },
+        {
+          "pos": 7,
+          "name": "Katrin Zacher",
+          "licencia": "AM86973397",
+          "hcp": 16.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2407968
+        },
+        {
+          "pos": 8,
+          "name": "Carol Du Toit",
+          "licencia": "AM86815393",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2407972
+        },
+        {
+          "pos": 9,
+          "name": "Nancy Anspach",
+          "licencia": "AM86142833",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2407971
+        },
+        {
+          "pos": 10,
+          "name": "Susan James",
+          "licencia": "AM86476985",
+          "hcp": 34.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2407973
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -116,6 +266,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3395282327_73953-tuesday-ladies-22-09-2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:20.933Z"
+  ]
 }

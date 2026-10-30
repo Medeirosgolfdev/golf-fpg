@@ -1,9 +1,9 @@
 {
   "tourId": 72641,
   "url": "https://www.nextcaddy.com/tour/72641",
-  "scrapedAt": "2026-07-29T16:50:59.274Z",
+  "scrapedAt": "2026-10-30T14:27:17.555Z",
   "meta": {
-    "name": null,
+    "name": "DANESES GOLF 30/7",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
@@ -21,20 +21,541 @@
     "dateIso": "2026-07-30",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Bjarne Plahn",
+          "licencia": "AM68981578",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2371398
+        },
+        {
+          "pos": 2,
+          "name": "Mona Bulow Plahn",
+          "licencia": "AM68981582",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2371397
+        },
+        {
+          "pos": 3,
+          "name": "Marie Bo Andersen",
+          "licencia": "AM76473630",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2371396
+        },
+        {
+          "pos": 4,
+          "name": "Alexander Walsoe",
+          "licencia": "AM76198382",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2371399
+        },
+        {
+          "pos": 5,
+          "name": "Peter Bundgard",
+          "licencia": "AM76946855",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2371401
+        },
+        {
+          "pos": 6,
+          "name": "Rikke Knudsen",
+          "licencia": "AM76475352",
+          "hcp": 18.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2371395
+        },
+        {
+          "pos": null,
+          "name": "Jan Gulloev",
+          "licencia": "AM76072061",
+          "hcp": 36.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2371404
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Rikke Knudsen",
+      "licencia": "AM76475352",
+      "hcp": 18.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Marie Bo Andersen",
+      "licencia": "AM76473630",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Mona Bulow Plahn",
+      "licencia": "AM68981582",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Bjarne Plahn",
+      "licencia": "AM68981578",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Alexander Walsoe",
+      "licencia": "AM76198382",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Peter Bundgard",
+      "licencia": "AM76946855",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jan Gulloev",
+      "licencia": "AM76072061",
+      "hcp": 36.3,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161186,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            11
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            39
+          ],
+          [
+            "Peor",
+            35
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161187,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            4
+          ],
+          [
+            "2",
+            8
+          ],
+          [
+            "3",
+            7
+          ],
+          [
+            "4",
+            11
+          ],
+          [
+            "5",
+            7
+          ],
+          [
+            "6",
+            7
+          ],
+          [
+            "7",
+            6
+          ],
+          [
+            "8",
+            6
+          ],
+          [
+            "9",
+            7
+          ],
+          [
+            "10",
+            6
+          ],
+          [
+            "11",
+            9
+          ],
+          [
+            "12",
+            11
+          ],
+          [
+            "13",
+            3
+          ],
+          [
+            "14",
+            3
+          ],
+          [
+            "15",
+            6
+          ],
+          [
+            "16",
+            4
+          ],
+          [
+            "17",
+            5
+          ],
+          [
+            "18",
+            6
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161188,
+        "datos": [
+          [
+            "Hoyo",
+            "BJARNE PLAHN",
+            "MONA BULOW PLAHN",
+            "MARIE BO ANDERSEN"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 8",
+            3,
+            0,
+            2
+          ],
+          [
+            "Hoyo 9",
+            3,
+            2,
+            4
+          ],
+          [
+            "Hoyo 10",
+            3,
+            2,
+            6
+          ],
+          [
+            "Hoyo 11",
+            2,
+            3,
+            7
+          ],
+          [
+            "Hoyo 12",
+            2,
+            5,
+            6
+          ],
+          [
+            "Hoyo 13",
+            3,
+            5,
+            8
+          ],
+          [
+            "Hoyo 14",
+            5,
+            6,
+            8
+          ],
+          [
+            "Hoyo 15",
+            6,
+            7,
+            8
+          ],
+          [
+            "Hoyo 16",
+            6,
+            7,
+            9
+          ],
+          [
+            "Hoyo 17",
+            5,
+            7,
+            9
+          ],
+          [
+            "Hoyo 18",
+            4,
+            7,
+            9
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161189,
+        "datos": [
+          [
+            "Hoyo",
+            "BJARNE PLAHN",
+            "MONA BULOW PLAHN",
+            "MARIE BO ANDERSEN"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 9",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            2,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -45,6 +566,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:17.142Z"
+  ]
 }

@@ -1,13 +1,13 @@
 {
   "tourId": 67238,
   "url": "https://www.nextcaddy.com/tour/67238",
-  "scrapedAt": "2026-06-24T14:57:50.900Z",
+  "scrapedAt": "2026-10-30T14:26:41.253Z",
   "meta": {
     "name": "V Prueba del Campeonato Regional de Castilla y León (Valedera Sace)",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-06-28",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -18,12 +18,898 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 64,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Absoluta Hándicap Masculino",
+      "expectedJugadores": 26,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carlos De Sebastian Sanz",
+          "licencia": "7709128381",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 61,
+          "toPar": -3,
+          "inscribedId": 2348712
+        },
+        {
+          "pos": 2,
+          "name": "Roberto Gonzalez Villa",
+          "licencia": "7770221309",
+          "hcp": 3.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 62,
+          "toPar": -2,
+          "inscribedId": 2348947
+        },
+        {
+          "pos": 3,
+          "name": "Jose Antonio Gonzalez Pertejo",
+          "licencia": "7776398093",
+          "hcp": 4.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 63,
+          "toPar": -1,
+          "inscribedId": 2349420
+        },
+        {
+          "pos": 4,
+          "name": "David De Cabo Cuervo",
+          "licencia": "7760008923",
+          "hcp": 28.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 64,
+          "toPar": null,
+          "inscribedId": 2350852
+        },
+        {
+          "pos": 5,
+          "name": "Andre Nilsson",
+          "licencia": "7707363836",
+          "hcp": 8.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": 2,
+          "inscribedId": 2348550
+        },
+        {
+          "pos": 6,
+          "name": "Jose Angel Sanz Martin",
+          "licencia": "7773101168",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": 2,
+          "inscribedId": 2348486
+        },
+        {
+          "pos": 7,
+          "name": "Jorge Merlo De La Huerta",
+          "licencia": "7713953792",
+          "hcp": 22.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": 2,
+          "inscribedId": 2348649
+        },
+        {
+          "pos": 8,
+          "name": "Jose Maria Ortiz De Pinedo Fernandez",
+          "licencia": "7752081049",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 67,
+          "toPar": 3,
+          "inscribedId": 2349441
+        },
+        {
+          "pos": 9,
+          "name": "Julio Cesar Garcia Carranza",
+          "licencia": "7752387358",
+          "hcp": 11.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 67,
+          "toPar": 3,
+          "inscribedId": 2349403
+        },
+        {
+          "pos": 10,
+          "name": "Marino Martin Alvarez",
+          "licencia": "7773970711",
+          "hcp": 15.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": 4,
+          "inscribedId": 2349532
+        },
+        {
+          "pos": 11,
+          "name": "Juan Ramon Garcia Casado",
+          "licencia": "7706897192",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": 5,
+          "inscribedId": 2344212
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Martin Arguello",
+          "licencia": "7713818807",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 8,
+          "inscribedId": 2344806
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Javier Olmedo Diez",
+          "licencia": "7773434580",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 8,
+          "inscribedId": 2344222
+        },
+        {
+          "pos": 14,
+          "name": "Jesus Carlos Jimenez Lopez",
+          "licencia": "7713090054",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 9,
+          "inscribedId": 2346162
+        },
+        {
+          "pos": 15,
+          "name": "Alberto Sanchez Gomez",
+          "licencia": "7713263875",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 10,
+          "inscribedId": 2349544
+        },
+        {
+          "pos": 16,
+          "name": "Juan Carlos Escorial Esteban",
+          "licencia": "7758364179",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 11,
+          "inscribedId": 2348803
+        },
+        {
+          "pos": 17,
+          "name": "Angel Jose Gonzalez Molero",
+          "licencia": "7700989056",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 13,
+          "inscribedId": 2349230
+        },
+        {
+          "pos": 18,
+          "name": "Agustin San Juan Arauzo",
+          "licencia": "7773179138",
+          "hcp": 18.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 14,
+          "inscribedId": 2350684
+        },
+        {
+          "pos": 19,
+          "name": "Luis Ortiz Ortiz",
+          "licencia": "7747196216",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 14,
+          "inscribedId": 2350154
+        },
+        {
+          "pos": 20,
+          "name": "Segundo Diez Vega",
+          "licencia": "7770755093",
+          "hcp": 4.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 15,
+          "inscribedId": 2350712
+        },
+        {
+          "pos": 21,
+          "name": "Jose Nuñez Carballo",
+          "licencia": "7735980962",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 15,
+          "inscribedId": 2344422
+        },
+        {
+          "pos": 22,
+          "name": "Francisco Gutierrez Vegara",
+          "licencia": "7713428950",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 15,
+          "inscribedId": 2348779
+        },
+        {
+          "pos": 23,
+          "name": "Juan Antonio Gomez Martin",
+          "licencia": "7713726798",
+          "hcp": 6.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 19,
+          "inscribedId": 2348842
+        },
+        {
+          "pos": 24,
+          "name": "Angel Antonio Seisdedos Alonso",
+          "licencia": "7771970435",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 19,
+          "inscribedId": 2350031
+        },
+        {
+          "pos": 25,
+          "name": "Antonio Jesus San Juan Alcalde",
+          "licencia": "7773279045",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 21,
+          "inscribedId": 2349184
+        },
+        {
+          "pos": 26,
+          "name": "Manuel Hernandez Gajate",
+          "licencia": "7709283725",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 103,
+          "toPar": 39,
+          "inscribedId": 2344265
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Masculina Scratch Entre 11.5 Y 18.5 Hcp",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Julio Cesar Garcia Carranza",
+          "licencia": "7752387358",
+          "hcp": 11.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 13,
+          "inscribedId": 2349403
+        },
+        {
+          "pos": 2,
+          "name": "Marino Martin Alvarez",
+          "licencia": "7773970711",
+          "hcp": 15.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 18,
+          "inscribedId": 2349532
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Martin Arguello",
+          "licencia": "7713818807",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 22,
+          "inscribedId": 2344806
+        },
+        {
+          "pos": 4,
+          "name": "Juan Carlos Escorial Esteban",
+          "licencia": "7758364179",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 22,
+          "inscribedId": 2348803
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Javier Olmedo Diez",
+          "licencia": "7773434580",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 24,
+          "inscribedId": 2344222
+        },
+        {
+          "pos": 6,
+          "name": "Jose Nuñez Carballo",
+          "licencia": "7735980962",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 89,
+          "toPar": 25,
+          "inscribedId": 2344422
+        },
+        {
+          "pos": 7,
+          "name": "Angel Jose Gonzalez Molero",
+          "licencia": "7700989056",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 92,
+          "toPar": 28,
+          "inscribedId": 2349230
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Gutierrez Vegara",
+          "licencia": "7713428950",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 29,
+          "inscribedId": 2348779
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Hernandez Gajate",
+          "licencia": "7709283725",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 115,
+          "toPar": 51,
+          "inscribedId": 2344265
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación Masculina Scratch Desde 18.5 Hcp",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jorge Merlo De La Huerta",
+          "licencia": "7713953792",
+          "hcp": 22.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 23,
+          "inscribedId": 2348649
+        },
+        {
+          "pos": 2,
+          "name": "David De Cabo Cuervo",
+          "licencia": "7760008923",
+          "hcp": 28.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 27,
+          "inscribedId": 2350852
+        },
+        {
+          "pos": 3,
+          "name": "Juan Ramon Garcia Casado",
+          "licencia": "7706897192",
+          "hcp": 23.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 27,
+          "inscribedId": 2344212
+        },
+        {
+          "pos": 4,
+          "name": "Agustin San Juan Arauzo",
+          "licencia": "7773179138",
+          "hcp": 18.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 95,
+          "toPar": 31,
+          "inscribedId": 2350684
+        },
+        {
+          "pos": 5,
+          "name": "Jesus Carlos Jimenez Lopez",
+          "licencia": "7713090054",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 98,
+          "toPar": 34,
+          "inscribedId": 2346162
+        },
+        {
+          "pos": 6,
+          "name": "Luis Ortiz Ortiz",
+          "licencia": "7747196216",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 98,
+          "toPar": 34,
+          "inscribedId": 2350154
+        },
+        {
+          "pos": 7,
+          "name": "Angel Antonio Seisdedos Alonso",
+          "licencia": "7771970435",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 102,
+          "toPar": 38,
+          "inscribedId": 2350031
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Jesus San Juan Alcalde",
+          "licencia": "7773279045",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 105,
+          "toPar": 41,
+          "inscribedId": 2349184
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificación Masculina Scratch Hasta 11.4 Hcp",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Maria Ortiz De Pinedo Fernandez",
+          "licencia": "7752081049",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 64,
+          "toPar": null,
+          "inscribedId": 2349441
+        },
+        {
+          "pos": 2,
+          "name": "Roberto Gonzalez Villa",
+          "licencia": "7770221309",
+          "hcp": 3.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 65,
+          "toPar": 1,
+          "inscribedId": 2348947
+        },
+        {
+          "pos": 3,
+          "name": "Jose Antonio Gonzalez Pertejo",
+          "licencia": "7776398093",
+          "hcp": 4.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 66,
+          "toPar": 2,
+          "inscribedId": 2349420
+        },
+        {
+          "pos": 4,
+          "name": "Carlos De Sebastian Sanz",
+          "licencia": "7709128381",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": 5,
+          "inscribedId": 2348712
+        },
+        {
+          "pos": 5,
+          "name": "Andre Nilsson",
+          "licencia": "7707363836",
+          "hcp": 8.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 9,
+          "inscribedId": 2348550
+        },
+        {
+          "pos": 6,
+          "name": "Jose Angel Sanz Martin",
+          "licencia": "7773101168",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 10,
+          "inscribedId": 2348486
+        },
+        {
+          "pos": 7,
+          "name": "Alberto Sanchez Gomez",
+          "licencia": "7713263875",
+          "hcp": 10,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 18,
+          "inscribedId": 2349544
+        },
+        {
+          "pos": 8,
+          "name": "Segundo Diez Vega",
+          "licencia": "7770755093",
+          "hcp": 4.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 18,
+          "inscribedId": 2350712
+        },
+        {
+          "pos": 9,
+          "name": "Juan Antonio Gomez Martin",
+          "licencia": "7713726798",
+          "hcp": 6.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 24,
+          "inscribedId": 2348842
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Clasificación Absoluta Scratch Damas",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 13,
+          "inscribedId": 2344266
+        },
+        {
+          "pos": 2,
+          "name": "Suban Srisaengorn",
+          "licencia": "7713816188",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 14,
+          "inscribedId": 2344805
+        },
+        {
+          "pos": 3,
+          "name": "Raquel Ortiz De Pinedo Fernandez",
+          "licencia": "7752099365",
+          "hcp": 4.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 14,
+          "inscribedId": 2349439
+        },
+        {
+          "pos": 4,
+          "name": "Mercedes Arroyo Ordoñez",
+          "licencia": "7713090056",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 17,
+          "inscribedId": 2346161
+        },
+        {
+          "pos": 5,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 22,
+          "inscribedId": 2348660
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Clasificación Hándicap Absoluta Damas",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 8,
+          "inscribedId": 2344266
+        },
+        {
+          "pos": 2,
+          "name": "Mercedes Arroyo Ordoñez",
+          "licencia": "7713090056",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 8,
+          "inscribedId": 2346161
+        },
+        {
+          "pos": 3,
+          "name": "Suban Srisaengorn",
+          "licencia": "7713816188",
+          "hcp": 6.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 10,
+          "inscribedId": 2344805
+        },
+        {
+          "pos": 4,
+          "name": "Raquel Ortiz De Pinedo Fernandez",
+          "licencia": "7752099365",
+          "hcp": 4.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 12,
+          "inscribedId": 2349439
+        },
+        {
+          "pos": 5,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 15,
+          "inscribedId": 2348660
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Absoluta Hándicap Masculino",
+      "jugadores": 26
+    },
+    "2": {
+      "name": "Clasificación Masculina Scratch Entre 11.5 Y 18.5 Hcp",
+      "jugadores": 9
+    },
+    "3": {
+      "name": "Clasificación Masculina Scratch Desde 18.5 Hcp",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Clasificación Masculina Scratch Hasta 11.4 Hcp",
+      "jugadores": 9
+    },
+    "5": {
+      "name": "Clasificación Absoluta Scratch Damas",
+      "jugadores": 5
+    },
+    "6": {
+      "name": "Clasificación Hándicap Absoluta Damas",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -36,14 +922,14 @@
       "orden": 2,
       "name": "Francisco Javier Olmedo Diez",
       "licencia": "7773434580",
-      "hcp": 17.5,
+      "hcp": 17.4,
       "nivel": "S"
     },
     {
       "orden": 3,
       "name": "Manuel Hernandez Gajate",
       "licencia": "7709283725",
-      "hcp": 14,
+      "hcp": 13.6,
       "nivel": "S"
     },
     {
@@ -71,7 +957,7 @@
       "orden": 7,
       "name": "Jose Angel Sanz Martin",
       "licencia": "7773101168",
-      "hcp": 9,
+      "hcp": 9.6,
       "nivel": "S"
     },
     {
@@ -92,7 +978,7 @@
       "orden": 10,
       "name": "Carlos De Sebastian Sanz",
       "licencia": "7709128381",
-      "hcp": 9,
+      "hcp": 9.1,
       "nivel": "S"
     },
     {
@@ -120,7 +1006,7 @@
       "orden": 14,
       "name": "Roberto Gonzalez Villa",
       "licencia": "7770221309",
-      "hcp": 4,
+      "hcp": 3.9,
       "nivel": "S"
     },
     {
@@ -139,72 +1025,79 @@
     },
     {
       "orden": 17,
-      "name": "Carlos Peñalba Lopez",
-      "licencia": "7773899364",
-      "hcp": 21.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 18,
       "name": "Julio Cesar Garcia Carranza",
       "licencia": "7752387358",
       "hcp": 11.5,
       "nivel": "S"
     },
     {
-      "orden": 19,
+      "orden": 18,
       "name": "Jose Antonio Gonzalez Pertejo",
       "licencia": "7776398093",
       "hcp": 4.4,
       "nivel": "S"
     },
     {
-      "orden": 20,
+      "orden": 19,
       "name": "Jose Maria Ortiz De Pinedo Fernandez",
       "licencia": "7752081049",
       "hcp": null,
       "nivel": "Mid"
     },
     {
-      "orden": 21,
+      "orden": 20,
       "name": "Marino Martin Alvarez",
       "licencia": "7773970711",
-      "hcp": 15.8,
+      "hcp": 15.5,
       "nivel": "Mid"
     },
     {
-      "orden": 22,
+      "orden": 21,
       "name": "Alberto Sanchez Gomez",
       "licencia": "7713263875",
       "hcp": 10,
       "nivel": "S"
     },
     {
-      "orden": 23,
+      "orden": 22,
       "name": "Angel Antonio Seisdedos Alonso",
       "licencia": "7771970435",
       "hcp": 20.7,
       "nivel": "S"
     },
     {
-      "orden": 24,
+      "orden": 23,
       "name": "Luis Ortiz Ortiz",
       "licencia": "7747196216",
       "hcp": 22,
       "nivel": "S"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 24,
+      "name": "Agustin San Juan Arauzo",
+      "licencia": "7773179138",
+      "hcp": 18.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Segundo Diez Vega",
+      "licencia": "7770755093",
+      "hcp": 4.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 26,
+      "name": "David De Cabo Cuervo",
+      "licencia": "7760008923",
+      "hcp": 28.7,
+      "nivel": "Mid"
     },
     {
       "orden": 1,
       "name": "Maria Yolanda Valbuena Rodrigo",
       "licencia": "7709283726",
-      "hcp": 7,
+      "hcp": 7.2,
       "nivel": "S"
     },
     {
@@ -218,7 +1111,7 @@
       "orden": 3,
       "name": "Mercedes Arroyo Ordoñez",
       "licencia": "7713090056",
-      "hcp": 11.5,
+      "hcp": 12,
       "nivel": "S"
     },
     {
@@ -234,216 +1127,6 @@
       "licencia": "7752099365",
       "hcp": 4.1,
       "nivel": "Mid"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Juan Ramon Garcia Casado",
-      "licencia": "16-06-26 09:00",
-      "hcp": 23.6,
-      "nivel": "7706897192"
-    },
-    {
-      "orden": 2,
-      "name": "Francisco Javier Olmedo Diez",
-      "licencia": "16-06-26 09:08",
-      "hcp": 17.5,
-      "nivel": "7773434580"
-    },
-    {
-      "orden": 3,
-      "name": "Manuel Hernandez Gajate",
-      "licencia": "16-06-26 09:54",
-      "hcp": 14,
-      "nivel": "7709283725"
-    },
-    {
-      "orden": 4,
-      "name": "Maria Yolanda Valbuena Rodrigo",
-      "licencia": "16-06-26 09:55",
-      "hcp": 7,
-      "nivel": "7709283726"
-    },
-    {
-      "orden": 5,
-      "name": "Jose Nuñez Carballo",
-      "licencia": "16-06-26 12:39",
-      "hcp": 11.8,
-      "nivel": "7735980962"
-    },
-    {
-      "orden": 6,
-      "name": "Suban Srisaengorn",
-      "licencia": "16-06-26 18:16",
-      "hcp": 6.6,
-      "nivel": "7713816188"
-    },
-    {
-      "orden": 7,
-      "name": "Carlos Martin Arguello",
-      "licencia": "16-06-26 18:17",
-      "hcp": 16.1,
-      "nivel": "7713818807"
-    },
-    {
-      "orden": 8,
-      "name": "Mercedes Arroyo Ordoñez",
-      "licencia": "17-06-26 17:43",
-      "hcp": 11.5,
-      "nivel": "7713090056"
-    },
-    {
-      "orden": 9,
-      "name": "Jesus Carlos Jimenez Lopez",
-      "licencia": "17-06-26 17:44",
-      "hcp": 27.1,
-      "nivel": "7713090054"
-    },
-    {
-      "orden": 10,
-      "name": "Jose Angel Sanz Martin",
-      "licencia": "21-06-26 14:27",
-      "hcp": 9,
-      "nivel": "7773101168"
-    },
-    {
-      "orden": 11,
-      "name": "Andre Nilsson",
-      "licencia": "21-06-26 14:34",
-      "hcp": 8.9,
-      "nivel": "7707363836"
-    },
-    {
-      "orden": 12,
-      "name": "Jorge Merlo De La Huerta",
-      "licencia": "21-06-26 17:45",
-      "hcp": 22.6,
-      "nivel": "7713953792"
-    },
-    {
-      "orden": 13,
-      "name": "Sonia Carrisque Sanchez",
-      "licencia": "21-06-26 19:07",
-      "hcp": 9.3,
-      "nivel": "7758450549"
-    },
-    {
-      "orden": 14,
-      "name": "Carlos De Sebastian Sanz",
-      "licencia": "22-06-26 07:45",
-      "hcp": 9,
-      "nivel": "7709128381"
-    },
-    {
-      "orden": 15,
-      "name": "Francisco Gutierrez Vegara",
-      "licencia": "22-06-26 09:34",
-      "hcp": 15.7,
-      "nivel": "7713428950"
-    },
-    {
-      "orden": 16,
-      "name": "Juan Carlos Escorial Esteban",
-      "licencia": "22-06-26 10:27",
-      "hcp": 12.3,
-      "nivel": "7758364179"
-    },
-    {
-      "orden": 17,
-      "name": "Juan Antonio Gomez Martin",
-      "licencia": "22-06-26 11:07",
-      "hcp": 6.7,
-      "nivel": "7713726798"
-    },
-    {
-      "orden": 18,
-      "name": "Roberto Gonzalez Villa",
-      "licencia": "22-06-26 13:35",
-      "hcp": 4,
-      "nivel": "7770221309"
-    },
-    {
-      "orden": 19,
-      "name": "Antonio Jesus San Juan Alcalde",
-      "licencia": "22-06-26 19:29",
-      "hcp": 22,
-      "nivel": "7773279045"
-    },
-    {
-      "orden": 20,
-      "name": "Angel Jose Gonzalez Molero",
-      "licencia": "22-06-26 22:39",
-      "hcp": 17,
-      "nivel": "7700989056"
-    },
-    {
-      "orden": 21,
-      "name": "Carlos Peñalba Lopez",
-      "licencia": "23-06-26 10:18",
-      "hcp": 21.1,
-      "nivel": "7773899364"
-    },
-    {
-      "orden": 22,
-      "name": "Julio Cesar Garcia Carranza",
-      "licencia": "23-06-26 10:28",
-      "hcp": 11.5,
-      "nivel": "7752387358"
-    },
-    {
-      "orden": 23,
-      "name": "Jose Antonio Gonzalez Pertejo",
-      "licencia": "23-06-26 10:58",
-      "hcp": 4.4,
-      "nivel": "7776398093"
-    },
-    {
-      "orden": 24,
-      "name": "Raquel Ortiz De Pinedo Fernandez",
-      "licencia": "23-06-26 11:38",
-      "hcp": 4.1,
-      "nivel": "7752099365"
-    },
-    {
-      "orden": 25,
-      "name": "Jose Maria Ortiz De Pinedo Fernandez",
-      "licencia": "23-06-26 11:40",
-      "hcp": null,
-      "nivel": "7752081049"
-    },
-    {
-      "orden": 26,
-      "name": "Marino Martin Alvarez",
-      "licencia": "23-06-26 13:37",
-      "hcp": 15.8,
-      "nivel": "7773970711"
-    },
-    {
-      "orden": 27,
-      "name": "Alberto Sanchez Gomez",
-      "licencia": "23-06-26 13:51",
-      "hcp": 10,
-      "nivel": "7713263875"
-    },
-    {
-      "orden": 28,
-      "name": "Angel Antonio Seisdedos Alonso",
-      "licencia": "24-06-26 08:34",
-      "hcp": 20.7,
-      "nivel": "7771970435"
-    },
-    {
-      "orden": 29,
-      "name": "Luis Ortiz Ortiz",
-      "licencia": "24-06-26 10:50",
-      "hcp": 22,
-      "nivel": "7747196216"
     }
   ],
   "horarios": [
@@ -915,7 +1598,8 @@
     }
   },
   "pdfs": [
-    "/uploads/competiciones/pdf/3230452908_cirfgcyl_circular.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-29T09:18:36.041Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3230452908_cirfgcyl_circular.pdf",
+    "/uploads/competiciones/pdf/3765955736_reglas_locales_rrll.pdf"
+  ]
 }

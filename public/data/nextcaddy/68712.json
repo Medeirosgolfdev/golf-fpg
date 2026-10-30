@@ -1,13 +1,13 @@
 {
   "tourId": 68712,
   "url": "https://www.nextcaddy.com/tour/68712",
-  "scrapedAt": "2026-06-24T14:58:09.010Z",
+  "scrapedAt": "2026-10-30T14:27:09.546Z",
   "meta": {
     "name": "V Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Tecina Golf",
     "courseCode": "CP23",
-    "dateStart": null,
+    "dateStart": "2026-07-25",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Profesional C. Téc",
     "categories": [
@@ -17,13 +17,186 @@
       "profesional",
       "Infantil",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-25",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 71,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -2,
+          "inscribedId": 2356979
+        },
+        {
+          "pos": null,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -2,
+          "inscribedId": 2356088
+        },
+        {
+          "pos": 3,
+          "name": "James Anthony Ferraby",
+          "licencia": "CP001852-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -1,
+          "inscribedId": 2359929
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2356073
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP050677-P",
+          "hcp": 1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2356775
+        },
+        {
+          "pos": 6,
+          "name": "Pedro Urriza Fuentes",
+          "licencia": "CP013247-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2356070
+        },
+        {
+          "pos": 7,
+          "name": "Christos Sakorafas",
+          "licencia": "CP230776-P",
+          "hcp": 1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 12,
+          "inscribedId": 2356162
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 7
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pedro Urriza Fuentes",
+      "licencia": "CP013247-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Christos Sakorafas",
+      "licencia": "CP230776-P",
+      "hcp": 1,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Cea Bermudez",
+      "licencia": "CP050677-P",
+      "hcp": 1,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Eduardo Gonzalez Galvan",
+      "licencia": "CP020896-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "James Anthony Ferraby",
+      "licencia": "CP001852-P",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -116,10 +289,6 @@
     {
       "roundNumber": 1,
       "roundId": 73359
-    },
-    {
-      "roundNumber": 2,
-      "roundId": 73360
     }
   ],
   "scoreTypes": {
@@ -134,6 +303,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-24T23:48:58.382Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

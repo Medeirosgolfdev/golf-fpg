@@ -1,23 +1,25 @@
 {
   "tourId": 61248,
   "url": "https://www.nextcaddy.com/tour/61248",
-  "scrapedAt": "2026-06-24T14:59:05.953Z",
+  "scrapedAt": "2026-10-30T14:29:56.191Z",
   "meta": {
-    "name": "Competición Final de Temporada  P&P 2026",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Alhaurín Golf Hotel & Resort",
     "courseCode": "AM22",
-    "dateStart": null,
+    "dateStart": "2026-11-21",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-21",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -62,6 +64,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.316Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/757a21df3d013def12ac8ef5a3f3e1ad.pdf"
+  ]
 }

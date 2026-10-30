@@ -1,13 +1,13 @@
 {
   "tourId": 70918,
   "url": "https://www.nextcaddy.com/tour/70918",
-  "scrapedAt": "2026-06-24T14:58:05.102Z",
+  "scrapedAt": "2026-10-30T14:26:58.946Z",
   "meta": {
     "name": "Real Club de Golf de Guadalhorce - Categoria Especial",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": null,
+    "dateStart": "2026-07-14",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -20,34 +20,207 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-07-14",
+    "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual All",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Arlet Dedaj Ungureanu",
+          "licencia": "AM51488408",
+          "hcp": 51.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2352396
+        },
+        {
+          "pos": 2,
+          "name": "Jose Manuel Farfan Ubeda",
+          "licencia": "AM51413236",
+          "hcp": 48.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2356124
+        },
+        {
+          "pos": 3,
+          "name": "Lucas Arias Carasec",
+          "licencia": "AM56496679",
+          "hcp": 45.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2351830
+        },
+        {
+          "pos": 4,
+          "name": "Lucia Holgado Requena",
+          "licencia": "AM51484737",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2349414
+        },
+        {
+          "pos": 5,
+          "name": "Adriana Arias Carasecova",
+          "licencia": "AM56496680",
+          "hcp": 45,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2351826
+        },
+        {
+          "pos": 6,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2343819
+        },
+        {
+          "pos": 7,
+          "name": "Martina Pineda De Las Infantas",
+          "licencia": "AM15479905",
+          "hcp": 48.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 3,
+          "inscribedId": 2356362
+        },
+        {
+          "pos": 8,
+          "name": "Dario Gil Cabeza",
+          "licencia": "AM70091107",
+          "hcp": 49,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2351903
+        },
+        {
+          "pos": 9,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2353740
+        },
+        {
+          "pos": 10,
+          "name": "Javier Ruiz Delaire",
+          "licencia": "AM55471602",
+          "hcp": 45.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2342291
+        },
+        {
+          "pos": 11,
+          "name": "Dasha Violeta Arenas Khattar",
+          "licencia": "AM11473991",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2355329
+        },
+        {
+          "pos": 12,
+          "name": "Ignacio Rubio Cerezo",
+          "licencia": "AM15067145",
+          "hcp": 45.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2349925
+        },
+        {
+          "pos": null,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": 50.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2343963
+        },
+        {
+          "pos": null,
+          "name": "Carlos Martin Villatoro",
+          "licencia": "AM11419406",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2343616
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual All",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
-    {
-      "orden": 1,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "AM11092816",
-      "hcp": 45.6,
-      "nivel": "B"
-    },
-    {
-      "orden": 2,
-      "name": "Lucia Holgado Requena",
-      "licencia": "AM51484737",
-      "hcp": 53.5,
-      "nivel": "B"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
     {
       "orden": 1,
       "name": "Javier Ruiz Delaire",
@@ -73,85 +246,78 @@
       "orden": 4,
       "name": "Luis Ramirez Barba",
       "licencia": "AM11414965",
-      "hcp": 50.7,
+      "hcp": 50.1,
       "nivel": "B"
     },
     {
       "orden": 5,
-      "name": "Philemon Casado Diouf",
-      "licencia": "AM11467632",
-      "hcp": 54,
-      "nivel": "B"
-    },
-    {
-      "orden": 6,
       "name": "Ignacio Rubio Cerezo",
       "licencia": "AM15067145",
       "hcp": 45.2,
       "nivel": "A"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "09-06-26 09:13",
-      "hcp": 45.6,
-      "nivel": "AM11092816"
-    },
-    {
-      "orden": 2,
-      "name": "Javier Ruiz Delaire",
-      "licencia": "13-06-26 07:54",
-      "hcp": 45.3,
-      "nivel": "AM55471602"
-    },
-    {
-      "orden": 3,
-      "name": "Carlos Martin Villatoro",
-      "licencia": "15-06-26 10:38",
-      "hcp": 54,
-      "nivel": "AM11419406"
-    },
-    {
-      "orden": 4,
-      "name": "Fabio Utrera Carracao",
-      "licencia": "15-06-26 13:17",
-      "hcp": 54,
-      "nivel": "AM11012935"
-    },
-    {
-      "orden": 5,
-      "name": "Luis Ramirez Barba",
-      "licencia": "15-06-26 16:33",
-      "hcp": 50.7,
-      "nivel": "AM11414965"
-    },
-    {
       "orden": 6,
-      "name": "Philemon Casado Diouf",
-      "licencia": "15-06-26 21:49",
-      "hcp": 54,
-      "nivel": "AM11467632"
+      "name": "Lucas Arias Carasec",
+      "licencia": "AM56496679",
+      "hcp": 45.2,
+      "nivel": "B"
     },
     {
       "orden": 7,
-      "name": "Lucia Holgado Requena",
-      "licencia": "23-06-26 10:51",
-      "hcp": 53.5,
-      "nivel": "AM51484737"
+      "name": "Dario Gil Cabeza",
+      "licencia": "AM70091107",
+      "hcp": 49,
+      "nivel": "A"
     },
     {
       "orden": 8,
-      "name": "Ignacio Rubio Cerezo",
-      "licencia": "23-06-26 18:57",
-      "hcp": 45.2,
-      "nivel": "AM15067145"
+      "name": "Daniel Jimenez Pachon",
+      "licencia": "AMI5322414",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Manuel Farfan Ubeda",
+      "licencia": "AM51413236",
+      "hcp": 48.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Lucia Holgado Requena",
+      "licencia": "AM51484737",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Adriana Arias Carasecova",
+      "licencia": "AM56496680",
+      "hcp": 45,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Arlet Dedaj Ungureanu",
+      "licencia": "AM51488408",
+      "hcp": 51.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Dasha Violeta Arenas Khattar",
+      "licencia": "AM11473991",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Martina Pineda De Las Infantas",
+      "licencia": "AM15479905",
+      "hcp": 48.2,
+      "nivel": "B"
     }
   ],
   "horarios": [
@@ -307,7 +473,7 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Gustan Svensson, Leif",
+          "playerName": "Svensson, Leif",
           "holeNumber": 13,
           "createdAt": "04/12/25 15:39:59"
         }
@@ -315,7 +481,7 @@
     }
   },
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/2266048887_reglas-locales-2024.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-13T07:10:16.082Z"
+  ]
 }

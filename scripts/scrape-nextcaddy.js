@@ -54,16 +54,34 @@ function contarTour(r) {
  * congelado vazio para sempre (skip-existing saltava-o em cada run, mesmo
  * depois de os resultados serem publicados).
  * Considera-se "completo" (saltável) se já tem jogadores no leaderboard OU
- * se é genuinamente PDF-only (nunca terá tabela HTML para parsear). Caso
- * contrário (vazio/futuro/ilegível) re-obtém-se a cada run até ter dados. */
-function existingIsComplete(file) {
+ * se é genuinamente PDF-only (nunca terá tabela HTML para parsear) — E foi
+ * lido DEPOIS de o torneio acabar. Caso contrário (vazio/futuro/ilegível, ou
+ * lido antes do fim) re-obtém-se a cada run até ter dados.
+ * ⚠ 30/10/2026: sem a condição da data, 867 torneios de 2026 lidos antes ou
+ * durante a prova ficaram congelados (75 da RFGA — o Campeonato de Andalucía
+ * Sub 16/Sub 18 de 31/07, lido a 24/06, tinha 0 jogadores; tem 140).
+ * `fimIso` = último dia do torneio ("YYYY-MM-DD"); sem ele vale a regra antiga. */
+function existingIsComplete(file, fimIso) {
   try {
     const d = JSON.parse(fs.readFileSync(file, "utf8"));
     const hasPlayers = (d.leaderboard || []).some((c) => (c.players || []).length > 0);
-    return hasPlayers || d.leaderboardPdfOnly === true;
+    if (!(hasPlayers || d.leaderboardPdfOnly === true)) return false;
+    const fim = (d.meta && d.meta.dateEnd) || fimIso;
+    const lido = String(d.scrapedAt || "").slice(0, 10);
+    return !fim || (!!lido && lido > fim);
   } catch {
     return false; // ilegível/truncado → re-obter
   }
+}
+
+/** Último dia de um torneio a partir da data do scope ("13 jun 2026" ou ISO)
+ *  e do nº de voltas (uma por dia; sem voltas conta 1). */
+function fimDoScope(data, rondas) {
+  const ini = /^\d{4}-\d{2}-\d{2}/.test(String(data || "")) ? String(data).slice(0, 10) : parseEsAbbrevDate(data);
+  if (!ini) return null;
+  const t = new Date(ini + "T12:00:00Z");
+  t.setUTCDate(t.getUTCDate() + Math.max(1, Number(rondas) || 1) - 1);
+  return t.toISOString().slice(0, 10);
 }
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
@@ -861,13 +879,18 @@ async function main() {
   // Mapa tourId → data da descoberta ("13 jun 2026"). O detalhe NextCaddy não
   // expõe data; o scope sim. Injectamos no meta para o ficheiro ser auto-suficiente.
   const scopeDateById = new Map();
+  const scopeFimById = new Map();   // último dia (para o --skip-existing não congelar torneios lidos antes do fim)
   if (tourArg) tours = tourArg.split(",").map((s) => parseInt(s.trim(), 10));
   if (scopeArg) {
     const sc = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), scopeArg), "utf8"));
     const list = sc.tours || sc.tournaments || sc;
     for (const t of list) {
       const id = t.tourId || t.id;
-      if (id != null && t && t.date) scopeDateById.set(id, t.date);
+      if (id != null && t && t.date) {
+        scopeDateById.set(id, t.date);
+        const fim = fimDoScope(t.date, t.rounds);
+        if (fim) scopeFimById.set(id, fim);
+      }
     }
     tours = list.map((t) => t.tourId || t.id || t).filter(Boolean);
   }
@@ -892,7 +915,7 @@ async function main() {
       const idx = cursor++;
       const tid = tours[idx];
       const outFile = path.join(OUT_DIR, `${tid}.json`);
-      if (skipExisting && !patchScorecards && fs.existsSync(outFile) && existingIsComplete(outFile)) { skipped++; continue; }
+      if (skipExisting && !patchScorecards && fs.existsSync(outFile) && existingIsComplete(outFile, scopeFimById.get(tid))) { skipped++; continue; }
       const t0 = Date.now();
       console.log(`  [${idx + 1}/${tours.length}] ${tid}: starting...`);
       try {
@@ -992,4 +1015,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
-module.exports = { scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };
+module.exports = { existingIsComplete, fimDoScope, scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };

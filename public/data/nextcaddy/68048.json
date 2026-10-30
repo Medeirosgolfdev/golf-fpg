@@ -1,13 +1,13 @@
 {
   "tourId": 68048,
   "url": "https://www.nextcaddy.com/tour/68048",
-  "scrapedAt": "2026-06-24T14:57:59.767Z",
+  "scrapedAt": "2026-10-30T14:26:49.042Z",
   "meta": {
     "name": "XXXVI CAMPEONATO DE DOBLES DE CyL  2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-07-05",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -17,12 +17,31 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-07-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja Masculino",
+      "jugadores": 42
+    },
+    "2": {
+      "name": "Handicap Pareja Masculino",
+      "jugadores": 42
+    },
+    "3": {
+      "name": "Handicap Pareja Femenino",
+      "jugadores": 8
+    },
+    "4": {
+      "name": "Scratch Pareja Femenino",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,7 +54,7 @@
       "orden": 1,
       "name": "Marco Rojas Alonso",
       "licencia": "7776372629",
-      "hcp": 14.5,
+      "hcp": 13.2,
       "nivel": "A"
     },
     {
@@ -96,288 +115,633 @@
     },
     {
       "orden": 6,
-      "name": "Manuela Turiño Lozano",
-      "licencia": "7724210714",
-      "hcp": 25.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 6,
-      "name": "Cesar Martinez Santiago",
-      "licencia": "7724818061",
-      "hcp": 26.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 7,
       "name": "Marcos Barcenilla Martin",
       "licencia": "7730033437",
       "hcp": 21.8,
       "nivel": "M"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Angel Barcenilla Dimas",
       "licencia": "7730158680",
       "hcp": 26,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Eduardo Hernaez Barrio",
       "licencia": "7712183243",
       "hcp": 5.2,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Liviu Cramba",
       "licencia": "7712790365",
-      "hcp": 5.5,
+      "hcp": 5.7,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Javier Alvarez-Guisasola B.",
       "licencia": "7707081048",
-      "hcp": 1.3,
+      "hcp": 0.8,
       "nivel": "Mid"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Jorge Vaquerizo Gilsanz",
       "licencia": "7707363178",
       "hcp": 6.1,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Carlos Martin Arranz",
       "licencia": "7730013605",
       "hcp": null,
       "nivel": "M"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Guillermo Padilla Ruiz",
       "licencia": "7730015013",
       "hcp": null,
       "nivel": "M"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Segundo Diez Vega",
       "licencia": "7770755093",
-      "hcp": 4.2,
+      "hcp": 5.2,
       "nivel": "Mid"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Antonio Manuel Martinez Peral",
       "licencia": "7770804583",
       "hcp": 6.1,
       "nivel": "S"
     },
     {
-      "orden": 12,
-      "name": "Alvaro Iglesias De Luis",
-      "licencia": "7707081379",
-      "hcp": 5.8,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 12,
-      "name": "Angel Mingo Sanchez",
-      "licencia": "7700981418",
-      "hcp": 7.1,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 13,
+      "orden": 11,
       "name": "Sergio Sanchez Cachafeiro",
       "licencia": "7776975558",
-      "hcp": 13.2,
+      "hcp": 12.7,
       "nivel": "Mid"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Carlos Sanchez Garcia",
       "licencia": "7776975543",
       "hcp": 21.7,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Sonia Carrisque Sanchez",
       "licencia": "7758450549",
       "hcp": 9.3,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "Patricia Escorial Carrisque",
       "licencia": "7758779605",
-      "hcp": 15.4,
+      "hcp": 15.1,
       "nivel": "Mid"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Eduardo Corral Garcia",
       "licencia": "7728959159",
       "hcp": 13.4,
       "nivel": "Mid"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Jorge Guijarro Roman",
       "licencia": "7728466940",
       "hcp": null,
       "nivel": "Mid"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Diego Perez Yague",
       "licencia": "7742431150",
       "hcp": 14.8,
       "nivel": "Mid"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Juan Carlos Carques Gonzalez",
       "licencia": "7700818051",
       "hcp": 23.5,
       "nivel": "S"
     },
     {
-      "orden": 17,
+      "orden": 15,
       "name": "Jorge Alonso Martin",
       "licencia": "7744691914",
       "hcp": 1,
       "nivel": "Mid"
     },
     {
-      "orden": 17,
+      "orden": 15,
       "name": "Javier Hernandez Martin",
       "licencia": "7706988204",
       "hcp": 3.5,
       "nivel": "Mid"
     },
     {
-      "orden": 18,
+      "orden": 16,
       "name": "David Hernandez Sobrino",
       "licencia": "7712030448",
       "hcp": 0.8,
       "nivel": "S"
     },
     {
-      "orden": 18,
+      "orden": 16,
       "name": "Jose Mª Reguera Del Arroyo",
       "licencia": "7769750822",
-      "hcp": 4.4,
+      "hcp": 4.2,
       "nivel": "S"
     },
     {
-      "orden": 19,
+      "orden": 17,
       "name": "Antonio Corcoles Vazquez",
       "licencia": "7773441130",
       "hcp": 10,
       "nivel": "Mid"
     },
     {
-      "orden": 19,
+      "orden": 17,
       "name": "Fernando Conde Parrado",
       "licencia": "7773763480",
-      "hcp": 13.2,
+      "hcp": 13.1,
       "nivel": "S"
     },
     {
-      "orden": 20,
+      "orden": 18,
       "name": "Gonzalo Alvarez Rodriguez",
       "licencia": "7776959774",
-      "hcp": 1.8,
+      "hcp": 1.3,
       "nivel": "C"
     },
     {
-      "orden": 20,
+      "orden": 18,
       "name": "Diego Martin Alonso",
       "licencia": "7759069356",
       "hcp": 2.9,
       "nivel": "C"
     },
     {
-      "orden": 21,
+      "orden": 19,
       "name": "Carmelo Villalba Villasur",
       "licencia": "7756404683",
-      "hcp": 13.4,
+      "hcp": 12.9,
       "nivel": "S"
     },
     {
-      "orden": 21,
+      "orden": 19,
       "name": "Jesus Angel Peral Crespo",
       "licencia": "7700365034",
-      "hcp": 13.5,
+      "hcp": 13.3,
       "nivel": "S"
     },
     {
-      "orden": 22,
-      "name": "Manuel De Las Heras Lorenzo",
-      "licencia": "7707492510",
-      "hcp": 25,
-      "nivel": "S"
-    },
-    {
-      "orden": 22,
+      "orden": 20,
       "name": "Nicanor Blanco Gomez",
       "licencia": "7760007603",
-      "hcp": 25.4,
+      "hcp": 24.5,
       "nivel": "Mid"
     },
     {
+      "orden": 20,
+      "name": "Manuel De Las Heras Lorenzo",
+      "licencia": "7707492510",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Eduardo Cordoba Gallardo",
+      "licencia": "7773747090",
+      "hcp": 7.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Javier Diaz Manteca",
+      "licencia": "7700981414",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Manuel Hernandez Gajate",
+      "licencia": "7709283725",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Jose Antonio Martinez Robles",
+      "licencia": "7738462013",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
       "orden": 23,
-      "name": "Gustavo De La Fuente Santamarta",
-      "licencia": "7770793728",
-      "hcp": 12.3,
+      "name": "Marcos Blanco Alvarez",
+      "licencia": "7752162222",
+      "hcp": 6.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Luis Oscar Garcia Martin",
+      "licencia": "7752387221",
+      "hcp": 10.4,
       "nivel": "S"
     },
     {
       "orden": 24,
-      "name": "Ignacio Hurtado Soto",
-      "licencia": "7770923403",
-      "hcp": 5.1,
-      "nivel": "Mid"
+      "name": "Angel Antonio Seisdedos Alonso",
+      "licencia": "7771970435",
+      "hcp": 20.7,
+      "nivel": "S"
     },
     {
-      "orden": 900,
-      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
-      "hcp": null
+      "orden": 24,
+      "name": "Luis Angel Baza Roman",
+      "licencia": "7752058485",
+      "hcp": 21.9,
+      "nivel": "S"
     },
     {
       "orden": 25,
+      "name": "Juan Agustin Bringas Garcia",
+      "licencia": "7744978971",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Jose Maria Alvarez Requejo",
+      "licencia": "7773379723",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Adrian Torres Maroto",
+      "licencia": "7707995130",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 26,
+      "name": "Oscar Torres Garcia",
+      "licencia": "7707980946",
+      "hcp": 16.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Pilar Sanchez Palla",
+      "licencia": "7707406232",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Eva Martinez Barroso",
+      "licencia": "7752759077",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Fernando Elias Gonzalez",
+      "licencia": "7772981118",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 28,
+      "name": "Carlos Del Valle Peña",
+      "licencia": "7776899025",
+      "hcp": 3.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 29,
+      "name": "Raquel Ortiz De Pinedo Fernandez",
+      "licencia": "7752099365",
+      "hcp": 4.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 29,
+      "name": "Mercedes Arroyo Ordoñez",
+      "licencia": "7713090056",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Alberto Sanchez Gomez",
+      "licencia": "7713263875",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Francisco Gutierrez Vegara",
+      "licencia": "7713428950",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Mercedes De Los Bueis Revilla",
+      "licencia": "7713428946",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Mª Yolanda Manzano Areños",
+      "licencia": "7713382876",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "7709283726",
+      "hcp": 7.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Irma Maria Claro Suarez",
+      "licencia": "7738450224",
+      "hcp": 12.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Roberto Gonzalez Villa",
+      "licencia": "7770221309",
+      "hcp": 3.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Jose Antonio Gonzalez Pertejo",
+      "licencia": "7776398093",
+      "hcp": 4.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Begoña Codon Miravalles",
+      "licencia": "7712233648",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Ines Vicente Manrique",
+      "licencia": "7712235390",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Jose Ignacio Gonzalez Andres",
+      "licencia": "7712235391",
+      "hcp": 9.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Luis Javier Arnaiz Alonso",
+      "licencia": "7712191685",
+      "hcp": 12.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Maria Teresa Preciado San Miguel",
+      "licencia": "7712235550",
+      "hcp": 15.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Maria Belen Gomez Bascones",
+      "licencia": "7769169835",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Juan Carlos Escorial Esteban",
+      "licencia": "7758364179",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Juan Carlos Mendez Pozo",
+      "licencia": "7712235549",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Elias Regueras Escudero",
+      "licencia": "7707406234",
+      "hcp": 12.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Luis Angel Rivero Friera",
+      "licencia": "7752759078",
+      "hcp": 22.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Pablo Rebolleda Diez",
+      "licencia": "7709449777",
+      "hcp": null,
+      "nivel": "M"
+    },
+    {
+      "orden": 39,
+      "name": "Ignacio Fernandez Rosales",
+      "licencia": "7709796631",
+      "hcp": 4.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 40,
+      "name": "Pedro Niño Riaño",
+      "licencia": "7776973195",
+      "hcp": 2.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 40,
+      "name": "Roberto Niño Riaño",
+      "licencia": "7776973196",
+      "hcp": 11.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 41,
+      "name": "David De Cabo Cuervo",
+      "licencia": "7760008923",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 41,
+      "name": "Alberto Gomez Mañanes",
+      "licencia": "7752006063",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 42,
+      "name": "Gustavo Enrique Blanco Mota",
+      "licencia": "7760420130",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Enrique Rodriguez Minguela",
+      "licencia": "7760410533",
+      "hcp": 22.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 43,
+      "name": "Francisco J. Borrego Noriega",
+      "licencia": "7700816409",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Angel Bermejo Barrios",
+      "licencia": "7700369717",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Victor Fernandez Polvorosa",
+      "licencia": "7700162859",
+      "hcp": 9.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 44,
+      "name": "Oscar Fernandez Guzon",
+      "licencia": "7709645288",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 45,
+      "name": "Elena Fernandez Polvorosa",
+      "licencia": "7709902163",
+      "hcp": 10,
+      "nivel": "J"
+    },
+    {
+      "orden": 45,
+      "name": "Elena Polvorosa Gomez",
+      "licencia": "7709899255",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 46,
+      "name": "Manuel Gonzalez Aquiso Madrigal",
+      "licencia": "7760930975",
+      "hcp": 6.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 46,
+      "name": "Jesus Vazquez De Prada Martinez",
+      "licencia": "7700970921",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
       "name": "Ramon Albarran Cuellar",
       "licencia": "9906210372",
       "hcp": 0.2,
       "nivel": "Mid"
     },
     {
-      "orden": 25,
+      "orden": 47,
       "name": "Diego Cruz-Villalon Garcia",
       "licencia": "9906103028",
-      "hcp": 2.5,
+      "hcp": 3.1,
       "nivel": "Mid"
     },
     {
-      "orden": 26,
+      "orden": 48,
       "name": "Jose Manuel Fort Ballus",
       "licencia": "CB05505602",
       "hcp": 6.2,
       "nivel": "Mid"
     },
     {
-      "orden": 27,
+      "orden": 48,
+      "name": "Gustavo De La Fuente Santamarta",
+      "licencia": "7770793728",
+      "hcp": 12.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
       "name": "Pedro Arribas Gridilla",
       "licencia": "9906267038",
-      "hcp": 5,
+      "hcp": 4.3,
       "nivel": "Mid"
+    },
+    {
+      "orden": 49,
+      "name": "Ignacio Hurtado Soto",
+      "licencia": "7770923403",
+      "hcp": 5.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 50,
+      "name": "Jesus Manuel Hernaez Barrio",
+      "licencia": "7769127901",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Javier Bermudez De Castro Rosillo",
+      "licencia": "CM04237599",
+      "hcp": 19.9,
+      "nivel": "S"
     }
   ],
   "horarios": [
@@ -1303,6 +1667,10 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-05T21:07:47.763Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/952184880_plan_de_evacuacion.pdf",
+    "/uploads/circulares/cirfgcyl2726.pdf",
+    "/uploads/competiciones/pdf/3969612358_merged.pdf"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72634,
   "url": "https://www.nextcaddy.com/tour/72634",
-  "scrapedAt": "2026-07-29T16:50:59.498Z",
+  "scrapedAt": "2026-10-30T14:27:29.800Z",
   "meta": {
-    "name": null,
+    "name": "Torneo Amigos de Torresalada 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -22,11 +22,327 @@
     "dateIso": "2026-08-07",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marcos Gonzalez Perez",
+          "licencia": "CM00513474",
+          "hcp": 10.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2374500
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Mula Diaz",
+          "licencia": "CM03949122",
+          "hcp": 18.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2373870
+        },
+        {
+          "pos": 3,
+          "name": "Joaquin Juridiaz Martin",
+          "licencia": "CM87079365",
+          "hcp": 23.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2373338
+        },
+        {
+          "pos": 4,
+          "name": "Borja Fadon Pedraja",
+          "licencia": "CM00972527",
+          "hcp": 28.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2376940
+        },
+        {
+          "pos": 5,
+          "name": "Santiago Mingo Martinez",
+          "licencia": "CM02075826",
+          "hcp": 6.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2373351
+        },
+        {
+          "pos": 6,
+          "name": "Diego De Las Cuevas Perez Ojeda",
+          "licencia": "CM00107963",
+          "hcp": 12.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2374870
+        },
+        {
+          "pos": 7,
+          "name": "Enrique Del Rey Varo",
+          "licencia": "AM25975758",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2373215
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Javier Saenz De Cenzano Zaforas",
+          "licencia": "CM00980800",
+          "hcp": 29.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2373259
+        },
+        {
+          "pos": 9,
+          "name": "Hugo Moreno Peña",
+          "licencia": "CM02803913",
+          "hcp": 22.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2376018
+        },
+        {
+          "pos": 10,
+          "name": "Victor Moreno Ortiz",
+          "licencia": "CM81090147",
+          "hcp": 34.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2374915
+        },
+        {
+          "pos": 11,
+          "name": "Ramon Uriarte Inchausti",
+          "licencia": "CM61145025",
+          "hcp": 10.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2374497
+        },
+        {
+          "pos": 12,
+          "name": "Alberto Giner Gomez",
+          "licencia": "CM00996191",
+          "hcp": 27.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2375919
+        },
+        {
+          "pos": 13,
+          "name": "Enrique Del Rey Fernandez",
+          "licencia": "CMA8190678",
+          "hcp": 32,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374850
+        },
+        {
+          "pos": 14,
+          "name": "Gregorio Joaquin Perez-Sauquillo Lopez",
+          "licencia": "CM00980803",
+          "hcp": 38.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2373426
+        },
+        {
+          "pos": 15,
+          "name": "Cesar De Gregorio Gonzalez",
+          "licencia": "CMD4996283",
+          "hcp": 26.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2373309
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Enrique Del Rey Varo",
+      "licencia": "AM25975758",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Francisco Javier Saenz De Cenzano Zaforas",
+      "licencia": "CM00980800",
+      "hcp": 29.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Cesar De Gregorio Gonzalez",
+      "licencia": "CMD4996283",
+      "hcp": 26.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Joaquin Juridiaz Martin",
+      "licencia": "CM87079365",
+      "hcp": 23.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Santiago Mingo Martinez",
+      "licencia": "CM02075826",
+      "hcp": 6.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Gregorio Joaquin Perez-Sauquillo Lopez",
+      "licencia": "CM00980803",
+      "hcp": 38.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Miguel Mula Diaz",
+      "licencia": "CM03949122",
+      "hcp": 18.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Ramon Uriarte Inchausti",
+      "licencia": "CM61145025",
+      "hcp": 10.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Marcos Gonzalez Perez",
+      "licencia": "CM00513474",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Enrique Del Rey Fernandez",
+      "licencia": "CMA8190678",
+      "hcp": 32,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Diego De Las Cuevas Perez Ojeda",
+      "licencia": "CM00107963",
+      "hcp": 12.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Victor Moreno Ortiz",
+      "licencia": "CM81090147",
+      "hcp": 34.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Alberto Giner Gomez",
+      "licencia": "CM00996191",
+      "hcp": 27.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Hugo Moreno Peña",
+      "licencia": "CM02803913",
+      "hcp": 22.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Borja Fadon Pedraja",
+      "licencia": "CM00972527",
+      "hcp": 28.4,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -186,7 +502,7 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-10T05:45:55.113Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/4010404455_amigos_de_torresalada.pdf"
+  ]
 }

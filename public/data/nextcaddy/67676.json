@@ -1,9 +1,9 @@
 {
   "tourId": 67676,
   "url": "https://www.nextcaddy.com/tour/67676",
-  "scrapedAt": "2026-10-12T12:09:17.019Z",
+  "scrapedAt": "2026-10-30T14:29:11.280Z",
   "meta": {
-    "name": null,
+    "name": "7ª Prueba Ranking Damas 2026",
     "organizer": null,
     "course": "Club de Golf la Cañada",
     "courseCode": "AM11",
@@ -20,16 +20,418 @@
     "dateIso": "2026-10-20",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 31,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Helen Hodgson",
+          "licencia": "AM11413786",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2420005
+        },
+        {
+          "pos": 2,
+          "name": "Ana Vega Narvaez",
+          "licencia": "AM11159480",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2427415
+        },
+        {
+          "pos": 3,
+          "name": "Paqui Morales Lopez",
+          "licencia": "AM11111810",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2429521
+        },
+        {
+          "pos": 4,
+          "name": "Caridad Cuevas Villalba",
+          "licencia": "AM11153734",
+          "hcp": 19.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2426039
+        },
+        {
+          "pos": 5,
+          "name": "Helena Chacin Hoogerbrugge",
+          "licencia": "AM11815229",
+          "hcp": 13.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2428337
+        },
+        {
+          "pos": 6,
+          "name": "Maria Del Carmen Ruiz Polo",
+          "licencia": "AM11962339",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2429057
+        },
+        {
+          "pos": 7,
+          "name": "Pamela Avis Redican",
+          "licencia": "AM11910480",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2427406
+        },
+        {
+          "pos": 8,
+          "name": "Jane Patricia Hindmarsh",
+          "licencia": "AM11345299",
+          "hcp": 33.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2427409
+        },
+        {
+          "pos": 9,
+          "name": "Manita Choeychazyaphum",
+          "licencia": "AM11250501",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2419434
+        },
+        {
+          "pos": 10,
+          "name": "Gladys Monica Zaine D`mello",
+          "licencia": "AM11348843",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2427080
+        },
+        {
+          "pos": 11,
+          "name": "Joan Maxwell",
+          "licencia": "AM11311934",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2421725
+        },
+        {
+          "pos": 12,
+          "name": "Gloria Sancho Lora",
+          "licencia": "AM00755786",
+          "hcp": 25.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2423895
+        },
+        {
+          "pos": 13,
+          "name": "Penelope Rhodes",
+          "licencia": "AM11612569",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2429038
+        },
+        {
+          "pos": 14,
+          "name": "Jacqueline Prior Hawkins",
+          "licencia": "AM11905318",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2428680
+        },
+        {
+          "pos": 15,
+          "name": "Jutta Niedermair",
+          "licencia": "AM11617959",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2428946
+        },
+        {
+          "pos": 16,
+          "name": "Josefa Vazquez Rojas",
+          "licencia": "AM11111739",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2429042
+        },
+        {
+          "pos": 17,
+          "name": "Consuelo Aliende Herran",
+          "licencia": "AM11337349",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2428905
+        },
+        {
+          "pos": 18,
+          "name": "Irene Bueno Roman",
+          "licencia": "AM11345336",
+          "hcp": 28.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2427353
+        },
+        {
+          "pos": 19,
+          "name": "Sagrario Huete Molina",
+          "licencia": "AM11343010",
+          "hcp": 33.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2429040
+        },
+        {
+          "pos": 20,
+          "name": "Helen Haughan",
+          "licencia": "AM11918816",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2427369
+        },
+        {
+          "pos": 21,
+          "name": "Lynda David",
+          "licencia": "AM11064955",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2419741
+        },
+        {
+          "pos": 22,
+          "name": "Renee Claire Spencer",
+          "licencia": "AM16414589",
+          "hcp": 36.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2429766
+        },
+        {
+          "pos": 23,
+          "name": "Veronique Ruttiens",
+          "licencia": "AM11026446",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2426631
+        },
+        {
+          "pos": 24,
+          "name": "Joanne Hollings",
+          "licencia": "AM11079768",
+          "hcp": 24.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2420167
+        },
+        {
+          "pos": 25,
+          "name": "Charlotte Mccracken",
+          "licencia": "AM11923825",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2427873
+        },
+        {
+          "pos": 26,
+          "name": "Pepa Moreno Ramirez",
+          "licencia": "AM11745293",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2429214
+        },
+        {
+          "pos": 27,
+          "name": "Isabel Maria Martin Jimenez",
+          "licencia": "AM11163750",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2428683
+        },
+        {
+          "pos": 28,
+          "name": "Belinda Romero Pineda",
+          "licencia": "AM11782225",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2429043
+        },
+        {
+          "pos": 29,
+          "name": "Inmaculada Garcia-Chicano Alarcon",
+          "licencia": "AM00610304",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2426038
+        },
+        {
+          "pos": 30,
+          "name": "Monika Bollhorst",
+          "licencia": "AM11288834",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2427758
+        },
+        {
+          "pos": null,
+          "name": "Erika Vanrensbergen",
+          "licencia": "AM11962311",
+          "hcp": 33.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2427352
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 31
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Manita Choeychazyaphum",
       "licencia": "AM11250501",
-      "hcp": 12.3,
+      "hcp": 12,
       "nivel": "S"
     },
     {
@@ -57,7 +459,7 @@
       "orden": 5,
       "name": "Joan Maxwell",
       "licencia": "AM11311934",
-      "hcp": 21.7,
+      "hcp": 21.5,
       "nivel": "S"
     },
     {
@@ -65,6 +467,181 @@
       "name": "Gloria Sancho Lora",
       "licencia": "AM00755786",
       "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Inmaculada Garcia-Chicano Alarcon",
+      "licencia": "AM00610304",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Caridad Cuevas Villalba",
+      "licencia": "AM11153734",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Veronique Ruttiens",
+      "licencia": "AM11026446",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Gladys Monica Zaine D`mello",
+      "licencia": "AM11348843",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Erika Vanrensbergen",
+      "licencia": "AM11962311",
+      "hcp": 33.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Irene Bueno Roman",
+      "licencia": "AM11345336",
+      "hcp": 28.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Helen Haughan",
+      "licencia": "AM11918816",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Pamela Avis Redican",
+      "licencia": "AM11910480",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jane Patricia Hindmarsh",
+      "licencia": "AM11345299",
+      "hcp": 33.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Ana Vega Narvaez",
+      "licencia": "AM11159480",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Monika Bollhorst",
+      "licencia": "AM11288834",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Charlotte Mccracken",
+      "licencia": "AM11923825",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Helena Chacin Hoogerbrugge",
+      "licencia": "AM11815229",
+      "hcp": 13.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Jacqueline Prior Hawkins",
+      "licencia": "AM11905318",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Isabel Maria Martin Jimenez",
+      "licencia": "AM11163750",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Consuelo Aliende Herran",
+      "licencia": "AM11337349",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Jutta Niedermair",
+      "licencia": "AM11617959",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Penelope Rhodes",
+      "licencia": "AM11612569",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Sagrario Huete Molina",
+      "licencia": "AM11343010",
+      "hcp": 33.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Josefa Vazquez Rojas",
+      "licencia": "AM11111739",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Belinda Romero Pineda",
+      "licencia": "AM11782225",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Maria Del Carmen Ruiz Polo",
+      "licencia": "AM11962339",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Pepa Moreno Ramirez",
+      "licencia": "AM11745293",
+      "hcp": 29.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Paqui Morales Lopez",
+      "licencia": "AM11111810",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Renee Claire Spencer",
+      "licencia": "AM16414589",
+      "hcp": 36.5,
       "nivel": "S"
     }
   ],
@@ -204,6 +781,15 @@
           "name": "Penelope Rhodes",
           "hcp": 21.9,
           "ins": "2429038",
+          "jid": "72158",
+          "nivel": "S"
+        },
+        {
+          "time": "09:30",
+          "tee": 15,
+          "name": "Renee Claire Spencer",
+          "hcp": 36.5,
+          "ins": "2429766",
           "jid": "72158",
           "nivel": "S"
         },
@@ -590,6 +1176,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1229637201_reglamento_ranking_damas_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:18.119Z"
+  ]
 }

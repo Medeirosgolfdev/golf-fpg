@@ -1,23 +1,25 @@
 {
   "tourId": 69248,
   "url": "https://www.nextcaddy.com/tour/69248",
-  "scrapedAt": "2026-06-24T14:59:03.033Z",
+  "scrapedAt": "2026-10-30T14:29:53.932Z",
   "meta": {
-    "name": "Torneo Infantil \"Montealvar\"",
+    "name": null,
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-11-15",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Infantil Masculino",
+    "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
       "Infantil",
+      "Juvenil",
       "Infantil Masculino",
       "Infantil Femenino",
-      "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-15",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -82,6 +84,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:04.431Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

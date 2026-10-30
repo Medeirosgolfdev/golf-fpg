@@ -1,29 +1,988 @@
 {
   "tourId": 61223,
   "url": "https://www.nextcaddy.com/tour/61223",
-  "scrapedAt": "2026-06-24T14:58:54.911Z",
+  "scrapedAt": "2026-10-30T14:29:15.748Z",
   "meta": {
     "name": "Trofeo Andalucía Señoras",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Guadalhorce Club de Golf",
     "courseCode": "AM15",
-    "dateStart": null,
+    "dateStart": "2026-10-22",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Handicap)  Señoras C. Femeni",
     "categories": [
       "Señoras",
-      "Caballeros",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-10-22",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja Todos",
+      "jugadores": 68
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mohanie Sookdeo Dodebier",
+      "licencia": "AM83287758",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Karen Grant",
+      "licencia": "AM83603624",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Leena Sairo",
+      "licencia": "AM83929969",
+      "hcp": 11.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Susan Wood",
+      "licencia": "AM83931328",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Astrid Ceelen",
+      "licencia": "AM83795441",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Janet Cox",
+      "licencia": "AM83791391",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Dolores Garcia Garcia",
+      "licencia": "AM85114659",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Virginia Daroca Bruño",
+      "licencia": "AM85127300",
+      "hcp": 29.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Carolina Peña Algaba",
+      "licencia": "AM06979099",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Erica Cid Perez",
+      "licencia": "AM06960584",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Elisa Maria Miret Borja",
+      "licencia": "AM85113305",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Regina Freitag Voelsing",
+      "licencia": "AM85102420",
+      "hcp": 31.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alison Gould",
+      "licencia": "AM83494079",
+      "hcp": 15.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Brenda Pike",
+      "licencia": "AM83979373",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Carmen Muñoz Navarro",
+      "licencia": "AM71318963",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Jose Campano Salardon",
+      "licencia": "AM95319967",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Inmaculada Gil-Delgado Diez",
+      "licencia": "AM04818600",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Maria Teresa Lorenzo-Arroyo Poullet",
+      "licencia": "AM75234256",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Alicia Morant Lopez",
+      "licencia": "AMA2211763",
+      "hcp": 8.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Maria Del Pilar Bravo Casas",
+      "licencia": "AM65202988",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Cecile Rousseau Vincent",
+      "licencia": "AM95129222",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Frederique Adnot",
+      "licencia": "AM71156965",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Ni Li",
+      "licencia": "AM76937265",
+      "hcp": 11.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jeannine Rehlinger",
+      "licencia": "AM76903264",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Dolores Rios Cruz",
+      "licencia": "AM11159484",
+      "hcp": 15.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Lelanie Marais",
+      "licencia": "AM84601808",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Nuria Maestre Cañete",
+      "licencia": "AM51352384",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Isabelle Gustin",
+      "licencia": "AM51784393",
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Joanna Mott",
+      "licencia": "AM76920154",
+      "hcp": 13.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Gillian Ballard",
+      "licencia": "AM76971658",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Josefa Perez Palomo",
+      "licencia": "AM01250033",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Luz Maria Robledo De Antonio",
+      "licencia": "AM01052704",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Lourdes Molina Rando",
+      "licencia": "AM75310867",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Maria Dolores Perez Saavedra",
+      "licencia": "AM75326537",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Lindsey Hill",
+      "licencia": "AM76170011",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Paula Jayne Monaghan",
+      "licencia": "AM76033183",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Ute Hakman",
+      "licencia": "AM76801467",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Jacqy De Rijk",
+      "licencia": "AM76898519",
+      "hcp": 31.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Julia Flada",
+      "licencia": "AM53234896",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Jeanette Baldemark",
+      "licencia": "AM53347244",
+      "hcp": 17.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Ana Maria Montes O Connor",
+      "licencia": "AM85278684",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Ana Ordoñez Cocovi",
+      "licencia": "AM85142580",
+      "hcp": 27.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Cornelia Johanna Hopmans",
+      "licencia": "AM76472578",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Jessica Welter",
+      "licencia": "AM76482636",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Christina Waker",
+      "licencia": "AM76033787",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Klaudia Luise Ilg",
+      "licencia": "AM76809386",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Angela Dwyer",
+      "licencia": "AM76032533",
+      "hcp": 6.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Sarah Stewart",
+      "licencia": "AM76901048",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Anne Donegan",
+      "licencia": "AM76955134",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Deborah Monaghan",
+      "licencia": "AM76481987",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Paloma Garcia Galvez",
+      "licencia": "AM60201762",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Sagrario Montero Martin",
+      "licencia": "AM01609175",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Aurora Hidalgo Navarro",
+      "licencia": "AM51262248",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Maria Jose Hidalgo Navarro",
+      "licencia": "AM51315894",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Mª Victoria Ramos Arrenberg",
+      "licencia": "AM15601456",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Maria Eugenia Ramos Arrenberg",
+      "licencia": "AM15073475",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Maria Teresa Rodriguez Rodriguez",
+      "licencia": "AM01152278",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Genoveva Del Moral Chaneta",
+      "licencia": "AMI5068340",
+      "hcp": 35.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Fina Pacheco Bohorquez",
+      "licencia": "AM02023090",
+      "hcp": 15.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Laura Cologan Machado",
+      "licencia": "AM02013205",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Marta Burgos Buil",
+      "licencia": "AM15249125",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Mª Isabel Bravo Garcia",
+      "licencia": "AM01612143",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Rosario Sanchez Tentor",
+      "licencia": "AM75353729",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Maria Del Carmen Cayuela Montalvo",
+      "licencia": "AM75138550",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Susana Lazarraga Garcia",
+      "licencia": "AM15111524",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Mº De Los Angeles Sanchez Mateos",
+      "licencia": "AM15091662",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Maria Dolores Osborne Maestre",
+      "licencia": "AM15051782",
+      "hcp": 14,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Maria Rosa Hafner Rein",
+      "licencia": "AM15112187",
+      "hcp": 24.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Carolina Perez-Estrada Cornejo",
+      "licencia": "AM15264728",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Antonia Arrebola Gonzalez",
+      "licencia": "AM15781667",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Damiana Rastoll Zaragoza",
+      "licencia": "AM00086351",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Mercedes Espiñeira Bañuelos",
+      "licencia": "AM15629792",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Ana Maria Vila Clavero",
+      "licencia": "AM15034357",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Juanibel Gomez Rodriguez",
+      "licencia": "AM75190787",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Michelle Hollings",
+      "licencia": "AM81491575",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Arlene Atteck",
+      "licencia": "AM81896743",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Anna Maria Van Anderlecht",
+      "licencia": "AM81903538",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Diane Parslow",
+      "licencia": "AM81071644",
+      "hcp": 31.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Ineke De Kloe",
+      "licencia": "AM81071804",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Maria Marta Johnsen",
+      "licencia": "AM81991928",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "M Carmen Lopez Del Campo",
+      "licencia": "AM06923151",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Maria Dolores Ruiz Gimenez",
+      "licencia": "AM06089117",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Lourdes Acasuso Garcia",
+      "licencia": "AM06264471",
+      "hcp": 0.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 42,
+      "name": "Concepcion Rodriguez Herrero",
+      "licencia": "AM06959143",
+      "hcp": 26.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Nina Hartz Altuna",
+      "licencia": "AM15053134",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "M ª Paz Estrada Segura",
+      "licencia": "AM15149684",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Remedios Rodriguez Parra",
+      "licencia": "AM15137177",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Patricia Laleona Trujillo",
+      "licencia": "AM15082270",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 45,
+      "name": "Mª Pilar Van Dulken Jimenez Lopera",
+      "licencia": "AM15022547",
+      "hcp": 15.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 45,
+      "name": "Begoña Uriguen Moreno",
+      "licencia": "AM15010799",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 46,
+      "name": "Virginia Medem Seghers",
+      "licencia": "AM15324331",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 46,
+      "name": "Corine Bernard",
+      "licencia": "AM15962370",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
+      "name": "Mª Victoria Sel Arias",
+      "licencia": "AM15608019",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
+      "name": "Rosa Castillo Valderrama",
+      "licencia": "AM15605576",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Francisca Baca Castañeda",
+      "licencia": "AMB2611143",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Mercedes Sanchez Rovira",
+      "licencia": "AM15207797",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
+      "name": "Liz Jonsson Vendel",
+      "licencia": "AM15088366",
+      "hcp": 33.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
+      "name": "M Carmen Perez Pinto",
+      "licencia": "AM00513467",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Margarita Oñate Torres",
+      "licencia": "AM15971579",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Elena Alvarez De Cienfuegos Rivera",
+      "licencia": "AM15974362",
+      "hcp": 32.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 51,
+      "name": "Karin Lopez Martin",
+      "licencia": "AM01610783",
+      "hcp": 13.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 51,
+      "name": "Anastasia Borrella Salas",
+      "licencia": "AM15327487",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 52,
+      "name": "Mercedes Garrido Torres-Puchol",
+      "licencia": "AM01182604",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 52,
+      "name": "Aurora M. Granelli Arcal",
+      "licencia": "AM15112744",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 53,
+      "name": "Asuncion Moreno Galiano",
+      "licencia": "AM06221523",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 53,
+      "name": "Rocio Garcia-Aranda Pez",
+      "licencia": "AM06114520",
+      "hcp": 19.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 54,
+      "name": "Maria Carrere Lovera",
+      "licencia": "AM06310821",
+      "hcp": 12.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 54,
+      "name": "Concha Nuñez Paya",
+      "licencia": "AM95248413",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 55,
+      "name": "Maria Teresa Gomez Arenas",
+      "licencia": "AM15086268",
+      "hcp": 30.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 55,
+      "name": "Josefa Gomez Arenas",
+      "licencia": "AM15086275",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 56,
+      "name": "Nelida Mabel Colombo",
+      "licencia": "AM15976966",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 56,
+      "name": "Mª Angeles Gonzalez Gavilan",
+      "licencia": "AM83797238",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 57,
+      "name": "Cristina Marina Benitez",
+      "licencia": "AM15043882",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 57,
+      "name": "Maria Teresa Leon Muñoz",
+      "licencia": "AM15138579",
+      "hcp": 28.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 58,
+      "name": "Fabiola Canivell Salas",
+      "licencia": "AM15016532",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 58,
+      "name": "Maria Teresa Martinez Avila",
+      "licencia": "AM15042964",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 59,
+      "name": "Olga Brinkmann Morales",
+      "licencia": "AM06990073",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 59,
+      "name": "Layla Mechbal Gracia",
+      "licencia": "AMJ7374824",
+      "hcp": 30.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 60,
+      "name": "Rosa Maria Sanchez Gonzalo",
+      "licencia": "AM51262246",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 60,
+      "name": "Maria Torres Trillo",
+      "licencia": "AM51813080",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 61,
+      "name": "Susana De La Guerra Irazu",
+      "licencia": "AM06358643",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 61,
+      "name": "Pilar Martinez Uceda",
+      "licencia": "AM06360141",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 62,
+      "name": "Alison Maidens",
+      "licencia": "AMB2789644",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 62,
+      "name": "Amanda Rosado Souviron",
+      "licencia": "AM15609529",
+      "hcp": 28.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 63,
+      "name": "Eva Camacho Torrent",
+      "licencia": "AMD5902043",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 63,
+      "name": "Mariam Alvarez Alonso",
+      "licencia": "AM17319053",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 64,
+      "name": "Katharina Bernet",
+      "licencia": "AM75129139",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 64,
+      "name": "Myriam Paz Bellido Pla",
+      "licencia": "AM15465873",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 65,
+      "name": "Montse Rodriguez Blanco",
+      "licencia": "AM15632196",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 65,
+      "name": "Maria Jose Aguilar Simon",
+      "licencia": "AMI5998317",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 66,
+      "name": "Alicia Gomez Guerrero",
+      "licencia": "AM04761678",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 66,
+      "name": "Elena Ramos Guillen",
+      "licencia": "AM04071533",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 67,
+      "name": "Loraine Enriquez Murphy",
+      "licencia": "AM81109662",
+      "hcp": 25.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 67,
+      "name": "Janice Marler",
+      "licencia": "AM81920958",
+      "hcp": 28.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 68,
+      "name": "Carmen Cañete Leyva",
+      "licencia": "AM06957945",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 68,
+      "name": "Enriqueta Cañete Leyva",
+      "licencia": "AM06054091",
+      "hcp": 27,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -1318,6 +2277,10 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-26T09:53:04.633Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3265371502_info_web.pdf",
+    "/uploads/circular/2026/d1d7540b9dde37d97f2858b1937e1a3d.pdf",
+    "/uploads/competiciones/pdf/184356344_web.pdf"
+  ]
 }

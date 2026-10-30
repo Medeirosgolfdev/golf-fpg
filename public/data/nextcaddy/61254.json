@@ -1,23 +1,25 @@
 {
   "tourId": 61254,
   "url": "https://www.nextcaddy.com/tour/61254",
-  "scrapedAt": "2026-06-24T14:59:09.464Z",
+  "scrapedAt": "2026-10-30T14:30:04.103Z",
   "meta": {
-    "name": "Final Circuito Senior",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
-    "dateStart": null,
+    "dateStart": "2026-12-05",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-12-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -41,6 +43,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.540Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

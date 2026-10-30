@@ -1,7 +1,7 @@
 {
   "tourId": 74235,
   "url": "https://www.nextcaddy.com/tour/74235",
-  "scrapedAt": "2026-10-12T12:09:27.202Z",
+  "scrapedAt": "2026-10-30T14:30:01.454Z",
   "meta": {
     "name": null,
     "organizer": null,
@@ -17,6 +17,8 @@
       "Benjamin Masculino",
       "Alevin Femenino",
       "Benjamin Femenino",
+      "BENJAMIN",
+      "ALEVIN",
       "Infantil",
       "Profesional",
       "Senior",
@@ -29,7 +31,20 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 900,
+      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
+      "hcp": null
+    },
+    {
+      "orden": 1001,
+      "name": "Enzo Ledo Chou",
+      "licencia": "CM00267825",
+      "hcp": 48.4,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -91,6 +106,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1436534196_250702_reglas_locales_sotoverde.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:22.508Z"
+  ]
 }

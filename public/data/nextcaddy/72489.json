@@ -1,9 +1,9 @@
 {
   "tourId": 72489,
   "url": "https://www.nextcaddy.com/tour/72489",
-  "scrapedAt": "2026-07-24T23:48:35.408Z",
+  "scrapedAt": "2026-10-30T14:27:33.301Z",
   "meta": {
-    "name": null,
+    "name": "CIRCUITO HEINEKEN",
     "organizer": null,
     "course": "Montecastillo Barceló Golf Club",
     "courseCode": "AM29",
@@ -25,14 +25,23 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 52
+    },
+    "2": {
+      "name": "Handicap Pareja",
+      "jugadores": 52
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Juan Antonio Bollain Rodriguez",
       "licencia": "VB04221848",
-      "hcp": 4.9,
+      "hcp": 5.4,
       "nivel": "Mid"
     },
     {
@@ -44,23 +53,23 @@
     },
     {
       "orden": 2,
+      "name": "Juan Ceballos Fdez De Cordoba",
+      "licencia": "CM01278590",
+      "hcp": 0.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
       "name": "Juan Barrenechea Montero",
       "licencia": "VB02200399",
       "hcp": 1.2,
       "nivel": "Mid"
     },
     {
-      "orden": 2,
-      "name": "Eduardo Fedriani Gonzalez",
-      "licencia": "AM02197654",
-      "hcp": 13,
-      "nivel": "S"
-    },
-    {
       "orden": 3,
       "name": "Alvaro Aleixandre Cornejo",
       "licencia": "AM86234848",
-      "hcp": 3.8,
+      "hcp": 3.7,
       "nivel": "Mid"
     },
     {
@@ -74,7 +83,7 @@
       "orden": 4,
       "name": "Eduardo Ros Dopico",
       "licencia": "CMA8484879",
-      "hcp": 8.5,
+      "hcp": 9.5,
       "nivel": "Mid"
     },
     {
@@ -95,7 +104,7 @@
       "orden": 5,
       "name": "Eduardo Arrien De Lecea",
       "licencia": "VB04728814",
-      "hcp": 15.8,
+      "hcp": 14.3,
       "nivel": "Mid"
     },
     {
@@ -109,21 +118,21 @@
       "orden": 6,
       "name": "Ignacio Javier Gonzalez Rodriguez",
       "licencia": "CM00290305",
-      "hcp": 14.6,
+      "hcp": 14.8,
       "nivel": "S"
     },
     {
       "orden": 7,
       "name": "Javier Rodrigo Antona",
       "licencia": "AMC3082204",
-      "hcp": 1.4,
+      "hcp": 1.7,
       "nivel": "S"
     },
     {
       "orden": 7,
       "name": "Aurelio De Terry Gomez De Terreros",
       "licencia": "AMC9506407",
-      "hcp": 19.5,
+      "hcp": 18.2,
       "nivel": "S"
     },
     {
@@ -144,7 +153,7 @@
       "orden": 9,
       "name": "Antonio P. Leal-Graciani Gonzalez",
       "licencia": "AMH8785810",
-      "hcp": 17.3,
+      "hcp": 17.6,
       "nivel": "S"
     },
     {
@@ -165,7 +174,7 @@
       "orden": 10,
       "name": "Rosario Ana Urbano Garcia",
       "licencia": "CB79058690",
-      "hcp": 34.7,
+      "hcp": 34.4,
       "nivel": "S"
     },
     {
@@ -179,7 +188,581 @@
       "orden": 11,
       "name": "Jose Rafael Perez Fernandez",
       "licencia": "CM00513297",
-      "hcp": 19.7,
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jorge Juan Fernandez Lizaso",
+      "licencia": "AM05067782",
+      "hcp": 6.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Alvaro Videgain Rodriguez",
+      "licencia": "VB04723280",
+      "hcp": 17.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Borja Sanchez Gil",
+      "licencia": "AM29954865",
+      "hcp": 8.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Rodrigo Del Castillo Valenzuela",
+      "licencia": "AM02698065",
+      "hcp": 9.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Enrique Albert Lopez",
+      "licencia": "CM04345045",
+      "hcp": 14.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Alberto De Soto Peris",
+      "licencia": "CM41375354",
+      "hcp": 17.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Fernando Ruiz-Cabello Calvo",
+      "licencia": "AM02104354",
+      "hcp": 3.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Fernando Galobart Rivero",
+      "licencia": "AM02200905",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Cesar Arias Piñero",
+      "licencia": "AMI9948573",
+      "hcp": 13,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Juan Arias Piñero",
+      "licencia": "AM00948424",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Daniel Zapata Alonso",
+      "licencia": "CM74928283",
+      "hcp": 14.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Borja Garcia Sanchez",
+      "licencia": "CM56638090",
+      "hcp": 18.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Eugenio Herraiz Garcia De Leyaristy",
+      "licencia": "AM02028963",
+      "hcp": 5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Enrique Martin Soldevilla",
+      "licencia": "AM02017899",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Jose Manuel Pinelo Herrera",
+      "licencia": "AMF7893356",
+      "hcp": 14.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Francisco Cardenas Martin",
+      "licencia": "AMF7615019",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Manuel Rodenas Alarcon",
+      "licencia": "AMK5609604",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Ana Moreno Encinas",
+      "licencia": "AMK5750252",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Jorge Ugarte Macias",
+      "licencia": "AM85601130",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Ignacio Maestre Sanchez Ibargüen",
+      "licencia": "AM02606008",
+      "hcp": 16.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Ignacio Sanchez Blanco",
+      "licencia": "AM05028884",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Sandra Paredes Lopez",
+      "licencia": "AM02808692",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Carlos Luis Fernandez-Carriles Gonzalez",
+      "licencia": "9900970549",
+      "hcp": 7.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Jose Maria Gonzalez Diaz",
+      "licencia": "AMB6074189",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Jorge Gross Davila",
+      "licencia": "AM02408924",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Jorge Gross Moreno",
+      "licencia": "AM02820706",
+      "hcp": 15.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 25,
+      "name": "Juan Perez Baena",
+      "licencia": "AMG3941792",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Jose Jesus Rodriguez Montes",
+      "licencia": "AMF7993423",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Borja Nieto Aguirre",
+      "licencia": "CM01211704",
+      "hcp": 3.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 26,
+      "name": "Ivan Mora Larrinaga",
+      "licencia": "CM01188747",
+      "hcp": 4.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Beltran Antoñanzas Aguirre",
+      "licencia": "CM01394858",
+      "hcp": 11.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Bruno Antoñanzas Aguirre",
+      "licencia": "CM01620155",
+      "hcp": 11.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Antonio Torres Paredes",
+      "licencia": "AMC9629142",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Eduardo Ribes Terrado",
+      "licencia": "CB35224314",
+      "hcp": 11.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Jesus Ollero Cuervo",
+      "licencia": "CM05256361",
+      "hcp": 4.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Luis Pablo Garcia Peñalver",
+      "licencia": "AMG8816262",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Jose Ramon Salamero Rodriguez-Varo",
+      "licencia": "AM05286263",
+      "hcp": 1.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 30,
+      "name": "Jorge Bel Perez",
+      "licencia": "AM05606424",
+      "hcp": 4.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 31,
+      "name": "Enrique Arnedo Bedoya",
+      "licencia": "AMC3610997",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Javier Segura Navazo",
+      "licencia": "CM02954225",
+      "hcp": 14.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "Daniel Godoy Monzon",
+      "licencia": "AMC3050247",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Carolina Laura Galliano",
+      "licencia": "AMD5004252",
+      "hcp": 35.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Pelayo Lasso De La Vega Romero",
+      "licencia": "CM02300647",
+      "hcp": 4.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Gonzalo Lasso De La Vega Borja",
+      "licencia": "CM05012724",
+      "hcp": 4.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Fernando Pierrard Hardy",
+      "licencia": "AM05055118",
+      "hcp": 3.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Ignacio Liniers Pierrard",
+      "licencia": "CM00288857",
+      "hcp": 6.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 35,
+      "name": "Alvaro Brandariz Borrero",
+      "licencia": "AM05239126",
+      "hcp": 1.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 35,
+      "name": "Emilio Marin Soto",
+      "licencia": "AM05249040",
+      "hcp": 6.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Borja Caminero Salazar",
+      "licencia": "AMC3071098",
+      "hcp": 16.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 36,
+      "name": "Felipe Quintana Lara",
+      "licencia": "AMC3524432",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 37,
+      "name": "Santiago Neira Lopez",
+      "licencia": "AME7185224",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Jose Maria Suanzes Fernandez De Cañete",
+      "licencia": "AM05149055",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Alberto Abarrategui Cordero",
+      "licencia": "CM02693932",
+      "hcp": 2.3,
+      "nivel": "M"
+    },
+    {
+      "orden": 38,
+      "name": "Alexandra Roca Rodriguez",
+      "licencia": "AM29895172",
+      "hcp": 9.5,
+      "nivel": "M"
+    },
+    {
+      "orden": 39,
+      "name": "Miriam Español Bajo",
+      "licencia": "CM00613210",
+      "hcp": 16.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 39,
+      "name": "Miguel Angel Gomez Rodriguez",
+      "licencia": "CM00772475",
+      "hcp": 22.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 40,
+      "name": "Angel Rafael García-Mier Del Rio",
+      "licencia": "AMC3510988",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Jose Romero Valdespino Lopez De Carrizosa",
+      "licencia": "AMC3357552",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Isaac Nuñez Doval",
+      "licencia": "CM52385811",
+      "hcp": 10.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Remigio Iglesias Surribas",
+      "licencia": "7700186136",
+      "hcp": 12.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Juan Pedro Jimenez Campos",
+      "licencia": "CM00167006",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 42,
+      "name": "Iker Zabala Loroño",
+      "licencia": "CM41089264",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 43,
+      "name": "David Alvarez-Beigbeder L.",
+      "licencia": "CM11216114",
+      "hcp": 8.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Miguel Ceinos Arcones",
+      "licencia": "CM11147112",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Francisco Vicente Sancho",
+      "licencia": "AM85312174",
+      "hcp": 2.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 44,
+      "name": "Manuel Conradi Delgado",
+      "licencia": "AM85187538",
+      "hcp": 8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 45,
+      "name": "Adrian Guillermo Idiazabal Lopez",
+      "licencia": "CM61128192",
+      "hcp": 10.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 45,
+      "name": "Macarena Velasco Rengifo",
+      "licencia": "CMA8887112",
+      "hcp": 11.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 46,
+      "name": "Jaime Govantes Garcia",
+      "licencia": "AM17786091",
+      "hcp": 18.7,
+      "nivel": "M"
+    },
+    {
+      "orden": 46,
+      "name": "Alberto Govantes Esteso",
+      "licencia": "CM00140433",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
+      "name": "Miguel Raul De La Cruz Lopez",
+      "licencia": "AM29238315",
+      "hcp": 6.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
+      "name": "Juan Carlos Nuñez Benicio",
+      "licencia": "AMC3917410",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Eduardo Chocero Arpa",
+      "licencia": "AM85357615",
+      "hcp": 20,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Rosario Peña Blanco",
+      "licencia": "AM85357617",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
+      "name": "Adrian Sanz Vinuesa",
+      "licencia": "CM00480433",
+      "hcp": 16.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 49,
+      "name": "Jorge Aguilar Vinuesa",
+      "licencia": "CM41500822",
+      "hcp": 22,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 50,
+      "name": "Fernando Leon Fernandez",
+      "licencia": "AM32700249",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Diego Perez Blanco",
+      "licencia": "AMC3794696",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 51,
+      "name": "Jesus Fernandez De Mesa Garcia",
+      "licencia": "AM05015383",
+      "hcp": 3.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 51,
+      "name": "Alejandro Grosso Romero",
+      "licencia": "AM05061043",
+      "hcp": 7.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 52,
+      "name": "Belen Alvarez Goicoechea",
+      "licencia": "VB02407771",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 52,
+      "name": "Jorge Peñin Jimenez",
+      "licencia": "VB02406717",
+      "hcp": 14.4,
       "nivel": "S"
     }
   ],
@@ -1123,10 +1706,110 @@
       "roundId": 77660
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Poggio Diaz-Tejeiro, Ana Maria",
+          "holeNumber": 16,
+          "createdAt": "28/10/26 10:03:54"
+        },
+        {
+          "playerName": "Arenales Saul, Natalia",
+          "holeNumber": 2,
+          "createdAt": "28/10/26 10:05:20"
+        },
+        {
+          "playerName": "Saldaña Perez, Carmen",
+          "holeNumber": 14,
+          "createdAt": "28/10/26 10:06:12"
+        },
+        {
+          "playerName": "Alonso Suau, Amelia",
+          "holeNumber": 4,
+          "createdAt": "28/10/26 10:32:08"
+        },
+        {
+          "playerName": "Barturen Antepara, Patricia",
+          "holeNumber": 15,
+          "createdAt": "28/10/26 10:35:09"
+        },
+        {
+          "playerName": "Ruiz De Velasco Colas, Rocio",
+          "holeNumber": 3,
+          "createdAt": "28/10/26 10:52:57"
+        },
+        {
+          "playerName": "Vega De Seoane Kindelan, Teresa",
+          "holeNumber": 6,
+          "createdAt": "28/10/26 11:05:30"
+        },
+        {
+          "playerName": "Sorela Pouget, Solange",
+          "holeNumber": 16,
+          "createdAt": "28/10/26 11:10:14"
+        },
+        {
+          "playerName": "Castillejo Oriol, Catalina",
+          "holeNumber": 9,
+          "createdAt": "28/10/26 12:09:08"
+        },
+        {
+          "playerName": "Blanco Heredia, Monica",
+          "holeNumber": 9,
+          "createdAt": "28/10/26 12:13:37"
+        },
+        {
+          "playerName": "Huici Diaz, Araceli",
+          "holeNumber": 5,
+          "createdAt": "28/10/26 12:21:27"
+        },
+        {
+          "playerName": "Quijano Gonzalez, Sylvia",
+          "holeNumber": 3,
+          "createdAt": "28/10/26 12:29:12"
+        },
+        {
+          "playerName": "Gonzalez De Vega Pomar M, Teresa",
+          "holeNumber": 9,
+          "createdAt": "28/10/26 12:34:43"
+        },
+        {
+          "playerName": "Arenales Saul, Natalia",
+          "holeNumber": 13,
+          "createdAt": "28/10/26 13:10:57"
+        },
+        {
+          "playerName": "Huici Diaz, Araceli",
+          "holeNumber": 9,
+          "createdAt": "28/10/26 13:26:38"
+        },
+        {
+          "playerName": "Pernia Garrido, Carmen",
+          "holeNumber": 13,
+          "createdAt": "28/10/26 13:40:48"
+        },
+        {
+          "playerName": "Alonso Suau, Amelia",
+          "holeNumber": 15,
+          "createdAt": "28/10/26 13:50:03"
+        },
+        {
+          "playerName": "Ruiz De Velasco Colas, Rocio",
+          "holeNumber": 13,
+          "createdAt": "28/10/26 13:50:57"
+        },
+        {
+          "playerName": "Jessen Rubio, Monica",
+          "holeNumber": 14,
+          "createdAt": "28/10/26 13:51:02"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/1113188041_circuito_heineken_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-10T05:45:55.065Z"
+  ]
 }

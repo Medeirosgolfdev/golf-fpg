@@ -1,9 +1,9 @@
 {
   "tourId": 72614,
   "url": "https://www.nextcaddy.com/tour/72614",
-  "scrapedAt": "2026-07-29T16:51:00.771Z",
+  "scrapedAt": "2026-10-30T14:28:04.087Z",
   "meta": {
-    "name": null,
+    "name": "Club de Golf El Bosque - 1ª y 2ª Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
@@ -13,6 +13,9 @@
     "categories": [
       "Caballeros",
       "Señoras",
+      "caballeros",
+      "señoras",
+      "Benjamin",
       "Infantil",
       "Profesional",
       "Senior",
@@ -42,10 +45,75 @@
       "roundId": 77790
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jimenez Lopez, Jesus Carlos - Arroyo Ordoñez, Mercedes",
+          "holeNumber": 4,
+          "createdAt": "21/10/26 10:11:05"
+        },
+        {
+          "playerName": "Valle Torres, Francisco - Cardo Gil, Maria Isabel",
+          "holeNumber": 2,
+          "createdAt": "21/10/26 10:12:25"
+        },
+        {
+          "playerName": "Jimenez Lopez, Jesus Carlos - Arroyo Ordoñez, Mercedes",
+          "holeNumber": 6,
+          "createdAt": "21/10/26 10:50:50"
+        },
+        {
+          "playerName": "Nuñez Carballo, Jose - Furones Hernandez, Fco.javier",
+          "holeNumber": 4,
+          "createdAt": "21/10/26 11:03:16"
+        },
+        {
+          "playerName": "Valle Torres, Francisco - Cardo Gil, Maria Isabel",
+          "holeNumber": 7,
+          "createdAt": "21/10/26 11:42:18"
+        },
+        {
+          "playerName": "Sicre Martin, Paloma - Garcia Moreton, Sara",
+          "holeNumber": 12,
+          "createdAt": "21/10/26 11:45:53"
+        },
+        {
+          "playerName": "Jimenez Lopez, Jesus Carlos - Arroyo Ordoñez, Mercedes",
+          "holeNumber": 10,
+          "createdAt": "21/10/26 11:59:12"
+        },
+        {
+          "playerName": "Bermejo Barrios, Angel - Bajo Prieto, Jose Maria",
+          "holeNumber": 13,
+          "createdAt": "21/10/26 12:51:48"
+        },
+        {
+          "playerName": "Nuñez Carballo, Jose - Furones Hernandez, Fco.javier",
+          "holeNumber": 13,
+          "createdAt": "21/10/26 13:26:51"
+        },
+        {
+          "playerName": "Diez Garcia, Pablo Antonio - Diaz Medina, Emiliano Jose",
+          "holeNumber": 17,
+          "createdAt": "21/10/26 13:46:00"
+        },
+        {
+          "playerName": "Valle Torres, Francisco - Cardo Gil, Maria Isabel",
+          "holeNumber": 17,
+          "createdAt": "21/10/26 14:19:43"
+        },
+        {
+          "playerName": "Valle Torres, Francisco - Cardo Gil, Maria Isabel",
+          "holeNumber": 1,
+          "createdAt": "21/10/26 14:54:34"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2322454284_72614-el-bosque-club-de-golf-1-y-2-categoria.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:17.004Z"
+  ]
 }

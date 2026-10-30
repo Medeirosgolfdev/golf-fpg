@@ -1,13 +1,13 @@
 {
   "tourId": 68245,
   "url": "https://www.nextcaddy.com/tour/68245",
-  "scrapedAt": "2026-06-24T14:59:01.357Z",
+  "scrapedAt": "2026-10-30T14:29:50.934Z",
   "meta": {
-    "name": "Campeonato de Madrid Interclubes Masculino",
+    "name": null,
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": null,
+    "dateStart": "2026-11-14",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros C. Amat",
     "categories": [
@@ -16,13 +16,51 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-14",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": null,
+      "name": "RCG LOMAS-BOSQUE",
+      "licencia": "",
+      "hcp": null,
+      "nivel": ""
+    },
+    {
+      "orden": null,
+      "name": "Alvaro Paradinas Gomez",
+      "licencia": "CM07031070",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": null,
+      "name": "Sandro Padro Gutierrez",
+      "licencia": "CM07094435",
+      "hcp": 0,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Gorka Zabarte Moreno",
+      "licencia": "CM07307358",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": null,
+      "name": "Adrian Guinea Hernandez",
+      "licencia": "CM07913417",
+      "hcp": null,
+      "nivel": "J"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -55,6 +93,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:58.177Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

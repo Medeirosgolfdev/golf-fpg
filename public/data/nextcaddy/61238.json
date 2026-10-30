@@ -1,30 +1,172 @@
 {
   "tourId": 61238,
   "url": "https://www.nextcaddy.com/tour/61238",
-  "scrapedAt": "2026-06-24T14:58:59.228Z",
+  "scrapedAt": "2026-10-30T14:29:43.784Z",
   "meta": {
-    "name": "Match Juvenil Femenino",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Fairplay Golf & Spa Resort",
     "courseCode": "AM48",
-    "dateStart": null,
+    "dateStart": "2026-11-07",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "format": "Medal Play (Handicap)  Señoras C. de Pro",
     "categories": [
       "Juvenil Femenino",
-      "Caballeros",
       "Señoras",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-07",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Irene Lavilla Marti",
+      "licencia": "AM62931932",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 2,
+      "name": "Kira Gonzalez Bernases",
+      "licencia": "AM85964619",
+      "hcp": 5.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 3,
+      "name": "Claudia Casasola Garcia",
+      "licencia": "AM83947915",
+      "hcp": 5,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Natalia Lavilla Marti",
+      "licencia": "AM62955024",
+      "hcp": 4.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Ofelia Gonzalez-Carrascosa Benitez",
+      "licencia": "AM15972841",
+      "hcp": 6,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Elizaveta Diaz Dominguez",
+      "licencia": "AM15966126",
+      "hcp": 7.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Anika Jimenez Rybak",
+      "licencia": "AM11959525",
+      "hcp": 7,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Lis Ferreiro Luciano",
+      "licencia": "AM15486673",
+      "hcp": 9.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Adriana Martel Molina",
+      "licencia": "AM05962900",
+      "hcp": 9,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Lara De Justo Fucs",
+      "licencia": "AM70967173",
+      "hcp": 12.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Amelia Toquero Flores",
+      "licencia": "AMF7900309",
+      "hcp": 4.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 12,
+      "name": "Zoey Sophia Papay",
+      "licencia": "AM53495488",
+      "hcp": null,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Ariadne Urpi Sala",
+      "licencia": "AM85952098",
+      "hcp": 6,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Sara Ruiz Bermudez",
+      "licencia": "AMF7996265",
+      "hcp": 9.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Ana Trujillano Cardenas",
+      "licencia": "AM11933331",
+      "hcp": 4.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Asuncion Lopez-Obrero Pommarez",
+      "licencia": "AM02967073",
+      "hcp": 13.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Martina Parra Gonzalez",
+      "licencia": "AM00069655",
+      "hcp": 9.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 18,
+      "name": "Paula Jimenez Tirado",
+      "licencia": "AM24988298",
+      "hcp": 4,
+      "nivel": "I"
+    },
+    {
+      "orden": 19,
+      "name": "Sara Sanchez Navas",
+      "licencia": "AM15989194",
+      "hcp": 19.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 20,
+      "name": "Manuela Araujo Guerrero",
+      "licencia": "AM92972036",
+      "hcp": 19.7,
+      "nivel": "I"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -128,7 +270,8 @@
     }
   },
   "pdfs": [
-    "/uploads/competiciones/pdf/927403381_matchjuvenilfemenino2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:53:50.081Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3908699659_cartel.pdf",
+    "/uploads/competiciones/pdf/143736669_documento_match_juvenil_femenino_2026_v2.pdf"
+  ]
 }

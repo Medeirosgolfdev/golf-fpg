@@ -1,24 +1,26 @@
 {
   "tourId": 61215,
   "url": "https://www.nextcaddy.com/tour/61215",
-  "scrapedAt": "2026-06-24T14:58:37.969Z",
+  "scrapedAt": "2026-10-30T14:29:59.998Z",
   "meta": {
-    "name": "Campeonato Andalucía Interclubs Infantil y Cadete",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Lauro Golf",
     "courseCode": "AM83",
-    "dateStart": null,
+    "dateStart": "2026-11-28",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Infantil",
       "Cadete",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-28",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -82,6 +84,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:49.658Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/384a32e11ea66b73229dcd84185d7327.pdf"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 73743,
   "url": "https://www.nextcaddy.com/tour/73743",
-  "scrapedAt": "2026-09-14T09:53:33.080Z",
+  "scrapedAt": "2026-10-30T14:28:20.515Z",
   "meta": {
     "name": "monday club",
     "organizer": null,
@@ -21,10 +21,220 @@
     "dateIso": "2026-09-14",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Neil Duncan",
+          "licencia": "AM86961736",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2402937
+        },
+        {
+          "pos": 2,
+          "name": "Charles Edward Topp",
+          "licencia": "AM86486616",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2402981
+        },
+        {
+          "pos": 3,
+          "name": "Mark Charles Rose",
+          "licencia": "AM86520379",
+          "hcp": 12,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2402970
+        },
+        {
+          "pos": 4,
+          "name": "Oystein Heldal",
+          "licencia": "AM86998238",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2402960
+        },
+        {
+          "pos": 5,
+          "name": "Graeme Grieve",
+          "licencia": "AM86944175",
+          "hcp": 13,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2402982
+        },
+        {
+          "pos": 6,
+          "name": "James Wilson",
+          "licencia": "AM86965984",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2402941
+        },
+        {
+          "pos": 7,
+          "name": "David Sharpe",
+          "licencia": "AM86611666",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2402955
+        },
+        {
+          "pos": 8,
+          "name": "Brian Rowlands",
+          "licencia": "AM86932781",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2402939
+        },
+        {
+          "pos": 9,
+          "name": "David A. Robinson",
+          "licencia": "AM86973433",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2402942
+        },
+        {
+          "pos": 10,
+          "name": "Hans Kristian Torgersen",
+          "licencia": "AM86931824",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2402979
+        },
+        {
+          "pos": 11,
+          "name": "Paul Parkins",
+          "licencia": "AM86486539",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2402976
+        },
+        {
+          "pos": 12,
+          "name": "John Bryan",
+          "licencia": "AM86890687",
+          "hcp": 10.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2402959
+        },
+        {
+          "pos": 13,
+          "name": "Stephen Boyle",
+          "licencia": "AM24816812",
+          "hcp": 8.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2402938
+        },
+        {
+          "pos": 14,
+          "name": "Richard Tweed",
+          "licencia": "AM86516606",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2402943
+        },
+        {
+          "pos": 15,
+          "name": "Robert Fulcher",
+          "licencia": "AM86915230",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2402944
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -1233,6 +1443,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/904473568_73743-monday-club.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:20.248Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72564,
   "url": "https://www.nextcaddy.com/tour/72564",
-  "scrapedAt": "2026-07-27T07:46:14.835Z",
+  "scrapedAt": "2026-10-30T14:27:17.256Z",
   "meta": {
-    "name": null,
+    "name": "LIGA EXPRES JORNADA 6 (TARDE 18:00)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
@@ -22,10 +22,622 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Primera Categoria",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Perez Baena",
+          "licencia": "AMG3941792",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2370345
+        },
+        {
+          "pos": 2,
+          "name": "Rosario Barea De Lara",
+          "licencia": "AMG3473261",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2369368
+        },
+        {
+          "pos": 3,
+          "name": "Mario Justel Gomez",
+          "licencia": "AM80504137",
+          "hcp": 15.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2369963
+        },
+        {
+          "pos": 4,
+          "name": "Jose Antonio Lillo Guerra",
+          "licencia": "7723901203",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2369294
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Olmedo Halcon",
+          "licencia": "AMF7802548",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2369984
+        },
+        {
+          "pos": 6,
+          "name": "Jose Postigo Secano",
+          "licencia": "AMK5771527",
+          "hcp": 15.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2369856
+        },
+        {
+          "pos": 7,
+          "name": "Rafael Nuñez Gomez",
+          "licencia": "AM61986563",
+          "hcp": 17.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2370104
+        },
+        {
+          "pos": 8,
+          "name": "Salvador Moll Lorca",
+          "licencia": "AMF7079945",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2368621
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Megias Casas",
+          "licencia": "AMK5942563",
+          "hcp": 13.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2369827
+        },
+        {
+          "pos": 10,
+          "name": "Jose Luis Molina Bermejo",
+          "licencia": "AMF7817050",
+          "hcp": 13.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2369473
+        },
+        {
+          "pos": 11,
+          "name": "Jose Antonio Gomez Jara",
+          "licencia": "AMG3970258",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2370025
+        },
+        {
+          "pos": 12,
+          "name": "Ignacio Calvo Borrego",
+          "licencia": "AMF7343780",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2368551
+        },
+        {
+          "pos": 13,
+          "name": "Jose Carlos Serrano Ramirez",
+          "licencia": "AMG3996942",
+          "hcp": 15.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2368775
+        },
+        {
+          "pos": 14,
+          "name": "Jose Luis Ruiz De Castroviejo Alvarez",
+          "licencia": "AMF7973319",
+          "hcp": 12.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2370348
+        },
+        {
+          "pos": 15,
+          "name": "Francisco Bernardez Sarabia",
+          "licencia": "AMC9757378",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2370289
+        },
+        {
+          "pos": 16,
+          "name": "Miguel Macias Becerra",
+          "licencia": "AME8766667",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2370754
+        },
+        {
+          "pos": 17,
+          "name": "Ignacio Olmedo Garcia",
+          "licencia": "AMG3071458",
+          "hcp": 20.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2369983
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rafael Eduardo Garcia Chacon",
+          "licencia": "AMG3784576",
+          "hcp": 27.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2370462
+        },
+        {
+          "pos": 2,
+          "name": "Jose Dominguez Ballestero",
+          "licencia": "AMG3902221",
+          "hcp": 28.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2369226
+        },
+        {
+          "pos": 3,
+          "name": "Asuncion Barbacid Sanchez",
+          "licencia": "AMG3164094",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2370128
+        },
+        {
+          "pos": 4,
+          "name": "Angel Marquez Romero",
+          "licencia": "AM06166348",
+          "hcp": 33.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2370127
+        },
+        {
+          "pos": 5,
+          "name": "Javier Barbacid Rodriguez",
+          "licencia": "AMF7695087",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2370131
+        },
+        {
+          "pos": 6,
+          "name": "Pedro Azcarate Gonzalez",
+          "licencia": "AM95010970",
+          "hcp": 24.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2368742
+        },
+        {
+          "pos": 7,
+          "name": "Carlos Correa Rodriguez",
+          "licencia": "AM85614428",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2369619
+        },
+        {
+          "pos": 8,
+          "name": "Santiago Muñoz Rey",
+          "licencia": "AMG3344431",
+          "hcp": 25,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2369475
+        },
+        {
+          "pos": 9,
+          "name": "Miguel Angel Vazquez Cantillo",
+          "licencia": "AMF7468753",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2369406
+        },
+        {
+          "pos": 10,
+          "name": "Luis Carlos Andrada Alsina",
+          "licencia": "AMF7608771",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2369618
+        },
+        {
+          "pos": 11,
+          "name": "Fernando Sampedro Abascal",
+          "licencia": "AMF7781752",
+          "hcp": 25.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2368578
+        },
+        {
+          "pos": 12,
+          "name": "Miguel Angel Martinez Costa",
+          "licencia": "AMF7975017",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2369910
+        },
+        {
+          "pos": 13,
+          "name": "Manuel Francisco Felipe Perez",
+          "licencia": "AMG3953857",
+          "hcp": 26.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2370136
+        },
+        {
+          "pos": 14,
+          "name": "Sergio Gutierrez Morillo",
+          "licencia": "AMF7784589",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2370344
+        },
+        {
+          "pos": 15,
+          "name": "Jose Luis Vivancos Perez",
+          "licencia": "AM00908990",
+          "hcp": 31.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2369499
+        },
+        {
+          "pos": 16,
+          "name": "Daniel Angel Grillo Guerrero",
+          "licencia": "AMK5475619",
+          "hcp": 36.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2370084
+        },
+        {
+          "pos": 17,
+          "name": "Jose Manuel Sanchez Gutierrez",
+          "licencia": "AMF7974652",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2369620
+        },
+        {
+          "pos": 18,
+          "name": "Shaun Eamonn Gavigan",
+          "licencia": "AMG3492187",
+          "hcp": 38.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2368557
+        },
+        {
+          "pos": 19,
+          "name": "Ian Warnock",
+          "licencia": "AM27354164",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2368074
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Primera Categoria",
+      "jugadores": 17
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 19
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pedro Azcarate Gonzalez",
+      "licencia": "AM95010970",
+      "hcp": 24.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Carlos Serrano Ramirez",
+      "licencia": "AMG3996942",
+      "hcp": 15.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Dominguez Ballestero",
+      "licencia": "AMG3902221",
+      "hcp": 28.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Miguel Angel Vazquez Cantillo",
+      "licencia": "AMF7468753",
+      "hcp": 27.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Santiago Muñoz Rey",
+      "licencia": "AMG3344431",
+      "hcp": 25,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Mario Justel Gomez",
+      "licencia": "AM80504137",
+      "hcp": 15.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio Olmedo Garcia",
+      "licencia": "AMG3071458",
+      "hcp": 20.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Ignacio Olmedo Halcon",
+      "licencia": "AMF7802548",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Daniel Angel Grillo Guerrero",
+      "licencia": "AMK5475619",
+      "hcp": 36.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Rafael Nuñez Gomez",
+      "licencia": "AM61986563",
+      "hcp": 17.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Angel Marquez Romero",
+      "licencia": "AM06166348",
+      "hcp": 33.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Javier Barbacid Rodriguez",
+      "licencia": "AMF7695087",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Manuel Francisco Felipe Perez",
+      "licencia": "AMG3953857",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Francisco Bernardez Sarabia",
+      "licencia": "AMC9757378",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Juan Perez Baena",
+      "licencia": "AMG3941792",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Luis Ruiz De Castroviejo Alvarez",
+      "licencia": "AMF7973319",
+      "hcp": 12.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Rafael Eduardo Garcia Chacon",
+      "licencia": "AMG3784576",
+      "hcp": 27.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Miguel Macias Becerra",
+      "licencia": "AME8766667",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Asuncion Barbacid Sanchez",
+      "licencia": "AMG3164094",
+      "hcp": 28.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -195,15 +807,6 @@
         {
           "time": "18:10",
           "tee": 18,
-          "name": "Antonio Martín Domínguez",
-          "hcp": 16.5,
-          "ins": "2370110",
-          "jid": "77740",
-          "nivel": "S"
-        },
-        {
-          "time": "18:10",
-          "tee": 18,
           "name": "Santiago Muñoz Rey",
           "hcp": 25,
           "ins": "2369475",
@@ -228,10 +831,180 @@
       "roundId": 77740
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel",
+          "holeNumber": 8,
+          "createdAt": "07/10/26 11:39:55"
+        },
+        {
+          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 12:21:34"
+        },
+        {
+          "playerName": "Gonzalez Diaz-Benito De Las Huertas, Miguel",
+          "holeNumber": 15,
+          "createdAt": "07/10/26 13:46:38"
+        },
+        {
+          "playerName": "Vilar Garcia, Enrique",
+          "holeNumber": 18,
+          "createdAt": "07/10/26 13:00:42"
+        },
+        {
+          "playerName": "Jimenez Barahona, David",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 09:53:03"
+        },
+        {
+          "playerName": "Jimenez  Barahona, Alejandro",
+          "holeNumber": 15,
+          "createdAt": "07/10/26 10:35:14"
+        },
+        {
+          "playerName": "Lagos Colaco, Piedade",
+          "holeNumber": 4,
+          "createdAt": "07/10/26 14:03:31"
+        },
+        {
+          "playerName": "Gascon Estevas-Guilmain, Miguel",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 10:56:18"
+        },
+        {
+          "playerName": "Mena Perez, Pedro De",
+          "holeNumber": 15,
+          "createdAt": "07/10/26 12:39:02"
+        },
+        {
+          "playerName": "Mena Perez, Pedro De",
+          "holeNumber": 2,
+          "createdAt": "07/10/26 13:55:20"
+        },
+        {
+          "playerName": "Gallego Garcia, Alejandro",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 12:36:23"
+        },
+        {
+          "playerName": "Gallego Garcia, Alejandro",
+          "holeNumber": 14,
+          "createdAt": "07/10/26 13:48:18"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 11:14:52"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 12:33:28"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 15,
+          "createdAt": "07/10/26 13:56:45"
+        },
+        {
+          "playerName": "Plana Algara, Manuel",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 14:33:29"
+        },
+        {
+          "playerName": "Bachiller Marco, Carlota",
+          "holeNumber": 15,
+          "createdAt": "07/10/26 13:47:19"
+        },
+        {
+          "playerName": "Mimo Alcaraz, Miguel",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 10:28:42"
+        },
+        {
+          "playerName": "Mimo Alcaraz, Miguel",
+          "holeNumber": 8,
+          "createdAt": "07/10/26 11:02:35"
+        },
+        {
+          "playerName": "Mimo Alcaraz, Miguel",
+          "holeNumber": 17,
+          "createdAt": "07/10/26 13:38:47"
+        },
+        {
+          "playerName": "Hernandez Ruiz, Alvaro",
+          "holeNumber": 3,
+          "createdAt": "07/10/26 10:54:54"
+        },
+        {
+          "playerName": "Hernandez Ruiz, Alvaro",
+          "holeNumber": 8,
+          "createdAt": "07/10/26 12:03:34"
+        },
+        {
+          "playerName": "Souza Sanchez, Francisco Ignacio",
+          "holeNumber": 2,
+          "createdAt": "07/10/26 10:21:39"
+        },
+        {
+          "playerName": "Guijarro Crespo, Jose Antonio",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 12:35:58"
+        },
+        {
+          "playerName": "Lopez Freyre, Silvina",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 11:08:56"
+        },
+        {
+          "playerName": "Lopez Freyre, Silvina",
+          "holeNumber": 11,
+          "createdAt": "07/10/26 12:31:37"
+        },
+        {
+          "playerName": "Cereda Tanzi, Ilaria",
+          "holeNumber": 2,
+          "createdAt": "07/10/26 11:13:43"
+        },
+        {
+          "playerName": "González Alonso, Vicente",
+          "holeNumber": 10,
+          "createdAt": "07/10/26 12:26:17"
+        },
+        {
+          "playerName": "Ramirez Ustariz, Julia",
+          "holeNumber": 2,
+          "createdAt": "07/10/26 10:33:43"
+        },
+        {
+          "playerName": "De Las Heras Bautista, Severo",
+          "holeNumber": 16,
+          "createdAt": "07/10/26 12:04:54"
+        },
+        {
+          "playerName": "Horcajada Garcia, Adrian",
+          "holeNumber": 12,
+          "createdAt": "07/10/26 12:44:18"
+        }
+      ]
+    },
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Bachiller Marco, Carlota",
+          "holeNumber": 6,
+          "createdAt": "07/10/26 11:04:56"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/175255881_72564-liga-expres-jornada-6-tarde-18-00.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-30T18:18:16.013Z"
+  ]
 }

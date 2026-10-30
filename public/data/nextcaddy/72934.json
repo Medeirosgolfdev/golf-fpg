@@ -1,19 +1,20 @@
 {
   "tourId": 72934,
   "url": "https://www.nextcaddy.com/tour/72934",
-  "scrapedAt": "2026-08-17T04:57:33.521Z",
+  "scrapedAt": "2026-10-30T14:27:59.607Z",
   "meta": {
-    "name": null,
+    "name": "I Prueba Pequecircuito (Jugadores/as 9 hoyos)",
     "organizer": null,
     "course": null,
     "courseCode": null,
     "dateStart": "2026-08-29",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "format": "Medal Play (Handicap)  Señoras  Caballer",
     "categories": [
       "Señoras",
       "Caballeros",
       "Juvenil",
+      "Benjamin",
       "Infantil",
       "Profesional",
       "Senior"
@@ -21,10 +22,216 @@
     "dateIso": "2026-08-29",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 36,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alejandro Sanchez Garcia",
+          "licencia": "7759349253",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -8,
+          "inscribedId": 2391022
+        },
+        {
+          "pos": 2,
+          "name": "Nuño Gil Garcia",
+          "licencia": "7712474827",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": -3,
+          "inscribedId": 2388190
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Lopez Millan",
+          "licencia": "7709309949",
+          "hcp": 44.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2391339
+        },
+        {
+          "pos": 4,
+          "name": "Martina Gil Garcia",
+          "licencia": "7712474820",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": 2,
+          "inscribedId": 2388192
+        },
+        {
+          "pos": 5,
+          "name": "Mateo Pretel Martin",
+          "licencia": "7744007411",
+          "hcp": 43.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": 3,
+          "inscribedId": 2384130
+        },
+        {
+          "pos": 6,
+          "name": "Mark Bautista Musina",
+          "licencia": "7700354373",
+          "hcp": 37.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": 6,
+          "inscribedId": 2384132
+        },
+        {
+          "pos": 7,
+          "name": "Matias Martin Martin",
+          "licencia": "7759097829",
+          "hcp": 40.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2392010
+        },
+        {
+          "pos": 8,
+          "name": "Candela Sanz Romero",
+          "licencia": "7707074288",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2391694
+        },
+        {
+          "pos": 9,
+          "name": "Valeria Rosiña Alfonso",
+          "licencia": "7760322318",
+          "hcp": 49.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": 12,
+          "inscribedId": 2390930
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Scratch General Benjamin Hcp Nacional",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 22.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 52,
+          "toPar": 16,
+          "inscribedId": 2393312
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Individual Handicap General Benjamin Hcp Nacional",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 22.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 7,
+          "inscribedId": 2393312
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Individual Scratch General Benjamin Hcp Nacional",
+      "jugadores": 1
+    },
+    "3": {
+      "name": "Individual Handicap General Benjamin Hcp Nacional",
+      "jugadores": 1
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -39,6 +246,62 @@
       "licencia": "7700354373",
       "hcp": 37.9,
       "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Nuño Gil Garcia",
+      "licencia": "7712474827",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Alejandro Sanchez Garcia",
+      "licencia": "7759349253",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Matias Martin Martin",
+      "licencia": "7759097829",
+      "hcp": 40.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Erik Bautista Musina",
+      "licencia": "7700354371",
+      "hcp": 22.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Martina Gil Garcia",
+      "licencia": "7712474820",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Valeria Rosiña Alfonso",
+      "licencia": "7760322318",
+      "hcp": 49.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Carmen Lopez Millan",
+      "licencia": "7709309949",
+      "hcp": 44.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Candela Sanz Romero",
+      "licencia": "7707074288",
+      "hcp": 54,
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -191,7 +454,7 @@
     }
   },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-31T10:51:30.982Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3369198667_reglas_locales_y_p._suspensiorn.pdf"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72883,
   "url": "https://www.nextcaddy.com/tour/72883",
-  "scrapedAt": "2026-08-10T05:45:19.638Z",
+  "scrapedAt": "2026-10-30T14:27:51.313Z",
   "meta": {
-    "name": null,
+    "name": "Pool Garay-Enrile  (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -22,10 +22,124 @@
     "dateIso": "2026-08-22",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Enrile Olleros",
+          "licencia": "CM02926923",
+          "hcp": 25.1,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2386854
+        },
+        {
+          "pos": 2,
+          "name": "Fernando Garay Gomez Arroyo",
+          "licencia": "CM01041605",
+          "hcp": 9.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2385837
+        },
+        {
+          "pos": 3,
+          "name": "Borja Garay Gomez-A.",
+          "licencia": "CM01051440",
+          "hcp": 9.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2385843
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Enrile Olleros",
+          "licencia": "CM02926924",
+          "hcp": 38.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386914
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Garay Gross",
+          "licencia": "CM01923547",
+          "hcp": 4.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2385844
+        },
+        {
+          "pos": 6,
+          "name": "Jose Martinez-Rasilla Morales-Arce",
+          "licencia": "CME5376153",
+          "hcp": 28.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2379059
+        },
+        {
+          "pos": 7,
+          "name": "Jaime Garay Gross",
+          "licencia": "CM01923548",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2385841
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -33,6 +147,48 @@
       "licencia": "CME5376153",
       "hcp": 28.1,
       "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Garay Gomez Arroyo",
+      "licencia": "CM01041605",
+      "hcp": 9.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Jaime Garay Gross",
+      "licencia": "CM01923548",
+      "hcp": 9.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Borja Garay Gomez-A.",
+      "licencia": "CM01051440",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Fernando Garay Gross",
+      "licencia": "CM01923547",
+      "hcp": 4.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Pablo Enrile Olleros",
+      "licencia": "CM02926923",
+      "hcp": 25.1,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Alfonso Enrile Olleros",
+      "licencia": "CM02926924",
+      "hcp": null,
+      "nivel": "I"
     }
   ],
   "horarios": [
@@ -134,6 +290,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-24T05:00:22.835Z"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 72439,
   "url": "https://www.nextcaddy.com/tour/72439",
-  "scrapedAt": "2026-07-20T07:01:09.730Z",
+  "scrapedAt": "2026-10-30T14:27:05.127Z",
   "meta": {
     "name": "VOBS COMPETITION",
     "organizer": null,
@@ -22,10 +22,196 @@
     "dateIso": "2026-07-20",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jeffrey Wadsworth",
+          "licencia": "AMD5979795",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2363800
+        },
+        {
+          "pos": 2,
+          "name": "Paul Boyce Howarth",
+          "licencia": "AMD5485623",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2363810
+        },
+        {
+          "pos": 3,
+          "name": "Louis Jorfi",
+          "licencia": "AM25979495",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2363803
+        },
+        {
+          "pos": 4,
+          "name": "Bret Myles Duncan",
+          "licencia": "AME7775047",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2363808
+        },
+        {
+          "pos": 5,
+          "name": "Glynn Rodgers",
+          "licencia": "AM29975464",
+          "hcp": 4.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2363801
+        },
+        {
+          "pos": 6,
+          "name": "Robert Edward Jewell",
+          "licencia": "AM25603729",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2363812
+        },
+        {
+          "pos": 7,
+          "name": "Mickey Allen Padron",
+          "licencia": "AMD5030872",
+          "hcp": 13.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2363804
+        },
+        {
+          "pos": 8,
+          "name": "Michael Marney",
+          "licencia": "AMD5492062",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2363811
+        },
+        {
+          "pos": 9,
+          "name": "Tony Pearse",
+          "licencia": "AMD5344094",
+          "hcp": 13,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2363806
+        },
+        {
+          "pos": 10,
+          "name": "John Collins",
+          "licencia": "AMD5492691",
+          "hcp": 31.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2363809
+        },
+        {
+          "pos": 11,
+          "name": "Matthew Colin Anderson",
+          "licencia": "AMC3064506",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2363807
+        },
+        {
+          "pos": null,
+          "name": "Mathias Manfred Czenna",
+          "licencia": "AMD5522071",
+          "hcp": 14.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2363813
+        },
+        {
+          "pos": null,
+          "name": "Barry Fennelly",
+          "licencia": "AM66412924",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2363802
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 13
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

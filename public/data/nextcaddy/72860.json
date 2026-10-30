@@ -1,9 +1,9 @@
 {
   "tourId": 72860,
   "url": "https://www.nextcaddy.com/tour/72860",
-  "scrapedAt": "2026-08-10T05:45:17.534Z",
+  "scrapedAt": "2026-10-30T14:27:41.166Z",
   "meta": {
-    "name": null,
+    "name": "PADRES E HIJOS (9 HOYOS GREENSOME).",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -25,8 +25,13 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 7
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -40,6 +45,90 @@
       "name": "Nahia Fonfria Cervantes",
       "licencia": "4402472223",
       "hcp": 38.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Mariano Marquez De Prado Moragues",
+      "licencia": "4401384695",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Valentina Marquez De Prado Fernandez",
+      "licencia": "4401997813",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Luis Sola Uriarte",
+      "licencia": "4402382136",
+      "hcp": 5.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Carlota Sola Ezpelta",
+      "licencia": "4402373665",
+      "hcp": 42.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Lazaro Sanchez",
+      "licencia": "4401772117",
+      "hcp": 8.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Carolina Lazaro La Orden",
+      "licencia": "4401507879",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Maria Marquez De Prado Moragues",
+      "licencia": "4401384696",
+      "hcp": 5.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Marquez De Prado Pascal",
+      "licencia": "4401997815",
+      "hcp": 53.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alex Zuloaga Oar-Arteta",
+      "licencia": "4401162282",
+      "hcp": 7.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Martin Zuloaga Valencia",
+      "licencia": "4401158012",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Oscar Crespo Najera",
+      "licencia": "RL04490084",
+      "hcp": 30.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Hector Crespo Rojo",
+      "licencia": "RL04490089",
+      "hcp": 42.9,
       "nivel": "B"
     }
   ],
@@ -194,6 +283,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:58:01.517Z"
+  ]
 }

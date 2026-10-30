@@ -1,13 +1,13 @@
 {
   "tourId": 68593,
   "url": "https://www.nextcaddy.com/tour/68593",
-  "scrapedAt": "2026-06-24T14:57:58.732Z",
+  "scrapedAt": "2026-10-30T14:26:49.130Z",
   "meta": {
     "name": "V Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Golf Los Palos",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": null,
+    "dateStart": "2026-07-05",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,7 +17,9 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -32,16 +34,72 @@
       "nivel": "B"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 2,
+      "name": "Maks Gregoric",
+      "licencia": "CP09494794",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
-      "orden": 1,
-      "name": "Roberto Real Rodriguez",
-      "licencia": "CP00522589",
+      "orden": 3,
+      "name": "Ian Errico Gutierrez",
+      "licencia": "CP06474872",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Aday Amador De Lorenzo",
+      "licencia": "CP09496831",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Alejandro Garcia Mesa",
+      "licencia": "CP09522474",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "James Peter Gibson",
+      "licencia": "CP09002678",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Remi Caiazza",
+      "licencia": "CP09002677",
+      "hcp": 43.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Leon Anfossi",
+      "licencia": "CP05015101",
+      "hcp": 37,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Edmundo Anfossi",
+      "licencia": "CP05523484",
+      "hcp": 53.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Dylan Hector Mills",
+      "licencia": "CP05016044",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Archie Mcknight",
+      "licencia": "CP05507479",
       "hcp": 54,
       "nivel": "B"
     }
@@ -89,6 +147,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.093Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

@@ -1,13 +1,13 @@
 {
   "tourId": 68768,
   "url": "https://www.nextcaddy.com/tour/68768",
-  "scrapedAt": "2026-06-24T14:58:00.595Z",
+  "scrapedAt": "2026-10-30T14:26:51.192Z",
   "meta": {
     "name": "Copa RFCG Juvenil 9 Hoyos (Benjamín)",
     "organizer": null,
     "course": "Real Club de Golf Tenerife",
     "courseCode": "CP02",
-    "dateStart": null,
+    "dateStart": "2026-07-08",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -19,12 +19,1844 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-08",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 35,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Femenina",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 50
+            },
+            {
+              "round": 3,
+              "gross": 48
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 36
+            },
+            {
+              "round": 2,
+              "ch": 36
+            },
+            {
+              "round": 3,
+              "ch": 36
+            }
+          ],
+          "total": 154,
+          "toPar": 49,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 2,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 62
+            },
+            {
+              "round": 2,
+              "gross": 46
+            },
+            {
+              "round": 3,
+              "gross": 50
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 49
+            },
+            {
+              "round": 2,
+              "ch": 49
+            },
+            {
+              "round": 3,
+              "ch": 49
+            }
+          ],
+          "total": 158,
+          "toPar": 53,
+          "inscribedId": 2350936
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 45
+            },
+            {
+              "round": 3,
+              "gross": 37
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            },
+            {
+              "round": 3,
+              "ch": 19
+            }
+          ],
+          "total": 124,
+          "toPar": 19,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 44
+            },
+            {
+              "round": 3,
+              "gross": 45
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 42
+            },
+            {
+              "round": 2,
+              "ch": 42
+            },
+            {
+              "round": 3,
+              "ch": 42
+            }
+          ],
+          "total": 141,
+          "toPar": 36,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 48
+            },
+            {
+              "round": 2,
+              "gross": 51
+            },
+            {
+              "round": 3,
+              "gross": 44
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            },
+            {
+              "round": 3,
+              "ch": 22
+            }
+          ],
+          "total": 143,
+          "toPar": 38,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 4,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 46
+            },
+            {
+              "round": 2,
+              "gross": 53
+            },
+            {
+              "round": 3,
+              "gross": 47
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 27
+            },
+            {
+              "round": 2,
+              "ch": 27
+            },
+            {
+              "round": 3,
+              "ch": 27
+            }
+          ],
+          "total": 146,
+          "toPar": 41,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 51
+            },
+            {
+              "round": 3,
+              "gross": 52
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 44
+            },
+            {
+              "round": 2,
+              "ch": 44
+            },
+            {
+              "round": 3,
+              "ch": 44
+            }
+          ],
+          "total": 153,
+          "toPar": 48,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 6,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 58
+            },
+            {
+              "round": 3,
+              "gross": 56
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 47
+            },
+            {
+              "round": 2,
+              "ch": 47
+            },
+            {
+              "round": 3,
+              "ch": 47
+            }
+          ],
+          "total": 172,
+          "toPar": 67,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 61
+            },
+            {
+              "round": 2,
+              "gross": 56
+            },
+            {
+              "round": 3,
+              "gross": 68
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            },
+            {
+              "round": 3,
+              "ch": 54
+            }
+          ],
+          "total": 185,
+          "toPar": 80,
+          "inscribedId": 2351262
+        },
+        {
+          "pos": 8,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 63
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            },
+            {
+              "round": 3,
+              "ch": 54
+            }
+          ],
+          "total": 195,
+          "toPar": 90,
+          "inscribedId": 2353601
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación Final Indistinta",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 45
+            },
+            {
+              "round": 3,
+              "gross": 37
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            },
+            {
+              "round": 3,
+              "ch": 19
+            }
+          ],
+          "total": 124,
+          "toPar": 19,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 44
+            },
+            {
+              "round": 3,
+              "gross": 45
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 42
+            },
+            {
+              "round": 2,
+              "ch": 42
+            },
+            {
+              "round": 3,
+              "ch": 42
+            }
+          ],
+          "total": 141,
+          "toPar": 36,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 48
+            },
+            {
+              "round": 2,
+              "gross": 51
+            },
+            {
+              "round": 3,
+              "gross": 44
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            },
+            {
+              "round": 3,
+              "ch": 22
+            }
+          ],
+          "total": 143,
+          "toPar": 38,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 4,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 46
+            },
+            {
+              "round": 2,
+              "gross": 53
+            },
+            {
+              "round": 3,
+              "gross": 47
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 27
+            },
+            {
+              "round": 2,
+              "ch": 27
+            },
+            {
+              "round": 3,
+              "ch": 27
+            }
+          ],
+          "total": 146,
+          "toPar": 41,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 51
+            },
+            {
+              "round": 3,
+              "gross": 52
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 44
+            },
+            {
+              "round": 2,
+              "ch": 44
+            },
+            {
+              "round": 3,
+              "ch": 44
+            }
+          ],
+          "total": 153,
+          "toPar": 48,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 6,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 50
+            },
+            {
+              "round": 3,
+              "gross": 48
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 36
+            },
+            {
+              "round": 2,
+              "ch": 36
+            },
+            {
+              "round": 3,
+              "ch": 36
+            }
+          ],
+          "total": 154,
+          "toPar": 49,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 7,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 62
+            },
+            {
+              "round": 2,
+              "gross": 46
+            },
+            {
+              "round": 3,
+              "gross": 50
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 49
+            },
+            {
+              "round": 2,
+              "ch": 49
+            },
+            {
+              "round": 3,
+              "ch": 49
+            }
+          ],
+          "total": 158,
+          "toPar": 53,
+          "inscribedId": 2350936
+        },
+        {
+          "pos": 8,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 58
+            },
+            {
+              "round": 3,
+              "gross": 56
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 47
+            },
+            {
+              "round": 2,
+              "ch": 47
+            },
+            {
+              "round": 3,
+              "ch": 47
+            }
+          ],
+          "total": 172,
+          "toPar": 67,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 61
+            },
+            {
+              "round": 2,
+              "gross": 56
+            },
+            {
+              "round": 3,
+              "gross": 68
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            },
+            {
+              "round": 3,
+              "ch": 54
+            }
+          ],
+          "total": 185,
+          "toPar": 80,
+          "inscribedId": 2351262
+        },
+        {
+          "pos": 10,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 63
+            },
+            {
+              "round": 3,
+              "gross": 74
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            },
+            {
+              "round": 3,
+              "ch": 54
+            }
+          ],
+          "total": 195,
+          "toPar": 90,
+          "inscribedId": 2353601
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificación Femenina 2ª Jornada",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 36
+            },
+            {
+              "round": 2,
+              "ch": 36
+            }
+          ],
+          "total": 106,
+          "toPar": 36,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 2,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 62
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 49
+            },
+            {
+              "round": 2,
+              "ch": 49
+            }
+          ],
+          "total": 108,
+          "toPar": 38,
+          "inscribedId": 2350936
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Clasificación Masculina 2ª Jornada",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            }
+          ],
+          "total": 87,
+          "toPar": 17,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 44
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 42
+            },
+            {
+              "round": 2,
+              "ch": 42
+            }
+          ],
+          "total": 96,
+          "toPar": 26,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 3,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 46
+            },
+            {
+              "round": 2,
+              "gross": 53
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 27
+            },
+            {
+              "round": 2,
+              "ch": 27
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": null,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 48
+            },
+            {
+              "round": 2,
+              "gross": 51
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 51
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 44
+            },
+            {
+              "round": 2,
+              "ch": 44
+            }
+          ],
+          "total": 101,
+          "toPar": 31,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 6,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 58
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 47
+            },
+            {
+              "round": 2,
+              "ch": 47
+            }
+          ],
+          "total": 116,
+          "toPar": 46,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 61
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            }
+          ],
+          "total": 117,
+          "toPar": 47,
+          "inscribedId": 2351262
+        },
+        {
+          "pos": 8,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 63
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            }
+          ],
+          "total": 121,
+          "toPar": 51,
+          "inscribedId": 2353601
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Clasificación Indistinta 2ª Jornada",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 42
+            },
+            {
+              "round": 2,
+              "gross": 45
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            }
+          ],
+          "total": 87,
+          "toPar": 17,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 52
+            },
+            {
+              "round": 2,
+              "gross": 44
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 42
+            },
+            {
+              "round": 2,
+              "ch": 42
+            }
+          ],
+          "total": 96,
+          "toPar": 26,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 3,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 46
+            },
+            {
+              "round": 2,
+              "gross": 53
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 27
+            },
+            {
+              "round": 2,
+              "ch": 27
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": null,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 48
+            },
+            {
+              "round": 2,
+              "gross": 51
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            }
+          ],
+          "total": 99,
+          "toPar": 29,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 5,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 50
+            },
+            {
+              "round": 2,
+              "gross": 51
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 44
+            },
+            {
+              "round": 2,
+              "ch": 44
+            }
+          ],
+          "total": 101,
+          "toPar": 31,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 6,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 56
+            },
+            {
+              "round": 2,
+              "gross": 50
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 36
+            },
+            {
+              "round": 2,
+              "ch": 36
+            }
+          ],
+          "total": 106,
+          "toPar": 36,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 7,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 62
+            },
+            {
+              "round": 2,
+              "gross": 46
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 49
+            },
+            {
+              "round": 2,
+              "ch": 49
+            }
+          ],
+          "total": 108,
+          "toPar": 38,
+          "inscribedId": 2350936
+        },
+        {
+          "pos": 8,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 58
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 47
+            },
+            {
+              "round": 2,
+              "ch": 47
+            }
+          ],
+          "total": 116,
+          "toPar": 46,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 61
+            },
+            {
+              "round": 2,
+              "gross": 56
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            }
+          ],
+          "total": 117,
+          "toPar": 47,
+          "inscribedId": 2351262
+        },
+        {
+          "pos": 10,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 58
+            },
+            {
+              "round": 2,
+              "gross": 63
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 54
+            },
+            {
+              "round": 2,
+              "ch": 54
+            }
+          ],
+          "total": 121,
+          "toPar": 51,
+          "inscribedId": 2353601
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Clasificación 1ª Jornada Indistinta",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": 7,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 11,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": 13,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 50,
+          "toPar": 15,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 5,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 52,
+          "toPar": 17,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 6,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 56,
+          "toPar": 21,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 7,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 23,
+          "inscribedId": 2353601
+        },
+        {
+          "pos": null,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 23,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 9,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 61,
+          "toPar": 26,
+          "inscribedId": 2351262
+        },
+        {
+          "pos": 10,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 62,
+          "toPar": 27,
+          "inscribedId": 2350936
+        }
+      ]
+    },
+    {
+      "category": 8,
+      "categoryName": "Clasificación 1ª Jornada Femenino",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Sara Henningsen Suarez",
+          "licencia": "CP01061295",
+          "hcp": 30.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 56,
+          "toPar": 21,
+          "inscribedId": 2353010
+        },
+        {
+          "pos": 2,
+          "name": "Gaia Bastianoni",
+          "licencia": "CP20491047",
+          "hcp": 42.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 62,
+          "toPar": 27,
+          "inscribedId": 2350936
+        }
+      ]
+    },
+    {
+      "category": 9,
+      "categoryName": "Clasificación 1ª Jornada Masculino",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maximo Cabezas De Herrera Mendez",
+          "licencia": "CP02052226",
+          "hcp": 21.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": 7,
+          "inscribedId": 2353001
+        },
+        {
+          "pos": 2,
+          "name": "Quim Rosales Grau",
+          "licencia": "CP26003513",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 11,
+          "inscribedId": 2348941
+        },
+        {
+          "pos": 3,
+          "name": "Miguel Galindo Aguado",
+          "licencia": "CP05496235",
+          "hcp": 24.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 48,
+          "toPar": 13,
+          "inscribedId": 2352426
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Meruane Estrada",
+          "licencia": "CP01410664",
+          "hcp": 44.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 50,
+          "toPar": 15,
+          "inscribedId": 2348895
+        },
+        {
+          "pos": 5,
+          "name": "Tomas Diaz De Juan",
+          "licencia": "CP05497242",
+          "hcp": 42.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 52,
+          "toPar": 17,
+          "inscribedId": 2353454
+        },
+        {
+          "pos": 6,
+          "name": "Aday Amador De Lorenzo",
+          "licencia": "CP09496831",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 23,
+          "inscribedId": 2353601
+        },
+        {
+          "pos": null,
+          "name": "Martin Robledano Perez",
+          "licencia": "CP01506145",
+          "hcp": 47.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 23,
+          "inscribedId": 2349052
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Da Costa Herrera",
+          "licencia": "CP01474918",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 61,
+          "toPar": 26,
+          "inscribedId": 2351262
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Femenina",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Clasificación Final Masculino",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Clasificación Final Indistinta",
+      "jugadores": 10
+    },
+    "4": {
+      "name": "Clasificación Femenina 2ª Jornada",
+      "jugadores": 2
+    },
+    "5": {
+      "name": "Clasificación Masculina 2ª Jornada",
+      "jugadores": 8
+    },
+    "6": {
+      "name": "Clasificación Indistinta 2ª Jornada",
+      "jugadores": 10
+    },
+    "7": {
+      "name": "Clasificación 1ª Jornada Indistinta",
+      "jugadores": 10
+    },
+    "8": {
+      "name": "Clasificación 1ª Jornada Femenino",
+      "jugadores": 2
+    },
+    "9": {
+      "name": "Clasificación 1ª Jornada Masculino",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -37,7 +1869,7 @@
       "orden": 2,
       "name": "Quim Rosales Grau",
       "licencia": "CP26003513",
-      "hcp": 29,
+      "hcp": 29.3,
       "nivel": "B"
     },
     {
@@ -48,31 +1880,52 @@
       "nivel": "B"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 4,
+      "name": "Manuel Da Costa Herrera",
+      "licencia": "CP01474918",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Galindo Aguado",
+      "licencia": "CP05496235",
+      "hcp": 24.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Maximo Cabezas De Herrera Mendez",
+      "licencia": "CP02052226",
+      "hcp": 21.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Tomas Diaz De Juan",
+      "licencia": "CP05497242",
+      "hcp": 42.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Aday Amador De Lorenzo",
+      "licencia": "CP09496831",
+      "hcp": 54,
+      "nivel": "B"
     },
     {
       "orden": 1,
-      "name": "Alvaro Meruane Estrada",
-      "licencia": "CP01410664",
-      "hcp": 44.6,
+      "name": "Gaia Bastianoni",
+      "licencia": "CP20491047",
+      "hcp": 42.4,
       "nivel": "B"
     },
     {
       "orden": 2,
-      "name": "Quim Rosales Grau",
-      "licencia": "CP26003513",
-      "hcp": 29,
-      "nivel": "B"
-    },
-    {
-      "orden": 3,
-      "name": "Martin Robledano Perez",
-      "licencia": "CP01506145",
-      "hcp": 47.4,
+      "name": "Sara Henningsen Suarez",
+      "licencia": "CP01061295",
+      "hcp": 30.9,
       "nivel": "B"
     }
   ],
@@ -387,6 +2240,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-13T07:10:11.314Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

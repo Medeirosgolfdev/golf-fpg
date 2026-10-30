@@ -1,9 +1,9 @@
 {
   "tourId": 73124,
   "url": "https://www.nextcaddy.com/tour/73124",
-  "scrapedAt": "2026-08-24T04:59:52.729Z",
+  "scrapedAt": "2026-10-30T14:28:09.661Z",
   "meta": {
-    "name": null,
+    "name": "CAMPEONATO JUVENIL DEL FRESNILLO  - BENJAMINES",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -23,11 +23,95 @@
     "dateIso": "2026-09-06",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 36,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 59,
+          "toPar": 23,
+          "inscribedId": 2396645
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "David Cerezal Criado",
+          "licencia": "7759968499",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 45,
+          "toPar": 9,
+          "inscribedId": 2396645
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "David Cerezal Criado",
+      "licencia": "7759968499",
+      "hcp": 36.4,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -58,6 +142,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:18.678Z"
+  ]
 }

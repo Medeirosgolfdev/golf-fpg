@@ -1,13 +1,13 @@
 {
   "tourId": 68598,
   "url": "https://www.nextcaddy.com/tour/68598",
-  "scrapedAt": "2026-06-24T14:58:30.154Z",
+  "scrapedAt": "2026-10-30T14:28:19.707Z",
   "meta": {
     "name": "VI Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": null,
+    "dateStart": "2026-09-13",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,58 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-13",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Enrique Perez Trapero",
+      "licencia": "CP26967032",
+      "hcp": 25.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Antonio Mira Melian",
+      "licencia": "CP26079834",
+      "hcp": 25,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Jorge Alvarez Muñoz",
+      "licencia": "CP26003516",
+      "hcp": 24.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Quim Rosales Grau",
+      "licencia": "CP26003513",
+      "hcp": 26.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Lucas Saavedra Fernandez",
+      "licencia": "CP31000819",
+      "hcp": 12.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Beatrice Sparicio",
+      "licencia": "CP26979413",
+      "hcp": 22,
+      "nivel": "I"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -67,6 +112,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.185Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

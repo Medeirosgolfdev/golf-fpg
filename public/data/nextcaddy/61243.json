@@ -1,30 +1,131 @@
 {
   "tourId": 61243,
   "url": "https://www.nextcaddy.com/tour/61243",
-  "scrapedAt": "2026-06-24T14:59:03.984Z",
+  "scrapedAt": "2026-10-30T14:29:55.795Z",
   "meta": {
-    "name": "Circuito Benjamin Zona W",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
-    "dateStart": null,
+    "dateStart": "2026-11-21",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamin",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-21",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lorenzo Morales Perez",
+      "licencia": "AM85419489",
+      "hcp": 43.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Gonzalo Perez Gonzalez",
+      "licencia": "AMK3021846",
+      "hcp": 27.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Thiago Gonzalez Bernases",
+      "licencia": "AM85984457",
+      "hcp": 13.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Lucas Santos Conde",
+      "licencia": "AM95157797",
+      "hcp": 27.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Gonzalo Rodriguez Olavarria",
+      "licencia": "AM00182628",
+      "hcp": 39.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Victor Manuel Torollo De La Escalera",
+      "licencia": "AM85475937",
+      "hcp": 44.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio De Lope Gomez",
+      "licencia": "AM05097683",
+      "hcp": 19,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Nicolas Auriol Ruiz",
+      "licencia": "AM05322812",
+      "hcp": 37.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Joaquin Caro Bernal",
+      "licencia": "AM06169927",
+      "hcp": 24.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Pablo Camacho Manuel De Villena",
+      "licencia": "AM05062617",
+      "hcp": 24.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Carlos Perez Pedraza",
+      "licencia": "AM95077283",
+      "hcp": 19.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Rafael Ribeiro Crisostomo",
+      "licencia": "AM00371960",
+      "hcp": 35.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Mª Asuncion Sedeño Martin",
+      "licencia": "AM95349030",
+      "hcp": 34,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Gadea Geldinovski Ruiz",
+      "licencia": "AM05322815",
+      "hcp": 30.8,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -73,6 +174,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.103Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
+  ]
 }

@@ -1,56 +1,568 @@
 {
   "tourId": 67971,
   "url": "https://www.nextcaddy.com/tour/67971",
-  "scrapedAt": "2026-06-24T14:57:59.774Z",
+  "scrapedAt": "2026-10-30T14:26:50.723Z",
   "meta": {
     "name": "Campeonato de Madrid Dobles de Profesionales",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Centro Nacional de Golf",
     "courseCode": "CMA8",
-    "dateStart": null,
+    "dateStart": "2026-07-06",
     "dateEnd": null,
     "format": "Medal Play (Scratch) 25º Circuito De Mad",
     "categories": [
       "Profesional",
       "Caballeros",
       "Señoras",
-      "Infantil",
+      "Senior Masculino",
       "Senior",
+      "Infantil",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-07-06",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 36
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
+      "name": "Jaime Romeral Rossi",
+      "licencia": "CM61921263",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 1,
+      "name": "Pedro Oriol Sanchez-Blanco",
+      "licencia": "CM011840-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Daniel Robles Delval",
+      "licencia": "88193892-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Angel Soria Casaponsa",
+      "licencia": "8819821152",
+      "hcp": 0.6,
+      "nivel": "M"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Angel Ferrer Martinez",
+      "licencia": "LV00403977",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Leonardo Gaston Quinteros",
+      "licencia": "CMA81848-P",
+      "hcp": 4.6,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Jorge Garcia De La Osada",
+      "licencia": "CM333698-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Diego Fernandez Garcia",
+      "licencia": "CM333697-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Angel De Paz Rodriguez",
+      "licencia": "CM020873-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Poggio Diaz-Tejeiro",
+      "licencia": "CM050531-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Orlando Mena Castillo",
+      "licencia": "CM060869-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Salvador Rivero Sanchez",
+      "licencia": "CM110310-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Maria Matamoros Mora",
+      "licencia": "CM003203-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "José Antonio Balcones Lopez",
+      "licencia": "88180367-P",
+      "hcp": 0.8,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Alvaro Calero Campillo",
+      "licencia": "88033695-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Jorge Junquera Sevillano",
+      "licencia": "CM003674-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Garrido-Lestache Lopez",
+      "licencia": "CM113852-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Gregorio Ferrandez",
+      "licencia": "CM003600-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Manuel Peralta Molina",
+      "licencia": "CM023896-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Jose Manuel Peralta Camacho",
+      "licencia": "CM021004-P",
+      "hcp": 0.2,
+      "nivel": "P+"
+    },
+    {
+      "orden": 11,
+      "name": "Carlos Balmaseda Sanchez",
+      "licencia": "CM020523-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 11,
+      "name": "Vicente Blazquez Sanchez",
+      "licencia": "CM070725-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 12,
+      "name": "Pedro Gallegos Marsal",
+      "licencia": "CM04777820",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "George Young Casanova",
+      "licencia": "CME9796295",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Davila Martin",
+      "licencia": "CM000275-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 13,
+      "name": "Alberto Davila Martin",
+      "licencia": "77591785-P",
+      "hcp": 2,
+      "nivel": "P+"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Manuel Pardo Benitez",
+      "licencia": "88343574-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 14,
+      "name": "Ruben Pardo Rodriguez",
+      "licencia": "88193584-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 15,
+      "name": "Pablo Calvo Perez",
+      "licencia": "CM021349-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Alvarez Jimenez",
+      "licencia": "CM023361-P",
+      "hcp": 1.6,
+      "nivel": "P+"
+    },
+    {
+      "orden": 16,
       "name": "Vanessa Andreina Chavez Ferrer",
       "licencia": "CM003807-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 1,
+      "orden": 16,
       "name": "Alberto Diaz Bravo",
       "licencia": "77700037-P",
       "hcp": 0,
       "nivel": "P+"
     },
     {
-      "orden": 2,
+      "orden": 17,
+      "name": "Juan Francisco Ojeda Racioppi",
+      "licencia": "CMC83585-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 17,
+      "name": "Joaquin Estevez Vila",
+      "licencia": "CMA80052-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 18,
+      "name": "Alejandro Aguilera Martin",
+      "licencia": "CM023690-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 18,
+      "name": "Javier Colomo Hidalgo",
+      "licencia": "CM001355-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 19,
+      "name": "Daniel Berna Manzanares",
+      "licencia": "77533091-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 19,
+      "name": "Raul Pascual Aragones",
+      "licencia": "77533756-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 20,
+      "name": "David Salgado Chacon",
+      "licencia": "CM113143-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 20,
+      "name": "Sigot Lopez",
+      "licencia": "CMA83438-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 21,
+      "name": "Sergio Tello Tello",
+      "licencia": "CM081453-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 21,
+      "name": "Fernando Del Amo Morata",
+      "licencia": "CM080567-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 22,
+      "name": "Luis Manuel Portela Rial",
+      "licencia": "GC541090-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 22,
+      "name": "Francisco Lagarto Alonso",
+      "licencia": "77091285-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 23,
+      "name": "Gonzalo Cuellar Gago",
+      "licencia": "CM60063846",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 23,
+      "name": "Pedro Garcia Armenteros",
+      "licencia": "CMA8162965",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 24,
+      "name": "Carlos Sanchez Molina",
+      "licencia": "CM021764-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 24,
+      "name": "Hugo Esposito Menard",
+      "licencia": "CM113508-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 25,
+      "name": "Andres Rojano Moreno",
+      "licencia": "CM001053-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 25,
+      "name": "Ignacio Garrido Villacieros",
+      "licencia": "CM000593-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 26,
+      "name": "Jose Maria Isbert Vernis",
+      "licencia": "CM041757-P",
+      "hcp": null,
+      "nivel": "P+"
+    },
+    {
+      "orden": 26,
+      "name": "Javier Herrero Gonzalez",
+      "licencia": "CM153326-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 27,
+      "name": "Daniel Castrillo Antolin",
+      "licencia": "CM663581-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 27,
+      "name": "Julio Moreno Mendoza",
+      "licencia": "CM113457-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 28,
+      "name": "Alfonso Miguel Morales Aparicio",
+      "licencia": "77393569-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 28,
+      "name": "Gonzalo Ruiz De La Torre Esporrin",
+      "licencia": "CM000877-P",
+      "hcp": 3.2,
+      "nivel": "P+"
+    },
+    {
+      "orden": 29,
+      "name": "Martin Saquicoray Pozuelo",
+      "licencia": "CM61815795",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 29,
+      "name": "Iñigo Aguirre Garay",
+      "licencia": "CM01903677",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 30,
+      "name": "Fernando Nogales Crespo",
+      "licencia": "CM030565-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 30,
+      "name": "Julian Nogales Crespo",
+      "licencia": "CM020333-P",
+      "hcp": 5.7,
+      "nivel": "P+"
+    },
+    {
+      "orden": 31,
+      "name": "Francisco Zafra Molina",
+      "licencia": "CM110476-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 31,
+      "name": "Jose Carlos Zafra Camarmo",
+      "licencia": "CM111249-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 32,
+      "name": "Luis Miguel Pozo Nicolas",
+      "licencia": "CM921207-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 32,
+      "name": "Rafael Martin Martinez",
+      "licencia": "CM611470-P",
+      "hcp": 5.8,
+      "nivel": "P+"
+    },
+    {
+      "orden": 33,
+      "name": "Francisco Alvarez Garcia",
+      "licencia": "CM040755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 33,
+      "name": "Miguel Angel Leiva Vera",
+      "licencia": "CM810512-P",
+      "hcp": 3.1,
+      "nivel": "P+"
+    },
+    {
+      "orden": 34,
+      "name": "Manuel Moreno Campos",
+      "licencia": "CM073188-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 34,
+      "name": "Manuel Moreno Perez",
+      "licencia": "CM070256-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 35,
+      "name": "Ivan Tiemblo Chinarro",
+      "licencia": "77053474-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 35,
+      "name": "Jorge Luis Catala Merlo",
+      "licencia": "CM12150309",
+      "hcp": 3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 36,
       "name": "Javier Cobiella Lajo",
       "licencia": "CM11815461",
       "hcp": null,
       "nivel": "J"
     },
     {
-      "orden": 2,
+      "orden": 36,
       "name": "Carlos Gonzalez Bueno",
       "licencia": "CM11888795",
       "hcp": null,
       "nivel": "J"
+    },
+    {
+      "orden": 37,
+      "name": "Pedro Branco-Rodriguez Cardoso",
+      "licencia": "CM183249-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 37,
+      "name": "Ignacio Puga Alvaro",
+      "licencia": "CM001208-P",
+      "hcp": 2.2,
+      "nivel": "P+"
+    },
+    {
+      "orden": 38,
+      "name": "Sergio Vela Torres",
+      "licencia": "CMA83653-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 38,
+      "name": "Cristina Turegano Mate",
+      "licencia": "CM004043-P",
+      "hcp": 0,
+      "nivel": "P+"
     }
   ],
   "horarios": [
@@ -60,164 +572,146 @@
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Raul Pascual Aragones",
+          "name": "Javier Garrido-Lestache Lopez",
           "hcp": 0,
-          "ins": "2353162",
-          "jid": "72492",
+          "ins": "2352984",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 1,
-          "name": "Daniel Berna Manzanares",
+          "name": "Luis Gregorio Ferrandez",
           "hcp": 0,
-          "ins": "2353161",
-          "jid": "72492",
+          "ins": "2352985",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 1,
+          "name": "Javier Colomo Hidalgo",
+          "hcp": 0,
+          "ins": "2353136",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 1,
+          "name": "Alejandro Aguilera Martin",
+          "hcp": 0,
+          "ins": "2353135",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Juan Francisco Ojeda Racioppi",
+          "hcp": 0,
+          "ins": "2353122",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
+          "name": "Joaquin Estevez Vila",
+          "hcp": 0,
+          "ins": "2353123",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 2,
           "name": "Carlos Balmaseda Sanchez",
           "hcp": 3.9,
           "ins": "2353041",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 1,
+          "tee": 2,
           "name": "Vicente Blazquez Sanchez",
           "hcp": 3.6,
           "ins": "2353040",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 2,
-          "name": "Jose Davila Martin",
-          "hcp": 1,
-          "ins": "2353060",
-          "jid": "72492",
+          "tee": 3,
+          "name": "Daniel Berna Manzanares",
+          "hcp": 0,
+          "ins": "2353161",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 2,
-          "name": "Alberto Davila Martin",
-          "hcp": 2,
-          "ins": "2353061",
-          "jid": "72492",
+          "tee": 3,
+          "name": "Raul Pascual Aragones",
+          "hcp": 0,
+          "ins": "2353162",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 2,
+          "tee": 3,
+          "name": "Carlos Sanchez Molina",
+          "hcp": 0,
+          "ins": "2353343",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 3,
+          "name": "Hugo Esposito Menard",
+          "hcp": 0,
+          "ins": "2353344",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 4,
           "name": "Jaime Romeral Rossi",
           "hcp": 2.8,
           "ins": "2351226",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "J"
         },
         {
           "time": "09:30",
-          "tee": 2,
+          "tee": 4,
           "name": "Pedro Oriol Sanchez-Blanco",
           "hcp": 0,
           "ins": "2351225",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Juan Francisco Ojeda Racioppi",
-          "hcp": 0,
-          "ins": "2353122",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Joaquin Estevez Vila",
-          "hcp": 0,
-          "ins": "2353123",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Luis Gregorio Ferrandez",
-          "hcp": 0,
-          "ins": "2352985",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 3,
-          "name": "Javier Garrido-Lestache Lopez",
-          "hcp": 0,
-          "ins": "2352984",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 4,
-          "name": "Carlos Sanchez Molina",
-          "hcp": 0,
-          "ins": "2353343",
-          "jid": "72492",
-          "nivel": "P"
+          "name": "Martin Saquicoray Pozuelo",
+          "hcp": 3.8,
+          "ins": "2353428",
+          "jid": "72493",
+          "nivel": "J"
         },
         {
           "time": "09:30",
           "tee": 4,
-          "name": "Hugo Esposito Menard",
-          "hcp": 0,
-          "ins": "2353344",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "Julio Moreno Mendoza",
-          "hcp": 0,
-          "ins": "2353420",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 4,
-          "name": "Daniel Castrillo Antolin",
-          "hcp": 0,
-          "ins": "2353419",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "Jose Manuel Pardo Benitez",
-          "hcp": 0,
-          "ins": "2353065",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 5,
-          "name": "Ruben Pardo Rodriguez",
-          "hcp": 0,
-          "ins": "2353066",
-          "jid": "72492",
-          "nivel": "P"
+          "name": "Iñigo Aguirre Garay",
+          "hcp": 1.5,
+          "ins": "2353429",
+          "jid": "72493",
+          "nivel": "J"
         },
         {
           "time": "09:30",
@@ -225,7 +719,7 @@
           "name": "Jose Manuel Peralta Molina",
           "hcp": 0,
           "ins": "2353034",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
@@ -234,26 +728,26 @@
           "name": "Jose Manuel Peralta Camacho",
           "hcp": 0.2,
           "ins": "2353033",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 6,
-          "name": "Alejandro Aguilera Martin",
-          "hcp": 0,
-          "ins": "2353135",
-          "jid": "72492",
-          "nivel": "P"
+          "tee": 5,
+          "name": "Gonzalo Cuellar Gago",
+          "hcp": 3,
+          "ins": "2353261",
+          "jid": "72493",
+          "nivel": "J"
         },
         {
           "time": "09:30",
-          "tee": 6,
-          "name": "Javier Colomo Hidalgo",
-          "hcp": 0,
-          "ins": "2353136",
-          "jid": "72492",
-          "nivel": "P"
+          "tee": 5,
+          "name": "Pedro Garcia Armenteros",
+          "hcp": 2.7,
+          "ins": "2353260",
+          "jid": "72493",
+          "nivel": "J"
         },
         {
           "time": "09:30",
@@ -261,7 +755,7 @@
           "name": "Jose Maria Isbert Vernis",
           "hcp": 2,
           "ins": "2353415",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
@@ -270,475 +764,421 @@
           "name": "Javier Herrero Gonzalez",
           "hcp": 0,
           "ins": "2353416",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 7,
+          "tee": 6,
           "name": "Miguel Angel De Paz Rodriguez",
           "hcp": 1.3,
           "ins": "2352823",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 7,
+          "tee": 6,
           "name": "Jose Poggio Diaz-Tejeiro",
           "hcp": 0,
           "ins": "2352822",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 7,
-          "name": "Jose Maria Matamoros Mora",
-          "hcp": 0,
-          "ins": "2352943",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 7,
-          "name": "José Antonio Balcones Lopez",
-          "hcp": 0.8,
-          "ins": "2352942",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
-          "name": "Diego Fernandez Garcia",
-          "hcp": 0,
-          "ins": "2352806",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
-          "name": "Jorge Garcia De La Osada",
-          "hcp": 0,
-          "ins": "2352805",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 8,
           "name": "Alvaro Calero Campillo",
           "hcp": 0,
           "ins": "2352968",
-          "jid": "72492",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Jorge Junquera Sevillano",
+          "hcp": 0,
+          "ins": "2352969",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Alfonso Miguel Morales Aparicio",
+          "hcp": 0,
+          "ins": "2353424",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 7,
+          "name": "Gonzalo Ruiz De La Torre Esporrin",
+          "hcp": 3.2,
+          "ins": "2353425",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 8,
-          "name": "Jorge Junquera Sevillano",
-          "hcp": 0,
-          "ins": "2352969",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Alfonso Miguel Morales Aparicio",
-          "hcp": 0,
-          "ins": "2353424",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Gonzalo Ruiz De La Torre Esporrin",
-          "hcp": 3.2,
-          "ins": "2353425",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Daniel Robles Delval",
-          "hcp": 0,
-          "ins": "2352289",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 9,
-          "name": "Angel Soria Casaponsa",
-          "hcp": 0,
-          "ins": "2352290",
-          "jid": "72492",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Martin Saquicoray Pozuelo",
-          "hcp": 3.8,
-          "ins": "2353428",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Iñigo Aguirre Garay",
-          "hcp": 1.5,
-          "ins": "2353429",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Manuel Moreno Perez",
-          "hcp": 0,
-          "ins": "2353640",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 10,
-          "name": "Manuel Moreno Campos",
-          "hcp": 0,
-          "ins": "2353639",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 11,
-          "name": "Pablo Calvo Perez",
-          "hcp": 1.3,
-          "ins": "2353082",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 11,
-          "name": "Manuel Alvarez Jimenez",
-          "hcp": 1.6,
-          "ins": "2353081",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 11,
           "name": "Andres Rojano Moreno",
           "hcp": 0,
           "ins": "2353379",
-          "jid": "72492",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Ignacio Garrido Villacieros",
+          "hcp": 0,
+          "ins": "2353380",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "David Salgado Chacon",
+          "hcp": 0,
+          "ins": "2353168",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 8,
+          "name": "Sigot Lopez",
+          "hcp": 0,
+          "ins": "2353169",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Luis Manuel Portela Rial",
+          "hcp": 4.2,
+          "ins": "2353215",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Francisco Lagarto Alonso",
+          "hcp": 0,
+          "ins": "2353214",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "Pedro Gallegos Marsal",
+          "hcp": 2,
+          "ins": "2353051",
+          "jid": "72493",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 9,
+          "name": "George Young Casanova",
+          "hcp": 0.3,
+          "ins": "2353050",
+          "jid": "72493",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Daniel Robles Delval",
+          "hcp": 0,
+          "ins": "2352289",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Angel Soria Casaponsa",
+          "hcp": 0.6,
+          "ins": "2352290",
+          "jid": "72493",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Pablo Calvo Perez",
+          "hcp": 1.3,
+          "ins": "2353082",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Manuel Alvarez Jimenez",
+          "hcp": 1.6,
+          "ins": "2353081",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 11,
-          "name": "Ignacio Garrido Villacieros",
+          "name": "Jorge Garcia De La Osada",
           "hcp": 0,
-          "ins": "2353380",
-          "jid": "72492",
+          "ins": "2352805",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 12,
-          "name": "Pedro Branco-Rodriguez Cardoso",
+          "tee": 11,
+          "name": "Diego Fernandez Garcia",
           "hcp": 0,
-          "ins": "2353787",
-          "jid": "72492",
+          "ins": "2352806",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 12,
-          "name": "Ignacio Puga Alvaro",
-          "hcp": 2.2,
-          "ins": "2353788",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 12,
-          "name": "Fernando Nogales Crespo",
-          "hcp": 0,
-          "ins": "2353432",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 12,
-          "name": "Julian Nogales Crespo",
-          "hcp": 5.7,
-          "ins": "2353431",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 13,
+          "tee": 11,
           "name": "Sergio Tello Tello",
           "hcp": 0,
           "ins": "2353186",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 13,
+          "tee": 11,
           "name": "Fernando Del Amo Morata",
           "hcp": 0,
           "ins": "2353187",
-          "jid": "72492",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 13,
-          "name": "Francisco Zafra Molina",
+          "tee": 12,
+          "name": "Jose Maria Matamoros Mora",
           "hcp": 0,
-          "ins": "2353480",
-          "jid": "72492",
+          "ins": "2352943",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 13,
-          "name": "Jose Carlos Zafra Camarmo",
-          "hcp": 0,
-          "ins": "2353481",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 14,
-          "name": "Javier Cobiella Lajo",
-          "hcp": 1.1,
-          "ins": "2353718",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 14,
-          "name": "Carlos Gonzalez Bueno",
-          "hcp": 0.6,
-          "ins": "2353717",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 14,
-          "name": "Pedro Gallegos Marsal",
-          "hcp": 2,
-          "ins": "2353051",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 14,
-          "name": "George Young Casanova",
-          "hcp": 0.3,
-          "ins": "2353050",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 15,
-          "name": "Francisco Alvarez Garcia",
-          "hcp": 0,
-          "ins": "2353536",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 15,
-          "name": "Miguel Angel Leiva Vera",
-          "hcp": 3.1,
-          "ins": "2353537",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 15,
-          "name": "Ivan Tiemblo Chinarro",
-          "hcp": 0,
-          "ins": "2353648",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 15,
-          "name": "Jorge Luis Catala Merlo",
-          "hcp": 3,
-          "ins": "2353649",
-          "jid": "72492",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 16,
-          "name": "Luis Miguel Pozo Nicolas",
-          "hcp": 0,
-          "ins": "2353499",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 16,
-          "name": "Rafael Martin Martinez",
-          "hcp": 5.8,
-          "ins": "2353500",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 16,
-          "name": "Orlando Mena Castillo",
-          "hcp": 0,
-          "ins": "2352865",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 16,
-          "name": "Salvador Rivero Sanchez",
-          "hcp": 0,
-          "ins": "2352866",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 17,
-          "name": "Gonzalo Cuellar Gago",
-          "hcp": 3,
-          "ins": "2353261",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 17,
-          "name": "Pedro Garcia Armenteros",
-          "hcp": 2.7,
-          "ins": "2353260",
-          "jid": "72492",
-          "nivel": "J"
-        },
-        {
-          "time": "09:30",
-          "tee": 17,
-          "name": "Sergio Vela Torres",
-          "hcp": 0,
-          "ins": "2354009",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 17,
-          "name": "Cristina Turegano Mate",
-          "hcp": 0,
-          "ins": "2354010",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:30",
-          "tee": 18,
-          "name": "Miguel Angel Ferrer Martinez",
+          "tee": 12,
+          "name": "José Antonio Balcones Lopez",
           "hcp": 0.8,
-          "ins": "2352751",
-          "jid": "72492",
-          "nivel": "M"
-        },
-        {
-          "time": "09:30",
-          "tee": 18,
-          "name": "Leonardo Gaston Quinteros",
-          "hcp": 4.6,
-          "ins": "2352750",
-          "jid": "72492",
+          "ins": "2352942",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
-          "tee": 18,
+          "tee": 12,
+          "name": "Jose Davila Martin",
+          "hcp": 1,
+          "ins": "2353060",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 12,
+          "name": "Alberto Davila Martin",
+          "hcp": 2,
+          "ins": "2353061",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 13,
+          "name": "Pedro Branco-Rodriguez Cardoso",
+          "hcp": 0,
+          "ins": "2353787",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 13,
+          "name": "Ignacio Puga Alvaro",
+          "hcp": 2.2,
+          "ins": "2353788",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 13,
           "name": "Vanessa Andreina Chavez Ferrer",
           "hcp": 0,
           "ins": "2353098",
-          "jid": "72492",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 13,
+          "name": "Alberto Diaz Bravo",
+          "hcp": 0,
+          "ins": "2353099",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 14,
+          "name": "Fernando Nogales Crespo",
+          "hcp": 0,
+          "ins": "2353432",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 14,
+          "name": "Julian Nogales Crespo",
+          "hcp": 5.7,
+          "ins": "2353431",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 14,
+          "name": "Francisco Alvarez Garcia",
+          "hcp": 0,
+          "ins": "2353536",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 14,
+          "name": "Miguel Angel Leiva Vera",
+          "hcp": 3.1,
+          "ins": "2353537",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Ivan Tiemblo Chinarro",
+          "hcp": 0,
+          "ins": "2353648",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Jorge Luis Catala Merlo",
+          "hcp": 3,
+          "ins": "2353649",
+          "jid": "72493",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Javier Cobiella Lajo",
+          "hcp": 1.1,
+          "ins": "2353718",
+          "jid": "72493",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 16,
+          "name": "Carlos Gonzalez Bueno",
+          "hcp": 0.6,
+          "ins": "2353717",
+          "jid": "72493",
+          "nivel": "J"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Francisco Zafra Molina",
+          "hcp": 0,
+          "ins": "2353480",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Jose Carlos Zafra Camarmo",
+          "hcp": 0,
+          "ins": "2353481",
+          "jid": "72493",
+          "nivel": "P"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Miguel Angel Ferrer Martinez",
+          "hcp": 0.8,
+          "ins": "2352751",
+          "jid": "72493",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 17,
+          "name": "Leonardo Gaston Quinteros",
+          "hcp": 4.6,
+          "ins": "2352750",
+          "jid": "72493",
           "nivel": "P"
         },
         {
           "time": "09:30",
           "tee": 18,
-          "name": "Alberto Diaz Bravo",
+          "name": "Salvador Rivero Sanchez",
           "hcp": 0,
-          "ins": "2353099",
-          "jid": "72492",
+          "ins": "2352866",
+          "jid": "72493",
           "nivel": "P"
         },
         {
-          "time": "09:39",
-          "tee": 1,
-          "name": "Luis Manuel Portela Rial",
-          "hcp": 4.2,
-          "ins": "2353215",
-          "jid": "72492",
+          "time": "09:30",
+          "tee": 18,
+          "name": "Orlando Mena Castillo",
+          "hcp": 0,
+          "ins": "2352865",
+          "jid": "72493",
           "nivel": "P"
         },
         {
-          "time": "09:39",
-          "tee": 1,
-          "name": "Francisco Lagarto Alonso",
+          "time": "09:30",
+          "tee": 18,
+          "name": "Manuel Moreno Campos",
           "hcp": 0,
-          "ins": "2353214",
-          "jid": "72492",
+          "ins": "2353639",
+          "jid": "72493",
           "nivel": "P"
         },
         {
-          "time": "09:39",
-          "tee": 1,
-          "name": "David Salgado Chacon",
+          "time": "09:30",
+          "tee": 18,
+          "name": "Manuel Moreno Perez",
           "hcp": 0,
-          "ins": "2353168",
-          "jid": "72492",
-          "nivel": "P"
-        },
-        {
-          "time": "09:39",
-          "tee": 1,
-          "name": "Sigot Lopez",
-          "hcp": 0,
-          "ins": "2353169",
-          "jid": "72492",
+          "ins": "2353640",
+          "jid": "72493",
           "nivel": "P"
         }
       ]
@@ -768,11 +1208,6 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Marney, Michael",
-          "holeNumber": 13,
-          "createdAt": "28/07/25 10:14:08"
-        },
-        {
           "playerName": "Monks, Paul",
           "holeNumber": 8,
           "createdAt": "28/07/25 10:57:11"
@@ -784,12 +1219,19 @@
         },
         {
           "playerName": "Marney, Michael",
+          "holeNumber": 13,
+          "createdAt": "28/07/25 10:14:08"
+        },
+        {
+          "playerName": "Marney, Michael",
           "holeNumber": 8,
           "createdAt": "28/07/25 13:02:40"
         }
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-05T21:07:46.532Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3383634678_rrll_cng.pdf"
+  ]
 }

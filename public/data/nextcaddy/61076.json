@@ -1,29 +1,2226 @@
 {
   "tourId": 61076,
   "url": "https://www.nextcaddy.com/tour/61076",
-  "scrapedAt": "2026-06-24T14:58:25.284Z",
+  "scrapedAt": "2026-10-30T14:28:09.331Z",
   "meta": {
     "name": "Torneo Senior Sevilla",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club Sevilla Golf",
     "courseCode": "AM85",
-    "dateStart": null,
+    "dateStart": "2026-09-06",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Senior",
       "Caballeros",
       "Señoras",
+      "SENIOR",
+      "CABALLEROS",
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-06",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Senior 1A Categoria",
+      "expectedJugadores": 34,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jesus Manuel Ferreiro Dieguez",
+          "licencia": "AMG3904039",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2389967
+        },
+        {
+          "pos": 2,
+          "name": "Jason Howard Thackray",
+          "licencia": "AM61349574",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2376092
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Ortega Amezaga",
+          "licencia": "AM07027058",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2393457
+        },
+        {
+          "pos": 4,
+          "name": "Emilio Gonzalez Mendez",
+          "licencia": "AMG3492268",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2386320
+        },
+        {
+          "pos": 5,
+          "name": "Frank Scheelings",
+          "licencia": "AME2930861",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2375576
+        },
+        {
+          "pos": 6,
+          "name": "Juan Fernandez Nuñez",
+          "licencia": "AM07409669",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2393016
+        },
+        {
+          "pos": 7,
+          "name": "Carlos Nardiz Martinez",
+          "licencia": "AMG8360893",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2390521
+        },
+        {
+          "pos": 8,
+          "name": "James Dorman Greene",
+          "licencia": "AM60915470",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2378374
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Olle Bertrand",
+          "licencia": "AM85091788",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2394546
+        },
+        {
+          "pos": 10,
+          "name": "Graham Bassi",
+          "licencia": "AMJ5976812",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2376212
+        },
+        {
+          "pos": 11,
+          "name": "Jose Luis Bootello Ramirez",
+          "licencia": "AM15210776",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2380792
+        },
+        {
+          "pos": 12,
+          "name": "Fernando Adarve Lozano",
+          "licencia": "AM95347471",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2394382
+        },
+        {
+          "pos": 13,
+          "name": "Alvaro Tellez Garcia",
+          "licencia": "AM15205802",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2375304
+        },
+        {
+          "pos": 14,
+          "name": "Mark Mullings Ray",
+          "licencia": "AM00488756",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2377237
+        },
+        {
+          "pos": 15,
+          "name": "Juan Jose Gomez Santana",
+          "licencia": "AM96131872",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2385222
+        },
+        {
+          "pos": 16,
+          "name": "Goyo Chanfreut Rodriguez",
+          "licencia": "AMF7603315",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2376094
+        },
+        {
+          "pos": 17,
+          "name": "Mario Muñoz Macias",
+          "licencia": "AM75964518",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2394291
+        },
+        {
+          "pos": 18,
+          "name": "Andrew Whitney Jhon",
+          "licencia": "AM75498350",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2391428
+        },
+        {
+          "pos": 19,
+          "name": "Eduardo Moran Sanchez",
+          "licencia": "AM95760289",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2377838
+        },
+        {
+          "pos": 20,
+          "name": "Jose Barroso Rubiales",
+          "licencia": "AM70935839",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2377544
+        },
+        {
+          "pos": 21,
+          "name": "Santiago Urquijo Ruiz-Gimenez",
+          "licencia": "AM02031550",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2391272
+        },
+        {
+          "pos": 22,
+          "name": "Francisco Farfan Rueda",
+          "licencia": "AMD7606274",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2376031
+        },
+        {
+          "pos": 23,
+          "name": "Anthony Fernandes",
+          "licencia": "AM51807911",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2393999
+        },
+        {
+          "pos": 24,
+          "name": "Steve Barnes",
+          "licencia": "AM83371794",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2390895
+        },
+        {
+          "pos": 25,
+          "name": "Rhys Wheeler",
+          "licencia": "AM83167387",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2376102
+        },
+        {
+          "pos": 26,
+          "name": "Alistair Marshall",
+          "licencia": "AM83888581",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2376086
+        },
+        {
+          "pos": 27,
+          "name": "Javier Garcia Lopez",
+          "licencia": "AM83609625",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2380096
+        },
+        {
+          "pos": 28,
+          "name": "Jose Mª Gutierrez-Rave Labourdette",
+          "licencia": "AM95793231",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2394229
+        },
+        {
+          "pos": 29,
+          "name": "Paul Holliday",
+          "licencia": "AM16961754",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2391649
+        },
+        {
+          "pos": 30,
+          "name": "Pedro Luis Blanco Pastor",
+          "licencia": "AM10600682",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2394795
+        },
+        {
+          "pos": 31,
+          "name": "Luis Bernal Iglesias",
+          "licencia": "AMI5215938",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2384435
+        },
+        {
+          "pos": 32,
+          "name": "Raul Martinez Lopez",
+          "licencia": "AM10202187",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2378853
+        },
+        {
+          "pos": 33,
+          "name": "Emilio Jimenez Mateos",
+          "licencia": "AM71601188",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2381573
+        },
+        {
+          "pos": null,
+          "name": "Fernando Pierrard Hardy",
+          "licencia": "AM05055118",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2394198
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Senior 2A Categoria",
+      "expectedJugadores": 22,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Francisco Medina Ruiz De Alarcon",
+          "licencia": "AM06265442",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2378798
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Jose Aguilar Cava",
+          "licencia": "AM06952696",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2380807
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Sanz Carmona",
+          "licencia": "AMA2614953",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2380980
+        },
+        {
+          "pos": 4,
+          "name": "Jose Duarte Aguilar",
+          "licencia": "AMC2058468",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2377521
+        },
+        {
+          "pos": 5,
+          "name": "Fco Javier Bermudez Cabello",
+          "licencia": "AM75700416",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2387365
+        },
+        {
+          "pos": 6,
+          "name": "Jose Maria Varona Perez",
+          "licencia": "AM04205092",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2375756
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Muñoz Muñoz",
+          "licencia": "AM10988783",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2385650
+        },
+        {
+          "pos": 8,
+          "name": "David Muñoz Zamora",
+          "licencia": "AM95897542",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2394378
+        },
+        {
+          "pos": 9,
+          "name": "Djamel Derguini",
+          "licencia": "AM24345010",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386046
+        },
+        {
+          "pos": 10,
+          "name": "Angel Jose Garcia-Valdecasas Alex",
+          "licencia": "AM65156952",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2379035
+        },
+        {
+          "pos": 11,
+          "name": "Jesus Bernardez Sarabia",
+          "licencia": "AMC9756009",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2387995
+        },
+        {
+          "pos": 12,
+          "name": "Philipp Klos",
+          "licencia": "AMG9495093",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2384527
+        },
+        {
+          "pos": 13,
+          "name": "David Reynolds",
+          "licencia": "AMI5927437",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2381223
+        },
+        {
+          "pos": 14,
+          "name": "Jose Maria Caballero Gomez",
+          "licencia": "AM95745403",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2382908
+        },
+        {
+          "pos": 15,
+          "name": "Alberto Saavedra Aubert",
+          "licencia": "AM04822139",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2375861
+        },
+        {
+          "pos": 16,
+          "name": "Juan Jesus Cardenas Jimenez",
+          "licencia": "AM22700962",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2380981
+        },
+        {
+          "pos": 17,
+          "name": "Antonio Espinosa Fuentes",
+          "licencia": "AMF7619064",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2376195
+        },
+        {
+          "pos": 18,
+          "name": "Manuel Rubiales Guisado",
+          "licencia": "AME7808305",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2383653
+        },
+        {
+          "pos": 19,
+          "name": "Jens Haller",
+          "licencia": "AMG9965839",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2390145
+        },
+        {
+          "pos": 20,
+          "name": "Miguel Angel Gil Pastor",
+          "licencia": "AM25354255",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2387994
+        },
+        {
+          "pos": null,
+          "name": "Jose Manuel Perez Gomez",
+          "licencia": "AM85937393",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2390498
+        },
+        {
+          "pos": null,
+          "name": "Joaquin Gamez Rojano",
+          "licencia": "AM10139722",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2376820
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Senior 3A Categoria",
+      "expectedJugadores": 24,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Manuel Jesus Maldonado Tornero",
+          "licencia": "AMC7354660",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2375765
+        },
+        {
+          "pos": 2,
+          "name": "Rafael Garcia-Fajardo Palacios",
+          "licencia": "AM15987827",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2375677
+        },
+        {
+          "pos": 3,
+          "name": "Cristobal Rojas Gonzalez",
+          "licencia": "AMG8481527",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2390858
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Ramirez Vega",
+          "licencia": "AMG6003584",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2380204
+        },
+        {
+          "pos": 5,
+          "name": "Andres Garcia Cardenas",
+          "licencia": "AM32326523",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2390740
+        },
+        {
+          "pos": 6,
+          "name": "Jesus Martinez Prior",
+          "licencia": "AM85609218",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2390938
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Gisonno",
+          "licencia": "AMG9196314",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2380312
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Millan Lopez",
+          "licencia": "AMF7061479",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2391992
+        },
+        {
+          "pos": 9,
+          "name": "Ariel Fiecconi Gurovich",
+          "licencia": "AMC8164585",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2376201
+        },
+        {
+          "pos": 10,
+          "name": "Jesus Lopez Fernandez",
+          "licencia": "AM76885942",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2382107
+        },
+        {
+          "pos": 11,
+          "name": "Jose Francisco Campos Sanchez",
+          "licencia": "AM06188068",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2387374
+        },
+        {
+          "pos": 12,
+          "name": "Alfonso Muñoz Encinas",
+          "licencia": "AM10964335",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2379017
+        },
+        {
+          "pos": 13,
+          "name": "Juan Carlos Caño Delgado",
+          "licencia": "AMJ9091054",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2393897
+        },
+        {
+          "pos": 14,
+          "name": "Orla Martin Joergensen",
+          "licencia": "AM76914987",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2382421
+        },
+        {
+          "pos": 15,
+          "name": "Eduardo Miguel Terron Bellido",
+          "licencia": "AMG3904339",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2386283
+        },
+        {
+          "pos": 16,
+          "name": "Javier Lozano Roldan",
+          "licencia": "AMK3968283",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2378572
+        },
+        {
+          "pos": 17,
+          "name": "Vicente Jesus Ortega Lechuga",
+          "licencia": "AM45051438",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2393898
+        },
+        {
+          "pos": 18,
+          "name": "Juan Carlos Carreira Mancera",
+          "licencia": "AM04060540",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2375618
+        },
+        {
+          "pos": 19,
+          "name": "Jose Luis Guerrero Estrada",
+          "licencia": "AM95983652",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2394525
+        },
+        {
+          "pos": 20,
+          "name": "Jose Antonio Gallardo Gonzalez",
+          "licencia": "AM04701355",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2375859
+        },
+        {
+          "pos": 21,
+          "name": "Alfredo Ramon Moreno Casado",
+          "licencia": "AMC8163694",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2376246
+        },
+        {
+          "pos": 22,
+          "name": "Fcº Javier Saquete Garbajosa",
+          "licencia": "AMG3744830",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2380439
+        },
+        {
+          "pos": 23,
+          "name": "Fco Javier Garcia Fernandez",
+          "licencia": "AM58346352",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2380086
+        },
+        {
+          "pos": null,
+          "name": "Javier Sanchez Garcia",
+          "licencia": "AMB2601669",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2390044
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Handicap Damas Senior 1A Categoria",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Celia Nebot Lorente",
+          "licencia": "AM95195497",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2380969
+        },
+        {
+          "pos": 2,
+          "name": "Angela Wheeler",
+          "licencia": "AM83905571",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2376104
+        },
+        {
+          "pos": 3,
+          "name": "Mª Jose Santiago Sanchez",
+          "licencia": "AM04815737",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375760
+        },
+        {
+          "pos": 4,
+          "name": "Josiane Derguini",
+          "licencia": "AM24345040",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2386049
+        },
+        {
+          "pos": 5,
+          "name": "Alison Marshall",
+          "licencia": "AM83915437",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2376091
+        },
+        {
+          "pos": 6,
+          "name": "Inmaculada Felices Esteban",
+          "licencia": "AMC7601781",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2375761
+        },
+        {
+          "pos": 7,
+          "name": "Rosario Barea De Lara",
+          "licencia": "AMG3473261",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2393438
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Handicap Damas Senior 2A Categoria",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Marta Queipo De Llano Argote",
+          "licencia": "AM15987829",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2375690
+        },
+        {
+          "pos": 2,
+          "name": "Mª Angeles Gonzalez Gavilan",
+          "licencia": "AM83797238",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2382134
+        },
+        {
+          "pos": 3,
+          "name": "Rosa Maria Ruiz Cabral",
+          "licencia": "AM95611127",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390733
+        },
+        {
+          "pos": 4,
+          "name": "Esperanza Hirschfeld Fabregas",
+          "licencia": "AM04894191",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2375623
+        },
+        {
+          "pos": 5,
+          "name": "Carmen Jimenez Bustos",
+          "licencia": "AM04772923",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2375854
+        },
+        {
+          "pos": 6,
+          "name": "Nora Alicia Gonzales Gisonno",
+          "licencia": "AMG9196281",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2380304
+        },
+        {
+          "pos": 7,
+          "name": "Rosa Espada Hinojosa",
+          "licencia": "AM04955479",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2375864
+        },
+        {
+          "pos": 8,
+          "name": "Encarnación Moreno Calderón",
+          "licencia": "AMK3002851",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2387338
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap Super Seniors",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Manuel La Chica Damas",
+          "licencia": "AM65095074",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2377417
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Gomez Escudero",
+          "licencia": "AM59342795",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2376128
+        },
+        {
+          "pos": 3,
+          "name": "Manuel Enrique Garcia Granados",
+          "licencia": "AM62109531",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2376824
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Ramon De Fata Gonzalez",
+          "licencia": "AM00222495",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2375331
+        },
+        {
+          "pos": 5,
+          "name": "Mohammed Mokhtari",
+          "licencia": "AM11154246",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2383695
+        },
+        {
+          "pos": 6,
+          "name": "Braulio Moreno Muñoz",
+          "licencia": "AM01043530",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2380337
+        },
+        {
+          "pos": 7,
+          "name": "Juan Costa Ribas",
+          "licencia": "AM75266053",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375683
+        },
+        {
+          "pos": 8,
+          "name": "Kees De Cock",
+          "licencia": "AM22237045",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375586
+        },
+        {
+          "pos": 9,
+          "name": "Juan Delgado Gazquez",
+          "licencia": "AM00355611",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375702
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Bernardez Sarabia",
+          "licencia": "AMC9757378",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2375610
+        },
+        {
+          "pos": 11,
+          "name": "Rafael Jimenez Romero",
+          "licencia": "AME7757710",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2375488
+        },
+        {
+          "pos": 12,
+          "name": "Osvaldo Miguel Appollonio Calderon",
+          "licencia": "AM10993518",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2385657
+        },
+        {
+          "pos": 13,
+          "name": "Mª Concepcion Gimenez Lafuente",
+          "licencia": "AM62109536",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2376826
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Senior 1A Categoria",
+      "jugadores": 34
+    },
+    "2": {
+      "name": "Handicap Senior 2A Categoria",
+      "jugadores": 22
+    },
+    "3": {
+      "name": "Handicap Senior 3A Categoria",
+      "jugadores": 24
+    },
+    "4": {
+      "name": "Handicap Damas Senior 1A Categoria",
+      "jugadores": 7
+    },
+    "5": {
+      "name": "Handicap Damas Senior 2A Categoria",
+      "jugadores": 8
+    },
+    "6": {
+      "name": "Handicap Super Seniors",
+      "jugadores": 13
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alvaro Tellez Garcia",
+      "licencia": "AM15205802",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Carlos Ramon De Fata Gonzalez",
+      "licencia": "AM00222495",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Rafael Jimenez Romero",
+      "licencia": "AME7757710",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Frank Scheelings",
+      "licencia": "AME2930861",
+      "hcp": 10.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Kees De Cock",
+      "licencia": "AM22237045",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Bernardez Sarabia",
+      "licencia": "AMC9757378",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Carlos Carreira Mancera",
+      "licencia": "AM04060540",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Esperanza Hirschfeld Fabregas",
+      "licencia": "AM04894191",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Rafael Garcia-Fajardo Palacios",
+      "licencia": "AM15987827",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Costa Ribas",
+      "licencia": "AM75266053",
+      "hcp": 13.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Marta Queipo De Llano Argote",
+      "licencia": "AM15987829",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Delgado Gazquez",
+      "licencia": "AM00355611",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Maria Varona Perez",
+      "licencia": "AM04205092",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Mª Jose Santiago Sanchez",
+      "licencia": "AM04815737",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Inmaculada Felices Esteban",
+      "licencia": "AMC7601781",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Manuel Jesus Maldonado Tornero",
+      "licencia": "AMC7354660",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Carmen Jimenez Bustos",
+      "licencia": "AM04772923",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Antonio Gallardo Gonzalez",
+      "licencia": "AM04701355",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Alberto Saavedra Aubert",
+      "licencia": "AM04822139",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Rosa Espada Hinojosa",
+      "licencia": "AM04955479",
+      "hcp": 29.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Francisco Farfan Rueda",
+      "licencia": "AMD7606274",
+      "hcp": 7.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Alistair Marshall",
+      "licencia": "AM83888581",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Alison Marshall",
+      "licencia": "AM83915437",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Jason Howard Thackray",
+      "licencia": "AM61349574",
+      "hcp": 7.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Goyo Chanfreut Rodriguez",
+      "licencia": "AMF7603315",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Rhys Wheeler",
+      "licencia": "AM83167387",
+      "hcp": 6.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Angela Wheeler",
+      "licencia": "AM83905571",
+      "hcp": 15.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Manuel Gomez Escudero",
+      "licencia": "AM59342795",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Antonio Espinosa Fuentes",
+      "licencia": "AMF7619064",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Ariel Fiecconi Gurovich",
+      "licencia": "AMC8164585",
+      "hcp": 20.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Graham Bassi",
+      "licencia": "AMJ5976812",
+      "hcp": 5.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Alfredo Ramon Moreno Casado",
+      "licencia": "AMC8163694",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Joaquin Gamez Rojano",
+      "licencia": "AM10139722",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Manuel Enrique Garcia Granados",
+      "licencia": "AM62109531",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Mª Concepcion Gimenez Lafuente",
+      "licencia": "AM62109536",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Mark Mullings Ray",
+      "licencia": "AM00488756",
+      "hcp": 5.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Juan Manuel La Chica Damas",
+      "licencia": "AM65095074",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Jose Duarte Aguilar",
+      "licencia": "AMC2058468",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Jose Barroso Rubiales",
+      "licencia": "AM70935839",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Eduardo Moran Sanchez",
+      "licencia": "AM95760289",
+      "hcp": 2.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "James Dorman Greene",
+      "licencia": "AM60915470",
+      "hcp": 5.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Javier Lozano Roldan",
+      "licencia": "AMK3968283",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Juan Francisco Medina Ruiz De Alarcon",
+      "licencia": "AM06265442",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Raul Martinez Lopez",
+      "licencia": "AM10202187",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 45,
+      "name": "Alfonso Muñoz Encinas",
+      "licencia": "AM10964335",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 46,
+      "name": "Angel Jose Garcia-Valdecasas Alex",
+      "licencia": "AM65156952",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 47,
+      "name": "Fco Javier Garcia Fernandez",
+      "licencia": "AM58346352",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Javier Garcia Lopez",
+      "licencia": "AM83609625",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
+      "name": "Fernando Ramirez Vega",
+      "licencia": "AMG6003584",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Nora Alicia Gonzales Gisonno",
+      "licencia": "AMG9196281",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 51,
+      "name": "Antonio Gisonno",
+      "licencia": "AMG9196314",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 52,
+      "name": "Braulio Moreno Muñoz",
+      "licencia": "AM01043530",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 53,
+      "name": "Fcº Javier Saquete Garbajosa",
+      "licencia": "AMG3744830",
+      "hcp": 23.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 54,
+      "name": "Jose Luis Bootello Ramirez",
+      "licencia": "AM15210776",
+      "hcp": 7.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 55,
+      "name": "Daniel Jose Aguilar Cava",
+      "licencia": "AM06952696",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 56,
+      "name": "Celia Nebot Lorente",
+      "licencia": "AM95195497",
+      "hcp": 11.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 57,
+      "name": "Francisco Sanz Carmona",
+      "licencia": "AMA2614953",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 58,
+      "name": "Juan Jesus Cardenas Jimenez",
+      "licencia": "AM22700962",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 59,
+      "name": "David Reynolds",
+      "licencia": "AMI5927437",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 60,
+      "name": "Emilio Jimenez Mateos",
+      "licencia": "AM71601188",
+      "hcp": 11.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 61,
+      "name": "Jesus Lopez Fernandez",
+      "licencia": "AM76885942",
+      "hcp": 21.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 62,
+      "name": "Mª Angeles Gonzalez Gavilan",
+      "licencia": "AM83797238",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 63,
+      "name": "Orla Martin Joergensen",
+      "licencia": "AM76914987",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 64,
+      "name": "Jose Maria Caballero Gomez",
+      "licencia": "AM95745403",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 65,
+      "name": "Manuel Rubiales Guisado",
+      "licencia": "AME7808305",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 66,
+      "name": "Mohammed Mokhtari",
+      "licencia": "AM11154246",
+      "hcp": 10.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 67,
+      "name": "Luis Bernal Iglesias",
+      "licencia": "AMI5215938",
+      "hcp": 6.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 68,
+      "name": "Philipp Klos",
+      "licencia": "AMG9495093",
+      "hcp": 14.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 69,
+      "name": "Juan Jose Gomez Santana",
+      "licencia": "AM96131872",
+      "hcp": 9.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 70,
+      "name": "Antonio Muñoz Muñoz",
+      "licencia": "AM10988783",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 71,
+      "name": "Osvaldo Miguel Appollonio Calderon",
+      "licencia": "AM10993518",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 72,
+      "name": "Djamel Derguini",
+      "licencia": "AM24345010",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 73,
+      "name": "Josiane Derguini",
+      "licencia": "AM24345040",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 74,
+      "name": "Eduardo Miguel Terron Bellido",
+      "licencia": "AMG3904339",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 75,
+      "name": "Emilio Gonzalez Mendez",
+      "licencia": "AMG3492268",
+      "hcp": 7.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 76,
+      "name": "Encarnación Moreno Calderón",
+      "licencia": "AMK3002851",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 77,
+      "name": "Fco Javier Bermudez Cabello",
+      "licencia": "AM75700416",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 78,
+      "name": "Jose Francisco Campos Sanchez",
+      "licencia": "AM06188068",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 79,
+      "name": "Miguel Angel Gil Pastor",
+      "licencia": "AM25354255",
+      "hcp": 17.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 80,
+      "name": "Jesus Bernardez Sarabia",
+      "licencia": "AMC9756009",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 81,
+      "name": "Jesus Manuel Ferreiro Dieguez",
+      "licencia": "AMG3904039",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 82,
+      "name": "Javier Sanchez Garcia",
+      "licencia": "AMB2601669",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 83,
+      "name": "Jens Haller",
+      "licencia": "AMG9965839",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 84,
+      "name": "Jose Manuel Perez Gomez",
+      "licencia": "AM85937393",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 85,
+      "name": "Carlos Nardiz Martinez",
+      "licencia": "AMG8360893",
+      "hcp": 2.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 86,
+      "name": "Rosa Maria Ruiz Cabral",
+      "licencia": "AM95611127",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 87,
+      "name": "Andres Garcia Cardenas",
+      "licencia": "AM32326523",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 88,
+      "name": "Cristobal Rojas Gonzalez",
+      "licencia": "AMG8481527",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 89,
+      "name": "Steve Barnes",
+      "licencia": "AM83371794",
+      "hcp": 8.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 90,
+      "name": "Jesus Martinez Prior",
+      "licencia": "AM85609218",
+      "hcp": 23.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 91,
+      "name": "Santiago Urquijo Ruiz-Gimenez",
+      "licencia": "AM02031550",
+      "hcp": 0.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 92,
+      "name": "Andrew Whitney Jhon",
+      "licencia": "AM75498350",
+      "hcp": 8.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 93,
+      "name": "Paul Holliday",
+      "licencia": "AM16961754",
+      "hcp": 4.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 94,
+      "name": "Manuel Millan Lopez",
+      "licencia": "AMF7061479",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 95,
+      "name": "Juan Fernandez Nuñez",
+      "licencia": "AM07409669",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 96,
+      "name": "Rosario Barea De Lara",
+      "licencia": "AMG3473261",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 97,
+      "name": "Carlos Ortega Amezaga",
+      "licencia": "AM07027058",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 98,
+      "name": "Juan Carlos Caño Delgado",
+      "licencia": "AMJ9091054",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 99,
+      "name": "Vicente Jesus Ortega Lechuga",
+      "licencia": "AM45051438",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 100,
+      "name": "Anthony Fernandes",
+      "licencia": "AM51807911",
+      "hcp": 4.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 101,
+      "name": "Fernando Pierrard Hardy",
+      "licencia": "AM05055118",
+      "hcp": 3,
+      "nivel": "S"
+    },
+    {
+      "orden": 102,
+      "name": "Jose Mª Gutierrez-Rave Labourdette",
+      "licencia": "AM95793231",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 103,
+      "name": "Mario Muñoz Macias",
+      "licencia": "AM75964518",
+      "hcp": 3.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 104,
+      "name": "David Muñoz Zamora",
+      "licencia": "AM95897542",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 105,
+      "name": "Fernando Adarve Lozano",
+      "licencia": "AM95347471",
+      "hcp": 11.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 106,
+      "name": "Jose Luis Guerrero Estrada",
+      "licencia": "AM95983652",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 107,
+      "name": "Carlos Olle Bertrand",
+      "licencia": "AM85091788",
+      "hcp": 3.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 108,
+      "name": "Pedro Luis Blanco Pastor",
+      "licencia": "AM10600682",
+      "hcp": 11,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -1004,13 +3201,370 @@
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161706,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            468
+          ],
+          [
+            "Birdie",
+            63
+          ],
+          [
+            "Eagle",
+            1
+          ],
+          [
+            "Bogey",
+            628
+          ],
+          [
+            "Peor",
+            606
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161707,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            87
+          ],
+          [
+            "2",
+            135
+          ],
+          [
+            "3",
+            73
+          ],
+          [
+            "4",
+            134
+          ],
+          [
+            "5",
+            61
+          ],
+          [
+            "6",
+            158
+          ],
+          [
+            "7",
+            104
+          ],
+          [
+            "8",
+            105
+          ],
+          [
+            "9",
+            90
+          ],
+          [
+            "10",
+            118
+          ],
+          [
+            "11",
+            87
+          ],
+          [
+            "12",
+            95
+          ],
+          [
+            "13",
+            96
+          ],
+          [
+            "14",
+            148
+          ],
+          [
+            "15",
+            170
+          ],
+          [
+            "16",
+            83
+          ],
+          [
+            "17",
+            102
+          ],
+          [
+            "18",
+            155
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161708,
+        "datos": [
+          [
+            "Hoyo",
+            "JESUS MANUEL FERREIRO DIEGUEZ",
+            "Jason Howard Thackray",
+            "Emilio Gonzalez Mendez"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            -3,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -3,
+            -4
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 9",
+            -3,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 10",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 12",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -4,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            -5,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -5,
+            -4,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -4,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -5,
+            -4,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -4,
+            -3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161709,
+        "datos": [
+          [
+            "Hoyo",
+            "JESUS MANUEL FERREIRO DIEGUEZ",
+            "Jason Howard Thackray",
+            "Emilio Gonzalez Mendez"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -1019,6 +3573,10 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-09-07T09:14:36.099Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/cartel/1988559884_61076-torneo-senior-sevilla.pdf",
+    "/uploads/circular/2026/539256dd2240e917cb5b247e369c5c30.pdf",
+    "/uploads/competiciones/pdf/3891973771_reglas_locales_rcsg_2026.pdf"
+  ]
 }

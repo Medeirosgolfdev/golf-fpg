@@ -1,9 +1,9 @@
 {
   "tourId": 74888,
   "url": "https://www.nextcaddy.com/tour/74888",
-  "scrapedAt": "2026-10-26T09:52:53.374Z",
+  "scrapedAt": "2026-10-30T14:29:30.856Z",
   "meta": {
-    "name": null,
+    "name": "NORDICOS MIERCOLES NORTE",
     "organizer": null,
     "course": "Real Club de Golf Guadalmina",
     "courseCode": "AM51",
@@ -21,10 +21,732 @@
     "dateIso": "2026-10-28",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 27,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Goran Johansson",
+          "licencia": "AM51983849",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": -11,
+          "inscribedId": 2435225
+        },
+        {
+          "pos": 2,
+          "name": "Janne Karl Andersson",
+          "licencia": "AM51520994",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435235
+        },
+        {
+          "pos": 3,
+          "name": "Richard Frenkel",
+          "licencia": "AM51754332",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435246
+        },
+        {
+          "pos": 4,
+          "name": "Christer Forsstrom",
+          "licencia": "AM51416484",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435244
+        },
+        {
+          "pos": 5,
+          "name": "Margareta Dworak",
+          "licencia": "AM51405298",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435217
+        },
+        {
+          "pos": 6,
+          "name": "Sune Backan",
+          "licencia": "AM51078500",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436311
+        },
+        {
+          "pos": 7,
+          "name": "Sven-Olof Krantz",
+          "licencia": "AM51945369",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435237
+        },
+        {
+          "pos": 8,
+          "name": "Lars Carell",
+          "licencia": "AM51615547",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435245
+        },
+        {
+          "pos": 9,
+          "name": "Carsten Magnusson",
+          "licencia": "AM51701603",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435230
+        },
+        {
+          "pos": 10,
+          "name": "Eun Hee Eriksson",
+          "licencia": "AM51615541",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435233
+        },
+        {
+          "pos": 11,
+          "name": "Jan Eriksson",
+          "licencia": "AM51615542",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435221
+        },
+        {
+          "pos": 12,
+          "name": "Michael Lembke",
+          "licencia": "AM51963762",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435243
+        },
+        {
+          "pos": 13,
+          "name": "Pia Palmgren",
+          "licencia": "AM51070195",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435219
+        },
+        {
+          "pos": 14,
+          "name": "Hans-Christer Holgersson",
+          "licencia": "AM51968727",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435229
+        },
+        {
+          "pos": 15,
+          "name": "Gunvor Neglen",
+          "licencia": "AM51202222",
+          "hcp": 32.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2435242
+        },
+        {
+          "pos": 16,
+          "name": "Ulf Palmgren",
+          "licencia": "AM51070211",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2435224
+        },
+        {
+          "pos": 17,
+          "name": "Magnus Key",
+          "licencia": "AM51162874",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435236
+        },
+        {
+          "pos": 18,
+          "name": "Ann-Christin Lindstrom",
+          "licencia": "AM51776063",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435232
+        },
+        {
+          "pos": 19,
+          "name": "Anita Kristina Blom",
+          "licencia": "AM51807913",
+          "hcp": 36.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435239
+        },
+        {
+          "pos": 20,
+          "name": "Ebbe Dworak",
+          "licencia": "AM51617096",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435238
+        },
+        {
+          "pos": 21,
+          "name": "Martha Isabella Carr",
+          "licencia": "AM51609127",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435241
+        },
+        {
+          "pos": 22,
+          "name": "Birgitta Von Der Burg",
+          "licencia": "AM51987849",
+          "hcp": 39,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435231
+        },
+        {
+          "pos": 23,
+          "name": "Lena Goldschmidt",
+          "licencia": "AM51618421",
+          "hcp": 38.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2435218
+        },
+        {
+          "pos": 24,
+          "name": "Staffan Norgren",
+          "licencia": "AM51698528",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435228
+        },
+        {
+          "pos": 25,
+          "name": "Gunnar Wickstrom",
+          "licencia": "AM51414510",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435227
+        },
+        {
+          "pos": 26,
+          "name": "Christina Sjoblon",
+          "licencia": "AM51798925",
+          "hcp": 31,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435220
+        },
+        {
+          "pos": 27,
+          "name": "Tommy Anders Wedin",
+          "licencia": "AM51807914",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2435222
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual Masculino",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Goran Johansson",
+          "licencia": "AM51983849",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": -11,
+          "inscribedId": 2435225
+        },
+        {
+          "pos": 2,
+          "name": "Janne Karl Andersson",
+          "licencia": "AM51520994",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435235
+        },
+        {
+          "pos": 3,
+          "name": "Richard Frenkel",
+          "licencia": "AM51754332",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435246
+        },
+        {
+          "pos": 4,
+          "name": "Christer Forsstrom",
+          "licencia": "AM51416484",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435244
+        },
+        {
+          "pos": 5,
+          "name": "Sune Backan",
+          "licencia": "AM51078500",
+          "hcp": 29.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436311
+        },
+        {
+          "pos": 6,
+          "name": "Sven-Olof Krantz",
+          "licencia": "AM51945369",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435237
+        },
+        {
+          "pos": 7,
+          "name": "Lars Carell",
+          "licencia": "AM51615547",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435245
+        },
+        {
+          "pos": 8,
+          "name": "Carsten Magnusson",
+          "licencia": "AM51701603",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435230
+        },
+        {
+          "pos": 9,
+          "name": "Jan Eriksson",
+          "licencia": "AM51615542",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435221
+        },
+        {
+          "pos": 10,
+          "name": "Michael Lembke",
+          "licencia": "AM51963762",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435243
+        },
+        {
+          "pos": 11,
+          "name": "Hans-Christer Holgersson",
+          "licencia": "AM51968727",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435229
+        },
+        {
+          "pos": 12,
+          "name": "Ulf Palmgren",
+          "licencia": "AM51070211",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2435224
+        },
+        {
+          "pos": 13,
+          "name": "Magnus Key",
+          "licencia": "AM51162874",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435236
+        },
+        {
+          "pos": 14,
+          "name": "Ebbe Dworak",
+          "licencia": "AM51617096",
+          "hcp": 31.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435238
+        },
+        {
+          "pos": 15,
+          "name": "Staffan Norgren",
+          "licencia": "AM51698528",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435228
+        },
+        {
+          "pos": 16,
+          "name": "Gunnar Wickstrom",
+          "licencia": "AM51414510",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435227
+        },
+        {
+          "pos": 17,
+          "name": "Tommy Anders Wedin",
+          "licencia": "AM51807914",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2435222
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap Individual Femenino",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Margareta Dworak",
+          "licencia": "AM51405298",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435217
+        },
+        {
+          "pos": 2,
+          "name": "Eun Hee Eriksson",
+          "licencia": "AM51615541",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435233
+        },
+        {
+          "pos": 3,
+          "name": "Pia Palmgren",
+          "licencia": "AM51070195",
+          "hcp": 30.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435219
+        },
+        {
+          "pos": 4,
+          "name": "Gunvor Neglen",
+          "licencia": "AM51202222",
+          "hcp": 32.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2435242
+        },
+        {
+          "pos": 5,
+          "name": "Ann-Christin Lindstrom",
+          "licencia": "AM51776063",
+          "hcp": 32.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435232
+        },
+        {
+          "pos": 6,
+          "name": "Anita Kristina Blom",
+          "licencia": "AM51807913",
+          "hcp": 36.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435239
+        },
+        {
+          "pos": 7,
+          "name": "Martha Isabella Carr",
+          "licencia": "AM51609127",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435241
+        },
+        {
+          "pos": 8,
+          "name": "Birgitta Von Der Burg",
+          "licencia": "AM51987849",
+          "hcp": 39,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435231
+        },
+        {
+          "pos": 9,
+          "name": "Lena Goldschmidt",
+          "licencia": "AM51618421",
+          "hcp": 38.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2435218
+        },
+        {
+          "pos": 10,
+          "name": "Christina Sjoblon",
+          "licencia": "AM51798925",
+          "hcp": 31,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2435220
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 27
+    },
+    "2": {
+      "name": "Handicap Individual Masculino",
+      "jugadores": 17
+    },
+    "3": {
+      "name": "Handicap Individual Femenino",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -154,65 +876,65 @@
     },
     {
       "orden": 9,
-      "name": "Ake Sjoblom",
-      "licencia": "AM51696352",
-      "hcp": 26.7,
-      "nivel": "S"
-    },
-    {
-      "orden": 10,
       "name": "Janne Karl Andersson",
       "licencia": "AM51520994",
       "hcp": 16.6,
       "nivel": "S"
     },
     {
-      "orden": 11,
+      "orden": 10,
       "name": "Magnus Key",
       "licencia": "AM51162874",
       "hcp": 26.4,
       "nivel": "S"
     },
     {
-      "orden": 12,
+      "orden": 11,
       "name": "Sven-Olof Krantz",
       "licencia": "AM51945369",
       "hcp": 24.5,
       "nivel": "S"
     },
     {
-      "orden": 13,
-      "name": "Ebbe Dworak",
-      "licencia": "AM51617096",
-      "hcp": 31.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 14,
+      "orden": 12,
       "name": "Michael Lembke",
       "licencia": "AM51963762",
       "hcp": 24,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "Christer Forsstrom",
       "licencia": "AM51416484",
       "hcp": 26,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Lars Carell",
       "licencia": "AM51615547",
       "hcp": 25,
       "nivel": "S"
     },
     {
-      "orden": 17,
+      "orden": 15,
       "name": "Richard Frenkel",
       "licencia": "AM51754332",
       "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Ebbe Dworak",
+      "licencia": "AM51617096",
+      "hcp": 31.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Sune Backan",
+      "licencia": "AM51078500",
+      "hcp": 29.5,
       "nivel": "S"
     }
   ],
@@ -356,15 +1078,6 @@
           "nivel": "S"
         },
         {
-          "time": "13:40",
-          "tee": 1,
-          "name": "Ake Sjoblom",
-          "hcp": 26.7,
-          "ins": "2435234",
-          "jid": "80252",
-          "nivel": "S"
-        },
-        {
           "time": "13:50",
           "tee": 1,
           "name": "Janne Karl Andersson",
@@ -424,6 +1137,15 @@
           "name": "Gunvor Neglen",
           "hcp": 32.5,
           "ins": "2435242",
+          "jid": "80252",
+          "nivel": "S"
+        },
+        {
+          "time": "14:00",
+          "tee": 1,
+          "name": "Sune Backan",
+          "hcp": 29.5,
+          "ins": "2436311",
           "jid": "80252",
           "nivel": "S"
         },

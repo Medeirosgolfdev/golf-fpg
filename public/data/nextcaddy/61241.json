@@ -1,30 +1,75 @@
 {
   "tourId": 61241,
   "url": "https://www.nextcaddy.com/tour/61241",
-  "scrapedAt": "2026-06-24T14:59:00.866Z",
+  "scrapedAt": "2026-10-30T14:29:50.568Z",
   "meta": {
-    "name": "Circuito Benjamín Zona E",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Granada Club de Golf",
     "courseCode": "AM65",
-    "dateStart": null,
+    "dateStart": "2026-11-14",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Benjamín",
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-14",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Rafael Valle Garcia-Valdecasas",
+      "licencia": "AM65965658",
+      "hcp": 29.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Nikita Elchaninov",
+      "licencia": "AM84081325",
+      "hcp": 12,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Mario Dos Santos Vicente",
+      "licencia": "AM62474265",
+      "hcp": 33,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Tiago Dos Santos Vicente",
+      "licencia": "AM62352030",
+      "hcp": 29.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Juan Alberto Muñoz Del Pozo Salinas",
+      "licencia": "AMC7099154",
+      "hcp": 32.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Liane Gavira Rodriguez",
+      "licencia": "AM11418118",
+      "hcp": 26.8,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -42,6 +87,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.099Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/2aa56b471e796fb607d471d2b9ad0c4c.pdf"
+  ]
 }

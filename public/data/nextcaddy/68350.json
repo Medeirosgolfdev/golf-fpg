@@ -1,13 +1,13 @@
 {
   "tourId": 68350,
   "url": "https://www.nextcaddy.com/tour/68350",
-  "scrapedAt": "2026-06-24T14:59:01.626Z",
+  "scrapedAt": "2026-10-30T14:29:51.126Z",
   "meta": {
-    "name": "Torneo Mid-Amateur Femenino",
+    "name": null,
     "organizer": "Federacion de Golf de Madrid",
     "course": "C D S C E A Barberan y Collar",
     "courseCode": "CM03",
-    "dateStart": null,
+    "dateStart": "2026-11-14",
     "dateEnd": null,
     "format": "Stableford (Scratch) Ranking Mid-Amateur",
     "categories": [
@@ -17,7 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-14",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -41,6 +43,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:58.915Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

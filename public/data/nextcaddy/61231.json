@@ -1,29 +1,123 @@
 {
   "tourId": 61231,
   "url": "https://www.nextcaddy.com/tour/61231",
-  "scrapedAt": "2026-06-24T14:58:55.872Z",
+  "scrapedAt": "2026-10-30T14:29:53.175Z",
   "meta": {
-    "name": "Pequecircuito Zona E",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Parque Deportivo la Garza",
-    "courseCode": "AM45",
-    "dateStart": null,
+    "course": "Valle del Este Hotel Golf Spa",
+    "courseCode": "AMA2",
+    "dateStart": "2026-11-15",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-15",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Maria Martin Sabiote",
+      "licencia": "AMA2518374",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Terres Ortiz",
+      "licencia": "AMC7531422",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Nicolas Moreno Vargas",
+      "licencia": "AM59021319",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Abel Salvador Morales",
+      "licencia": "AM59528430",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio García Zazo",
+      "licencia": "AMC7519025",
+      "hcp": 51.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Cara Gonzalez",
+      "licencia": "AM59009984",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Cara Gonzalez",
+      "licencia": "AM59009982",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Lucas Lope De Lima",
+      "licencia": "AMA2345518",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Antonio Sanchez Montes",
+      "licencia": "AMC7478625",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Ramon Terres Ortiz",
+      "licencia": "AMC7531420",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Alberto Muñoz Del Pozo Salinas",
+      "licencia": "AMC7099154",
+      "hcp": 32.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Parron Barranco",
+      "licencia": "AM59026895",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Sergio Maqueda Carreño",
+      "licencia": "AMC7038141",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -41,6 +135,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:49.862Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
+  ]
 }

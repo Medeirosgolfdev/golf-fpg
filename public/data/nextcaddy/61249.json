@@ -1,13 +1,13 @@
 {
   "tourId": 61249,
   "url": "https://www.nextcaddy.com/tour/61249",
-  "scrapedAt": "2026-06-24T14:59:07.814Z",
+  "scrapedAt": "2026-10-30T14:30:07.664Z",
   "meta": {
-    "name": "Campeonato Andalucía FEM Categoría Mid Amateur",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Real Federacion Andaluza de Golf",
-    "courseCode": "AM00",
-    "dateStart": null,
+    "course": "el Paraíso Golf Club",
+    "courseCode": "AM55",
+    "dateStart": "2026-12-19",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -17,7 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-12-19",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -49,14 +51,9 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Menendez Alvarez, Flor",
-          "holeNumber": 6,
-          "createdAt": "01/10/24 10:18:46"
-        },
-        {
-          "playerName": "Russo, Giuseppe",
-          "holeNumber": 2,
-          "createdAt": "01/10/24 10:19:50"
+          "playerName": "Martin Muñoz, Juan Jose",
+          "holeNumber": 18,
+          "createdAt": "01/10/24 12:55:24"
         },
         {
           "playerName": "Alonso  Garrido, Alfonso",
@@ -64,39 +61,14 @@
           "createdAt": "01/10/24 10:26:17"
         },
         {
-          "playerName": "De Haro Fernandez, Jose Felipe",
-          "holeNumber": 4,
-          "createdAt": "01/10/24 10:27:14"
-        },
-        {
-          "playerName": "Jimenez Romero, Luciano Felix",
-          "holeNumber": 5,
-          "createdAt": "01/10/24 10:30:59"
-        },
-        {
-          "playerName": "Di Geronimo, Carlos",
-          "holeNumber": 9,
-          "createdAt": "01/10/24 10:58:45"
-        },
-        {
           "playerName": "Alonso  Garrido, Alfonso",
           "holeNumber": 6,
           "createdAt": "01/10/24 11:00:11"
         },
         {
-          "playerName": "Fernandez  Menendez, Jose David",
-          "holeNumber": 14,
-          "createdAt": "01/10/24 11:05:34"
-        },
-        {
-          "playerName": "Fernandez  Menendez, Jose David",
-          "holeNumber": 16,
-          "createdAt": "01/10/24 11:25:19"
-        },
-        {
-          "playerName": "Mendez Almazan, Salvador",
-          "holeNumber": 9,
-          "createdAt": "01/10/24 11:25:31"
+          "playerName": "Russo, Giuseppe",
+          "holeNumber": 2,
+          "createdAt": "01/10/24 10:19:50"
         },
         {
           "playerName": "Russo, Giuseppe",
@@ -104,9 +76,24 @@
           "createdAt": "01/10/24 11:50:58"
         },
         {
-          "playerName": "Jimenez Romero, Luciano Felix",
-          "holeNumber": 14,
-          "createdAt": "01/10/24 11:52:17"
+          "playerName": "Menendez Alvarez, Flor",
+          "holeNumber": 6,
+          "createdAt": "01/10/24 10:18:46"
+        },
+        {
+          "playerName": "De Haro Fernandez, Jose Felipe",
+          "holeNumber": 4,
+          "createdAt": "01/10/24 10:27:14"
+        },
+        {
+          "playerName": "Di Geronimo, Carlos",
+          "holeNumber": 9,
+          "createdAt": "01/10/24 10:58:45"
+        },
+        {
+          "playerName": "Mendez Almazan, Salvador",
+          "holeNumber": 9,
+          "createdAt": "01/10/24 11:25:31"
         },
         {
           "playerName": "Navarrina Tello, Francisco",
@@ -119,18 +106,34 @@
           "createdAt": "01/10/24 12:07:43"
         },
         {
-          "playerName": "Martin Muñoz, Juan Jose",
-          "holeNumber": 18,
-          "createdAt": "01/10/24 12:55:24"
-        },
-        {
           "playerName": "Farfan Rueda, Francisco",
           "holeNumber": 18,
           "createdAt": "01/10/24 12:55:28"
+        },
+        {
+          "playerName": "Fernandez  Menendez, Jose David",
+          "holeNumber": 14,
+          "createdAt": "01/10/24 11:05:34"
+        },
+        {
+          "playerName": "Fernandez  Menendez, Jose David",
+          "holeNumber": 16,
+          "createdAt": "01/10/24 11:25:19"
+        },
+        {
+          "playerName": "Jimenez Romero, Luciano Felix",
+          "holeNumber": 5,
+          "createdAt": "01/10/24 10:30:59"
+        },
+        {
+          "playerName": "Jimenez Romero, Luciano Felix",
+          "holeNumber": 14,
+          "createdAt": "01/10/24 11:52:17"
         }
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.341Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72563,
   "url": "https://www.nextcaddy.com/tour/72563",
-  "scrapedAt": "2026-07-27T07:46:14.719Z",
+  "scrapedAt": "2026-10-30T14:27:17.045Z",
   "meta": {
-    "name": null,
+    "name": "LIGA EXPRES JORNADA 6 (MAÑANA 9:30)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
@@ -35,44 +35,114 @@
     },
     {
       "orden": 2,
-      "name": "Joaquin Gabriel Diaz Espinosa",
-      "licencia": "LV70942401",
-      "hcp": 22.3,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
       "name": "Ignacio Calvo Borrego",
       "licencia": "AMF7343780",
       "hcp": 22,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Shaun Eamonn Gavigan",
       "licencia": "AMG3492187",
       "hcp": 38.6,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Fernando Sampedro Abascal",
       "licencia": "AMF7781752",
       "hcp": 25.5,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Salvador Moll Lorca",
       "licencia": "AMF7079945",
       "hcp": 9.8,
       "nivel": "S"
     },
     {
+      "orden": 6,
+      "name": "Jose Antonio Lillo Guerra",
+      "licencia": "7723901203",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
       "orden": 7,
-      "name": "Juan Perez Baena",
-      "licencia": "AMG3941792",
-      "hcp": 18,
+      "name": "Jose Luis Molina Bermejo",
+      "licencia": "AMF7817050",
+      "hcp": 13.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Luis Vivancos Perez",
+      "licencia": "AM00908990",
+      "hcp": 31.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Luis Carlos Andrada Alsina",
+      "licencia": "AMF7608771",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Carlos Correa Rodriguez",
+      "licencia": "AM85614428",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Sanchez Gutierrez",
+      "licencia": "AMF7974652",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Manuel Megias Casas",
+      "licencia": "AMK5942563",
+      "hcp": 13.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Postigo Secano",
+      "licencia": "AMK5771527",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Miguel Angel Martinez Costa",
+      "licencia": "AMF7975017",
+      "hcp": 29.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Antonio Gomez Jara",
+      "licencia": "AMG3970258",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Sergio Gutierrez Morillo",
+      "licencia": "AMF7784589",
+      "hcp": 34.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Rosario Barea De Lara",
+      "licencia": "AMG3473261",
+      "hcp": 18.8,
       "nivel": "S"
     }
   ],
@@ -149,15 +219,6 @@
           "name": "Miguel Angel Martinez Costa",
           "hcp": 29.1,
           "ins": "2369910",
-          "jid": "77739",
-          "nivel": "S"
-        },
-        {
-          "time": "09:30",
-          "tee": 17,
-          "name": "David Hijon Morillo",
-          "hcp": 30.1,
-          "ins": "2369449",
           "jid": "77739",
           "nivel": "S"
         },
@@ -260,10 +321,275 @@
       "roundId": 77739
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Vilar Garcia, Enrique",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 09:56:46"
+        }
+      ]
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Machon Hernandez, Luis Miguel",
+          "holeNumber": 15,
+          "createdAt": "09/09/26 13:29:00"
+        },
+        {
+          "playerName": "Gallego Garcia, Alejandro",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:40:29"
+        },
+        {
+          "playerName": "Gallego Garcia, Alejandro",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 09:01:56"
+        },
+        {
+          "playerName": "Gallego Garcia, Alejandro",
+          "holeNumber": 11,
+          "createdAt": "09/09/26 11:23:51"
+        },
+        {
+          "playerName": "Arguelles Badillo, Jose Antonio",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:14:44"
+        },
+        {
+          "playerName": "Arguelles Badillo, Jose Antonio",
+          "holeNumber": 11,
+          "createdAt": "09/09/26 10:55:35"
+        },
+        {
+          "playerName": "Dezcallar Saez, Francisco Javier",
+          "holeNumber": 10,
+          "createdAt": "09/09/26 13:08:41"
+        },
+        {
+          "playerName": "Smith, Matthew Bede",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:52:25"
+        },
+        {
+          "playerName": "De Lima De Menezes, Daniel Ricardo",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:53:25"
+        },
+        {
+          "playerName": "De Lima De Menezes, Daniel Ricardo",
+          "holeNumber": 7,
+          "createdAt": "09/09/26 10:33:26"
+        },
+        {
+          "playerName": "Mimo Alcaraz, Miguel",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 09:39:40"
+        },
+        {
+          "playerName": "Mimo Alcaraz, Miguel",
+          "holeNumber": 11,
+          "createdAt": "09/09/26 12:06:01"
+        },
+        {
+          "playerName": "Jimenez Barahona, David",
+          "holeNumber": 11,
+          "createdAt": "09/09/26 13:36:38"
+        },
+        {
+          "playerName": "Jimenez Barahona, David",
+          "holeNumber": 15,
+          "createdAt": "09/09/26 14:46:38"
+        },
+        {
+          "playerName": "Berna Menendez, Francisco",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:35:44"
+        },
+        {
+          "playerName": "Bachiller Marco, Carlota",
+          "holeNumber": 16,
+          "createdAt": "09/09/26 12:09:04"
+        },
+        {
+          "playerName": "Quinlan, Evan",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 08:44:11"
+        },
+        {
+          "playerName": "Quinlan, Evan",
+          "holeNumber": 7,
+          "createdAt": "09/09/26 09:47:02"
+        },
+        {
+          "playerName": "Fractman  De Las Casa, Martin Daniel",
+          "holeNumber": 7,
+          "createdAt": "09/09/26 12:55:32"
+        },
+        {
+          "playerName": "Erburu Zazpe, Andres",
+          "holeNumber": 10,
+          "createdAt": "09/09/26 10:51:57"
+        },
+        {
+          "playerName": "Erburu Zazpe, Andres",
+          "holeNumber": 16,
+          "createdAt": "09/09/26 12:41:36"
+        },
+        {
+          "playerName": "Minuesa Madruga, Jaime",
+          "holeNumber": 18,
+          "createdAt": "09/09/26 16:49:51"
+        },
+        {
+          "playerName": "Velo Bordils, Fernando",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 08:53:48"
+        },
+        {
+          "playerName": "Velo Bordils, Fernando",
+          "holeNumber": 13,
+          "createdAt": "09/09/26 11:41:27"
+        },
+        {
+          "playerName": "Hernandez Ruiz, Alvaro",
+          "holeNumber": 2,
+          "createdAt": "09/09/26 08:45:12"
+        },
+        {
+          "playerName": "Hernandez Ruiz, Alvaro",
+          "holeNumber": 11,
+          "createdAt": "09/09/26 11:15:47"
+        },
+        {
+          "playerName": "Garcia Renilla, Javier",
+          "holeNumber": 10,
+          "createdAt": "09/09/26 12:43:33"
+        },
+        {
+          "playerName": "Herrera Rubio, Georgina",
+          "holeNumber": 4,
+          "createdAt": "09/09/26 09:26:22"
+        },
+        {
+          "playerName": "Herrera Rubio, Georgina",
+          "holeNumber": 16,
+          "createdAt": "09/09/26 12:41:34"
+        },
+        {
+          "playerName": "Del Pozo Parrondo, Alberto",
+          "holeNumber": 10,
+          "createdAt": "09/09/26 12:05:00"
+        },
+        {
+          "playerName": "Pozo Hernaiz, Gonzalo",
+          "holeNumber": 12,
+          "createdAt": "09/09/26 13:45:50"
+        },
+        {
+          "playerName": "Pozo Hernaiz, Gonzalo",
+          "holeNumber": 18,
+          "createdAt": "09/09/26 15:35:17"
+        },
+        {
+          "playerName": "Abad Lopez, Alejandro",
+          "holeNumber": 7,
+          "createdAt": "09/09/26 14:06:59"
+        },
+        {
+          "playerName": "Horcajada Garcia, Adrian",
+          "holeNumber": 1,
+          "createdAt": "09/09/26 08:49:23"
+        },
+        {
+          "playerName": "Horcajada Garcia, Adrian",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 09:17:04"
+        },
+        {
+          "playerName": "Horcajada Garcia, Adrian",
+          "holeNumber": 13,
+          "createdAt": "09/09/26 12:11:15"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 5,
+          "createdAt": "09/09/26 09:25:08"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 13,
+          "createdAt": "09/09/26 11:40:43"
+        },
+        {
+          "playerName": "Viguera Bolumburu, Javier",
+          "holeNumber": 15,
+          "createdAt": "09/09/26 12:09:22"
+        },
+        {
+          "playerName": "Alonso Gonzalez, Isabel",
+          "holeNumber": 12,
+          "createdAt": "09/09/26 12:23:47"
+        },
+        {
+          "playerName": "Rihuete Rihuete, Angel Luis",
+          "holeNumber": 5,
+          "createdAt": "09/09/26 11:03:11"
+        },
+        {
+          "playerName": "Guijarro Crespo, Jose Antonio",
+          "holeNumber": 5,
+          "createdAt": "09/09/26 09:35:54"
+        },
+        {
+          "playerName": "Olmo Ayuso, Enrique",
+          "holeNumber": 12,
+          "createdAt": "09/09/26 14:00:00"
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos",
+          "holeNumber": 7,
+          "createdAt": "09/09/26 10:28:54"
+        },
+        {
+          "playerName": "Carballo Diaz, Jose Marcos",
+          "holeNumber": 13,
+          "createdAt": "09/09/26 12:13:44"
+        },
+        {
+          "playerName": "Delgado Palomar, Maria Elena",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 10:02:01"
+        },
+        {
+          "playerName": "González Alonso, Vicente",
+          "holeNumber": 2,
+          "createdAt": "09/09/26 09:16:46"
+        },
+        {
+          "playerName": "De Blas Arribas, Felix",
+          "holeNumber": 3,
+          "createdAt": "09/09/26 11:58:47"
+        },
+        {
+          "playerName": "Zapata Alonso, Daniel",
+          "holeNumber": 5,
+          "createdAt": "09/09/26 10:53:44"
+        },
+        {
+          "playerName": "Zapata Alonso, Daniel",
+          "holeNumber": 14,
+          "createdAt": "09/09/26 13:31:00"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2223307842_72563-liga-expres-jornada-6-manana-9-30.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-29T16:51:35.102Z"
+  ]
 }

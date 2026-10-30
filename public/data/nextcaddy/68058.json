@@ -1,15 +1,15 @@
 {
   "tourId": 68058,
   "url": "https://www.nextcaddy.com/tour/68058",
-  "scrapedAt": "2026-06-24T14:58:24.792Z",
+  "scrapedAt": "2026-10-30T14:28:06.643Z",
   "meta": {
     "name": "FINAL CIRCUITO DE DOBLES DE CASTILLA Y LEON",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-09-05",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Caballeros  Señora",
+    "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
       "Caballeros",
       "Señoras",
@@ -17,13 +17,329 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja",
+      "jugadores": 22
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Diodoro Fernandez Fernandez",
+      "licencia": "7713379716",
+      "hcp": 9.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Daniel Fernandez Schwake",
+      "licencia": "7713447370",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Carmelo Castillo Gañan",
+      "licencia": "7739130477",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Paloma Martin Herrero",
+      "licencia": "7739135578",
+      "hcp": 28.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Sergio Sanchez Cachafeiro",
+      "licencia": "7776975558",
+      "hcp": 10.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Sanchez Garcia",
+      "licencia": "7776975543",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "7709283726",
+      "hcp": 7.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Manuel Hernandez Gajate",
+      "licencia": "7709283725",
+      "hcp": 13.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Agustin Cruz Miguel",
+      "licencia": "7744327068",
+      "hcp": 10.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Carlos Joaquin Sanchez-Aguilar Rojas",
+      "licencia": "7744644094",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Sonia Carrisque Sanchez",
+      "licencia": "7758450549",
+      "hcp": 8.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Juan Carlos Escorial Esteban",
+      "licencia": "7758364179",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Ayuso Hontoria",
+      "licencia": "7772930997",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Soto Morales",
+      "licencia": "7772890863",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Marco Rojas Alonso",
+      "licencia": "7776372629",
+      "hcp": 7.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Eduardo Rojas Carracedo",
+      "licencia": "7776400674",
+      "hcp": 10.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Carmelo Villalba Villasur",
+      "licencia": "7756404683",
+      "hcp": 13.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "M Amparo Antolin Antolin",
+      "licencia": "7756779719",
+      "hcp": 29.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Pablo Lopez Bernabe",
+      "licencia": "7772771687",
+      "hcp": 5.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Fernando Saez Bajo",
+      "licencia": "7772981111",
+      "hcp": 8.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Alvaro Garcia Garcia",
+      "licencia": "7772983962",
+      "hcp": 12,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Angel Fernandez Juarez",
+      "licencia": "7772490577",
+      "hcp": 28.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Rodrigo San Bruno Leonor",
+      "licencia": "7730001307",
+      "hcp": 21.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Juan Quinteiro Arenal",
+      "licencia": "7730033954",
+      "hcp": 25.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Eduardo Castillo De Oyagüe",
+      "licencia": "7712365159",
+      "hcp": 1.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Ruben Castillo Bravo",
+      "licencia": "7712377228",
+      "hcp": 20.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Pedro Garcia De Miguel",
+      "licencia": "7722022831",
+      "hcp": 29,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Jesus Doroteo Garcia Lopez",
+      "licencia": "7722171565",
+      "hcp": 29.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Gonzalez Aquiso Madrigal",
+      "licencia": "7760930975",
+      "hcp": 6.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Alfonso Gonzalez-Aquiso Madrigal",
+      "licencia": "7700961336",
+      "hcp": 12.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Dina Furceanu Furceanu",
+      "licencia": "CM05920575",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Juan Carlos Cabezon Revuelta",
+      "licencia": "CM05920576",
+      "hcp": 34.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Alvaro Juste Dinesen",
+      "licencia": "CMA8797841",
+      "hcp": 12.5,
+      "nivel": "M"
+    },
+    {
+      "orden": 17,
+      "name": "Alvaro Jimenez Gonzalez",
+      "licencia": "CMA8168502",
+      "hcp": 17,
+      "nivel": "M"
+    },
+    {
+      "orden": 18,
+      "name": "Alejandro Santibañez Lara",
+      "licencia": "CM00416270",
+      "hcp": 19.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Javier Garcia Martin",
+      "licencia": "CMA8515189",
+      "hcp": 31.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Miguel Abat De Lorenzo",
+      "licencia": "CM01486980",
+      "hcp": 7.1,
+      "nivel": "M"
+    },
+    {
+      "orden": 19,
+      "name": "Nicolas Auger Caro",
+      "licencia": "CMA8377123",
+      "hcp": 36,
+      "nivel": "M"
+    },
+    {
+      "orden": 20,
+      "name": "Alvaro Mengual Abella",
+      "licencia": "CME5007956",
+      "hcp": 13.7,
+      "nivel": "M"
+    },
+    {
+      "orden": 20,
+      "name": "Iñigo Bazaga Figueroa",
+      "licencia": "CM02165119",
+      "hcp": 18.7,
+      "nivel": "M"
+    },
+    {
+      "orden": 21,
+      "name": "Francis Iguacel De La Cruz",
+      "licencia": "CM41626927",
+      "hcp": 8.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Iñigo Arenal Lopez",
+      "licencia": "CM18973125",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Alberto Rivas Ramos",
+      "licencia": "8828399305",
+      "hcp": 8.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Aitor Tovar Rodriguez",
+      "licencia": "8801459739",
+      "hcp": 34,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -464,6 +780,10 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-09-07T09:14:42.563Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/35523217_suspension_del_juego_la_faisanera_2026.pdf",
+    "/uploads/circulares/cirfgcyl1626.pdf",
+    "/uploads/competiciones/pdf/2885108676_merged.pdf"
+  ]
 }

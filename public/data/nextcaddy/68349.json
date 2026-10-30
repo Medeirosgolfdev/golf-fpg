@@ -1,13 +1,13 @@
 {
   "tourId": 68349,
   "url": "https://www.nextcaddy.com/tour/68349",
-  "scrapedAt": "2026-06-24T14:58:57.767Z",
+  "scrapedAt": "2026-10-30T14:29:06.761Z",
   "meta": {
     "name": "Torneo Juvenil Absoluto \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": null,
+    "dateStart": "2026-10-18",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
@@ -17,13 +17,1537 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-10-18",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Scratch Sub-16",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 2,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 3,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 4,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 6,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 8,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 9,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 11,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": 12,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 13,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 101,
+          "toPar": 29,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Scratch Sub-18",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 6.4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2418954
+        },
+        {
+          "pos": 3,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 4,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 7,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 9,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 10,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 11,
+          "name": "Miguel Gonzalez Diaz-Benito De Las Huertas",
+          "licencia": "CM60929659",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2418847
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 13,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": 14,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 15,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 101,
+          "toPar": 29,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 3.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419466
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación Scratch Sub-25",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 6.4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 10,
+          "inscribedId": 2418954
+        },
+        {
+          "pos": 3,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 4,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 11,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 7,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 9,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 10,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 11,
+          "name": "Miguel Gonzalez Diaz-Benito De Las Huertas",
+          "licencia": "CM60929659",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 18,
+          "inscribedId": 2418847
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 13,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 94,
+          "toPar": 22,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": 14,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 97,
+          "toPar": 25,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 15,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 101,
+          "toPar": 29,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 3.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419466
+        },
+        {
+          "pos": null,
+          "name": "Felix Cabezon Sanz",
+          "licencia": "CMA8901671",
+          "hcp": 5.3,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419517
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificación Handicap Sub-16",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 2,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 4,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 5,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 6,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 7,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 8,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 9,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 10,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 11,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 12,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": 13,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Clasificación Handicap Sub-18",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 2,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 6.4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2418954
+        },
+        {
+          "pos": 5,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 7,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 8,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 10,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 11,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 12,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 13,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": 14,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": 15,
+          "name": "Miguel Gonzalez Diaz-Benito De Las Huertas",
+          "licencia": "CM60929659",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 92,
+          "toPar": 20,
+          "inscribedId": 2418847
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 3.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419466
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Clasificación Handicap Sub-25",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gabriel Fernandez Gonzalez",
+          "licencia": "CME5967228",
+          "hcp": 10.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": null,
+          "inscribedId": 2420009
+        },
+        {
+          "pos": 2,
+          "name": "Han Xiang Wang",
+          "licencia": "CMA5007285",
+          "hcp": 7.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2420201
+        },
+        {
+          "pos": 3,
+          "name": "Ignacio Balmaseda Rueda",
+          "licencia": "CM02944542",
+          "hcp": 9.4,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 3,
+          "inscribedId": 2420013
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Ricardo De Lima De Menezes",
+          "licencia": "CM07088274",
+          "hcp": 6.4,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2418954
+        },
+        {
+          "pos": 5,
+          "name": "Raul Ruiz De Infante Hernandez",
+          "licencia": "CMA8924203",
+          "hcp": 4.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2422851
+        },
+        {
+          "pos": 6,
+          "name": "Carlos Ceballos Redondo",
+          "licencia": "CM41955331",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 12,
+          "inscribedId": 2424615
+        },
+        {
+          "pos": 7,
+          "name": "Victor Minghui Jiang",
+          "licencia": "CM22966496",
+          "hcp": 1.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2421371
+        },
+        {
+          "pos": 8,
+          "name": "Daniel Peña Mata",
+          "licencia": "CM41945965",
+          "hcp": 3.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 13,
+          "inscribedId": 2420408
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Fernandez Ripoll",
+          "licencia": "CM52998271",
+          "hcp": 8.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 14,
+          "inscribedId": 2419468
+        },
+        {
+          "pos": 10,
+          "name": "Nicolas Fernandez De La Cruz",
+          "licencia": "CM41969603",
+          "hcp": 10.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 15,
+          "inscribedId": 2419073
+        },
+        {
+          "pos": 11,
+          "name": "Alvaro Herrero Bernal",
+          "licencia": "CM41919727",
+          "hcp": 0,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419092
+        },
+        {
+          "pos": 12,
+          "name": "Martin Fernandez Aliaga",
+          "licencia": "CMA8955021",
+          "hcp": 1.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2419356
+        },
+        {
+          "pos": 13,
+          "name": "Ivan Bruna Sosa",
+          "licencia": "CM33964485",
+          "hcp": 12.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 16,
+          "inscribedId": 2418991
+        },
+        {
+          "pos": 14,
+          "name": "Adrian De Eguren Rodriguez-Solar",
+          "licencia": "CM06913080",
+          "hcp": 5.9,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 89,
+          "toPar": 17,
+          "inscribedId": 2422827
+        },
+        {
+          "pos": 15,
+          "name": "Miguel Gonzalez Diaz-Benito De Las Huertas",
+          "licencia": "CM60929659",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 92,
+          "toPar": 20,
+          "inscribedId": 2418847
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 3.7,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419466
+        },
+        {
+          "pos": null,
+          "name": "Felix Cabezon Sanz",
+          "licencia": "CMA8901671",
+          "hcp": 5.3,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2419517
+        },
+        {
+          "pos": null,
+          "name": "Francisco Casas Castillo",
+          "licencia": "CMA8920445",
+          "hcp": 6.8,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423802
+        },
+        {
+          "pos": null,
+          "name": "Guillermo Sanchez-Praena Berengena",
+          "licencia": "CM04056110",
+          "hcp": 8.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2420297
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Scratch Sub-16",
+      "jugadores": 15
+    },
+    "2": {
+      "name": "Clasificación Scratch Sub-18",
+      "jugadores": 18
+    },
+    "3": {
+      "name": "Clasificación Scratch Sub-25",
+      "jugadores": 19
+    },
+    "4": {
+      "name": "Clasificación Handicap Sub-16",
+      "jugadores": 15
+    },
+    "5": {
+      "name": "Clasificación Handicap Sub-18",
+      "jugadores": 18
+    },
+    "6": {
+      "name": "Clasificación Handicap Sub-25",
+      "jugadores": 19
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Miguel Gonzalez Diaz-Benito De Las Huertas",
+      "licencia": "CM60929659",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Daniel Ricardo De Lima De Menezes",
+      "licencia": "CM07088274",
+      "hcp": 6.4,
+      "nivel": "J"
+    },
+    {
+      "orden": 3,
+      "name": "Ivan Bruna Sosa",
+      "licencia": "CM33964485",
+      "hcp": 12.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Fernandez De La Cruz",
+      "licencia": "CM41969603",
+      "hcp": 10.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Herrero Bernal",
+      "licencia": "CM41919727",
+      "hcp": 0,
+      "nivel": "C"
+    },
+    {
+      "orden": 6,
+      "name": "Martin Fernandez Aliaga",
+      "licencia": "CMA8955021",
+      "hcp": 1.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 7,
+      "name": "Carlos Fernandez Ripoll",
+      "licencia": "CM52998271",
+      "hcp": 8.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Felix Cabezon Sanz",
+      "licencia": "CMA8901671",
+      "hcp": 5.3,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
+      "name": "Gabriel Fernandez Gonzalez",
+      "licencia": "CME5967228",
+      "hcp": 10.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Ignacio Balmaseda Rueda",
+      "licencia": "CM02944542",
+      "hcp": 9.4,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Han Xiang Wang",
+      "licencia": "CMA5007285",
+      "hcp": 7.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 12,
+      "name": "Guillermo Sanchez-Praena Berengena",
+      "licencia": "CM04056110",
+      "hcp": 8.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Daniel Peña Mata",
+      "licencia": "CM41945965",
+      "hcp": 3.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 14,
+      "name": "Victor Minghui Jiang",
+      "licencia": "CM22966496",
+      "hcp": 1.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Adrian De Eguren Rodriguez-Solar",
+      "licencia": "CM06913080",
+      "hcp": 5.9,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Raul Ruiz De Infante Hernandez",
+      "licencia": "CMA8924203",
+      "hcp": 4.6,
+      "nivel": "C"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Casas Castillo",
+      "licencia": "CMA8920445",
+      "hcp": 6.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "Carlos Ceballos Redondo",
+      "licencia": "CM41955331",
+      "hcp": 2.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Miranda Viera Garcia",
+      "licencia": "CM41414516",
+      "hcp": 3.7,
+      "nivel": "J"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -254,6 +1778,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-19T09:49:23.224Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1774946698_rrll_el_robledal.pdf"
+  ]
 }

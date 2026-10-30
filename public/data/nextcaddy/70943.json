@@ -1,13 +1,13 @@
 {
   "tourId": 70943,
   "url": "https://www.nextcaddy.com/tour/70943",
-  "scrapedAt": "2026-06-24T14:58:14.289Z",
+  "scrapedAt": "2026-10-30T14:27:29.136Z",
   "meta": {
     "name": "Ballena Cup 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": null,
+    "dateStart": "2026-08-07",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,781 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-08-07",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 23,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jacobo De La Mata Baena",
+          "licencia": "CM01154351",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2375784
+        },
+        {
+          "pos": 2,
+          "name": "Luis Martin Cubillo",
+          "licencia": "CM01037339",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2376197
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Martin Cubillo",
+          "licencia": "CM01038986",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2374618
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Martin Marti",
+          "licencia": "CM01378246",
+          "hcp": 11.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2374665
+        },
+        {
+          "pos": 5,
+          "name": "Jose Corral Ballano",
+          "licencia": "CM00969528",
+          "hcp": 17.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2374740
+        },
+        {
+          "pos": 6,
+          "name": "Javier Regidor Nestares",
+          "licencia": "CM22614093",
+          "hcp": 9.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2375892
+        },
+        {
+          "pos": 7,
+          "name": "Luis Satrustegui Calonje",
+          "licencia": "CM01018987",
+          "hcp": 18.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2373441
+        },
+        {
+          "pos": 8,
+          "name": "Borja Castellano Sanchez-Quiñones",
+          "licencia": "CM02964268",
+          "hcp": 9.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2374741
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Landecho Cubillo",
+          "licencia": "CM00305919",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2374612
+        },
+        {
+          "pos": 10,
+          "name": "Borja Torres-Muñoz Cabrera",
+          "licencia": "CM00391378",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2373016
+        },
+        {
+          "pos": 11,
+          "name": "Francisco Ruiz-Jarabo Treviño",
+          "licencia": "CM01983998",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2373260
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Martin Marti",
+          "licencia": "CM01378248",
+          "hcp": 10,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2374843
+        },
+        {
+          "pos": 13,
+          "name": "Jesus Ruiz-Jarabo Treviño",
+          "licencia": "CM02126730",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2373140
+        },
+        {
+          "pos": 14,
+          "name": "Emilio Ros Torres",
+          "licencia": "CM15629595",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2373617
+        },
+        {
+          "pos": 15,
+          "name": "Guillermo Hott Castañeda",
+          "licencia": "CM11202044",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2373210
+        },
+        {
+          "pos": 16,
+          "name": "Manuel Diaz Delgado",
+          "licencia": "AM17191575",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2377361
+        },
+        {
+          "pos": 17,
+          "name": "Karl Julian Hansen Larramendi",
+          "licencia": "CM11253821",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2373776
+        },
+        {
+          "pos": 18,
+          "name": "Alberto Fermoso De Ancos",
+          "licencia": "CM11197857",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2374638
+        },
+        {
+          "pos": 19,
+          "name": "Jaime Vazquez De La Puerta",
+          "licencia": "AM17602352",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2376263
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Oses Cordoba",
+          "licencia": "CM04346940",
+          "hcp": 32.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2376225
+        },
+        {
+          "pos": 21,
+          "name": "Leopoldo Morales Tissot",
+          "licencia": "AM25301834",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2373883
+        },
+        {
+          "pos": 22,
+          "name": "Jose Luis Fermoso De Ancos",
+          "licencia": "CM00950503",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2373077
+        },
+        {
+          "pos": 23,
+          "name": "Ignacio Sebastian Merello",
+          "licencia": "CM07022105",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2373598
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 23,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jacobo De La Mata Baena",
+          "licencia": "CM01154351",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2375784
+        },
+        {
+          "pos": 2,
+          "name": "Luis Martin Cubillo",
+          "licencia": "CM01037339",
+          "hcp": 11.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2376197
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Martin Cubillo",
+          "licencia": "CM01038986",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2374618
+        },
+        {
+          "pos": 4,
+          "name": "Luis Satrustegui Calonje",
+          "licencia": "CM01018987",
+          "hcp": 18.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2373441
+        },
+        {
+          "pos": 5,
+          "name": "Jose Corral Ballano",
+          "licencia": "CM00969528",
+          "hcp": 17.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2374740
+        },
+        {
+          "pos": 6,
+          "name": "Emilio Ros Torres",
+          "licencia": "CM15629595",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2373617
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Martin Marti",
+          "licencia": "CM01378246",
+          "hcp": 11.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2374665
+        },
+        {
+          "pos": 8,
+          "name": "Jesus Ruiz-Jarabo Treviño",
+          "licencia": "CM02126730",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2373140
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Landecho Cubillo",
+          "licencia": "CM00305919",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2374612
+        },
+        {
+          "pos": 10,
+          "name": "Francisco Ruiz-Jarabo Treviño",
+          "licencia": "CM01983998",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2373260
+        },
+        {
+          "pos": 11,
+          "name": "Guillermo Hott Castañeda",
+          "licencia": "CM11202044",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2373210
+        },
+        {
+          "pos": 12,
+          "name": "Karl Julian Hansen Larramendi",
+          "licencia": "CM11253821",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2373776
+        },
+        {
+          "pos": 13,
+          "name": "Manuel Diaz Delgado",
+          "licencia": "AM17191575",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2377361
+        },
+        {
+          "pos": 14,
+          "name": "Jaime Vazquez De La Puerta",
+          "licencia": "AM17602352",
+          "hcp": 29.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2376263
+        },
+        {
+          "pos": 15,
+          "name": "Jose Luis Fermoso De Ancos",
+          "licencia": "CM00950503",
+          "hcp": 31.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2373077
+        },
+        {
+          "pos": 16,
+          "name": "Carlos Oses Cordoba",
+          "licencia": "CM04346940",
+          "hcp": 32.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2376225
+        },
+        {
+          "pos": 17,
+          "name": "Javier Regidor Nestares",
+          "licencia": "CM22614093",
+          "hcp": 9.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2375892
+        },
+        {
+          "pos": 18,
+          "name": "Alberto Fermoso De Ancos",
+          "licencia": "CM11197857",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374638
+        },
+        {
+          "pos": 19,
+          "name": "Borja Castellano Sanchez-Quiñones",
+          "licencia": "CM02964268",
+          "hcp": 9.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2374741
+        },
+        {
+          "pos": 20,
+          "name": "Borja Torres-Muñoz Cabrera",
+          "licencia": "CM00391378",
+          "hcp": 11,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2373016
+        },
+        {
+          "pos": 21,
+          "name": "Carlos Martin Marti",
+          "licencia": "CM01378248",
+          "hcp": 10,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2374843
+        },
+        {
+          "pos": 22,
+          "name": "Leopoldo Morales Tissot",
+          "licencia": "AM25301834",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2373883
+        },
+        {
+          "pos": 23,
+          "name": "Ignacio Sebastian Merello",
+          "licencia": "CM07022105",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2373598
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 23
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Borja Torres-Muñoz Cabrera",
+      "licencia": "CM00391378",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Luis Fermoso De Ancos",
+      "licencia": "CM00950503",
+      "hcp": 31.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jesus Ruiz-Jarabo Treviño",
+      "licencia": "CM02126730",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Guillermo Hott Castañeda",
+      "licencia": "CM11202044",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Francisco Ruiz-Jarabo Treviño",
+      "licencia": "CM01983998",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Luis Satrustegui Calonje",
+      "licencia": "CM01018987",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio Sebastian Merello",
+      "licencia": "CM07022105",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Emilio Ros Torres",
+      "licencia": "CM15629595",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Karl Julian Hansen Larramendi",
+      "licencia": "CM11253821",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Leopoldo Morales Tissot",
+      "licencia": "AM25301834",
+      "hcp": 29.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Carlos Landecho Cubillo",
+      "licencia": "CM00305919",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Carlos Martin Cubillo",
+      "licencia": "CM01038986",
+      "hcp": 14.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Alberto Fermoso De Ancos",
+      "licencia": "CM11197857",
+      "hcp": 30.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Alvaro Martin Marti",
+      "licencia": "CM01378246",
+      "hcp": 11.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Corral Ballano",
+      "licencia": "CM00969528",
+      "hcp": 17.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Borja Castellano Sanchez-Quiñones",
+      "licencia": "CM02964268",
+      "hcp": 9.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Carlos Martin Marti",
+      "licencia": "CM01378248",
+      "hcp": 10,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Jacobo De La Mata Baena",
+      "licencia": "CM01154351",
+      "hcp": 11,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Javier Regidor Nestares",
+      "licencia": "CM22614093",
+      "hcp": 9.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Luis Martin Cubillo",
+      "licencia": "CM01037339",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Carlos Oses Cordoba",
+      "licencia": "CM04346940",
+      "hcp": 32.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Jaime Vazquez De La Puerta",
+      "licencia": "AM17602352",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Manuel Diaz Delgado",
+      "licencia": "AM17191575",
+      "hcp": 25.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -296,7 +1064,7 @@
     }
   },
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3399168820_ballena_cup_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-10T05:45:49.130Z"
+  ]
 }

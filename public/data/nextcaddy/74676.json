@@ -1,9 +1,9 @@
 {
   "tourId": 74676,
   "url": "https://www.nextcaddy.com/tour/74676",
-  "scrapedAt": "2026-10-19T09:49:00.337Z",
+  "scrapedAt": "2026-10-30T14:29:15.929Z",
   "meta": {
-    "name": null,
+    "name": "DANESES GOLF 22/10",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
@@ -21,20 +21,598 @@
     "dateIso": "2026-10-22",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ruben Mandrella",
+          "licencia": "AM76064084",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2432932
+        },
+        {
+          "pos": 2,
+          "name": "Tage Potoker",
+          "licencia": "AM76769742",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2432933
+        },
+        {
+          "pos": 3,
+          "name": "Peter Bundgard",
+          "licencia": "AM76946855",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2432931
+        },
+        {
+          "pos": 4,
+          "name": "Anita Due",
+          "licencia": "AM76896953",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2432930
+        },
+        {
+          "pos": 5,
+          "name": "Edna Mandrella",
+          "licencia": "AM76064085",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2432929
+        },
+        {
+          "pos": 6,
+          "name": "Paul Smith",
+          "licencia": "AM76773125",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2432928
+        },
+        {
+          "pos": 7,
+          "name": "Flemming Lykke Hansen",
+          "licencia": "AM76354745",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2432934
+        },
+        {
+          "pos": 8,
+          "name": "Per Richard Svendsen",
+          "licencia": "AM76284827",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2432939
+        },
+        {
+          "pos": 9,
+          "name": "Jan Gulloev",
+          "licencia": "AM76072061",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2432941
+        },
+        {
+          "pos": 10,
+          "name": "Alexander Walsoe",
+          "licencia": "AM76198382",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2432943
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 10
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Paul Smith",
+      "licencia": "AM76773125",
+      "hcp": 8.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Peter Bundgard",
+      "licencia": "AM76946855",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ruben Mandrella",
+      "licencia": "AM76064084",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Tage Potoker",
+      "licencia": "AM76769742",
+      "hcp": 29.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Flemming Lykke Hansen",
+      "licencia": "AM76354745",
+      "hcp": 30.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Per Richard Svendsen",
+      "licencia": "AM76284827",
+      "hcp": 33.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jan Gulloev",
+      "licencia": "AM76072061",
+      "hcp": 37.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Alexander Walsoe",
+      "licencia": "AM76198382",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Edna Mandrella",
+      "licencia": "AM76064085",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Anita Due",
+      "licencia": "AM76896953",
+      "hcp": 37.9,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162250,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            28
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            49
+          ],
+          [
+            "Peor",
+            86
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162251,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            5
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            20
+          ],
+          [
+            "5",
+            22
+          ],
+          [
+            "6",
+            16
+          ],
+          [
+            "7",
+            14
+          ],
+          [
+            "8",
+            11
+          ],
+          [
+            "9",
+            16
+          ],
+          [
+            "10",
+            8
+          ],
+          [
+            "11",
+            15
+          ],
+          [
+            "12",
+            15
+          ],
+          [
+            "13",
+            21
+          ],
+          [
+            "14",
+            12
+          ],
+          [
+            "15",
+            14
+          ],
+          [
+            "16",
+            18
+          ],
+          [
+            "17",
+            12
+          ],
+          [
+            "18",
+            17
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162252,
+        "datos": [
+          [
+            "Hoyo",
+            "RUBEN MANDRELLA",
+            "TAGE  POTOKER ",
+            "PETER BUNDGARD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 4",
+            -1,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 6",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -3,
+            -2
+          ],
+          [
+            "Hoyo 8",
+            0,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 14",
+            0,
+            2,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            1,
+            -3
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 17",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            2
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162253,
+        "datos": [
+          [
+            "Hoyo",
+            "RUBEN MANDRELLA",
+            "TAGE  POTOKER ",
+            "PETER BUNDGARD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 18",
+            2,
+            0,
+            2
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -45,6 +623,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:24.616Z"
+  ]
 }

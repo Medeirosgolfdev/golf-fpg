@@ -1,13 +1,13 @@
 {
   "tourId": 68243,
   "url": "https://www.nextcaddy.com/tour/68243",
-  "scrapedAt": "2026-06-24T14:57:47.821Z",
+  "scrapedAt": "2026-10-30T14:26:39.172Z",
   "meta": {
     "name": "Torneo Fun&Golf Family Challenge - Equipos de 3 - \"Escuela RFGM\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
+    "dateStart": "2026-06-27",
     "dateEnd": null,
     "format": "Stableford (Handicap) Circuito Fun&Golf",
     "categories": [
@@ -17,12 +17,23 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación 1ª Categoría",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Clasificación 2ª Categoría",
+      "jugadores": 6
+    }
+  },
   "inscritos": [
     {
       "orden": null,
@@ -188,7 +199,7 @@
     {
       "orden": null,
       "name": "Sara Diaz Ramos",
-      "licencia": "CMA5485754",
+      "licencia": "CM00485754",
       "hcp": 54,
       "nivel": "A"
     },
@@ -784,18 +795,18 @@
         {
           "time": "11:30",
           "tee": 4,
-          "name": "Francisco Javier Domingo Capape",
+          "name": "Juan Pablo Domingo Capape",
           "hcp": 54,
-          "ins": "2347860",
+          "ins": "2347859",
           "jid": "72807",
           "nivel": "B"
         },
         {
           "time": "11:30",
           "tee": 4,
-          "name": "Juan Pablo Domingo Capape",
+          "name": "Francisco Javier Domingo Capape",
           "hcp": 54,
-          "ins": "2347859",
+          "ins": "2347860",
           "jid": "72807",
           "nivel": "B"
         }
@@ -829,6 +840,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-29T09:18:42.192Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

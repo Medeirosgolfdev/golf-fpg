@@ -1,9 +1,9 @@
 {
   "tourId": 74515,
   "url": "https://www.nextcaddy.com/tour/74515",
-  "scrapedAt": "2026-10-12T12:09:14.186Z",
+  "scrapedAt": "2026-10-30T14:29:05.419Z",
   "meta": {
-    "name": null,
+    "name": "Repesca Social",
     "organizer": null,
     "course": "Club Deportivo Añoreta Golf",
     "courseCode": "AM75",
@@ -21,10 +21,220 @@
     "dateIso": "2026-10-17",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gilles Henriquet",
+          "licencia": "AM75078534",
+          "hcp": 12.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2424289
+        },
+        {
+          "pos": 2,
+          "name": "Rosario Sanchez Tentor",
+          "licencia": "AM75353729",
+          "hcp": 22.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2424050
+        },
+        {
+          "pos": 3,
+          "name": "Gary Raymond Miles",
+          "licencia": "AM58771708",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2425432
+        },
+        {
+          "pos": 4,
+          "name": "Fco Javier Bermudez Cabello",
+          "licencia": "AM75700416",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2424506
+        },
+        {
+          "pos": 5,
+          "name": "Veronique Rodriguez",
+          "licencia": "AM75078535",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2424288
+        },
+        {
+          "pos": 6,
+          "name": "Jesus Maria Sola Rodriguez",
+          "licencia": "AM75492451",
+          "hcp": 26.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2424479
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Miguel Antunez Ramilo",
+          "licencia": "AM75358572",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423914
+        },
+        {
+          "pos": 8,
+          "name": "Sergio Haro Rodriguez",
+          "licencia": "AM83696534",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2424059
+        },
+        {
+          "pos": 9,
+          "name": "Carlos Acevedo Ramos",
+          "licencia": "AM01261469",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2424467
+        },
+        {
+          "pos": 10,
+          "name": "Eva Maria Millan Escarraman",
+          "licencia": "AM75492450",
+          "hcp": 33.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424480
+        },
+        {
+          "pos": 11,
+          "name": "Antonio Navarro Del Amo",
+          "licencia": "AM00108014",
+          "hcp": 13.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2424051
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Santos Ximenez",
+          "licencia": "AM75818466",
+          "hcp": 3.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2424236
+        },
+        {
+          "pos": 13,
+          "name": "Casto Galan Caldera",
+          "licencia": "AM04074609",
+          "hcp": 33.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2426223
+        },
+        {
+          "pos": 14,
+          "name": "Maria Cano Gomez",
+          "licencia": "AM75618673",
+          "hcp": 23.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2424264
+        },
+        {
+          "pos": 15,
+          "name": "Antonio Pedrosa Jodar",
+          "licencia": "AMC8071629",
+          "hcp": 13.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2423915
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -37,7 +247,7 @@
       "orden": 2,
       "name": "Antonio Pedrosa Jodar",
       "licencia": "AMC8071629",
-      "hcp": 13.8,
+      "hcp": 13.2,
       "nivel": "S"
     },
     {
@@ -48,6 +258,27 @@
       "nivel": "S"
     },
     {
+      "orden": 4,
+      "name": "Jesus Maria Sola Rodriguez",
+      "licencia": "AM75492451",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Gary Raymond Miles",
+      "licencia": "AM58771708",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Casto Galan Caldera",
+      "licencia": "AM04074609",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
       "orden": 1,
       "name": "Rosario Sanchez Tentor",
       "licencia": "AM75353729",
@@ -55,10 +286,59 @@
       "nivel": "S"
     },
     {
+      "orden": 2,
+      "name": "Maria Cano Gomez",
+      "licencia": "AM75618673",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Veronique Rodriguez",
+      "licencia": "AM75078535",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Eva Maria Millan Escarraman",
+      "licencia": "AM75492450",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
       "orden": 1,
       "name": "Sergio Haro Rodriguez",
       "licencia": "AM83696534",
       "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Antonio Santos Ximenez",
+      "licencia": "AM75818466",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Gilles Henriquet",
+      "licencia": "AM75078534",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Acevedo Ramos",
+      "licencia": "AM01261469",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Fco Javier Bermudez Cabello",
+      "licencia": "AM75700416",
+      "hcp": 14.5,
       "nivel": "S"
     }
   ],
@@ -222,6 +502,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:50.340Z"
+  ]
 }

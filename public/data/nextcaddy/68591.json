@@ -1,13 +1,13 @@
 {
   "tourId": 68591,
   "url": "https://www.nextcaddy.com/tour/68591",
-  "scrapedAt": "2026-06-24T14:57:58.261Z",
+  "scrapedAt": "2026-10-30T14:26:48.718Z",
   "meta": {
     "name": "V Prueba Circuito Juvenil de P&P (18 Hoyos) 1ª y 2ª Categoría - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": null,
+    "dateStart": "2026-07-05",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,182 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-05",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación 2ª Categoría",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enrique Perez Trapero",
+          "licencia": "CP26967032",
+          "hcp": 27.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2353029
+        },
+        {
+          "pos": 2,
+          "name": "Beatrice Sparicio",
+          "licencia": "CP26979413",
+          "hcp": 23.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2353117
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Alvarez Muñoz",
+          "licencia": "CP26003516",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2353090
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Mira Melian",
+          "licencia": "CP26079834",
+          "hcp": 27.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2353376
+        },
+        {
+          "pos": 5,
+          "name": "Victoria Ramirez Santana",
+          "licencia": "CP26054982",
+          "hcp": 30.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2353367
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificacion 1ª Categoría",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2353354
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación 2ª Categoría",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificacion 1ª Categoría",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Enrique Perez Trapero",
+      "licencia": "CP26967032",
+      "hcp": 27.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Jorge Alvarez Muñoz",
+      "licencia": "CP26003516",
+      "hcp": 26,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Lucas Saavedra Fernandez",
+      "licencia": "CP31000819",
+      "hcp": 14.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Mira Melian",
+      "licencia": "CP26079834",
+      "hcp": 27.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Beatrice Sparicio",
+      "licencia": "CP26979413",
+      "hcp": 23.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Victoria Ramirez Santana",
+      "licencia": "CP26054982",
+      "hcp": 30.2,
+      "nivel": "I"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -52,6 +221,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.041Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

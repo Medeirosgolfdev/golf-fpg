@@ -1,13 +1,13 @@
 {
   "tourId": 68743,
   "url": "https://www.nextcaddy.com/tour/68743",
-  "scrapedAt": "2026-06-24T14:58:55.635Z",
+  "scrapedAt": "2026-10-30T14:29:18.461Z",
   "meta": {
     "name": "Campeonato Individual Damas \"La Dehesa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": null,
+    "dateStart": "2026-10-24",
     "dateEnd": null,
     "format": "Stableford (Handicap) Ranking Mid-Amateu",
     "categories": [
@@ -18,13 +18,142 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-10-24",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francis Alcantara Torres",
+      "licencia": "CMC2888436",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Li Zhang",
+      "licencia": "CM07743638",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Georgina Herrera Rubio",
+      "licencia": "CM41509485",
+      "hcp": 4.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Maria Del Carmen Moreno Rodriguez",
+      "licencia": "CM03352578",
+      "hcp": 20.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Carlota Bachiller Marco",
+      "licencia": "CM05307775",
+      "hcp": 1.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Mara Ron Roman",
+      "licencia": "CM05504401",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Emilia Martin Sanchez",
+      "licencia": "CM41795219",
+      "hcp": 31.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Monica Loma Martinez",
+      "licencia": "CM61154278",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Marta Torralvo Liebanas",
+      "licencia": "CM02061326",
+      "hcp": 9.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Matilde Ramirez Ustariz",
+      "licencia": "CM41671977",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Consuelo Azabal Arroyo",
+      "licencia": "CMD9792576",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Alejandra Vilariño Targhetta",
+      "licencia": "CM02072365",
+      "hcp": 3.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Carmen Buesa Galiano",
+      "licencia": "CM81211788",
+      "hcp": 24.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Isabel Verdeja Lizama",
+      "licencia": "CM52082907",
+      "hcp": 29.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Silvina Lopez Freyre",
+      "licencia": "CM02888542",
+      "hcp": 5.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Paloma Lama Perez",
+      "licencia": "CM08295354",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Rosa Maria Sanz Sanchez",
+      "licencia": "CM05694469",
+      "hcp": 22.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "M Dolores Serra Lopez De Chicheri",
+      "licencia": "CM01026379",
+      "hcp": 3.2,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -42,6 +171,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.650Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/2458307246_clasificaciones_dehesa_1_hoja.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/2458307246_clasificaciones_dehesa_1_hoja.pdf",
+    "/uploads/competiciones/pdf/3443721070_campeonato_individual_de_damas_club_de_golf_la_dehesa_2026.pdf"
+  ]
 }

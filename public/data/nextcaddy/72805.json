@@ -1,9 +1,9 @@
 {
   "tourId": 72805,
   "url": "https://www.nextcaddy.com/tour/72805",
-  "scrapedAt": "2026-08-10T05:45:19.098Z",
+  "scrapedAt": "2026-10-30T14:27:45.320Z",
   "meta": {
-    "name": null,
+    "name": "Canaleta Invitational",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
@@ -21,11 +21,612 @@
     "dateIso": "2026-08-18",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Hcp General",
+      "expectedJugadores": 30,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rafael Fernandez-Basterra Sanchez",
+          "licencia": "AM02927540",
+          "hcp": 4.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2385536
+        },
+        {
+          "pos": 2,
+          "name": "Julio Acal Mendez",
+          "licencia": "AMA9618068",
+          "hcp": 22.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2385551
+        },
+        {
+          "pos": 3,
+          "name": "Borja De Luis De Blas",
+          "licencia": "CM02114593",
+          "hcp": 9.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2385540
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Toro Diaz",
+          "licencia": "AM07497684",
+          "hcp": 19.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2385560
+        },
+        {
+          "pos": 5,
+          "name": "Guillermo Navas Delgado-Brackenbury,",
+          "licencia": "EXX1912346",
+          "hcp": 22.3,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2387579
+        },
+        {
+          "pos": 6,
+          "name": "Juan De La Hera Salvador",
+          "licencia": "BP18102776",
+          "hcp": 7.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2385539
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Maza Moreno",
+          "licencia": "AM02154318",
+          "hcp": 12.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2385545
+        },
+        {
+          "pos": 8,
+          "name": "Alfonso Charlo Gomez",
+          "licencia": "AM02125828",
+          "hcp": 6.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2385534
+        },
+        {
+          "pos": 9,
+          "name": "Diego Cascajo Ysern",
+          "licencia": "AM02796853",
+          "hcp": 2.8,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2385533
+        },
+        {
+          "pos": 10,
+          "name": "Jaime De Blas Aguilera",
+          "licencia": "CM02406502",
+          "hcp": 11.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2385572
+        },
+        {
+          "pos": 11,
+          "name": "Diego Oriol Sanchez-Blanco",
+          "licencia": "AM02202063",
+          "hcp": 5.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2385538
+        },
+        {
+          "pos": 12,
+          "name": "Julio Guija Rodriguez",
+          "licencia": "AM02168776",
+          "hcp": 8.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2385556
+        },
+        {
+          "pos": 13,
+          "name": "Alvaro Golmar Portes",
+          "licencia": "AM07987371",
+          "hcp": 9.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2386452
+        },
+        {
+          "pos": 14,
+          "name": "Antonio De Leon Ibarra",
+          "licencia": "AM02808610",
+          "hcp": 23.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2385547
+        },
+        {
+          "pos": 15,
+          "name": "Jose Maza Moreno",
+          "licencia": "AM02078959",
+          "hcp": 13.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2385552
+        },
+        {
+          "pos": 16,
+          "name": "Francisco Bolaños Rowe",
+          "licencia": "AM85061082",
+          "hcp": 0.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2385532
+        },
+        {
+          "pos": 17,
+          "name": "Alfredo Maza Moreno",
+          "licencia": "AM02154321",
+          "hcp": 12.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2385546
+        },
+        {
+          "pos": 18,
+          "name": "Patricio Garcia Soriano",
+          "licencia": "AM02064051",
+          "hcp": 20.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2385549
+        },
+        {
+          "pos": 19,
+          "name": "Jesus Maza Burgos",
+          "licencia": "AM02266524",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2385555
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Arteaga Maestre",
+          "licencia": "AM02068661",
+          "hcp": 11.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2385554
+        },
+        {
+          "pos": 21,
+          "name": "Miguel Cebrian Del Pino",
+          "licencia": "AMG8943397",
+          "hcp": 23.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2385544
+        },
+        {
+          "pos": 22,
+          "name": "Lazaro Godoy Borrero",
+          "licencia": "AMG3980659",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2385557
+        },
+        {
+          "pos": 23,
+          "name": "Jaime Abaurre Benjumea",
+          "licencia": "AM02928955",
+          "hcp": 7.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2386458
+        },
+        {
+          "pos": 24,
+          "name": "Alfonso Fernandez Yñiguez",
+          "licencia": "AM02749756",
+          "hcp": 12.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2385548
+        },
+        {
+          "pos": 25,
+          "name": "Ricardo Gonzalo Balbontin",
+          "licencia": "AM07508134",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2385562
+        },
+        {
+          "pos": 26,
+          "name": "Juan Prats Sanchez",
+          "licencia": "AM02483534",
+          "hcp": 24.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2385553
+        },
+        {
+          "pos": 27,
+          "name": "Ignacio Fernandez Maza",
+          "licencia": "9915929506",
+          "hcp": 28.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2385558
+        },
+        {
+          "pos": 28,
+          "name": "Daniel Maya Conejo",
+          "licencia": "AMA9192146",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2385559
+        },
+        {
+          "pos": 29,
+          "name": "Ricardo Dominguez Serrano",
+          "licencia": "AMC3492346",
+          "hcp": 39.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2385563
+        },
+        {
+          "pos": 30,
+          "name": "Jaime Pommarez Tarradas",
+          "licencia": "AMG8523702",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2385646
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Hcp General",
+      "jugadores": 30
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Francisco Bolaños Rowe",
+      "licencia": "AM85061082",
+      "hcp": 0.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Diego Cascajo Ysern",
+      "licencia": "AM02796853",
+      "hcp": 2.8,
+      "nivel": "M"
+    },
+    {
+      "orden": 3,
+      "name": "Alfonso Charlo Gomez",
+      "licencia": "AM02125828",
+      "hcp": 6.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Rafael Fernandez-Basterra Sanchez",
+      "licencia": "AM02927540",
+      "hcp": 4.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Diego Oriol Sanchez-Blanco",
+      "licencia": "AM02202063",
+      "hcp": 5.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Juan De La Hera Salvador",
+      "licencia": "BP18102776",
+      "hcp": 7.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Borja De Luis De Blas",
+      "licencia": "CM02114593",
+      "hcp": 9.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Miguel Cebrian Del Pino",
+      "licencia": "AMG8943397",
+      "hcp": 23.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Alvaro Maza Moreno",
+      "licencia": "AM02154318",
+      "hcp": 12.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Alfredo Maza Moreno",
+      "licencia": "AM02154321",
+      "hcp": 12.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Antonio De Leon Ibarra",
+      "licencia": "AM02808610",
+      "hcp": 23.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Alfonso Fernandez Yñiguez",
+      "licencia": "AM02749756",
+      "hcp": 12.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Patricio Garcia Soriano",
+      "licencia": "AM02064051",
+      "hcp": 20.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Julio Acal Mendez",
+      "licencia": "AMA9618068",
+      "hcp": 22.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Maza Moreno",
+      "licencia": "AM02078959",
+      "hcp": 13.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Juan Prats Sanchez",
+      "licencia": "AM02483534",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Carlos Arteaga Maestre",
+      "licencia": "AM02068661",
+      "hcp": 11.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Jesus Maza Burgos",
+      "licencia": "AM02266524",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Julio Guija Rodriguez",
+      "licencia": "AM02168776",
+      "hcp": 8.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Lazaro Godoy Borrero",
+      "licencia": "AMG3980659",
+      "hcp": 24,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Ignacio Fernandez Maza",
+      "licencia": "9915929506",
+      "hcp": 28.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Daniel Maya Conejo",
+      "licencia": "AMA9192146",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Alfonso Toro Diaz",
+      "licencia": "AM07497684",
+      "hcp": 19.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 24,
+      "name": "Ricardo Gonzalo Balbontin",
+      "licencia": "AM07508134",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Ricardo Dominguez Serrano",
+      "licencia": "AMC3492346",
+      "hcp": 39.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 26,
+      "name": "Jaime De Blas Aguilera",
+      "licencia": "CM02406502",
+      "hcp": 11.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Jaime Pommarez Tarradas",
+      "licencia": "AMG8523702",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Alvaro Golmar Portes",
+      "licencia": "AM07987371",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 29,
+      "name": "Jaime Abaurre Benjumea",
+      "licencia": "AM02928955",
+      "hcp": 7.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 30,
+      "name": "Guillermo Navas Delgado-Brackenbury,",
+      "licencia": "EXX1912346",
+      "hcp": 22.3,
+      "nivel": "M"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -67,16 +668,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:20",
-          "tee": 1,
-          "name": "Antonio Muñoz De Verger García",
-          "hcp": 7.3,
-          "ins": "2385537",
-          "jid": "78016",
-          "nivel": "M"
-        },
-        {
-          "time": "08:20",
+          "time": "08:18",
           "tee": 1,
           "name": "Diego Oriol Sanchez-Blanco",
           "hcp": 5.7,
@@ -85,7 +677,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:20",
+          "time": "08:18",
           "tee": 1,
           "name": "Juan De La Hera Salvador",
           "hcp": 7.4,
@@ -94,7 +686,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:20",
+          "time": "08:18",
           "tee": 1,
           "name": "Borja De Luis De Blas",
           "hcp": 9.3,
@@ -103,7 +695,16 @@
           "nivel": "M"
         },
         {
-          "time": "08:30",
+          "time": "08:18",
+          "tee": 1,
+          "name": "Jaime Abaurre Benjumea",
+          "hcp": 7.4,
+          "ins": "2386458",
+          "jid": "78016",
+          "nivel": "M"
+        },
+        {
+          "time": "08:26",
           "tee": 1,
           "name": "Antonio De Leon Ibarra",
           "hcp": 23.5,
@@ -112,7 +713,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:30",
+          "time": "08:26",
           "tee": 1,
           "name": "Miguel Cebrian Del Pino",
           "hcp": 23.4,
@@ -121,7 +722,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:30",
+          "time": "08:26",
           "tee": 1,
           "name": "Jaime De Blas Aguilera",
           "hcp": 11.5,
@@ -130,7 +731,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:30",
+          "time": "08:26",
           "tee": 1,
           "name": "Alvaro Maza Moreno",
           "hcp": 12.2,
@@ -139,7 +740,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:40",
+          "time": "08:34",
           "tee": 1,
           "name": "Alfredo Maza Moreno",
           "hcp": 12.8,
@@ -148,7 +749,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:40",
+          "time": "08:34",
           "tee": 1,
           "name": "Alfonso Fernandez Yñiguez",
           "hcp": 12.6,
@@ -157,7 +758,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:40",
+          "time": "08:34",
           "tee": 1,
           "name": "Patricio Garcia Soriano",
           "hcp": 20.7,
@@ -166,7 +767,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:40",
+          "time": "08:34",
           "tee": 1,
           "name": "Julio Acal Mendez",
           "hcp": 22.6,
@@ -175,7 +776,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:50",
+          "time": "08:42",
           "tee": 1,
           "name": "Jose Maza Moreno",
           "hcp": 13.3,
@@ -184,7 +785,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:50",
+          "time": "08:42",
           "tee": 1,
           "name": "Juan Prats Sanchez",
           "hcp": 24.1,
@@ -193,7 +794,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:50",
+          "time": "08:42",
           "tee": 1,
           "name": "Carlos Arteaga Maestre",
           "hcp": 11.6,
@@ -202,7 +803,7 @@
           "nivel": "M"
         },
         {
-          "time": "08:50",
+          "time": "08:42",
           "tee": 1,
           "name": "Jesus Maza Burgos",
           "hcp": 24,
@@ -211,7 +812,7 @@
           "nivel": "S"
         },
         {
-          "time": "09:00",
+          "time": "08:50",
           "tee": 1,
           "name": "Julio Guija Rodriguez",
           "hcp": 8.8,
@@ -220,7 +821,7 @@
           "nivel": "M"
         },
         {
-          "time": "09:00",
+          "time": "08:50",
           "tee": 1,
           "name": "Lazaro Godoy Borrero",
           "hcp": 24,
@@ -229,7 +830,7 @@
           "nivel": "M"
         },
         {
-          "time": "09:00",
+          "time": "08:50",
           "tee": 1,
           "name": "Ignacio Fernandez Maza",
           "hcp": 28.9,
@@ -238,7 +839,7 @@
           "nivel": "M"
         },
         {
-          "time": "09:00",
+          "time": "08:50",
           "tee": 1,
           "name": "Daniel Maya Conejo",
           "hcp": 26,
@@ -247,7 +848,7 @@
           "nivel": "S"
         },
         {
-          "time": "09:10",
+          "time": "08:58",
           "tee": 1,
           "name": "Alfonso Toro Diaz",
           "hcp": 19.1,
@@ -256,7 +857,7 @@
           "nivel": "M"
         },
         {
-          "time": "09:10",
+          "time": "08:58",
           "tee": 1,
           "name": "Ricardo Gonzalo Balbontin",
           "hcp": 36,
@@ -265,7 +866,16 @@
           "nivel": "M"
         },
         {
-          "time": "09:10",
+          "time": "08:58",
+          "tee": 1,
+          "name": "Jaime Pommarez Tarradas",
+          "hcp": 36,
+          "ins": "2385646",
+          "jid": "78016",
+          "nivel": "M"
+        },
+        {
+          "time": "09:06",
           "tee": 1,
           "name": "Ricardo Dominguez Serrano",
           "hcp": 39.6,
@@ -274,11 +884,11 @@
           "nivel": "M"
         },
         {
-          "time": "09:10",
+          "time": "09:06",
           "tee": 1,
-          "name": "Jaime Pommarez Tarradas",
-          "hcp": 36,
-          "ins": "2385646",
+          "name": "Alvaro Golmar Portes",
+          "hcp": 9.5,
+          "ins": "2386452",
           "jid": "78016",
           "nivel": "M"
         }
@@ -304,6 +914,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/781065792_72805-canaleta-invitational.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:58:01.452Z"
+  ]
 }

@@ -1,29 +1,540 @@
 {
   "tourId": 61205,
   "url": "https://www.nextcaddy.com/tour/61205",
-  "scrapedAt": "2026-06-24T14:58:32.077Z",
+  "scrapedAt": "2026-10-30T14:28:22.646Z",
   "meta": {
     "name": "Trofeo Andalucía Dobles Señoras",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Real Club de Golf Vista Hermosa",
     "courseCode": "AM05",
-    "dateStart": null,
+    "dateStart": "2026-09-17",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Handicap)  Señoras C. Femeni",
     "categories": [
       "Señoras",
-      "Caballeros",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-17",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja Todos",
+      "jugadores": 36
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ana Ordoñez Cocovi",
+      "licencia": "AM85142580",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Begoña Galarza Azurmendi",
+      "licencia": "AM85073991",
+      "hcp": 33.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Gomez Martinez",
+      "licencia": "AM85114215",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Dolores Garcia Garcia",
+      "licencia": "AM85114659",
+      "hcp": 27.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Eva Camacho Torrent",
+      "licencia": "AMD5902043",
+      "hcp": 14.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Virginia Quintana Cerezo",
+      "licencia": "AMC9761113",
+      "hcp": 18.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Concha Calvo Muñoz",
+      "licencia": "CM00419265",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Ana Maria Aguirre Uribe",
+      "licencia": "AM00619081",
+      "hcp": 35,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Carolina Peña Algaba",
+      "licencia": "AM06979099",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Erica Cid Perez",
+      "licencia": "AM06960584",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Ana Sainz De Vicuña Bemberg S.",
+      "licencia": "AM03016209",
+      "hcp": 32.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Mª Nieves Medina Ricart",
+      "licencia": "AM02974569",
+      "hcp": 34,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Teresa Martin Bermudo",
+      "licencia": "AM05344492",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Rocio Medina Ricart",
+      "licencia": "AM05266810",
+      "hcp": 35.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Maria Luisa De Las Heras Gil",
+      "licencia": "AM05233385",
+      "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Trinidad Moreno De Alboran Peralta",
+      "licencia": "AM05156693",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Monica Loma Martinez",
+      "licencia": "CM61154278",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Pilar Davila Lopez",
+      "licencia": "CM04075973",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Casilda Castillejo Oriol",
+      "licencia": "AM02007511",
+      "hcp": 6.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Maria Dolores Ariza Astolfi",
+      "licencia": "AM02014929",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Brianda Terry Osborne",
+      "licencia": "AM05746317",
+      "hcp": 21.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Maria Ruiz Diez",
+      "licencia": "AM05359931",
+      "hcp": 27.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Victoria Eugenia Bernal Fernandez De La Reguera",
+      "licencia": "AM05106083",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Angela Gracian Alcaide",
+      "licencia": "AM05095330",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Rosa Diaz De La Peña Lopez",
+      "licencia": "AM02358481",
+      "hcp": 17.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Cristina Mochales Gutierrez",
+      "licencia": "AM05080910",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Natalia Jimenez Toro",
+      "licencia": "CMA5635451",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Belen Valcarce Rodriguez",
+      "licencia": "CM00157046",
+      "hcp": 27.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Silvia Ybarra Coello De Portugal",
+      "licencia": "AM05018097",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Maria Cristina Cologan Machado",
+      "licencia": "AM05009544",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Maria Lourdes Caballo Giles",
+      "licencia": "AM05138959",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Susana Sanchez-Araña Moreno",
+      "licencia": "AM05615435",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Carmen Muñoz Navarro",
+      "licencia": "AM71318963",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Maria Jose Campano Salardon",
+      "licencia": "AM95319967",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Marta Garcia Ceballos",
+      "licencia": "AM02617572",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Pilar Fernandez Martinez",
+      "licencia": "AMF7701261",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Maria Fernandez-Duran Soto",
+      "licencia": "AM05039311",
+      "hcp": 11.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Fina Pacheco Bohorquez",
+      "licencia": "AM02023090",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Maria Carmen Colmenares Planas",
+      "licencia": "AM05343743",
+      "hcp": 14.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Maria Josefa Romero Sanchez",
+      "licencia": "AM05913106",
+      "hcp": 20,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Maria Goizueta Fagalde",
+      "licencia": "CM01004699",
+      "hcp": 11.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Carmen Allendesalazar Ruiz De Arana",
+      "licencia": "AM05019877",
+      "hcp": 12.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Marie Dominique Hardy Gauvain",
+      "licencia": "AM05036124",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Covadonga Molina Fernandez De Miranda",
+      "licencia": "AM05061068",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Ana Villota Osborne",
+      "licencia": "AM05310364",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Maria Osborne Sanz-Magallon",
+      "licencia": "AM05616672",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Teresa Yrayzoz Aranda",
+      "licencia": "AM05288848",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Patricia Leiva Ramos",
+      "licencia": "AM05146077",
+      "hcp": 23.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Paloma Martinez-Gil Gutierrez De La Camara",
+      "licencia": "GC07443224",
+      "hcp": 19.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 25,
+      "name": "Lidia Romero Castaño",
+      "licencia": "CM02158043",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Rosa Maria Ruiz Cabral",
+      "licencia": "AM95611127",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Marta Martinez Fuentes",
+      "licencia": "AM71759473",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Rocio Garcia-Aranda Pez",
+      "licencia": "AM06114520",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "M Carmen Lopez Del Campo",
+      "licencia": "AM06923151",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Ana Tapia Guadix",
+      "licencia": "AM05107744",
+      "hcp": 5.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Cristina Bernal Fernandez De La Reguera",
+      "licencia": "AM05097176",
+      "hcp": 13.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Isabel Toledano Martinez Del Cerro",
+      "licencia": "AM05370401",
+      "hcp": 16.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 29,
+      "name": "Elena Martinez Del Cerro Solis",
+      "licencia": "AM05317844",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Magdalena Agudo Romero",
+      "licencia": "AM95284620",
+      "hcp": 12.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Maria Luisa Carrere Lovera",
+      "licencia": "AM95236657",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Belen Gonzalez Terol",
+      "licencia": "AME7266164",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Begoña De Celis Rodriguez",
+      "licencia": "AME7604764",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Cristina Garate De Las Heras",
+      "licencia": "AM05972847",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Beatriz Lopez Bujia",
+      "licencia": "CM03150055",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Isabel Palacios Rafoso",
+      "licencia": "AM05604799",
+      "hcp": 18.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Pilar Bustamante Molina",
+      "licencia": "AM05343857",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Pilar Gomez-Pando Gonzalez",
+      "licencia": "AM95261341",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Maria Del Carmen Alberola Morejon",
+      "licencia": "AM95133334",
+      "hcp": 27,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Marta Alvarez-Requejo Perez",
+      "licencia": "AM00359868",
+      "hcp": 27.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Mª Dolores Navas Moreno",
+      "licencia": "AM95203415",
+      "hcp": 31,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Carmen Maine Gago",
+      "licencia": "AM05604317",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Alicia Sanchez Alvarez Pedrosa",
+      "licencia": "0202185800",
+      "hcp": 25.5,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -256,7 +767,7 @@
         {
           "time": "09:00",
           "tee": 7,
-          "name": "Erika Cid Perez",
+          "name": "Erica Cid Perez",
           "hcp": 28,
           "ins": "2391593",
           "jid": "77260",
@@ -688,8 +1199,17 @@
     "5": {},
     "6": {}
   },
-  "roundIds": [],
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 77260
+    }
+  ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-09-21T09:55:47.097Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1290849607_info_web.pdf",
+    "/uploads/circular/2026/b1f1315306e1f0250aae7e0c557822d2.pdf",
+    "/uploads/competiciones/pdf/714258431_web.pdf"
+  ]
 }

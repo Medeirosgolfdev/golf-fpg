@@ -1,13 +1,13 @@
 {
   "tourId": 70964,
   "url": "https://www.nextcaddy.com/tour/70964",
-  "scrapedAt": "2026-06-24T14:58:02.368Z",
+  "scrapedAt": "2026-10-30T14:26:54.758Z",
   "meta": {
     "name": "Campeonato WAGR Femenino Golf Santander",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Santander S A",
     "courseCode": "CMA5",
-    "dateStart": null,
+    "dateStart": "2026-07-11",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Señoras C. Amateur",
     "categories": [
@@ -16,13 +16,1086 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-11",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Absoluta Individual_Jornada 3",
+      "expectedJugadores": 23,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rut Diaz Garcia",
+          "licencia": "CM41915757",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 66
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": -1
+            },
+            {
+              "round": 2,
+              "ch": -1
+            },
+            {
+              "round": 3,
+              "ch": -1
+            }
+          ],
+          "total": 211,
+          "toPar": -5,
+          "inscribedId": 2355331
+        },
+        {
+          "pos": 2,
+          "name": "Almendra Campoverde Martin",
+          "licencia": "CMA8072292",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 68
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": -2
+            },
+            {
+              "round": 2,
+              "ch": -2
+            },
+            {
+              "round": 3,
+              "ch": -2
+            }
+          ],
+          "total": 217,
+          "toPar": 1,
+          "inscribedId": 2353634
+        },
+        {
+          "pos": 3,
+          "name": "Iciar Rodriguez Crespo",
+          "licencia": "CM61964557",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 71
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": -1
+            },
+            {
+              "round": 2,
+              "ch": -1
+            },
+            {
+              "round": 3,
+              "ch": -1
+            }
+          ],
+          "total": 221,
+          "toPar": 5,
+          "inscribedId": 2355251
+        },
+        {
+          "pos": 4,
+          "name": "Gabriela Rincon De La Torre",
+          "licencia": "CM41913370",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 76
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 0
+            },
+            {
+              "round": 2,
+              "ch": 0
+            },
+            {
+              "round": 3,
+              "ch": 0
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2353616
+        },
+        {
+          "pos": null,
+          "name": "Carlota Marcos Cortezo",
+          "licencia": "CM11164685",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 73
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 0
+            },
+            {
+              "round": 2,
+              "ch": 0
+            },
+            {
+              "round": 3,
+              "ch": 0
+            }
+          ],
+          "total": 222,
+          "toPar": 6,
+          "inscribedId": 2352576
+        },
+        {
+          "pos": 6,
+          "name": "Chloe Huang Xu",
+          "licencia": "CM07979315",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 74
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            },
+            {
+              "round": 3,
+              "ch": 2
+            }
+          ],
+          "total": 228,
+          "toPar": 12,
+          "inscribedId": 2355914
+        },
+        {
+          "pos": 7,
+          "name": "Paula Puerta Revuelta",
+          "licencia": "CM66931174",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 77
+            },
+            {
+              "round": 2,
+              "gross": 72
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": -2
+            },
+            {
+              "round": 2,
+              "ch": -2
+            },
+            {
+              "round": 3,
+              "ch": -2
+            }
+          ],
+          "total": 230,
+          "toPar": 14,
+          "inscribedId": 2353562
+        },
+        {
+          "pos": 8,
+          "name": "Ines Izuzquiza Ruiz De Arana",
+          "licencia": "AM03166797",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 73
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 1
+            },
+            {
+              "round": 2,
+              "ch": 1
+            },
+            {
+              "round": 3,
+              "ch": 1
+            }
+          ],
+          "total": 231,
+          "toPar": 15,
+          "inscribedId": 2355248
+        },
+        {
+          "pos": 9,
+          "name": "Carlota Bachiller Marco",
+          "licencia": "CM05307775",
+          "hcp": 0.8,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 3
+            },
+            {
+              "round": 2,
+              "ch": 3
+            },
+            {
+              "round": 3,
+              "ch": 3
+            }
+          ],
+          "total": 232,
+          "toPar": 16,
+          "inscribedId": 2352621
+        },
+        {
+          "pos": 10,
+          "name": "Daniela Lozano Ramirez",
+          "licencia": "CM66991354",
+          "hcp": 1.5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 73
+            },
+            {
+              "round": 3,
+              "gross": 79
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 4
+            },
+            {
+              "round": 2,
+              "ch": 4
+            },
+            {
+              "round": 3,
+              "ch": 4
+            }
+          ],
+          "total": 233,
+          "toPar": 17,
+          "inscribedId": 2354182
+        },
+        {
+          "pos": 11,
+          "name": "Alejandra Esteban Pablos",
+          "licencia": "8833916829",
+          "hcp": null,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 72
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            },
+            {
+              "round": 3,
+              "ch": 2
+            }
+          ],
+          "total": 234,
+          "toPar": 18,
+          "inscribedId": 2355845
+        },
+        {
+          "pos": null,
+          "name": "Diana Fraile Herrero",
+          "licencia": "7706912557",
+          "hcp": 0.7,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 74
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 3
+            },
+            {
+              "round": 2,
+              "ch": 3
+            },
+            {
+              "round": 3,
+              "ch": 3
+            }
+          ],
+          "total": 234,
+          "toPar": 18,
+          "inscribedId": 2355315
+        },
+        {
+          "pos": 13,
+          "name": "Carla Revenga Bengoechea",
+          "licencia": "CMA8903766",
+          "hcp": 0.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 3
+            },
+            {
+              "round": 2,
+              "ch": 3
+            },
+            {
+              "round": 3,
+              "ch": 3
+            }
+          ],
+          "total": 236,
+          "toPar": 20,
+          "inscribedId": 2353274
+        },
+        {
+          "pos": 14,
+          "name": "Nerea Anton Moya",
+          "licencia": "CMA8960343",
+          "hcp": 1.3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 82
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 4
+            },
+            {
+              "round": 2,
+              "ch": 4
+            },
+            {
+              "round": 3,
+              "ch": 4
+            }
+          ],
+          "total": 241,
+          "toPar": 25,
+          "inscribedId": 2352569
+        },
+        {
+          "pos": 15,
+          "name": "Daniela Cobiella Lajo",
+          "licencia": "CM11908857",
+          "hcp": 1.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 83
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 4
+            },
+            {
+              "round": 2,
+              "ch": 4
+            },
+            {
+              "round": 3,
+              "ch": 4
+            }
+          ],
+          "total": 242,
+          "toPar": 26,
+          "inscribedId": 2353088
+        },
+        {
+          "pos": 16,
+          "name": "Liria Siyi Hao Zhang",
+          "licencia": "CM07947194",
+          "hcp": 2.3,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 80
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 5
+            },
+            {
+              "round": 2,
+              "ch": 5
+            },
+            {
+              "round": 3,
+              "ch": 5
+            }
+          ],
+          "total": 247,
+          "toPar": 31,
+          "inscribedId": 2352528
+        },
+        {
+          "pos": null,
+          "name": "Sara Diaz Garcia",
+          "licencia": "CM41900064",
+          "hcp": 0.1,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 2
+            },
+            {
+              "round": 2,
+              "ch": 2
+            },
+            {
+              "round": 3,
+              "ch": 2
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2355334
+        },
+        {
+          "pos": null,
+          "name": "Aitana Rubio Sevilla",
+          "licencia": "CM66045537",
+          "hcp": 3,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 6
+            },
+            {
+              "round": 2,
+              "ch": 6
+            },
+            {
+              "round": 3,
+              "ch": 6
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2355859
+        },
+        {
+          "pos": null,
+          "name": "Maria Perez Barrios",
+          "licencia": "CM22946019",
+          "hcp": 4,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            },
+            {
+              "round": 3,
+              "ch": 7
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2352587
+        },
+        {
+          "pos": null,
+          "name": "Maria De Pablo Chacon",
+          "licencia": "CM41900882",
+          "hcp": 6,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            },
+            {
+              "round": 3,
+              "ch": 9
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2355136
+        },
+        {
+          "pos": null,
+          "name": "Miranda Viera Garcia",
+          "licencia": "CM41414516",
+          "hcp": 5,
+          "nivel": "J",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            },
+            {
+              "round": 3,
+              "ch": 8
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2352991
+        },
+        {
+          "pos": null,
+          "name": "Georgina Herrera Rubio",
+          "licencia": "CM41509485",
+          "hcp": 5.4,
+          "nivel": "Mid",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            },
+            {
+              "round": 3,
+              "ch": 9
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2352476
+        },
+        {
+          "pos": null,
+          "name": "Alejandra Hernandez Soto",
+          "licencia": "CM52890007",
+          "hcp": 0.3,
+          "nivel": "C",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": null
+            },
+            {
+              "round": 2,
+              "gross": null
+            },
+            {
+              "round": 3,
+              "gross": null
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 3
+            },
+            {
+              "round": 2,
+              "ch": 3
+            },
+            {
+              "round": 3,
+              "ch": 3
+            }
+          ],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2354900
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Absoluta Individual_Jornada 3",
+      "jugadores": 23
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Georgina Herrera Rubio",
+      "licencia": "CM41509485",
+      "hcp": 5.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Liria Siyi Hao Zhang",
+      "licencia": "CM07947194",
+      "hcp": 2.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Nerea Anton Moya",
+      "licencia": "CMA8960343",
+      "hcp": 1.3,
+      "nivel": "J"
+    },
+    {
+      "orden": 4,
+      "name": "Carlota Marcos Cortezo",
+      "licencia": "CM11164685",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Perez Barrios",
+      "licencia": "CM22946019",
+      "hcp": 4,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Carlota Bachiller Marco",
+      "licencia": "CM05307775",
+      "hcp": 0.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Miranda Viera Garcia",
+      "licencia": "CM41414516",
+      "hcp": 5,
+      "nivel": "J"
+    },
+    {
+      "orden": 8,
+      "name": "Daniela Cobiella Lajo",
+      "licencia": "CM11908857",
+      "hcp": 1.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 9,
+      "name": "Carla Revenga Bengoechea",
+      "licencia": "CMA8903766",
+      "hcp": 0.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 10,
+      "name": "Paula Puerta Revuelta",
+      "licencia": "CM66931174",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 11,
+      "name": "Gabriela Rincon De La Torre",
+      "licencia": "CM41913370",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 12,
+      "name": "Almendra Campoverde Martin",
+      "licencia": "CMA8072292",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 13,
+      "name": "Daniela Lozano Ramirez",
+      "licencia": "CM66991354",
+      "hcp": 1.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Alejandra Hernandez Soto",
+      "licencia": "CM52890007",
+      "hcp": 0.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 15,
+      "name": "Maria De Pablo Chacon",
+      "licencia": "CM41900882",
+      "hcp": 6,
+      "nivel": "C"
+    },
+    {
+      "orden": 16,
+      "name": "Ines Izuzquiza Ruiz De Arana",
+      "licencia": "AM03166797",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 17,
+      "name": "Iciar Rodriguez Crespo",
+      "licencia": "CM61964557",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 18,
+      "name": "Diana Fraile Herrero",
+      "licencia": "7706912557",
+      "hcp": 0.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 19,
+      "name": "Rut Diaz Garcia",
+      "licencia": "CM41915757",
+      "hcp": null,
+      "nivel": "C"
+    },
+    {
+      "orden": 20,
+      "name": "Sara Diaz Garcia",
+      "licencia": "CM41900064",
+      "hcp": 0.1,
+      "nivel": "J"
+    },
+    {
+      "orden": 21,
+      "name": "Alejandra Esteban Pablos",
+      "licencia": "8833916829",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 22,
+      "name": "Aitana Rubio Sevilla",
+      "licencia": "CM66045537",
+      "hcp": 3,
+      "nivel": "J"
+    },
+    {
+      "orden": 23,
+      "name": "Chloe Huang Xu",
+      "licencia": "CM07979315",
+      "hcp": null,
+      "nivel": "I"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -239,6 +1312,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-13T07:10:16.355Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/2442076433_arb_reg_loc_cma5_.pdf"
+  ]
 }

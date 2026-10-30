@@ -1,9 +1,9 @@
 {
   "tourId": 72766,
   "url": "https://www.nextcaddy.com/tour/72766",
-  "scrapedAt": "2026-08-10T05:45:18.535Z",
+  "scrapedAt": "2026-10-30T14:27:43.535Z",
   "meta": {
-    "name": null,
+    "name": "Torneo Padres e Hijos Gómez-Zubeldia (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -22,11 +22,384 @@
     "dateIso": "2026-08-17",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 18,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rafael Canales Abaitua",
+          "licencia": "AM05171299",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2384679
+        },
+        {
+          "pos": 2,
+          "name": "Catalina Cubillo Perez De Ayala",
+          "licencia": "CM02256590",
+          "hcp": 26.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2384725
+        },
+        {
+          "pos": 3,
+          "name": "Tomas Gortazar Mendieta",
+          "licencia": "CM04094012",
+          "hcp": 18.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2385519
+        },
+        {
+          "pos": 4,
+          "name": "Alberto Rabano Ruiz",
+          "licencia": "CM04289474",
+          "hcp": 7.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2384692
+        },
+        {
+          "pos": 5,
+          "name": "Iñigo Cubillo Perez De Ayala",
+          "licencia": "CM02292450",
+          "hcp": 15.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2384738
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Cubillo Perez De Ayala",
+          "licencia": "CM02304223",
+          "hcp": 15.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2384723
+        },
+        {
+          "pos": 7,
+          "name": "Ricardo De La Sota Piña",
+          "licencia": "CM02292093",
+          "hcp": 8.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2385146
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Gomez-Zubeldia Sanchez",
+          "licencia": "8801130148",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2384849
+        },
+        {
+          "pos": 9,
+          "name": "Ignacio Cubillo Santamaria",
+          "licencia": "CM02099238",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2384717
+        },
+        {
+          "pos": 10,
+          "name": "Jose Castellanos Ybarra",
+          "licencia": "CM11294358",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2385754
+        },
+        {
+          "pos": 11,
+          "name": "Asis Canales Abaitua",
+          "licencia": "VB02096860",
+          "hcp": 20.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2384668
+        },
+        {
+          "pos": 12,
+          "name": "Carlos Chapa Imaz",
+          "licencia": "VB02096861",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2385567
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Gomez-Zubeldia Soroa",
+          "licencia": "CM04305052",
+          "hcp": 3.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2385015
+        },
+        {
+          "pos": 14,
+          "name": "Alvaro Chapa Gortazar",
+          "licencia": "VB02724567",
+          "hcp": 15.8,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2385541
+        },
+        {
+          "pos": 15,
+          "name": "Mª Angeles Perez De Ayala Becerril",
+          "licencia": "AM05111283",
+          "hcp": 24.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2384716
+        },
+        {
+          "pos": 16,
+          "name": "Tomas Gortazar Sanchez",
+          "licencia": "CM04623087",
+          "hcp": 18.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2385513
+        },
+        {
+          "pos": 17,
+          "name": "Diego Gomez-Zubeldia Soroa",
+          "licencia": "CM02142773",
+          "hcp": 10.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2385233
+        },
+        {
+          "pos": 18,
+          "name": "Alberto Reglero Sanchez",
+          "licencia": "7711435279",
+          "hcp": 16.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2385231
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 18
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Asis Canales Abaitua",
+      "licencia": "VB02096860",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rafael Canales Abaitua",
+      "licencia": "AM05171299",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Alberto Rabano Ruiz",
+      "licencia": "CM04289474",
+      "hcp": 7.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Cubillo Santamaria",
+      "licencia": "CM02099238",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Cubillo Perez De Ayala",
+      "licencia": "CM02304223",
+      "hcp": 15.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Iñigo Cubillo Perez De Ayala",
+      "licencia": "CM02292450",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Gomez-Zubeldia Sanchez",
+      "licencia": "8801130148",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Francisco Gomez-Zubeldia Soroa",
+      "licencia": "CM04305052",
+      "hcp": 3.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Ricardo De La Sota Piña",
+      "licencia": "CM02292093",
+      "hcp": 8.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Alberto Reglero Sanchez",
+      "licencia": "7711435279",
+      "hcp": 16.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Diego Gomez-Zubeldia Soroa",
+      "licencia": "CM02142773",
+      "hcp": 10.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Tomas Gortazar Sanchez",
+      "licencia": "CM04623087",
+      "hcp": 18.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Tomas Gortazar Mendieta",
+      "licencia": "CM04094012",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Alvaro Chapa Gortazar",
+      "licencia": "VB02724567",
+      "hcp": 15.8,
+      "nivel": "M"
+    },
+    {
+      "orden": 15,
+      "name": "Carlos Chapa Imaz",
+      "licencia": "VB02096861",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Castellanos Ybarra",
+      "licencia": "CM11294358",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Mª Angeles Perez De Ayala Becerril",
+      "licencia": "AM05111283",
+      "hcp": 24.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Catalina Cubillo Perez De Ayala",
+      "licencia": "CM02256590",
+      "hcp": 26.4,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -214,6 +587,5 @@
   "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:58:00.830Z"
+  ]
 }

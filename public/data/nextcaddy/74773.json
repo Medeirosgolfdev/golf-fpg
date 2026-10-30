@@ -1,9 +1,9 @@
 {
   "tourId": 74773,
   "url": "https://www.nextcaddy.com/tour/74773",
-  "scrapedAt": "2026-10-26T09:52:53.908Z",
+  "scrapedAt": "2026-10-30T14:29:32.661Z",
   "meta": {
-    "name": null,
+    "name": "IX TORNEO DIRECTORES CAMPOS DE GOLF ANDALUCÍA 2026",
     "organizer": null,
     "course": "Escuela Pública la Cartuja",
     "courseCode": "AMG3",
@@ -21,11 +21,460 @@
     "dateIso": "2026-10-29",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Ix Torneo Directore Campos De Golf 2026",
+      "expectedJugadores": 22,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Jose Rubio Mirabent",
+          "licencia": "AM07616026",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2436315
+        },
+        {
+          "pos": 2,
+          "name": "Ana Garcia Gil",
+          "licencia": "AMG3064308",
+          "hcp": 32.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2436337
+        },
+        {
+          "pos": 3,
+          "name": "Alvaro Tellez Garcia",
+          "licencia": "AM15205802",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2436992
+        },
+        {
+          "pos": 4,
+          "name": "Miguel Carbonell Simon",
+          "licencia": "AMK3410539",
+          "hcp": 22.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2436307
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Rodriguez Yaguez",
+          "licencia": "AM852042-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436336
+        },
+        {
+          "pos": 6,
+          "name": "Jose Luis Hernandez Pascual",
+          "licencia": "99083243-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436309
+        },
+        {
+          "pos": 7,
+          "name": "Juan Carlos Carretero Garcia",
+          "licencia": "AM07063708",
+          "hcp": 9.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2436310
+        },
+        {
+          "pos": 8,
+          "name": "Pablo Alcantara Martinez",
+          "licencia": "AMG8114626",
+          "hcp": 1.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2436299
+        },
+        {
+          "pos": 9,
+          "name": "Ignacio Iturbe Escolano",
+          "licencia": "AM58192896",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2436329
+        },
+        {
+          "pos": 10,
+          "name": "Fco Javier Martin Mendoza",
+          "licencia": "AM23053806",
+          "hcp": 6.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2436297
+        },
+        {
+          "pos": 11,
+          "name": "Ricardo Andrades Bermejo",
+          "licencia": "AMK1328396",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2436306
+        },
+        {
+          "pos": 12,
+          "name": "Samuel Cadenas Cortes",
+          "licencia": "AM75097720",
+          "hcp": 5.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2436318
+        },
+        {
+          "pos": 13,
+          "name": "Hector Llanza Ortiz",
+          "licencia": "AM48921316",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2436298
+        },
+        {
+          "pos": 14,
+          "name": "Ignacio Perez Benito",
+          "licencia": "AM85111566",
+          "hcp": 11.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2436333
+        },
+        {
+          "pos": 15,
+          "name": "Jose Javier Serrano Peñas",
+          "licencia": "AMF8154234",
+          "hcp": 4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2436292
+        },
+        {
+          "pos": 16,
+          "name": "Augusto Lahore Bravo",
+          "licencia": "AM02050440",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2436332
+        },
+        {
+          "pos": 17,
+          "name": "Isabel Guisado Rasco",
+          "licencia": "AM95780805",
+          "hcp": 38.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2436312
+        },
+        {
+          "pos": 18,
+          "name": "Jose Antonio Tellez Sanchez",
+          "licencia": "AM07909950",
+          "hcp": 27.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2436317
+        },
+        {
+          "pos": 19,
+          "name": "Guillermo Perez Gutierrez",
+          "licencia": "AM29220408",
+          "hcp": 6.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2436303
+        },
+        {
+          "pos": 20,
+          "name": "Cesar Gomez Paullada",
+          "licencia": "AM29929713",
+          "hcp": 24.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2436302
+        },
+        {
+          "pos": 21,
+          "name": "Petya Rozenova Todorova",
+          "licencia": "AM91484052",
+          "hcp": 34,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2436316
+        },
+        {
+          "pos": null,
+          "name": "Antonio Espinosa Fuentes",
+          "licencia": "AMF7619064",
+          "hcp": 14.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2436335
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Ix Torneo Directore Campos De Golf 2026",
+      "jugadores": 22
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Javier Serrano Peñas",
+      "licencia": "AMF8154234",
+      "hcp": 4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fco Javier Martin Mendoza",
+      "licencia": "AM23053806",
+      "hcp": 6.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Hector Llanza Ortiz",
+      "licencia": "AM48921316",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Pablo Alcantara Martinez",
+      "licencia": "AMG8114626",
+      "hcp": 1.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Cesar Gomez Paullada",
+      "licencia": "AM29929713",
+      "hcp": 24.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Guillermo Perez Gutierrez",
+      "licencia": "AM29220408",
+      "hcp": 6.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Ricardo Andrades Bermejo",
+      "licencia": "AMK1328396",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Miguel Carbonell Simon",
+      "licencia": "AMK3410539",
+      "hcp": 22.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Luis Hernandez Pascual",
+      "licencia": "99083243-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Carlos Carretero Garcia",
+      "licencia": "AM07063708",
+      "hcp": 9.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Francisco Jose Rubio Mirabent",
+      "licencia": "AM07616026",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Antonio Tellez Sanchez",
+      "licencia": "AM07909950",
+      "hcp": 27.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Samuel Cadenas Cortes",
+      "licencia": "AM75097720",
+      "hcp": 5.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Ignacio Iturbe Escolano",
+      "licencia": "AM58192896",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Augusto Lahore Bravo",
+      "licencia": "AM02050440",
+      "hcp": 18.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Ignacio Perez Benito",
+      "licencia": "AM85111566",
+      "hcp": 11.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Antonio Espinosa Fuentes",
+      "licencia": "AMF7619064",
+      "hcp": 14.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Antonio Rodriguez Yaguez",
+      "licencia": "AM852042-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 19,
+      "name": "Alvaro Tellez Garcia",
+      "licencia": "AM15205802",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Isabel Guisado Rasco",
+      "licencia": "AM95780805",
+      "hcp": 38.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Petya Rozenova Todorova",
+      "licencia": "AM91484052",
+      "hcp": 34,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Ana Garcia Gil",
+      "licencia": "AMG3064308",
+      "hcp": 32.5,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -250,6 +699,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3734727136_74773-ix-torneo-directores-campos-de-golf-andalucia-2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:25.583Z"
+  ]
 }

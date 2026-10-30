@@ -1,9 +1,9 @@
 {
   "tourId": 74454,
   "url": "https://www.nextcaddy.com/tour/74454",
-  "scrapedAt": "2026-10-12T12:09:15.628Z",
+  "scrapedAt": "2026-10-30T14:29:08.663Z",
   "meta": {
-    "name": null,
+    "name": "8ª PRUEBA LIGA INFANTIL 9 HOYOS",
     "organizer": null,
     "course": "Real Club Sevilla Golf",
     "courseCode": "AM85",
@@ -25,10 +25,148 @@
     "dateIso": "2026-10-18",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "9 Hoyos",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pilar Ramirez Rodriguez",
+          "licencia": "AM85077487",
+          "hcp": 53.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2428353
+        },
+        {
+          "pos": 2,
+          "name": "Roberto Marin Fernandez",
+          "licencia": "AMG3481822",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2428351
+        },
+        {
+          "pos": 3,
+          "name": "Fernando Barrio Garcia",
+          "licencia": "AM85348752",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2422600
+        },
+        {
+          "pos": 4,
+          "name": "Javier Rituerto Borges",
+          "licencia": "AM85348748",
+          "hcp": 48,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2428348
+        },
+        {
+          "pos": 5,
+          "name": "Victor Manuel Torollo De La Escalera",
+          "licencia": "AM85475937",
+          "hcp": 44.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2422624
+        },
+        {
+          "pos": 6,
+          "name": "Rodrigo Marin Fernandez",
+          "licencia": "AMG3481821",
+          "hcp": 48.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2428350
+        },
+        {
+          "pos": 7,
+          "name": "Andres Flores Arevalo",
+          "licencia": "AMG3971119",
+          "hcp": 50.8,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2428349
+        },
+        {
+          "pos": 8,
+          "name": "Lorenzo Morales Perez",
+          "licencia": "AM85419489",
+          "hcp": 43.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2422627
+        },
+        {
+          "pos": null,
+          "name": "Julian Larrea Clemente",
+          "licencia": "AM85523991",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2422625
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "9 Hoyos",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -38,10 +176,17 @@
       "nivel": "A"
     },
     {
+      "orden": 2,
+      "name": "Andres Flores Arevalo",
+      "licencia": "AMG3971119",
+      "hcp": 50.8,
+      "nivel": "A"
+    },
+    {
       "orden": 1,
       "name": "Victor Manuel Torollo De La Escalera",
       "licencia": "AM85475937",
-      "hcp": 45.7,
+      "hcp": 44.9,
       "nivel": "B"
     },
     {
@@ -57,6 +202,34 @@
       "licencia": "AM85419489",
       "hcp": 43.2,
       "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Rituerto Borges",
+      "licencia": "AM85348748",
+      "hcp": 48,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Rodrigo Marin Fernandez",
+      "licencia": "AMG3481821",
+      "hcp": 48.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Roberto Marin Fernandez",
+      "licencia": "AMG3481822",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Pilar Ramirez Rodriguez",
+      "licencia": "AM85077487",
+      "hcp": 53.6,
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -267,6 +440,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2279791710_74454-8-prueba-liga-infantil-9-hoyos.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:49.869Z"
+  ]
 }

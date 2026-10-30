@@ -1,28 +1,328 @@
 {
   "tourId": 68195,
   "url": "https://www.nextcaddy.com/tour/68195",
-  "scrapedAt": "2026-06-24T14:58:30.882Z",
+  "scrapedAt": "2026-10-30T14:28:18.836Z",
   "meta": {
     "name": "Liga Femenina (hcp igual o menor de 42.0)",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Golf Park Entertainment",
     "courseCode": "CM18",
-    "dateStart": null,
+    "dateStart": "2026-09-13",
     "dateEnd": null,
     "format": "Stableford (Handicap) Liga Femenina 2026",
     "categories": [
       "Señoras",
       "Juvenil",
+      "profesional",
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-13",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Barbara Osaba Rohleder",
+          "licencia": "CM04376811",
+          "hcp": 34.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": -6,
+          "inscribedId": 2396082
+        },
+        {
+          "pos": 2,
+          "name": "Manuela Triguero Fernandez",
+          "licencia": "CM41373590",
+          "hcp": 33.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2395579
+        },
+        {
+          "pos": 3,
+          "name": "Cristina Stein Muro",
+          "licencia": "CM01083378",
+          "hcp": 35.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2395217
+        },
+        {
+          "pos": 4,
+          "name": "Sira Martin-Pozuelo Medina",
+          "licencia": "CM02199385",
+          "hcp": 22.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2395699
+        },
+        {
+          "pos": 5,
+          "name": "Candela Guerra Vera",
+          "licencia": "CM41998364",
+          "hcp": 34.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2395366
+        },
+        {
+          "pos": 6,
+          "name": "Marina Garcia Arias",
+          "licencia": "CM81985579",
+          "hcp": 36.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2398773
+        },
+        {
+          "pos": 7,
+          "name": "Alba De Funes Martin Del Campo",
+          "licencia": "CM09497349",
+          "hcp": 37.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2395658
+        },
+        {
+          "pos": 8,
+          "name": "Carlotta Casas-Velez Osorio",
+          "licencia": "CM06355871",
+          "hcp": 27,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2397256
+        },
+        {
+          "pos": 9,
+          "name": "Alicia Rey Valcarcel",
+          "licencia": "CM81069259",
+          "hcp": 40.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2397071
+        },
+        {
+          "pos": 10,
+          "name": "Maria Hernanz Hernando",
+          "licencia": "CM41989534",
+          "hcp": 28.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2398720
+        },
+        {
+          "pos": 11,
+          "name": "Sofia Sendagorta Rojo",
+          "licencia": "CM60066758",
+          "hcp": 33.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2395778
+        },
+        {
+          "pos": 12,
+          "name": "Lucia Rodriguez Luna",
+          "licencia": "CM02977313",
+          "hcp": 34.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2395131
+        },
+        {
+          "pos": 13,
+          "name": "Teresa Martinez Garcia-Nieto",
+          "licencia": "CM04977192",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2398275
+        },
+        {
+          "pos": null,
+          "name": "Teresa Fernandez De Gamboa Bareño",
+          "licencia": "CM01091018",
+          "hcp": 32,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2395508
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap",
+      "jugadores": 14
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Lucia Rodriguez Luna",
+      "licencia": "CM02977313",
+      "hcp": 34.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Cristina Stein Muro",
+      "licencia": "CM01083378",
+      "hcp": 35.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Candela Guerra Vera",
+      "licencia": "CM41998364",
+      "hcp": 34.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Teresa Fernandez De Gamboa Bareño",
+      "licencia": "CM01091018",
+      "hcp": 32,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Manuela Triguero Fernandez",
+      "licencia": "CM41373590",
+      "hcp": 33.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Alba De Funes Martin Del Campo",
+      "licencia": "CM09497349",
+      "hcp": 37.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Sira Martin-Pozuelo Medina",
+      "licencia": "CM02199385",
+      "hcp": 22.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 8,
+      "name": "Sofia Sendagorta Rojo",
+      "licencia": "CM60066758",
+      "hcp": 33.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Barbara Osaba Rohleder",
+      "licencia": "CM04376811",
+      "hcp": 34.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Alicia Rey Valcarcel",
+      "licencia": "CM81069259",
+      "hcp": 40.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Carlotta Casas-Velez Osorio",
+      "licencia": "CM06355871",
+      "hcp": 27,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Teresa Martinez Garcia-Nieto",
+      "licencia": "CM04977192",
+      "hcp": 35,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Maria Hernanz Hernando",
+      "licencia": "CM41989534",
+      "hcp": 28.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Marina Garcia Arias",
+      "licencia": "CM81985579",
+      "hcp": 36.4,
+      "nivel": "I"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -172,6 +472,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-09-14T09:53:56.410Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/882276968_arb_reg_loc_cm18_.pdf"
+  ]
 }

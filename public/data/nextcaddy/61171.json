@@ -1,13 +1,13 @@
 {
   "tourId": 61171,
   "url": "https://www.nextcaddy.com/tour/61171",
-  "scrapedAt": "2026-06-24T14:59:11.667Z",
+  "scrapedAt": "2026-10-30T14:30:07.500Z",
   "meta": {
-    "name": "Campeonato Internacional de Andalucía Dobles Senior",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Golf Torrequebrada",
     "courseCode": "AM60",
-    "dateStart": null,
+    "dateStart": "2026-12-19",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -17,7 +17,9 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-12-19",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -49,9 +51,49 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Ponton Sanchez, Daniel",
-          "holeNumber": 1,
-          "createdAt": "18/01/25 13:15:47"
+          "playerName": "Lopez Gutierrez, Rodrigo",
+          "holeNumber": 10,
+          "createdAt": "18/01/25 13:18:36"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Iñigo",
+          "holeNumber": 2,
+          "createdAt": "18/01/25 13:28:47"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Iñigo",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 13:28:47"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Iñigo",
+          "holeNumber": 9,
+          "createdAt": "18/01/25 13:28:47"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja",
+          "holeNumber": 8,
+          "createdAt": "18/01/25 13:16:44"
+        },
+        {
+          "playerName": "Rabadan Baldasano, Francisco De Borja",
+          "holeNumber": 17,
+          "createdAt": "18/01/25 13:16:44"
+        },
+        {
+          "playerName": "Casas-Velez Osorio, Benjamin",
+          "holeNumber": 3,
+          "createdAt": "18/01/25 13:22:07"
+        },
+        {
+          "playerName": "Casas-Velez Osorio, Benjamin",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 13:22:07"
+        },
+        {
+          "playerName": "Casas-Velez Osorio, Benjamin",
+          "holeNumber": 7,
+          "createdAt": "18/01/25 13:22:07"
         },
         {
           "playerName": "Diez Del Potro, Tomas",
@@ -64,49 +106,74 @@
           "createdAt": "18/01/25 13:16:04"
         },
         {
-          "playerName": "Tsuchiya Mora, Takeshi",
-          "holeNumber": 10,
-          "createdAt": "18/01/25 13:16:26"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Francisco De Borja",
-          "holeNumber": 8,
-          "createdAt": "18/01/25 13:16:44"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Francisco De Borja",
-          "holeNumber": 17,
-          "createdAt": "18/01/25 13:16:44"
-        },
-        {
-          "playerName": "Villen Villamiel, Sara",
+          "playerName": "Fernandez Gallardo, Nicolas",
           "holeNumber": 5,
-          "createdAt": "18/01/25 13:17:05"
+          "createdAt": "18/01/25 16:48:32"
         },
         {
-          "playerName": "Pecharroman Canales, Eva",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 13:17:26"
+          "playerName": "Fernandez Gallardo, Nicolas",
+          "holeNumber": 18,
+          "createdAt": "18/01/25 16:48:32"
         },
         {
-          "playerName": "Pecharroman Canales, Eva",
-          "holeNumber": 8,
-          "createdAt": "18/01/25 13:17:26"
-        },
-        {
-          "playerName": "Mittelbrum Infante, Eugenia",
-          "holeNumber": 10,
-          "createdAt": "18/01/25 13:17:42"
-        },
-        {
-          "playerName": "Meng, Dechuan",
+          "playerName": "Rodriguez Sainz, Alfonso",
           "holeNumber": 1,
-          "createdAt": "18/01/25 13:17:58"
+          "createdAt": "18/01/25 13:26:39"
         },
         {
-          "playerName": "Lopez Gutierrez, Rodrigo",
-          "holeNumber": 10,
-          "createdAt": "18/01/25 13:18:36"
+          "playerName": "Ponton Sanchez, Daniel",
+          "holeNumber": 1,
+          "createdAt": "18/01/25 13:15:47"
+        },
+        {
+          "playerName": "Canalda Gutierrez, Maite",
+          "holeNumber": 15,
+          "createdAt": "18/01/25 16:57:01"
+        },
+        {
+          "playerName": "Lopez-Huerta Molina, Ignacio",
+          "holeNumber": 13,
+          "createdAt": "18/01/25 13:26:09"
+        },
+        {
+          "playerName": "Rodriguez Crespo, Beltran",
+          "holeNumber": 1,
+          "createdAt": "18/01/25 16:49:53"
+        },
+        {
+          "playerName": "Rodriguez Crespo, Beltran",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 16:49:53"
+        },
+        {
+          "playerName": "Perez De Zabalza Jaro, Alvaro",
+          "holeNumber": 6,
+          "createdAt": "18/01/25 16:42:23"
+        },
+        {
+          "playerName": "Perez De Zabalza Jaro, Alvaro",
+          "holeNumber": 7,
+          "createdAt": "18/01/25 16:42:23"
+        },
+        {
+          "playerName": "Perez De Zabalza Jaro, Alvaro",
+          "holeNumber": 14,
+          "createdAt": "18/01/25 16:42:23"
+        },
+        {
+          "playerName": "Jiang, Sophia Mingyue",
+          "holeNumber": 1,
+          "createdAt": "18/01/25 13:26:58"
+        },
+        {
+          "playerName": "Jiang, Sophia Mingyue",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 13:26:58"
+        },
+        {
+          "playerName": "Jiang, Sophia Mingyue",
+          "holeNumber": 15,
+          "createdAt": "18/01/25 13:26:58"
         },
         {
           "playerName": "Salas Dos Santos, Maria",
@@ -114,21 +181,6 @@
           "createdAt": "18/01/25 13:21:24"
         },
         {
-          "playerName": "Casas Velez-Osorio, Benjamin",
-          "holeNumber": 3,
-          "createdAt": "18/01/25 13:22:07"
-        },
-        {
-          "playerName": "Casas Velez-Osorio, Benjamin",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 13:22:07"
-        },
-        {
-          "playerName": "Casas Velez-Osorio, Benjamin",
-          "holeNumber": 7,
-          "createdAt": "18/01/25 13:22:07"
-        },
-        {
           "playerName": "Martin Villena, Hugo",
           "holeNumber": 7,
           "createdAt": "18/01/25 13:22:33"
@@ -144,14 +196,74 @@
           "createdAt": "18/01/25 13:22:33"
         },
         {
-          "playerName": "Garcia Ceballos, Julio",
-          "holeNumber": 7,
-          "createdAt": "18/01/25 13:23:08"
+          "playerName": "Pecharroman Canales, Eva",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 13:17:26"
         },
         {
-          "playerName": "Garcia Ceballos, Julio",
-          "holeNumber": 14,
-          "createdAt": "18/01/25 13:23:08"
+          "playerName": "Pecharroman Canales, Eva",
+          "holeNumber": 8,
+          "createdAt": "18/01/25 13:17:26"
+        },
+        {
+          "playerName": "Villen Villamiel, Sara",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 13:17:05"
+        },
+        {
+          "playerName": "Gonzalez Crespo, Hugo",
+          "holeNumber": 3,
+          "createdAt": "18/01/25 16:41:12"
+        },
+        {
+          "playerName": "Gonzalez Crespo, Hugo",
+          "holeNumber": 5,
+          "createdAt": "18/01/25 16:41:12"
+        },
+        {
+          "playerName": "Triguero Fernandez, Clara",
+          "holeNumber": 2,
+          "createdAt": "18/01/25 13:24:22"
+        },
+        {
+          "playerName": "Triguero Fernandez, Clara",
+          "holeNumber": 11,
+          "createdAt": "18/01/25 13:24:22"
+        },
+        {
+          "playerName": "Triguero Fernandez, Clara",
+          "holeNumber": 15,
+          "createdAt": "18/01/25 13:24:22"
+        },
+        {
+          "playerName": "Seferian Gomez-Acebo, Felipe",
+          "holeNumber": 7,
+          "createdAt": "18/01/25 13:27:40"
+        },
+        {
+          "playerName": "Seferian Gomez-Acebo, Felipe",
+          "holeNumber": 18,
+          "createdAt": "18/01/25 13:27:40"
+        },
+        {
+          "playerName": "Soler Lavalle, Macarena",
+          "holeNumber": 13,
+          "createdAt": "18/01/25 17:00:11"
+        },
+        {
+          "playerName": "Tsuchiya Mora, Takeshi",
+          "holeNumber": 10,
+          "createdAt": "18/01/25 13:16:26"
+        },
+        {
+          "playerName": "Lopez De Santiago, Fernando",
+          "holeNumber": 1,
+          "createdAt": "18/01/25 13:27:23"
+        },
+        {
+          "playerName": "Meng, Dechuan",
+          "holeNumber": 1,
+          "createdAt": "18/01/25 13:17:58"
         },
         {
           "playerName": "Medina Susino, Miguel",
@@ -174,66 +286,6 @@
           "createdAt": "18/01/25 13:23:45"
         },
         {
-          "playerName": "Triguero Fernandez, Clara",
-          "holeNumber": 2,
-          "createdAt": "18/01/25 13:24:22"
-        },
-        {
-          "playerName": "Triguero Fernandez, Clara",
-          "holeNumber": 11,
-          "createdAt": "18/01/25 13:24:22"
-        },
-        {
-          "playerName": "Triguero Fernandez, Clara",
-          "holeNumber": 15,
-          "createdAt": "18/01/25 13:24:22"
-        },
-        {
-          "playerName": "Delgado Pascual, Gabriela",
-          "holeNumber": 13,
-          "createdAt": "18/01/25 13:25:27"
-        },
-        {
-          "playerName": "Lopez-Huerta Molina, Ignacio",
-          "holeNumber": 13,
-          "createdAt": "18/01/25 13:26:09"
-        },
-        {
-          "playerName": "Rodriguez Sainz, Alfonso",
-          "holeNumber": 1,
-          "createdAt": "18/01/25 13:26:39"
-        },
-        {
-          "playerName": "Jiang, Sophia Mingyue",
-          "holeNumber": 1,
-          "createdAt": "18/01/25 13:26:58"
-        },
-        {
-          "playerName": "Jiang, Sophia Mingyue",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 13:26:58"
-        },
-        {
-          "playerName": "Jiang, Sophia Mingyue",
-          "holeNumber": 15,
-          "createdAt": "18/01/25 13:26:58"
-        },
-        {
-          "playerName": "Lopez De Santiago, Fernando",
-          "holeNumber": 1,
-          "createdAt": "18/01/25 13:27:23"
-        },
-        {
-          "playerName": "Seferian Gomez-Acebo, Felipe",
-          "holeNumber": 7,
-          "createdAt": "18/01/25 13:27:40"
-        },
-        {
-          "playerName": "Seferian Gomez-Acebo, Felipe",
-          "holeNumber": 18,
-          "createdAt": "18/01/25 13:27:40"
-        },
-        {
           "playerName": "Fernandez Montoto, Eduardo",
           "holeNumber": 10,
           "createdAt": "18/01/25 13:28:12"
@@ -242,61 +294,6 @@
           "playerName": "Fernandez Montoto, Eduardo",
           "holeNumber": 16,
           "createdAt": "18/01/25 13:28:12"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Iñigo",
-          "holeNumber": 2,
-          "createdAt": "18/01/25 13:28:47"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Iñigo",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 13:28:47"
-        },
-        {
-          "playerName": "Rabadan Baldasano, Iñigo",
-          "holeNumber": 9,
-          "createdAt": "18/01/25 13:28:47"
-        },
-        {
-          "playerName": "Alvarez Solana, Guzman",
-          "holeNumber": 12,
-          "createdAt": "18/01/25 16:36:26"
-        },
-        {
-          "playerName": "Alvarez Solana, Guzman",
-          "holeNumber": 17,
-          "createdAt": "18/01/25 16:36:26"
-        },
-        {
-          "playerName": "Diez Vilariño, Alejandro",
-          "holeNumber": 6,
-          "createdAt": "18/01/25 16:37:08"
-        },
-        {
-          "playerName": "Campaña Rodriguez, Ignacio Maria",
-          "holeNumber": 1,
-          "createdAt": "18/01/25 16:39:15"
-        },
-        {
-          "playerName": "Campaña Rodriguez, Ignacio Maria",
-          "holeNumber": 7,
-          "createdAt": "18/01/25 16:39:15"
-        },
-        {
-          "playerName": "Campaña Rodriguez, Ignacio Maria",
-          "holeNumber": 8,
-          "createdAt": "18/01/25 16:39:15"
-        },
-        {
-          "playerName": "Gonzalez Crespo, Hugo",
-          "holeNumber": 3,
-          "createdAt": "18/01/25 16:41:12"
-        },
-        {
-          "playerName": "Gonzalez Crespo, Hugo",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 16:41:12"
         },
         {
           "playerName": "Ruiz De Infante Hernandez, Guillermo",
@@ -314,39 +311,19 @@
           "createdAt": "18/01/25 16:41:55"
         },
         {
-          "playerName": "Perez De Zabalza Jaro, Alvaro",
-          "holeNumber": 6,
-          "createdAt": "18/01/25 16:42:23"
-        },
-        {
-          "playerName": "Perez De Zabalza Jaro, Alvaro",
-          "holeNumber": 7,
-          "createdAt": "18/01/25 16:42:23"
-        },
-        {
-          "playerName": "Perez De Zabalza Jaro, Alvaro",
-          "holeNumber": 14,
-          "createdAt": "18/01/25 16:42:23"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Nicolas",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 16:48:32"
-        },
-        {
-          "playerName": "Fernandez Gallardo, Nicolas",
-          "holeNumber": 18,
-          "createdAt": "18/01/25 16:48:32"
-        },
-        {
-          "playerName": "Rodriguez Crespo, Beltran",
+          "playerName": "Campaña Rodriguez, Ignacio Maria",
           "holeNumber": 1,
-          "createdAt": "18/01/25 16:49:53"
+          "createdAt": "18/01/25 16:39:15"
         },
         {
-          "playerName": "Rodriguez Crespo, Beltran",
-          "holeNumber": 5,
-          "createdAt": "18/01/25 16:49:53"
+          "playerName": "Campaña Rodriguez, Ignacio Maria",
+          "holeNumber": 7,
+          "createdAt": "18/01/25 16:39:15"
+        },
+        {
+          "playerName": "Campaña Rodriguez, Ignacio Maria",
+          "holeNumber": 8,
+          "createdAt": "18/01/25 16:39:15"
         },
         {
           "playerName": "Romeral Rossi, Bruno",
@@ -354,18 +331,44 @@
           "createdAt": "18/01/25 16:51:09"
         },
         {
-          "playerName": "Canalda Gutierrez, Maite",
-          "holeNumber": 15,
-          "createdAt": "18/01/25 16:57:01"
+          "playerName": "Mittelbrum Infante, Eugenia",
+          "holeNumber": 10,
+          "createdAt": "18/01/25 13:17:42"
         },
         {
-          "playerName": "Soler Lavalle, Macarena",
+          "playerName": "Diez Vilariño, Alejandro",
+          "holeNumber": 6,
+          "createdAt": "18/01/25 16:37:08"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio",
+          "holeNumber": 7,
+          "createdAt": "18/01/25 13:23:08"
+        },
+        {
+          "playerName": "Garcia Ceballos, Julio",
+          "holeNumber": 14,
+          "createdAt": "18/01/25 13:23:08"
+        },
+        {
+          "playerName": "Alvarez Solana, Guzman",
+          "holeNumber": 12,
+          "createdAt": "18/01/25 16:36:26"
+        },
+        {
+          "playerName": "Alvarez Solana, Guzman",
+          "holeNumber": 17,
+          "createdAt": "18/01/25 16:36:26"
+        },
+        {
+          "playerName": "Delgado Pascual, Gabriela",
           "holeNumber": 13,
-          "createdAt": "18/01/25 17:00:11"
+          "createdAt": "18/01/25 13:25:27"
         }
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:49.606Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

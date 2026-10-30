@@ -1,13 +1,13 @@
 {
   "tourId": 71768,
   "url": "https://www.nextcaddy.com/tour/71768",
-  "scrapedAt": "2026-06-24T14:57:51.175Z",
+  "scrapedAt": "2026-10-30T14:26:42.204Z",
   "meta": {
     "name": "5 J. CIRCUITO VNG 2026. CATEGORIA ORO (0 - 12)",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
-    "dateStart": null,
+    "dateStart": "2026-06-28",
     "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,12 +18,402 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 71,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leandro Guillermo Scholtis Noceto",
+          "licencia": "AM66949341",
+          "hcp": 4.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2350001
+        },
+        {
+          "pos": 2,
+          "name": "Javier Fernandez Bustelo",
+          "licencia": "AM17940245",
+          "hcp": 4.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2351854
+        },
+        {
+          "pos": 3,
+          "name": "Luis De-Bernardi Ojuel",
+          "licencia": "AMC9812610",
+          "hcp": 7.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2349431
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Javier Barroso Martinez",
+          "licencia": "AM00609210",
+          "hcp": 4.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2351838
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Sierra Galan",
+          "licencia": "AMD5696093",
+          "hcp": 7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 9,
+          "inscribedId": 2349438
+        },
+        {
+          "pos": 6,
+          "name": "Maximo Quintero Diaz",
+          "licencia": "AM00606713",
+          "hcp": 7.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 2350003
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Barnes Franco",
+          "licencia": "AMD5165008",
+          "hcp": 8.1,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 13,
+          "inscribedId": 2350676
+        },
+        {
+          "pos": 8,
+          "name": "Alberto Sanchez Rodriguez",
+          "licencia": "8843954347",
+          "hcp": 6.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 13,
+          "inscribedId": 2350668
+        },
+        {
+          "pos": 9,
+          "name": "Luis Ferrer Puga",
+          "licencia": "AM00357350",
+          "hcp": 12.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 2350204
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Alvarez-Ossorio Fernández",
+          "licencia": "AMD5607412",
+          "hcp": 14,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 2350706
+        },
+        {
+          "pos": 11,
+          "name": "Juan Rego Olvera",
+          "licencia": "AMD5926544",
+          "hcp": 14,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 2350705
+        },
+        {
+          "pos": 12,
+          "name": "Fernando Muñoz Rodriguez",
+          "licencia": "AMD5749518",
+          "hcp": 8.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 15,
+          "inscribedId": 2350163
+        },
+        {
+          "pos": 13,
+          "name": "Manuel Barnes Fiscer",
+          "licencia": "AMC9600166",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 88,
+          "toPar": 17,
+          "inscribedId": 2350675
+        },
+        {
+          "pos": 14,
+          "name": "Joaquin Escalante Boceta",
+          "licencia": "AMD5698526",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 92,
+          "toPar": 21,
+          "inscribedId": 2350696
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leandro Guillermo Scholtis Noceto",
+          "licencia": "AM66949341",
+          "hcp": 4.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -2,
+          "inscribedId": 2350001
+        },
+        {
+          "pos": 2,
+          "name": "Javier Fernandez Bustelo",
+          "licencia": "AM17940245",
+          "hcp": 4.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -2,
+          "inscribedId": 2351854
+        },
+        {
+          "pos": 3,
+          "name": "Luis De-Bernardi Ojuel",
+          "licencia": "AMC9812610",
+          "hcp": 7.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -2,
+          "inscribedId": 2349431
+        },
+        {
+          "pos": 4,
+          "name": "Francisco Javier Barroso Martinez",
+          "licencia": "AM00609210",
+          "hcp": 4.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 1,
+          "inscribedId": 2351838
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Sierra Galan",
+          "licencia": "AMD5696093",
+          "hcp": 7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2349438
+        },
+        {
+          "pos": 6,
+          "name": "Luis Ferrer Puga",
+          "licencia": "AM00357350",
+          "hcp": 12.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2350204
+        },
+        {
+          "pos": 7,
+          "name": "Carlos Alvarez-Ossorio Fernández",
+          "licencia": "AMD5607412",
+          "hcp": 14,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2350706
+        },
+        {
+          "pos": 8,
+          "name": "Juan Rego Olvera",
+          "licencia": "AMD5926544",
+          "hcp": 14,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 3,
+          "inscribedId": 2350705
+        },
+        {
+          "pos": 9,
+          "name": "Maximo Quintero Diaz",
+          "licencia": "AM00606713",
+          "hcp": 7.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2350003
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Barnes Franco",
+          "licencia": "AMD5165008",
+          "hcp": 8.1,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2350676
+        },
+        {
+          "pos": 11,
+          "name": "Manuel Barnes Fiscer",
+          "licencia": "AMC9600166",
+          "hcp": 14.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2350675
+        },
+        {
+          "pos": 12,
+          "name": "Alberto Sanchez Rodriguez",
+          "licencia": "8843954347",
+          "hcp": 6.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2350668
+        },
+        {
+          "pos": 13,
+          "name": "Fernando Muñoz Rodriguez",
+          "licencia": "AMD5749518",
+          "hcp": 8.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2350163
+        },
+        {
+          "pos": 14,
+          "name": "Joaquin Escalante Boceta",
+          "licencia": "AMD5698526",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2350696
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -68,53 +458,60 @@
       "nivel": "S"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
+      "orden": 7,
+      "name": "Alberto Sanchez Rodriguez",
+      "licencia": "8843954347",
+      "hcp": 6.8,
+      "nivel": "Mid"
     },
     {
-      "orden": 1,
-      "name": "Luis De-Bernardi Ojuel",
-      "licencia": "23-06-26 11:18",
-      "hcp": 7.5,
-      "nivel": "AMC9812610"
+      "orden": 8,
+      "name": "Manuel Barnes Fiscer",
+      "licencia": "AMC9600166",
+      "hcp": 14.9,
+      "nivel": "S"
     },
     {
-      "orden": 2,
-      "name": "Antonio Sierra Galan",
-      "licencia": "23-06-26 11:38",
-      "hcp": 7,
-      "nivel": "AMD5696093"
-    },
-    {
-      "orden": 3,
-      "name": "Leandro Guillermo Scholtis Noceto",
-      "licencia": "24-06-26 00:10",
-      "hcp": 4.3,
-      "nivel": "AM66949341"
-    },
-    {
-      "orden": 4,
-      "name": "Maximo Quintero Diaz",
-      "licencia": "24-06-26 00:23",
-      "hcp": 7.2,
-      "nivel": "AM00606713"
-    },
-    {
-      "orden": 5,
-      "name": "Fernando Muñoz Rodriguez",
-      "licencia": "24-06-26 11:01",
+      "orden": 9,
+      "name": "Manuel Barnes Franco",
+      "licencia": "AMD5165008",
       "hcp": 8.1,
-      "nivel": "AMD5749518"
+      "nivel": "J"
     },
     {
-      "orden": 6,
-      "name": "Luis Ferrer Puga",
-      "licencia": "24-06-26 11:52",
-      "hcp": 12.1,
-      "nivel": "AM00357350"
+      "orden": 10,
+      "name": "Joaquin Escalante Boceta",
+      "licencia": "AMD5698526",
+      "hcp": 11.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Rego Olvera",
+      "licencia": "AMD5926544",
+      "hcp": 14,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Carlos Alvarez-Ossorio Fernández",
+      "licencia": "AMD5607412",
+      "hcp": 14,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Francisco Javier Barroso Martinez",
+      "licencia": "AM00609210",
+      "hcp": 4.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Javier Fernandez Bustelo",
+      "licencia": "AM17940245",
+      "hcp": 4.2,
+      "nivel": "Mid"
     }
   ],
   "horarios": [
@@ -267,7 +664,7 @@
   ],
   "scoreTypes": null,
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/2336797973_reglamento_circuito_villanueva_golf_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-29T09:18:55.433Z"
+  ]
 }

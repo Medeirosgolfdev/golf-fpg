@@ -1,13 +1,13 @@
 {
   "tourId": 73672,
   "url": "https://www.nextcaddy.com/tour/73672",
-  "scrapedAt": "2026-09-14T09:53:39.060Z",
+  "scrapedAt": "2026-10-30T14:29:58.357Z",
   "meta": {
     "name": null,
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": "2026-11-21",
+    "dateStart": "2026-11-22",
     "dateEnd": null,
     "format": "Medal Play (Handicap)  Caballeros  Señor",
     "categories": [
@@ -19,14 +19,69 @@
       "Profesional",
       "Senior"
     ],
-    "dateIso": "2026-11-21",
+    "dateIso": "2026-11-22",
     "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Beltran Diez Sillero",
+      "licencia": "7706962379",
+      "hcp": 5.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Cayetano Casado Villarreal",
+      "licencia": "7712191196",
+      "hcp": 12.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Rodriguez Molina",
+      "licencia": "7706966959",
+      "hcp": 10.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Nicolas Laso Fernandez",
+      "licencia": "7712924027",
+      "hcp": 10,
+      "nivel": "C"
+    },
+    {
+      "orden": 5,
+      "name": "Javier Garcia Cordero",
+      "licencia": "7706099745",
+      "hcp": 3.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 900,
+      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
+      "hcp": null
+    },
+    {
+      "orden": 1006,
+      "name": "Jose Manuel Vilabella Fernandez-Yugueros",
+      "licencia": "CM22076269",
+      "hcp": 0.8,
+      "nivel": null
+    },
+    {
+      "orden": 1007,
+      "name": "Enzo Ledo Chou",
+      "licencia": "CM00267825",
+      "hcp": null,
+      "nivel": null
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -67,6 +122,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:20.121Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72591,
   "url": "https://www.nextcaddy.com/tour/72591",
-  "scrapedAt": "2026-07-27T07:46:14.482Z",
+  "scrapedAt": "2026-10-30T14:27:15.461Z",
   "meta": {
-    "name": null,
+    "name": "MENS DAY 2807",
     "organizer": null,
     "course": "Miraflores Golf",
     "courseCode": "AM76",
@@ -20,20 +20,1225 @@
     "dateIso": "2026-07-28",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 43,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Thomas Keenan Mcmillan",
+          "licencia": "AM76488968",
+          "hcp": 9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2369709
+        },
+        {
+          "pos": 2,
+          "name": "Lippens Philippe Marcel",
+          "licencia": "AM76478287",
+          "hcp": 9.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2369793
+        },
+        {
+          "pos": 3,
+          "name": "Dominic Michael Packwood",
+          "licencia": "AM76530407",
+          "hcp": 22,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2369708
+        },
+        {
+          "pos": 4,
+          "name": "Orla Martin Joergensen",
+          "licencia": "AM76914987",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2369509
+        },
+        {
+          "pos": 5,
+          "name": "Andrew Philip West",
+          "licencia": "AM76485663",
+          "hcp": 9.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2369710
+        },
+        {
+          "pos": 6,
+          "name": "Michael Alan Watson",
+          "licencia": "AM76817411",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2369567
+        },
+        {
+          "pos": 7,
+          "name": "Kevin Packebusch",
+          "licencia": "AM76187036",
+          "hcp": 16,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2369587
+        },
+        {
+          "pos": 8,
+          "name": "Graham Blackburn",
+          "licencia": "AM76777364",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369600
+        },
+        {
+          "pos": 9,
+          "name": "Charles Jonathan Holden",
+          "licencia": "AM76096682",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369648
+        },
+        {
+          "pos": 10,
+          "name": "Yann Simonon",
+          "licencia": "AM76903258",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369794
+        },
+        {
+          "pos": 11,
+          "name": "Lawrence Davison",
+          "licencia": "AM76359536",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369573
+        },
+        {
+          "pos": 12,
+          "name": "Martin Schmier",
+          "licencia": "AM76086891",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369810
+        },
+        {
+          "pos": 13,
+          "name": "Ross O`sullivan",
+          "licencia": "AM76416779",
+          "hcp": 4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369581
+        },
+        {
+          "pos": 14,
+          "name": "Shaun James",
+          "licencia": "AM76517674",
+          "hcp": 26.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369575
+        },
+        {
+          "pos": 15,
+          "name": "Michael Partridge",
+          "licencia": "AM76951885",
+          "hcp": 8.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369749
+        },
+        {
+          "pos": 16,
+          "name": "Olivier Katz",
+          "licencia": "AM76421011",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369802
+        },
+        {
+          "pos": 17,
+          "name": "Michael De Rijk",
+          "licencia": "AM76898521",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369801
+        },
+        {
+          "pos": 18,
+          "name": "Derek Cooper",
+          "licencia": "AM76946225",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369601
+        },
+        {
+          "pos": 19,
+          "name": "Jordan Antony Abbasciano",
+          "licencia": "AM76941751",
+          "hcp": 3.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2369680
+        },
+        {
+          "pos": 20,
+          "name": "John Shiers",
+          "licencia": "AM76492110",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2369586
+        },
+        {
+          "pos": 21,
+          "name": "Carlos Maria Hirschfeld Cobian",
+          "licencia": "AM76091046",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2369531
+        },
+        {
+          "pos": 22,
+          "name": "Kevin Burke",
+          "licencia": "AM76913697",
+          "hcp": 9.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369574
+        },
+        {
+          "pos": 23,
+          "name": "Garry Miller",
+          "licencia": "AM76473524",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369792
+        },
+        {
+          "pos": 24,
+          "name": "Aneel Singh Sohal",
+          "licencia": "AM76060131",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2369577
+        },
+        {
+          "pos": 25,
+          "name": "Stephen Elsworth",
+          "licencia": "AM76099395",
+          "hcp": 20.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2369800
+        },
+        {
+          "pos": 26,
+          "name": "William F. Nicholls",
+          "licencia": "AM76604230",
+          "hcp": 32.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2369652
+        },
+        {
+          "pos": 27,
+          "name": "Paul Shelton",
+          "licencia": "AM76943934",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369726
+        },
+        {
+          "pos": 28,
+          "name": "Peter Bundgard",
+          "licencia": "AM76946855",
+          "hcp": 13.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369809
+        },
+        {
+          "pos": 29,
+          "name": "John Greenaway",
+          "licencia": "AM76977650",
+          "hcp": 20.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369602
+        },
+        {
+          "pos": 30,
+          "name": "Nicolaas Hakman",
+          "licencia": "AM76202985",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369720
+        },
+        {
+          "pos": 31,
+          "name": "Alexander Walsoe",
+          "licencia": "AM76198382",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2369782
+        },
+        {
+          "pos": 32,
+          "name": "Michael Ball",
+          "licencia": "AM76412062",
+          "hcp": 21.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2369799
+        },
+        {
+          "pos": 33,
+          "name": "Shawn Mudie",
+          "licencia": "AM76185453",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2369746
+        },
+        {
+          "pos": 34,
+          "name": "Jesus Lopez Fernandez",
+          "licencia": "AM76885942",
+          "hcp": 22.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2369508
+        },
+        {
+          "pos": 35,
+          "name": "Brendan Monaghan",
+          "licencia": "AM76481985",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369808
+        },
+        {
+          "pos": 36,
+          "name": "Jeff Lane",
+          "licencia": "AM76531148",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369572
+        },
+        {
+          "pos": 37,
+          "name": "Tom Garneys",
+          "licencia": "AM76961090",
+          "hcp": 33,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369568
+        },
+        {
+          "pos": 38,
+          "name": "Robert Richards",
+          "licencia": "AM76959136",
+          "hcp": 18.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2369777
+        },
+        {
+          "pos": 39,
+          "name": "Stan Rowlands",
+          "licencia": "AM76808636",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2369729
+        },
+        {
+          "pos": 40,
+          "name": "Neil Ingram",
+          "licencia": "AM76927634",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2369807
+        },
+        {
+          "pos": 41,
+          "name": "Allan Watts",
+          "licencia": "AM76168571",
+          "hcp": 27.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2369723
+        },
+        {
+          "pos": null,
+          "name": "Guy Bisin",
+          "licencia": "AM76071888",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2369510
+        },
+        {
+          "pos": null,
+          "name": "David Lomax",
+          "licencia": "AM76508703",
+          "hcp": 29.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2369797
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 43
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jesus Lopez Fernandez",
+      "licencia": "AM76885942",
+      "hcp": 22.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Orla Martin Joergensen",
+      "licencia": "AM76914987",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Guy Bisin",
+      "licencia": "AM76071888",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Maria Hirschfeld Cobian",
+      "licencia": "AM76091046",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Michael Alan Watson",
+      "licencia": "AM76817411",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Tom Garneys",
+      "licencia": "AM76961090",
+      "hcp": 33,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jeff Lane",
+      "licencia": "AM76531148",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Lawrence Davison",
+      "licencia": "AM76359536",
+      "hcp": 24.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Kevin Burke",
+      "licencia": "AM76913697",
+      "hcp": 9.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Shaun James",
+      "licencia": "AM76517674",
+      "hcp": 26.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Aneel Singh Sohal",
+      "licencia": "AM76060131",
+      "hcp": 16.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Ross O`sullivan",
+      "licencia": "AM76416779",
+      "hcp": 4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "John Shiers",
+      "licencia": "AM76492110",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Kevin Packebusch",
+      "licencia": "AM76187036",
+      "hcp": 16,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Graham Blackburn",
+      "licencia": "AM76777364",
+      "hcp": 20.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Derek Cooper",
+      "licencia": "AM76946225",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "John Greenaway",
+      "licencia": "AM76977650",
+      "hcp": 20.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Charles Jonathan Holden",
+      "licencia": "AM76096682",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "William F. Nicholls",
+      "licencia": "AM76604230",
+      "hcp": 32.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Jordan Antony Abbasciano",
+      "licencia": "AM76941751",
+      "hcp": 3.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Dominic Michael Packwood",
+      "licencia": "AM76530407",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Thomas Keenan Mcmillan",
+      "licencia": "AM76488968",
+      "hcp": 9,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Andrew Philip West",
+      "licencia": "AM76485663",
+      "hcp": 9.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Nicolaas Hakman",
+      "licencia": "AM76202985",
+      "hcp": 28.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Allan Watts",
+      "licencia": "AM76168571",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Paul Shelton",
+      "licencia": "AM76943934",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Stan Rowlands",
+      "licencia": "AM76808636",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Shawn Mudie",
+      "licencia": "AM76185453",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Michael Partridge",
+      "licencia": "AM76951885",
+      "hcp": 8.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Robert Richards",
+      "licencia": "AM76959136",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Alexander Walsoe",
+      "licencia": "AM76198382",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Garry Miller",
+      "licencia": "AM76473524",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Lippens Philippe Marcel",
+      "licencia": "AM76478287",
+      "hcp": 9.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Yann Simonon",
+      "licencia": "AM76903258",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "David Lomax",
+      "licencia": "AM76508703",
+      "hcp": 29.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Michael Ball",
+      "licencia": "AM76412062",
+      "hcp": 21.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Stephen Elsworth",
+      "licencia": "AM76099395",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Michael De Rijk",
+      "licencia": "AM76898521",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Olivier Katz",
+      "licencia": "AM76421011",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Neil Ingram",
+      "licencia": "AM76927634",
+      "hcp": 18.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Brendan Monaghan",
+      "licencia": "AM76481985",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Peter Bundgard",
+      "licencia": "AM76946855",
+      "hcp": 13.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Martin Schmier",
+      "licencia": "AM76086891",
+      "hcp": 26.4,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161170,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            189
+          ],
+          [
+            "Birdie",
+            17
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            267
+          ],
+          [
+            "Peor",
+            174
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161171,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            14
+          ],
+          [
+            "2",
+            28
+          ],
+          [
+            "3",
+            70
+          ],
+          [
+            "4",
+            36
+          ],
+          [
+            "5",
+            43
+          ],
+          [
+            "6",
+            39
+          ],
+          [
+            "7",
+            35
+          ],
+          [
+            "8",
+            33
+          ],
+          [
+            "9",
+            23
+          ],
+          [
+            "10",
+            17
+          ],
+          [
+            "11",
+            41
+          ],
+          [
+            "12",
+            36
+          ],
+          [
+            "13",
+            37
+          ],
+          [
+            "14",
+            23
+          ],
+          [
+            "15",
+            42
+          ],
+          [
+            "16",
+            50
+          ],
+          [
+            "17",
+            27
+          ],
+          [
+            "18",
+            42
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161172,
+        "datos": [
+          [
+            "Hoyo",
+            "ORLA MARTIN JORGENSEN",
+            "TOMMY MCMILLAN",
+            "DOMINIC PACKWOOD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            1,
+            2,
+            1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -3,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -3,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            -3,
+            -2,
+            -2
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            -3,
+            -3
+          ],
+          [
+            "Hoyo 18",
+            -4,
+            -4,
+            -4
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161173,
+        "datos": [
+          [
+            "Hoyo",
+            "ORLA MARTIN JORGENSEN",
+            "TOMMY MCMILLAN",
+            "DOMINIC PACKWOOD"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            2
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -1,
+            -2
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            -1,
+            -1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -44,6 +1249,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.907Z"
+  ]
 }

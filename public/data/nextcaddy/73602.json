@@ -1,9 +1,9 @@
 {
   "tourId": 73602,
   "url": "https://www.nextcaddy.com/tour/73602",
-  "scrapedAt": "2026-09-07T09:14:28.224Z",
+  "scrapedAt": "2026-10-30T14:28:35.605Z",
   "meta": {
-    "name": null,
+    "name": "I TORNEO ACADEMIA INFANTIL 2026-2027 - 2ª y 3ª Categoría",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
@@ -28,10 +28,254 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Tercera Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": 40.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2405767
+        },
+        {
+          "pos": 2,
+          "name": "Dasha Violeta Arenas Khattar",
+          "licencia": "AM11473991",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2405994
+        },
+        {
+          "pos": 3,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2406231
+        },
+        {
+          "pos": 4,
+          "name": "Mario Morillo Gonzalez",
+          "licencia": "AMI5091408",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2403317
+        },
+        {
+          "pos": 5,
+          "name": "Matteo Galacho Rodriguez",
+          "licencia": "AMI5507376",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2409668
+        },
+        {
+          "pos": 6,
+          "name": "Aron Aharrar Bricha",
+          "licencia": "AMI5495878",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2407946
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Mena Gutierrez",
+          "licencia": "AMI5488760",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2410834
+        },
+        {
+          "pos": 8,
+          "name": "Oliver Kieron Rea",
+          "licencia": "AMI5474796",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2409372
+        },
+        {
+          "pos": 9,
+          "name": "Julia Bueno Bellido",
+          "licencia": "AMI5471443",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 13,
+          "inscribedId": 2408490
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Segunda Categoria",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Krauel Pineda",
+          "licencia": "AMI5506871",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2408026
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Tercera Categoria",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Segunda Categoria",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mario Morillo Gonzalez",
+      "licencia": "AMI5091408",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Leo Rodriguez Lopez",
+      "licencia": "AMI5416477",
+      "hcp": 40.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Daniel Jimenez Pachon",
+      "licencia": "AMI5322414",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Aron Aharrar Bricha",
+      "licencia": "AMI5495878",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Gonzalo Krauel Pineda",
+      "licencia": "AMI5506871",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Oliver Kieron Rea",
+      "licencia": "AMI5474796",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Matteo Galacho Rodriguez",
+      "licencia": "AMI5507376",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Mena Gutierrez",
+      "licencia": "AMI5488760",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Philemon Casado Diouf",
+      "licencia": "AM11467632",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Julia Bueno Bellido",
+      "licencia": "AMI5471443",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Dasha Violeta Arenas Khattar",
+      "licencia": "AM11473991",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -156,6 +400,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:08.463Z"
+  ]
 }

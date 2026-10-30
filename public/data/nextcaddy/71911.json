@@ -1,13 +1,13 @@
 {
   "tourId": 71911,
   "url": "https://www.nextcaddy.com/tour/71911",
-  "scrapedAt": "2026-06-24T14:57:45.799Z",
+  "scrapedAt": "2026-10-30T14:26:37.555Z",
   "meta": {
     "name": "Torneo Privado Banco de España",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
-    "dateStart": null,
+    "dateStart": "2026-06-26",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,402 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-26",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Maria Mendez Batalla",
+          "licencia": "CM81347526",
+          "hcp": 35.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2350332
+        },
+        {
+          "pos": 2,
+          "name": "Alberto Sanchez Mazarro",
+          "licencia": "CM18812712",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2350325
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Gonzalez Constan",
+          "licencia": "CM81916608",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350335
+        },
+        {
+          "pos": 4,
+          "name": "Pablo De Aguinaga Garcia",
+          "licencia": "CM22257528",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350334
+        },
+        {
+          "pos": 5,
+          "name": "Lucas Garcia Calvo",
+          "licencia": "CMB2692660",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350326
+        },
+        {
+          "pos": 6,
+          "name": "Julio German Labora Castro",
+          "licencia": "CM00217084",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2350327
+        },
+        {
+          "pos": 7,
+          "name": "Juan Pablo Villarrubia Garcia",
+          "licencia": "CM33073715",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2350339
+        },
+        {
+          "pos": 8,
+          "name": "Rosa Maria Robles Gonzalez",
+          "licencia": "CM33073702",
+          "hcp": 32.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2350337
+        },
+        {
+          "pos": 9,
+          "name": "David Jimenez Martin",
+          "licencia": "CM81898387",
+          "hcp": 35.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2350333
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Ruiz Catalan",
+          "licencia": "CM81951953",
+          "hcp": 33,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2350331
+        },
+        {
+          "pos": 11,
+          "name": "Juan Jose Ortiz Sanchez",
+          "licencia": "CM81196390",
+          "hcp": 20.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2350330
+        },
+        {
+          "pos": 12,
+          "name": "Sara Ortiz Sanchez",
+          "licencia": "CM04991367",
+          "hcp": 48.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2350328
+        },
+        {
+          "pos": 13,
+          "name": "Gloria Sanchez Saborido",
+          "licencia": "CM04493565",
+          "hcp": 26.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2350329
+        },
+        {
+          "pos": 14,
+          "name": "Alba Balaguer Muñoz",
+          "licencia": "CM81916606",
+          "hcp": 40.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2350336
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Maria Mendez Batalla",
+          "licencia": "CM81347526",
+          "hcp": 35.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2350332
+        },
+        {
+          "pos": 2,
+          "name": "Pablo De Aguinaga Garcia",
+          "licencia": "CM22257528",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350334
+        },
+        {
+          "pos": 3,
+          "name": "Lucas Garcia Calvo",
+          "licencia": "CMB2692660",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350326
+        },
+        {
+          "pos": 4,
+          "name": "Carlos Gonzalez Constan",
+          "licencia": "CM81916608",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2350335
+        },
+        {
+          "pos": 5,
+          "name": "Alberto Sanchez Mazarro",
+          "licencia": "CM18812712",
+          "hcp": 24,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2350325
+        },
+        {
+          "pos": 6,
+          "name": "David Jimenez Martin",
+          "licencia": "CM81898387",
+          "hcp": 35.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2350333
+        },
+        {
+          "pos": 7,
+          "name": "Rosa Maria Robles Gonzalez",
+          "licencia": "CM33073702",
+          "hcp": 32.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2350337
+        },
+        {
+          "pos": 8,
+          "name": "Sara Ortiz Sanchez",
+          "licencia": "CM04991367",
+          "hcp": 48.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2350328
+        },
+        {
+          "pos": 9,
+          "name": "Julio German Labora Castro",
+          "licencia": "CM00217084",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2350327
+        },
+        {
+          "pos": 10,
+          "name": "Juan Pablo Villarrubia Garcia",
+          "licencia": "CM33073715",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2350339
+        },
+        {
+          "pos": 11,
+          "name": "Carlos Ruiz Catalan",
+          "licencia": "CM81951953",
+          "hcp": 33,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2350331
+        },
+        {
+          "pos": 12,
+          "name": "Alba Balaguer Muñoz",
+          "licencia": "CM81916606",
+          "hcp": 40.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2350336
+        },
+        {
+          "pos": 13,
+          "name": "Gloria Sanchez Saborido",
+          "licencia": "CM04493565",
+          "hcp": 26.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2350329
+        },
+        {
+          "pos": 14,
+          "name": "Juan Jose Ortiz Sanchez",
+          "licencia": "CM81196390",
+          "hcp": 20.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2350330
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General",
+      "jugadores": 14
+    },
+    "2": {
+      "name": "Individual Handicap General",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -95,13 +485,6 @@
       "nivel": "S"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
-    {
       "orden": 1,
       "name": "Sara Ortiz Sanchez",
       "licencia": "CM04991367",
@@ -127,111 +510,6 @@
       "name": "Rosa Maria Robles Gonzalez",
       "licencia": "CM33073702",
       "hcp": 32.6,
-      "nivel": "S"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
-    {
-      "orden": 1,
-      "name": "Alberto Sanchez Mazarro",
-      "licencia": "CM18812712",
-      "hcp": 24,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 2,
-      "name": "Lucas Garcia Calvo",
-      "licencia": "CMB2692660",
-      "hcp": 25.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 3,
-      "name": "Julio German Labora Castro",
-      "licencia": "CM00217084",
-      "hcp": 15.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 4,
-      "name": "Sara Ortiz Sanchez",
-      "licencia": "CM04991367",
-      "hcp": 48.2,
-      "nivel": "A"
-    },
-    {
-      "orden": 5,
-      "name": "Gloria Sanchez Saborido",
-      "licencia": "CM04493565",
-      "hcp": 26.6,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 6,
-      "name": "Juan Jose Ortiz Sanchez",
-      "licencia": "CM81196390",
-      "hcp": 20.9,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 7,
-      "name": "Carlos Ruiz Catalan",
-      "licencia": "CM81951953",
-      "hcp": 33,
-      "nivel": "S"
-    },
-    {
-      "orden": 8,
-      "name": "Jose Maria Mendez Batalla",
-      "licencia": "CM81347526",
-      "hcp": 35.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 9,
-      "name": "David Jimenez Martin",
-      "licencia": "CM81898387",
-      "hcp": 35.4,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 10,
-      "name": "Pablo De Aguinaga Garcia",
-      "licencia": "CM22257528",
-      "hcp": 27.5,
-      "nivel": "S"
-    },
-    {
-      "orden": 11,
-      "name": "Carlos Gonzalez Constan",
-      "licencia": "CM81916608",
-      "hcp": 28.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 12,
-      "name": "Alba Balaguer Muñoz",
-      "licencia": "CM81916606",
-      "hcp": 40.9,
-      "nivel": "S"
-    },
-    {
-      "orden": 13,
-      "name": "Rosa Maria Robles Gonzalez",
-      "licencia": "CM33073702",
-      "hcp": 32.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 14,
-      "name": "Juan Pablo Villarrubia Garcia",
-      "licencia": "CM33073715",
-      "hcp": 36,
       "nivel": "S"
     }
   ],
@@ -253,7 +531,7 @@
   ],
   "scoreTypes": [],
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3343454784_71911-torneo-privado-banco-de-espana.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:13.963Z"
+  ]
 }

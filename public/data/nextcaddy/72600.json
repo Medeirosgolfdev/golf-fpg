@@ -1,7 +1,7 @@
 {
   "tourId": 72600,
   "url": "https://www.nextcaddy.com/tour/72600",
-  "scrapedAt": "2026-07-29T16:50:58.579Z",
+  "scrapedAt": "2026-10-30T14:27:16.109Z",
   "meta": {
     "name": "LADIES DAY KICK THROW 2907",
     "organizer": null,
@@ -140,9 +140,84 @@
       "roundId": 77776
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Ramos Revilla, Miguel",
+          "holeNumber": 3,
+          "createdAt": "12/09/26 09:54:08"
+        },
+        {
+          "playerName": "Gomez  Franco, David",
+          "holeNumber": 11,
+          "createdAt": "12/09/26 10:07:32"
+        },
+        {
+          "playerName": "Mozo Salvador, Jesus Manuel",
+          "holeNumber": 7,
+          "createdAt": "12/09/26 10:19:03"
+        },
+        {
+          "playerName": "De La Orden Lazaro, Antonio",
+          "holeNumber": 5,
+          "createdAt": "12/09/26 10:32:08"
+        },
+        {
+          "playerName": "Velasco Baladron, Felix",
+          "holeNumber": 7,
+          "createdAt": "12/09/26 10:32:16"
+        },
+        {
+          "playerName": "Martin Gutierrez, Luis Antonio",
+          "holeNumber": 16,
+          "createdAt": "12/09/26 10:55:02"
+        },
+        {
+          "playerName": "Gutierrez Calvo, Jose",
+          "holeNumber": 10,
+          "createdAt": "12/09/26 11:24:13"
+        },
+        {
+          "playerName": "Ribot Alvarez, Isabel",
+          "holeNumber": 13,
+          "createdAt": "12/09/26 11:29:57"
+        },
+        {
+          "playerName": "Garcia De Miguel, Pedro",
+          "holeNumber": 1,
+          "createdAt": "12/09/26 11:57:25"
+        },
+        {
+          "playerName": "Blanco Gomez, Nicanor",
+          "holeNumber": 14,
+          "createdAt": "12/09/26 12:15:47"
+        },
+        {
+          "playerName": "Navarro Domingo, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "12/09/26 12:17:27"
+        },
+        {
+          "playerName": "Sanchez Garcia, Francisco Javier",
+          "holeNumber": 7,
+          "createdAt": "12/09/26 12:22:13"
+        },
+        {
+          "playerName": "Vidal Zugasti, Josu",
+          "holeNumber": 17,
+          "createdAt": "12/09/26 12:31:21"
+        },
+        {
+          "playerName": "Silva Pinto, Jose Jesus",
+          "holeNumber": 13,
+          "createdAt": "12/09/26 12:43:14"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.972Z"
+  ]
 }

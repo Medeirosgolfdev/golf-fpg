@@ -29,6 +29,32 @@ const { lgsCountryToIso } = require("./lib/lgs-country.js");
 const OUT_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
+const MESES_ES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8,
+  septiembre: 9, setiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
+
+/** Com --skip-existing: o ficheiro em disco está completo? Antes bastava existir,
+ *  e um torneio lido a meio ficava congelado (30/10/2026: o Spanish International
+ *  U-18 Mens 2026, lido a 03/09 e acabado a 05/09, só tinha R1 e R2).
+ *  Completo = lido DEPOIS do último dia (meta.year + "dd mes - dd mes"); sem
+ *  data, completo se nenhuma volta está vazia nem tem jogadores `_partial`. */
+function lgsCompleto(file) {
+  try {
+    const d = JSON.parse(fs.readFileSync(file, "utf-8"));
+    const m = d.meta || {};
+    const r = /(\d+)\s+([a-z]+)\s*-\s*(\d+)\s+([a-z]+)/i.exec(m.dateRange || "");
+    const mesFim = r && MESES_ES[r[4].toLowerCase()];
+    if (m.year && mesFim) {
+      const mesIni = MESES_ES[r[2].toLowerCase()];
+      const ano = m.year + (mesIni && mesFim < mesIni ? 1 : 0);   // "28 diciembre - 02 enero"
+      const fim = `${ano}-${String(mesFim).padStart(2, "0")}-${r[3].padStart(2, "0")}`;
+      return String(d.scrapedAt || "").slice(0, 10) > fim;
+    }
+    return !(d.rounds || []).some((rd) => !(rd.players || []).length || rd.players.some((p) => p._partial));
+  } catch {
+    return false; // ilegível → reler
+  }
+}
+
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
 const AGENT = new https.Agent({ keepAlive: true, maxSockets: 8 });
 
@@ -676,7 +702,7 @@ async function main() {
     while (cursor < ids.length) {
       const id = ids[cursor++];
       const out = path.join(OUT_DIR, id + ".json");
-      if (skipExisting && fs.existsSync(out)) { skip++; continue; }
+      if (skipExisting && fs.existsSync(out) && lgsCompleto(out)) { skip++; continue; }
       try {
         const result = await scrapeTorneo(id);
         if (result.ok) {
@@ -731,7 +757,7 @@ if (require.main === module) {
 
 // Exportados para testes (o main() só corre quando o ficheiro é o entrypoint).
 module.exports = {
-  scrapeTorneo, httpGet,
+  lgsCompleto, scrapeTorneo, httpGet,
   parseHoyoAHoyo, parseClasificacion, parseEstadisticas, parseCourseValue,
   parseTorneoMeta, parseHorarios, parseHorarioRounds,
 };

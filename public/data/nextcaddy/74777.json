@@ -1,9 +1,9 @@
 {
   "tourId": 74777,
   "url": "https://www.nextcaddy.com/tour/74777",
-  "scrapedAt": "2026-10-26T09:52:50.626Z",
+  "scrapedAt": "2026-10-30T14:29:27.607Z",
   "meta": {
-    "name": null,
+    "name": "3ª PRUEBA LIGA DE SEÑORAS OTOÑO",
     "organizer": null,
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
@@ -21,10 +21,292 @@
     "dateIso": "2026-10-27",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 21,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Rosa Diaz De La Peña Lopez",
+          "licencia": "AM02358481",
+          "hcp": 17.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2435347
+        },
+        {
+          "pos": 2,
+          "name": "Macarena Perez Mendez",
+          "licencia": "AM02064285",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2435343
+        },
+        {
+          "pos": 3,
+          "name": "Laura Cologan Machado",
+          "licencia": "AM02013205",
+          "hcp": 22.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2435349
+        },
+        {
+          "pos": 4,
+          "name": "Maria Ibañez De Aldecoa Silvela",
+          "licencia": "AM02100035",
+          "hcp": 15.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435350
+        },
+        {
+          "pos": 5,
+          "name": "Maria De Gracia Gutierrez Valdenebro",
+          "licencia": "AM02981541",
+          "hcp": 14.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2435355
+        },
+        {
+          "pos": 6,
+          "name": "Elena Pedraza Navarro",
+          "licencia": "AM02023880",
+          "hcp": 19.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435354
+        },
+        {
+          "pos": 7,
+          "name": "Mª Luisa Bonet Padilla",
+          "licencia": "AM02417854",
+          "hcp": 17.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435345
+        },
+        {
+          "pos": 8,
+          "name": "Pilar Carranza Guell",
+          "licencia": "AM02113258",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435362
+        },
+        {
+          "pos": 9,
+          "name": "Olga Fajardo Gonzalez",
+          "licencia": "AM02345360",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435346
+        },
+        {
+          "pos": 10,
+          "name": "Rosario Conde Hinojosa",
+          "licencia": "AM02158866",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435341
+        },
+        {
+          "pos": 11,
+          "name": "Rocio Bonet Perez",
+          "licencia": "AM02946634",
+          "hcp": 7.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435342
+        },
+        {
+          "pos": 12,
+          "name": "Concha Tejera Plasencia",
+          "licencia": "AM02136563",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435352
+        },
+        {
+          "pos": 13,
+          "name": "Carla Blanco Fernandez-Castaño",
+          "licencia": "AM02166614",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2435351
+        },
+        {
+          "pos": 14,
+          "name": "Almudena Maestre Domecq",
+          "licencia": "AM02015002",
+          "hcp": 17.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435356
+        },
+        {
+          "pos": 15,
+          "name": "Maria Coello De Portugal Martin De Los Rios",
+          "licencia": "AM02897976",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2435344
+        },
+        {
+          "pos": null,
+          "name": "Emma Palancar Sanchez",
+          "licencia": "AM02062522",
+          "hcp": 34.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435358
+        },
+        {
+          "pos": null,
+          "name": "Maria Isabel Valenzuela Etayo",
+          "licencia": "AM02351205",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435360
+        },
+        {
+          "pos": null,
+          "name": "Maria Fdez-Basterra Y Basagoiti",
+          "licencia": "AM02370258",
+          "hcp": 21.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435348
+        },
+        {
+          "pos": null,
+          "name": "Mª Del Mar Sanchez Blanco",
+          "licencia": "AM02976035",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435361
+        },
+        {
+          "pos": null,
+          "name": "Alicia Bernal Ruiz",
+          "licencia": "AM02357085",
+          "hcp": 20.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435353
+        },
+        {
+          "pos": null,
+          "name": "Livia Medina De La Paz",
+          "licencia": "AM02959722",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2435357
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

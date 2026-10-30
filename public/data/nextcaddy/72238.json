@@ -1,9 +1,9 @@
 {
   "tourId": 72238,
   "url": "https://www.nextcaddy.com/tour/72238",
-  "scrapedAt": "2026-07-13T07:09:48.752Z",
+  "scrapedAt": "2026-10-30T14:27:20.651Z",
   "meta": {
-    "name": null,
+    "name": "CIRCUITO HEINEKEN",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
@@ -23,9 +23,719 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Pareja",
+      "jugadores": 50
+    },
+    "2": {
+      "name": "Handicap Pareja",
+      "jugadores": 50
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Luis Gabarda Duran",
+      "licencia": "CM01006519",
+      "hcp": 2.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Luis Gabarda Pery",
+      "licencia": "CM01145048",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Nicolas Maestre Santos-Suarez",
+      "licencia": "CM01199052",
+      "hcp": 2.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Alvaro Gil-Delgado Ruiz-Jarabo",
+      "licencia": "CMD4256622",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Jesus Bernardez Sarabia",
+      "licencia": "AMC9756009",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose David Rendo",
+      "licencia": "AMD5986829",
+      "hcp": 22.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Claudio Alvarez Gonzalez",
+      "licencia": "0208136176",
+      "hcp": 5.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Luis Seoane Gomez",
+      "licencia": "AMC3377747",
+      "hcp": 24,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Alvaro Luna Martin",
+      "licencia": "CM00040277",
+      "hcp": 0.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Miguel Angel Luna Mansilla",
+      "licencia": "CM61130341",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Juan Jose Garcia Pulido",
+      "licencia": "AMD5356066",
+      "hcp": 7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Alberto Orellana Diaz",
+      "licencia": "AM17925972",
+      "hcp": 11.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Fernandez Bustelo",
+      "licencia": "AM17940245",
+      "hcp": 3.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Antonio Pereira Rivas",
+      "licencia": "AMD5470203",
+      "hcp": 19.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Marta Micheo Diaz",
+      "licencia": "AMD5022669",
+      "hcp": 31.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Iñigo Micheo Benjumeda",
+      "licencia": "AMD5021613",
+      "hcp": 35.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jaime Berge Ampuero",
+      "licencia": "VB02107684",
+      "hcp": 6.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Eduardo Real De Asua Aguirrezabal",
+      "licencia": "VB02144336",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Estanislao Ybarra Valdenebro",
+      "licencia": "AM02130266",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Vicente Gil-Delgado Andrada",
+      "licencia": "AM02350225",
+      "hcp": 15,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Michael Staley",
+      "licencia": "AM25074559",
+      "hcp": 7.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Louis Jorfi",
+      "licencia": "AM25979495",
+      "hcp": 16.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Salvador Lopez Gilabert",
+      "licencia": "AMD5193278",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Viñas Enriquez",
+      "licencia": "AMD5479286",
+      "hcp": 37.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jorge Gomez Fernandez",
+      "licencia": "AM00476541",
+      "hcp": 19.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Juan Antonio Ayoso Cantador",
+      "licencia": "AME7208087",
+      "hcp": 22,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Francisco Mera Leal",
+      "licencia": "AMC9600143",
+      "hcp": 28.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Antonio Romero Acero",
+      "licencia": "AMD5993751",
+      "hcp": 30.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Barnes Franco",
+      "licencia": "AMD5165008",
+      "hcp": 8.5,
+      "nivel": "J"
+    },
+    {
+      "orden": 15,
+      "name": "Manuel Barnes Fiscer",
+      "licencia": "AMC9600166",
+      "hcp": 14.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Oscar David Rosado Tobias",
+      "licencia": "9901959217",
+      "hcp": 17.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Ana Romero Reche",
+      "licencia": "9901959218",
+      "hcp": 39.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Juan Jose Gallardo Mesa",
+      "licencia": "AMD5067646",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Luisclemente Crespo Corrales",
+      "licencia": "AMD5979784",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Luis Carlos Guillen De Troya",
+      "licencia": "AMC9601053",
+      "hcp": 19.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Paloma Azagra Rexach",
+      "licencia": "AMC9601054",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Manuel Rodriguez Verdejo",
+      "licencia": "AMC9325334",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Jose Antonio Romero Sanjuan",
+      "licencia": "AMD5068595",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Pedro Jose Cantero Ortega",
+      "licencia": "AMD5769349",
+      "hcp": 6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Joaquin Escalante Boceta",
+      "licencia": "AMD5698526",
+      "hcp": 11.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Luis De-Bernardi Ojuel",
+      "licencia": "AMC9812610",
+      "hcp": 6.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Juan Manuel Rivilla Baena",
+      "licencia": "AMC9095394",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Carlos Molinero Gamio",
+      "licencia": "AME7069052",
+      "hcp": 13.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Pedro Velon Ororbia",
+      "licencia": "AME7068970",
+      "hcp": 13.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Juan Pablo Morales Rondan",
+      "licencia": "AMG3093868",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Juan Maria Lopez Martin",
+      "licencia": "AMG3374391",
+      "hcp": 27,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 24,
+      "name": "Antonio Javier Zarallo Perez",
+      "licencia": "AMD5086401",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Francisco Japon Sola",
+      "licencia": "AMD5086394",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Pedro Guerrero Mateo",
+      "licencia": "AMD5492043",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Alejandro Rosendi Galvin",
+      "licencia": "AMD5004733",
+      "hcp": 24.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 26,
+      "name": "Luis Sanchez Jimenez",
+      "licencia": "AMC9359224",
+      "hcp": 27.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Vicente Sanchez Galvan",
+      "licencia": "AMD5496934",
+      "hcp": 27.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Federica Domecq Lacroze",
+      "licencia": "CM07775442",
+      "hcp": 0.2,
+      "nivel": "M"
+    },
+    {
+      "orden": 27,
+      "name": "Mateo Domecq Lacroze",
+      "licencia": "CB00339321",
+      "hcp": 17.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Pablo Martinez-Brocal Ogayar",
+      "licencia": "AM05612843",
+      "hcp": 18.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Juan Gualberto Guerrero Peman",
+      "licencia": "CM61150551",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Francisco Bisbal Pons",
+      "licencia": "AME7503944",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Eduardo Diaz Arteche",
+      "licencia": "AME7105894",
+      "hcp": 12.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Miguel Angel Fernandez Jimenez",
+      "licencia": "AMD5606350",
+      "hcp": 21.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Rafael Gonzalez Vargas",
+      "licencia": "AM00750076",
+      "hcp": 29.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Francisco Javier Cordero Benitez",
+      "licencia": "AMD5998997",
+      "hcp": 34.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Javier Cordero Iraizoz",
+      "licencia": "AMD5031150",
+      "hcp": 36,
+      "nivel": "M"
+    },
+    {
+      "orden": 32,
+      "name": "Miguel Angel Gonzalo Garcia",
+      "licencia": "CM00929151",
+      "hcp": 14.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "Alfonso Loren Diez",
+      "licencia": "AMC4083493",
+      "hcp": 18.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Juan Pedro Jimenez Campos",
+      "licencia": "CM00167006",
+      "hcp": 31.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Iker Zabala Loroño",
+      "licencia": "CM41089264",
+      "hcp": 31.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 34,
+      "name": "Manuel Rodriguez Fernandez De Molina",
+      "licencia": "AM06044766",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Pedro Javier Galan Perez",
+      "licencia": "AMC3499212",
+      "hcp": 31.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Eduardo Gutierrez Martinez",
+      "licencia": "AM02600567",
+      "hcp": 31.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Alicia Beuster Vela",
+      "licencia": "AM02080419",
+      "hcp": 36.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Daniel Naranjo Alba",
+      "licencia": "AMC3885932",
+      "hcp": 4.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Juan Pedro Bellido Perez",
+      "licencia": "AM32609898",
+      "hcp": 5.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Javier Neira Moreno",
+      "licencia": "AM05065195",
+      "hcp": 3.7,
+      "nivel": "M"
+    },
+    {
+      "orden": 37,
+      "name": "Gonzalo Delgado Gomez",
+      "licencia": "AM05498356",
+      "hcp": 25.4,
+      "nivel": "M"
+    },
+    {
+      "orden": 38,
+      "name": "Daniel Godoy Monzon",
+      "licencia": "AMC3050247",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Carolina Laura Galliano",
+      "licencia": "AMD5004252",
+      "hcp": 35.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Jorge Valenzuela Rivero",
+      "licencia": "AM02913351",
+      "hcp": 9.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 39,
+      "name": "Filomeno Martinez Aspe",
+      "licencia": "AM02243893",
+      "hcp": 32.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Diego Crespo Sevilla",
+      "licencia": "AM66914047",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Maria Del Rosario Rodriguez Sanz",
+      "licencia": "AM66914052",
+      "hcp": 31.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Ismael Rosendi Galvin",
+      "licencia": "AM64087618",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 41,
+      "name": "Jose Ramon Fernandez Lasanta",
+      "licencia": "AMC9611946",
+      "hcp": 30.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Jaime Plaza Rodriguez-Vita",
+      "licencia": "CM01026983",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 42,
+      "name": "Javier Bohorquez Crespi",
+      "licencia": "AM05389271",
+      "hcp": 13.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Mikel Bollar Sanchez",
+      "licencia": "AM00343765",
+      "hcp": 11.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 43,
+      "name": "Antonio Herrera Bermejo",
+      "licencia": "AM00606433",
+      "hcp": 16.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 44,
+      "name": "Francisco Javier Barroso Martinez",
+      "licencia": "AM00609210",
+      "hcp": 4.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 44,
+      "name": "Francisco Javier Barroso Toledo",
+      "licencia": "AM00609208",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 45,
+      "name": "Luis Gonzalez Cervera",
+      "licencia": "AMD5099916",
+      "hcp": 20.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 45,
+      "name": "Alvaro Gonzalez Cervera",
+      "licencia": "AM00190582",
+      "hcp": 26.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 46,
+      "name": "Carlos Uribe Astolfi",
+      "licencia": "AM02966121",
+      "hcp": 19.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 46,
+      "name": "Pablo Uribe Cebreros",
+      "licencia": "AME7948027",
+      "hcp": 24.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 47,
+      "name": "Alfonso Rodriguez Guerrero",
+      "licencia": "AM17975928",
+      "hcp": 14.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 47,
+      "name": "Eddy Joseph Chullunquia Apaza",
+      "licencia": "AMC9480334",
+      "hcp": 24.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 48,
+      "name": "Ignacio Liberal Gonzalez De Lara",
+      "licencia": "AME7352203",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 48,
+      "name": "Mariano Hernan Garcia",
+      "licencia": "AM65930271",
+      "hcp": 21.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 49,
+      "name": "Ivan Lopez Hernandez",
+      "licencia": "AMD5414684",
+      "hcp": 19.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 49,
+      "name": "Manuel Rodriguez Otero",
+      "licencia": "AMD5962859",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Leandro Guillermo Scholtis Noceto",
+      "licencia": "AM66949341",
+      "hcp": 3.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 50,
+      "name": "Eduardo Manuel Lopez Ortega",
+      "licencia": "AMD5004352",
+      "hcp": 30,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -964,6 +1674,5 @@
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3459238985_torneo_heineken.pdf",
     "/uploads/competiciones/pdf/2285113670_reglamento_heineken_2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-03T07:23:39.940Z"
+  ]
 }

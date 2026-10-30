@@ -1,13 +1,13 @@
 {
   "tourId": 68725,
   "url": "https://www.nextcaddy.com/tour/68725",
-  "scrapedAt": "2026-06-24T14:58:10.959Z",
+  "scrapedAt": "2026-10-30T14:27:20.238Z",
   "meta": {
     "name": "Campeonato de Canarias Dobles de P&P",
     "organizer": null,
     "course": "Campo de Golf Los Palos",
     "courseCode": "CP09",
-    "dateStart": null,
+    "dateStart": "2026-08-01",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito P&P 20206",
     "categories": [
@@ -17,13 +17,363 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-08-01",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Handicap Final",
+      "jugadores": 23
+    },
+    "2": {
+      "name": "Clasificación Scratch Final",
+      "jugadores": 23
+    },
+    "3": {
+      "name": "Clasificación Handicap 1ª Y 2ª Vueltas",
+      "jugadores": 23
+    },
+    "4": {
+      "name": "Clasificación Scratch 1ª Y 2ª Vueltas",
+      "jugadores": 23
+    },
+    "5": {
+      "name": "Clasificación Handicap 1ª Vuelta",
+      "jugadores": 23
+    },
+    "6": {
+      "name": "Clasificación Scratch 1ª Vuelta",
+      "jugadores": 23
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Luis Maria Cardona Afonso",
+      "licencia": "CP35367526",
+      "hcp": 11.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Desiderio Padilla Belza",
+      "licencia": "CP35914548",
+      "hcp": 16.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Francisco Javier Diaz Rosa",
+      "licencia": "CP15372436",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Bea Caneda",
+      "licencia": "CP09169494",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Ignacio Giedelmann Ospina",
+      "licencia": "CP06899264",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Hector Didy Montero Merchant",
+      "licencia": "CP06348862",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Cesar Fernandez De Caleya Pujol",
+      "licencia": "CP02015816",
+      "hcp": 1.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Bernabe Gonzalez Alonso",
+      "licencia": "CP26102263",
+      "hcp": 3.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Christoph Gnadlinger",
+      "licencia": "CP35818632",
+      "hcp": 11.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Karl Gnadlinger",
+      "licencia": "CP15266720",
+      "hcp": 15.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Ashok Tikamdas Choolani Wadhwani",
+      "licencia": "CP09350937",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Manuel Hernandez Gonzalez",
+      "licencia": "CP09350935",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Eduardo Galera Gaspar",
+      "licencia": "CP00286388",
+      "hcp": 18.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Fernando Aza Frutos",
+      "licencia": "CP06815666",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Rafael Alexander Mesa Castillo",
+      "licencia": "CP15973696",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jose David Gonzalez Arrocha",
+      "licencia": "CP09061964",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Juanjo Sanchez De Arcos",
+      "licencia": "CP02372493",
+      "hcp": 18.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Noa Sanchez Viera",
+      "licencia": "CP02171427",
+      "hcp": null,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Alejandro Jimenez Grande",
+      "licencia": "CP02044213",
+      "hcp": 5.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Alejandro Jimenez Morales",
+      "licencia": "CP02747638",
+      "hcp": 6,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Javier Sabaris Rey",
+      "licencia": "CP09428202",
+      "hcp": 14.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Sanchez Rijo",
+      "licencia": "CP06798628",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jose Luis Salomon Felechosa",
+      "licencia": "CP00381543",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Alejandro Vera Palmes",
+      "licencia": "CP35383314",
+      "hcp": 22.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Silvia Aza Cordero",
+      "licencia": "CP06906792",
+      "hcp": 11.8,
+      "nivel": "M"
+    },
+    {
+      "orden": 13,
+      "name": "Luis Francisco Mendez Castilla",
+      "licencia": "CP09015256",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Carlos Javier Rodriguez Rivero",
+      "licencia": "CP39265712",
+      "hcp": 6.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Luis Verbo Palomino",
+      "licencia": "CP39951909",
+      "hcp": 11.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Esther Ramirez Naranjo",
+      "licencia": "CP39990323",
+      "hcp": 20.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Maria Gonzalez Garcia",
+      "licencia": "CP39955307",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Manuel Borrageiros Parracho",
+      "licencia": "CP09283757",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Alejandro Estevez Salieto",
+      "licencia": "CP40262770",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 9.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 17,
+      "name": "Miguel Galindo Aguado",
+      "licencia": "CP05496235",
+      "hcp": 25.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Rodrigo Trapaga Cabrera",
+      "licencia": "CP02945484",
+      "hcp": 16.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Maria Trapaga Fernandez",
+      "licencia": "CP02310411",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Onesimo Dorta Luis",
+      "licencia": "CP22030410",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Pablo Dorta Garcia",
+      "licencia": "CP22501240",
+      "hcp": null,
+      "nivel": "A"
+    },
+    {
+      "orden": 20,
+      "name": "Jorge Rodriguez Perez",
+      "licencia": "CP09970392",
+      "hcp": 12.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Victor Antonio Piquero Gonzalez",
+      "licencia": "CP00793987",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Anette Puehl",
+      "licencia": "CP15466358",
+      "hcp": 26.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Carmen Piedad Plasencia Garces",
+      "licencia": "CP15937710",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Antonio Manuel Diaz De Las Casas",
+      "licencia": "CP02140721",
+      "hcp": 17.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Tomas Diaz De Juan",
+      "licencia": "CP05497242",
+      "hcp": null,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Santiago Rivero De La Cruz",
+      "licencia": "CP05137603",
+      "hcp": 8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Joaquin Alvarez Alvarez",
+      "licencia": "CP09405989",
+      "hcp": 17.4,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -1333,6 +1683,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-08-03T07:23:31.973Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

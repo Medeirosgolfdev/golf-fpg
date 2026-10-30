@@ -1,13 +1,13 @@
 {
   "tourId": 74498,
   "url": "https://www.nextcaddy.com/tour/74498",
-  "scrapedAt": "2026-10-12T12:09:16.541Z",
+  "scrapedAt": "2026-10-30T14:29:20.069Z",
   "meta": {
-    "name": null,
+    "name": "ALISTAIR GROUP 24/10/26",
     "organizer": null,
     "course": "Lauro Golf",
     "courseCode": "AM83",
-    "dateStart": "2026-10-18",
+    "dateStart": "2026-10-24",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -18,13 +18,175 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-10-18",
+    "dateIso": "2026-10-24",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alan Trevor Maslen",
+          "licencia": "AM83072810",
+          "hcp": 7.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2423653
+        },
+        {
+          "pos": 2,
+          "name": "Kari Tapani Sairo",
+          "licencia": "AM83928742",
+          "hcp": 6.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2425222
+        },
+        {
+          "pos": 3,
+          "name": "Yury Tabolich",
+          "licencia": "AM83995173",
+          "hcp": 10.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2423642
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Martinez Navarro",
+          "licencia": "AM83701334",
+          "hcp": 3.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2429954
+        },
+        {
+          "pos": 5,
+          "name": "Rainer Suehling",
+          "licencia": "AM76161167",
+          "hcp": 6.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2423650
+        },
+        {
+          "pos": 6,
+          "name": "Gordon Millar",
+          "licencia": "AM83072078",
+          "hcp": 9.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423645
+        },
+        {
+          "pos": 7,
+          "name": "Luis Bernal Iglesias",
+          "licencia": "AMI5215938",
+          "hcp": 6.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2430155
+        },
+        {
+          "pos": 8,
+          "name": "Alistair Marshall",
+          "licencia": "AM83888581",
+          "hcp": 11.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2423640
+        },
+        {
+          "pos": 9,
+          "name": "Jose Sandino Egea",
+          "licencia": "AM83058773",
+          "hcp": 6.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2423644
+        },
+        {
+          "pos": 10,
+          "name": "Rudy Clerkx",
+          "licencia": "AM22519265",
+          "hcp": 0.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2430156
+        },
+        {
+          "pos": 11,
+          "name": "Ruud Vermeer Wilhelmus Henricus",
+          "licencia": "AM22155749",
+          "hcp": 9.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2423643
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 11
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,79 +197,79 @@
     },
     {
       "orden": 2,
-      "name": "RUDY CLERKX",
-      "licencia": "TAM9841987",
-      "hcp": 54,
+      "name": "Yury Tabolich",
+      "licencia": "AM83995173",
+      "hcp": 10.7,
       "nivel": "Mid"
     },
     {
       "orden": 3,
-      "name": "Yury Tabolich",
-      "licencia": "AM83995173",
-      "hcp": 10.5,
-      "nivel": "Mid"
-    },
-    {
-      "orden": 4,
       "name": "Ruud Vermeer Wilhelmus Henricus",
       "licencia": "AM22155749",
       "hcp": 9.5,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Jose Sandino Egea",
       "licencia": "AM83058773",
       "hcp": 6.3,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Gordon Millar",
       "licencia": "AM83072078",
       "hcp": 9.9,
       "nivel": "S"
     },
     {
-      "orden": 7,
-      "name": "Rhys Wheeler",
-      "licencia": "AM83167387",
-      "hcp": 6.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 8,
-      "name": "Steve Barnes",
-      "licencia": "AM83371794",
-      "hcp": 8.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 9,
-      "name": "George Gourlay",
-      "licencia": "AM83991001",
-      "hcp": 8.5,
-      "nivel": "S"
-    },
-    {
-      "orden": 10,
+      "orden": 6,
       "name": "Rainer Suehling",
       "licencia": "AM76161167",
       "hcp": 6.7,
       "nivel": "S"
     },
     {
-      "orden": 11,
-      "name": "Niklas Johan Jakobsson",
-      "licencia": "AM83052328",
-      "hcp": 9.7,
+      "orden": 7,
+      "name": "Alan Trevor Maslen",
+      "licencia": "AM83072810",
+      "hcp": 7.3,
       "nivel": "S"
     },
     {
+      "orden": 8,
+      "name": "Kari Tapani Sairo",
+      "licencia": "AM83928742",
+      "hcp": 6.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Alvaro Martinez Navarro",
+      "licencia": "AM83701334",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 10,
+      "name": "Luis Bernal Iglesias",
+      "licencia": "AMI5215938",
+      "hcp": 6.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Rudy Clerkx",
+      "licencia": "AM22519265",
+      "hcp": 0.9,
+      "nivel": "Mid"
+    },
+    {
       "orden": 12,
-      "name": "Alan Trevor Maslen",
-      "licencia": "AM83072810",
-      "hcp": 7.6,
+      "name": "Niklas Johan Jakobsson",
+      "licencia": "AM83052328",
+      "hcp": 9.8,
       "nivel": "S"
     }
   ],
@@ -236,6 +398,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2715167553_74498-alistair-group-18-10-26.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:36.731Z"
+  ]
 }

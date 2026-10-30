@@ -1,9 +1,9 @@
 {
   "tourId": 72243,
   "url": "https://www.nextcaddy.com/tour/72243",
-  "scrapedAt": "2026-07-13T07:09:49.351Z",
+  "scrapedAt": "2026-10-30T14:27:34.786Z",
   "meta": {
-    "name": null,
+    "name": "Torneo F23 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,11 +21,346 @@
     "dateIso": "2026-08-11",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Javier Arbona Molina",
+          "licencia": "CM18483562",
+          "hcp": 24.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2361322
+        },
+        {
+          "pos": 2,
+          "name": "Luis Perez-Prat Gomez De Terreros",
+          "licencia": "AM95489460",
+          "hcp": 38.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2369128
+        },
+        {
+          "pos": 3,
+          "name": "Pablo Troyano Garcia",
+          "licencia": "AMG3372798",
+          "hcp": 18.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2370742
+        },
+        {
+          "pos": 4,
+          "name": "Ernesto Cortes Torres",
+          "licencia": "CMD4991960",
+          "hcp": 25.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2374904
+        },
+        {
+          "pos": 5,
+          "name": "Beltran Lozano Maldonado",
+          "licencia": "AM02986462",
+          "hcp": 0.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2379316
+        },
+        {
+          "pos": 6,
+          "name": "Leandro Izquierdo Quiros",
+          "licencia": "CM00386753",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2370764
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Laffon Molina",
+          "licencia": "CM01189259",
+          "hcp": 21.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2380198
+        },
+        {
+          "pos": 8,
+          "name": "Jaime Benjumea Rodriguez",
+          "licencia": "AM02070111",
+          "hcp": 15.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2368907
+        },
+        {
+          "pos": 9,
+          "name": "Jose Manuel Peña Salas",
+          "licencia": "AM95496756",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2377722
+        },
+        {
+          "pos": 10,
+          "name": "Alberto Garvey Ramirez",
+          "licencia": "AM02807641",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2375916
+        },
+        {
+          "pos": 11,
+          "name": "Ignacio Garvey Robles",
+          "licencia": "AM02070482",
+          "hcp": 13.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2364918
+        },
+        {
+          "pos": 12,
+          "name": "Juan Carlos Lara Viguera",
+          "licencia": "AM02517382",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374503
+        },
+        {
+          "pos": 13,
+          "name": "Alberto Garvey Robles",
+          "licencia": "AM00486831",
+          "hcp": 13.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2371781
+        },
+        {
+          "pos": 14,
+          "name": "Jaime Carvajal Garcia-Corona",
+          "licencia": "AM02526904",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2366243
+        },
+        {
+          "pos": null,
+          "name": "Charles Sans-Arcidet",
+          "licencia": "EXX1912121",
+          "hcp": 22,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2362570
+        },
+        {
+          "pos": null,
+          "name": "Diego Jose Diez Gonzalez",
+          "licencia": "CME5093268",
+          "hcp": 17.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2366200
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Javier Arbona Molina",
+      "licencia": "CM18483562",
+      "hcp": 24.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Charles Sans-Arcidet",
+      "licencia": "EXX1912121",
+      "hcp": 22,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Ignacio Garvey Robles",
+      "licencia": "AM02070482",
+      "hcp": 13.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Diego Jose Diez Gonzalez",
+      "licencia": "CME5093268",
+      "hcp": 17.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Jaime Carvajal Garcia-Corona",
+      "licencia": "AM02526904",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Jaime Benjumea Rodriguez",
+      "licencia": "AM02070111",
+      "hcp": 15.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Luis Perez-Prat Gomez De Terreros",
+      "licencia": "AM95489460",
+      "hcp": 38.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Pablo Troyano Garcia",
+      "licencia": "AMG3372798",
+      "hcp": 18.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Leandro Izquierdo Quiros",
+      "licencia": "CM00386753",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Alberto Garvey Robles",
+      "licencia": "AM00486831",
+      "hcp": 13.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Juan Carlos Lara Viguera",
+      "licencia": "AM02517382",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Ernesto Cortes Torres",
+      "licencia": "CMD4991960",
+      "hcp": 25.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Alberto Garvey Ramirez",
+      "licencia": "AM02807641",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Manuel Peña Salas",
+      "licencia": "AM95496756",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Beltran Lozano Maldonado",
+      "licencia": "AM02986462",
+      "hcp": 0.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Manuel Laffon Molina",
+      "licencia": "CM01189259",
+      "hcp": 21.6,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -192,10 +527,50 @@
       "roundId": 77402
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Jimenez Acevedo, Juan Maria",
+          "holeNumber": 14,
+          "createdAt": "13/09/26 16:34:14"
+        },
+        {
+          "playerName": "Jimenez Acevedo, Juan Maria",
+          "holeNumber": 3,
+          "createdAt": "13/09/26 18:14:00"
+        },
+        {
+          "playerName": "Santos Valdivia, Victor Manuel",
+          "holeNumber": 13,
+          "createdAt": "13/09/26 16:45:20"
+        },
+        {
+          "playerName": "Santos Valdivia, Victor Manuel",
+          "holeNumber": 18,
+          "createdAt": "13/09/26 17:59:32"
+        },
+        {
+          "playerName": "Rincon Muñoz, Angel",
+          "holeNumber": 3,
+          "createdAt": "13/09/26 18:28:57"
+        },
+        {
+          "playerName": "Nuñez Escobedo, Alberto",
+          "holeNumber": 6,
+          "createdAt": "13/09/26 19:06:25"
+        },
+        {
+          "playerName": "Garcia De Castro Escorial, Jose Carlos",
+          "holeNumber": 7,
+          "createdAt": "13/09/26 16:20:15"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/112964036_72243-torneo-f23-grupo-privado.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-17T04:57:58.996Z"
+  ]
 }

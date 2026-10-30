@@ -1,9 +1,9 @@
 {
   "tourId": 72939,
   "url": "https://www.nextcaddy.com/tour/72939",
-  "scrapedAt": "2026-08-17T04:57:34.101Z",
+  "scrapedAt": "2026-10-30T14:28:16.512Z",
   "meta": {
-    "name": null,
+    "name": "II Prueba Pequecircuito Benjamines (con Hcp menor de 36,1)",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,11 +22,250 @@
     "dateIso": "2026-09-12",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 36,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Benjamín Scratch General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 21.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 10,
+          "inscribedId": 2400964
+        },
+        {
+          "pos": 2,
+          "name": "Llen Aguayo Del Castillo",
+          "licencia": "7752003383",
+          "hcp": 31.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": 11,
+          "inscribedId": 2393807
+        },
+        {
+          "pos": 3,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 11.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": 11,
+          "inscribedId": 2402185
+        },
+        {
+          "pos": 4,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 22.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 49,
+          "toPar": 13,
+          "inscribedId": 2395774
+        },
+        {
+          "pos": 5,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 35.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2400860
+        },
+        {
+          "pos": 6,
+          "name": "Javier Alonso Arrimadas",
+          "licencia": "7706083592",
+          "hcp": 32,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 58,
+          "toPar": 22,
+          "inscribedId": 2401171
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Benjamín Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Llen Aguayo Del Castillo",
+          "licencia": "7752003383",
+          "hcp": 31.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2393807
+        },
+        {
+          "pos": 2,
+          "name": "Angela Basconcillos Rodriguez",
+          "licencia": "7712416189",
+          "hcp": 35.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": 1,
+          "inscribedId": 2400860
+        },
+        {
+          "pos": 3,
+          "name": "Juan Aparicio Gonzalez",
+          "licencia": "7707094609",
+          "hcp": 21.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": 3,
+          "inscribedId": 2400964
+        },
+        {
+          "pos": 4,
+          "name": "Paula Casas Fernandez",
+          "licencia": "7770474202",
+          "hcp": 11.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": 6,
+          "inscribedId": 2402185
+        },
+        {
+          "pos": 5,
+          "name": "Erik Bautista Musina",
+          "licencia": "7700354371",
+          "hcp": 22.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": 6,
+          "inscribedId": 2395774
+        },
+        {
+          "pos": 6,
+          "name": "Javier Alonso Arrimadas",
+          "licencia": "7706083592",
+          "hcp": 32,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 10,
+          "inscribedId": 2401171
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Benjamín Scratch General",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Individual Benjamín Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Llen Aguayo Del Castillo",
+      "licencia": "7752003383",
+      "hcp": 31.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Erik Bautista Musina",
+      "licencia": "7700354371",
+      "hcp": 22.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Juan Aparicio Gonzalez",
+      "licencia": "7707094609",
+      "hcp": 21.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Javier Alonso Arrimadas",
+      "licencia": "7706083592",
+      "hcp": 32,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Angela Basconcillos Rodriguez",
+      "licencia": "7712416189",
+      "hcp": 35.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Paula Casas Fernandez",
+      "licencia": "7770474202",
+      "hcp": 11.3,
+      "nivel": "B"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -96,7 +335,8 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-09-14T09:54:11.741Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3603144821_reglas_locales_y_p._suspension.pdf",
+    "/uploads/circulares/cirfgcyl3126.pdf"
+  ]
 }

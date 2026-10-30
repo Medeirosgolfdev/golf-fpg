@@ -1,13 +1,13 @@
 {
   "tourId": 68256,
   "url": "https://www.nextcaddy.com/tour/68256",
-  "scrapedAt": "2026-06-24T14:58:38.885Z",
+  "scrapedAt": "2026-10-30T14:29:56.674Z",
   "meta": {
-    "name": "Campeonato de Madrid Interclubes Infantil y Cadete",
+    "name": null,
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-11-21",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
@@ -18,7 +18,9 @@
       "Señoras",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-11-21",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -38,11 +40,11 @@
   "roundIds": [
     {
       "roundNumber": 1,
-      "roundId": 72828
+      "roundId": 77981
     },
     {
       "roundNumber": 2,
-      "roundId": 72829
+      "roundId": 77982
     }
   ],
   "scoreTypes": {
@@ -72,6 +74,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:58.336Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

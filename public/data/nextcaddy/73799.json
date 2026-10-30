@@ -1,9 +1,9 @@
 {
   "tourId": 73799,
   "url": "https://www.nextcaddy.com/tour/73799",
-  "scrapedAt": "2026-09-14T09:53:35.613Z",
+  "scrapedAt": "2026-10-30T14:28:32.297Z",
   "meta": {
-    "name": null,
+    "name": "Grupo Golf Portaceli 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,11 +21,460 @@
     "dateIso": "2026-09-25",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Hándicap Única Categoría",
+      "expectedJugadores": 22,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Jose Rodriguez Guanter",
+          "licencia": "AM02075406",
+          "hcp": 30.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2404175
+        },
+        {
+          "pos": 2,
+          "name": "Juan Antonio Navarrete De Carcer",
+          "licencia": "AM95740582",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2408895
+        },
+        {
+          "pos": 3,
+          "name": "Jose A Garcia Del Salto Morales",
+          "licencia": "AMC3195493",
+          "hcp": 26.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2408741
+        },
+        {
+          "pos": 4,
+          "name": "Gonzalo Mora-Figueroa Gayan",
+          "licencia": "AM02249748",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2408907
+        },
+        {
+          "pos": 5,
+          "name": "Jose Luis Escatllar Rodriguez De Codes",
+          "licencia": "AM02907460",
+          "hcp": 24.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2407443
+        },
+        {
+          "pos": 6,
+          "name": "Eugenio Molina Valcarce",
+          "licencia": "AM05138958",
+          "hcp": 35.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2408959
+        },
+        {
+          "pos": 7,
+          "name": "Arturo Argüeso Asta-Buruaga",
+          "licencia": "AM02067648",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2409561
+        },
+        {
+          "pos": 8,
+          "name": "Benito Cortines Torres",
+          "licencia": "AMC3360327",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2408137
+        },
+        {
+          "pos": 9,
+          "name": "Pedro Ruiz-Ocejo Crespo",
+          "licencia": "AM02078928",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2408955
+        },
+        {
+          "pos": 10,
+          "name": "Dionisio Romero Comellas",
+          "licencia": "AM32205034",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2409577
+        },
+        {
+          "pos": 11,
+          "name": "Jose Ramon Vaca Salas",
+          "licencia": "AME7131751",
+          "hcp": 31.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2408727
+        },
+        {
+          "pos": 12,
+          "name": "Santiago Garcia Gonzalez",
+          "licencia": "AMC3359311",
+          "hcp": 8.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2409488
+        },
+        {
+          "pos": 13,
+          "name": "Gabriel Soler Nonell",
+          "licencia": "AM05233384",
+          "hcp": 27.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2408750
+        },
+        {
+          "pos": 14,
+          "name": "Carlos Beca Soto",
+          "licencia": "AM02809468",
+          "hcp": 28.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2409638
+        },
+        {
+          "pos": 15,
+          "name": "Jose Maria De La Cuadra Corbacho",
+          "licencia": "AM02779164",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2409004
+        },
+        {
+          "pos": 16,
+          "name": "Fernando Sampedro Abascal",
+          "licencia": "AMF7781752",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2405710
+        },
+        {
+          "pos": 17,
+          "name": "Francisco Javier Liniers Bernabeu",
+          "licencia": "AM05036569",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2408988
+        },
+        {
+          "pos": 18,
+          "name": "Joaquin Arbona Prini",
+          "licencia": "AM02062515",
+          "hcp": 31.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2408526
+        },
+        {
+          "pos": 19,
+          "name": "Ignacio Lojendio Osborne",
+          "licencia": "AM02792863",
+          "hcp": 35.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2408827
+        },
+        {
+          "pos": 20,
+          "name": "Carlos Camacho Alvarez",
+          "licencia": "AM02325358",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2408147
+        },
+        {
+          "pos": 21,
+          "name": "Antonio Javier De La Cueva Spinola",
+          "licencia": "AM85234402",
+          "hcp": 17.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2403868
+        },
+        {
+          "pos": 22,
+          "name": "Jose Ruiz Granados",
+          "licencia": "AM02343840",
+          "hcp": 30,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2408126
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Hándicap Única Categoría",
+      "jugadores": 22
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Antonio Javier De La Cueva Spinola",
+      "licencia": "AM85234402",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Francisco Jose Rodriguez Guanter",
+      "licencia": "AM02075406",
+      "hcp": 30.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Fernando Sampedro Abascal",
+      "licencia": "AMF7781752",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Luis Escatllar Rodriguez De Codes",
+      "licencia": "AM02907460",
+      "hcp": 24.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Ruiz Granados",
+      "licencia": "AM02343840",
+      "hcp": 30,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Benito Cortines Torres",
+      "licencia": "AMC3360327",
+      "hcp": 25.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Carlos Camacho Alvarez",
+      "licencia": "AM02325358",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Joaquin Arbona Prini",
+      "licencia": "AM02062515",
+      "hcp": 31.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Ramon Vaca Salas",
+      "licencia": "AME7131751",
+      "hcp": 31.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Jose A Garcia Del Salto Morales",
+      "licencia": "AMC3195493",
+      "hcp": 26.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Gabriel Soler Nonell",
+      "licencia": "AM05233384",
+      "hcp": 27.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Ignacio Lojendio Osborne",
+      "licencia": "AM02792863",
+      "hcp": 35.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Juan Antonio Navarrete De Carcer",
+      "licencia": "AM95740582",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Gonzalo Mora-Figueroa Gayan",
+      "licencia": "AM02249748",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Pedro Ruiz-Ocejo Crespo",
+      "licencia": "AM02078928",
+      "hcp": 16.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Eugenio Molina Valcarce",
+      "licencia": "AM05138958",
+      "hcp": 35.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Javier Liniers Bernabeu",
+      "licencia": "AM05036569",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Maria De La Cuadra Corbacho",
+      "licencia": "AM02779164",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Santiago Garcia Gonzalez",
+      "licencia": "AMC3359311",
+      "hcp": 8.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Arturo Argüeso Asta-Buruaga",
+      "licencia": "AM02067648",
+      "hcp": 20.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Dionisio Romero Comellas",
+      "licencia": "AM32205034",
+      "hcp": 19.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Carlos Beca Soto",
+      "licencia": "AM02809468",
+      "hcp": 28.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -259,7 +708,7 @@
     }
   },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:09.470Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1979721515_portaceli.pdf"
+  ]
 }

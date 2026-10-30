@@ -1,13 +1,13 @@
 {
   "tourId": 68597,
   "url": "https://www.nextcaddy.com/tour/68597",
-  "scrapedAt": "2026-06-24T14:58:29.892Z",
+  "scrapedAt": "2026-10-30T14:28:19.539Z",
   "meta": {
     "name": "VI Prueba Circuito Juvenil de P&P (9 hoyos) 3ª Categoría y Noveles - Las Palmeras Golf",
     "organizer": null,
     "course": "Las Palmeras Golf Club",
     "courseCode": "CP26",
-    "dateStart": null,
+    "dateStart": "2026-09-13",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,107 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-13",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Amir Esmaeilizadeh Padilla",
+      "licencia": "CP26188143",
+      "hcp": 52.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Adriel Sosa Sosa",
+      "licencia": "CP26003572",
+      "hcp": 47.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Demetrio Marrero Sanchez",
+      "licencia": "CP26497385",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "Carlos Yanez Martel",
+      "licencia": "CP26003611",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Fernando Solsona Quintanilla",
+      "licencia": "CP01017103",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Daniel Lopez-Mingo Aguirre",
+      "licencia": "CP26485166",
+      "hcp": 44.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 7,
+      "name": "Jesus Vidal Velasco",
+      "licencia": "CP26198359",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 8,
+      "name": "Alejandro Bagan Marquez",
+      "licencia": "CP26006568",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Rodrigo Vega Garcia",
+      "licencia": "CP26172346",
+      "hcp": 40.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Mariam Gonzalez Jimenez",
+      "licencia": "CP26962412",
+      "hcp": 33.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 2,
+      "name": "Alba Medina Canalejo",
+      "licencia": "CP26978243",
+      "hcp": 47.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Catalina Bagan Marquez",
+      "licencia": "CP26019896",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Nayra Dorta Perez",
+      "licencia": "CP26006584",
+      "hcp": 54,
+      "nivel": "A"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -57,6 +151,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:01.166Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72246,
   "url": "https://www.nextcaddy.com/tour/72246",
-  "scrapedAt": "2026-07-13T07:09:47.171Z",
+  "scrapedAt": "2026-10-30T14:27:00.789Z",
   "meta": {
-    "name": null,
+    "name": "LIGA EXPRES JORNADA 4 (TARDE 18:00)",
     "organizer": null,
     "course": "Club Hato Verde",
     "courseCode": "AMF7",
@@ -21,10 +21,398 @@
     "dateIso": "2026-07-16",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "1 Categoria",
+      "expectedJugadores": 13,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pedro Ortega Peinado",
+          "licencia": "AMF7090571",
+          "hcp": 11.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2361641
+        },
+        {
+          "pos": 2,
+          "name": "Mario Justel Gomez",
+          "licencia": "AM80504137",
+          "hcp": 16.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2360243
+        },
+        {
+          "pos": 3,
+          "name": "Salvador Moll Lorca",
+          "licencia": "AMF7079945",
+          "hcp": 10.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2360447
+        },
+        {
+          "pos": 4,
+          "name": "Jose Postigo Secano",
+          "licencia": "AMK5771527",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2361640
+        },
+        {
+          "pos": 5,
+          "name": "Jose Carlos Serrano Ramirez",
+          "licencia": "AMG3996942",
+          "hcp": 16.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2362342
+        },
+        {
+          "pos": 6,
+          "name": "Jose Antonio Gomez Jara",
+          "licencia": "AMG3970258",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2361588
+        },
+        {
+          "pos": 7,
+          "name": "Juan Perez Baena",
+          "licencia": "AMG3941792",
+          "hcp": 18.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2360280
+        },
+        {
+          "pos": 8,
+          "name": "Miguel Macias Becerra",
+          "licencia": "AME8766667",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2362339
+        },
+        {
+          "pos": 9,
+          "name": "Ignacio Olmedo Garcia",
+          "licencia": "AMG3071458",
+          "hcp": 20.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2362162
+        },
+        {
+          "pos": 10,
+          "name": "Jose Luis Ruiz De Castroviejo Alvarez",
+          "licencia": "AMF7973319",
+          "hcp": 12.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2362190
+        },
+        {
+          "pos": 11,
+          "name": "Ignacio Olmedo Halcon",
+          "licencia": "AMF7802548",
+          "hcp": 21.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2360955
+        },
+        {
+          "pos": 12,
+          "name": "Ignacio Calvo Borrego",
+          "licencia": "AMF7343780",
+          "hcp": 21.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2361293
+        },
+        {
+          "pos": 13,
+          "name": "Francisco Bernardez Sarabia",
+          "licencia": "AMC9757378",
+          "hcp": 22.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2361919
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "2 Categoria",
+      "expectedJugadores": 15,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Miguel Angel Vazquez Cantillo",
+          "licencia": "AMF7468753",
+          "hcp": 29.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2361180
+        },
+        {
+          "pos": 2,
+          "name": "Jose Luis Vivancos Perez",
+          "licencia": "AM00908990",
+          "hcp": 31.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2361505
+        },
+        {
+          "pos": 3,
+          "name": "David Hijon Morillo",
+          "licencia": "AMG3071275",
+          "hcp": 30.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2362278
+        },
+        {
+          "pos": 4,
+          "name": "Angel Marquez Romero",
+          "licencia": "AM06166348",
+          "hcp": 34.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2361912
+        },
+        {
+          "pos": 5,
+          "name": "Javier Barbacid Rodriguez",
+          "licencia": "AMF7695087",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2361756
+        },
+        {
+          "pos": 6,
+          "name": "Jose Dominguez Ballestero",
+          "licencia": "AMG3902221",
+          "hcp": 28.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2360381
+        },
+        {
+          "pos": 7,
+          "name": "Lorenzo Castaño Zulueta",
+          "licencia": "AMG3468278",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2359653
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Francisco Felipe Perez",
+          "licencia": "AMG3953857",
+          "hcp": 26.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2360792
+        },
+        {
+          "pos": 9,
+          "name": "Asuncion Barbacid Sanchez",
+          "licencia": "AMG3164094",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2361774
+        },
+        {
+          "pos": 10,
+          "name": "Servando Chaza Chimeno",
+          "licencia": "AMK5481924",
+          "hcp": 44,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2361639
+        },
+        {
+          "pos": 11,
+          "name": "Luis Carlos Andrada Alsina",
+          "licencia": "AMF7608771",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2360538
+        },
+        {
+          "pos": 12,
+          "name": "Antonio Jose Repullo Aranda",
+          "licencia": "AMF7811550",
+          "hcp": 31.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2360667
+        },
+        {
+          "pos": 13,
+          "name": "Eduardo Miguel Terron Bellido",
+          "licencia": "AMG3904339",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2362125
+        },
+        {
+          "pos": 14,
+          "name": "Francisco Nuñez Pozo",
+          "licencia": "AMF7373909",
+          "hcp": 38.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2361719
+        },
+        {
+          "pos": 15,
+          "name": "Fernando Sampedro Abascal",
+          "licencia": "AMF7781752",
+          "hcp": 25.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2360193
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "1 Categoria",
+      "jugadores": 13
+    },
+    "2": {
+      "name": "2 Categoria",
+      "jugadores": 15
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -38,6 +426,118 @@
       "name": "Mario Justel Gomez",
       "licencia": "AM80504137",
       "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Dominguez Ballestero",
+      "licencia": "AMG3902221",
+      "hcp": 28.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Jose Repullo Aranda",
+      "licencia": "AMF7811550",
+      "hcp": 31.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Manuel Francisco Felipe Perez",
+      "licencia": "AMG3953857",
+      "hcp": 26.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Ignacio Olmedo Halcon",
+      "licencia": "AMF7802548",
+      "hcp": 21.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Miguel Angel Vazquez Cantillo",
+      "licencia": "AMF7468753",
+      "hcp": 29.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Pedro Ortega Peinado",
+      "licencia": "AMF7090571",
+      "hcp": 11.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Javier Barbacid Rodriguez",
+      "licencia": "AMF7695087",
+      "hcp": 24.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Angel Marquez Romero",
+      "licencia": "AM06166348",
+      "hcp": 34.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Francisco Bernardez Sarabia",
+      "licencia": "AMC9757378",
+      "hcp": 22.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Eduardo Miguel Terron Bellido",
+      "licencia": "AMG3904339",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Ignacio Olmedo Garcia",
+      "licencia": "AMG3071458",
+      "hcp": 20.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Luis Ruiz De Castroviejo Alvarez",
+      "licencia": "AMF7973319",
+      "hcp": 12.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "David Hijon Morillo",
+      "licencia": "AMG3071275",
+      "hcp": 30.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Miguel Macias Becerra",
+      "licencia": "AME8766667",
+      "hcp": 19.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Jose Carlos Serrano Ramirez",
+      "licencia": "AMG3996942",
+      "hcp": 16.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Asuncion Barbacid Sanchez",
+      "licencia": "AMG3164094",
+      "hcp": 28.8,
       "nivel": "S"
     }
   ],
@@ -229,6 +729,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3604139699_72246-liga-expres-jornada-4-tarde-18-00.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-20T07:01:42.660Z"
+  ]
 }

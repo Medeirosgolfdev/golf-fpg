@@ -1,13 +1,13 @@
 {
   "tourId": 68434,
   "url": "https://www.nextcaddy.com/tour/68434",
-  "scrapedAt": "2026-06-24T14:58:34.807Z",
+  "scrapedAt": "2026-10-30T14:28:25.817Z",
   "meta": {
     "name": "Campeonato Individual Caballeros \"La Dehesa\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "Club de Golf la Dehesa",
     "courseCode": "CM61",
-    "dateStart": null,
+    "dateStart": "2026-09-19",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Ranking Mid-Amateur",
     "categories": [
@@ -17,13 +17,184 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-19",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Gabriel Centeno Huerta",
+      "licencia": "CM02070742",
+      "hcp": 4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Manuel Muelas Peña",
+      "licencia": "CMF3114295",
+      "hcp": 3.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Carlos Enrique San Juan Barrero",
+      "licencia": "CM00786552",
+      "hcp": 4.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Santiago Gonzalez-Llanos Mate",
+      "licencia": "CM61772852",
+      "hcp": 0.5,
+      "nivel": "M"
+    },
+    {
+      "orden": 5,
+      "name": "Jaime Gonzalez-Llanos Mate",
+      "licencia": "CM61772851",
+      "hcp": 1.8,
+      "nivel": "J"
+    },
+    {
+      "orden": 6,
+      "name": "Andres Erburu Zazpe",
+      "licencia": "CM11054128",
+      "hcp": 2.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Rafael Picon Sanchez",
+      "licencia": "CMA8747315",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Geoffrey Lonca",
+      "licencia": "CM00486529",
+      "hcp": 1.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Ramon Franco Cerame",
+      "licencia": "CM01079043",
+      "hcp": 4.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Alvaro Escalada Lopez Ibor",
+      "licencia": "CM01622261",
+      "hcp": 2.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Enrique Fontecilla Rodriguez",
+      "licencia": "CM01292511",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Rafael Santonja Hernandez",
+      "licencia": "CM52628528",
+      "hcp": 3.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Rafael Perez Santonja",
+      "licencia": "CMA8635383",
+      "hcp": 3.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Enrique De Juan Gonzalez De Castejon",
+      "licencia": "CM00303762",
+      "hcp": 3.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Felix Bolivar Asensi",
+      "licencia": "CM02295083",
+      "hcp": 2.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Javier Viguera Bolumburu",
+      "licencia": "CM00473878",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Borja Ros Villanueva",
+      "licencia": "4400975193",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Santos De Gandarillas Font",
+      "licencia": "CM02751696",
+      "hcp": 0.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Gorka Zabarte Moreno",
+      "licencia": "CM07307358",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Alfonso Lopez Rey",
+      "licencia": "AM95632981",
+      "hcp": 1.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Angel Perez Fernandez",
+      "licencia": "CM04098690",
+      "hcp": 0.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Alvaro Rodriguez Villanueva",
+      "licencia": "CM02291651",
+      "hcp": 0,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Jacobo Reh Carrascosa",
+      "licencia": "CM05264624",
+      "hcp": 3.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 24,
+      "name": "David Hernandez-Rubio Rodriguez",
+      "licencia": "CM07207010",
+      "hcp": 2.3,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -56,6 +227,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:59.690Z"
+  "pdfs": [
+    "/uploads/competiciones/pdf/631211886_clasificacion_la_dehesa_1_hoja.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/631211886_clasificacion_la_dehesa_1_hoja.pdf"
+  ]
 }

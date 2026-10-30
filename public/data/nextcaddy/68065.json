@@ -1,13 +1,13 @@
 {
   "tourId": 68065,
   "url": "https://www.nextcaddy.com/tour/68065",
-  "scrapedAt": "2026-06-24T14:58:41.392Z",
+  "scrapedAt": "2026-10-30T14:28:37.606Z",
   "meta": {
     "name": "CAMPEONATO FEMENINO DE 2ª, 3ª y 4ª CATEG. DE Cy L 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-09-27",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
@@ -18,13 +18,776 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-27",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 70,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch 2ª Categoria Damas",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mercedes Arroyo Ordoñez",
+          "licencia": "7713090056",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 10,
+          "inscribedId": 2409110
+        },
+        {
+          "pos": 2,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 11,
+          "inscribedId": 2394608
+        },
+        {
+          "pos": 3,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2398235
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Scratch 3ª Categoria Damas",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Garcia Novella",
+          "licencia": "7752981269",
+          "hcp": 13.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 12,
+          "inscribedId": 2399744
+        },
+        {
+          "pos": 2,
+          "name": "Paloma De Nicolas Peral",
+          "licencia": "7709944170",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 16,
+          "inscribedId": 2409130
+        },
+        {
+          "pos": 3,
+          "name": "Irma Maria Claro Suarez",
+          "licencia": "7738450224",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 20,
+          "inscribedId": 2401430
+        },
+        {
+          "pos": 4,
+          "name": "Pilar Sanchez Palla",
+          "licencia": "7707406232",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 21,
+          "inscribedId": 2408753
+        },
+        {
+          "pos": 5,
+          "name": "Berta Finat Gomez",
+          "licencia": "7709082991",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 96,
+          "toPar": 26,
+          "inscribedId": 2405670
+        },
+        {
+          "pos": 6,
+          "name": "Silvia Martin Arranz",
+          "licencia": "7707283667",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 101,
+          "toPar": 31,
+          "inscribedId": 2408265
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Scratch 4ª Categoría Damas",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carmen Garabito De Las Heras",
+          "licencia": "7709055250",
+          "hcp": 21.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 23,
+          "inscribedId": 2408953
+        },
+        {
+          "pos": 2,
+          "name": "Almudena Huerta Albarran",
+          "licencia": "7709890846",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 96,
+          "toPar": 26,
+          "inscribedId": 2409015
+        },
+        {
+          "pos": 3,
+          "name": "Mªantonia Altable Izquierdo",
+          "licencia": "7700795769",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 96,
+          "toPar": 26,
+          "inscribedId": 2406300
+        },
+        {
+          "pos": 4,
+          "name": "Eva Martinez Barroso",
+          "licencia": "7752759077",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 100,
+          "toPar": 30,
+          "inscribedId": 2406937
+        },
+        {
+          "pos": 5,
+          "name": "Belen Finat De Codes",
+          "licencia": "7709199788",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 102,
+          "toPar": 32,
+          "inscribedId": 2409030
+        },
+        {
+          "pos": 6,
+          "name": "Purificacion Silva Gonzalez",
+          "licencia": "7709743810",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 104,
+          "toPar": 34,
+          "inscribedId": 2408962
+        },
+        {
+          "pos": 7,
+          "name": "Ana Isabel Meabe Lopez",
+          "licencia": "7758923406",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 105,
+          "toPar": 35,
+          "inscribedId": 2405729
+        },
+        {
+          "pos": 8,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 20.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 105,
+          "toPar": 35,
+          "inscribedId": 2408825
+        },
+        {
+          "pos": 9,
+          "name": "Maria Reyes Manteca Gomez-Pallete",
+          "licencia": "7752205420",
+          "hcp": 20.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 106,
+          "toPar": 36,
+          "inscribedId": 2408361
+        },
+        {
+          "pos": 10,
+          "name": "Vanesa Rafael Casares",
+          "licencia": "7707367973",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 109,
+          "toPar": 39,
+          "inscribedId": 2408155
+        },
+        {
+          "pos": 11,
+          "name": "Anne Sinn Joncker",
+          "licencia": "7709612591",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 111,
+          "toPar": 41,
+          "inscribedId": 2407334
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Handicap 2ª Categoria Damas",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mercedes Arroyo Ordoñez",
+          "licencia": "7713090056",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 69,
+          "toPar": -1,
+          "inscribedId": 2409110
+        },
+        {
+          "pos": 2,
+          "name": "Sonia Carrisque Sanchez",
+          "licencia": "7758450549",
+          "hcp": 9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 2,
+          "inscribedId": 2394608
+        },
+        {
+          "pos": 3,
+          "name": "Maria Yolanda Valbuena Rodrigo",
+          "licencia": "7709283726",
+          "hcp": 7.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2398235
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Handicap 3ª Categoria Damas",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Maria Garcia Novella",
+          "licencia": "7752981269",
+          "hcp": 13.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": -2,
+          "inscribedId": 2399744
+        },
+        {
+          "pos": 2,
+          "name": "Paloma De Nicolas Peral",
+          "licencia": "7709944170",
+          "hcp": 13.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": 2,
+          "inscribedId": 2409130
+        },
+        {
+          "pos": 3,
+          "name": "Pilar Sanchez Palla",
+          "licencia": "7707406232",
+          "hcp": 15.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2408753
+        },
+        {
+          "pos": 4,
+          "name": "Irma Maria Claro Suarez",
+          "licencia": "7738450224",
+          "hcp": 12.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 7,
+          "inscribedId": 2401430
+        },
+        {
+          "pos": 5,
+          "name": "Berta Finat Gomez",
+          "licencia": "7709082991",
+          "hcp": 15.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 10,
+          "inscribedId": 2405670
+        },
+        {
+          "pos": 6,
+          "name": "Silvia Martin Arranz",
+          "licencia": "7707283667",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 12,
+          "inscribedId": 2408265
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap 4ª Categoría Damas",
+      "expectedJugadores": 11,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Carmen Garabito De Las Heras",
+          "licencia": "7709055250",
+          "hcp": 21.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 1,
+          "inscribedId": 2408953
+        },
+        {
+          "pos": 2,
+          "name": "Eva Martinez Barroso",
+          "licencia": "7752759077",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 5,
+          "inscribedId": 2406937
+        },
+        {
+          "pos": 3,
+          "name": "Almudena Huerta Albarran",
+          "licencia": "7709890846",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 6,
+          "inscribedId": 2409015
+        },
+        {
+          "pos": 4,
+          "name": "Mªantonia Altable Izquierdo",
+          "licencia": "7700795769",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 7,
+          "inscribedId": 2406300
+        },
+        {
+          "pos": 5,
+          "name": "Ana Isabel Meabe Lopez",
+          "licencia": "7758923406",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 8,
+          "inscribedId": 2405729
+        },
+        {
+          "pos": 6,
+          "name": "Purificacion Silva Gonzalez",
+          "licencia": "7709743810",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 9,
+          "inscribedId": 2408962
+        },
+        {
+          "pos": 7,
+          "name": "Belen Finat De Codes",
+          "licencia": "7709199788",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2409030
+        },
+        {
+          "pos": 8,
+          "name": "Vanesa Rafael Casares",
+          "licencia": "7707367973",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 13,
+          "inscribedId": 2408155
+        },
+        {
+          "pos": 9,
+          "name": "Olivia Gallego Sanchez",
+          "licencia": "7709092740",
+          "hcp": 20.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 14,
+          "inscribedId": 2408825
+        },
+        {
+          "pos": 10,
+          "name": "Maria Reyes Manteca Gomez-Pallete",
+          "licencia": "7752205420",
+          "hcp": 20.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 15,
+          "inscribedId": 2408361
+        },
+        {
+          "pos": 11,
+          "name": "Anne Sinn Joncker",
+          "licencia": "7709612591",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 20,
+          "inscribedId": 2407334
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch 2ª Categoria Damas",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Scratch 3ª Categoria Damas",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Scratch 4ª Categoría Damas",
+      "jugadores": 11
+    },
+    "4": {
+      "name": "Handicap 2ª Categoria Damas",
+      "jugadores": 3
+    },
+    "5": {
+      "name": "Handicap 3ª Categoria Damas",
+      "jugadores": 6
+    },
+    "6": {
+      "name": "Handicap 4ª Categoría Damas",
+      "jugadores": 11
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Sonia Carrisque Sanchez",
+      "licencia": "7758450549",
+      "hcp": 9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Yolanda Valbuena Rodrigo",
+      "licencia": "7709283726",
+      "hcp": 7.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Garcia Novella",
+      "licencia": "7752981269",
+      "hcp": 13.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Irma Maria Claro Suarez",
+      "licencia": "7738450224",
+      "hcp": 12.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Berta Finat Gomez",
+      "licencia": "7709082991",
+      "hcp": 15.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Ana Isabel Meabe Lopez",
+      "licencia": "7758923406",
+      "hcp": 27.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Mªantonia Altable Izquierdo",
+      "licencia": "7700795769",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Eva Martinez Barroso",
+      "licencia": "7752759077",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Anne Sinn Joncker",
+      "licencia": "7709612591",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Vanesa Rafael Casares",
+      "licencia": "7707367973",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Silvia Martin Arranz",
+      "licencia": "7707283667",
+      "hcp": 18.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Maria Reyes Manteca Gomez-Pallete",
+      "licencia": "7752205420",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Pilar Sanchez Palla",
+      "licencia": "7707406232",
+      "hcp": 15.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Olivia Gallego Sanchez",
+      "licencia": "7709092740",
+      "hcp": 20.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 15,
+      "name": "Carmen Garabito De Las Heras",
+      "licencia": "7709055250",
+      "hcp": 21.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 16,
+      "name": "Purificacion Silva Gonzalez",
+      "licencia": "7709743810",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Almudena Huerta Albarran",
+      "licencia": "7709890846",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Belen Finat De Codes",
+      "licencia": "7709199788",
+      "hcp": 18.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Mercedes Arroyo Ordoñez",
+      "licencia": "7713090056",
+      "hcp": 11.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Paloma De Nicolas Peral",
+      "licencia": "7709944170",
+      "hcp": 13.6,
+      "nivel": "C"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -228,6 +991,9 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-12T12:09:44.825Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3751434489_cuadro_fem.pdf",
+    "/uploads/circulares/cirfgcyl3926-1.pdf"
+  ]
 }

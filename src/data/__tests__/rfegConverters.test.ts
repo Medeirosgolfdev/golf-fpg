@@ -81,22 +81,24 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
         "drawRounds": [
           1,
           2,
+          3,
+          4,
         ],
         "inscritos": "120 + 0 reservas",
         "inscritos1": [
-          "CHIRBAND, Junes |  |  |  | SE | ",
-          "GLENNON, Tom |  |  |  | IE | ",
+          "AASE, Mathias | 71-5160 |  | Junior | NO | ",
+          "WHITEHEAD, George | 1014710582 |  | Junior | GB-ENG | ",
         ],
         "jogadores": 120,
         "links": [],
         "porSexo": null,
         "top": [
-          "1 | Junes Chirband | 🇸🇪 | 131 | -11 | 18 | 71 | 6311 m | null | null",
-          "2 | Tom Glennon | 🇮🇪 | 132 | -10 | 18 | 71 | 6311 m | null | null",
-          "3 | Mathias Aase | 🇳🇴 Norway | 133 | -9 | 18 | 71 | 6311 m | Junior | 17",
+          "1 | Mathias Aase | 🇳🇴 Norway | 264 | -20 | 18 | 71 | 6311 m | Junior | 17",
+          "1 | George Whitehead | 🏴󠁧󠁢󠁥󠁮󠁧󠁿 Hillside Golf Club | 264 | -20 | 18 | 71 | 6311 m | Junior | 16",
+          "3 | Junes Chirband | 🇸🇪 | 266 | -18 | 18 | 71 | 6311 m | null | null",
         ],
         "totais": null,
-        "voltas": 2,
+        "voltas": 4,
       }
     `);
     const r2 = rfegRoundDraw(d!.data, t("livegolfscoring", 388, ""), 2);
@@ -106,6 +108,8 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
           [
             "R1: 60",
             "R2: 60",
+            "R3: 58",
+            "R4: 32",
           ],
           20,
           325,

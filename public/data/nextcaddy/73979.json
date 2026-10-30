@@ -1,9 +1,9 @@
 {
   "tourId": 73979,
   "url": "https://www.nextcaddy.com/tour/73979",
-  "scrapedAt": "2026-10-12T12:09:14.417Z",
+  "scrapedAt": "2026-10-30T14:29:07.636Z",
   "meta": {
-    "name": null,
+    "name": "LIGA FEMENINA ULZAMA  2026 18 de octubre",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -20,11 +20,291 @@
     "dateIso": "2026-10-18",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Liga Femenina 16 18 Octubre",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Susana Herreros Lopetegui",
+          "licencia": "4401395734",
+          "hcp": 29.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2425546
+        },
+        {
+          "pos": 2,
+          "name": "Maria Español Batalla",
+          "licencia": "4401288941",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2425334
+        },
+        {
+          "pos": 3,
+          "name": "Mercedes Irujo Espinosa De Los Monteros",
+          "licencia": "4401923983",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2427074
+        },
+        {
+          "pos": 4,
+          "name": "Susana Beñaran Arocena",
+          "licencia": "4401010052",
+          "hcp": 7.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2425899
+        },
+        {
+          "pos": 5,
+          "name": "Cristina Huarte Irujo",
+          "licencia": "4401028917",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2424888
+        },
+        {
+          "pos": 6,
+          "name": "Edna Maria Gomara Gomez",
+          "licencia": "4401072045",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2425900
+        },
+        {
+          "pos": 7,
+          "name": "Carmen Frauca Sagastibelza",
+          "licencia": "4401457389",
+          "hcp": 20.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2424595
+        },
+        {
+          "pos": 8,
+          "name": "Maria Luisa Garces Larrea",
+          "licencia": "4401282434",
+          "hcp": 16.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2424889
+        },
+        {
+          "pos": 9,
+          "name": "Virginia Ibiricu Diaz",
+          "licencia": "4401022759",
+          "hcp": 21,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2427342
+        },
+        {
+          "pos": 10,
+          "name": "Ana Galindez Zubiria",
+          "licencia": "4401457896",
+          "hcp": 39.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2424863
+        },
+        {
+          "pos": 11,
+          "name": "Lydia Anoz Iribarren",
+          "licencia": "4401896690",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2424704
+        },
+        {
+          "pos": 12,
+          "name": "M.paz Frauca Sagastibelza",
+          "licencia": "4401234676",
+          "hcp": 23.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2424616
+        },
+        {
+          "pos": 13,
+          "name": "Paula Machimbarrena Carasa",
+          "licencia": "4400998168",
+          "hcp": 32.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2427505
+        },
+        {
+          "pos": 14,
+          "name": "Isabel Deprit Uriarte",
+          "licencia": "4401279296",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2425878
+        },
+        {
+          "pos": 15,
+          "name": "Carmen Galindez Zubiria",
+          "licencia": "4401246302",
+          "hcp": 31.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2425754
+        },
+        {
+          "pos": 16,
+          "name": "Ana Mozota Frauca",
+          "licencia": "4401983598",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2424631
+        },
+        {
+          "pos": 17,
+          "name": "Maria Pilar Aguinaga Alfonso",
+          "licencia": "4401196444",
+          "hcp": 21.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2424887
+        },
+        {
+          "pos": 18,
+          "name": "Nieves Fernandez De Arcaya",
+          "licencia": "4401077121",
+          "hcp": 49.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2426787
+        },
+        {
+          "pos": 19,
+          "name": "Maria Luisa Iñarra Castiella",
+          "licencia": "4401944184",
+          "hcp": 44.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2424751
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Liga Femenina 16 18 Octubre",
+      "jugadores": 19
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Mercedes Irujo Espinosa De Los Monteros",
+      "licencia": "4401923983",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Virginia Ibiricu Diaz",
+      "licencia": "4401022759",
+      "hcp": 21,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Paula Machimbarrena Carasa",
+      "licencia": "4400998168",
+      "hcp": 32.8,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -77,6 +357,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:45.939Z"
+  ]
 }

@@ -1,7 +1,7 @@
 {
   "tourId": 74889,
   "url": "https://www.nextcaddy.com/tour/74889",
-  "scrapedAt": "2026-10-26T09:52:49.878Z",
+  "scrapedAt": "2026-10-30T14:29:26.629Z",
   "meta": {
     "name": "monday club",
     "organizer": null,
@@ -20,10 +20,340 @@
     "dateIso": "2026-10-26",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 25,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mark Charles Rose",
+          "licencia": "AM86520379",
+          "hcp": 12.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2435763
+        },
+        {
+          "pos": 2,
+          "name": "Yuri Blyumin",
+          "licencia": "AM86893229",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2435365
+        },
+        {
+          "pos": 3,
+          "name": "Stephen Boyle",
+          "licencia": "AM24816812",
+          "hcp": 9.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2435327
+        },
+        {
+          "pos": 4,
+          "name": "William Lutton",
+          "licencia": "AM86888469",
+          "hcp": 7.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435315
+        },
+        {
+          "pos": 5,
+          "name": "Brendan Connolly",
+          "licencia": "AM86908400",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2435326
+        },
+        {
+          "pos": 6,
+          "name": "Axel Anspach Lengemann",
+          "licencia": "AM86142831",
+          "hcp": 17.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2435322
+        },
+        {
+          "pos": 7,
+          "name": "Robert Fulcher",
+          "licencia": "AM86915230",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435323
+        },
+        {
+          "pos": 8,
+          "name": "John Flanagan",
+          "licencia": "AM86914681",
+          "hcp": 19,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2435324
+        },
+        {
+          "pos": 9,
+          "name": "Jonas Lind Clement",
+          "licencia": "AM86493180",
+          "hcp": 3.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435312
+        },
+        {
+          "pos": 10,
+          "name": "Oystein Heldal",
+          "licencia": "AM86998238",
+          "hcp": 15.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435319
+        },
+        {
+          "pos": 11,
+          "name": "Hans Kristian Torgersen",
+          "licencia": "AM86931824",
+          "hcp": 19.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2435334
+        },
+        {
+          "pos": 12,
+          "name": "David Sharpe",
+          "licencia": "AM86611666",
+          "hcp": 12.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435325
+        },
+        {
+          "pos": 13,
+          "name": "Owen Conway",
+          "licencia": "AM86350363",
+          "hcp": 16.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435330
+        },
+        {
+          "pos": 14,
+          "name": "Chris Du Toit",
+          "licencia": "AM86815392",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2435332
+        },
+        {
+          "pos": 15,
+          "name": "Graeme Grieve",
+          "licencia": "AM86944175",
+          "hcp": 13,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435314
+        },
+        {
+          "pos": 16,
+          "name": "Neil Duncan",
+          "licencia": "AM86961736",
+          "hcp": 15,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435311
+        },
+        {
+          "pos": 17,
+          "name": "Peter Madden",
+          "licencia": "AM86371774",
+          "hcp": 19.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2435328
+        },
+        {
+          "pos": 18,
+          "name": "John Bryan",
+          "licencia": "AM86890687",
+          "hcp": 11.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2435331
+        },
+        {
+          "pos": 19,
+          "name": "John Rossiter",
+          "licencia": "AM86473417",
+          "hcp": 21.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2435329
+        },
+        {
+          "pos": 20,
+          "name": "Tom Nordnes",
+          "licencia": "AM86936239",
+          "hcp": 13.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435318
+        },
+        {
+          "pos": 21,
+          "name": "Ernst Husa",
+          "licencia": "AM86348124",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435313
+        },
+        {
+          "pos": 22,
+          "name": "Eugene Pigott",
+          "licencia": "AM86474665",
+          "hcp": 16.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2435320
+        },
+        {
+          "pos": 23,
+          "name": "David A. Robinson",
+          "licencia": "AM86973433",
+          "hcp": 12.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435317
+        },
+        {
+          "pos": 24,
+          "name": "Paul Parkins",
+          "licencia": "AM86486539",
+          "hcp": 20.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435333
+        },
+        {
+          "pos": 25,
+          "name": "Charles Edward Topp",
+          "licencia": "AM86486616",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2435335
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -62,149 +392,142 @@
     },
     {
       "orden": 6,
-      "name": "Paul Achdan",
-      "licencia": "AME1932725",
-      "hcp": 18.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 7,
       "name": "David A. Robinson",
       "licencia": "AM86973433",
       "hcp": 12.7,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Tom Nordnes",
       "licencia": "AM86936239",
       "hcp": 13.6,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Oystein Heldal",
       "licencia": "AM86998238",
       "hcp": 15.8,
       "nivel": "S"
     },
     {
-      "orden": 10,
+      "orden": 9,
       "name": "Eugene Pigott",
       "licencia": "AM86474665",
       "hcp": 16.1,
       "nivel": "S"
     },
     {
-      "orden": 11,
-      "name": "Paul Harrison",
-      "licencia": "AM86022509",
-      "hcp": 12.6,
-      "nivel": "S"
-    },
-    {
-      "orden": 12,
+      "orden": 10,
       "name": "Axel Anspach Lengemann",
       "licencia": "AM86142831",
       "hcp": 17.5,
       "nivel": "S"
     },
     {
-      "orden": 13,
+      "orden": 11,
       "name": "Robert Fulcher",
       "licencia": "AM86915230",
       "hcp": 18.9,
       "nivel": "S"
     },
     {
-      "orden": 14,
+      "orden": 12,
       "name": "John Flanagan",
       "licencia": "AM86914681",
       "hcp": 19,
       "nivel": "S"
     },
     {
-      "orden": 15,
+      "orden": 13,
       "name": "David Sharpe",
       "licencia": "AM86611666",
       "hcp": 12.7,
       "nivel": "S"
     },
     {
-      "orden": 16,
+      "orden": 14,
       "name": "Brendan Connolly",
       "licencia": "AM86908400",
       "hcp": 16.8,
       "nivel": "S"
     },
     {
-      "orden": 17,
+      "orden": 15,
       "name": "Stephen Boyle",
       "licencia": "AM24816812",
       "hcp": 9.7,
       "nivel": "S"
     },
     {
-      "orden": 18,
+      "orden": 16,
       "name": "Peter Madden",
       "licencia": "AM86371774",
       "hcp": 19.1,
       "nivel": "S"
     },
     {
-      "orden": 19,
+      "orden": 17,
       "name": "John Rossiter",
       "licencia": "AM86473417",
       "hcp": 21.3,
       "nivel": "S"
     },
     {
-      "orden": 20,
+      "orden": 18,
       "name": "Owen Conway",
       "licencia": "AM86350363",
       "hcp": 16.2,
       "nivel": "S"
     },
     {
-      "orden": 21,
+      "orden": 19,
       "name": "John Bryan",
       "licencia": "AM86890687",
       "hcp": 11.6,
       "nivel": "S"
     },
     {
-      "orden": 22,
-      "name": "Chris Du Toit",
-      "licencia": "AM86815392",
-      "hcp": 23.1,
-      "nivel": "S"
-    },
-    {
-      "orden": 23,
+      "orden": 20,
       "name": "Paul Parkins",
       "licencia": "AM86486539",
       "hcp": 20.2,
       "nivel": "S"
     },
     {
-      "orden": 24,
+      "orden": 21,
       "name": "Hans Kristian Torgersen",
       "licencia": "AM86931824",
       "hcp": 19.8,
       "nivel": "S"
     },
     {
-      "orden": 25,
+      "orden": 22,
       "name": "Charles Edward Topp",
       "licencia": "AM86486616",
       "hcp": 25.4,
       "nivel": "S"
     },
     {
-      "orden": 26,
+      "orden": 23,
       "name": "Yuri Blyumin",
       "licencia": "AM86893229",
       "hcp": 19,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Mark Charles Rose",
+      "licencia": "AM86520379",
+      "hcp": 12.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Chris Du Toit",
+      "licencia": "AM86815392",
+      "hcp": 23.1,
       "nivel": "S"
     }
   ],
@@ -228,6 +551,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3714194721_74889-monday-club.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:26.290Z"
+  ]
 }

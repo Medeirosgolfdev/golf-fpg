@@ -1,23 +1,25 @@
 {
   "tourId": 61252,
   "url": "https://www.nextcaddy.com/tour/61252",
-  "scrapedAt": "2026-06-24T14:59:09.724Z",
+  "scrapedAt": "2026-10-30T14:30:04.440Z",
   "meta": {
-    "name": "Final Pequecircuito",
+    "name": null,
     "organizer": "Real Federacion Andaluza de Golf",
-    "course": "Real Federacion Andaluza de Golf",
-    "courseCode": "AM00",
-    "dateStart": null,
+    "course": "Real Guadalhorce Club de Golf",
+    "courseCode": "AM15",
+    "dateStart": "2026-12-06",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-12-06",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -57,6 +59,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:50.349Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 73864,
   "url": "https://www.nextcaddy.com/tour/73864",
-  "scrapedAt": "2026-09-21T09:55:35.490Z",
+  "scrapedAt": "2026-10-30T14:28:31.689Z",
   "meta": {
-    "name": null,
+    "name": "TORNEO LA PEÑA",
     "organizer": null,
     "course": "Club de Golf Bellavista",
     "courseCode": "AM07",
@@ -21,11 +21,560 @@
     "dateIso": "2026-09-23",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jorge Luis Gil Delgado",
+          "licencia": "AM00968635",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2408680
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Marin Rodriguez",
+          "licencia": "AMG3796842",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2408689
+        },
+        {
+          "pos": 3,
+          "name": "Luis Belloso Arias",
+          "licencia": "AM80805251",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 22,
+          "inscribedId": 2408683
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Dominguez Fresco",
+          "licencia": "AMG3819778",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2408685
+        },
+        {
+          "pos": 5,
+          "name": "Juan Carlos Miranda Tremiño",
+          "licencia": "AMF7617620",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2408688
+        },
+        {
+          "pos": 6,
+          "name": "Leonardo Chaves Gonzalez",
+          "licencia": "AMG3502756",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2408675
+        },
+        {
+          "pos": 7,
+          "name": "Raimundo Romero Gonzalez",
+          "licencia": "AMG3888336",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2408687
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Aparicio Rite",
+          "licencia": "AMG3798674",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2408677
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Rivas Zapata",
+          "licencia": "AMG3098616",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2408686
+        },
+        {
+          "pos": 10,
+          "name": "Jose Palenzuela Sanchez",
+          "licencia": "AM11809169",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2408673
+        },
+        {
+          "pos": 11,
+          "name": "Fernando Gonzalez De La Flor",
+          "licencia": "AM25511873",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2408678
+        },
+        {
+          "pos": 12,
+          "name": "Manuel Dominguez Del Valle",
+          "licencia": "AM25075424",
+          "hcp": 43.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2408771
+        },
+        {
+          "pos": 13,
+          "name": "Ricardo Garcia Crespo",
+          "licencia": "AMF7755109",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2408679
+        },
+        {
+          "pos": 14,
+          "name": "Jose Aguilar Martin",
+          "licencia": "AMG3816592",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2408691
+        },
+        {
+          "pos": 15,
+          "name": "Jose Lorente Vergara",
+          "licencia": "AMG3162059",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 2408676
+        },
+        {
+          "pos": 16,
+          "name": "Manuel Mateos Martin",
+          "licencia": "AMG3152036",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2408684
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "General",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jorge Luis Gil Delgado",
+          "licencia": "AM00968635",
+          "hcp": 18.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2408680
+        },
+        {
+          "pos": 2,
+          "name": "Luis Belloso Arias",
+          "licencia": "AM80805251",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2408683
+        },
+        {
+          "pos": 3,
+          "name": "Leonardo Chaves Gonzalez",
+          "licencia": "AMG3502756",
+          "hcp": 27.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2408675
+        },
+        {
+          "pos": 4,
+          "name": "Antonio Dominguez Fresco",
+          "licencia": "AMG3819778",
+          "hcp": 22.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2408685
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Rivas Zapata",
+          "licencia": "AMG3098616",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2408686
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Marin Rodriguez",
+          "licencia": "AMG3796842",
+          "hcp": 14.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2408689
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Gonzalez De La Flor",
+          "licencia": "AM25511873",
+          "hcp": 29.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2408678
+        },
+        {
+          "pos": 8,
+          "name": "Antonio Aparicio Rite",
+          "licencia": "AMG3798674",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2408677
+        },
+        {
+          "pos": 9,
+          "name": "Ricardo Garcia Crespo",
+          "licencia": "AMF7755109",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2408679
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Dominguez Del Valle",
+          "licencia": "AM25075424",
+          "hcp": 43.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2408771
+        },
+        {
+          "pos": 11,
+          "name": "Raimundo Romero Gonzalez",
+          "licencia": "AMG3888336",
+          "hcp": 18,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2408687
+        },
+        {
+          "pos": 12,
+          "name": "Jose Palenzuela Sanchez",
+          "licencia": "AM11809169",
+          "hcp": 21.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2408673
+        },
+        {
+          "pos": 13,
+          "name": "Jose Aguilar Martin",
+          "licencia": "AMG3816592",
+          "hcp": 26,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2408691
+        },
+        {
+          "pos": 14,
+          "name": "Juan Carlos Miranda Tremiño",
+          "licencia": "AMF7617620",
+          "hcp": 15.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2408688
+        },
+        {
+          "pos": 15,
+          "name": "Jose Lorente Vergara",
+          "licencia": "AMG3162059",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2408676
+        },
+        {
+          "pos": 16,
+          "name": "Manuel Mateos Martin",
+          "licencia": "AMG3152036",
+          "hcp": 28.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2408684
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch",
+      "jugadores": 16
+    },
+    "2": {
+      "name": "General",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Palenzuela Sanchez",
+      "licencia": "AM11809169",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Leonardo Chaves Gonzalez",
+      "licencia": "AMG3502756",
+      "hcp": 27.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Lorente Vergara",
+      "licencia": "AMG3162059",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Antonio Aparicio Rite",
+      "licencia": "AMG3798674",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Fernando Gonzalez De La Flor",
+      "licencia": "AM25511873",
+      "hcp": 29.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Ricardo Garcia Crespo",
+      "licencia": "AMF7755109",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Jorge Luis Gil Delgado",
+      "licencia": "AM00968635",
+      "hcp": 18.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Luis Belloso Arias",
+      "licencia": "AM80805251",
+      "hcp": 25.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Manuel Mateos Martin",
+      "licencia": "AMG3152036",
+      "hcp": 28.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Antonio Dominguez Fresco",
+      "licencia": "AMG3819778",
+      "hcp": 22.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Antonio Rivas Zapata",
+      "licencia": "AMG3098616",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Raimundo Romero Gonzalez",
+      "licencia": "AMG3888336",
+      "hcp": 18,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Juan Carlos Miranda Tremiño",
+      "licencia": "AMF7617620",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Manuel Marin Rodriguez",
+      "licencia": "AMG3796842",
+      "hcp": 14.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Jose Aguilar Martin",
+      "licencia": "AMG3816592",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Manuel Dominguez Del Valle",
+      "licencia": "AM25075424",
+      "hcp": 43.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -277,6 +826,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3690104953_73864-torneo-la-pena.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:09.955Z"
+  ]
 }

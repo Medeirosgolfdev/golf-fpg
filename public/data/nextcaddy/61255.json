@@ -1,13 +1,13 @@
 {
   "tourId": 61255,
   "url": "https://www.nextcaddy.com/tour/61255",
-  "scrapedAt": "2026-06-24T14:57:47.230Z",
+  "scrapedAt": "2026-10-30T14:26:38.339Z",
   "meta": {
     "name": "Torneo Senior de Verano",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "la Cala Resort",
     "courseCode": "AM81",
-    "dateStart": null,
+    "dateStart": "2026-06-27",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,23 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Pareja 2 Categoria",
+      "jugadores": 12
+    },
+    "2": {
+      "name": "Handicap Pareja 1 Categoria",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -133,7 +144,7 @@
       "orden": 8,
       "name": "Klaudia Luise Ilg",
       "licencia": "AM76809386",
-      "hcp": 25.8,
+      "hcp": 26,
       "nivel": "S"
     },
     {
@@ -344,6 +355,20 @@
       "name": "Francisco Cervilla Rodriguez",
       "licencia": "AM01136200",
       "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Luis Lopez-Crespo Delgado",
+      "licencia": "AM06909383",
+      "hcp": 19.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 24,
+      "name": "Monica Castello Perez",
+      "licencia": "AM06927844",
+      "hcp": 22.6,
       "nivel": "S"
     }
   ],
@@ -803,7 +828,7 @@
   ],
   "scoreTypes": [],
   "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/3466884513_1459090665_61255-torneo-senior-de-verano.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-29T09:18:33.866Z"
+  ]
 }

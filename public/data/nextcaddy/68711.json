@@ -1,13 +1,13 @@
 {
   "tourId": 68711,
   "url": "https://www.nextcaddy.com/tour/68711",
-  "scrapedAt": "2026-06-24T14:57:56.674Z",
+  "scrapedAt": "2026-10-30T14:26:46.781Z",
   "meta": {
     "name": "IV Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Campo de Golf Las Americas",
     "courseCode": "CP14",
-    "dateStart": null,
+    "dateStart": "2026-07-04",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Profesional  Señor",
     "categories": [
@@ -18,12 +18,152 @@
       "profesional",
       "Infantil",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-04",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 72,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Profesionales",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Javier Amatriain Perallon",
+          "licencia": "CP200493-P",
+          "hcp": 2.7,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2343499
+        },
+        {
+          "pos": null,
+          "name": "Pedro Urriza Fuentes",
+          "licencia": "CP013247-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2350734
+        },
+        {
+          "pos": null,
+          "name": "James Anthony Ferraby",
+          "licencia": "CP001852-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 1,
+          "inscribedId": 2350006
+        },
+        {
+          "pos": 4,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 2,
+          "inscribedId": 2349961
+        },
+        {
+          "pos": 5,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 4,
+          "inscribedId": 2349245
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Cea Bermudez",
+          "licencia": "CP060677-P",
+          "hcp": 1,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 7,
+          "inscribedId": 2343764
+        },
+        {
+          "pos": 7,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2349693
+        },
+        {
+          "pos": null,
+          "name": "Jose Luis Gonzalez Courtney",
+          "licencia": "CP143284-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 8,
+          "inscribedId": 2349107
+        },
+        {
+          "pos": 9,
+          "name": "Alvaro Bañares Rodriguez-Miñon",
+          "licencia": "CP020480-P",
+          "hcp": 2.8,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 9,
+          "inscribedId": 2347168
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Profesionales",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -43,7 +183,7 @@
       "orden": 3,
       "name": "Alvaro Bañares Rodriguez-Miñon",
       "licencia": "CP020480-P",
-      "hcp": 2.6,
+      "hcp": 2.8,
       "nivel": "P+"
     },
     {
@@ -82,65 +222,9 @@
       "nivel": "P+"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
-    {
-      "orden": 1,
-      "name": "Francisco Javier Amatriain Perallon",
-      "licencia": "CP200493-P",
-      "hcp": 2.7,
-      "nivel": "P+"
-    },
-    {
-      "orden": 2,
-      "name": "Francisco Cea Bermudez",
-      "licencia": "CP060677-P",
-      "hcp": 1,
-      "nivel": "P+"
-    },
-    {
-      "orden": 3,
-      "name": "Alvaro Bañares Rodriguez-Miñon",
-      "licencia": "CP020480-P",
-      "hcp": 2.6,
-      "nivel": "P+"
-    },
-    {
-      "orden": 4,
-      "name": "Jose Luis Gonzalez Courtney",
-      "licencia": "CP143284-P",
-      "hcp": 0,
-      "nivel": "P+"
-    },
-    {
-      "orden": 5,
-      "name": "Samuel Santana Garcia",
-      "licencia": "CP313008-P",
-      "hcp": 0,
-      "nivel": "P+"
-    },
-    {
-      "orden": 6,
-      "name": "Ignacio Urriza Fuentes",
-      "licencia": "CP013212-P",
-      "hcp": 0,
-      "nivel": "P+"
-    },
-    {
-      "orden": 7,
-      "name": "Christian Espino Bohm",
-      "licencia": "CP013755-P",
-      "hcp": 0,
-      "nivel": "P+"
-    },
-    {
-      "orden": 8,
-      "name": "James Anthony Ferraby",
-      "licencia": "CP001852-P",
+      "orden": 9,
+      "name": "Pedro Urriza Fuentes",
+      "licencia": "CP013247-P",
       "hcp": 0,
       "nivel": "P+"
     }
@@ -249,6 +333,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-05T21:07:52.661Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

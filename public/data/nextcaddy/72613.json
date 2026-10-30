@@ -1,9 +1,9 @@
 {
   "tourId": 72613,
   "url": "https://www.nextcaddy.com/tour/72613",
-  "scrapedAt": "2026-07-29T16:51:00.570Z",
+  "scrapedAt": "2026-10-30T14:28:02.108Z",
   "meta": {
-    "name": null,
+    "name": "La Dehesa Club de Golf  3º Categoría",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
@@ -25,7 +25,78 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Alvaro Abbad-Jaime De Aragon Garcia",
+      "licencia": "CM61491849",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Marcos Lozano Davila",
+      "licencia": "CM41414699",
+      "hcp": 16.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Marcos Ceballos Redondo",
+      "licencia": "CM41055975",
+      "hcp": 25.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Daniel Castedo Fernandez",
+      "licencia": "CM61477505",
+      "hcp": 36.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Lucas Viros Alonso",
+      "licencia": "CM11349548",
+      "hcp": 50.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Antonio Viros Alonso",
+      "licencia": "CM11507289",
+      "hcp": 51,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Borja Zurita Travesedo",
+      "licencia": "CM41985756",
+      "hcp": 32.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Iñigo Seisdedos Barbi",
+      "licencia": "CM04471988",
+      "hcp": 34,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Alexandra Serrano Villa",
+      "licencia": "CM41488811",
+      "hcp": 48.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Iciar Gomeza Otero",
+      "licencia": "CM61376694",
+      "hcp": 47.3,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -42,10 +113,36 @@
       "roundId": 77789
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Hervella  Presa, Jesus Alfonso",
+          "holeNumber": 7,
+          "createdAt": "18/10/26 12:13:38"
+        },
+        {
+          "playerName": "Muñoz Ortega, Jose Mª",
+          "holeNumber": 9,
+          "createdAt": "18/10/26 12:18:22"
+        },
+        {
+          "playerName": "Mardaras Ibarguchi, Oscar",
+          "holeNumber": 6,
+          "createdAt": "18/10/26 10:28:19"
+        },
+        {
+          "playerName": "Santin Alvarez, Maria Milagros",
+          "holeNumber": 9,
+          "createdAt": "18/10/26 11:05:11"
+        }
+      ]
+    }
+  },
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/pdf/3545681278_arb_reg_loc_cm2762025.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.995Z"
+    "/uploads/competiciones/pdf/2432262041_clasificacion_3ª_categoria_maj.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/2432262041_clasificacion_3ª_categoria_maj.pdf",
+    "/uploads/competiciones/pdf/1367989363_posicion_de_banderas_nueva_1.pdf"
+  ]
 }

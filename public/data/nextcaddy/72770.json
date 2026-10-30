@@ -1,9 +1,9 @@
 {
   "tourId": 72770,
   "url": "https://www.nextcaddy.com/tour/72770",
-  "scrapedAt": "2026-08-10T05:45:15.058Z",
+  "scrapedAt": "2026-10-30T14:27:35.230Z",
   "meta": {
-    "name": null,
+    "name": "Open VH de golf 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,10 +21,254 @@
     "dateIso": "2026-08-11",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Villarig Rodrigo",
+          "licencia": "0102277206",
+          "hcp": 6.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374564
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Copano Fernandez",
+          "licencia": "AM05796207",
+          "hcp": 15.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2375248
+        },
+        {
+          "pos": 3,
+          "name": "Fermin De Viana-Cardenas Garcia-B",
+          "licencia": "0201277378",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2374590
+        },
+        {
+          "pos": 4,
+          "name": "Pedro Ara Salazar",
+          "licencia": "CM02092050",
+          "hcp": 14.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2374641
+        },
+        {
+          "pos": 5,
+          "name": "Daniel Izquierdo Muñoz",
+          "licencia": "AM25797523",
+          "hcp": 21.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2374569
+        },
+        {
+          "pos": 6,
+          "name": "Ismael Rosendo Saldaña Moreno",
+          "licencia": "AMG3756018",
+          "hcp": 28.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2374575
+        },
+        {
+          "pos": 7,
+          "name": "Borja Millan-Astray Torres-Muñoz",
+          "licencia": "CM81619928",
+          "hcp": 29.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 3,
+          "toPar": 33,
+          "inscribedId": 2374642
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Leon Rivas",
+          "licencia": "AM00059125",
+          "hcp": 35.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 35,
+          "inscribedId": 2374737
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Copano Fernandez",
+          "licencia": "AM05796207",
+          "hcp": 15.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2375248
+        },
+        {
+          "pos": 2,
+          "name": "Gonzalo Villarig Rodrigo",
+          "licencia": "0102277206",
+          "hcp": 6.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2374564
+        },
+        {
+          "pos": 3,
+          "name": "Fermin De Viana-Cardenas Garcia-B",
+          "licencia": "0201277378",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2374590
+        },
+        {
+          "pos": 4,
+          "name": "Pedro Ara Salazar",
+          "licencia": "CM02092050",
+          "hcp": 14.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2374641
+        },
+        {
+          "pos": 5,
+          "name": "Daniel Izquierdo Muñoz",
+          "licencia": "AM25797523",
+          "hcp": 21.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2374569
+        },
+        {
+          "pos": 6,
+          "name": "Ismael Rosendo Saldaña Moreno",
+          "licencia": "AMG3756018",
+          "hcp": 28.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2374575
+        },
+        {
+          "pos": 7,
+          "name": "Borja Millan-Astray Torres-Muñoz",
+          "licencia": "CM81619928",
+          "hcp": 29.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2374642
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Leon Rivas",
+          "licencia": "AM00059125",
+          "hcp": 35.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2374737
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 8
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 8
+    }
+  },
   "inscritos": [
     {
       "orden": 1,

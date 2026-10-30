@@ -1,20 +1,20 @@
 {
   "tourId": 70153,
   "url": "https://www.nextcaddy.com/tour/70153",
-  "scrapedAt": "2026-06-24T14:58:08.509Z",
+  "scrapedAt": "2026-10-30T14:27:07.081Z",
   "meta": {
     "name": "La Cañada Club de Golf - Categoría Especial",
     "organizer": null,
     "course": "",
     "courseCode": "MAJC",
-    "dateStart": null,
+    "dateStart": "2026-07-22",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Benjamin Masculin",
     "categories": [
       "Benjamin Masculino",
       "Señoras",
       "Alevin Masculino",
-      "Caballeros",
+      "Infantil Masculino",
       "benjamin",
       "alevin",
       "infantil",
@@ -22,34 +22,285 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-07-22",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Categoria Especial",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Lucas Arias Carasec",
+          "licencia": "AM56496679",
+          "hcp": 45.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": -10,
+          "inscribedId": 2361843
+        },
+        {
+          "pos": 2,
+          "name": "Guilhem Valette Jordao",
+          "licencia": "AM11484221",
+          "hcp": 46.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2348968
+        },
+        {
+          "pos": 3,
+          "name": "Arlet Dedaj Ungureanu",
+          "licencia": "AM51488408",
+          "hcp": 50.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2361129
+        },
+        {
+          "pos": 4,
+          "name": "Fabio Utrera Carracao",
+          "licencia": "AM11012935",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2343823
+        },
+        {
+          "pos": 5,
+          "name": "Ignacio Sanchez Lozano",
+          "licencia": "AM07517987",
+          "hcp": 52.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2362166
+        },
+        {
+          "pos": 6,
+          "name": "Jorge Garcia Alfonso",
+          "licencia": "AM11373230",
+          "hcp": 45.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2354221
+        },
+        {
+          "pos": 7,
+          "name": "Lucas Martin Marin",
+          "licencia": "AM11495197",
+          "hcp": 45.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2361396
+        },
+        {
+          "pos": 8,
+          "name": "Manuel Gil Maroto",
+          "licencia": "AM11022565",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2354228
+        },
+        {
+          "pos": 9,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": 50.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2343944
+        },
+        {
+          "pos": 10,
+          "name": "Philemon Casado Diouf",
+          "licencia": "AM11467632",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2344081
+        },
+        {
+          "pos": 11,
+          "name": "Matthew Drechsler",
+          "licencia": "AM53522966",
+          "hcp": 45.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2354897
+        },
+        {
+          "pos": 12,
+          "name": "Sara Alonso Gonzalez",
+          "licencia": "AM11923131",
+          "hcp": 49.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2362054
+        },
+        {
+          "pos": 13,
+          "name": "Lucia Holgado Requena",
+          "licencia": "AM51484737",
+          "hcp": 53,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2349427
+        },
+        {
+          "pos": 14,
+          "name": "Carlos Martin Villatoro",
+          "licencia": "AM11419406",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2343596
+        },
+        {
+          "pos": 15,
+          "name": "Jose Manuel Farfan Ubeda",
+          "licencia": "AM51413236",
+          "hcp": 47.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2361269
+        },
+        {
+          "pos": 16,
+          "name": "Carlota Alonso Gonzalez",
+          "licencia": "AM11374330",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2362055
+        },
+        {
+          "pos": 17,
+          "name": "Dario Gil Cabeza",
+          "licencia": "AM70091107",
+          "hcp": 49,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2351917
+        },
+        {
+          "pos": 18,
+          "name": "Dasha Violeta Arenas Khattar",
+          "licencia": "AM11473991",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2361028
+        },
+        {
+          "pos": null,
+          "name": "Rafael Muñoz-Rojas Salinas",
+          "licencia": "AM02488032",
+          "hcp": 51.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2357704
+        },
+        {
+          "pos": null,
+          "name": "Marcos Salinas Valentin",
+          "licencia": "CM11494423",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2357749
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoria Especial",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
-    {
-      "orden": 1,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "AM11092816",
-      "hcp": 45.6,
-      "nivel": "B"
-    },
-    {
-      "orden": 2,
-      "name": "Lucia Holgado Requena",
-      "licencia": "AM51484737",
-      "hcp": 53.5,
-      "nivel": "B"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
     {
       "orden": 1,
       "name": "Carlos Martin Villatoro",
@@ -68,7 +319,7 @@
       "orden": 3,
       "name": "Luis Ramirez Barba",
       "licencia": "AM11414965",
-      "hcp": 50.7,
+      "hcp": 50.1,
       "nivel": "B"
     },
     {
@@ -86,60 +337,109 @@
       "nivel": "B"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Daniela Mena Chaparro",
-      "licencia": "15-06-26 10:23",
-      "hcp": 45.6,
-      "nivel": "AM11092816"
-    },
-    {
-      "orden": 2,
-      "name": "Carlos Martin Villatoro",
-      "licencia": "15-06-26 10:27",
-      "hcp": 54,
-      "nivel": "AM11419406"
-    },
-    {
-      "orden": 3,
-      "name": "Fabio Utrera Carracao",
-      "licencia": "15-06-26 13:21",
-      "hcp": 54,
-      "nivel": "AM11012935"
-    },
-    {
-      "orden": 4,
-      "name": "Luis Ramirez Barba",
-      "licencia": "15-06-26 16:28",
-      "hcp": 50.7,
-      "nivel": "AM11414965"
-    },
-    {
-      "orden": 5,
-      "name": "Philemon Casado Diouf",
-      "licencia": "15-06-26 21:41",
-      "hcp": 54,
-      "nivel": "AM11467632"
-    },
-    {
       "orden": 6,
-      "name": "Guilhem Valette Jordao",
-      "licencia": "22-06-26 14:13",
-      "hcp": 46.8,
-      "nivel": "AM11484221"
+      "name": "Jorge Garcia Alfonso",
+      "licencia": "AM11373230",
+      "hcp": 45.9,
+      "nivel": "B"
     },
     {
       "orden": 7,
+      "name": "Manuel Gil Maroto",
+      "licencia": "AM11022565",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "Matthew Drechsler",
+      "licencia": "AM53522966",
+      "hcp": 45.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Rafael Muñoz-Rojas Salinas",
+      "licencia": "AM02488032",
+      "hcp": 51.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 10,
+      "name": "Marcos Salinas Valentin",
+      "licencia": "CM11494423",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Jose Manuel Farfan Ubeda",
+      "licencia": "AM51413236",
+      "hcp": 47.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Lucas Martin Marin",
+      "licencia": "AM11495197",
+      "hcp": 45.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 13,
+      "name": "Lucas Arias Carasec",
+      "licencia": "AM56496679",
+      "hcp": 45.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 14,
+      "name": "Ignacio Sanchez Lozano",
+      "licencia": "AM07517987",
+      "hcp": 52.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
       "name": "Lucia Holgado Requena",
-      "licencia": "23-06-26 11:03",
-      "hcp": 53.5,
-      "nivel": "AM51484737"
+      "licencia": "AM51484737",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Dasha Violeta Arenas Khattar",
+      "licencia": "AM11473991",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Arlet Dedaj Ungureanu",
+      "licencia": "AM51488408",
+      "hcp": 50.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Sara Alonso Gonzalez",
+      "licencia": "AM11923131",
+      "hcp": 49.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Carlota Alonso Gonzalez",
+      "licencia": "AM11374330",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Dario Gil Cabeza",
+      "licencia": "AM70091107",
+      "hcp": 49,
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -147,7 +447,7 @@
       "round": 1,
       "players": [
         {
-          "time": "16:20",
+          "time": "09:30",
           "tee": 1,
           "name": "Matthew Drechsler",
           "hcp": 45.3,
@@ -156,7 +456,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:20",
+          "time": "09:30",
           "tee": 1,
           "name": "Lucas Arias Carasec",
           "hcp": 45.3,
@@ -165,7 +465,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:20",
+          "time": "09:30",
           "tee": 1,
           "name": "Lucas Martin Marin",
           "hcp": 45.4,
@@ -174,7 +474,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:20",
+          "time": "09:30",
           "tee": 1,
           "name": "Jorge Garcia Alfonso",
           "hcp": 45.9,
@@ -183,7 +483,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:30",
+          "time": "09:40",
           "tee": 1,
           "name": "Guilhem Valette Jordao",
           "hcp": 46.8,
@@ -192,7 +492,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:30",
+          "time": "09:40",
           "tee": 1,
           "name": "Jose Manuel Farfan Ubeda",
           "hcp": 47.5,
@@ -201,7 +501,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:30",
+          "time": "09:40",
           "tee": 1,
           "name": "Dario Gil Cabeza",
           "hcp": 49,
@@ -210,7 +510,7 @@
           "nivel": "A"
         },
         {
-          "time": "16:30",
+          "time": "09:40",
           "tee": 1,
           "name": "Sara Alonso Gonzalez",
           "hcp": 49.5,
@@ -219,7 +519,7 @@
           "nivel": "I"
         },
         {
-          "time": "16:40",
+          "time": "09:50",
           "tee": 1,
           "name": "Luis Ramirez Barba",
           "hcp": 50.1,
@@ -228,7 +528,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:40",
+          "time": "09:50",
           "tee": 1,
           "name": "Arlet Dedaj Ungureanu",
           "hcp": 50.2,
@@ -237,7 +537,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:40",
+          "time": "09:50",
           "tee": 1,
           "name": "Rafael Muñoz-Rojas Salinas",
           "hcp": 51.7,
@@ -246,7 +546,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:40",
+          "time": "09:50",
           "tee": 1,
           "name": "Ignacio Sanchez Lozano",
           "hcp": 52.8,
@@ -255,7 +555,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:50",
+          "time": "10:00",
           "tee": 1,
           "name": "Lucia Holgado Requena",
           "hcp": 53,
@@ -264,7 +564,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:50",
+          "time": "10:00",
           "tee": 1,
           "name": "Carlos Martin Villatoro",
           "hcp": 54,
@@ -273,7 +573,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:50",
+          "time": "10:00",
           "tee": 1,
           "name": "Fabio Utrera Carracao",
           "hcp": 54,
@@ -282,7 +582,7 @@
           "nivel": "B"
         },
         {
-          "time": "16:50",
+          "time": "10:00",
           "tee": 1,
           "name": "Philemon Casado Diouf",
           "hcp": 54,
@@ -291,7 +591,7 @@
           "nivel": "B"
         },
         {
-          "time": "17:00",
+          "time": "10:10",
           "tee": 1,
           "name": "Manuel Gil Maroto",
           "hcp": 54,
@@ -300,7 +600,7 @@
           "nivel": "B"
         },
         {
-          "time": "17:00",
+          "time": "10:10",
           "tee": 1,
           "name": "Marcos Salinas Valentin",
           "hcp": 54,
@@ -309,7 +609,7 @@
           "nivel": "B"
         },
         {
-          "time": "17:00",
+          "time": "10:10",
           "tee": 1,
           "name": "Dasha Violeta Arenas Khattar",
           "hcp": 54,
@@ -318,7 +618,7 @@
           "nivel": "B"
         },
         {
-          "time": "17:00",
+          "time": "10:10",
           "tee": 1,
           "name": "Carlota Alonso Gonzalez",
           "hcp": 54,
@@ -346,7 +646,6 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "/uploads/competiciones/pdf/2085288619_rrll.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-20T07:01:36.873Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

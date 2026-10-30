@@ -1,9 +1,9 @@
 {
   "tourId": 72448,
   "url": "https://www.nextcaddy.com/tour/72448",
-  "scrapedAt": "2026-07-20T07:01:10.962Z",
+  "scrapedAt": "2026-10-30T14:27:07.408Z",
   "meta": {
-    "name": null,
+    "name": "JUEGOS DEPORTIVOS NAVARROS 2026 9 HOYOS ",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -20,10 +20,182 @@
     "dateIso": "2026-07-22",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 36,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Erice Lopez",
+          "licencia": "4400375189",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 47,
+          "toPar": 11,
+          "inscribedId": 2363940
+        },
+        {
+          "pos": 2,
+          "name": "Iñigo Lizarraga Rodriguez",
+          "licencia": "4402479671",
+          "hcp": 45.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 55,
+          "toPar": 19,
+          "inscribedId": 2363942
+        },
+        {
+          "pos": 3,
+          "name": "Javier Erice Lopez",
+          "licencia": "4400481122",
+          "hcp": 53.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 59,
+          "toPar": 23,
+          "inscribedId": 2363941
+        },
+        {
+          "pos": 4,
+          "name": "Anton Oficialdegui De Araoz",
+          "licencia": "4401997810",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 62,
+          "toPar": 26,
+          "inscribedId": 2364165
+        },
+        {
+          "pos": 5,
+          "name": "Martin Zuloaga Valencia",
+          "licencia": "4401158012",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": 35,
+          "inscribedId": 2363939
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Erice Lopez",
+          "licencia": "4400375189",
+          "hcp": 37.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": -7,
+          "inscribedId": 2363940
+        },
+        {
+          "pos": 2,
+          "name": "Iñigo Lizarraga Rodriguez",
+          "licencia": "4402479671",
+          "hcp": 45.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": -4,
+          "inscribedId": 2363942
+        },
+        {
+          "pos": 3,
+          "name": "Javier Erice Lopez",
+          "licencia": "4400481122",
+          "hcp": 53.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": -4,
+          "inscribedId": 2363941
+        },
+        {
+          "pos": 4,
+          "name": "Anton Oficialdegui De Araoz",
+          "licencia": "4401997810",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": -1,
+          "inscribedId": 2364165
+        },
+        {
+          "pos": 5,
+          "name": "Martin Zuloaga Valencia",
+          "licencia": "4401158012",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": 8,
+          "inscribedId": 2363939
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch Individual",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 5
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -36,21 +208,28 @@
       "orden": 2,
       "name": "Pablo Erice Lopez",
       "licencia": "4400375189",
-      "hcp": 38,
+      "hcp": 37.5,
       "nivel": "B"
     },
     {
       "orden": 3,
       "name": "Javier Erice Lopez",
       "licencia": "4400481122",
-      "hcp": 53.6,
+      "hcp": 53.3,
       "nivel": "B"
     },
     {
       "orden": 4,
       "name": "Iñigo Lizarraga Rodriguez",
       "licencia": "4402479671",
-      "hcp": 45.5,
+      "hcp": 45.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Anton Oficialdegui De Araoz",
+      "licencia": "4401997810",
+      "hcp": 54,
       "nivel": "B"
     }
   ],
@@ -244,6 +423,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:16.476Z"
+  ]
 }

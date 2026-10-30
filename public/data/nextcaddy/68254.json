@@ -1,13 +1,13 @@
 {
   "tourId": 68254,
   "url": "https://www.nextcaddy.com/tour/68254",
-  "scrapedAt": "2026-06-24T14:58:32.586Z",
+  "scrapedAt": "2026-10-30T14:28:23.848Z",
   "meta": {
     "name": "Copa Alianza Juvenil",
     "organizer": "Federacion de Golf de Madrid",
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-09-18",
     "dateEnd": null,
     "format": "Medal Play (Scratch) Circuito Juvenil 20",
     "categories": [
@@ -17,7 +17,9 @@
       "Infantil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-18",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -49,6 +51,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:58.241Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circulares/cirfgcyl3526.pdf"
+  ]
 }

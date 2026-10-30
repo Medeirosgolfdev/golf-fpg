@@ -1,13 +1,13 @@
 {
   "tourId": 71802,
   "url": "https://www.nextcaddy.com/tour/71802",
-  "scrapedAt": "2026-06-24T14:58:25.059Z",
+  "scrapedAt": "2026-10-30T14:28:07.476Z",
   "meta": {
-    "name": "INDIVIDUAL II Torneo Especial de Verano ALMERIMAR  EMBUMAR  + 10 Eagle Lounge Cafe Marbella",
+    "name": "INDIVIDUAL II Torneo Especial de Verano ALMERIMAR  10 Eagle Lounge Cafe Marbella",
     "organizer": null,
     "course": "",
     "courseCode": "GROS",
-    "dateStart": null,
+    "dateStart": "2026-09-05",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -19,10 +19,17 @@
       "Infantil",
       "Cadete",
       "Juvenil",
+      "BENJAMÍN",
+      "ALEVÍN",
       "INFANTIL",
+      "CADETE",
+      "JUVENIL",
+      "junior",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-05",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -40,42 +47,315 @@
       "orden": 2,
       "name": "Raul Gallardo Pliego",
       "licencia": "AM68903662",
-      "hcp": 21.7,
+      "hcp": 23.1,
       "nivel": "S"
     },
     {
       "orden": 3,
       "name": "George Nelmes",
       "licencia": "AM22475714",
-      "hcp": 34.3,
+      "hcp": 33.3,
       "nivel": "B"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 4,
+      "name": "Leonard Suanes Kotz",
+      "licencia": "AM51987062",
+      "hcp": 36.2,
+      "nivel": "I"
     },
     {
-      "orden": 1,
-      "name": "Raul Gallardo Fernandez",
-      "licencia": "AM68900315",
-      "hcp": 23.2,
-      "nivel": "C"
+      "orden": 5,
+      "name": "Vincent Suanes Kotz",
+      "licencia": "AM51987057",
+      "hcp": 51.2,
+      "nivel": "B"
     },
     {
-      "orden": 2,
-      "name": "Raul Gallardo Pliego",
-      "licencia": "AM68903662",
-      "hcp": 21.7,
+      "orden": 6,
+      "name": "Alejandro Suanes Crespo",
+      "licencia": "AM51617420",
+      "hcp": 23.4,
       "nivel": "S"
     },
     {
+      "orden": 7,
+      "name": "Sebastian Perez Garcia",
+      "licencia": "AM83807803",
+      "hcp": 16.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Jose Francisco Perez Santiago",
+      "licencia": "AM83807804",
+      "hcp": 3.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 9,
+      "name": "Corrado Rattone",
+      "licencia": "AM74889031",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Dylan Dedaj Ungureanu",
+      "licencia": "AM51995519",
+      "hcp": 6.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 11,
+      "name": "Lorenzo Dedaj",
+      "licencia": "AMC4152552",
+      "hcp": 11.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Bruno Vela Carballo",
+      "licencia": "CM07472715",
+      "hcp": 31,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Alvaro Vela Rivera",
+      "licencia": "CM00350712",
+      "hcp": 16.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Fernando Valls Hernandez",
+      "licencia": "AM58353686",
+      "hcp": 15.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 15,
+      "name": "Dario Gil Cabeza",
+      "licencia": "AM70091107",
+      "hcp": 40.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 16,
+      "name": "Sergio Gil Espinosa",
+      "licencia": "AM70091121",
+      "hcp": 25.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Nicolas Martinez Ruiz",
+      "licencia": "AM58488827",
+      "hcp": 51.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 18,
+      "name": "Jose Maria Sanabria Moreno",
+      "licencia": "AMD2980499",
+      "hcp": 35.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Victor Sanabria De Borja",
+      "licencia": "AMI5991948",
+      "hcp": 29,
+      "nivel": "I"
+    },
+    {
+      "orden": 20,
+      "name": "Gonzalo Muñoz Rubio",
+      "licencia": "AM15054539",
+      "hcp": 21.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 21,
+      "name": "Alonso De La Macorra Escobar",
+      "licencia": "AM15986924",
+      "hcp": 17.4,
+      "nivel": "A"
+    },
+    {
+      "orden": 22,
+      "name": "Antonio Merchan Casado",
+      "licencia": "AM15471296",
+      "hcp": 22.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 23,
+      "name": "Silas Forster Garcia",
+      "licencia": "AM55094760",
+      "hcp": 11.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 24,
+      "name": "Samuel Forster Garcia",
+      "licencia": "AM55094761",
+      "hcp": 13.3,
+      "nivel": "C"
+    },
+    {
+      "orden": 25,
+      "name": "Miguel Villalobos Gonzalez",
+      "licencia": "AM83492505",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 26,
+      "name": "Hugo Villalobos Gonzalez",
+      "licencia": "AM83955294",
+      "hcp": 11,
+      "nivel": "C"
+    },
+    {
+      "orden": 27,
+      "name": "Miguel Villalobos Escamilla",
+      "licencia": "AM70889803",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "Ignacio Rubio Cerezo",
+      "licencia": "AM15067145",
+      "hcp": 44.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 29,
+      "name": "Rodrigo Rubio Cerezo",
+      "licencia": "AM15067148",
+      "hcp": 25.1,
+      "nivel": "A"
+    },
+    {
+      "orden": 30,
+      "name": "Francisco Cabeza Mira",
+      "licencia": "AM15517131",
+      "hcp": 17.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 31,
+      "name": "Juan Krauel Vergara",
+      "licencia": "AMI5506870",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "Alberto Fabian Azpitarte",
+      "licencia": "AMB5967446",
+      "hcp": 21.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Ezequiel Fabian Azpitarte Perea",
+      "licencia": "AM15493715",
+      "hcp": 40.7,
+      "nivel": "C"
+    },
+    {
+      "orden": 34,
+      "name": "Carlos Walter Azpitarte Fernandez",
+      "licencia": "AMB5967449",
+      "hcp": 16.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 35,
+      "name": "Ivan Marcelo Arambuena Delgado",
+      "licencia": "AMB5967456",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 36,
+      "name": "Alejandro Gomez Morillo",
+      "licencia": "AMF7965735",
+      "hcp": 12.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 37,
+      "name": "David Prieto Perez",
+      "licencia": "AM59080295",
+      "hcp": 43.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 38,
+      "name": "Jose Ramon Callejon Sanchez",
+      "licencia": "AM59086868",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 39,
+      "name": "Alfonso Serrano Salinas",
+      "licencia": "AM59075104",
+      "hcp": 49.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 40,
+      "name": "Gonzalo Cazorla Perea",
+      "licencia": "AM04934958",
+      "hcp": 7.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 41,
+      "name": "Rafael Salido Reina",
+      "licencia": "AM15945944",
+      "hcp": 10.3,
+      "nivel": "I"
+    },
+    {
+      "orden": 42,
+      "name": "Rafael Salido Setien",
+      "licencia": "AMI4884343",
+      "hcp": 13.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Sara Rattone",
+      "licencia": "AM83916837",
+      "hcp": null,
+      "nivel": "J"
+    },
+    {
+      "orden": 2,
+      "name": "Arlet Dedaj Ungureanu",
+      "licencia": "AM51488408",
+      "hcp": 45,
+      "nivel": "B"
+    },
+    {
       "orden": 3,
-      "name": "George Nelmes",
-      "licencia": "AM22475714",
-      "hcp": 34.3,
+      "name": "Ainara Vanesa Azpitarte Perea",
+      "licencia": "AM15497337",
+      "hcp": 53,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Cloe Arambuena Vela",
+      "licencia": "AM58498744",
+      "hcp": 54,
       "nivel": "B"
     }
   ],
@@ -100,44 +380,9 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Yllera Ceballos, Julio",
+          "playerName": "San Felix Carbajo, Ivan",
           "holeNumber": 9,
-          "createdAt": "29/03/26 11:52:02"
-        },
-        {
-          "playerName": "Barrenechea Elorrieta, Santiago",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 12:18:43"
-        },
-        {
-          "playerName": "Beltran Garay, Eduardo",
-          "holeNumber": 8,
-          "createdAt": "29/03/26 12:56:51"
-        },
-        {
-          "playerName": "San Juan Barrero, Carlos Enrique",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 13:00:14"
-        },
-        {
-          "playerName": "Mestanza Iturmendi, Felipe Santiago",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 13:24:36"
-        },
-        {
-          "playerName": "Del Rio Lavin, Alfonso",
-          "holeNumber": 3,
-          "createdAt": "29/03/26 13:40:00"
-        },
-        {
-          "playerName": "Plaza Rodriguez-Vita, Jaime",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 13:40:05"
-        },
-        {
-          "playerName": "Buceta Albillos, Jorge",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 13:55:47"
+          "createdAt": "29/03/26 16:48:23"
         },
         {
           "playerName": "Stockfleth Pernaute, Carlos",
@@ -145,64 +390,9 @@
           "createdAt": "29/03/26 13:56:42"
         },
         {
-          "playerName": "Miranda Alvarez-Pickman, Ignacio",
-          "holeNumber": 18,
-          "createdAt": "29/03/26 14:04:11"
-        },
-        {
-          "playerName": "Santonja Hernandez, Rafael",
-          "holeNumber": 4,
-          "createdAt": "29/03/26 14:08:55"
-        },
-        {
-          "playerName": "Lopez-Ibor Vega-Penichet, Borja",
-          "holeNumber": 4,
-          "createdAt": "29/03/26 14:12:20"
-        },
-        {
-          "playerName": "Lopez-Ibor Vega-Penichet, Borja",
-          "holeNumber": 9,
-          "createdAt": "29/03/26 14:12:20"
-        },
-        {
-          "playerName": "Albert Reig, Jose Vicente",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 14:32:40"
-        },
-        {
-          "playerName": "Oriol Icaza, Pedro",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 14:35:23"
-        },
-        {
-          "playerName": "Oriol Icaza, Pedro",
-          "holeNumber": 7,
-          "createdAt": "29/03/26 14:35:23"
-        },
-        {
-          "playerName": "Oriol Icaza, Pedro",
-          "holeNumber": 9,
-          "createdAt": "29/03/26 14:35:23"
-        },
-        {
-          "playerName": "Ballesteros Blanco, Alvaro",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 14:41:24"
-        },
-        {
-          "playerName": "Erhardt Ybarra, Alfonso",
-          "holeNumber": 4,
-          "createdAt": "29/03/26 14:52:29"
-        },
-        {
-          "playerName": "Bergaz Hoyos, Alberto",
-          "holeNumber": 4,
-          "createdAt": "29/03/26 14:58:33"
-        },
-        {
-          "playerName": "Olaso Echevarria, Guillermo",
-          "holeNumber": 6,
-          "createdAt": "29/03/26 15:30:47"
+          "playerName": "Do Amaral Casal Ribeiro, Francisco",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 16:56:00"
         },
         {
           "playerName": "Mccarthy, Brian",
@@ -210,29 +400,19 @@
           "createdAt": "29/03/26 15:35:56"
         },
         {
+          "playerName": "Ballesteros Blanco, Alvaro",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 14:41:24"
+        },
+        {
+          "playerName": "Santonja Hernandez, Rafael",
+          "holeNumber": 4,
+          "createdAt": "29/03/26 14:08:55"
+        },
+        {
           "playerName": "Granell Traver, Vicente",
           "holeNumber": 16,
           "createdAt": "29/03/26 15:37:21"
-        },
-        {
-          "playerName": "Barrenechea Elorrieta, Santiago",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 15:38:38"
-        },
-        {
-          "playerName": "Oriol Icaza, Pedro",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 15:43:09"
-        },
-        {
-          "playerName": "Martinez-Piñeiro, Luis",
-          "holeNumber": 14,
-          "createdAt": "29/03/26 15:43:27"
-        },
-        {
-          "playerName": "Olaso Echevarria, Guillermo",
-          "holeNumber": 7,
-          "createdAt": "29/03/26 15:44:01"
         },
         {
           "playerName": "Hernandez-Rubio Rodriguez, David",
@@ -240,49 +420,9 @@
           "createdAt": "29/03/26 15:55:06"
         },
         {
-          "playerName": "Martinez-Piñeiro, Luis",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 15:55:56"
-        },
-        {
-          "playerName": "De La Rosa Maura, Borja",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 16:03:03"
-        },
-        {
-          "playerName": "Mendoza Zabala, Jose Luis",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 16:03:54"
-        },
-        {
-          "playerName": "Angell Harmsen, Alexander",
-          "holeNumber": 18,
-          "createdAt": "29/03/26 16:05:54"
-        },
-        {
-          "playerName": "Llanza Figueroa, Alvaro",
-          "holeNumber": 7,
-          "createdAt": "29/03/26 16:17:23"
-        },
-        {
-          "playerName": "Vega-Penichet Lopez, Jorge",
-          "holeNumber": 5,
-          "createdAt": "29/03/26 16:34:40"
-        },
-        {
           "playerName": "Hernandez-Rubio Rodriguez, David",
           "holeNumber": 9,
           "createdAt": "29/03/26 16:48:21"
-        },
-        {
-          "playerName": "San Felix Carbajo, Ivan",
-          "holeNumber": 9,
-          "createdAt": "29/03/26 16:48:23"
-        },
-        {
-          "playerName": "Boyer Bergese, Pablo",
-          "holeNumber": 14,
-          "createdAt": "29/03/26 16:53:40"
         },
         {
           "playerName": "Fevre Obarrio, Jacques",
@@ -290,14 +430,59 @@
           "createdAt": "29/03/26 16:53:53"
         },
         {
-          "playerName": "Do Amaral Casal Ribeiro, Francisco",
-          "holeNumber": 15,
-          "createdAt": "29/03/26 16:56:00"
+          "playerName": "Martinez-Piñeiro, Luis",
+          "holeNumber": 14,
+          "createdAt": "29/03/26 15:43:27"
         },
         {
-          "playerName": "Maura Andreu, Ivan",
+          "playerName": "Martinez-Piñeiro, Luis",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 15:55:56"
+        },
+        {
+          "playerName": "Albert Reig, Jose Vicente",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 14:32:40"
+        },
+        {
+          "playerName": "Buceta Albillos, Jorge",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 13:55:47"
+        },
+        {
+          "playerName": "Del Rio Lavin, Alfonso",
+          "holeNumber": 3,
+          "createdAt": "29/03/26 13:40:00"
+        },
+        {
+          "playerName": "Mendoza Zabala, Jose Luis",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 16:03:54"
+        },
+        {
+          "playerName": "San Juan Barrero, Carlos Enrique",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 13:00:14"
+        },
+        {
+          "playerName": "Barrenechea Elorrieta, Santiago",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 12:18:43"
+        },
+        {
+          "playerName": "Barrenechea Elorrieta, Santiago",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 15:38:38"
+        },
+        {
+          "playerName": "Bergaz Hoyos, Alberto",
+          "holeNumber": 4,
+          "createdAt": "29/03/26 14:58:33"
+        },
+        {
+          "playerName": "Angell Harmsen, Alexander",
           "holeNumber": 18,
-          "createdAt": "29/03/26 16:56:11"
+          "createdAt": "29/03/26 16:05:54"
         },
         {
           "playerName": "Campos Pardo, Bernardo",
@@ -305,20 +490,116 @@
           "createdAt": "29/03/26 17:23:59"
         },
         {
+          "playerName": "Campos Pardo, Bernardo",
+          "holeNumber": 18,
+          "createdAt": "29/03/26 17:40:06"
+        },
+        {
+          "playerName": "Beltran Garay, Eduardo",
+          "holeNumber": 8,
+          "createdAt": "29/03/26 12:56:51"
+        },
+        {
+          "playerName": "Miranda Alvarez-Pickman, Ignacio",
+          "holeNumber": 18,
+          "createdAt": "29/03/26 14:04:11"
+        },
+        {
+          "playerName": "Yllera Ceballos, Julio",
+          "holeNumber": 9,
+          "createdAt": "29/03/26 11:52:02"
+        },
+        {
+          "playerName": "Mestanza Iturmendi, Felipe Santiago",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 13:24:36"
+        },
+        {
+          "playerName": "De La Rosa Maura, Borja",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 16:03:03"
+        },
+        {
+          "playerName": "Maura Andreu, Ivan",
+          "holeNumber": 18,
+          "createdAt": "29/03/26 16:56:11"
+        },
+        {
+          "playerName": "Plaza Rodriguez-Vita, Jaime",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 13:40:05"
+        },
+        {
+          "playerName": "Olaso Echevarria, Guillermo",
+          "holeNumber": 6,
+          "createdAt": "29/03/26 15:30:47"
+        },
+        {
+          "playerName": "Olaso Echevarria, Guillermo",
+          "holeNumber": 7,
+          "createdAt": "29/03/26 15:44:01"
+        },
+        {
           "playerName": "Olaso Echevarria, Guillermo",
           "holeNumber": 15,
           "createdAt": "29/03/26 17:29:10"
         },
         {
-          "playerName": "Campos Pardo, Bernardo",
-          "holeNumber": 18,
-          "createdAt": "29/03/26 17:40:06"
+          "playerName": "Llanza Figueroa, Alvaro",
+          "holeNumber": 7,
+          "createdAt": "29/03/26 16:17:23"
+        },
+        {
+          "playerName": "Oriol Icaza, Pedro",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 14:35:23"
+        },
+        {
+          "playerName": "Oriol Icaza, Pedro",
+          "holeNumber": 7,
+          "createdAt": "29/03/26 14:35:23"
+        },
+        {
+          "playerName": "Oriol Icaza, Pedro",
+          "holeNumber": 9,
+          "createdAt": "29/03/26 14:35:23"
+        },
+        {
+          "playerName": "Oriol Icaza, Pedro",
+          "holeNumber": 15,
+          "createdAt": "29/03/26 15:43:09"
+        },
+        {
+          "playerName": "Erhardt Ybarra, Alfonso",
+          "holeNumber": 4,
+          "createdAt": "29/03/26 14:52:29"
+        },
+        {
+          "playerName": "Lopez-Ibor Vega-Penichet, Borja",
+          "holeNumber": 4,
+          "createdAt": "29/03/26 14:12:20"
+        },
+        {
+          "playerName": "Lopez-Ibor Vega-Penichet, Borja",
+          "holeNumber": 9,
+          "createdAt": "29/03/26 14:12:20"
+        },
+        {
+          "playerName": "Vega-Penichet Lopez, Jorge",
+          "holeNumber": 5,
+          "createdAt": "29/03/26 16:34:40"
+        },
+        {
+          "playerName": "Boyer Bergese, Pablo",
+          "holeNumber": 14,
+          "createdAt": "29/03/26 16:53:40"
         }
       ]
     }
   },
   "pdfs": [
+    "/uploads/competiciones/pdf/791724667_clasificaciorn_individual_especial_de_verano_almerimar_2026.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/791724667_clasificaciorn_individual_especial_de_verano_almerimar_2026.pdf",
     "/uploads/competiciones/cartel/2222390442_71802-i-torneo-padres-e-hijos-tem2026-gross-dentistas-costa-del-sol.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:13.260Z"
+  ]
 }

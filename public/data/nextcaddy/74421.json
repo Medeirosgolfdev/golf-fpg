@@ -1,9 +1,9 @@
 {
   "tourId": 74421,
   "url": "https://www.nextcaddy.com/tour/74421",
-  "scrapedAt": "2026-10-12T12:09:08.384Z",
+  "scrapedAt": "2026-10-30T14:28:56.375Z",
   "meta": {
-    "name": null,
+    "name": "Sherry International Golf Group (SIGG) - Martes 13 Octubre 2026 (Grupo privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,10 +21,424 @@
     "dateIso": "2026-10-13",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 32,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Antonio Corrochano Reviriego",
+          "licencia": "AMC3612205",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2423560
+        },
+        {
+          "pos": 2,
+          "name": "Miguel Angel Becerra Moya",
+          "licencia": "AMC3810193",
+          "hcp": 12.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2423511
+        },
+        {
+          "pos": 3,
+          "name": "Edward James",
+          "licencia": "AMC3343313",
+          "hcp": 14.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2423495
+        },
+        {
+          "pos": 4,
+          "name": "Christopher Davies",
+          "licencia": "AMC3965899",
+          "hcp": 11.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2423496
+        },
+        {
+          "pos": 5,
+          "name": "Antonio Manuel Ureña Serrano",
+          "licencia": "AM32612444",
+          "hcp": 7.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2423522
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Diaz Rivera",
+          "licencia": "AM00898678",
+          "hcp": 16.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2423497
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Guindo Guindo",
+          "licencia": "AMC3937809",
+          "hcp": 27.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2423501
+        },
+        {
+          "pos": 8,
+          "name": "Axel Junkerman",
+          "licencia": "EXX1465618",
+          "hcp": 6.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2423974
+        },
+        {
+          "pos": 9,
+          "name": "Antonio Seto Cala",
+          "licencia": "AME7242706",
+          "hcp": 15.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2423554
+        },
+        {
+          "pos": 10,
+          "name": "Juan Carlos Monge Martinez",
+          "licencia": "AM00388228",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423533
+        },
+        {
+          "pos": 11,
+          "name": "Matias Galindo Doblas",
+          "licencia": "AME7246000",
+          "hcp": 16.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423503
+        },
+        {
+          "pos": 12,
+          "name": "Tomas Romero Abad",
+          "licencia": "AM32611302",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423514
+        },
+        {
+          "pos": 13,
+          "name": "Lucia Mendicuti Rodriguez",
+          "licencia": "AMC3204420",
+          "hcp": 34.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2423577
+        },
+        {
+          "pos": 14,
+          "name": "Jose Luis Oviedo Granados",
+          "licencia": "AM32358980",
+          "hcp": 13.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2423527
+        },
+        {
+          "pos": 15,
+          "name": "Susanne Junkerman",
+          "licencia": "EXX1465619",
+          "hcp": 13.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2423973
+        },
+        {
+          "pos": 16,
+          "name": "Christopher J. Jameson",
+          "licencia": "AMC3605717",
+          "hcp": 20.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2423492
+        },
+        {
+          "pos": 17,
+          "name": "Concha Calvo Muñoz",
+          "licencia": "CM00419265",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2423571
+        },
+        {
+          "pos": 18,
+          "name": "Linda Jameson",
+          "licencia": "AMC3605716",
+          "hcp": 36.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2423488
+        },
+        {
+          "pos": 19,
+          "name": "Elias Alvarez Fernandez",
+          "licencia": "AME7097565",
+          "hcp": 7.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2423568
+        },
+        {
+          "pos": 20,
+          "name": "Jose Luis Lafuente Ojuel",
+          "licencia": "VB08422510",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2423564
+        },
+        {
+          "pos": 21,
+          "name": "Tord Erling Bengtsson",
+          "licencia": "AMC3070245",
+          "hcp": 20.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2423509
+        },
+        {
+          "pos": 22,
+          "name": "James Major",
+          "licencia": "AMC9820109",
+          "hcp": 9.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2423530
+        },
+        {
+          "pos": 23,
+          "name": "Lorenzo Carrion Mata",
+          "licencia": "AME7220403",
+          "hcp": 29.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2423558
+        },
+        {
+          "pos": 24,
+          "name": "Adriana Verwater",
+          "licencia": "AM29893741",
+          "hcp": 19.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2423536
+        },
+        {
+          "pos": 25,
+          "name": "Jesus Cantos Ruiz",
+          "licencia": "AMC3921569",
+          "hcp": 18.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2423493
+        },
+        {
+          "pos": 26,
+          "name": "Ian Morris",
+          "licencia": "AMC3070228",
+          "hcp": 25.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2423518
+        },
+        {
+          "pos": 27,
+          "name": "Raul Barroso Benitez",
+          "licencia": "AM00356412",
+          "hcp": 13.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2423504
+        },
+        {
+          "pos": 28,
+          "name": "Peter Green",
+          "licencia": "AMC3904584",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2423494
+        },
+        {
+          "pos": 29,
+          "name": "Dean Jannone",
+          "licencia": "AM25818745",
+          "hcp": 19.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2423500
+        },
+        {
+          "pos": 30,
+          "name": "Jose Manuel Salido Hedrera",
+          "licencia": "AMC3899113",
+          "hcp": 25.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2423515
+        },
+        {
+          "pos": 31,
+          "name": "Florence Louisa Laruelle",
+          "licencia": "AMC9981836",
+          "hcp": 33.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2423507
+        },
+        {
+          "pos": null,
+          "name": "Gustavo Adolfo Ernesto Contepomi",
+          "licencia": "AMC3959008",
+          "hcp": 27.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2423502
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 32
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -65,7 +479,7 @@
       "orden": 6,
       "name": "Susanne Junkerman",
       "licencia": "EXX1465619",
-      "hcp": 36,
+      "hcp": 13.5,
       "nivel": "Mid"
     },
     {
@@ -247,7 +661,7 @@
       "orden": 19,
       "name": "Axel Junkerman",
       "licencia": "EXX1465618",
-      "hcp": 36,
+      "hcp": 6.1,
       "nivel": "Mid"
     }
   ],
@@ -520,7 +934,7 @@
           "time": "09:50",
           "tee": 1,
           "name": "Susanne Junkerman",
-          "hcp": 36,
+          "hcp": 13.5,
           "ins": "2423973",
           "jid": "79725",
           "nivel": "M"
@@ -529,7 +943,7 @@
           "time": "09:50",
           "tee": 1,
           "name": "Axel Junkerman",
-          "hcp": 36,
+          "hcp": 6.1,
           "ins": "2423974",
           "jid": "79725",
           "nivel": "M"

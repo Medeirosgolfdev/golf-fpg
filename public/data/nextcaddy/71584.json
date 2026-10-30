@@ -1,13 +1,13 @@
 {
   "tourId": 71584,
   "url": "https://www.nextcaddy.com/tour/71584",
-  "scrapedAt": "2026-06-24T14:57:49.649Z",
+  "scrapedAt": "2026-10-30T14:26:40.808Z",
   "meta": {
     "name": "IX  Liga Promesas 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-06-27",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,92 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 4,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Jose Muñoz Mora",
+          "licencia": "AMI5467648",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2349275
+        },
+        {
+          "pos": 2,
+          "name": "Carlos Colombo Flethes",
+          "licencia": "AMI5097186",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2343780
+        },
+        {
+          "pos": 3,
+          "name": "Javier Olmedo Ruiz",
+          "licencia": "AMI5076745",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2349252
+        },
+        {
+          "pos": 4,
+          "name": "Jose Luis Ortega Herraiz",
+          "licencia": "CM66150463",
+          "hcp": 25.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2350036
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 4
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -51,41 +131,6 @@
       "licencia": "CM66150463",
       "hcp": 25.7,
       "nivel": "S"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Carlos Colombo Flethes",
-      "licencia": "15-06-26 12:29",
-      "hcp": 28.5,
-      "nivel": "AMI5097186"
-    },
-    {
-      "orden": 2,
-      "name": "Javier Olmedo Ruiz",
-      "licencia": "23-06-26 07:09",
-      "hcp": 34.3,
-      "nivel": "AMI5076745"
-    },
-    {
-      "orden": 3,
-      "name": "Juan Jose Muñoz Mora",
-      "licencia": "23-06-26 08:45",
-      "hcp": 24.7,
-      "nivel": "AMI5467648"
-    },
-    {
-      "orden": 4,
-      "name": "Jose Luis Ortega Herraiz",
-      "licencia": "24-06-26 08:56",
-      "hcp": 25.7,
-      "nivel": "CM66150463"
     }
   ],
   "horarios": [
@@ -158,6 +203,7 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-29T09:18:54.760Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

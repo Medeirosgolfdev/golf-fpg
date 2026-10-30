@@ -1,13 +1,13 @@
 {
   "tourId": 71011,
   "url": "https://www.nextcaddy.com/tour/71011",
-  "scrapedAt": "2026-06-24T14:58:27.747Z",
+  "scrapedAt": "2026-10-30T14:28:15.236Z",
   "meta": {
     "name": "XII Prueba Circuito 4ª, 5ª y 6ª categoría campo corto",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Almenara Hotel - Golf",
     "courseCode": "AM99",
-    "dateStart": null,
+    "dateStart": "2026-09-12",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,584 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-12",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap 4A Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Santiago Amaya Cozzi",
+          "licencia": "AM11254047",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2390906
+        },
+        {
+          "pos": 2,
+          "name": "Daniel Fernandez Dominguez",
+          "licencia": "AM22889637",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2401628
+        },
+        {
+          "pos": 3,
+          "name": "Martin Quiros Lopez",
+          "licencia": "AM11056975",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390878
+        },
+        {
+          "pos": 4,
+          "name": "Daniel Hernandez Ruiz",
+          "licencia": "AM51986528",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2398402
+        },
+        {
+          "pos": 5,
+          "name": "Jamie John Rodríguez",
+          "licencia": "AM99000207",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2401533
+        },
+        {
+          "pos": 6,
+          "name": "Juan Olid Del Rio",
+          "licencia": "AM11895757",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2394241
+        },
+        {
+          "pos": 7,
+          "name": "Alfonso Morillas Benitez",
+          "licencia": "AM83889246",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2398159
+        },
+        {
+          "pos": 8,
+          "name": "Luca Aguilera Cordero",
+          "licencia": "AMI5488550",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2398750
+        },
+        {
+          "pos": 9,
+          "name": "Juan Carlos Ramirez Dominguez",
+          "licencia": "AM11914349",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2400522
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap 5A Categoria",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Manuel Martin Sabio",
+          "licencia": "AM11499392",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2396059
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Perez Bracho",
+          "licencia": "AM55498798",
+          "hcp": null,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2392743
+        },
+        {
+          "pos": 3,
+          "name": "Maria Rosa Gonzalez Mena",
+          "licencia": "AM11418097",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2381555
+        },
+        {
+          "pos": 4,
+          "name": "Dionisio Megias Garrido",
+          "licencia": "AMB5345626",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2401198
+        },
+        {
+          "pos": 5,
+          "name": "Jose Miguel Gonzalez Mena",
+          "licencia": "AM11026874",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2381548
+        },
+        {
+          "pos": 6,
+          "name": "Samuel Brocal Torres",
+          "licencia": "AMH8803012",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2401466
+        },
+        {
+          "pos": 7,
+          "name": "Daniel Olid Del Rio",
+          "licencia": "AM11895760",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2394243
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Javier Cano Castellano",
+          "licencia": "AMG3522821",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2400930
+        },
+        {
+          "pos": null,
+          "name": "Lorenzo Perez Romero",
+          "licencia": "AM11000837",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2385680
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap 6A Categoria",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Philemon Casado Diouf",
+          "licencia": "AM11467632",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2398192
+        },
+        {
+          "pos": 2,
+          "name": "Luis Ramirez Barba",
+          "licencia": "AM11414965",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2390914
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Garcia Alfonso",
+          "licencia": "AM11373230",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390880
+        },
+        {
+          "pos": 4,
+          "name": "Joaquin Rodriguez Toboso",
+          "licencia": "AM11481523",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2397250
+        },
+        {
+          "pos": 5,
+          "name": "Timur Tsyrenzhapov",
+          "licencia": "AM11017651",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2397158
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Mota Gavilan",
+          "licencia": "AM11491778",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2401017
+        },
+        {
+          "pos": 7,
+          "name": "Manuel Gil Maroto",
+          "licencia": "AM11022565",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2401566
+        },
+        {
+          "pos": 8,
+          "name": "Sofia Morillas Benitez",
+          "licencia": "AMD2075285",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2398161
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap 4A Categoria",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Handicap 5A Categoria",
+      "jugadores": 9
+    },
+    "3": {
+      "name": "Handicap 6A Categoria",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jose Miguel Gonzalez Mena",
+      "licencia": "AM11026874",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Lorenzo Perez Romero",
+      "licencia": "AM11000837",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Martin Quiros Lopez",
+      "licencia": "AM11056975",
+      "hcp": 19.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Jorge Garcia Alfonso",
+      "licencia": "AM11373230",
+      "hcp": 40,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Santiago Amaya Cozzi",
+      "licencia": "AM11254047",
+      "hcp": 20.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Luis Ramirez Barba",
+      "licencia": "AM11414965",
+      "hcp": 45.6,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Alejandro Perez Bracho",
+      "licencia": "AM55498798",
+      "hcp": 35.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 8,
+      "name": "Juan Olid Del Rio",
+      "licencia": "AM11895757",
+      "hcp": 22.8,
+      "nivel": "A"
+    },
+    {
+      "orden": 9,
+      "name": "Daniel Olid Del Rio",
+      "licencia": "AM11895760",
+      "hcp": 34,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Victor Manuel Martin Sabio",
+      "licencia": "AM11499392",
+      "hcp": 34.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Timur Tsyrenzhapov",
+      "licencia": "AM11017651",
+      "hcp": 41.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Joaquin Rodriguez Toboso",
+      "licencia": "AM11481523",
+      "hcp": 36.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Alfonso Morillas Benitez",
+      "licencia": "AM83889246",
+      "hcp": 25.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Philemon Casado Diouf",
+      "licencia": "AM11467632",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 15,
+      "name": "Daniel Hernandez Ruiz",
+      "licencia": "AM51986528",
+      "hcp": 21.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 16,
+      "name": "Luca Aguilera Cordero",
+      "licencia": "AMI5488550",
+      "hcp": 19.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 17,
+      "name": "Juan Carlos Ramirez Dominguez",
+      "licencia": "AM11914349",
+      "hcp": 21.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Francisco Javier Cano Castellano",
+      "licencia": "AMG3522821",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Francisco Mota Gavilan",
+      "licencia": "AM11491778",
+      "hcp": 37,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Dionisio Megias Garrido",
+      "licencia": "AMB5345626",
+      "hcp": 33.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Samuel Brocal Torres",
+      "licencia": "AMH8803012",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Jamie John Rodríguez",
+      "licencia": "AM99000207",
+      "hcp": 25,
+      "nivel": "I"
+    },
+    {
+      "orden": 23,
+      "name": "Manuel Gil Maroto",
+      "licencia": "AM11022565",
+      "hcp": 52.8,
+      "nivel": "B"
+    },
+    {
+      "orden": 24,
+      "name": "Daniel Fernandez Dominguez",
+      "licencia": "AM22889637",
+      "hcp": 24.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Rosa Gonzalez Mena",
+      "licencia": "AM11418097",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Sofia Morillas Benitez",
+      "licencia": "AMD2075285",
+      "hcp": 42.3,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -266,13 +837,370 @@
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161738,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            128
+          ],
+          [
+            "Birdie",
+            9
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            183
+          ],
+          [
+            "Peor",
+            124
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161739,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            27
+          ],
+          [
+            "2",
+            24
+          ],
+          [
+            "3",
+            25
+          ],
+          [
+            "4",
+            26
+          ],
+          [
+            "5",
+            25
+          ],
+          [
+            "6",
+            34
+          ],
+          [
+            "7",
+            28
+          ],
+          [
+            "8",
+            35
+          ],
+          [
+            "9",
+            20
+          ],
+          [
+            "10",
+            28
+          ],
+          [
+            "11",
+            39
+          ],
+          [
+            "12",
+            22
+          ],
+          [
+            "13",
+            13
+          ],
+          [
+            "14",
+            30
+          ],
+          [
+            "15",
+            21
+          ],
+          [
+            "16",
+            23
+          ],
+          [
+            "17",
+            27
+          ],
+          [
+            "18",
+            33
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161740,
+        "datos": [
+          [
+            "Hoyo",
+            "Philemon Casado Diouf",
+            "Santiago Amaya Cozzi",
+            "Luis Ramirez Barba"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 4",
+            1,
+            1,
+            3
+          ],
+          [
+            "Hoyo 5",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 6",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            -1,
+            2
+          ],
+          [
+            "Hoyo 8",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            1,
+            0,
+            2
+          ],
+          [
+            "Hoyo 10",
+            1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 11",
+            2,
+            1,
+            3
+          ],
+          [
+            "Hoyo 12",
+            2,
+            2,
+            3
+          ],
+          [
+            "Hoyo 13",
+            1,
+            3,
+            2
+          ],
+          [
+            "Hoyo 14",
+            2,
+            3,
+            2
+          ],
+          [
+            "Hoyo 15",
+            1,
+            3,
+            2
+          ],
+          [
+            "Hoyo 16",
+            1,
+            2,
+            3
+          ],
+          [
+            "Hoyo 17",
+            2,
+            3,
+            2
+          ],
+          [
+            "Hoyo 18",
+            2,
+            3,
+            3
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161741,
+        "datos": [
+          [
+            "Hoyo",
+            "Philemon Casado Diouf",
+            "Santiago Amaya Cozzi",
+            "Luis Ramirez Barba"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 4",
+            2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 8",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 10",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            0
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 17",
+            1,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -281,6 +1209,11 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-09-14T09:54:06.167Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1508473762_cartel.pdf",
+    "/uploads/competiciones/pdf/1909101646_informacion_web_altoclub_12092026.pdf",
+    "/uploads/circular/2026/42824416ec7bcd5d806eea121047c678.pdf",
+    "/uploads/competiciones/pdf/2162226950_reglas_web_altoclub_12092026_.pdf"
+  ]
 }

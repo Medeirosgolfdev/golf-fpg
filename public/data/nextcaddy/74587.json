@@ -1,9 +1,9 @@
 {
   "tourId": 74587,
   "url": "https://www.nextcaddy.com/tour/74587",
-  "scrapedAt": "2026-10-19T09:48:57.783Z",
+  "scrapedAt": "2026-10-30T14:29:11.861Z",
   "meta": {
-    "name": null,
+    "name": "TORNEO INDIVIDUAL DE SEÑORAS",
     "organizer": null,
     "course": "Real Club Pineda de Sevilla",
     "courseCode": "AM02",
@@ -22,10 +22,472 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 23,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Soledad Argudo O`neale",
+          "licencia": "AM02923135",
+          "hcp": 29.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2429909
+        },
+        {
+          "pos": 2,
+          "name": "Cira Hernandez Medina",
+          "licencia": "AM02488361",
+          "hcp": 33.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2429916
+        },
+        {
+          "pos": 3,
+          "name": "Macarena Perez Mendez",
+          "licencia": "AM02064285",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2429911
+        },
+        {
+          "pos": 4,
+          "name": "Susana Valverde Cuesta",
+          "licencia": "AM02900996",
+          "hcp": 35,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2429899
+        },
+        {
+          "pos": 5,
+          "name": "Maria Auxiliadora Laguillo Candau",
+          "licencia": "AM02469232",
+          "hcp": 36.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2429903
+        },
+        {
+          "pos": 6,
+          "name": "Rocio Bonet Perez",
+          "licencia": "AM02946634",
+          "hcp": 7.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2429894
+        },
+        {
+          "pos": 7,
+          "name": "Analia Quijano Morenes",
+          "licencia": "AM02740345",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2429913
+        },
+        {
+          "pos": 8,
+          "name": "Dolores Losada Sainz De Rozas",
+          "licencia": "AM02995225",
+          "hcp": 37.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2429902
+        },
+        {
+          "pos": 9,
+          "name": "Maria Fdez-Basterra Y Basagoiti",
+          "licencia": "AM02370258",
+          "hcp": 21.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429892
+        },
+        {
+          "pos": 10,
+          "name": "Berta Valverde Cuesta",
+          "licencia": "AM02816104",
+          "hcp": 28.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429897
+        },
+        {
+          "pos": 11,
+          "name": "Marta Galan Montojo",
+          "licencia": "AM02061673",
+          "hcp": 32.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429883
+        },
+        {
+          "pos": 12,
+          "name": "Ana Fernandez Halcon",
+          "licencia": "AM02516475",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429908
+        },
+        {
+          "pos": 13,
+          "name": "Leticia Guzman Azqueta",
+          "licencia": "VB02730602",
+          "hcp": 28,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2429884
+        },
+        {
+          "pos": 14,
+          "name": "Inmaculada De La Lama Obando",
+          "licencia": "AM02078941",
+          "hcp": 3.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429901
+        },
+        {
+          "pos": 15,
+          "name": "Rosario Conde Hinojosa",
+          "licencia": "AM02158866",
+          "hcp": 26.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429905
+        },
+        {
+          "pos": 16,
+          "name": "Isabel Cruz- Conde Lleo",
+          "licencia": "AM02775025",
+          "hcp": 27.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429895
+        },
+        {
+          "pos": 17,
+          "name": "Ana Rosa Queralt Aragon",
+          "licencia": "AM71104018",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429915
+        },
+        {
+          "pos": 18,
+          "name": "Alicia Beuster Vela",
+          "licencia": "AM02080419",
+          "hcp": 36.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429896
+        },
+        {
+          "pos": 19,
+          "name": "Mariana Toscano Leria",
+          "licencia": "AM05931377",
+          "hcp": 18.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2429917
+        },
+        {
+          "pos": 20,
+          "name": "Carla Blanco Fernandez-Castaño",
+          "licencia": "AM02166614",
+          "hcp": 25.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2429891
+        },
+        {
+          "pos": 21,
+          "name": "Pilar Farran Fernandez-Borrero",
+          "licencia": "AM02783409",
+          "hcp": 29.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2429882
+        },
+        {
+          "pos": 22,
+          "name": "Patricia Conde Alonso",
+          "licencia": "AM02489529",
+          "hcp": 36,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2429914
+        },
+        {
+          "pos": 23,
+          "name": "Mªde Las Nieves Ruiz Marin",
+          "licencia": "AM02145626",
+          "hcp": 36.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2429904
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 23
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Pilar Farran Fernandez-Borrero",
+      "licencia": "AM02783409",
+      "hcp": 29.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Marta Galan Montojo",
+      "licencia": "AM02061673",
+      "hcp": 32.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Leticia Guzman Azqueta",
+      "licencia": "VB02730602",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Carla Blanco Fernandez-Castaño",
+      "licencia": "AM02166614",
+      "hcp": 25.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Maria Fdez-Basterra Y Basagoiti",
+      "licencia": "AM02370258",
+      "hcp": 21.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Rocio Bonet Perez",
+      "licencia": "AM02946634",
+      "hcp": 7.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Isabel Cruz- Conde Lleo",
+      "licencia": "AM02775025",
+      "hcp": 27.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Alicia Beuster Vela",
+      "licencia": "AM02080419",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Berta Valverde Cuesta",
+      "licencia": "AM02816104",
+      "hcp": 28.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Susana Valverde Cuesta",
+      "licencia": "AM02900996",
+      "hcp": 35,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Inmaculada De La Lama Obando",
+      "licencia": "AM02078941",
+      "hcp": 3.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Dolores Losada Sainz De Rozas",
+      "licencia": "AM02995225",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Maria Auxiliadora Laguillo Candau",
+      "licencia": "AM02469232",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Mªde Las Nieves Ruiz Marin",
+      "licencia": "AM02145626",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Rosario Conde Hinojosa",
+      "licencia": "AM02158866",
+      "hcp": 26.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 16,
+      "name": "Ana Fernandez Halcon",
+      "licencia": "AM02516475",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Soledad Argudo O`neale",
+      "licencia": "AM02923135",
+      "hcp": 29.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Macarena Perez Mendez",
+      "licencia": "AM02064285",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Analia Quijano Morenes",
+      "licencia": "AM02740345",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Patricia Conde Alonso",
+      "licencia": "AM02489529",
+      "hcp": 36,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Ana Rosa Queralt Aragon",
+      "licencia": "AM71104018",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Cira Hernandez Medina",
+      "licencia": "AM02488361",
+      "hcp": 33.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Mariana Toscano Leria",
+      "licencia": "AM05931377",
+      "hcp": 18.6,
+      "nivel": "Mid"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -258,7 +720,6 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
-    "/uploads/competiciones/cartel/1977494112_74587-torneo-individual-de-senoras.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:37.271Z"
+    "/uploads/competiciones/pdf/4198501591_reglas_locales_pineda_08.10.26.pdf"
+  ]
 }

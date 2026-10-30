@@ -1,9 +1,9 @@
 {
   "tourId": 74438,
   "url": "https://www.nextcaddy.com/tour/74438",
-  "scrapedAt": "2026-10-12T12:09:17.307Z",
+  "scrapedAt": "2026-10-30T14:29:11.737Z",
   "meta": {
-    "name": null,
+    "name": "Torneo Frente Juventudes (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,10 +21,280 @@
     "dateIso": "2026-10-20",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 38,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 20,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Francisco Pina Dominguez",
+          "licencia": "AM85605119",
+          "hcp": 32.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2426004
+        },
+        {
+          "pos": 2,
+          "name": "Antonio Diaz Muñoz",
+          "licencia": "AME8699569",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2426616
+        },
+        {
+          "pos": 3,
+          "name": "Juan Jose Muñoz Gallardo",
+          "licencia": "AM00344344",
+          "hcp": 15.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2425837
+        },
+        {
+          "pos": 4,
+          "name": "Federico Jose Mora Carazo",
+          "licencia": "AM85134833",
+          "hcp": 27.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2425926
+        },
+        {
+          "pos": 5,
+          "name": "Joaquin Cruz-Guzman Lopez",
+          "licencia": "AM85111165",
+          "hcp": 17.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424997
+        },
+        {
+          "pos": 6,
+          "name": "Jose Manuel Aguilera Gomez",
+          "licencia": "AM85182643",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2424989
+        },
+        {
+          "pos": 7,
+          "name": "Francisco Javier Pedregal Pardo",
+          "licencia": "AM00075960",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2425431
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Galnares Vorcy",
+          "licencia": "AMH8784937",
+          "hcp": 31.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2425256
+        },
+        {
+          "pos": 9,
+          "name": "Sebastian Ciscares Franco",
+          "licencia": "AM85768154",
+          "hcp": 33.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2425767
+        },
+        {
+          "pos": 10,
+          "name": "Manuel Molleja Barba",
+          "licencia": "AM85905243",
+          "hcp": 28.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2426227
+        },
+        {
+          "pos": 11,
+          "name": "Evaristo Rosa Naranjo",
+          "licencia": "AM85278683",
+          "hcp": 16.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2423720
+        },
+        {
+          "pos": 12,
+          "name": "Jose Luis Cordon Oliveras",
+          "licencia": "AM85146028",
+          "hcp": 14.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2425737
+        },
+        {
+          "pos": 13,
+          "name": "Manuel Jurado Toro",
+          "licencia": "AM85125387",
+          "hcp": 18.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2425599
+        },
+        {
+          "pos": 14,
+          "name": "Jose Maria Larrea Tellez",
+          "licencia": "AM05130253",
+          "hcp": 19.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2424998
+        },
+        {
+          "pos": 15,
+          "name": "Francisco Arteaga Alarcon",
+          "licencia": "AM85107526",
+          "hcp": 23.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2425259
+        },
+        {
+          "pos": 16,
+          "name": "Juan Ramon Martinez Landazabal",
+          "licencia": "AM51059512",
+          "hcp": 32.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2423724
+        },
+        {
+          "pos": 17,
+          "name": "Rafael Gomez Carrera",
+          "licencia": "AM85143527",
+          "hcp": 24.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2427370
+        },
+        {
+          "pos": 18,
+          "name": "Mariano Torres Calzada",
+          "licencia": "AM85348337",
+          "hcp": 22.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2425185
+        },
+        {
+          "pos": 19,
+          "name": "Jose Manuel Pardo Toron",
+          "licencia": "7700170759",
+          "hcp": 35.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2424995
+        },
+        {
+          "pos": 20,
+          "name": "Antonio Garcia De La Torre",
+          "licencia": "AM85171349",
+          "hcp": 20.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2427349
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -35,9 +305,135 @@
     },
     {
       "orden": 2,
+      "name": "Jose Manuel Aguilera Gomez",
+      "licencia": "AM85182643",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Joaquin Cruz-Guzman Lopez",
+      "licencia": "AM85111165",
+      "hcp": 17.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Maria Larrea Tellez",
+      "licencia": "AM05130253",
+      "hcp": 19.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Mariano Torres Calzada",
+      "licencia": "AM85348337",
+      "hcp": 22.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Francisco Arteaga Alarcon",
+      "licencia": "AM85107526",
+      "hcp": 23.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Javier Pedregal Pardo",
+      "licencia": "AM00075960",
+      "hcp": 27.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Jurado Toro",
+      "licencia": "AM85125387",
+      "hcp": 18.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Juan Jose Muñoz Gallardo",
+      "licencia": "AM00344344",
+      "hcp": 15.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Manuel Molleja Barba",
+      "licencia": "AM85905243",
+      "hcp": 28.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Antonio Diaz Muñoz",
+      "licencia": "AME8699569",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Antonio Garcia De La Torre",
+      "licencia": "AM85171349",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
       "name": "Juan Ramon Martinez Landazabal",
       "licencia": "AM51059512",
       "hcp": 32.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Manuel Pardo Toron",
+      "licencia": "7700170759",
+      "hcp": 35.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Francisco Galnares Vorcy",
+      "licencia": "AMH8784937",
+      "hcp": 31.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Luis Cordon Oliveras",
+      "licencia": "AM85146028",
+      "hcp": 14.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Sebastian Ciscares Franco",
+      "licencia": "AM85768154",
+      "hcp": 33.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Federico Jose Mora Carazo",
+      "licencia": "AM85134833",
+      "hcp": 27.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Francisco Pina Dominguez",
+      "licencia": "AM85605119",
+      "hcp": 32.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Rafael Gomez Carrera",
+      "licencia": "AM85143527",
+      "hcp": 24.5,
       "nivel": "S"
     }
   ],
@@ -246,6 +642,5 @@
   "scoreTypes": null,
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:49.804Z"
+  ]
 }

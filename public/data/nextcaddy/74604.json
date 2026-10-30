@@ -1,9 +1,9 @@
 {
   "tourId": 74604,
   "url": "https://www.nextcaddy.com/tour/74604",
-  "scrapedAt": "2026-10-19T09:49:00.658Z",
+  "scrapedAt": "2026-10-30T14:29:17.382Z",
   "meta": {
-    "name": null,
+    "name": "Final Ranking Dobles Fourball 2026 · 16:00",
     "organizer": null,
     "course": "Escuela de la Real Federación de Golf de Madrid",
     "courseCode": "CM41",
@@ -23,8 +23,17 @@
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Pareja Scratch General",
+      "jugadores": 20
+    },
+    "2": {
+      "name": "Pareja Handicap General",
+      "jugadores": 20
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -58,7 +67,7 @@
       "orden": 3,
       "name": "Tomas Segura Collado",
       "licencia": "CM41670329",
-      "hcp": 9.3,
+      "hcp": 9,
       "nivel": "S"
     },
     {
@@ -72,28 +81,28 @@
       "orden": 4,
       "name": "Jorge Mendoza Rivero",
       "licencia": "CM33808128",
-      "hcp": 13.2,
+      "hcp": 12.8,
       "nivel": "S"
     },
     {
       "orden": 4,
       "name": "Luis Martin Gonzalez",
       "licencia": "CM41894316",
-      "hcp": 15.2,
-      "nivel": "S"
-    },
-    {
-      "orden": 5,
-      "name": "Luis De Nicolas Muñoz",
-      "licencia": "CM41452596",
-      "hcp": 12.1,
+      "hcp": 15.5,
       "nivel": "S"
     },
     {
       "orden": 5,
       "name": "Jose Antonio Plaza Cambronero",
       "licencia": "CM41084418",
-      "hcp": 20.5,
+      "hcp": 20.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Eduardo Fernandez Bello",
+      "licencia": "CM41258857",
+      "hcp": 23.5,
       "nivel": "S"
     },
     {
@@ -128,14 +137,14 @@
       "orden": 8,
       "name": "Agustin Nuevo Felipe",
       "licencia": "CM41886837",
-      "hcp": 12.1,
+      "hcp": 12.3,
       "nivel": "S"
     },
     {
       "orden": 8,
       "name": "Jose Rincon Bautista",
       "licencia": "CM41796607",
-      "hcp": 17.1,
+      "hcp": 17.7,
       "nivel": "S"
     },
     {
@@ -149,14 +158,14 @@
       "orden": 9,
       "name": "Heliodoro Cruz Gallego",
       "licencia": "CM41941702",
-      "hcp": 27.4,
+      "hcp": 27.1,
       "nivel": "S"
     },
     {
       "orden": 10,
       "name": "David Diaz Hernandez",
       "licencia": "CM41385670",
-      "hcp": 17.4,
+      "hcp": 17.3,
       "nivel": "S"
     },
     {
@@ -198,7 +207,7 @@
       "orden": 13,
       "name": "Maria Teresa Fernandez-Monzon Ravena",
       "licencia": "CM41146806",
-      "hcp": 17.9,
+      "hcp": 17.7,
       "nivel": "S"
     },
     {
@@ -231,9 +240,9 @@
     },
     {
       "orden": 15,
-      "name": "Gonzalo Cardenal Vaquerizo",
-      "licencia": "CM41692448",
-      "hcp": 23.8,
+      "name": "Rafael Fernandez Fernandez De Los Rios",
+      "licencia": "CM22251216",
+      "hcp": 21.4,
       "nivel": "S"
     },
     {
@@ -275,14 +284,14 @@
       "orden": 18,
       "name": "Ana Maria Gonzalez Candanedo",
       "licencia": "CM41308668",
-      "hcp": 30,
+      "hcp": 29.2,
       "nivel": "S"
     },
     {
       "orden": 19,
       "name": "Francisco Orgaz Escalera",
       "licencia": "CM41185542",
-      "hcp": 27.8,
+      "hcp": 27.1,
       "nivel": "S"
     },
     {
@@ -294,16 +303,16 @@
     },
     {
       "orden": 20,
-      "name": "Alfredo Sanchez Aguirre",
-      "licencia": "CM41490886",
-      "hcp": 24.7,
+      "name": "Santiago Morales Portillo",
+      "licencia": "CM41063765",
+      "hcp": 17.4,
       "nivel": "S"
     },
     {
       "orden": 20,
-      "name": "Jose Manuel De La Ossa Durango",
-      "licencia": "CM41793406",
-      "hcp": 33.1,
+      "name": "Cristian Monserrat Naranjo",
+      "licencia": "CM41766804",
+      "hcp": 19.7,
       "nivel": "S"
     }
   ],
@@ -704,6 +713,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/2836123477_74604-final-ranking-dobles-fourball-2026-16-00.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:37.616Z"
+  ]
 }

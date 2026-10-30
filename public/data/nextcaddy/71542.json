@@ -1,13 +1,13 @@
 {
   "tourId": 71542,
   "url": "https://www.nextcaddy.com/tour/71542",
-  "scrapedAt": "2026-06-24T14:57:52.132Z",
+  "scrapedAt": "2026-10-30T14:26:41.547Z",
   "meta": {
     "name": "FINAL Torneo Academia Infantil 2025-2026 - 9 hoyos",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-06-28",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -19,12 +19,210 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 3,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Hugo Zambrano Gonzalez",
+          "licencia": "AMI5989569",
+          "hcp": 37.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2343249
+        },
+        {
+          "pos": 2,
+          "name": "Leo Rodriguez Lopez",
+          "licencia": "AMI5416477",
+          "hcp": 41.8,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2348175
+        },
+        {
+          "pos": 3,
+          "name": "Daniel Jimenez Pachon",
+          "licencia": "AMI5322414",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2349100
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Olaia Navarro Sanjaume",
+          "licencia": "AMI5061667",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2350207
+        },
+        {
+          "pos": 2,
+          "name": "Alejandro Labrot-Moreno Sanchez",
+          "licencia": "AMI5066739",
+          "hcp": 22.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2349058
+        },
+        {
+          "pos": 3,
+          "name": "Logan Heredia Martin-Price",
+          "licencia": "AM83989022",
+          "hcp": 46,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2350169
+        },
+        {
+          "pos": 4,
+          "name": "Jose Harras Diaz",
+          "licencia": "AMI5517647",
+          "hcp": 36,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2350301
+        },
+        {
+          "pos": 5,
+          "name": "Adrian Blasco Pietras",
+          "licencia": "AMI5495900",
+          "hcp": 40.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2343820
+        },
+        {
+          "pos": 6,
+          "name": "Gonzalo Krauel Pineda",
+          "licencia": "AMI5506871",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2349227
+        },
+        {
+          "pos": 7,
+          "name": "Liam Heredia Martin-Price",
+          "licencia": "AM83095176",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2350171
+        },
+        {
+          "pos": 8,
+          "name": "Alba Ruiz Macias",
+          "licencia": "AMI5351545",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2348628
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Ballesteros Lopez De Los Mozos",
+          "licencia": "AMI5987995",
+          "hcp": 40.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2349923
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 3
+    },
+    "2": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -83,11 +281,18 @@
       "nivel": "A"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 9,
+      "name": "Logan Heredia Martin-Price",
+      "licencia": "AM83989022",
+      "hcp": 46,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Liam Heredia Martin-Price",
+      "licencia": "AM83095176",
+      "hcp": 54,
+      "nivel": "A"
     },
     {
       "orden": 1,
@@ -102,102 +307,6 @@
       "licencia": "AMI5061667",
       "hcp": 54,
       "nivel": "A"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Hugo Zambrano Gonzalez",
-      "licencia": "15-06-26 07:31",
-      "hcp": 37.6,
-      "nivel": "AMI5989569"
-    },
-    {
-      "orden": 2,
-      "name": "Adrian Blasco Pietras",
-      "licencia": "15-06-26 13:18",
-      "hcp": 40.6,
-      "nivel": "AMI5495900"
-    },
-    {
-      "orden": 3,
-      "name": "Leo Rodriguez Lopez",
-      "licencia": "20-06-26 17:17",
-      "hcp": 41.8,
-      "nivel": "AMI5416477"
-    },
-    {
-      "orden": 4,
-      "name": "Alba Ruiz Macias",
-      "licencia": "21-06-26 16:36",
-      "hcp": 54,
-      "nivel": "AMI5351545"
-    },
-    {
-      "orden": 5,
-      "name": "Alejandro Labrot-Moreno Sanchez",
-      "licencia": "22-06-26 16:18",
-      "hcp": 22.4,
-      "nivel": "AMI5066739"
-    },
-    {
-      "orden": 6,
-      "name": "Daniel Jimenez Pachon",
-      "licencia": "22-06-26 16:45",
-      "hcp": 54,
-      "nivel": "AMI5322414"
-    },
-    {
-      "orden": 7,
-      "name": "Gonzalo Krauel Pineda",
-      "licencia": "22-06-26 22:29",
-      "hcp": 54,
-      "nivel": "AMI5506871"
-    },
-    {
-      "orden": 8,
-      "name": "Ignacio Ballesteros Lopez De Los Mozos",
-      "licencia": "23-06-26 18:51",
-      "hcp": 40.5,
-      "nivel": "AMI5987995"
-    },
-    {
-      "orden": 9,
-      "name": "Olaia Navarro Sanjaume",
-      "licencia": "24-06-26 12:01",
-      "hcp": 54,
-      "nivel": "AMI5061667"
-    },
-    {
-      "orden": 10,
-      "name": "Jose Harras Diaz",
-      "licencia": "24-06-26 13:11",
-      "hcp": 36,
-      "nivel": "AMI5517647"
-    },
-    {
-      "orden": 900,
-      "name": "Los jugadores por debajo de esta línea se encuentran en lista de espera Al estar cubierto el máximo de inscritos, la participación de los jugadores en lista de espera estará pendiente de posibles bajas de otros jugadores. En caso de no ser incluidos en la lista final de participantes se les devolverá el importe de la inscripción por el mismo medio empleado para su pago \">",
-      "hcp": null
-    },
-    {
-      "orden": 1011,
-      "name": "Logan Heredia Martin-Price",
-      "licencia": "24-06-26 11:13",
-      "hcp": 46,
-      "nivel": "AM83989022"
-    },
-    {
-      "orden": 1012,
-      "name": "Liam Heredia Martin-Price",
-      "licencia": "24-06-26 11:16",
-      "hcp": 54,
-      "nivel": "AM83095176"
     }
   ],
   "horarios": [
@@ -331,6 +440,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-29T09:18:54.553Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

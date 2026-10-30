@@ -1,9 +1,9 @@
 {
   "tourId": 74607,
   "url": "https://www.nextcaddy.com/tour/74607",
-  "scrapedAt": "2026-10-19T09:48:58.101Z",
+  "scrapedAt": "2026-10-30T14:29:12.087Z",
   "meta": {
-    "name": null,
+    "name": "LIGUILLA DAMAS 20/10/2026",
     "organizer": null,
     "course": "Real Club de Campo de Cordoba",
     "courseCode": "AM06",
@@ -21,17 +21,415 @@
     "dateIso": "2026-10-20",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 28,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap 1A Categoria Liguilla Damas",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "M Carmen Lopez Del Campo",
+          "licencia": "AM06923151",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2429350
+        },
+        {
+          "pos": 2,
+          "name": "Maria Carrere Lovera",
+          "licencia": "AM06310821",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429660
+        },
+        {
+          "pos": 3,
+          "name": "Carmen Cañete Leyva",
+          "licencia": "AM06957945",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2429719
+        },
+        {
+          "pos": 4,
+          "name": "Rocio Garcia-Aranda Pez",
+          "licencia": "AM06114520",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2427339
+        },
+        {
+          "pos": 5,
+          "name": "Carolina Peña Algaba",
+          "licencia": "AM06979099",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2428334
+        },
+        {
+          "pos": 6,
+          "name": "M. Angeles De La Torre Moran",
+          "licencia": "AM06323165",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2426614
+        },
+        {
+          "pos": 7,
+          "name": "Susana De La Guerra Irazu",
+          "licencia": "AM06358643",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 7,
+          "inscribedId": 2429475
+        },
+        {
+          "pos": 8,
+          "name": "Maria Jose Carrion Muñoz",
+          "licencia": "AM06903492",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2428651
+        },
+        {
+          "pos": 9,
+          "name": "Maria Del Mar Romero Garcia",
+          "licencia": "AM06050625",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 9,
+          "inscribedId": 2428962
+        },
+        {
+          "pos": 10,
+          "name": "Pilar Martinez Uceda",
+          "licencia": "AM06360141",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2429661
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Handicap 2A Categoria Liguilla Damas",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Concepcion Rodriguez Herrero",
+          "licencia": "AM06959143",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2429710
+        },
+        {
+          "pos": 2,
+          "name": "Maria Pilar Perez Navero",
+          "licencia": "AM06885414",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2429474
+        },
+        {
+          "pos": 3,
+          "name": "Enriqueta Cañete Leyva",
+          "licencia": "AM06054091",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2429720
+        },
+        {
+          "pos": 4,
+          "name": "Eulalia Ruiz Rodriguez",
+          "licencia": "AM06897540",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429657
+        },
+        {
+          "pos": 5,
+          "name": "Layla Mechbal Gracia",
+          "licencia": "AMJ7374824",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2429659
+        },
+        {
+          "pos": 6,
+          "name": "Erica Cid Perez",
+          "licencia": "AM06960584",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2426567
+        },
+        {
+          "pos": 7,
+          "name": "Maria Del Mar Ribes Bautista",
+          "licencia": "AM06965342",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2429067
+        },
+        {
+          "pos": null,
+          "name": "Lourdes Muñoz Alarcon",
+          "licencia": "AM06262699",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2429344
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Handicap 3A Categoria Liguilla Damas",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Silvia Delgado-Brackenbury Ferrer",
+          "licencia": "AM06799715",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2428875
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Maria Gomez Gomez De Tejada",
+          "licencia": "AM25963208",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2429013
+        },
+        {
+          "pos": 3,
+          "name": "Maria Isabel Carmona Priego",
+          "licencia": "AM06417565",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2428335
+        },
+        {
+          "pos": 4,
+          "name": "Maria Dolores Moreno Martinez",
+          "licencia": "AMC4792373",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2428336
+        },
+        {
+          "pos": 5,
+          "name": "Esther Gonzalez Martinez",
+          "licencia": "AMJ7347872",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2427500
+        },
+        {
+          "pos": 6,
+          "name": "Gloria Cabrera Amian",
+          "licencia": "AMJ7470032",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2428963
+        },
+        {
+          "pos": 7,
+          "name": "Maria De Los Angeles Toledo Larrea",
+          "licencia": "AM06376973",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2430164
+        },
+        {
+          "pos": 8,
+          "name": "Angela Calvento Gavilan",
+          "licencia": "AM06759479",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2429068
+        },
+        {
+          "pos": 9,
+          "name": "Belen Fernandez Robledo",
+          "licencia": "AM06471795",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2429658
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap 1A Categoria Liguilla Damas",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Handicap 2A Categoria Liguilla Damas",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Handicap 3A Categoria Liguilla Damas",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Erica Cid Perez",
       "licencia": "AM06960584",
       "hcp": 28.4,
-      "nivel": "S"
+      "nivel": "Mid"
     },
     {
       "orden": 2,
@@ -206,6 +604,13 @@
       "name": "Enriqueta Cañete Leyva",
       "licencia": "AM06054091",
       "hcp": 27,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Maria De Los Angeles Toledo Larrea",
+      "licencia": "AM06376973",
+      "hcp": 36,
       "nivel": "S"
     }
   ],
@@ -460,13 +865,334 @@
     }
   ],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 162238,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            16
+          ],
+          [
+            "Birdie",
+            1
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            54
+          ],
+          [
+            "Peor",
+            102
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162239,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            46
+          ],
+          [
+            "2",
+            39
+          ],
+          [
+            "3",
+            40
+          ],
+          [
+            "4",
+            23
+          ],
+          [
+            "5",
+            24
+          ],
+          [
+            "6",
+            41
+          ],
+          [
+            "7",
+            41
+          ],
+          [
+            "8",
+            28
+          ],
+          [
+            "9",
+            38
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162240,
+        "datos": [
+          [
+            "Hoyo",
+            "SILVIA DELGADO-BRACKENBURY FERRER",
+            "CONCEPCION RODRIGUEZ HERRERO",
+            "CARMEN MARIA GOMEZ GOMEZ DE TEJADA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 12",
+            -1,
+            1,
+            -2
+          ],
+          [
+            "Hoyo 13",
+            -2,
+            0,
+            -3
+          ],
+          [
+            "Hoyo 14",
+            -3,
+            -1,
+            -4
+          ],
+          [
+            "Hoyo 15",
+            -1,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 16",
+            -4,
+            -2,
+            -3
+          ],
+          [
+            "Hoyo 17",
+            -4,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 18",
+            -5,
+            -2,
+            -1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162241,
+        "datos": [
+          [
+            "Hoyo",
+            "SILVIA DELGADO-BRACKENBURY FERRER",
+            "CONCEPCION RODRIGUEZ HERRERO",
+            "CARMEN MARIA GOMEZ GOMEZ DE TEJADA"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 6",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 7",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            0,
+            -2
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 13",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 14",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 15",
+            2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 16",
+            -3,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            2,
+            2
+          ],
+          [
+            "Hoyo 18",
+            -1,
+            -2,
+            0
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -477,6 +1203,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:37.822Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 73638,
   "url": "https://www.nextcaddy.com/tour/73638",
-  "scrapedAt": "2026-10-12T12:09:17.865Z",
+  "scrapedAt": "2026-10-30T14:29:19.229Z",
   "meta": {
-    "name": null,
+    "name": "XIV LIGA JUNIOR GOLF 2026-2027",
     "organizer": null,
     "course": "Escuela Pública la Cartuja",
     "courseCode": "AMG3",
@@ -23,9 +23,285 @@
     "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Xiv Liga Junior 26-27 - 1ª Jornada",
+      "expectedJugadores": 21,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Victor Roman Garrido",
+          "licencia": "AMF3181390",
+          "hcp": 17.5,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2421128
+        },
+        {
+          "pos": 2,
+          "name": "Julia Luque Garcia",
+          "licencia": "AMG3994974",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2416651
+        },
+        {
+          "pos": 3,
+          "name": "Gala Morales Perez",
+          "licencia": "AM85978344",
+          "hcp": 18.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2424613
+        },
+        {
+          "pos": 4,
+          "name": "Martin Becerra Alvarez",
+          "licencia": "AMG3522203",
+          "hcp": 52,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2402694
+        },
+        {
+          "pos": 5,
+          "name": "Victoria Polyanskiy Polyanskaya",
+          "licencia": "AM95906224",
+          "hcp": 54,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2415002
+        },
+        {
+          "pos": 6,
+          "name": "Kimberley Martinez Marchena",
+          "licencia": "AMG3376636",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2432966
+        },
+        {
+          "pos": 7,
+          "name": "Lucas Nuño Medinilla",
+          "licencia": "AMF7093110",
+          "hcp": 35.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2401322
+        },
+        {
+          "pos": 8,
+          "name": "Jaime Guillen Carmona",
+          "licencia": "AM85972709",
+          "hcp": 10.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2431385
+        },
+        {
+          "pos": 9,
+          "name": "Pedro Flores Azagra",
+          "licencia": "AMG3373371",
+          "hcp": 53.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2406245
+        },
+        {
+          "pos": 10,
+          "name": "Pedro Sanchez-Osorio Garcia",
+          "licencia": "AM85962701",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 2,
+          "inscribedId": 2430169
+        },
+        {
+          "pos": 11,
+          "name": "Pablo De La Torre Guisado",
+          "licencia": "AMG3099560",
+          "hcp": 12.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2401321
+        },
+        {
+          "pos": 12,
+          "name": "Ruben Alonso Merino",
+          "licencia": "AM07515967",
+          "hcp": 36,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2401320
+        },
+        {
+          "pos": 13,
+          "name": "Carla Garcia Garcia",
+          "licencia": "AMG3522158",
+          "hcp": 36,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 5,
+          "inscribedId": 2402095
+        },
+        {
+          "pos": 14,
+          "name": "Lorenzo Morales Perez",
+          "licencia": "AM85419489",
+          "hcp": 43.2,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 8,
+          "inscribedId": 2424614
+        },
+        {
+          "pos": 15,
+          "name": "Manuel Montagut Gonzalez",
+          "licencia": "AMG3954124",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2401439
+        },
+        {
+          "pos": 16,
+          "name": "Antonio Javier Sanchez Ramirez",
+          "licencia": "AMG3351040",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2415744
+        },
+        {
+          "pos": 17,
+          "name": "Sofia Flores Azagra",
+          "licencia": "AMG3012152",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2406244
+        },
+        {
+          "pos": 18,
+          "name": "Lucia Grimaldi Ferrer",
+          "licencia": "AM95949848",
+          "hcp": 12.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2432682
+        },
+        {
+          "pos": 19,
+          "name": "Manuel De La Torre Guisado",
+          "licencia": "AMG3099567",
+          "hcp": 32.3,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2403998
+        },
+        {
+          "pos": 20,
+          "name": "Beltran Leria Sanchez-Osorio",
+          "licencia": "AM85962702",
+          "hcp": 33.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2430172
+        },
+        {
+          "pos": 21,
+          "name": "Ignacio Sanchez Lozano",
+          "licencia": "AM07517987",
+          "hcp": 36.6,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2421206
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Xiv Liga Junior 26-27 - 1ª Jornada",
+      "jugadores": 21
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -45,7 +321,7 @@
       "orden": 3,
       "name": "Lucas Nuño Medinilla",
       "licencia": "AMF7093110",
-      "hcp": 35.5,
+      "hcp": 35.4,
       "nivel": "B"
     },
     {
@@ -94,8 +370,36 @@
       "orden": 10,
       "name": "Ignacio Sanchez Lozano",
       "licencia": "AM07517987",
-      "hcp": 39.1,
+      "hcp": 36.6,
       "nivel": "B"
+    },
+    {
+      "orden": 11,
+      "name": "Lorenzo Morales Perez",
+      "licencia": "AM85419489",
+      "hcp": 43.2,
+      "nivel": "B"
+    },
+    {
+      "orden": 12,
+      "name": "Pedro Sanchez-Osorio Garcia",
+      "licencia": "AM85962701",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 13,
+      "name": "Beltran Leria Sanchez-Osorio",
+      "licencia": "AM85962702",
+      "hcp": 33.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 14,
+      "name": "Jaime Guillen Carmona",
+      "licencia": "AM85972709",
+      "hcp": 10.9,
+      "nivel": "A"
     },
     {
       "orden": 1,
@@ -124,6 +428,27 @@
       "licencia": "AMG3994974",
       "hcp": 54,
       "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Gala Morales Perez",
+      "licencia": "AM85978344",
+      "hcp": 18.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Lucia Grimaldi Ferrer",
+      "licencia": "AM95949848",
+      "hcp": 12.9,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Kimberley Martinez Marchena",
+      "licencia": "AMG3376636",
+      "hcp": 54,
+      "nivel": "B"
     }
   ],
   "horarios": [
@@ -364,6 +689,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/4035473203_73638-xiv-liga-junior-golf-2026-2027.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-26T09:53:33.044Z"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 73122,
   "url": "https://www.nextcaddy.com/tour/73122",
-  "scrapedAt": "2026-08-24T04:59:52.463Z",
+  "scrapedAt": "2026-10-30T14:28:09.514Z",
   "meta": {
-    "name": null,
+    "name": "CAMPEONATO JUVENIL DEL FRESNILLO",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -14,6 +14,8 @@
       "JUVENIL",
       "Caballeros",
       "Señoras",
+      "Benjamin Masculino",
+      "Alevin Masculino",
       "Juvenil",
       "Infantil",
       "Profesional",
@@ -22,24 +24,553 @@
     "dateIso": "2026-09-06",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 73,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Individual Scratch General Alevín",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 4.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 1,
+          "inscribedId": 2389371
+        },
+        {
+          "pos": 2,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 7.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 80,
+          "toPar": 7,
+          "inscribedId": 2389459
+        },
+        {
+          "pos": 3,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 8.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 8,
+          "inscribedId": 2396099
+        },
+        {
+          "pos": 4,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 10.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 87,
+          "toPar": 14,
+          "inscribedId": 2392678
+        },
+        {
+          "pos": 5,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 12.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 95,
+          "toPar": 22,
+          "inscribedId": 2391881
+        },
+        {
+          "pos": 6,
+          "name": "Leonardo Lopez Sopelana",
+          "licencia": "7739484636",
+          "hcp": 35.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 111,
+          "toPar": 38,
+          "inscribedId": 2395669
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Individual Handicap General Alevín",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Pablo Herguedas Sanz",
+          "licencia": "7752053507",
+          "hcp": 4.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 71,
+          "toPar": -2,
+          "inscribedId": 2389371
+        },
+        {
+          "pos": 2,
+          "name": "Marco Rojas Alonso",
+          "licencia": "7776372629",
+          "hcp": 7.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 1,
+          "inscribedId": 2389459
+        },
+        {
+          "pos": 3,
+          "name": "Diego San Sebastian Alonso",
+          "licencia": "7760993876",
+          "hcp": 8.2,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 2,
+          "inscribedId": 2396099
+        },
+        {
+          "pos": 4,
+          "name": "Leonardo Lopez Sopelana",
+          "licencia": "7739484636",
+          "hcp": 35.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 2,
+          "inscribedId": 2395669
+        },
+        {
+          "pos": 5,
+          "name": "Jaime Pardo Gonzalez",
+          "licencia": "7706966957",
+          "hcp": 10.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 5,
+          "inscribedId": 2392678
+        },
+        {
+          "pos": 6,
+          "name": "Pablo Rodriguez Molina",
+          "licencia": "7706966959",
+          "hcp": 12.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 84,
+          "toPar": 11,
+          "inscribedId": 2391881
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Individual Scratch General Infantil",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 6.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 4,
+          "inscribedId": 2396091
+        },
+        {
+          "pos": 2,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 4,
+          "inscribedId": 2393879
+        },
+        {
+          "pos": 3,
+          "name": "Oliver Fraile Saenz",
+          "licencia": "7752071342",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 83,
+          "toPar": 10,
+          "inscribedId": 2393753
+        },
+        {
+          "pos": 4,
+          "name": "Joaquin Aparicio Gonzalez",
+          "licencia": "7707917692",
+          "hcp": 7.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 86,
+          "toPar": 13,
+          "inscribedId": 2394779
+        },
+        {
+          "pos": 5,
+          "name": "David Merino Garcia",
+          "licencia": "7739015062",
+          "hcp": 18.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 92,
+          "toPar": 19,
+          "inscribedId": 2395489
+        },
+        {
+          "pos": 6,
+          "name": "Sergio Cerezal Criado",
+          "licencia": "7759935670",
+          "hcp": 36,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 118,
+          "toPar": 45,
+          "inscribedId": 2396643
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Individual Handicap General Infantil",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Oliver Fraile Saenz",
+          "licencia": "7752071342",
+          "hcp": 13.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": -5,
+          "inscribedId": 2393753
+        },
+        {
+          "pos": 2,
+          "name": "Beltran Diez Sillero",
+          "licencia": "7706962379",
+          "hcp": 6.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 70,
+          "toPar": -3,
+          "inscribedId": 2396091
+        },
+        {
+          "pos": 3,
+          "name": "David Merino Garcia",
+          "licencia": "7739015062",
+          "hcp": 18.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 72,
+          "toPar": -1,
+          "inscribedId": 2395489
+        },
+        {
+          "pos": 4,
+          "name": "Enzo Jimenez Puerta",
+          "licencia": "7753983104",
+          "hcp": 2.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 2,
+          "inscribedId": 2393879
+        },
+        {
+          "pos": 5,
+          "name": "Sergio Cerezal Criado",
+          "licencia": "7759935670",
+          "hcp": 36,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 5,
+          "inscribedId": 2396643
+        },
+        {
+          "pos": 6,
+          "name": "Joaquin Aparicio Gonzalez",
+          "licencia": "7707917692",
+          "hcp": 7.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 6,
+          "inscribedId": 2394779
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Individual Scratch General Cadete",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alicia Martinez Gonzalez",
+          "licencia": "CM41975268",
+          "hcp": 14.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 108,
+          "toPar": 35,
+          "inscribedId": 2396652
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Individual Handicap General Cadete",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alicia Martinez Gonzalez",
+          "licencia": "CM41975268",
+          "hcp": 14.7,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 18,
+          "inscribedId": 2396652
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Individual Scratch General Alevín",
+      "jugadores": 6
+    },
+    "2": {
+      "name": "Individual Handicap General Alevín",
+      "jugadores": 6
+    },
+    "3": {
+      "name": "Individual Scratch General Infantil",
+      "jugadores": 6
+    },
+    "4": {
+      "name": "Individual Handicap General Infantil",
+      "jugadores": 6
+    },
+    "5": {
+      "name": "Individual Scratch General Cadete",
+      "jugadores": 1
+    },
+    "6": {
+      "name": "Individual Handicap General Cadete",
+      "jugadores": 1
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
       "name": "Pablo Herguedas Sanz",
       "licencia": "7752053507",
-      "hcp": 5.6,
+      "hcp": 4.9,
       "nivel": "A"
     },
     {
       "orden": 2,
       "name": "Marco Rojas Alonso",
       "licencia": "7776372629",
-      "hcp": 8.3,
+      "hcp": 7.7,
       "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Pablo Rodriguez Molina",
+      "licencia": "7706966959",
+      "hcp": 12.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 4,
+      "name": "Jaime Pardo Gonzalez",
+      "licencia": "7706966957",
+      "hcp": 10.3,
+      "nivel": "A"
+    },
+    {
+      "orden": 5,
+      "name": "Leonardo Lopez Sopelana",
+      "licencia": "7739484636",
+      "hcp": 35.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 6,
+      "name": "Diego San Sebastian Alonso",
+      "licencia": "7760993876",
+      "hcp": 8.2,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Oliver Fraile Saenz",
+      "licencia": "7752071342",
+      "hcp": 13.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Enzo Jimenez Puerta",
+      "licencia": "7753983104",
+      "hcp": 2.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Joaquin Aparicio Gonzalez",
+      "licencia": "7707917692",
+      "hcp": 7.1,
+      "nivel": "I"
+    },
+    {
+      "orden": 4,
+      "name": "David Merino Garcia",
+      "licencia": "7739015062",
+      "hcp": 18.4,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Beltran Diez Sillero",
+      "licencia": "7706962379",
+      "hcp": 6.6,
+      "nivel": "I"
+    },
+    {
+      "orden": 6,
+      "name": "Sergio Cerezal Criado",
+      "licencia": "7759935670",
+      "hcp": 36,
+      "nivel": "I"
+    },
+    {
+      "orden": 1,
+      "name": "Alicia Martinez Gonzalez",
+      "licencia": "CM41975268",
+      "hcp": 14.7,
+      "nivel": "C"
     }
   ],
   "horarios": [
@@ -183,7 +714,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-09-07T09:14:56.160Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/1349029774_plan_de_evacuacion.pdf",
+    "/uploads/2026/08/puntuable-ranking-sub14-equipo-cyl-Villamayor-2026.pdf",
+    "/uploads/competiciones/pdf/3006767974_reglas_locales_fresnillo.pdf"
+  ]
 }

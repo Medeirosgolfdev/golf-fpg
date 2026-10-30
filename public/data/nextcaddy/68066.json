@@ -1,13 +1,13 @@
 {
   "tourId": 68066,
   "url": "https://www.nextcaddy.com/tour/68066",
-  "scrapedAt": "2026-06-24T14:58:39.725Z",
+  "scrapedAt": "2026-10-30T14:28:33.105Z",
   "meta": {
     "name": "Final de Ranking Match Play P&P 2026",
     "organizer": null,
     "course": null,
     "courseCode": null,
-    "dateStart": null,
+    "dateStart": "2026-09-26",
     "dateEnd": null,
     "format": "Match Play P&P 2026",
     "categories": [
@@ -17,13 +17,128 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-09-26",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Fernando Cabezudo San Jose",
+      "licencia": "7773319786",
+      "hcp": 4.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Cesar Gomez Hernandez",
+      "licencia": "7752389832",
+      "hcp": 4.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Antonio Gonzalez Pertejo",
+      "licencia": "7776398093",
+      "hcp": 4,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Martiniano Delgado Prieto",
+      "licencia": "7759382396",
+      "hcp": 10,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Jose Manuel Rojano Martinez",
+      "licencia": "7773790872",
+      "hcp": 9.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Alberto De Antonio Palermo",
+      "licencia": "7728364844",
+      "hcp": 2.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Marcos Blanco Alvarez",
+      "licencia": "7752162222",
+      "hcp": 6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Mariano San Jose De La Rosa",
+      "licencia": "7752260868",
+      "hcp": 11.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Tomas Asuncion Guerra",
+      "licencia": "7723329497",
+      "hcp": 6,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Francisco Javier Pizarro Maderal",
+      "licencia": "7724340339",
+      "hcp": 6,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Samuel Nieto Lopez",
+      "licencia": "7752162882",
+      "hcp": 2.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Andres Perez Garrido",
+      "licencia": "7773321447",
+      "hcp": 8.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Marino Martin Alvarez",
+      "licencia": "7773970711",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Maria Ortiz De Pinedo Fernandez",
+      "licencia": "7752081049",
+      "hcp": null,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Ivan Huertas Pascual",
+      "licencia": "7771947205",
+      "hcp": 14,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Dario De Antonio Perez-Villamil",
+      "licencia": "7728374742",
+      "hcp": 12.5,
+      "nivel": "J"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -42,7 +157,9 @@
   ],
   "scoreTypes": [],
   "pdfs": [
-    "/uploads/competiciones/pdf/749361405_cirfgcyl4125.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:53:56.993Z"
+    "/uploads/competiciones/pdf/3784006524_clasificaciones.pdf",
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/3784006524_clasificaciones.pdf",
+    "/uploads/competiciones/pdf/3735910270_cuadro-match-play-final-de-ranking-pyp-cyl-2026.pdf",
+    "/uploads/circulares/cirfgcyl3226.pdf"
+  ]
 }

@@ -1,9 +1,9 @@
 {
   "tourId": 72242,
   "url": "https://www.nextcaddy.com/tour/72242",
-  "scrapedAt": "2026-07-13T07:09:51.415Z",
+  "scrapedAt": "2026-10-30T14:28:34.568Z",
   "meta": {
-    "name": null,
+    "name": "Final CINCOCAMPOS 2026 (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -25,7 +25,106 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Roberto Vara Rojas",
+      "licencia": "AM85757058",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Rafael Fernandez Baez",
+      "licencia": "AM95769148",
+      "hcp": 14.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Jose Juan Bocarando Gutierrez",
+      "licencia": "AM85357348",
+      "hcp": 14.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Enrique Martin Romero",
+      "licencia": "AM02764251",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Rafael Prieto Garcia",
+      "licencia": "AM85958724",
+      "hcp": 16.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Angel Ignacio Garrido Benito",
+      "licencia": "AM85344296",
+      "hcp": 15.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Antonio Sandino Chaparro",
+      "licencia": "AM85920989",
+      "hcp": 15.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Manuel Jose Huerta Infantes",
+      "licencia": "AM02261292",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Maria Prieto Garcia",
+      "licencia": "AM85153928",
+      "hcp": 19.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Juan Francisco Fernandez Melo",
+      "licencia": "AMG3093900",
+      "hcp": 35,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Leopoldo Gonzalez Sanz De Andino",
+      "licencia": "AM02600417",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Javier Alameda Bustinza",
+      "licencia": "AM95327240",
+      "hcp": 13.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Jesus Sanchez De Lamadrid Garcia",
+      "licencia": "AM95050519",
+      "hcp": 5.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Francisco Trujillo Madroñal",
+      "licencia": "AM25341799",
+      "hcp": 26.5,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -174,10 +273,45 @@
       "roundId": 77401
     }
   ],
-  "scoreTypes": [],
+  "scoreTypes": {
+    "eagle": {
+      "scoreTypeKey": "eagle",
+      "players": [
+        {
+          "playerName": "Sanchez Herreros, Jose Manuel",
+          "holeNumber": 5,
+          "createdAt": "24/08/26 15:35:57"
+        }
+      ]
+    },
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Fernandez Gomez, Javier",
+          "holeNumber": 5,
+          "createdAt": "24/08/26 15:47:52"
+        },
+        {
+          "playerName": "Roldan Cantos, Patricia",
+          "holeNumber": 7,
+          "createdAt": "24/08/26 15:58:02"
+        },
+        {
+          "playerName": "Roldan Cantos, Patricia",
+          "holeNumber": 8,
+          "createdAt": "24/08/26 16:16:14"
+        },
+        {
+          "playerName": "Sierra Rosa, Jose Antonio",
+          "holeNumber": 6,
+          "createdAt": "24/08/26 16:50:57"
+        }
+      ]
+    }
+  },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/176284050_72242-grupo-privado-26-septiembre-2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-12T12:10:03.979Z"
+  ]
 }

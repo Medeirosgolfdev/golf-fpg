@@ -1,13 +1,13 @@
 {
   "tourId": 70550,
   "url": "https://www.nextcaddy.com/tour/70550",
-  "scrapedAt": "2026-06-24T14:58:49.065Z",
+  "scrapedAt": "2026-10-30T14:29:00.265Z",
   "meta": {
     "name": "Ryder Grupo Privado",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": null,
+    "dateStart": "2026-10-16",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,7 +17,9 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-10-16",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
@@ -40,7 +42,204 @@
       "roundId": 75494
     }
   ],
-  "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:54:08.767Z"
+  "scoreTypes": {
+    "birdie": {
+      "scoreTypeKey": "birdie",
+      "players": [
+        {
+          "playerName": "Aragon Rubio, Francisco",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 09:55:49"
+        },
+        {
+          "playerName": "Triviño Martin, Mario",
+          "holeNumber": 6,
+          "createdAt": "08/08/26 09:59:30"
+        },
+        {
+          "playerName": "Picon Sanchez, Rafael",
+          "holeNumber": 1,
+          "createdAt": "08/08/26 10:05:34"
+        },
+        {
+          "playerName": "Iturbe Escolano, Ignacio",
+          "holeNumber": 3,
+          "createdAt": "08/08/26 10:35:23"
+        },
+        {
+          "playerName": "Picon Sanchez, Rafael",
+          "holeNumber": 4,
+          "createdAt": "08/08/26 10:43:40"
+        },
+        {
+          "playerName": "Farfan Rueda, Francisco",
+          "holeNumber": 6,
+          "createdAt": "08/08/26 10:44:05"
+        },
+        {
+          "playerName": "Garcia Perez, Jose Luis",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 10:52:03"
+        },
+        {
+          "playerName": "Sanchez Herreros, Jose Manuel",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 10:55:33"
+        },
+        {
+          "playerName": "Leiner, Sven",
+          "holeNumber": 11,
+          "createdAt": "08/08/26 11:01:29"
+        },
+        {
+          "playerName": "Lliso Aranguren, Jorge",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 11:03:59"
+        },
+        {
+          "playerName": "Delgado  Pardo, Jose",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 11:20:34"
+        },
+        {
+          "playerName": "Herrera Garcia, Cristobal",
+          "holeNumber": 12,
+          "createdAt": "08/08/26 11:22:13"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 11:35:57"
+        },
+        {
+          "playerName": "Leiner, Sven",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 11:49:34"
+        },
+        {
+          "playerName": "Duran Garcia, Jose Carlos",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 12:06:51"
+        },
+        {
+          "playerName": "Lartigue, Benjamin",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 12:13:29"
+        },
+        {
+          "playerName": "Plocher, Manfredo Roberto",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 13:05:43"
+        },
+        {
+          "playerName": "Van T Zelfde, Timo Aleski",
+          "holeNumber": 12,
+          "createdAt": "08/08/26 13:09:54"
+        },
+        {
+          "playerName": "Arevalo Olmo, Cesar Eduardo",
+          "holeNumber": 13,
+          "createdAt": "08/08/26 13:09:55"
+        },
+        {
+          "playerName": "Jimenez De Vicuña Urbieta, Francisco",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 13:16:05"
+        },
+        {
+          "playerName": "Picon Sanchez, Rafael",
+          "holeNumber": 12,
+          "createdAt": "08/08/26 13:22:11"
+        },
+        {
+          "playerName": "Velasco Frutos, Jose Miguel",
+          "holeNumber": 14,
+          "createdAt": "08/08/26 13:25:34"
+        },
+        {
+          "playerName": "Picon Campos, Rafael",
+          "holeNumber": 15,
+          "createdAt": "08/08/26 13:37:48"
+        },
+        {
+          "playerName": "Vazquez Ruz, Julen",
+          "holeNumber": 4,
+          "createdAt": "08/08/26 13:59:08"
+        },
+        {
+          "playerName": "Leiner, Sven",
+          "holeNumber": 4,
+          "createdAt": "08/08/26 13:59:13"
+        },
+        {
+          "playerName": "Cassina, Flavio",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 14:02:17"
+        },
+        {
+          "playerName": "Loaiza Benitez, Sergio",
+          "holeNumber": 10,
+          "createdAt": "08/08/26 14:26:39"
+        },
+        {
+          "playerName": "Marks, Gustavo",
+          "holeNumber": 1,
+          "createdAt": "08/08/26 14:39:19"
+        },
+        {
+          "playerName": "Jimenez De Vicuña Urbieta, Francisco",
+          "holeNumber": 1,
+          "createdAt": "08/08/26 14:44:44"
+        },
+        {
+          "playerName": "Garcia Frias, Antonio Javier",
+          "holeNumber": 18,
+          "createdAt": "08/08/26 14:48:01"
+        },
+        {
+          "playerName": "Rubia Chica, Jose Ramon",
+          "holeNumber": 8,
+          "createdAt": "08/08/26 14:48:27"
+        },
+        {
+          "playerName": "Van T Zelfde, Timo Aleski",
+          "holeNumber": 18,
+          "createdAt": "08/08/26 14:49:10"
+        },
+        {
+          "playerName": "Sanchez Herreros, Jose Manuel",
+          "holeNumber": 9,
+          "createdAt": "08/08/26 14:49:12"
+        },
+        {
+          "playerName": "Granlund, Hans",
+          "holeNumber": 4,
+          "createdAt": "08/08/26 14:53:18"
+        },
+        {
+          "playerName": "Corral Pedruzo, Pedro Antonio",
+          "holeNumber": 17,
+          "createdAt": "08/08/26 14:57:34"
+        },
+        {
+          "playerName": "Bas Trujillo, Ricardo",
+          "holeNumber": 12,
+          "createdAt": "08/08/26 14:59:00"
+        },
+        {
+          "playerName": "Rodriguez Hidalgo, Jose Julio",
+          "holeNumber": 3,
+          "createdAt": "08/08/26 15:06:52"
+        },
+        {
+          "playerName": "Arbs, Matt",
+          "holeNumber": 7,
+          "createdAt": "08/08/26 15:16:31"
+        }
+      ]
+    }
+  },
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

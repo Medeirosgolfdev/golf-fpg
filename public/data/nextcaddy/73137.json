@@ -1,9 +1,9 @@
 {
   "tourId": 73137,
   "url": "https://www.nextcaddy.com/tour/73137",
-  "scrapedAt": "2026-08-24T04:59:49.264Z",
+  "scrapedAt": "2026-10-30T14:27:56.278Z",
   "meta": {
-    "name": null,
+    "name": "POOL LEO REAÑO",
     "organizer": null,
     "course": "Villa Nueva Golf Resort",
     "courseCode": "AMD5",
@@ -21,72 +21,267 @@
     "dateIso": "2026-08-26",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Adolfo Marto Gross",
+          "licencia": "AM00014772",
+          "hcp": 35,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2390528
+        },
+        {
+          "pos": 2,
+          "name": "Gonzalo Marquez De La Plata Dolz De Espejo",
+          "licencia": "CM01307561",
+          "hcp": 15.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2390332
+        },
+        {
+          "pos": 3,
+          "name": "Carlos Burguete Buiza",
+          "licencia": "CM11632021",
+          "hcp": 13.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2390308
+        },
+        {
+          "pos": 4,
+          "name": "Joaquin Barbadillo Lopez",
+          "licencia": "CM18693963",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2391489
+        },
+        {
+          "pos": 5,
+          "name": "Salvador Martos Barrionuevo",
+          "licencia": "AM02182457",
+          "hcp": 12.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390286
+        },
+        {
+          "pos": 6,
+          "name": "Yago Alonso Casado",
+          "licencia": "CM52635488",
+          "hcp": 20.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2389468
+        },
+        {
+          "pos": 7,
+          "name": "Javier Huergo Cruzado",
+          "licencia": "CM18693968",
+          "hcp": 26.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2390822
+        },
+        {
+          "pos": 8,
+          "name": "Jose Manuel Diez Pemartin",
+          "licencia": "AM00377429",
+          "hcp": 17.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2391227
+        },
+        {
+          "pos": 9,
+          "name": "Rafael Ximenez De Embun Monjardin",
+          "licencia": "CM02213935",
+          "hcp": 18.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2390509
+        },
+        {
+          "pos": 10,
+          "name": "Gonzalo Bohorquez Crespi De Valldaura",
+          "licencia": "AM05607928",
+          "hcp": 23.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2391228
+        },
+        {
+          "pos": 11,
+          "name": "Luis Rodriguez-Villamil Salido",
+          "licencia": "CMB2950273",
+          "hcp": 30.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2389966
+        },
+        {
+          "pos": null,
+          "name": "Jaime Burguete Buiza",
+          "licencia": "CM11490762",
+          "hcp": 21.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2391488
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
-      "name": "Leopoldo Reaño Costales",
-      "licencia": "CM04780071",
-      "hcp": 21.4,
-      "nivel": "S"
-    },
-    {
-      "orden": 2,
       "name": "Yago Alonso Casado",
       "licencia": "CM52635488",
       "hcp": 20.3,
       "nivel": "S"
     },
     {
-      "orden": 3,
+      "orden": 2,
       "name": "Luis Rodriguez-Villamil Salido",
       "licencia": "CMB2950273",
       "hcp": 30.9,
       "nivel": "S"
     },
     {
-      "orden": 4,
+      "orden": 3,
       "name": "Salvador Martos Barrionuevo",
       "licencia": "AM02182457",
       "hcp": 12.5,
       "nivel": "S"
     },
     {
-      "orden": 5,
+      "orden": 4,
       "name": "Carlos Burguete Buiza",
       "licencia": "CM11632021",
       "hcp": 13.8,
       "nivel": "S"
     },
     {
-      "orden": 6,
+      "orden": 5,
       "name": "Gonzalo Marquez De La Plata Dolz De Espejo",
       "licencia": "CM01307561",
       "hcp": 15.1,
       "nivel": "S"
     },
     {
-      "orden": 7,
+      "orden": 6,
       "name": "Rafael Ximenez De Embun Monjardin",
       "licencia": "CM02213935",
       "hcp": 18.9,
       "nivel": "S"
     },
     {
-      "orden": 8,
+      "orden": 7,
       "name": "Adolfo Marto Gross",
       "licencia": "AM00014772",
       "hcp": 35,
       "nivel": "S"
     },
     {
-      "orden": 9,
+      "orden": 8,
       "name": "Javier Huergo Cruzado",
       "licencia": "CM18693968",
       "hcp": 26.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Jose Manuel Diez Pemartin",
+      "licencia": "AM00377429",
+      "hcp": 17.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Gonzalo Bohorquez Crespi De Valldaura",
+      "licencia": "AM05607928",
+      "hcp": 23.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Jaime Burguete Buiza",
+      "licencia": "CM11490762",
+      "hcp": 21.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Joaquin Barbadillo Lopez",
+      "licencia": "CM18693963",
+      "hcp": 28.9,
       "nivel": "S"
     }
   ],
@@ -240,6 +435,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1911161867_73137-pool-leo-reano.pdf"
-  ],
-  "horariosScrapedAt": "2026-08-31T10:51:31.940Z"
+  ]
 }

@@ -1,31 +1,3303 @@
 {
   "tourId": 68770,
   "url": "https://www.nextcaddy.com/tour/68770",
-  "scrapedAt": "2026-06-24T14:58:00.532Z",
+  "scrapedAt": "2026-10-30T14:26:51.511Z",
   "meta": {
-    "name": "Copa RFCG Juvenil 18 Hoyos (Alevín - Sub18)",
+    "name": "Copa RFCG Juvenil 18 Hoyos (Alevín - Infantil)",
     "organizer": null,
     "course": "Real Club de Golf Tenerife",
     "courseCode": "CP02",
-    "dateStart": null,
+    "dateStart": "2026-07-08",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Juvenil",
       "Alevín",
+      "Infantil",
       "Caballeros",
       "Señoras",
       "Cadete",
-      "Infantil",
       "Alevin",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-07-08",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 71,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final Femenina",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            },
+            {
+              "round": 3,
+              "ch": 8
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": 2,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 79
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            },
+            {
+              "round": 3,
+              "ch": 7
+            }
+          ],
+          "total": 234,
+          "toPar": 21,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 3,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 103
+            },
+            {
+              "round": 3,
+              "gross": 96
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            },
+            {
+              "round": 3,
+              "ch": 35
+            }
+          ],
+          "total": 305,
+          "toPar": 92,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 4,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 120
+            },
+            {
+              "round": 2,
+              "gross": 110
+            },
+            {
+              "round": 3,
+              "gross": 111
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 39
+            },
+            {
+              "round": 2,
+              "ch": 39
+            },
+            {
+              "round": 3,
+              "ch": 39
+            }
+          ],
+          "total": 341,
+          "toPar": 128,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 5,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 141
+            },
+            {
+              "round": 2,
+              "gross": 125
+            },
+            {
+              "round": 3,
+              "gross": 118
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 40
+            },
+            {
+              "round": 2,
+              "ch": 40
+            },
+            {
+              "round": 3,
+              "ch": 40
+            }
+          ],
+          "total": 384,
+          "toPar": 171,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Clasificación Final Masculina",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            },
+            {
+              "round": 3,
+              "ch": 7
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": 2,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            },
+            {
+              "round": 3,
+              "ch": 8
+            }
+          ],
+          "total": 236,
+          "toPar": 23,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 3,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            },
+            {
+              "round": 3,
+              "ch": 10
+            }
+          ],
+          "total": 241,
+          "toPar": 28,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": 4,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 5
+            },
+            {
+              "round": 2,
+              "ch": 5
+            },
+            {
+              "round": 3,
+              "ch": 5
+            }
+          ],
+          "total": 248,
+          "toPar": 35,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": 5,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            },
+            {
+              "round": 3,
+              "ch": 9
+            }
+          ],
+          "total": 251,
+          "toPar": 38,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 6,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 87
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            },
+            {
+              "round": 3,
+              "ch": 16
+            }
+          ],
+          "total": 263,
+          "toPar": 50,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": 7,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            },
+            {
+              "round": 3,
+              "ch": 22
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 96
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 15
+            },
+            {
+              "round": 2,
+              "ch": 15
+            },
+            {
+              "round": 3,
+              "ch": 15
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 9,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 91
+            },
+            {
+              "round": 3,
+              "gross": 99
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            },
+            {
+              "round": 3,
+              "ch": 19
+            }
+          ],
+          "total": 269,
+          "toPar": 56,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 10,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 95
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            },
+            {
+              "round": 3,
+              "ch": 18
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 11,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 100
+            },
+            {
+              "round": 2,
+              "gross": 92
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            },
+            {
+              "round": 3,
+              "ch": 16
+            }
+          ],
+          "total": 278,
+          "toPar": 65,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 12,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 97
+            },
+            {
+              "round": 3,
+              "gross": 92
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 26
+            },
+            {
+              "round": 2,
+              "ch": 26
+            },
+            {
+              "round": 3,
+              "ch": 26
+            }
+          ],
+          "total": 279,
+          "toPar": 66,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 13,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 100
+            },
+            {
+              "round": 3,
+              "gross": 94
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 29
+            },
+            {
+              "round": 2,
+              "ch": 29
+            },
+            {
+              "round": 3,
+              "ch": 29
+            }
+          ],
+          "total": 285,
+          "toPar": 72,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 14,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 101
+            },
+            {
+              "round": 3,
+              "gross": 99
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            },
+            {
+              "round": 3,
+              "ch": 21
+            }
+          ],
+          "total": 306,
+          "toPar": 93,
+          "inscribedId": 2351344
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Clasificación Final Indistinta",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "J3",
+        "HcpJuego J3",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            },
+            {
+              "round": 3,
+              "gross": 78
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            },
+            {
+              "round": 3,
+              "ch": 8
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": null,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            },
+            {
+              "round": 3,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            },
+            {
+              "round": 3,
+              "ch": 7
+            }
+          ],
+          "total": 233,
+          "toPar": 20,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": 3,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 79
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            },
+            {
+              "round": 3,
+              "ch": 7
+            }
+          ],
+          "total": 234,
+          "toPar": 21,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 4,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            },
+            {
+              "round": 3,
+              "gross": 80
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            },
+            {
+              "round": 3,
+              "ch": 8
+            }
+          ],
+          "total": 236,
+          "toPar": 23,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 5,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 79
+            },
+            {
+              "round": 3,
+              "gross": 81
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            },
+            {
+              "round": 3,
+              "ch": 10
+            }
+          ],
+          "total": 241,
+          "toPar": 28,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": 6,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 77
+            },
+            {
+              "round": 3,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 5
+            },
+            {
+              "round": 2,
+              "ch": 5
+            },
+            {
+              "round": 3,
+              "ch": 5
+            }
+          ],
+          "total": 248,
+          "toPar": 35,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": 7,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            },
+            {
+              "round": 3,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            },
+            {
+              "round": 3,
+              "ch": 9
+            }
+          ],
+          "total": 251,
+          "toPar": 38,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 8,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 86
+            },
+            {
+              "round": 3,
+              "gross": 87
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            },
+            {
+              "round": 3,
+              "ch": 16
+            }
+          ],
+          "total": 263,
+          "toPar": 50,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": 9,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 85
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            },
+            {
+              "round": 3,
+              "ch": 22
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": null,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 90
+            },
+            {
+              "round": 3,
+              "gross": 96
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 15
+            },
+            {
+              "round": 2,
+              "ch": 15
+            },
+            {
+              "round": 3,
+              "ch": 15
+            }
+          ],
+          "total": 268,
+          "toPar": 55,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 11,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 91
+            },
+            {
+              "round": 3,
+              "gross": 99
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            },
+            {
+              "round": 3,
+              "ch": 19
+            }
+          ],
+          "total": 269,
+          "toPar": 56,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 12,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 95
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            },
+            {
+              "round": 3,
+              "ch": 18
+            }
+          ],
+          "total": 274,
+          "toPar": 61,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 13,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 100
+            },
+            {
+              "round": 2,
+              "gross": 92
+            },
+            {
+              "round": 3,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            },
+            {
+              "round": 3,
+              "ch": 16
+            }
+          ],
+          "total": 278,
+          "toPar": 65,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 14,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 97
+            },
+            {
+              "round": 3,
+              "gross": 92
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 26
+            },
+            {
+              "round": 2,
+              "ch": 26
+            },
+            {
+              "round": 3,
+              "ch": 26
+            }
+          ],
+          "total": 279,
+          "toPar": 66,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 15,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 100
+            },
+            {
+              "round": 3,
+              "gross": 94
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 29
+            },
+            {
+              "round": 2,
+              "ch": 29
+            },
+            {
+              "round": 3,
+              "ch": 29
+            }
+          ],
+          "total": 285,
+          "toPar": 72,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 16,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 103
+            },
+            {
+              "round": 3,
+              "gross": 96
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            },
+            {
+              "round": 3,
+              "ch": 35
+            }
+          ],
+          "total": 305,
+          "toPar": 92,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 17,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 101
+            },
+            {
+              "round": 3,
+              "gross": 99
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            },
+            {
+              "round": 3,
+              "ch": 21
+            }
+          ],
+          "total": 306,
+          "toPar": 93,
+          "inscribedId": 2351344
+        },
+        {
+          "pos": 18,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 120
+            },
+            {
+              "round": 2,
+              "gross": 110
+            },
+            {
+              "round": 3,
+              "gross": 111
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 39
+            },
+            {
+              "round": 2,
+              "ch": 39
+            },
+            {
+              "round": 3,
+              "ch": 39
+            }
+          ],
+          "total": 341,
+          "toPar": 128,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 19,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 141
+            },
+            {
+              "round": 2,
+              "gross": 125
+            },
+            {
+              "round": 3,
+              "gross": 118
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 40
+            },
+            {
+              "round": 2,
+              "ch": 40
+            },
+            {
+              "round": 3,
+              "ch": 40
+            }
+          ],
+          "total": 384,
+          "toPar": 171,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificación Femenina 2ª Jornada",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            }
+          ],
+          "total": 155,
+          "toPar": 13,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": null,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            }
+          ],
+          "total": 155,
+          "toPar": 13,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 3,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 103
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            }
+          ],
+          "total": 209,
+          "toPar": 67,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 4,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 120
+            },
+            {
+              "round": 2,
+              "gross": 110
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 39
+            },
+            {
+              "round": 2,
+              "ch": 39
+            }
+          ],
+          "total": 230,
+          "toPar": 88,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 5,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 141
+            },
+            {
+              "round": 2,
+              "gross": 125
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 40
+            },
+            {
+              "round": 2,
+              "ch": 40
+            }
+          ],
+          "total": 266,
+          "toPar": 124,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Clasificación Masculina 2ª Jornada",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            }
+          ],
+          "total": 156,
+          "toPar": 14,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 2,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            }
+          ],
+          "total": 157,
+          "toPar": 15,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": 3,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 5
+            },
+            {
+              "round": 2,
+              "ch": 5
+            }
+          ],
+          "total": 158,
+          "toPar": 16,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": 4,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            }
+          ],
+          "total": 160,
+          "toPar": 18,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": 5,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            }
+          ],
+          "total": 168,
+          "toPar": 26,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 6,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 91
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            }
+          ],
+          "total": 170,
+          "toPar": 28,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 15
+            },
+            {
+              "round": 2,
+              "ch": 15
+            }
+          ],
+          "total": 172,
+          "toPar": 30,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 8,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 176,
+          "toPar": 34,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": 9,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            }
+          ],
+          "total": 183,
+          "toPar": 41,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": 10,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 97
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 26
+            },
+            {
+              "round": 2,
+              "ch": 26
+            }
+          ],
+          "total": 187,
+          "toPar": 45,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 11,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 95
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            }
+          ],
+          "total": 188,
+          "toPar": 46,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 12,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 100
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 29
+            },
+            {
+              "round": 2,
+              "ch": 29
+            }
+          ],
+          "total": 191,
+          "toPar": 49,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 13,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 100
+            },
+            {
+              "round": 2,
+              "gross": 92
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 192,
+          "toPar": 50,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 14,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 101
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            }
+          ],
+          "total": 207,
+          "toPar": 65,
+          "inscribedId": 2351344
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Clasificación Indistinta 2ª Jornada",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "J1",
+        "HcpJuego J1",
+        "J2",
+        "HcpJuego J2",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 76
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            }
+          ],
+          "total": 155,
+          "toPar": 13,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": null,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 78
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            }
+          ],
+          "total": 155,
+          "toPar": 13,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 3,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 75
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 8
+            },
+            {
+              "round": 2,
+              "ch": 8
+            }
+          ],
+          "total": 156,
+          "toPar": 14,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 4,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 78
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 7
+            },
+            {
+              "round": 2,
+              "ch": 7
+            }
+          ],
+          "total": 157,
+          "toPar": 15,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": 5,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 77
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 5
+            },
+            {
+              "round": 2,
+              "ch": 5
+            }
+          ],
+          "total": 158,
+          "toPar": 16,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": 6,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 81
+            },
+            {
+              "round": 2,
+              "gross": 79
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 10
+            },
+            {
+              "round": 2,
+              "ch": 10
+            }
+          ],
+          "total": 160,
+          "toPar": 18,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": 7,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 85
+            },
+            {
+              "round": 2,
+              "gross": 83
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 9
+            },
+            {
+              "round": 2,
+              "ch": 9
+            }
+          ],
+          "total": 168,
+          "toPar": 26,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 8,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 79
+            },
+            {
+              "round": 2,
+              "gross": 91
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 19
+            },
+            {
+              "round": 2,
+              "ch": 19
+            }
+          ],
+          "total": 170,
+          "toPar": 28,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 9,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 82
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 15
+            },
+            {
+              "round": 2,
+              "ch": 15
+            }
+          ],
+          "total": 172,
+          "toPar": 30,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 10,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 86
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 176,
+          "toPar": 34,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": 11,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 90
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 22
+            },
+            {
+              "round": 2,
+              "ch": 22
+            }
+          ],
+          "total": 183,
+          "toPar": 41,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": 12,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 90
+            },
+            {
+              "round": 2,
+              "gross": 97
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 26
+            },
+            {
+              "round": 2,
+              "ch": 26
+            }
+          ],
+          "total": 187,
+          "toPar": 45,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 13,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 93
+            },
+            {
+              "round": 2,
+              "gross": 95
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 18
+            },
+            {
+              "round": 2,
+              "ch": 18
+            }
+          ],
+          "total": 188,
+          "toPar": 46,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 14,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 91
+            },
+            {
+              "round": 2,
+              "gross": 100
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 29
+            },
+            {
+              "round": 2,
+              "ch": 29
+            }
+          ],
+          "total": 191,
+          "toPar": 49,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 15,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 100
+            },
+            {
+              "round": 2,
+              "gross": 92
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 16
+            },
+            {
+              "round": 2,
+              "ch": 16
+            }
+          ],
+          "total": 192,
+          "toPar": 50,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 16,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 101
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 21
+            },
+            {
+              "round": 2,
+              "ch": 21
+            }
+          ],
+          "total": 207,
+          "toPar": 65,
+          "inscribedId": 2351344
+        },
+        {
+          "pos": 17,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 106
+            },
+            {
+              "round": 2,
+              "gross": 103
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 35
+            },
+            {
+              "round": 2,
+              "ch": 35
+            }
+          ],
+          "total": 209,
+          "toPar": 67,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 18,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 120
+            },
+            {
+              "round": 2,
+              "gross": 110
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 39
+            },
+            {
+              "round": 2,
+              "ch": 39
+            }
+          ],
+          "total": 230,
+          "toPar": 88,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 19,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [
+            {
+              "round": 1,
+              "gross": 141
+            },
+            {
+              "round": 2,
+              "gross": 125
+            }
+          ],
+          "hcpJuego": [
+            {
+              "round": 1,
+              "ch": 40
+            },
+            {
+              "round": 2,
+              "ch": 40
+            }
+          ],
+          "total": 266,
+          "toPar": 124,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Clasificación 1ª Jornada Indistinta",
+      "expectedJugadores": 19,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 2,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": null,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": null,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 5,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": null,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": null,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 8,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 9,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 10,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": null,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 12,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 20,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 13,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 22,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 22,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 15,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 100,
+          "toPar": 29,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 16,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 106,
+          "toPar": 35,
+          "inscribedId": 2351344
+        },
+        {
+          "pos": null,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 106,
+          "toPar": 35,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 18,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 120,
+          "toPar": 49,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 19,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 141,
+          "toPar": 70,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 8,
+      "categoryName": "Clasificación 1ª Jornada Femenina",
+      "expectedJugadores": 5,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Valeria Armas Mateo",
+          "licencia": "CP02099929",
+          "hcp": 5.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 78,
+          "toPar": 7,
+          "inscribedId": 2351275
+        },
+        {
+          "pos": 2,
+          "name": "Isabella Cabezas De Herrera Mendez",
+          "licencia": "CP02962907",
+          "hcp": 6.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2353000
+        },
+        {
+          "pos": 3,
+          "name": "Sofia Mendoza Duque",
+          "licencia": "CP04972681",
+          "hcp": 29.9,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 106,
+          "toPar": 35,
+          "inscribedId": 2353392
+        },
+        {
+          "pos": 4,
+          "name": "Noa Sanchez Viera",
+          "licencia": "CP02171427",
+          "hcp": 34.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 120,
+          "toPar": 49,
+          "inscribedId": 2353400
+        },
+        {
+          "pos": 5,
+          "name": "Angela Helena Bisshopp Luis",
+          "licencia": "CP05354309",
+          "hcp": 35,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 141,
+          "toPar": 70,
+          "inscribedId": 2354179
+        }
+      ]
+    },
+    {
+      "category": 9,
+      "categoryName": "Clasificación 1ª Jornada Masculino",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Massimo Amoni Gamardo",
+          "licencia": "CP04942811",
+          "hcp": 6.9,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2353390
+        },
+        {
+          "pos": null,
+          "name": "Sebastian Mesa Luis",
+          "licencia": "CP22058249",
+          "hcp": 17.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 79,
+          "toPar": 8,
+          "inscribedId": 2348847
+        },
+        {
+          "pos": 3,
+          "name": "Diego Crespo Barco",
+          "licencia": "CP02923942",
+          "hcp": 5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2351230
+        },
+        {
+          "pos": null,
+          "name": "Leo Calasanzio Borsellino",
+          "licencia": "CP05081101",
+          "hcp": 9.7,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2352446
+        },
+        {
+          "pos": null,
+          "name": "Cisco De Bethencourt",
+          "licencia": "CP01952017",
+          "hcp": 7.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 81,
+          "toPar": 10,
+          "inscribedId": 2352862
+        },
+        {
+          "pos": 6,
+          "name": "Alvaro Peñafiel Martinez",
+          "licencia": "CP31001002",
+          "hcp": 13.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 82,
+          "toPar": 11,
+          "inscribedId": 2353394
+        },
+        {
+          "pos": 7,
+          "name": "Alejandro Sanchez Lopez",
+          "licencia": "CP01951648",
+          "hcp": 8.6,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 85,
+          "toPar": 14,
+          "inscribedId": 2353427
+        },
+        {
+          "pos": 8,
+          "name": "Lucas Saavedra Fernandez",
+          "licencia": "CP31000819",
+          "hcp": 14.6,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2353391
+        },
+        {
+          "pos": null,
+          "name": "Ruben Humada Morera",
+          "licencia": "CP14468411",
+          "hcp": 23.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 90,
+          "toPar": 19,
+          "inscribedId": 2349943
+        },
+        {
+          "pos": 10,
+          "name": "Jorge Alvarez Garcia",
+          "licencia": "CP02957731",
+          "hcp": 26,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 91,
+          "toPar": 20,
+          "inscribedId": 2349489
+        },
+        {
+          "pos": 11,
+          "name": "Rodrigo Trapaga Cabrera",
+          "licencia": "CP02945484",
+          "hcp": 20,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 22,
+          "inscribedId": 2348794
+        },
+        {
+          "pos": null,
+          "name": "Nicolas Garcia Luis",
+          "licencia": "CP22934968",
+          "hcp": 16.8,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 93,
+          "toPar": 22,
+          "inscribedId": 2351346
+        },
+        {
+          "pos": 13,
+          "name": "Mark Kaydo Petrov",
+          "licencia": "CP05993369",
+          "hcp": 14.4,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 100,
+          "toPar": 29,
+          "inscribedId": 2348802
+        },
+        {
+          "pos": 14,
+          "name": "Nevis Molina Spindler",
+          "licencia": "CP01949889",
+          "hcp": 18.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 106,
+          "toPar": 35,
+          "inscribedId": 2351344
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final Femenina",
+      "jugadores": 5
+    },
+    "2": {
+      "name": "Clasificación Final Masculina",
+      "jugadores": 14
+    },
+    "3": {
+      "name": "Clasificación Final Indistinta",
+      "jugadores": 19
+    },
+    "4": {
+      "name": "Clasificación Femenina 2ª Jornada",
+      "jugadores": 5
+    },
+    "5": {
+      "name": "Clasificación Masculina 2ª Jornada",
+      "jugadores": 14
+    },
+    "6": {
+      "name": "Clasificación Indistinta 2ª Jornada",
+      "jugadores": 19
+    },
+    "7": {
+      "name": "Clasificación 1ª Jornada Indistinta",
+      "jugadores": 19
+    },
+    "8": {
+      "name": "Clasificación 1ª Jornada Femenina",
+      "jugadores": 5
+    },
+    "9": {
+      "name": "Clasificación 1ª Jornada Masculino",
+      "jugadores": 14
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -57,101 +3329,108 @@
     },
     {
       "orden": 5,
-      "name": "Francisco Delgado Castro",
-      "licencia": "CP02922406",
-      "hcp": 5.1,
-      "nivel": "C"
+      "name": "Ruben Humada Morera",
+      "licencia": "CP14468411",
+      "hcp": 23.7,
+      "nivel": "I"
     },
     {
       "orden": 6,
-      "name": "David Arzola Hernandez",
-      "licencia": "CP24974220",
-      "hcp": 8.8,
-      "nivel": "C"
+      "name": "Diego Crespo Barco",
+      "licencia": "CP02923942",
+      "hcp": 5,
+      "nivel": "I"
     },
     {
       "orden": 7,
-      "name": "Ruben Humada Morera",
-      "licencia": "CP14468411",
-      "hcp": 35,
+      "name": "Nevis Molina Spindler",
+      "licencia": "CP01949889",
+      "hcp": 18.7,
       "nivel": "I"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
+      "orden": 8,
+      "name": "Nicolas Garcia Luis",
+      "licencia": "CP22934968",
+      "hcp": 16.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 9,
+      "name": "Leo Calasanzio Borsellino",
+      "licencia": "CP05081101",
+      "hcp": 9.7,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Cisco De Bethencourt",
+      "licencia": "CP01952017",
+      "hcp": 7.7,
+      "nivel": "I"
+    },
+    {
+      "orden": 11,
+      "name": "Massimo Amoni Gamardo",
+      "licencia": "CP04942811",
+      "hcp": 6.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 12,
+      "name": "Lucas Saavedra Fernandez",
+      "licencia": "CP31000819",
+      "hcp": 14.6,
+      "nivel": "A"
+    },
+    {
+      "orden": 13,
+      "name": "Alvaro Peñafiel Martinez",
+      "licencia": "CP31001002",
+      "hcp": 13.8,
+      "nivel": "I"
+    },
+    {
+      "orden": 14,
+      "name": "Alejandro Sanchez Lopez",
+      "licencia": "CP01951648",
+      "hcp": 8.6,
+      "nivel": "I"
     },
     {
       "orden": 1,
-      "name": "Edurne Lairihoy Gonzalez",
-      "licencia": "CP24944877",
+      "name": "Valeria Armas Mateo",
+      "licencia": "CP02099929",
       "hcp": 5.3,
-      "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
-    {
-      "orden": 1,
-      "name": "Rodrigo Trapaga Cabrera",
-      "licencia": "CP02945484",
-      "hcp": 20,
-      "nivel": "I"
+      "nivel": "A"
     },
     {
       "orden": 2,
-      "name": "Mark Kaydo Petrov",
-      "licencia": "CP05993369",
-      "hcp": 14.4,
+      "name": "Isabella Cabezas De Herrera Mendez",
+      "licencia": "CP02962907",
+      "hcp": 6.1,
       "nivel": "A"
     },
     {
       "orden": 3,
-      "name": "Sebastian Mesa Luis",
-      "licencia": "CP22058249",
-      "hcp": 17.1,
-      "nivel": "I"
+      "name": "Sofia Mendoza Duque",
+      "licencia": "CP04972681",
+      "hcp": 29.9,
+      "nivel": "A"
     },
     {
       "orden": 4,
-      "name": "Jorge Alvarez Garcia",
-      "licencia": "CP02957731",
-      "hcp": 26,
+      "name": "Noa Sanchez Viera",
+      "licencia": "CP02171427",
+      "hcp": 34.3,
       "nivel": "A"
     },
     {
       "orden": 5,
-      "name": "Francisco Delgado Castro",
-      "licencia": "CP02922406",
-      "hcp": 5.1,
-      "nivel": "C"
-    },
-    {
-      "orden": 6,
-      "name": "Edurne Lairihoy Gonzalez",
-      "licencia": "CP24944877",
-      "hcp": 5.3,
-      "nivel": "C"
-    },
-    {
-      "orden": 7,
-      "name": "David Arzola Hernandez",
-      "licencia": "CP24974220",
-      "hcp": 8.8,
-      "nivel": "C"
-    },
-    {
-      "orden": 8,
-      "name": "Ruben Humada Morera",
-      "licencia": "CP14468411",
+      "name": "Angela Helena Bisshopp Luis",
+      "licencia": "CP05354309",
       "hcp": 35,
-      "nivel": "I"
+      "nivel": "A"
     }
   ],
   "horarios": [
@@ -708,6 +3987,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-07-13T07:10:11.773Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

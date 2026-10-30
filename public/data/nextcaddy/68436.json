@@ -1,29 +1,112 @@
 {
   "tourId": 68436,
   "url": "https://www.nextcaddy.com/tour/68436",
-  "scrapedAt": "2026-06-24T14:58:44.049Z",
+  "scrapedAt": "2026-10-30T14:29:43.970Z",
   "meta": {
-    "name": "Campeonato Senior Masculino \"RC La Moraleja\"",
+    "name": null,
     "organizer": "Federacion de Golf de Madrid",
     "course": "Real Club la Moraleja",
     "courseCode": "CM52",
-    "dateStart": null,
+    "dateStart": "2026-11-07",
     "dateEnd": null,
-    "format": "Medal Play (Scratch) Ranking Mid-Amateur",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
       "Senior Masculino",
       "Caballeros",
+      "Señoras",
+      "SENIOR",
+      "SENIOR MASCULINO",
       "Infantil",
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-11-07",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Javier Dominguez Ramirez",
+      "licencia": "CM04215653",
+      "hcp": 3.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jaime De La Torriente Gallo",
+      "licencia": "CM02068516",
+      "hcp": 3.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Ramon Franco Cerame",
+      "licencia": "CM01079043",
+      "hcp": 4.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Alvaro Paradinas Gomez",
+      "licencia": "CM07031070",
+      "hcp": null,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "David Hernandez-Rubio Rodriguez",
+      "licencia": "CM07207010",
+      "hcp": 2.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Brian Mccarthy",
+      "licencia": "CM11187686",
+      "hcp": 1.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 7,
+      "name": "Alvaro Ballesteros Blanco",
+      "licencia": "CM41129839",
+      "hcp": 1.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Carlos Satrustegui Marfull",
+      "licencia": "CM01022559",
+      "hcp": 1.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Alejandro Sevillano Gil",
+      "licencia": "CM04045168",
+      "hcp": 2.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Manuel Ruiz Garcia",
+      "licencia": "CM60214059",
+      "hcp": 3.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Estanislao Urquijo Rubio",
+      "licencia": "CM01019843",
+      "hcp": null,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -45,6 +128,8 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-30T13:53:59.712Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/3144815516_reglamento_campeonato_indiv_caballeros_senior_real_club_la_moraleja_2026.doc_-_documentos_de_google.pdf"
+  ]
 }

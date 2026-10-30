@@ -1,13 +1,13 @@
 {
   "tourId": 71585,
   "url": "https://www.nextcaddy.com/tour/71585",
-  "scrapedAt": "2026-06-24T14:57:49.910Z",
+  "scrapedAt": "2026-10-30T14:26:40.948Z",
   "meta": {
     "name": "IX Liga Beginners 2025-2026",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-06-27",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,146 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
   },
   "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Eduardo Blasco Vivas",
+          "licencia": "AMI5495902",
+          "hcp": 29.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2343816
+        },
+        {
+          "pos": 2,
+          "name": "Carmen Ibañez Dominguez",
+          "licencia": "CM41393569",
+          "hcp": 43.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": -2,
+          "inscribedId": 2349276
+        },
+        {
+          "pos": 3,
+          "name": "Josefa Siles Muñoz",
+          "licencia": "AMI5003299",
+          "hcp": 41.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2341132
+        },
+        {
+          "pos": 4,
+          "name": "Javier Rafael Arenas Ros",
+          "licencia": "AMI5090401",
+          "hcp": 40.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2349204
+        },
+        {
+          "pos": 5,
+          "name": "Maria Pilar Romero Garcia",
+          "licencia": "AMI5928779",
+          "hcp": 37.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 1,
+          "inscribedId": 2350444
+        },
+        {
+          "pos": 6,
+          "name": "Jesus Huertas Lopez",
+          "licencia": "AMI5499283",
+          "hcp": 38.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2349666
+        },
+        {
+          "pos": 7,
+          "name": "Jesús Domene Navas",
+          "licencia": "AMI5998268",
+          "hcp": 37.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 14,
+          "toPar": 4,
+          "inscribedId": 2348949
+        },
+        {
+          "pos": 8,
+          "name": "Juan Lobera Garcia",
+          "licencia": "AMI5173366",
+          "hcp": 38.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 6,
+          "inscribedId": 2350139
+        },
+        {
+          "pos": 9,
+          "name": "Juan Ramon Ruiz Castro",
+          "licencia": "AMI5523884",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2350113
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 9
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -44,13 +178,6 @@
       "licencia": "AMI5928779",
       "hcp": 37.9,
       "nivel": "S"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
     },
     {
       "orden": 1,
@@ -93,90 +220,6 @@
       "licencia": "AMI5173366",
       "hcp": 38.9,
       "nivel": "S"
-    },
-    {
-      "orden": 7,
-      "name": "Rafael Llera Fernandez",
-      "licencia": "AMD2090847",
-      "hcp": 37.2,
-      "nivel": "S"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Josefa Siles Muñoz",
-      "licencia": "11-06-26 14:07",
-      "hcp": 41.8,
-      "nivel": "AMI5003299"
-    },
-    {
-      "orden": 2,
-      "name": "Eduardo Blasco Vivas",
-      "licencia": "15-06-26 13:16",
-      "hcp": 29.5,
-      "nivel": "AMI5495902"
-    },
-    {
-      "orden": 3,
-      "name": "Jesús Domene Navas",
-      "licencia": "22-06-26 13:41",
-      "hcp": 37.1,
-      "nivel": "AMI5998268"
-    },
-    {
-      "orden": 4,
-      "name": "Javier Rafael Arenas Ros",
-      "licencia": "22-06-26 20:40",
-      "hcp": 40.9,
-      "nivel": "AMI5090401"
-    },
-    {
-      "orden": 5,
-      "name": "Carmen Ibañez Dominguez",
-      "licencia": "23-06-26 08:48",
-      "hcp": 43.3,
-      "nivel": "CM41393569"
-    },
-    {
-      "orden": 6,
-      "name": "Jesus Huertas Lopez",
-      "licencia": "23-06-26 15:05",
-      "hcp": 38.4,
-      "nivel": "AMI5499283"
-    },
-    {
-      "orden": 7,
-      "name": "Juan Ramon Ruiz Castro",
-      "licencia": "24-06-26 10:01",
-      "hcp": 36,
-      "nivel": "AMI5523884"
-    },
-    {
-      "orden": 8,
-      "name": "Juan Lobera Garcia",
-      "licencia": "24-06-26 10:22",
-      "hcp": 38.9,
-      "nivel": "AMI5173366"
-    },
-    {
-      "orden": 9,
-      "name": "Rafael Llera Fernandez",
-      "licencia": "24-06-26 14:15",
-      "hcp": 37.2,
-      "nivel": "AMD2090847"
-    },
-    {
-      "orden": 10,
-      "name": "Maria Pilar Romero Garcia",
-      "licencia": "24-06-26 15:25",
-      "hcp": 37.9,
-      "nivel": "AMI5928779"
     }
   ],
   "horarios": [
@@ -283,6 +326,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-06-29T09:18:54.785Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

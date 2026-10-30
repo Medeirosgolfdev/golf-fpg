@@ -1,13 +1,13 @@
 {
   "tourId": 68713,
   "url": "https://www.nextcaddy.com/tour/68713",
-  "scrapedAt": "2026-06-24T14:58:15.273Z",
+  "scrapedAt": "2026-10-30T14:27:30.445Z",
   "meta": {
     "name": "VI Prueba Circuito Regional Amateur (INSCRIPCIÓN PROFESIONALES)",
     "organizer": null,
     "course": "Meloneras Golf",
     "courseCode": "CP27",
-    "dateStart": null,
+    "dateStart": "2026-08-08",
     "dateEnd": null,
     "format": "Medal Play (Scratch)  Profesional C. Téc",
     "categories": [
@@ -17,13 +17,198 @@
       "profesional",
       "Infantil",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-08-08",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 71,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificación Final",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alvaro Hernandez Cabezuela",
+          "licencia": "CP143545-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 62,
+          "toPar": -9,
+          "inscribedId": 2373834
+        },
+        {
+          "pos": 2,
+          "name": "Jose Antonio Sintes Navarro",
+          "licencia": "CP013742-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 67,
+          "toPar": -4,
+          "inscribedId": 2370353
+        },
+        {
+          "pos": 3,
+          "name": "Samuel Santana Garcia",
+          "licencia": "CP313008-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 68,
+          "toPar": -3,
+          "inscribedId": 2373561
+        },
+        {
+          "pos": 4,
+          "name": "Pedro Urriza Fuentes",
+          "licencia": "CP013247-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 73,
+          "toPar": 2,
+          "inscribedId": 2370356
+        },
+        {
+          "pos": 5,
+          "name": "Felix Melian Sosa",
+          "licencia": "CP350704-P",
+          "hcp": 2,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2364149
+        },
+        {
+          "pos": 6,
+          "name": "Christian Espino Bohm",
+          "licencia": "CP013755-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 75,
+          "toPar": 4,
+          "inscribedId": 2369171
+        },
+        {
+          "pos": 7,
+          "name": "Ignacio Urriza Fuentes",
+          "licencia": "CP013212-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 76,
+          "toPar": 5,
+          "inscribedId": 2366546
+        },
+        {
+          "pos": 8,
+          "name": "Malang Jammeh Sanneh",
+          "licencia": "CP201895-P",
+          "hcp": 0,
+          "nivel": "P+",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 77,
+          "toPar": 6,
+          "inscribedId": 2370774
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificación Final",
+      "jugadores": 8
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Felix Melian Sosa",
+      "licencia": "CP350704-P",
+      "hcp": 2,
+      "nivel": "P+"
+    },
+    {
+      "orden": 2,
+      "name": "Ignacio Urriza Fuentes",
+      "licencia": "CP013212-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 3,
+      "name": "Christian Espino Bohm",
+      "licencia": "CP013755-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Antonio Sintes Navarro",
+      "licencia": "CP013742-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 5,
+      "name": "Pedro Urriza Fuentes",
+      "licencia": "CP013247-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 6,
+      "name": "Malang Jammeh Sanneh",
+      "licencia": "CP201895-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 7,
+      "name": "Samuel Santana Garcia",
+      "licencia": "CP313008-P",
+      "hcp": 0,
+      "nivel": "P+"
+    },
+    {
+      "orden": 8,
+      "name": "Alvaro Hernandez Cabezuela",
+      "licencia": "CP143545-P",
+      "hcp": 0,
+      "nivel": "P+"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -119,6 +304,7 @@
     }
   ],
   "scoreTypes": [],
-  "pdfs": [],
-  "horariosScrapedAt": "2026-08-10T05:45:42.675Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

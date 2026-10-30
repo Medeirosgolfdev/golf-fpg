@@ -1,13 +1,13 @@
 {
   "tourId": 68416,
   "url": "https://www.nextcaddy.com/tour/68416",
-  "scrapedAt": "2026-06-24T14:57:47.978Z",
+  "scrapedAt": "2026-10-30T14:26:39.339Z",
   "meta": {
     "name": "Torneo Mixto de Golf Adaptado \"El Robledal\"",
     "organizer": "Federacion de Golf de Madrid",
     "course": "el Robledal Golf",
     "courseCode": "CM08",
-    "dateStart": null,
+    "dateStart": "2026-06-27",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,19 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-27",
+    "year": 2026
   },
   "course": null,
   "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Handicap Parejas",
+      "jugadores": 10
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -56,7 +63,7 @@
       "orden": 3,
       "name": "Antonio Arcis Gomez",
       "licencia": "CM81514705",
-      "hcp": 23.9,
+      "hcp": 25,
       "nivel": "S"
     },
     {
@@ -140,7 +147,7 @@
       "orden": 9,
       "name": "Javier Castro Asenjo",
       "licencia": "CM81694625",
-      "hcp": 25.2,
+      "hcp": 23.8,
       "nivel": "S"
     },
     {
@@ -460,7 +467,8 @@
     }
   },
   "pdfs": [
-    "/uploads/competiciones/pdf/68416_cartel_370.pdf"
-  ],
-  "horariosScrapedAt": "2026-06-29T09:18:43.929Z"
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/competiciones/pdf/68416_cartel_370.pdf",
+    "/uploads/competiciones/pdf/4066070303_rrll_el_robledal.pdf"
+  ]
 }

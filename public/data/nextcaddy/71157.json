@@ -1,13 +1,13 @@
 {
   "tourId": 71157,
   "url": "https://www.nextcaddy.com/tour/71157",
-  "scrapedAt": "2026-06-24T14:58:12.657Z",
+  "scrapedAt": "2026-10-30T14:27:22.338Z",
   "meta": {
     "name": "VII Tanger Cup - Campeonato Familia Solís (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
-    "dateStart": null,
+    "dateStart": "2026-08-02",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,13 +17,2276 @@
       "Infantil",
       "Profesional",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-08-02",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Clasificacion Infantil",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Piñar Valentin",
+          "licencia": "AM02467920",
+          "hcp": 25.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2369493
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Segunda Categoría Desde 18.1 Hcp",
+      "expectedJugadores": 14,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Felipe Domecq Benjumea",
+          "licencia": "AM03155123",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2366751
+        },
+        {
+          "pos": 2,
+          "name": "Jaime Lauder Sanjuan",
+          "licencia": "CMB2300558",
+          "hcp": 31.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369355
+        },
+        {
+          "pos": 3,
+          "name": "Borja Diaz Solis",
+          "licencia": "CM07976001",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369526
+        },
+        {
+          "pos": 4,
+          "name": "Iñigo Ramirez De Cardenas Cabello De Los Cobos",
+          "licencia": "CB22984873",
+          "hcp": 18.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2370561
+        },
+        {
+          "pos": 5,
+          "name": "Borja Gumuziomorenes",
+          "licencia": "EXX1912227",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2372872
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Domecq Leon",
+          "licencia": "AM05280235",
+          "hcp": 24.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2369048
+        },
+        {
+          "pos": 7,
+          "name": "Jorge Vazquez Morenes",
+          "licencia": "CM01202060",
+          "hcp": 26.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369993
+        },
+        {
+          "pos": 8,
+          "name": "Jose Maria Domecq Morenes",
+          "licencia": "9900904662",
+          "hcp": 26.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369365
+        },
+        {
+          "pos": 9,
+          "name": "Ricardo Pablo De Soto Solis",
+          "licencia": "AM02972882",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2369841
+        },
+        {
+          "pos": 10,
+          "name": "Antonio Juan Domecq Leon",
+          "licencia": "AM05942218",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2369640
+        },
+        {
+          "pos": 11,
+          "name": "Miguel Arias Domecq",
+          "licencia": "AMC3602412",
+          "hcp": 29.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2368749
+        },
+        {
+          "pos": 12,
+          "name": "Patricio Molina Porres",
+          "licencia": "CMA8436747",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2370375
+        },
+        {
+          "pos": 13,
+          "name": "Alvaro Molina De Porres",
+          "licencia": "CM02388741",
+          "hcp": 23.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2370318
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Domecq Benjumea",
+          "licencia": "AM05972935",
+          "hcp": 19.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2369084
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Primera Categoria Hasta 18 Hcp",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Gonzalo Piñar Goizueta",
+          "licencia": "AM02788751",
+          "hcp": 6.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369492
+        },
+        {
+          "pos": 2,
+          "name": "Javier Domecq Benjumea",
+          "licencia": "AM03184711",
+          "hcp": 10.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368351
+        },
+        {
+          "pos": 3,
+          "name": "Ricardo Rebuelta Morenes",
+          "licencia": "AM05233382",
+          "hcp": 15.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2370394
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Basa Pacheco",
+          "licencia": "AM05183518",
+          "hcp": 4.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369418
+        },
+        {
+          "pos": 5,
+          "name": "Fernando Domecq Nuñez",
+          "licencia": "AM05233408",
+          "hcp": 10.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369863
+        },
+        {
+          "pos": 6,
+          "name": "Gonzalo Leon Morenes",
+          "licencia": "AM02199514",
+          "hcp": 11.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369795
+        },
+        {
+          "pos": 7,
+          "name": "Javier Puig Lopez",
+          "licencia": "CM01208958",
+          "hcp": 12,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369496
+        },
+        {
+          "pos": 8,
+          "name": "Jacobo Bernar Aguirre",
+          "licencia": "CM01218284",
+          "hcp": 10,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369467
+        },
+        {
+          "pos": 9,
+          "name": "Juan Pedro Davila Domecq",
+          "licencia": "CM01136438",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2370540
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Clasificacion Senior",
+      "expectedJugadores": 17,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mercedes Morenes Solis",
+          "licencia": "CM01040192",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2369991
+        },
+        {
+          "pos": 2,
+          "name": "Manuel Maestre Domecq",
+          "licencia": "AM05014401",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2371806
+        },
+        {
+          "pos": 3,
+          "name": "Jorge Vazquez Salinero",
+          "licencia": "CM01040703",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369992
+        },
+        {
+          "pos": 4,
+          "name": "Santiago Leon Domecq",
+          "licencia": "AM05111273",
+          "hcp": 27.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369552
+        },
+        {
+          "pos": 5,
+          "name": "Miguel Domecq Solis",
+          "licencia": "AM05014375",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2370642
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Domecq Solis",
+          "licencia": "AM05610981",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2369882
+        },
+        {
+          "pos": 7,
+          "name": "Fernando Rodriguez-Vizcaino Y Murube",
+          "licencia": "AM02186077",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369212
+        },
+        {
+          "pos": 8,
+          "name": "Eugenio Molina Valcarce",
+          "licencia": "AM05138958",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369187
+        },
+        {
+          "pos": 9,
+          "name": "Miguel Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05317871",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2371906
+        },
+        {
+          "pos": 10,
+          "name": "Michael Norton",
+          "licencia": "AM00148348",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2369309
+        },
+        {
+          "pos": 11,
+          "name": "Ignacio Domecq Solis",
+          "licencia": "AM29135413",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2370643
+        },
+        {
+          "pos": 12,
+          "name": "Javier Morenes Solis",
+          "licencia": "CM00972493",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369621
+        },
+        {
+          "pos": 13,
+          "name": "Pedro De Solis Guardiola",
+          "licencia": "AM02249241",
+          "hcp": 12.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2368992
+        },
+        {
+          "pos": 14,
+          "name": "Pedro Morenes Solis",
+          "licencia": "CM00892324",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369703
+        },
+        {
+          "pos": 15,
+          "name": "Alfonso Morenes Solis-Beaumont",
+          "licencia": "AMG3161002",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369227
+        },
+        {
+          "pos": 16,
+          "name": "Ignacio Solis Guardiola",
+          "licencia": "AM02196532",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2368988
+        },
+        {
+          "pos": null,
+          "name": "Ricardo Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05204567",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2370663
+        }
+      ]
+    },
+    {
+      "category": 5,
+      "categoryName": "Scratch Individual",
+      "expectedJugadores": 48,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alfonso Morenes Camacho",
+          "licencia": "AM00940747",
+          "hcp": 2.6,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369225
+        },
+        {
+          "pos": 2,
+          "name": "Gonzalo Piñar Goizueta",
+          "licencia": "AM02788751",
+          "hcp": 6.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369492
+        },
+        {
+          "pos": 3,
+          "name": "Alvaro Basa Pacheco",
+          "licencia": "AM05183518",
+          "hcp": 4.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369418
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Domecq Nuñez",
+          "licencia": "AM05233408",
+          "hcp": 10.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369863
+        },
+        {
+          "pos": 5,
+          "name": "Javier Domecq Benjumea",
+          "licencia": "AM03184711",
+          "hcp": 10.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2368351
+        },
+        {
+          "pos": 6,
+          "name": "Manuel Maestre Domecq",
+          "licencia": "AM05014401",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2371806
+        },
+        {
+          "pos": 7,
+          "name": "Felipe Domecq Benjumea",
+          "licencia": "AM03155123",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2366751
+        },
+        {
+          "pos": 8,
+          "name": "Ricardo Rebuelta Morenes",
+          "licencia": "AM05233382",
+          "hcp": 15.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2370394
+        },
+        {
+          "pos": 9,
+          "name": "Gonzalo Leon Morenes",
+          "licencia": "AM02199514",
+          "hcp": 11.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2369795
+        },
+        {
+          "pos": 10,
+          "name": "Jacobo Bernar Aguirre",
+          "licencia": "CM01218284",
+          "hcp": 10,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2369467
+        },
+        {
+          "pos": 11,
+          "name": "Francisco Javier Leon Morenes",
+          "licencia": "AM02885948",
+          "hcp": 19.2,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369655
+        },
+        {
+          "pos": 12,
+          "name": "Javier Puig Lopez",
+          "licencia": "CM01208958",
+          "hcp": 12,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369496
+        },
+        {
+          "pos": 13,
+          "name": "Maria Lourdes Silva Cruz-Villalon",
+          "licencia": "9901138733",
+          "hcp": 15.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2369366
+        },
+        {
+          "pos": 14,
+          "name": "Iñigo Ramirez De Cardenas Cabello De Los Cobos",
+          "licencia": "CB22984873",
+          "hcp": 18.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2370561
+        },
+        {
+          "pos": 15,
+          "name": "Ignacio Piñar Valentin",
+          "licencia": "AM02467920",
+          "hcp": 25.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2369493
+        },
+        {
+          "pos": 16,
+          "name": "Juan Pedro Davila Domecq",
+          "licencia": "CM01136438",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2370540
+        },
+        {
+          "pos": 17,
+          "name": "Miguel Domecq Solis",
+          "licencia": "AM05014375",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2370642
+        },
+        {
+          "pos": 18,
+          "name": "Ignacio Domecq Solis",
+          "licencia": "AM29135413",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 17,
+          "toPar": 19,
+          "inscribedId": 2370643
+        },
+        {
+          "pos": 19,
+          "name": "Mercedes Morenes Solis",
+          "licencia": "CM01040192",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2369991
+        },
+        {
+          "pos": 20,
+          "name": "Pedro De Solis Guardiola",
+          "licencia": "AM02249241",
+          "hcp": 12.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 16,
+          "toPar": 20,
+          "inscribedId": 2368992
+        },
+        {
+          "pos": 21,
+          "name": "Jorge Vazquez Salinero",
+          "licencia": "CM01040703",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 21,
+          "inscribedId": 2369992
+        },
+        {
+          "pos": 22,
+          "name": "Rafael Domecq Solis",
+          "licencia": "AM05610981",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2369882
+        },
+        {
+          "pos": 23,
+          "name": "Rafael Domecq Leon",
+          "licencia": "AM05280235",
+          "hcp": 24.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2369048
+        },
+        {
+          "pos": 24,
+          "name": "Michael Norton",
+          "licencia": "AM00148348",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 13,
+          "toPar": 23,
+          "inscribedId": 2369309
+        },
+        {
+          "pos": 25,
+          "name": "Miguel Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05317871",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 12,
+          "toPar": 24,
+          "inscribedId": 2371906
+        },
+        {
+          "pos": 26,
+          "name": "Borja Diaz Solis",
+          "licencia": "CM07976001",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2369526
+        },
+        {
+          "pos": 27,
+          "name": "Antonio Juan Domecq Leon",
+          "licencia": "AM05942218",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2369640
+        },
+        {
+          "pos": 28,
+          "name": "Santiago Leon Domecq",
+          "licencia": "AM05111273",
+          "hcp": 27.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 11,
+          "toPar": 25,
+          "inscribedId": 2369552
+        },
+        {
+          "pos": 29,
+          "name": "Fernando Rodriguez-Vizcaino Y Murube",
+          "licencia": "AM02186077",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2369212
+        },
+        {
+          "pos": 30,
+          "name": "Jose Maria Domecq Morenes",
+          "licencia": "9900904662",
+          "hcp": 26.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 10,
+          "toPar": 26,
+          "inscribedId": 2369365
+        },
+        {
+          "pos": 31,
+          "name": "Jaime Lauder Sanjuan",
+          "licencia": "CMB2300558",
+          "hcp": 31.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2369355
+        },
+        {
+          "pos": 32,
+          "name": "Eugenio Molina Valcarce",
+          "licencia": "AM05138958",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2369187
+        },
+        {
+          "pos": 33,
+          "name": "Ricardo Pablo De Soto Solis",
+          "licencia": "AM02972882",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2369841
+        },
+        {
+          "pos": 34,
+          "name": "Javier Morenes Solis",
+          "licencia": "CM00972493",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 9,
+          "toPar": 27,
+          "inscribedId": 2369621
+        },
+        {
+          "pos": 35,
+          "name": "Borja Gumuziomorenes",
+          "licencia": "EXX1912227",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2372872
+        },
+        {
+          "pos": 36,
+          "name": "Jorge Vazquez Morenes",
+          "licencia": "CM01202060",
+          "hcp": 26.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2369993
+        },
+        {
+          "pos": 37,
+          "name": "Mª.micaela Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203308",
+          "hcp": 21.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2369758
+        },
+        {
+          "pos": 38,
+          "name": "Pedro Morenes Solis",
+          "licencia": "CM00892324",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 28,
+          "inscribedId": 2369703
+        },
+        {
+          "pos": 39,
+          "name": "Patricio Molina Porres",
+          "licencia": "CMA8436747",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2370375
+        },
+        {
+          "pos": 40,
+          "name": "Alfonso Morenes Solis-Beaumont",
+          "licencia": "AMG3161002",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 29,
+          "inscribedId": 2369227
+        },
+        {
+          "pos": 41,
+          "name": "Ana Maria Domecq Leon",
+          "licencia": "AM05280234",
+          "hcp": 34.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2368956
+        },
+        {
+          "pos": 42,
+          "name": "Ignacio Solis Guardiola",
+          "licencia": "AM02196532",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 30,
+          "inscribedId": 2368988
+        },
+        {
+          "pos": 43,
+          "name": "Miguel Arias Domecq",
+          "licencia": "AMC3602412",
+          "hcp": 29.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2368749
+        },
+        {
+          "pos": 44,
+          "name": "Alvaro Molina De Porres",
+          "licencia": "CM02388741",
+          "hcp": 23.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 5,
+          "toPar": 31,
+          "inscribedId": 2370318
+        },
+        {
+          "pos": 45,
+          "name": "Catalina Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203310",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 32,
+          "inscribedId": 2369789
+        },
+        {
+          "pos": 46,
+          "name": "Mariana Solis O`neill",
+          "licencia": "AM02475632",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 35,
+          "inscribedId": 2370562
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Domecq Benjumea",
+          "licencia": "AM05972935",
+          "hcp": 19.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2369084
+        },
+        {
+          "pos": null,
+          "name": "Ricardo Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05204567",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2370663
+        }
+      ]
+    },
+    {
+      "category": 6,
+      "categoryName": "Handicap Individual Señoras Femenino",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mercedes Morenes Solis",
+          "licencia": "CM01040192",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2369991
+        },
+        {
+          "pos": 2,
+          "name": "Maria Lourdes Silva Cruz-Villalon",
+          "licencia": "9901138733",
+          "hcp": 15.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369366
+        },
+        {
+          "pos": 3,
+          "name": "Ana Maria Domecq Leon",
+          "licencia": "AM05280234",
+          "hcp": 34.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368956
+        },
+        {
+          "pos": 4,
+          "name": "Mª.micaela Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203308",
+          "hcp": 21.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369758
+        },
+        {
+          "pos": 5,
+          "name": "Catalina Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203310",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2369789
+        },
+        {
+          "pos": 6,
+          "name": "Mariana Solis O`neill",
+          "licencia": "AM02475632",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2370562
+        }
+      ]
+    },
+    {
+      "category": 7,
+      "categoryName": "Clasificacion Junior",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Alfonso Morenes Camacho",
+          "licencia": "AM00940747",
+          "hcp": 2.6,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369225
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier Leon Morenes",
+          "licencia": "AM02885948",
+          "hcp": 19.2,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369655
+        }
+      ]
+    },
+    {
+      "category": 8,
+      "categoryName": "Clasificacion General",
+      "expectedJugadores": 48,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Ignacio Piñar Valentin",
+          "licencia": "AM02467920",
+          "hcp": 25.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2369493
+        },
+        {
+          "pos": 2,
+          "name": "Felipe Domecq Benjumea",
+          "licencia": "AM03155123",
+          "hcp": 21.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2366751
+        },
+        {
+          "pos": 3,
+          "name": "Mercedes Morenes Solis",
+          "licencia": "CM01040192",
+          "hcp": 25.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2369991
+        },
+        {
+          "pos": 4,
+          "name": "Alfonso Morenes Camacho",
+          "licencia": "AM00940747",
+          "hcp": 2.6,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2369225
+        },
+        {
+          "pos": 5,
+          "name": "Manuel Maestre Domecq",
+          "licencia": "AM05014401",
+          "hcp": 16.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2371806
+        },
+        {
+          "pos": 6,
+          "name": "Gonzalo Piñar Goizueta",
+          "licencia": "AM02788751",
+          "hcp": 6.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369492
+        },
+        {
+          "pos": 7,
+          "name": "Maria Lourdes Silva Cruz-Villalon",
+          "licencia": "9901138733",
+          "hcp": 15.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369366
+        },
+        {
+          "pos": 8,
+          "name": "Francisco Javier Leon Morenes",
+          "licencia": "AM02885948",
+          "hcp": 19.2,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369655
+        },
+        {
+          "pos": 9,
+          "name": "Jorge Vazquez Salinero",
+          "licencia": "CM01040703",
+          "hcp": 23.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369992
+        },
+        {
+          "pos": 10,
+          "name": "Santiago Leon Domecq",
+          "licencia": "AM05111273",
+          "hcp": 27.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2369552
+        },
+        {
+          "pos": 11,
+          "name": "Miguel Domecq Solis",
+          "licencia": "AM05014375",
+          "hcp": 27.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2370642
+        },
+        {
+          "pos": 12,
+          "name": "Jaime Lauder Sanjuan",
+          "licencia": "CMB2300558",
+          "hcp": 31.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369355
+        },
+        {
+          "pos": 13,
+          "name": "Borja Diaz Solis",
+          "licencia": "CM07976001",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2369526
+        },
+        {
+          "pos": 14,
+          "name": "Javier Domecq Benjumea",
+          "licencia": "AM03184711",
+          "hcp": 10.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2368351
+        },
+        {
+          "pos": 15,
+          "name": "Ricardo Rebuelta Morenes",
+          "licencia": "AM05233382",
+          "hcp": 15.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2370394
+        },
+        {
+          "pos": 16,
+          "name": "Iñigo Ramirez De Cardenas Cabello De Los Cobos",
+          "licencia": "CB22984873",
+          "hcp": 18.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2370561
+        },
+        {
+          "pos": 17,
+          "name": "Rafael Domecq Solis",
+          "licencia": "AM05610981",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2369882
+        },
+        {
+          "pos": 18,
+          "name": "Borja Gumuziomorenes",
+          "licencia": "EXX1912227",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2372872
+        },
+        {
+          "pos": 19,
+          "name": "Alvaro Basa Pacheco",
+          "licencia": "AM05183518",
+          "hcp": 4.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369418
+        },
+        {
+          "pos": 20,
+          "name": "Fernando Domecq Nuñez",
+          "licencia": "AM05233408",
+          "hcp": 10.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369863
+        },
+        {
+          "pos": 21,
+          "name": "Fernando Rodriguez-Vizcaino Y Murube",
+          "licencia": "AM02186077",
+          "hcp": 28.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369212
+        },
+        {
+          "pos": 22,
+          "name": "Eugenio Molina Valcarce",
+          "licencia": "AM05138958",
+          "hcp": 34.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2369187
+        },
+        {
+          "pos": 23,
+          "name": "Ana Maria Domecq Leon",
+          "licencia": "AM05280234",
+          "hcp": 34.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2368956
+        },
+        {
+          "pos": 24,
+          "name": "Rafael Domecq Leon",
+          "licencia": "AM05280235",
+          "hcp": 24.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2369048
+        },
+        {
+          "pos": 25,
+          "name": "Miguel Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05317871",
+          "hcp": 24.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2371906
+        },
+        {
+          "pos": 26,
+          "name": "Gonzalo Leon Morenes",
+          "licencia": "AM02199514",
+          "hcp": 11.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369795
+        },
+        {
+          "pos": 27,
+          "name": "Javier Puig Lopez",
+          "licencia": "CM01208958",
+          "hcp": 12,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2369496
+        },
+        {
+          "pos": 28,
+          "name": "Jacobo Bernar Aguirre",
+          "licencia": "CM01218284",
+          "hcp": 10,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369467
+        },
+        {
+          "pos": 29,
+          "name": "Juan Pedro Davila Domecq",
+          "licencia": "CM01136438",
+          "hcp": 14.3,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2370540
+        },
+        {
+          "pos": 30,
+          "name": "Jorge Vazquez Morenes",
+          "licencia": "CM01202060",
+          "hcp": 26.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369993
+        },
+        {
+          "pos": 31,
+          "name": "Jose Maria Domecq Morenes",
+          "licencia": "9900904662",
+          "hcp": 26.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2369365
+        },
+        {
+          "pos": 32,
+          "name": "Ricardo Pablo De Soto Solis",
+          "licencia": "AM02972882",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2369841
+        },
+        {
+          "pos": 33,
+          "name": "Michael Norton",
+          "licencia": "AM00148348",
+          "hcp": 19.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2369309
+        },
+        {
+          "pos": 34,
+          "name": "Antonio Juan Domecq Leon",
+          "licencia": "AM05942218",
+          "hcp": 28,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2369640
+        },
+        {
+          "pos": 35,
+          "name": "Ignacio Domecq Solis",
+          "licencia": "AM29135413",
+          "hcp": 11.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2370643
+        },
+        {
+          "pos": 36,
+          "name": "Miguel Arias Domecq",
+          "licencia": "AMC3602412",
+          "hcp": 29.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2368749
+        },
+        {
+          "pos": 37,
+          "name": "Javier Morenes Solis",
+          "licencia": "CM00972493",
+          "hcp": 24,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2369621
+        },
+        {
+          "pos": 38,
+          "name": "Patricio Molina Porres",
+          "licencia": "CMA8436747",
+          "hcp": 28.2,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2370375
+        },
+        {
+          "pos": 39,
+          "name": "Pedro De Solis Guardiola",
+          "licencia": "AM02249241",
+          "hcp": 12.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2368992
+        },
+        {
+          "pos": 40,
+          "name": "Pedro Morenes Solis",
+          "licencia": "CM00892324",
+          "hcp": 19.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369703
+        },
+        {
+          "pos": 41,
+          "name": "Mª.micaela Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203308",
+          "hcp": 21.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369758
+        },
+        {
+          "pos": 42,
+          "name": "Alvaro Molina De Porres",
+          "licencia": "CM02388741",
+          "hcp": 23.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2370318
+        },
+        {
+          "pos": 43,
+          "name": "Alfonso Morenes Solis-Beaumont",
+          "licencia": "AMG3161002",
+          "hcp": 24.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2369227
+        },
+        {
+          "pos": 44,
+          "name": "Ignacio Solis Guardiola",
+          "licencia": "AM02196532",
+          "hcp": 22.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2368988
+        },
+        {
+          "pos": 45,
+          "name": "Catalina Rodriguez-Vizcaino De Solis",
+          "licencia": "AM02203310",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2369789
+        },
+        {
+          "pos": 46,
+          "name": "Mariana Solis O`neill",
+          "licencia": "AM02475632",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2370562
+        },
+        {
+          "pos": null,
+          "name": "Ignacio Domecq Benjumea",
+          "licencia": "AM05972935",
+          "hcp": 19.8,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2369084
+        },
+        {
+          "pos": null,
+          "name": "Ricardo Rebuelta Del Pedredo Gonzalez",
+          "licencia": "AM05204567",
+          "hcp": 23,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2370663
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Clasificacion Infantil",
+      "jugadores": 1
+    },
+    "2": {
+      "name": "Segunda Categoría Desde 18.1 Hcp",
+      "jugadores": 14
+    },
+    "3": {
+      "name": "Primera Categoria Hasta 18 Hcp",
+      "jugadores": 9
+    },
+    "4": {
+      "name": "Clasificacion Senior",
+      "jugadores": 17
+    },
+    "5": {
+      "name": "Scratch Individual",
+      "jugadores": 48
+    },
+    "6": {
+      "name": "Handicap Individual Señoras Femenino",
+      "jugadores": 6
+    },
+    "7": {
+      "name": "Clasificacion Junior",
+      "jugadores": 2
+    },
+    "8": {
+      "name": "Clasificacion General",
+      "jugadores": 48
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Felipe Domecq Benjumea",
+      "licencia": "AM03155123",
+      "hcp": 21.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Javier Domecq Benjumea",
+      "licencia": "AM03184711",
+      "hcp": 10.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Arias Domecq",
+      "licencia": "AMC3602412",
+      "hcp": 29.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Ignacio Solis Guardiola",
+      "licencia": "AM02196532",
+      "hcp": 22.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Pedro De Solis Guardiola",
+      "licencia": "AM02249241",
+      "hcp": 12.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Rafael Domecq Leon",
+      "licencia": "AM05280235",
+      "hcp": 24.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Ignacio Domecq Benjumea",
+      "licencia": "AM05972935",
+      "hcp": 19.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "Fernando Rodriguez-Vizcaino Y Murube",
+      "licencia": "AM02186077",
+      "hcp": 28.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 9,
+      "name": "Alfonso Morenes Camacho",
+      "licencia": "AM00940747",
+      "hcp": 2.6,
+      "nivel": "J"
+    },
+    {
+      "orden": 10,
+      "name": "Alfonso Morenes Solis-Beaumont",
+      "licencia": "AMG3161002",
+      "hcp": 24.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Michael Norton",
+      "licencia": "AM00148348",
+      "hcp": 19.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Jaime Lauder Sanjuan",
+      "licencia": "CMB2300558",
+      "hcp": 31.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Jose Maria Domecq Morenes",
+      "licencia": "9900904662",
+      "hcp": 26.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Alvaro Basa Pacheco",
+      "licencia": "AM05183518",
+      "hcp": 4.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 15,
+      "name": "Jacobo Bernar Aguirre",
+      "licencia": "CM01218284",
+      "hcp": 10,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Gonzalo Piñar Goizueta",
+      "licencia": "AM02788751",
+      "hcp": 6.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Piñar Valentin",
+      "licencia": "AM02467920",
+      "hcp": 25.2,
+      "nivel": "I"
+    },
+    {
+      "orden": 18,
+      "name": "Javier Puig Lopez",
+      "licencia": "CM01208958",
+      "hcp": 12,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 19,
+      "name": "Borja Diaz Solis",
+      "licencia": "CM07976001",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 20,
+      "name": "Santiago Leon Domecq",
+      "licencia": "AM05111273",
+      "hcp": 27.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 21,
+      "name": "Javier Morenes Solis",
+      "licencia": "CM00972493",
+      "hcp": 24,
+      "nivel": "S"
+    },
+    {
+      "orden": 22,
+      "name": "Antonio Juan Domecq Leon",
+      "licencia": "AM05942218",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 23,
+      "name": "Francisco Javier Leon Morenes",
+      "licencia": "AM02885948",
+      "hcp": 19.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 24,
+      "name": "Pedro Morenes Solis",
+      "licencia": "CM00892324",
+      "hcp": 19.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 25,
+      "name": "Gonzalo Leon Morenes",
+      "licencia": "AM02199514",
+      "hcp": 11.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 26,
+      "name": "Ricardo Pablo De Soto Solis",
+      "licencia": "AM02972882",
+      "hcp": 28,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 27,
+      "name": "Fernando Domecq Nuñez",
+      "licencia": "AM05233408",
+      "hcp": 10.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 28,
+      "name": "Rafael Domecq Solis",
+      "licencia": "AM05610981",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 29,
+      "name": "Jorge Vazquez Salinero",
+      "licencia": "CM01040703",
+      "hcp": 23.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 30,
+      "name": "Jorge Vazquez Morenes",
+      "licencia": "CM01202060",
+      "hcp": 26.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 31,
+      "name": "Alvaro Molina De Porres",
+      "licencia": "CM02388741",
+      "hcp": 23.9,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 32,
+      "name": "Patricio Molina Porres",
+      "licencia": "CMA8436747",
+      "hcp": 28.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 33,
+      "name": "Ricardo Rebuelta Morenes",
+      "licencia": "AM05233382",
+      "hcp": 15.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 34,
+      "name": "Juan Pedro Davila Domecq",
+      "licencia": "CM01136438",
+      "hcp": 14.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 35,
+      "name": "Iñigo Ramirez De Cardenas Cabello De Los Cobos",
+      "licencia": "CB22984873",
+      "hcp": 18.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 36,
+      "name": "Ignacio Domecq Solis",
+      "licencia": "AM29135413",
+      "hcp": 11.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Ricardo Rebuelta Del Pedredo Gonzalez",
+      "licencia": "AM05204567",
+      "hcp": 23,
+      "nivel": "S"
+    },
+    {
+      "orden": 38,
+      "name": "Manuel Maestre Domecq",
+      "licencia": "AM05014401",
+      "hcp": 16.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Miguel Rebuelta Del Pedredo Gonzalez",
+      "licencia": "AM05317871",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 40,
+      "name": "Borja Gumuziomorenes",
+      "licencia": "EXX1912227",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Ana Maria Domecq Leon",
+      "licencia": "AM05280234",
+      "hcp": 34.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Maria Lourdes Silva Cruz-Villalon",
+      "licencia": "9901138733",
+      "hcp": 15.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Mª.micaela Rodriguez-Vizcaino De Solis",
+      "licencia": "AM02203308",
+      "hcp": 21.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Catalina Rodriguez-Vizcaino De Solis",
+      "licencia": "AM02203310",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Mercedes Morenes Solis",
+      "licencia": "CM01040192",
+      "hcp": 25.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Mariana Solis O`neill",
+      "licencia": "AM02475632",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Eugenio Molina Valcarce",
+      "licencia": "AM05138958",
+      "hcp": 34.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Miguel Domecq Solis",
+      "licencia": "AM05014375",
+      "hcp": 27.4,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -669,6 +2932,7 @@
       "players": []
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-08-03T07:23:36.984Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ]
 }

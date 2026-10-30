@@ -1,9 +1,9 @@
 {
   "tourId": 73118,
   "url": "https://www.nextcaddy.com/tour/73118",
-  "scrapedAt": "2026-08-24T04:59:53.393Z",
+  "scrapedAt": "2026-10-30T14:29:07.297Z",
   "meta": {
-    "name": null,
+    "name": "Torneo Corendi Cup (Grupo Privado)",
     "organizer": null,
     "course": "Sherry Golf Jerez",
     "courseCode": "AMC3",
@@ -21,11 +21,346 @@
     "dateIso": "2026-10-18",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 40,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual",
+      "expectedJugadores": 16,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Harsh Sharma",
+          "licencia": "AMC3097723",
+          "hcp": 23.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2417473
+        },
+        {
+          "pos": 2,
+          "name": "Ignacio Cores Valido",
+          "licencia": "AMD5003037",
+          "hcp": 37.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2408146
+        },
+        {
+          "pos": 3,
+          "name": "Mauro Rosendi Guerrero",
+          "licencia": "AM64087636",
+          "hcp": 50.2,
+          "nivel": "J",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2422145
+        },
+        {
+          "pos": 4,
+          "name": "Alvaro Tofe Povedano",
+          "licencia": "AMG3820939",
+          "hcp": 25.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2422259
+        },
+        {
+          "pos": 5,
+          "name": "Alejandro Rosendi Galvin",
+          "licencia": "AMD5004733",
+          "hcp": 22,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2421293
+        },
+        {
+          "pos": 6,
+          "name": "Jose Ramon Fernandez Lasanta",
+          "licencia": "AMC9611946",
+          "hcp": 32.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2423483
+        },
+        {
+          "pos": 7,
+          "name": "Alvaro Barea Spinola",
+          "licencia": "AMD5496422",
+          "hcp": 35.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2421983
+        },
+        {
+          "pos": 8,
+          "name": "Pedro Guerrero Mateo",
+          "licencia": "AMD5492043",
+          "hcp": 17.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2421987
+        },
+        {
+          "pos": 9,
+          "name": "Ismael Rosendi Galvin",
+          "licencia": "AM64087618",
+          "hcp": 23.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2422143
+        },
+        {
+          "pos": 10,
+          "name": "Fernando Urquia Edreira",
+          "licencia": "AM17989515",
+          "hcp": 27,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2408186
+        },
+        {
+          "pos": 11,
+          "name": "Oliverio Alonso Piñera",
+          "licencia": "AM17988890",
+          "hcp": 25.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2408293
+        },
+        {
+          "pos": 12,
+          "name": "Isaac Cabanes Jiménez",
+          "licencia": "AMD5010136",
+          "hcp": 26.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": 18,
+          "inscribedId": 2421993
+        },
+        {
+          "pos": null,
+          "name": "Miguel Perez Diaz",
+          "licencia": "AMD5925008",
+          "hcp": 39.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2422434
+        },
+        {
+          "pos": null,
+          "name": "Diego Crespo Sevilla",
+          "licencia": "AM66914047",
+          "hcp": 25.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2422439
+        },
+        {
+          "pos": null,
+          "name": "Maria Del Rosario Rodriguez Sanz",
+          "licencia": "AM66914052",
+          "hcp": 30.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2422440
+        },
+        {
+          "pos": null,
+          "name": "Inmaculada Hernandez Sousa",
+          "licencia": "AMD5006530",
+          "hcp": 50,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2422448
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual",
+      "jugadores": 16
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Ignacio Cores Valido",
+      "licencia": "AMD5003037",
+      "hcp": 37.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Fernando Urquia Edreira",
+      "licencia": "AM17989515",
+      "hcp": 27,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 3,
+      "name": "Oliverio Alonso Piñera",
+      "licencia": "AM17988890",
+      "hcp": 25.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Harsh Sharma",
+      "licencia": "AMC3097723",
+      "hcp": 23.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Alejandro Rosendi Galvin",
+      "licencia": "AMD5004733",
+      "hcp": 22,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Alvaro Barea Spinola",
+      "licencia": "AMD5496422",
+      "hcp": 35.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Pedro Guerrero Mateo",
+      "licencia": "AMD5492043",
+      "hcp": 17.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Isaac Cabanes Jiménez",
+      "licencia": "AMD5010136",
+      "hcp": 26.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Ismael Rosendi Galvin",
+      "licencia": "AM64087618",
+      "hcp": 23.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Mauro Rosendi Guerrero",
+      "licencia": "AM64087636",
+      "hcp": 50.2,
+      "nivel": "J"
+    },
+    {
+      "orden": 11,
+      "name": "Alvaro Tofe Povedano",
+      "licencia": "AMG3820939",
+      "hcp": 25.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Miguel Perez Diaz",
+      "licencia": "AMD5925008",
+      "hcp": 39.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Diego Crespo Sevilla",
+      "licencia": "AM66914047",
+      "hcp": 25.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jose Ramon Fernandez Lasanta",
+      "licencia": "AMC9611946",
+      "hcp": 32.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Maria Del Rosario Rodriguez Sanz",
+      "licencia": "AM66914052",
+      "hcp": 30.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Inmaculada Hernandez Sousa",
+      "licencia": "AMD5006530",
+      "hcp": 50,
+      "nivel": "S"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -195,6 +530,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-19T09:49:43.504Z"
+  ]
 }

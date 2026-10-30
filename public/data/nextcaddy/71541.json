@@ -1,13 +1,13 @@
 {
   "tourId": 71541,
   "url": "https://www.nextcaddy.com/tour/71541",
-  "scrapedAt": "2026-06-28T17:40:32.173Z",
+  "scrapedAt": "2026-10-30T14:26:41.407Z",
   "meta": {
     "name": "FINAL Torneo Academia Infantil 2025-2026 - 18 hoyos",
     "organizer": null,
     "course": "Escuela de Golf Miguel ángel Jiménez",
     "courseCode": "AMI5",
-    "dateStart": null,
+    "dateStart": "2026-06-28",
     "dateEnd": null,
     "format": "Stableford (Handicap)  Caballeros  Señor",
     "categories": [
@@ -17,12 +17,188 @@
       "Profesional",
       "Senior",
       "Juvenil"
-    ]
+    ],
+    "dateIso": "2026-06-28",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap Individual Junio 2026",
+      "expectedJugadores": 12,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Luca Aguilera Cordero",
+          "licencia": "AMI5488550",
+          "hcp": 26,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 40,
+          "toPar": -4,
+          "inscribedId": 2349223
+        },
+        {
+          "pos": 2,
+          "name": "Mathis Volant",
+          "licencia": "AMI5029799",
+          "hcp": 32.6,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2348201
+        },
+        {
+          "pos": 3,
+          "name": "Alan Anderson Tolosa",
+          "licencia": "AMI5374223",
+          "hcp": 30.7,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2349950
+        },
+        {
+          "pos": 4,
+          "name": "Carolina Borrey Wust",
+          "licencia": "AMI5988830",
+          "hcp": 54,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2349067
+        },
+        {
+          "pos": 5,
+          "name": "Victor Sanabria De Borja",
+          "licencia": "AMI5991948",
+          "hcp": 36.1,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2348177
+        },
+        {
+          "pos": 6,
+          "name": "Eliot Anderson Tolosa",
+          "licencia": "AMI5374222",
+          "hcp": 42.2,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2349951
+        },
+        {
+          "pos": 7,
+          "name": "Marina Orejuela Solero",
+          "licencia": "AMI5937621",
+          "hcp": 43.3,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2350153
+        },
+        {
+          "pos": 8,
+          "name": "Irene Orejuela Solero",
+          "licencia": "AMI5937619",
+          "hcp": 38.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2350140
+        },
+        {
+          "pos": 9,
+          "name": "Hector Gonzalez Ortega",
+          "licencia": "AM04983718",
+          "hcp": 19.1,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 30,
+          "toPar": 6,
+          "inscribedId": 2348365
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Jimenez Pachon",
+          "licencia": "AMI5968707",
+          "hcp": 42.4,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2349098
+        },
+        {
+          "pos": 11,
+          "name": "Juan Jose Rodriguez Lopez",
+          "licencia": "AMI5998051",
+          "hcp": 20.3,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2348176
+        },
+        {
+          "pos": 12,
+          "name": "Aimar Jodar Armario",
+          "licencia": "AMI5522443",
+          "hcp": 36,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": 17,
+          "inscribedId": 2350583
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap Individual Junio 2026",
+      "jugadores": 12
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -88,13 +264,6 @@
       "nivel": "A"
     },
     {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Licencia",
-      "hcp": null,
-      "nivel": "Nivel"
-    },
-    {
       "orden": 1,
       "name": "Carolina Borrey Wust",
       "licencia": "AMI5988830",
@@ -114,90 +283,6 @@
       "licencia": "AMI5937621",
       "hcp": 43.3,
       "nivel": "C"
-    },
-    {
-      "orden": null,
-      "name": "Jugador",
-      "licencia": "Fecha Inscripción",
-      "hcp": null,
-      "nivel": "Licencia"
-    },
-    {
-      "orden": 1,
-      "name": "Juan Jose Rodriguez Lopez",
-      "licencia": "20-06-26 17:17",
-      "hcp": 20.3,
-      "nivel": "AMI5998051"
-    },
-    {
-      "orden": 3,
-      "name": "Mathis Volant",
-      "licencia": "20-06-26 17:56",
-      "hcp": 32.6,
-      "nivel": "AMI5029799"
-    },
-    {
-      "orden": 4,
-      "name": "Carolina Borrey Wust",
-      "licencia": "22-06-26 16:30",
-      "hcp": 54,
-      "nivel": "AMI5988830"
-    },
-    {
-      "orden": 5,
-      "name": "Carlos Jimenez Pachon",
-      "licencia": "22-06-26 16:45",
-      "hcp": 42.4,
-      "nivel": "AMI5968707"
-    },
-    {
-      "orden": 6,
-      "name": "Luca Aguilera Cordero",
-      "licencia": "22-06-26 22:10",
-      "hcp": 26,
-      "nivel": "AMI5488550"
-    },
-    {
-      "orden": 7,
-      "name": "Alan Anderson Tolosa",
-      "licencia": "23-06-26 20:34",
-      "hcp": 30.7,
-      "nivel": "AMI5374223"
-    },
-    {
-      "orden": 8,
-      "name": "Eliot Anderson Tolosa",
-      "licencia": "23-06-26 20:35",
-      "hcp": 42.2,
-      "nivel": "AMI5374222"
-    },
-    {
-      "orden": 9,
-      "name": "Irene Orejuela Solero",
-      "licencia": "24-06-26 10:22",
-      "hcp": 38.2,
-      "nivel": "AMI5937619"
-    },
-    {
-      "orden": 10,
-      "name": "Marina Orejuela Solero",
-      "licencia": "24-06-26 10:48",
-      "hcp": 43.3,
-      "nivel": "AMI5937621"
-    },
-    {
-      "orden": 11,
-      "name": "Aimar Jodar Armario",
-      "licencia": "24-06-26 17:03",
-      "hcp": 36,
-      "nivel": "AMI5522443"
-    },
-    {
-      "orden": 12,
-      "name": "Hector Gonzalez Ortega",
-      "licencia": "21-06-26 11:20",
-      "hcp": 19.1,
-      "nivel": "AM04983718"
     }
   ],
   "horarios": [
@@ -335,49 +420,19 @@
       "scoreTypeKey": "birdie",
       "players": [
         {
-          "playerName": "Magariño Alvarez, David",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 16:02:04"
+          "playerName": "Olmedo Diez, Francisco Javier",
+          "holeNumber": 16,
+          "createdAt": "21/02/26 17:57:03"
         },
         {
-          "playerName": "San Jose De La Rosa, Mariano",
-          "holeNumber": 3,
-          "createdAt": "21/02/26 16:02:21"
+          "playerName": "Olmedo Diez, Francisco Javier",
+          "holeNumber": 17,
+          "createdAt": "21/02/26 18:05:51"
         },
         {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 1,
-          "createdAt": "21/02/26 16:02:48"
-        },
-        {
-          "playerName": "Nieto Lopez, Samuel",
-          "holeNumber": 4,
-          "createdAt": "21/02/26 16:10:59"
-        },
-        {
-          "playerName": "Rojano Martinez, Jose Manuel",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 16:11:17"
-        },
-        {
-          "playerName": "Gonzalez Aquiso Madrigal, Manuel",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 16:11:50"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Diodoro",
-          "holeNumber": 5,
-          "createdAt": "21/02/26 16:12:00"
-        },
-        {
-          "playerName": "Fernandez Blanco, Angel",
-          "holeNumber": 9,
-          "createdAt": "21/02/26 16:19:04"
-        },
-        {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 3,
-          "createdAt": "21/02/26 16:21:00"
+          "playerName": "Olmedo Diez, Francisco Javier",
+          "holeNumber": 18,
+          "createdAt": "21/02/26 18:12:19"
         },
         {
           "playerName": "Rodriguez Benito, Alberto",
@@ -385,89 +440,9 @@
           "createdAt": "21/02/26 16:23:05"
         },
         {
-          "playerName": "Nieto Lopez, Samuel",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 16:25:36"
-        },
-        {
-          "playerName": "Giganto Burguete, Pedro",
-          "holeNumber": 11,
-          "createdAt": "21/02/26 16:26:39"
-        },
-        {
-          "playerName": "Fernandez Pedraza, Fernando Julian",
-          "holeNumber": 9,
-          "createdAt": "21/02/26 16:27:06"
-        },
-        {
-          "playerName": "Delgado Prieto, Martiniano",
-          "holeNumber": 7,
-          "createdAt": "21/02/26 16:41:22"
-        },
-        {
-          "playerName": "Gomez Hernandez, Pablo Cesar",
-          "holeNumber": 10,
-          "createdAt": "21/02/26 16:41:57"
-        },
-        {
-          "playerName": "Srisaengorn, Suban",
-          "holeNumber": 11,
-          "createdAt": "21/02/26 16:43:15"
-        },
-        {
-          "playerName": "Cascon Lopez, Roberto",
-          "holeNumber": 13,
-          "createdAt": "21/02/26 16:45:27"
-        },
-        {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 16:45:55"
-        },
-        {
           "playerName": "Rodriguez Benito, Alberto",
           "holeNumber": 9,
           "createdAt": "21/02/26 16:52:39"
-        },
-        {
-          "playerName": "Fernandez Fernandez, Diodoro",
-          "holeNumber": 10,
-          "createdAt": "21/02/26 16:58:56"
-        },
-        {
-          "playerName": "Sanz Martin, Jose Angel",
-          "holeNumber": 9,
-          "createdAt": "21/02/26 16:59:12"
-        },
-        {
-          "playerName": "Cabezudo San Jose, Fernando",
-          "holeNumber": 9,
-          "createdAt": "21/02/26 17:00:04"
-        },
-        {
-          "playerName": "Blanco Alvarez, Marcos",
-          "holeNumber": 9,
-          "createdAt": "21/02/26 17:01:13"
-        },
-        {
-          "playerName": "Martin Alvarez, Marino",
-          "holeNumber": 13,
-          "createdAt": "21/02/26 17:02:16"
-        },
-        {
-          "playerName": "Blanco Alvarez, Marcos",
-          "holeNumber": 11,
-          "createdAt": "21/02/26 17:22:01"
-        },
-        {
-          "playerName": "Fernandez Pedraza, Fernando Julian",
-          "holeNumber": 15,
-          "createdAt": "21/02/26 17:29:14"
-        },
-        {
-          "playerName": "Laustalet Gonzalez, Jose Manuel",
-          "holeNumber": 13,
-          "createdAt": "21/02/26 17:30:54"
         },
         {
           "playerName": "Rodriguez Benito, Alberto",
@@ -475,24 +450,64 @@
           "createdAt": "21/02/26 17:36:28"
         },
         {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 11,
-          "createdAt": "21/02/26 17:38:18"
-        },
-        {
-          "playerName": "Cisneros Diaz, Alfredo",
+          "playerName": "Vazquez De Prada Martinez, Jesus",
           "holeNumber": 18,
-          "createdAt": "21/02/26 17:39:08"
+          "createdAt": "21/02/26 18:06:45"
         },
         {
-          "playerName": "Sanz Martin, Jose Angel",
+          "playerName": "Fernandez Pedraza, Fernando Julian",
+          "holeNumber": 9,
+          "createdAt": "21/02/26 16:27:06"
+        },
+        {
+          "playerName": "Fernandez Pedraza, Fernando Julian",
+          "holeNumber": 15,
+          "createdAt": "21/02/26 17:29:14"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Diodoro",
+          "holeNumber": 5,
+          "createdAt": "21/02/26 16:12:00"
+        },
+        {
+          "playerName": "Fernandez Fernandez, Diodoro",
+          "holeNumber": 10,
+          "createdAt": "21/02/26 16:58:56"
+        },
+        {
+          "playerName": "Baeza Velasco, David",
+          "holeNumber": 7,
+          "createdAt": "21/02/26 18:29:54"
+        },
+        {
+          "playerName": "Baeza Velasco, David",
+          "holeNumber": 10,
+          "createdAt": "21/02/26 18:29:54"
+        },
+        {
+          "playerName": "Baeza Velasco, David",
           "holeNumber": 13,
-          "createdAt": "21/02/26 17:42:46"
+          "createdAt": "21/02/26 18:29:54"
         },
         {
-          "playerName": "Nieto Lopez, Samuel",
-          "holeNumber": 14,
-          "createdAt": "21/02/26 17:48:28"
+          "playerName": "Baeza Velasco, David",
+          "holeNumber": 16,
+          "createdAt": "21/02/26 18:29:54"
+        },
+        {
+          "playerName": "Baeza Velasco, David",
+          "holeNumber": 17,
+          "createdAt": "21/02/26 18:29:54"
+        },
+        {
+          "playerName": "Rojano Martinez, Jose Manuel",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 16:11:17"
+        },
+        {
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 10,
+          "createdAt": "21/02/26 16:41:57"
         },
         {
           "playerName": "Gomez Hernandez, Pablo Cesar",
@@ -500,19 +515,109 @@
           "createdAt": "21/02/26 17:52:03"
         },
         {
-          "playerName": "San Jose De La Rosa, Mariano",
-          "holeNumber": 15,
-          "createdAt": "21/02/26 17:54:12"
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 2,
+          "createdAt": "21/02/26 18:14:36"
         },
         {
-          "playerName": "Olmedo Diez, Francisco Javier",
+          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "holeNumber": 5,
+          "createdAt": "21/02/26 18:40:03"
+        },
+        {
+          "playerName": "Cascon Lopez, Roberto",
+          "holeNumber": 13,
+          "createdAt": "21/02/26 16:45:27"
+        },
+        {
+          "playerName": "Asuncion Guerra, Tomas",
+          "holeNumber": 18,
+          "createdAt": "21/02/26 18:35:22"
+        },
+        {
+          "playerName": "Srisaengorn, Suban",
+          "holeNumber": 11,
+          "createdAt": "21/02/26 16:43:15"
+        },
+        {
+          "playerName": "Srisaengorn, Suban",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 18:40:28"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 4,
+          "createdAt": "21/02/26 16:10:59"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 16:25:36"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 14,
+          "createdAt": "21/02/26 17:48:28"
+        },
+        {
+          "playerName": "Nieto Lopez, Samuel",
+          "holeNumber": 2,
+          "createdAt": "21/02/26 18:39:15"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 1,
+          "createdAt": "21/02/26 16:02:48"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 3,
+          "createdAt": "21/02/26 16:21:00"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 16:45:55"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 11,
+          "createdAt": "21/02/26 17:38:18"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
+          "holeNumber": 15,
+          "createdAt": "21/02/26 18:12:20"
+        },
+        {
+          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
           "holeNumber": 16,
-          "createdAt": "21/02/26 17:57:03"
+          "createdAt": "21/02/26 18:19:51"
+        },
+        {
+          "playerName": "Blanco Alvarez, Marcos",
+          "holeNumber": 9,
+          "createdAt": "21/02/26 17:01:13"
+        },
+        {
+          "playerName": "Blanco Alvarez, Marcos",
+          "holeNumber": 11,
+          "createdAt": "21/02/26 17:22:01"
+        },
+        {
+          "playerName": "Fernandez Blanco, Angel",
+          "holeNumber": 9,
+          "createdAt": "21/02/26 16:19:04"
         },
         {
           "playerName": "Fernandez Blanco, Angel",
           "holeNumber": 1,
           "createdAt": "21/02/26 17:58:21"
+        },
+        {
+          "playerName": "Magariño Alvarez, David",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 16:02:04"
         },
         {
           "playerName": "Magariño Alvarez, David",
@@ -525,74 +630,14 @@
           "createdAt": "21/02/26 18:04:52"
         },
         {
-          "playerName": "Olmedo Diez, Francisco Javier",
-          "holeNumber": 17,
-          "createdAt": "21/02/26 18:05:51"
-        },
-        {
-          "playerName": "Vazquez De Prada Martinez, Jesus",
+          "playerName": "Cisneros Diaz, Alfredo",
           "holeNumber": 18,
-          "createdAt": "21/02/26 18:06:45"
+          "createdAt": "21/02/26 17:39:08"
         },
         {
-          "playerName": "Olmedo Diez, Francisco Javier",
-          "holeNumber": 18,
-          "createdAt": "21/02/26 18:12:19"
-        },
-        {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 15,
-          "createdAt": "21/02/26 18:12:20"
-        },
-        {
-          "playerName": "Gomez Hernandez, Pablo Cesar",
-          "holeNumber": 2,
-          "createdAt": "21/02/26 18:14:36"
-        },
-        {
-          "playerName": "Ortiz De Pinedo Fernandez, Jose Maria",
-          "holeNumber": 16,
-          "createdAt": "21/02/26 18:19:51"
-        },
-        {
-          "playerName": "Castillo Bravo, Ruben",
-          "holeNumber": 6,
-          "createdAt": "21/02/26 18:21:15"
-        },
-        {
-          "playerName": "Baeza Velasco, David",
-          "holeNumber": 7,
-          "createdAt": "21/02/26 18:29:54"
-        },
-        {
-          "playerName": "Baeza Velasco, David",
-          "holeNumber": 10,
-          "createdAt": "21/02/26 18:29:54"
-        },
-        {
-          "playerName": "Baeza Velasco, David",
-          "holeNumber": 13,
-          "createdAt": "21/02/26 18:29:54"
-        },
-        {
-          "playerName": "Baeza Velasco, David",
-          "holeNumber": 16,
-          "createdAt": "21/02/26 18:29:54"
-        },
-        {
-          "playerName": "Baeza Velasco, David",
-          "holeNumber": 17,
-          "createdAt": "21/02/26 18:29:54"
-        },
-        {
-          "playerName": "Martin Alvarez, Marino",
-          "holeNumber": 5,
-          "createdAt": "21/02/26 18:32:56"
-        },
-        {
-          "playerName": "Asuncion Guerra, Tomas",
-          "holeNumber": 18,
-          "createdAt": "21/02/26 18:35:22"
+          "playerName": "Cabezudo San Jose, Fernando",
+          "holeNumber": 9,
+          "createdAt": "21/02/26 17:00:04"
         },
         {
           "playerName": "Cabezudo San Jose, Fernando",
@@ -600,14 +645,24 @@
           "createdAt": "21/02/26 18:35:41"
         },
         {
-          "playerName": "Nieto Lopez, Samuel",
-          "holeNumber": 2,
-          "createdAt": "21/02/26 18:39:15"
+          "playerName": "San Jose De La Rosa, Mariano",
+          "holeNumber": 3,
+          "createdAt": "21/02/26 16:02:21"
         },
         {
-          "playerName": "Gomez Hernandez, Pablo Cesar",
+          "playerName": "San Jose De La Rosa, Mariano",
+          "holeNumber": 15,
+          "createdAt": "21/02/26 17:54:12"
+        },
+        {
+          "playerName": "Martin Alvarez, Marino",
+          "holeNumber": 13,
+          "createdAt": "21/02/26 17:02:16"
+        },
+        {
+          "playerName": "Martin Alvarez, Marino",
           "holeNumber": 5,
-          "createdAt": "21/02/26 18:40:03"
+          "createdAt": "21/02/26 18:32:56"
         },
         {
           "playerName": "Martin Alvarez, Marino",
@@ -615,9 +670,39 @@
           "createdAt": "21/02/26 18:40:23"
         },
         {
-          "playerName": "Srisaengorn, Suban",
+          "playerName": "Giganto Burguete, Pedro",
+          "holeNumber": 11,
+          "createdAt": "21/02/26 16:26:39"
+        },
+        {
+          "playerName": "Delgado Prieto, Martiniano",
+          "holeNumber": 7,
+          "createdAt": "21/02/26 16:41:22"
+        },
+        {
+          "playerName": "Gonzalez Aquiso Madrigal, Manuel",
           "holeNumber": 6,
-          "createdAt": "21/02/26 18:40:28"
+          "createdAt": "21/02/26 16:11:50"
+        },
+        {
+          "playerName": "Castillo Bravo, Ruben",
+          "holeNumber": 6,
+          "createdAt": "21/02/26 18:21:15"
+        },
+        {
+          "playerName": "Laustalet Gonzalez, Jose Manuel",
+          "holeNumber": 13,
+          "createdAt": "21/02/26 17:30:54"
+        },
+        {
+          "playerName": "Sanz Martin, Jose Angel",
+          "holeNumber": 9,
+          "createdAt": "21/02/26 16:59:12"
+        },
+        {
+          "playerName": "Sanz Martin, Jose Angel",
+          "holeNumber": 13,
+          "createdAt": "21/02/26 17:42:46"
         }
       ]
     }

@@ -1,9 +1,9 @@
 {
   "tourId": 72134,
   "url": "https://www.nextcaddy.com/tour/72134",
-  "scrapedAt": "2026-07-05T21:07:31.854Z",
+  "scrapedAt": "2026-10-30T14:26:57.304Z",
   "meta": {
-    "name": null,
+    "name": "TORNEO VERBENA 2026",
     "organizer": null,
     "course": "Club de Golf Pozoblanco",
     "courseCode": "AM10",
@@ -21,10 +21,600 @@
     "dateIso": "2026-07-12",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
+  "course": {
+    "parTotal": 76,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Trofeo Verbena 2026 Segunda Categoria",
+      "expectedJugadores": 10,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Julio Garcia-Liñan Amo",
+          "licencia": "AME8619701",
+          "hcp": 19.5,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2355916
+        },
+        {
+          "pos": 2,
+          "name": "Jose Manuel Luque Fernandez",
+          "licencia": "AM10995149",
+          "hcp": 15.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2358909
+        },
+        {
+          "pos": 3,
+          "name": "Javier Garcia-Liñan Fragero",
+          "licencia": "AM10082621",
+          "hcp": 21,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2355801
+        },
+        {
+          "pos": 4,
+          "name": "Jose Antonio Hens Lopez",
+          "licencia": "AM06911058",
+          "hcp": 17.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2359015
+        },
+        {
+          "pos": 5,
+          "name": "Angel Garcia Rojas",
+          "licencia": "AM10975100",
+          "hcp": 24.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2358980
+        },
+        {
+          "pos": 6,
+          "name": "Antonio Muñoz Muñoz",
+          "licencia": "AM10988783",
+          "hcp": 14.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2358968
+        },
+        {
+          "pos": 7,
+          "name": "Osvaldo Miguel Appollonio Calderon",
+          "licencia": "AM10993518",
+          "hcp": 17,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2359140
+        },
+        {
+          "pos": 8,
+          "name": "Juan Gomez Capitan",
+          "licencia": "AM10604846",
+          "hcp": 20.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2359014
+        },
+        {
+          "pos": 9,
+          "name": "Jose Antonio Burgueño Perez",
+          "licencia": "AM10990893",
+          "hcp": 22.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2356134
+        },
+        {
+          "pos": 10,
+          "name": "David Marquez Porcuna",
+          "licencia": "AMG3964322",
+          "hcp": 24.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2358999
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Trofeo Verbena 2026 Primera Categoria",
+      "expectedJugadores": 8,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Javier Gamez Martinez",
+          "licencia": "AM10206820",
+          "hcp": 8.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2356143
+        },
+        {
+          "pos": 2,
+          "name": "Raul Martinez Lopez",
+          "licencia": "AM10202187",
+          "hcp": 11.2,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2359089
+        },
+        {
+          "pos": 3,
+          "name": "Raul Martinez Moreno",
+          "licencia": "AM10776070",
+          "hcp": 1,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2359108
+        },
+        {
+          "pos": 4,
+          "name": "Juan Manuel Dueñas Lopez",
+          "licencia": "AM10600115",
+          "hcp": 4.9,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2355508
+        },
+        {
+          "pos": 5,
+          "name": "Diego Risquez Garcia",
+          "licencia": "AM10479343",
+          "hcp": 7.1,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2355479
+        },
+        {
+          "pos": 6,
+          "name": "Francisco Javier Gomez Serrano",
+          "licencia": "AM10899474",
+          "hcp": 11.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2356561
+        },
+        {
+          "pos": 7,
+          "name": "Pedro Luis Blanco Pastor",
+          "licencia": "AM10600682",
+          "hcp": 10.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2359002
+        },
+        {
+          "pos": null,
+          "name": "Raul Molina Grande",
+          "licencia": "AM10114261",
+          "hcp": 7.4,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2358942
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Trofeo Verbena 2026 Tercera Categoria",
+      "expectedJugadores": 25,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Jose Miguel Fernandez Cabrera",
+          "licencia": "AMK3953249",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 56,
+          "toPar": -20,
+          "inscribedId": 2358981
+        },
+        {
+          "pos": 2,
+          "name": "Francisco Javier Garcia Garcia",
+          "licencia": "AM10516587",
+          "hcp": 26.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 44,
+          "toPar": -8,
+          "inscribedId": 2357685
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Javier Garcia Fernandez",
+          "licencia": "AM10489825",
+          "hcp": 44.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": -7,
+          "inscribedId": 2357023
+        },
+        {
+          "pos": 4,
+          "name": "Fernando Medina Badanelli",
+          "licencia": "AM06978548",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 42,
+          "toPar": -6,
+          "inscribedId": 2357677
+        },
+        {
+          "pos": 5,
+          "name": "Sergio Serrano Revuelto",
+          "licencia": "AMK3376135",
+          "hcp": 39.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": -5,
+          "inscribedId": 2358992
+        },
+        {
+          "pos": 6,
+          "name": "Rafael Esteo Porras",
+          "licencia": "AM10977984",
+          "hcp": 25,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 39,
+          "toPar": -3,
+          "inscribedId": 2358993
+        },
+        {
+          "pos": 7,
+          "name": "Angel Garcia Garcia",
+          "licencia": "AM10964621",
+          "hcp": 26.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 38,
+          "toPar": -2,
+          "inscribedId": 2357853
+        },
+        {
+          "pos": 8,
+          "name": "Pablo Jurado Gonzalez",
+          "licencia": "AM10152586",
+          "hcp": 30.1,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2356817
+        },
+        {
+          "pos": 9,
+          "name": "Ana Isabel Cano Cerezo",
+          "licencia": "AM10953237",
+          "hcp": 35.5,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2358966
+        },
+        {
+          "pos": 10,
+          "name": "Carlos Ramon Morales De La Puerta",
+          "licencia": "AM10516709",
+          "hcp": 41,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 37,
+          "toPar": -1,
+          "inscribedId": 2355539
+        },
+        {
+          "pos": 11,
+          "name": "Maria Angeles Alameda Fernandez",
+          "licencia": "AM10978876",
+          "hcp": 33.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2358965
+        },
+        {
+          "pos": 12,
+          "name": "David Aparicio Criado",
+          "licencia": "AMK3350114",
+          "hcp": 40.6,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2356270
+        },
+        {
+          "pos": 13,
+          "name": "Eleuterio Lunar Villarreal",
+          "licencia": "AM10995204",
+          "hcp": 29,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2356276
+        },
+        {
+          "pos": 14,
+          "name": "Francisco Javier García Morales",
+          "licencia": "AM10024323",
+          "hcp": 34.2,
+          "nivel": "C",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 34,
+          "toPar": 2,
+          "inscribedId": 2359017
+        },
+        {
+          "pos": 15,
+          "name": "Hilario Madrid Garcia",
+          "licencia": "AM10967399",
+          "hcp": 24.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2359016
+        },
+        {
+          "pos": 16,
+          "name": "Adolfo Lopez Camacho",
+          "licencia": "AM06953182",
+          "hcp": 29,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2359000
+        },
+        {
+          "pos": 17,
+          "name": "Carlos Aparicio Luque",
+          "licencia": "AMK3000608",
+          "hcp": 30.5,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2356272
+        },
+        {
+          "pos": 18,
+          "name": "Francisco Javier Fernandez Calero",
+          "licencia": "AM10489815",
+          "hcp": 43.8,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2359022
+        },
+        {
+          "pos": 19,
+          "name": "Juan Jose Fernandez Garcia",
+          "licencia": "AMK3485014",
+          "hcp": 45.9,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2358989
+        },
+        {
+          "pos": 20,
+          "name": "Jesus Lunar Lopez",
+          "licencia": "AM10506647",
+          "hcp": 32.7,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2359256
+        },
+        {
+          "pos": 21,
+          "name": "Jesus Cela Sanchez",
+          "licencia": "AM06087070",
+          "hcp": 41.7,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2357565
+        },
+        {
+          "pos": 22,
+          "name": "Alvaro Jimenez Cabrera",
+          "licencia": "AMK3945636",
+          "hcp": 36,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": 10,
+          "inscribedId": 2357680
+        },
+        {
+          "pos": 23,
+          "name": "Juan Jose Lunar Villarreal",
+          "licencia": "AM10978385",
+          "hcp": 26.4,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2357852
+        },
+        {
+          "pos": 24,
+          "name": "Rafaela Millan Villatoro",
+          "licencia": "AM06087060",
+          "hcp": 41.3,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": 13,
+          "inscribedId": 2357568
+        },
+        {
+          "pos": 25,
+          "name": "Esther Garcia Martinez",
+          "licencia": "AM10516708",
+          "hcp": 44.6,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": 15,
+          "inscribedId": 2355538
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Trofeo Verbena 2026 Segunda Categoria",
+      "jugadores": 10
+    },
+    "2": {
+      "name": "Trofeo Verbena 2026 Primera Categoria",
+      "jugadores": 8
+    },
+    "3": {
+      "name": "Trofeo Verbena 2026 Tercera Categoria",
+      "jugadores": 25
+    }
+  },
   "inscritos": [
     {
       "orden": 1,
@@ -55,6 +645,251 @@
       "nivel": "Mid"
     },
     {
+      "orden": 5,
+      "name": "Julio Garcia-Liñan Amo",
+      "licencia": "AME8619701",
+      "hcp": 19.5,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Antonio Burgueño Perez",
+      "licencia": "AM10990893",
+      "hcp": 22.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 7,
+      "name": "Javier Gamez Martinez",
+      "licencia": "AM10206820",
+      "hcp": 8.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 8,
+      "name": "David Aparicio Criado",
+      "licencia": "AMK3350114",
+      "hcp": 40.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Carlos Aparicio Luque",
+      "licencia": "AMK3000608",
+      "hcp": 30.5,
+      "nivel": "I"
+    },
+    {
+      "orden": 10,
+      "name": "Eleuterio Lunar Villarreal",
+      "licencia": "AM10995204",
+      "hcp": 29,
+      "nivel": "S"
+    },
+    {
+      "orden": 11,
+      "name": "Francisco Javier Gomez Serrano",
+      "licencia": "AM10899474",
+      "hcp": 11.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 12,
+      "name": "Pablo Jurado Gonzalez",
+      "licencia": "AM10152586",
+      "hcp": 30.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 13,
+      "name": "Francisco Javier Garcia Fernandez",
+      "licencia": "AM10489825",
+      "hcp": 44.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 14,
+      "name": "Jesus Cela Sanchez",
+      "licencia": "AM06087070",
+      "hcp": 41.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Fernando Medina Badanelli",
+      "licencia": "AM06978548",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Alvaro Jimenez Cabrera",
+      "licencia": "AMK3945636",
+      "hcp": 36,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 17,
+      "name": "Francisco Javier Garcia Garcia",
+      "licencia": "AM10516587",
+      "hcp": 26.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 18,
+      "name": "Juan Jose Lunar Villarreal",
+      "licencia": "AM10978385",
+      "hcp": 26.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Angel Garcia Garcia",
+      "licencia": "AM10964621",
+      "hcp": 26.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 20,
+      "name": "Jose Manuel Luque Fernandez",
+      "licencia": "AM10995149",
+      "hcp": 15.7,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 21,
+      "name": "Raul Molina Grande",
+      "licencia": "AM10114261",
+      "hcp": 7.4,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 22,
+      "name": "Antonio Muñoz Muñoz",
+      "licencia": "AM10988783",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 23,
+      "name": "Angel Garcia Rojas",
+      "licencia": "AM10975100",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 24,
+      "name": "Jose Miguel Fernandez Cabrera",
+      "licencia": "AMK3953249",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 25,
+      "name": "Juan Jose Fernandez Garcia",
+      "licencia": "AMK3485014",
+      "hcp": 45.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 26,
+      "name": "Sergio Serrano Revuelto",
+      "licencia": "AMK3376135",
+      "hcp": 39.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 27,
+      "name": "Rafael Esteo Porras",
+      "licencia": "AM10977984",
+      "hcp": 25,
+      "nivel": "S"
+    },
+    {
+      "orden": 28,
+      "name": "David Marquez Porcuna",
+      "licencia": "AMG3964322",
+      "hcp": 24.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 29,
+      "name": "Adolfo Lopez Camacho",
+      "licencia": "AM06953182",
+      "hcp": 29,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 30,
+      "name": "Pedro Luis Blanco Pastor",
+      "licencia": "AM10600682",
+      "hcp": 10.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 31,
+      "name": "Juan Gomez Capitan",
+      "licencia": "AM10604846",
+      "hcp": 20.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 32,
+      "name": "Jose Antonio Hens Lopez",
+      "licencia": "AM06911058",
+      "hcp": 17.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 33,
+      "name": "Hilario Madrid Garcia",
+      "licencia": "AM10967399",
+      "hcp": 24.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 34,
+      "name": "Francisco Javier García Morales",
+      "licencia": "AM10024323",
+      "hcp": 34.2,
+      "nivel": "C"
+    },
+    {
+      "orden": 35,
+      "name": "Francisco Javier Fernandez Calero",
+      "licencia": "AM10489815",
+      "hcp": 43.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 36,
+      "name": "Raul Martinez Lopez",
+      "licencia": "AM10202187",
+      "hcp": 11.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 37,
+      "name": "Raul Martinez Moreno",
+      "licencia": "AM10776070",
+      "hcp": 1,
+      "nivel": "M"
+    },
+    {
+      "orden": 38,
+      "name": "Osvaldo Miguel Appollonio Calderon",
+      "licencia": "AM10993518",
+      "hcp": 17,
+      "nivel": "S"
+    },
+    {
+      "orden": 39,
+      "name": "Jesus Lunar Lopez",
+      "licencia": "AM10506647",
+      "hcp": 32.7,
+      "nivel": "Mid"
+    },
+    {
       "orden": 1,
       "name": "Esther Garcia Martinez",
       "licencia": "AM10516708",
@@ -63,6 +898,20 @@
     },
     {
       "orden": 2,
+      "name": "Rafaela Millan Villatoro",
+      "licencia": "AM06087060",
+      "hcp": 41.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Angeles Alameda Fernandez",
+      "licencia": "AM10978876",
+      "hcp": 33.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
       "name": "Ana Isabel Cano Cerezo",
       "licencia": "AM10953237",
       "hcp": 35.5,
@@ -482,6 +1331,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/3813099966_72134-torneo-verbena-2026.pdf"
-  ],
-  "horariosScrapedAt": "2026-07-13T07:10:19.087Z"
+  ]
 }

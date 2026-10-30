@@ -1,7 +1,7 @@
 {
   "tourId": 72995,
   "url": "https://www.nextcaddy.com/tour/72995",
-  "scrapedAt": "2026-08-17T04:57:30.474Z",
+  "scrapedAt": "2026-10-30T14:27:44.079Z",
   "meta": {
     "name": "EL JAMON 17/8",
     "organizer": null,
@@ -21,20 +21,883 @@
     "dateIso": "2026-08-17",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 30,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 25,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Vidal Angel Garcia Garcia",
+          "licencia": "CMF1754768",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2386593
+        },
+        {
+          "pos": 2,
+          "name": "Jaime Sabau Graziati",
+          "licencia": "CMA1257598",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 36,
+          "toPar": null,
+          "inscribedId": 2386533
+        },
+        {
+          "pos": 3,
+          "name": "Francisco Lopez Martinez",
+          "licencia": "CM07149526",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 1,
+          "inscribedId": 2386612
+        },
+        {
+          "pos": 4,
+          "name": "Jose Diez Fontana",
+          "licencia": "CM52250926",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386581
+        },
+        {
+          "pos": 5,
+          "name": "Leonardo Rebollar Conchado",
+          "licencia": "CM07123285",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386596
+        },
+        {
+          "pos": 6,
+          "name": "Maria Carvajal Kindelan",
+          "licencia": "CM01935960",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 33,
+          "toPar": 3,
+          "inscribedId": 2386580
+        },
+        {
+          "pos": 7,
+          "name": "Emilio Alberto Bachiller Sanchez",
+          "licencia": "CMA1189589",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2386535
+        },
+        {
+          "pos": 8,
+          "name": "Miguel Gomez Vazquez",
+          "licencia": "CMF1344907",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2386595
+        },
+        {
+          "pos": 9,
+          "name": "Leonor Vallejo Quesada",
+          "licencia": "CM12194033",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 32,
+          "toPar": 4,
+          "inscribedId": 2386577
+        },
+        {
+          "pos": 10,
+          "name": "Jose Diez Gonzalez De Riancho",
+          "licencia": "CM18819762",
+          "hcp": null,
+          "nivel": "M",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 31,
+          "toPar": 5,
+          "inscribedId": 2386579
+        },
+        {
+          "pos": 11,
+          "name": "Jose Maria Sanchez Tamayo",
+          "licencia": "CMA1189572",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2386537
+        },
+        {
+          "pos": 12,
+          "name": "Ana Diez Fontana",
+          "licencia": "4400213066",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2386585
+        },
+        {
+          "pos": 13,
+          "name": "Santiago Bernal Palomo",
+          "licencia": "CM60257394",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2386598
+        },
+        {
+          "pos": 14,
+          "name": "Mª. Angeles Fontana Bertran",
+          "licencia": "AM86211679",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 29,
+          "toPar": 7,
+          "inscribedId": 2386602
+        },
+        {
+          "pos": 15,
+          "name": "Alfonso Martinez Ferrando",
+          "licencia": "CM02019413",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 28,
+          "toPar": 8,
+          "inscribedId": 2386603
+        },
+        {
+          "pos": 16,
+          "name": "Jacinta Romero Torralbo",
+          "licencia": "CM60257404",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2386601
+        },
+        {
+          "pos": 17,
+          "name": "Pedro Jesus Alvarez Redin",
+          "licencia": "4402977361",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2386583
+        },
+        {
+          "pos": 18,
+          "name": "Jose Santa-Cruz Duran",
+          "licencia": "AM15295373",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2386604
+        },
+        {
+          "pos": 19,
+          "name": "Carlos Van-Eyk Pereira",
+          "licencia": "CM60491725",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 27,
+          "toPar": 9,
+          "inscribedId": 2386610
+        },
+        {
+          "pos": 20,
+          "name": "Jose Luis Rembado Gonzalez",
+          "licencia": "CMA1211187",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": 11,
+          "inscribedId": 2386534
+        },
+        {
+          "pos": 21,
+          "name": "Robert George Horler",
+          "licencia": "AMB5372595",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 24,
+          "toPar": 12,
+          "inscribedId": 2386584
+        },
+        {
+          "pos": 22,
+          "name": "Armando Garcia Otero",
+          "licencia": "CMF1206669",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2386575
+        },
+        {
+          "pos": 23,
+          "name": "Candelas Paunero Merino",
+          "licencia": "CM12259765",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": 14,
+          "inscribedId": 2386576
+        },
+        {
+          "pos": 24,
+          "name": "Ignacio Santa-Cruz Duran",
+          "licencia": "AM15136260",
+          "hcp": null,
+          "nivel": "S",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 20,
+          "toPar": 16,
+          "inscribedId": 2386607
+        },
+        {
+          "pos": null,
+          "name": "Saturnino Gutierrez Maldonado",
+          "licencia": "AMB5300035",
+          "hcp": null,
+          "nivel": "Mid",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": null,
+          "toPar": null,
+          "inscribedId": 2386586
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 25
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Jaime Sabau Graziati",
+      "licencia": "CMA1257598",
+      "hcp": 26,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jose Luis Rembado Gonzalez",
+      "licencia": "CMA1211187",
+      "hcp": 26.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Emilio Alberto Bachiller Sanchez",
+      "licencia": "CMA1189589",
+      "hcp": 15.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Jose Maria Sanchez Tamayo",
+      "licencia": "CMA1189572",
+      "hcp": 21.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 5,
+      "name": "Armando Garcia Otero",
+      "licencia": "CMF1206669",
+      "hcp": 26.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Jose Diez Gonzalez De Riancho",
+      "licencia": "CM18819762",
+      "hcp": 29.9,
+      "nivel": "M"
+    },
+    {
+      "orden": 7,
+      "name": "Jose Diez Fontana",
+      "licencia": "CM52250926",
+      "hcp": 14.8,
+      "nivel": "S"
+    },
+    {
+      "orden": 8,
+      "name": "Pedro Jesus Alvarez Redin",
+      "licencia": "4402977361",
+      "hcp": 21.1,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 9,
+      "name": "Robert George Horler",
+      "licencia": "AMB5372595",
+      "hcp": 28,
+      "nivel": "S"
+    },
+    {
+      "orden": 10,
+      "name": "Saturnino Gutierrez Maldonado",
+      "licencia": "AMB5300035",
+      "hcp": 31.3,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 11,
+      "name": "Vidal Angel Garcia Garcia",
+      "licencia": "CMF1754768",
+      "hcp": 18.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 12,
+      "name": "Miguel Gomez Vazquez",
+      "licencia": "CMF1344907",
+      "hcp": 25.8,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 13,
+      "name": "Leonardo Rebollar Conchado",
+      "licencia": "CM07123285",
+      "hcp": 23,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 14,
+      "name": "Santiago Bernal Palomo",
+      "licencia": "CM60257394",
+      "hcp": 25.6,
+      "nivel": "S"
+    },
+    {
+      "orden": 15,
+      "name": "Alfonso Martinez Ferrando",
+      "licencia": "CM02019413",
+      "hcp": 19.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 16,
+      "name": "Jose Santa-Cruz Duran",
+      "licencia": "AM15295373",
+      "hcp": 34.4,
+      "nivel": "S"
+    },
+    {
+      "orden": 17,
+      "name": "Ignacio Santa-Cruz Duran",
+      "licencia": "AM15136260",
+      "hcp": 26.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 18,
+      "name": "Carlos Van-Eyk Pereira",
+      "licencia": "CM60491725",
+      "hcp": 36.2,
+      "nivel": "S"
+    },
+    {
+      "orden": 19,
+      "name": "Francisco Lopez Martinez",
+      "licencia": "CM07149526",
+      "hcp": 17.6,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 1,
+      "name": "Candelas Paunero Merino",
+      "licencia": "CM12259765",
+      "hcp": 29.9,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Leonor Vallejo Quesada",
+      "licencia": "CM12194033",
+      "hcp": 26.3,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Maria Carvajal Kindelan",
+      "licencia": "CM01935960",
+      "hcp": 23.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 4,
+      "name": "Ana Diez Fontana",
+      "licencia": "4400213066",
+      "hcp": 21.2,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 5,
+      "name": "Jacinta Romero Torralbo",
+      "licencia": "CM60257404",
+      "hcp": 20.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 6,
+      "name": "Mª. Angeles Fontana Bertran",
+      "licencia": "AM86211679",
+      "hcp": 24.9,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
-    "0": {},
-    "1": {},
-    "2": {},
-    "3": {},
-    "4": {},
-    "5": {},
-    "6": {}
+    "0": {
+      "p": {
+        "id": 161458,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            50
+          ],
+          [
+            "Birdie",
+            4
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            135
+          ],
+          [
+            "Peor",
+            222
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 161459,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            17
+          ],
+          [
+            "2",
+            45
+          ],
+          [
+            "3",
+            60
+          ],
+          [
+            "4",
+            40
+          ],
+          [
+            "5",
+            38
+          ],
+          [
+            "6",
+            46
+          ],
+          [
+            "7",
+            31
+          ],
+          [
+            "8",
+            50
+          ],
+          [
+            "9",
+            23
+          ],
+          [
+            "10",
+            31
+          ],
+          [
+            "11",
+            27
+          ],
+          [
+            "12",
+            50
+          ],
+          [
+            "13",
+            28
+          ],
+          [
+            "14",
+            48
+          ],
+          [
+            "15",
+            26
+          ],
+          [
+            "16",
+            35
+          ],
+          [
+            "17",
+            51
+          ],
+          [
+            "18",
+            38
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 161460,
+        "datos": [
+          [
+            "Hoyo",
+            "VIDAL ANGEL GARCIA GARCIA",
+            "JAIME SABAU GRAZIATI",
+            "FRANCISCO LOPEZ MARTINEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 3",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 5",
+            0,
+            -2,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 7",
+            -1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 10",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -3,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            -3,
+            0,
+            1
+          ],
+          [
+            "Hoyo 13",
+            -3,
+            0,
+            1
+          ],
+          [
+            "Hoyo 14",
+            -2,
+            0,
+            1
+          ],
+          [
+            "Hoyo 15",
+            0,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 17",
+            -1,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            1
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 161461,
+        "datos": [
+          [
+            "Hoyo",
+            "VIDAL ANGEL GARCIA GARCIA",
+            "JAIME SABAU GRAZIATI",
+            "FRANCISCO LOPEZ MARTINEZ"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 2",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 3",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 4",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -1,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 6",
+            -1,
+            1,
+            2
+          ],
+          [
+            "Hoyo 7",
+            0,
+            1,
+            -1
+          ],
+          [
+            "Hoyo 8",
+            0,
+            0,
+            1
+          ],
+          [
+            "Hoyo 9",
+            0,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 10",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 11",
+            -1,
+            0,
+            1
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            2,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 16",
+            -2,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            1,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            1,
+            1,
+            1
+          ]
+        ]
+      }
+    }
   },
   "roundIds": [
     {
@@ -45,6 +908,5 @@
   "scoreTypes": [],
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:18.350Z"
+  ]
 }

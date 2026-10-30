@@ -1,15 +1,15 @@
 {
   "tourId": 69149,
   "url": "https://www.nextcaddy.com/tour/69149",
-  "scrapedAt": "2026-10-12T12:09:26.626Z",
+  "scrapedAt": "2026-10-30T14:30:04.252Z",
   "meta": {
     "name": null,
     "organizer": null,
     "course": "Club Deportivo Añoreta Golf",
     "courseCode": "AM75",
-    "dateStart": "2026-11-28",
+    "dateStart": "2026-12-05",
     "dateEnd": null,
-    "format": "Stableford (Handicap)  Caballeros  Señor",
+    "format": "Stableford (Handicap)  Especial Azul Mas",
     "categories": [
       "Caballeros",
       "Señoras",
@@ -18,14 +18,22 @@
       "Senior",
       "Juvenil"
     ],
-    "dateIso": "2026-11-28",
+    "dateIso": "2026-12-05",
     "year": 2026
   },
   "course": null,
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Juan Costa Ribas",
+      "licencia": "AM75266053",
+      "hcp": 12.6,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -46,6 +54,5 @@
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/pdf/69149_cartel_412.pdf"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:03.840Z"
+  ]
 }

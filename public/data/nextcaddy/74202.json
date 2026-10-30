@@ -1,7 +1,7 @@
 {
   "tourId": 74202,
   "url": "https://www.nextcaddy.com/tour/74202",
-  "scrapedAt": "2026-10-12T12:09:22.535Z",
+  "scrapedAt": "2026-10-30T14:29:42.472Z",
   "meta": {
     "name": null,
     "organizer": null,
@@ -26,7 +26,43 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Domingo Agudo Huici",
+      "licencia": "4401074581",
+      "hcp": 20.1,
+      "nivel": "S"
+    },
+    {
+      "orden": 1,
+      "name": "Miguel Angel Saenz Garcia",
+      "licencia": "VB14734386",
+      "hcp": 24.7,
+      "nivel": "S"
+    },
+    {
+      "orden": 2,
+      "name": "Jesús Antonio Munilla Martinez",
+      "licencia": "4401789557",
+      "hcp": 17.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 3,
+      "name": "Miguel Torrea Larralde",
+      "licencia": "4401696255",
+      "hcp": 25.5,
+      "nivel": "S"
+    },
+    {
+      "orden": 4,
+      "name": "Cesar Ayesta Otano",
+      "licencia": "4401926793",
+      "hcp": 21.7,
+      "nivel": "S"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -97,6 +133,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:22.047Z"
+  ]
 }

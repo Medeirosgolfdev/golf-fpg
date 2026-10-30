@@ -1,9 +1,9 @@
 {
   "tourId": 72367,
   "url": "https://www.nextcaddy.com/tour/72367",
-  "scrapedAt": "2026-07-20T07:01:12.127Z",
+  "scrapedAt": "2026-10-30T14:27:14.457Z",
   "meta": {
-    "name": null,
+    "name": "CIRCUITO YMPLAN 2026 BENJAMINES",
     "organizer": null,
     "course": null,
     "courseCode": null,
@@ -22,11 +22,343 @@
     "dateIso": "2026-07-26",
     "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 34,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Scratch",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Diego Raigon Mate",
+          "licencia": "VB14733371",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 8,
+          "toPar": 10,
+          "inscribedId": 2367753
+        },
+        {
+          "pos": 2,
+          "name": "Pablo Erice Lopez",
+          "licencia": "4400375189",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 7,
+          "toPar": 11,
+          "inscribedId": 2367754
+        },
+        {
+          "pos": 3,
+          "name": "Andres Burgos Otero",
+          "licencia": "LV02732078",
+          "hcp": 43.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 6,
+          "toPar": 12,
+          "inscribedId": 2367756
+        },
+        {
+          "pos": 4,
+          "name": "Martin Raigon Mate",
+          "licencia": "VB09733613",
+          "hcp": 51.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2367758
+        },
+        {
+          "pos": 5,
+          "name": "Urbi Haritz Arregi Alonso",
+          "licencia": "4400492869",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2367760
+        },
+        {
+          "pos": 6,
+          "name": "Iñigo Lizarraga Rodriguez",
+          "licencia": "4402479671",
+          "hcp": 45,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 2,
+          "toPar": 16,
+          "inscribedId": 2367757
+        },
+        {
+          "pos": 7,
+          "name": "Javier Erice Lopez",
+          "licencia": "4400481122",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2367759
+        },
+        {
+          "pos": 8,
+          "name": "Nahia Fonfria Cervantes",
+          "licencia": "4402472223",
+          "hcp": 39.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 1,
+          "toPar": 17,
+          "inscribedId": 2367755
+        },
+        {
+          "pos": 9,
+          "name": "Juncal Tellitu Gonzalez",
+          "licencia": "VB14732550",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 0,
+          "toPar": 18,
+          "inscribedId": 2367761
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Hándicap",
+      "expectedJugadores": 9,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Andres Burgos Otero",
+          "licencia": "LV02732078",
+          "hcp": 43.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2367756
+        },
+        {
+          "pos": 2,
+          "name": "Martin Raigon Mate",
+          "licencia": "VB09733613",
+          "hcp": 51.7,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 26,
+          "toPar": -8,
+          "inscribedId": 2367758
+        },
+        {
+          "pos": 3,
+          "name": "Diego Raigon Mate",
+          "licencia": "VB14733371",
+          "hcp": 29.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2367753
+        },
+        {
+          "pos": 4,
+          "name": "Pablo Erice Lopez",
+          "licencia": "4400375189",
+          "hcp": 36.4,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 22,
+          "toPar": -4,
+          "inscribedId": 2367754
+        },
+        {
+          "pos": 5,
+          "name": "Iñigo Lizarraga Rodriguez",
+          "licencia": "4402479671",
+          "hcp": 45,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2367757
+        },
+        {
+          "pos": 6,
+          "name": "Javier Erice Lopez",
+          "licencia": "4400481122",
+          "hcp": 52.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2367759
+        },
+        {
+          "pos": 7,
+          "name": "Urbi Haritz Arregi Alonso",
+          "licencia": "4400492869",
+          "hcp": 53.5,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2367760
+        },
+        {
+          "pos": 8,
+          "name": "Nahia Fonfria Cervantes",
+          "licencia": "4402472223",
+          "hcp": 39.3,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 15,
+          "toPar": 3,
+          "inscribedId": 2367755
+        },
+        {
+          "pos": 9,
+          "name": "Juncal Tellitu Gonzalez",
+          "licencia": "VB14732550",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 4,
+          "toPar": 14,
+          "inscribedId": 2367761
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Scratch",
+      "jugadores": 9
+    },
+    "2": {
+      "name": "Hándicap",
+      "jugadores": 9
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Diego Raigon Mate",
+      "licencia": "VB14733371",
+      "hcp": 29.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Pablo Erice Lopez",
+      "licencia": "4400375189",
+      "hcp": 36.4,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Andres Burgos Otero",
+      "licencia": "LV02732078",
+      "hcp": 43.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Iñigo Lizarraga Rodriguez",
+      "licencia": "4402479671",
+      "hcp": 45,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Martin Raigon Mate",
+      "licencia": "VB09733613",
+      "hcp": 51.7,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Javier Erice Lopez",
+      "licencia": "4400481122",
+      "hcp": 52.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 7,
+      "name": "Urbi Haritz Arregi Alonso",
+      "licencia": "4400492869",
+      "hcp": 53.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 1,
+      "name": "Nahia Fonfria Cervantes",
+      "licencia": "4402472223",
+      "hcp": 39.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Juncal Tellitu Gonzalez",
+      "licencia": "VB14732550",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
   "horarios": [],
   "estadisticas": {
     "0": {},
@@ -972,6 +1304,5 @@
   },
   "pdfs": [
     "https://www.nextcaddy.com/uploads/competiciones/pdf/"
-  ],
-  "horariosScrapedAt": "2026-10-30T13:54:15.850Z"
+  ]
 }

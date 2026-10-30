@@ -1,29 +1,330 @@
 {
   "tourId": 61214,
   "url": "https://www.nextcaddy.com/tour/61214",
-  "scrapedAt": "2026-06-24T14:58:37.702Z",
+  "scrapedAt": "2026-10-30T14:28:32.947Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
     "course": "Aguilon Golf",
     "courseCode": "AMF8",
-    "dateStart": null,
+    "dateStart": "2026-09-26",
     "dateEnd": null,
-    "format": "Medal Play (Scratch)  Señoras  Caballero",
+    "format": "Medal Play (Scratch)  Caballeros  Señora",
     "categories": [
-      "Señoras",
       "Caballeros",
+      "Señoras",
       "Infantil",
       "Juvenil",
       "Profesional",
       "Senior"
-    ]
+    ],
+    "dateIso": "2026-09-26",
+    "year": 2026
   },
-  "course": null,
-  "leaderboard": [],
-  "leaderboardPdfOnly": true,
-  "categoryNames": {},
-  "inscritos": [],
+  "course": {
+    "parTotal": 29,
+    "parInferred": true,
+    "parConfidence": "total-high",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Categoria 3",
+      "expectedJugadores": 2,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Mauro Cid Galvez",
+          "licencia": "AM15991749",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 41,
+          "toPar": 12,
+          "inscribedId": 2408083
+        },
+        {
+          "pos": 2,
+          "name": "Mario Lopez Acejo",
+          "licencia": "AM23520573",
+          "hcp": 54,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 74,
+          "toPar": 45,
+          "inscribedId": 2403249
+        }
+      ]
+    },
+    {
+      "category": 2,
+      "categoryName": "Categoria 2",
+      "expectedJugadores": 7,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": 34.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 6,
+          "inscribedId": 2406580
+        },
+        {
+          "pos": 2,
+          "name": "David Prieto Perez",
+          "licencia": "AM59080295",
+          "hcp": 42.9,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 43,
+          "toPar": 14,
+          "inscribedId": 2407352
+        },
+        {
+          "pos": 3,
+          "name": "Abel Salvador Morales",
+          "licencia": "AM59528430",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 46,
+          "toPar": 17,
+          "inscribedId": 2398250
+        },
+        {
+          "pos": 4,
+          "name": "Alan Gonzalez Bonilla",
+          "licencia": "AM63507568",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 53,
+          "toPar": 24,
+          "inscribedId": 2408952
+        },
+        {
+          "pos": 5,
+          "name": "Francisco Cara Gonzalez",
+          "licencia": "AM59009982",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 57,
+          "toPar": 28,
+          "inscribedId": 2401358
+        },
+        {
+          "pos": 6,
+          "name": "Nicolas Moreno Vargas",
+          "licencia": "AM59021319",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 57,
+          "toPar": 28,
+          "inscribedId": 2398181
+        },
+        {
+          "pos": 7,
+          "name": "Antonio Cara Gonzalez",
+          "licencia": "AM59009984",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 60,
+          "toPar": 31,
+          "inscribedId": 2401359
+        }
+      ]
+    },
+    {
+      "category": 3,
+      "categoryName": "Categoria 1",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Hugo Garcia Rodriguez",
+          "licencia": "MM06479315",
+          "hcp": 54,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 53,
+          "toPar": 24,
+          "inscribedId": 2387376
+        }
+      ]
+    },
+    {
+      "category": 4,
+      "categoryName": "Categoria Especial -36",
+      "expectedJugadores": 1,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Juan Alberto Muñoz Del Pozo Salinas",
+          "licencia": "AMC7099154",
+          "hcp": 34.1,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 35,
+          "toPar": 6,
+          "inscribedId": 2406580
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Categoria 3",
+      "jugadores": 2
+    },
+    "2": {
+      "name": "Categoria 2",
+      "jugadores": 7
+    },
+    "3": {
+      "name": "Categoria 1",
+      "jugadores": 1
+    },
+    "4": {
+      "name": "Categoria Especial -36",
+      "jugadores": 1
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Hugo Garcia Rodriguez",
+      "licencia": "MM06479315",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 2,
+      "name": "Nicolas Moreno Vargas",
+      "licencia": "AM59021319",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Abel Salvador Morales",
+      "licencia": "AM59528430",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Francisco Cara Gonzalez",
+      "licencia": "AM59009982",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 5,
+      "name": "Antonio Cara Gonzalez",
+      "licencia": "AM59009984",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 6,
+      "name": "Mario Lopez Acejo",
+      "licencia": "AM23520573",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 7,
+      "name": "Juan Alberto Muñoz Del Pozo Salinas",
+      "licencia": "AMC7099154",
+      "hcp": 34.1,
+      "nivel": "B"
+    },
+    {
+      "orden": 8,
+      "name": "David Prieto Perez",
+      "licencia": "AM59080295",
+      "hcp": 42.9,
+      "nivel": "B"
+    },
+    {
+      "orden": 9,
+      "name": "Mauro Cid Galvez",
+      "licencia": "AM15991749",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 10,
+      "name": "Alan Gonzalez Bonilla",
+      "licencia": "AM63507568",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
   "horarios": [
     {
       "round": 1,
@@ -58,6 +359,15 @@
         {
           "time": "14:10",
           "tee": 1,
+          "name": "Mauro Cid Galvez",
+          "hcp": 54,
+          "ins": "2408083",
+          "jid": "64893",
+          "nivel": "A"
+        },
+        {
+          "time": "14:10",
+          "tee": 1,
           "name": "Francisco Cara Gonzalez",
           "hcp": 54,
           "ins": "2401358",
@@ -70,33 +380,6 @@
           "name": "Hugo Garcia Rodriguez",
           "hcp": 54,
           "ins": "2387376",
-          "jid": "64893",
-          "nivel": "B"
-        },
-        {
-          "time": "14:10",
-          "tee": 1,
-          "name": "Mauro Cid Galvez",
-          "hcp": 54,
-          "ins": "2408083",
-          "jid": "64893",
-          "nivel": "A"
-        },
-        {
-          "time": "14:20",
-          "tee": 1,
-          "name": "Alan Gonzalez Bonilla",
-          "hcp": 54,
-          "ins": "2408952",
-          "jid": "64893",
-          "nivel": "B"
-        },
-        {
-          "time": "14:20",
-          "tee": 1,
-          "name": "Nicolas Moreno Vargas",
-          "hcp": 54,
-          "ins": "2398181",
           "jid": "64893",
           "nivel": "B"
         },
@@ -115,6 +398,24 @@
           "name": "Abel Salvador Morales",
           "hcp": 54,
           "ins": "2398250",
+          "jid": "64893",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Alan Gonzalez Bonilla",
+          "hcp": 54,
+          "ins": "2408952",
+          "jid": "64893",
+          "nivel": "B"
+        },
+        {
+          "time": "14:20",
+          "tee": 1,
+          "name": "Nicolas Moreno Vargas",
+          "hcp": 54,
+          "ins": "2398181",
           "jid": "64893",
           "nivel": "B"
         }
@@ -168,6 +469,8 @@
       ]
     }
   },
-  "pdfs": [],
-  "horariosScrapedAt": "2026-10-12T12:09:36.672Z"
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/",
+    "/uploads/circular/2026/60646390603b16b04fdebb02436999ef.pdf"
+  ]
 }
