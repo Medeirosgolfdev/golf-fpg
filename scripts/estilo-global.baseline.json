@@ -1,9 +1,9 @@
 {
   "gerado": "2026-10-30",
   "totais": {
-    "estilosInline": 2838,
+    "estilosInline": 2826,
     "coresHex": 308,
-    "tabelasSemClasse": 14,
+    "tabelasSemClasse": 13,
     "letraNumero": 13,
     "cantosNumero": 73
   },
@@ -35,15 +35,12 @@
       "coresHex": 2
     },
     "pages/DrawsPage.tsx": {
-      "estilosInline": 101,
+      "estilosInline": 93,
       "letraNumero": 1
     },
     "pages/drive/driveRanking.tsx": {
       "estilosInline": 1,
       "letraNumero": 2
-    },
-    "pages/DrivePage.tsx": {
-      "estilosInline": 1
     },
     "pages/EGRPage.tsx": {
       "estilosInline": 3,
@@ -121,9 +118,8 @@
       "coresHex": 3
     },
     "pages/jogadores/PPHistoryView.tsx": {
-      "estilosInline": 13,
-      "coresHex": 1,
-      "tabelasSemClasse": 1
+      "estilosInline": 9,
+      "coresHex": 1
     },
     "pages/jogadores/statsWidgets.tsx": {
       "estilosInline": 10
@@ -405,6 +401,9 @@
     "ui/FilterField.tsx": {
       "estilosInline": 1,
       "coresHex": 1
+    },
+    "ui/FilterPillRow.tsx": {
+      "estilosInline": 1
     },
     "ui/FilterPills.tsx": {
       "estilosInline": 2,

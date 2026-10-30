@@ -12,15 +12,16 @@
  * ficha pública P&P (sempre fresca).
  */
 
-import { Fragment, useEffect, useState, type CSSProperties } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { loadPPHistory, ppPlayerUrl, type PPHistory, type PPRound } from "../../data/federadosPPLoader";
 import { useSort } from "../../hooks/useSort";
 import SortableHdr from "../../ui/SortableHdr";
-import { scClass, fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
+import { fmtStb, sdClassByHcp } from "../../utils/scoreDisplay";
 import { numSafe } from "../../utils/mathUtils";
 import { GrossCell as GrossDeltaCell } from "../../ui/tableCells";
 import TeeDate from "../../ui/TeeDate";
 import TeePill from "../../ui/TeePill";
+import { ScorecardTable } from "../../ui/ScorecardTable";
 import LoadingState from "../../ui/LoadingState";
 
 type SortKey = "date" | "tourn" | "course" | "holes" | "gross" | "stb" | "sd" | "index";
@@ -32,13 +33,8 @@ function Scorecard({ r }: { r: PPRound }) {
   const sc = r.scorecard;
   if (!sc) return <div className="muted fs-12" style={{ padding: "6px 10px" }}>Sem scorecard buraco-a-buraco para esta volta.</div>;
 
-  const holes = Array.from({ length: 18 }, (_, i) => i);
-  const out = holes.slice(0, 9), inn = holes.slice(9);
-  const sum = (arr: (number | null)[], idxs: number[]) => idxs.reduce((a, i) => a + (toNum(arr[i]) || 0), 0);
-  const parF = sum(sc.par, out), parB = sum(sc.par, inn);
-  const grF = sum(sc.gross, out), grB = sum(sc.gross, inn);
-  const cell: CSSProperties = { padding: "2px 5px", textAlign: "center", fontVariantNumeric: "tabular-nums", borderBottom: "1px solid var(--border)" };
-  const head: CSSProperties = { ...cell, fontWeight: 700, color: "var(--text-2)" };
+  const nh = sc.nholes ?? 18;
+  const arr = (v: (number | null)[]) => Array.from({ length: nh }, (_, i) => toNum(v[i]));
 
   return (
     <div style={{ padding: "8px 10px 12px" }}>
@@ -48,48 +44,10 @@ function Scorecard({ r }: { r: PPRound }) {
         {sc.courseRating != null && <span className="muted fs-11">CR {sc.courseRating}</span>}
         {sc.slope != null && <span className="muted fs-11">Slope {sc.slope}</span>}
       </div>
-      <div className="scroll-x">
-        <table style={{ borderCollapse: "collapse", width: "fit-content", fontSize: "var(--fs-12)", fontVariantNumeric: "tabular-nums" }}>
-          <thead>
-            <tr>
-              <th style={head}>Buraco</th>
-              {out.map(i => <th key={i} style={head}>{i + 1}</th>)}
-              <th style={head}>OUT</th>
-              {inn.map(i => <th key={i} style={head}>{i + 1}</th>)}
-              <th style={head}>IN</th>
-              <th style={head}>TOT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td style={head}>PAR</td>
-              {out.map(i => <td key={i} style={cell}>{sc.par[i] ?? "—"}</td>)}
-              <td style={head}>{parF || "—"}</td>
-              {inn.map(i => <td key={i} style={cell}>{sc.par[i] ?? "—"}</td>)}
-              <td style={head}>{parB || "—"}</td>
-              <td style={head}>{(sc.parTotal ?? (parF + parB)) || "—"}</td>
-            </tr>
-            <tr>
-              <td style={head}>Score</td>
-              {out.map(i => <td key={i} className={scClass(toNum(sc.gross[i]), toNum(sc.par[i]))} style={cell}>{sc.gross[i] ?? "—"}</td>)}
-              <td style={head}>{grF || "—"}</td>
-              {inn.map(i => <td key={i} className={scClass(toNum(sc.gross[i]), toNum(sc.par[i]))} style={cell}>{sc.gross[i] ?? "—"}</td>)}
-              <td style={head}>{grB || "—"}</td>
-              <td style={head}>{(sc.grossTotal ?? (grF + grB)) || "—"}</td>
-            </tr>
-            {sc.meters.some(m => m != null) && (
-              <tr>
-                <td style={{ ...head, fontWeight: 400 }}>Metros</td>
-                {out.map(i => <td key={i} style={{ ...cell, color: "var(--text-3)" }}>{sc.meters[i] ?? "—"}</td>)}
-                <td style={cell}></td>
-                {inn.map(i => <td key={i} style={{ ...cell, color: "var(--text-3)" }}>{sc.meters[i] ?? "—"}</td>)}
-                <td style={cell}></td>
-                <td style={cell}></td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
+      {/* O cartão global (o mesmo das outras vistas), sem cabeçalho — já vem por cima. */}
+      <ScorecardTable bare
+        holes={{ g: arr(sc.gross), p: arr(sc.par), si: Array(nh).fill(null), m: arr(sc.meters), hc: nh }}
+        courseName={sc.course || ""} date={(r.date || "").slice(0, 10).split("-").reverse().join("-")} tee={sc.teeName || ""} />
     </div>
   );
 }

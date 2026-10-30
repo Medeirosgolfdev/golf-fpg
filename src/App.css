@@ -3654,6 +3654,8 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  color: var(--text-2);
  border-color: var(--border);
 }
+/* Linha de filtro «Rótulo: Todos · a · b» (ui/FilterPillRow.tsx) */
+.filter-pill-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; margin-bottom: 12px; }
 /* ★ Manuel ligado (filtro da /FPG) — verde em vez do escuro do .active */
 .tourn-tab.manuel-on {
  background: var(--bg-success-subtle);

@@ -28,6 +28,8 @@ import { Toolbar, ToolbarTitle, ToolbarMeta } from "../ui/Toolbar";
 import LoadingState from "../ui/LoadingState";
 import EmptyState from "../ui/EmptyState";
 import KpiCard from "../ui/KpiCard";
+import TabRow from "../ui/TabRow";
+import FilterPillRow from "../ui/FilterPillRow";
 import { EscPill, PILL_ROUND } from "../ui/PillBadge";
 import { kidsUrl } from "../ui/KidsLink";
 import { FLAG } from "../utils/flagUtils";
@@ -1022,37 +1024,12 @@ export default function DrawsPage() {
       )}
 
       {/* Tabs — só FPG e Internacional (Intl junta USKids + Bluegolf/GolfGenius) */}
-      <div className="segmented-toggle mb-16" role="tablist" aria-label="Circuito">
-        {(["FPG", "Intl"] as Tab[]).map((t) => (
-          <button
-            key={t}
-            type="button"
-            role="tab"
-            aria-selected={tab === t}
-            className={`seg-btn${tab === t ? " active" : ""}`}
-            onClick={() => setTab(t)}
-          >
-            <span className="seg-label">{t === "FPG" ? "🇵🇹 FPG" : "🌍 Internacional"}</span>
-            <span className="seg-count">{contagensTab[t]}</span>
-          </button>
-        ))}
-      </div>
+      <TabRow className="mb-16" active={tab} onChange={setTab}
+        tabs={(["FPG", "Intl"] as Tab[]).map(t => ({ key: t, label: t === "FPG" ? "🇵🇹 FPG" : "🌍 Internacional", count: contagensTab[t] }))} />
 
       {/* Vista — por companheiro (default) ou por torneio (draws por dia) */}
-      <div className="segmented-toggle mb-16" role="tablist" aria-label="Vista">
-        {(["companheiro", "torneio"] as ViewMode[]).map((v) => (
-          <button
-            key={v}
-            type="button"
-            role="tab"
-            aria-selected={viewMode === v}
-            className={`seg-btn${viewMode === v ? " active" : ""}`}
-            onClick={() => setViewMode(v)}
-          >
-            <span className="seg-label">{v === "companheiro" ? "👥 Por companheiro" : "🏆 Por torneio"}</span>
-          </button>
-        ))}
-      </div>
+      <TabRow className="mb-16" active={viewMode} onChange={setViewMode}
+        tabs={(["companheiro", "torneio"] as ViewMode[]).map(v => ({ key: v, label: v === "companheiro" ? "👥 Por companheiro" : "🏆 Por torneio" }))} />
 
       {/* Conteúdo */}
       <div>
@@ -1123,76 +1100,14 @@ export default function DrawsPage() {
 
         {/* Filtro por ano */}
         {data && linhas.length > 0 && anosPresentes.length > 1 && (
-          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-            <span className="h-xs" style={{ margin: 0, marginRight: 2 }}>Ano:</span>
-            {anosPresentes.map(y => {
-              const active = anoFilter.has(y);
-              return (
-                <button
-                  key={y}
-                  type="button"
-                  onClick={() => setAnoFilter(prev => {
-                    const next = new Set(prev);
-                    next.has(y) ? next.delete(y) : next.add(y);
-                    return next;
-                  })}
-                  className="p p-sm"
-                  style={{
-                    cursor: "pointer",
-                    fontVariantNumeric: "tabular-nums",
-                    border: active ? "1.5px solid var(--accent)" : "1.5px solid var(--border)",
-                    background: active ? "var(--accent-light)" : "transparent",
-                    color: active ? "var(--accent)" : "var(--text-2)",
-                    fontWeight: active ? 700 : 600,
-                  }}
-                >
-                  {y}
-                </button>
-              );
-            })}
-            {anoFilter.size > 0 && (
-              <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setAnoFilter(new Set())}>
-                limpar
-              </button>
-            )}
-          </div>
+          <FilterPillRow label="Ano:" items={anosPresentes.map(y => ({ key: y, label: y }))}
+            active={anoFilter} onChange={k => setAnoFilter(new Set(k))} />
         )}
 
         {/* Filtro por escalão — só na vista por companheiro */}
         {data && viewMode === "companheiro" && linhas.length > 0 && escaloesPresentes.length > 1 && (
-          <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
-            <span className="h-xs" style={{ margin: 0, marginRight: 2 }}>Escalão:</span>
-            {escaloesPresentes.map(e => {
-              const active = escFilter.has(e);
-              const label = e === "—" ? "sem escalão" : e;
-              return (
-                <button
-                  key={e}
-                  type="button"
-                  onClick={() => setEscFilter(prev => {
-                    const next = new Set(prev);
-                    next.has(e) ? next.delete(e) : next.add(e);
-                    return next;
-                  })}
-                  className="p p-sm"
-                  style={{
-                    cursor: "pointer",
-                    border: active ? "1.5px solid var(--accent)" : "1.5px solid var(--border)",
-                    background: active ? "var(--accent-light)" : "transparent",
-                    color: active ? "var(--accent)" : "var(--text-2)",
-                    fontWeight: active ? 700 : 600,
-                  }}
-                >
-                  {label}
-                </button>
-              );
-            })}
-            {escFilter.size > 0 && (
-              <button type="button" className="btn-link muted" style={{ fontSize: "var(--fs-11)" }} onClick={() => setEscFilter(new Set())}>
-                limpar
-              </button>
-            )}
-          </div>
+          <FilterPillRow label="Escalão:" items={escaloesPresentes.map(e => ({ key: e, label: e === "—" ? "sem escalão" : e }))}
+            active={escFilter} onChange={k => setEscFilter(new Set(k))} />
         )}
 
         {data && viewMode === "torneio" && torneiosView.length > 0 && (

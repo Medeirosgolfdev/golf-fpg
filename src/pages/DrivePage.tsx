@@ -6,7 +6,7 @@
  */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import TabRow from "../ui/TabRow";
-import { FilterPills } from "../ui/FilterPills";
+import FilterPillRow from "../ui/FilterPillRow";
 import { useParams, useNavigate, useLocation, useSearchParams } from "react-router-dom";
 import { usePasswordGate } from "../hooks/usePasswordGate";
 import PasswordGate from "../ui/PasswordGate";
@@ -402,20 +402,15 @@ function DriveContent() {
             {/* Não é o mesmo que o filtro da tabela: este refaz a classificação
                 só com o(s) escalão(ões) escolhido(s). No Ranking o escalão é o da vista. */}
             {navMode === "torneios" && (<>
-            <span className="fs-11 muted shrink-0" title="Classificação só com estes escalões (as posições são recalculadas)">Classificação:</span>
-            <button className={"tourn-tab tourn-tab-sm shrink-0" + (escFilter.length === 0 ? " active" : " tourn-tab-muted")}
-              onClick={() => go({ esc: [] })}>
-              {md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
-            </button>
-            <FilterPills
-              items={(["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"] as const).map(e => ({
+            <FilterPillRow inline label="Classificação:" title="Classificação só com estes escalões (as posições são recalculadas)"
+              allLabel={md.isMobile ? `Todos ${uniquePCRegion}` : `Todos (${uniquePCRegion} jog)`}
+              items={["Sub 10","Sub 12","Sub 14","Sub 16","Sub 18","Absoluto","Sénior"].map(e => ({
                 key: e,
                 label: e,
                 disabled: !availEscs.includes(e),
               }))}
               active={escFilter}
-              onToggle={(e) => go({ esc: escFilter.includes(e) ? escFilter.filter(x => x !== e) : [...escFilter, e] })}
-              style={{ display: "contents" }}
+              onChange={esc => go({ esc })}
             />
             </>)}
           </div>
