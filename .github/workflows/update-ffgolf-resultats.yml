@@ -139,6 +139,11 @@ jobs:
       - name: Regenerar roster de jogadores FR (france-players.json)
         run: node scripts/build-france-players.js
 
+      # Índice Manuel/PT dos filtros ★ Manuel / PT da /ffg. O push-generated só o
+      # regenera quando o main avança — sem este passo ficava parado (30/10/2026).
+      - name: Regenerar índice Manuel/PT (ffgolf-manuel-index.json)
+        run: node scripts/build-ffgolf-manuel-index.js
+
       - name: Commit e push (se houver mudanças)
         run: |
           bash scripts/ci/push-generated.sh -m "data: update FFGolf resultats $(date -u +'%Y-%m-%d %H:%M UTC')" \
