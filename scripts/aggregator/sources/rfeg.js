@@ -237,7 +237,7 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
     seriesId = "rfeg-gran-premio"; seriesLabel = "Gran Premio";
   }
   // Links: derivar do prefix do tid (lgs = LiveGolfScoring, nc = NextCaddy)
-  const links = buildRfegLinks(String(tid));
+  const links = buildRfegLinks(String(tid), t);
 
   return {
     sourceKey: String(tid),
@@ -273,7 +273,7 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
  *  Os sufixos (_alevín, _infantil, _juvenil) aparecem em alguns torneios
  *  multi-escalão onde o mesmo tour ID expõe vários flights — o número é o
  *  identificador real do torneio. */
-function buildRfegLinks(tid) {
+function buildRfegLinks(tid, t = {}) {
   const lgsMatch = /^lgs(\d+)(?:_|$)/i.exec(tid);
   if (lgsMatch) {
     return [{
@@ -303,6 +303,8 @@ function buildRfegLinks(tid) {
       url: `https://golfcv.com/ver-torneo/?torneoid=${fgcvMatch[1]}`,
     }];
   }
+  // Federação Basca (scrape-fvg.js): a página da prova no fvgolf.com.
+  if (/^fvg/i.test(tid) && t.url) return [{ label: "FVG", url: t.url }];
   return [];
 }
 

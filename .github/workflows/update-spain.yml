@@ -10,6 +10,7 @@ name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
 #   • NextCaddy (RFGA Andaluzia + FGM Madrid + outras) — scrape-nextcaddy.js
 #   • Federació Catalana de Golf (golfdirecto.com) — scrape-fcg.js
 #   • Federación Gallega de Golf (fggolf.com → golfdirecto.com) — discover-fgg-scope.js + scrape-fcg.js
+#   • Federación Vasca de Golf (fvgolf.com, PDFs) — scrape-fvg.js
 #
 # Todos os portais são públicos (sem cookies/secrets). Node puro, sem Playwright.
 #
@@ -253,6 +254,14 @@ jobs:
         timeout-minutes: 30
         run: node scripts/scrape-fgcv.js || [ $? -eq 2 ]
 
+      # País Basco: calendário do fvgolf.com (admin-ajax) + PDFs de resultados
+      # dos clubes (3 formatos com colunas) → public/data/fvg/{uuid}.json (fonte «FVG»).
+      - name: Scrape FVG (Federação Basca)
+        id: fvg
+        continue-on-error: true
+        timeout-minutes: 20
+        run: node scripts/scrape-fvg.js || [ $? -eq 2 ]
+
       - name: Enrich LGS stats (metros + SI por buraco)
         id: enrich_lgs_stats
         continue-on-error: true
@@ -306,7 +315,7 @@ jobs:
         timeout-minutes: 20
         run: |
           bash scripts/ci/push-generated.sh -m "data: update Espanha (RFEG + LGS + NC + FCG) $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ public/data/lgs-matchplay/ public/data/fgcv/ \
+            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ public/data/lgs-matchplay/ public/data/fgcv/ public/data/fvg/ \
                public/data/nextcaddy/ public/data/fcg/ public/data/rfegolf-resultats-index.json \
                public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
                public/data/spain-players.json public/data/rfegolf-rivals.json \
@@ -337,6 +346,7 @@ jobs:
           [ "${{ steps.enrich_lgs_stats.outcome }}" = "failure" ] && FAILED="$FAILED enrich-LGS-stats"
           [ "${{ steps.lgs_matchplay.outcome }}" = "failure" ] && FAILED="$FAILED match-play-LGS"
           [ "${{ steps.fgcv.outcome }}" = "failure" ] && FAILED="$FAILED FGCV"
+          [ "${{ steps.fvg.outcome }}" = "failure" ] && FAILED="$FAILED FVG"
           [ "${{ steps.infer_par.outcome }}"   = "failure" ] && FAILED="$FAILED infer-par-NC"
           # Os builds e o commit não têm continue-on-error: se falharem o job já
           # está vermelho; aqui só se diz qual foi.

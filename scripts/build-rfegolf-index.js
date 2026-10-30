@@ -515,28 +515,33 @@ for (const file of fcgFiles) {
   }
 }
 
-// ── 5) FGCV — Federação Valenciana (golfcv.com, 30/10/2026) ───────────
-// Mesmo formato do microsite antigo da RFEG (results por categoria + inscritos),
-// gerado por scripts/scrape-fgcv.js.
-const FGCV_ROOT = path.resolve(__dirname, "../public/data/fgcv");
-const fgcvFiles = fs.existsSync(FGCV_ROOT) ? fs.readdirSync(FGCV_ROOT).filter(f => /^\d+\.json$/.test(f)).sort() : [];
-for (const file of fgcvFiles) {
+// ── 5) Federações regionais com PDFs (30/10/2026) ─────────────────────
+// FGCV — Valência (golfcv.com, scripts/scrape-fgcv.js) e FVG — País Basco
+// (fvgolf.com, scripts/scrape-fvg.js; ficheiros pelo uuid da prova). Mesmo
+// formato do microsite antigo da RFEG (results por categoria + inscritos).
+const REGIONAIS = [
+  { source: "fgcv", root: path.resolve(__dirname, "../public/data/fgcv"), re: /^\d+\.json$/ },
+  { source: "fvg", root: path.resolve(__dirname, "../public/data/fvg"), re: /^[0-9a-f-]{36}\.json$/ },
+];
+for (const { source, root, re } of REGIONAIS) for (const file of (fs.existsSync(root) ? fs.readdirSync(root).filter((f) => re.test(f)).sort() : [])) {
   try {
-    const j = JSON.parse(fs.readFileSync(path.join(FGCV_ROOT, file), "utf-8"));
+    const j = JSON.parse(fs.readFileSync(path.join(root, file), "utf-8"));
     if (!j || !j.ok || !j.meta) { skipped++; continue; }
     const meta = j.meta;
     const name = meta.name || "";
     const results = Array.isArray(j.results) ? j.results : [];
     const cats = results.map((r) => r.categoria).filter(Boolean);
     const insc = (j.inscritos && j.inscritos.admitidos) || [];
+    // Sem classificação nem inscritos (PDFs em imagem, ligas por equipas) não há página.
+    if (!results.length && !insc.length) { skipped++; continue; }
     const catsInsc = insc.map((p) => p.catEdad).filter(Boolean);
     const ordem = ["Benjamín", "Alevín", "Infantil", "Cadete", "Junior"];
     const escs = [...new Set([...cats, ...catsInsc])].sort((a, b) => ordem.indexOf(a) - ordem.indexOf(b));
     const dsIso = parseEsDate(meta.dateStart);
     tournaments.push({
-      source: "fgcv",
+      source,
       id: j.compId, compId: j.compId, file,
-      filePath: `fgcv/${file}`,
+      filePath: `${source}/${file}`,
       url: j.url || null,
       name,
       year: dsIso ? parseInt(dsIso.slice(0, 4), 10) : extractYearFromName(name),
@@ -556,7 +561,7 @@ for (const file of fgcvFiles) {
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) {
-    console.warn("skip fgcv " + file + ": " + e.message);
+    console.warn(`skip ${source} ${file}: ${e.message}`);
     skipped++;
   }
 }
@@ -591,6 +596,6 @@ const out = {
 };
 
 writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
-console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}, fgcv=${bySource.fgcv || 0}), skipped=${skipped}`);
+console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}, fgcv=${bySource.fgcv || 0}, fvg=${bySource.fvg || 0}), skipped=${skipped}`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);

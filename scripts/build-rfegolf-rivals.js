@@ -344,10 +344,12 @@ let rfKept = 0, rfSkipped = 0, rfTwinned = 0;
 // A Federação Valenciana (scrape-fgcv.js, 30/10/2026) grava no MESMO formato
 // (results por categoria) — entra pelo mesmo ciclo, com prefixo e fonte próprios.
 const FGCV_DIR = path.resolve(__dirname, "../public/data/fgcv");
-const lerDir = (dir, src) => (fs.existsSync(dir)
-  ? fs.readdirSync(dir).filter(f => /^\d+\.json$/.test(f)).map(f => ({ dir, f, src }))
+// E a Federação Basca (scrape-fvg.js, 30/10/2026), ficheiros pelo uuid da prova.
+const FVG_DIR = path.resolve(__dirname, "../public/data/fvg");
+const lerDir = (dir, src, re = /^\d+\.json$/) => (fs.existsSync(dir)
+  ? fs.readdirSync(dir).filter(f => re.test(f)).map(f => ({ dir, f, src }))
   : []);
-const rfFiles = [...lerDir(RFEG_DIR, "rfegolf"), ...lerDir(FGCV_DIR, "fgcv")];
+const rfFiles = [...lerDir(RFEG_DIR, "rfegolf"), ...lerDir(FGCV_DIR, "fgcv"), ...lerDir(FVG_DIR, "fvg", /^[0-9a-f-]{36}\.json$/)];
 
 for (const { dir, f, src } of rfFiles) {
   try {
@@ -399,9 +401,11 @@ for (const { dir, f, src } of rfFiles) {
       if (enriched.length === 0) continue;
       const sexKey = /F/i.test(b.sexo || "") ? "f" : (/M/i.test(b.sexo || "") ? "m" : "x");
       const catKey = String(cat).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "");
-      const tid = `${src === "fgcv" ? "fgcv" : "rfeg"}${compId}_${catKey}_${sexKey}`;
+      const pref = src === "rfegolf" ? "rfeg" : src;
+      const tid = `${pref}${compId}_${catKey}_${sexKey}`;
       out.torneios[tid] = {
-        name: metaName || `${src === "fgcv" ? "FGCV" : "RFEG"} ${compId}`,
+        name: metaName || `${pref.toUpperCase()} ${compId}`,
+        url: src === "fvg" ? (d.url || null) : undefined,
         categoryName: b.label || null,
         year,
         ageGroup: cat,
