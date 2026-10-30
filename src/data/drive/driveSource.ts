@@ -7,6 +7,7 @@ import type { Tournament } from "../fpgTypes";
 import type { FpgTournamentData } from "../nacional2026Loader";
 import { FEATURED_TOURNAMENTS, buildFeaturedSynthetic } from "../featuredTournaments";
 import { mergeDrivePlaceholders } from "./driveCircuitData";
+import { todayIso } from "../../utils/format";
 
 export type DriveSeries = "tour" | "challenge" | "aquapor";
 export type DriveAdmissionsIndex = Map<string, FpgTournamentData>;
@@ -77,17 +78,25 @@ export function buildDriveSource(raw: Tournament[], idx: DriveAdmissionsIndex): 
   return mergeDrivePlaceholders(src);
 }
 
+/** Ano por omissão (decisão B: abrir o mais recente/próximo): o do próximo
+ *  torneio, de hoje para a frente; sem nenhum por jogar, o mais recente. Assim
+ *  a época seguinte já anunciada (Challenge de Jan/Fev 2027, ainda sem
+ *  inscritos, chegou a 30/10/2026) não passa à frente da final que está para vir. */
+export function driveDefaultYear(src: Tournament[], today = todayIso()): string | null {
+  const datas = src.map(t => t.date || "").filter(Boolean).sort();
+  return (datas.find(d => d >= today) ?? datas[datas.length - 1])?.slice(0, 4) ?? null;
+}
+
 /** Filtros ao nível do torneio (partilhados por todos os escalões do mesmo dia,
  *  por isso não partem o agrupamento por evento): série, ano e zona. Sem ano,
- *  fica o mais recente que houver depois do filtro da série. */
+ *  fica o `driveDefaultYear` depois do filtro da série. */
 export function filterDriveSource(
   src: Tournament[],
   f: { series: DriveSeries | "all"; year: string | null; region: string | null },
 ): Tournament[] {
   let out = src;
   if (f.series !== "all") out = out.filter(t => (t.series || "tour") === f.series);
-  const yrs = [...new Set(out.map(t => (t.date || "").slice(0, 4)).filter(Boolean))].sort().reverse();
-  const effYear = f.year ?? yrs[0];
+  const effYear = f.year ?? driveDefaultYear(out);
   if (effYear) out = out.filter(t => (t.date || "").slice(0, 4) === effYear);
   if (f.region) out = out.filter(t => t.region === f.region);
   return out;

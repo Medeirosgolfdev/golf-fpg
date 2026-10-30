@@ -31,7 +31,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import { buildDriveEntries, DRIVE_CONFIG } from "../data/drive/driveCircuitData";
 import { TournamentDetail } from "./fpg/TournamentDetail";
 import { loadDriveAdmissions, loadDriveDataProgressive, loadDriveEquipas } from "../data/drive/driveLoader";
-import { attachDriveAdmissions, buildDriveSource, filterDriveSource, type DriveAdmissionsIndex, type DriveSeries } from "../data/drive/driveSource";
+import { attachDriveAdmissions, buildDriveSource, driveDefaultYear, filterDriveSource, type DriveAdmissionsIndex, type DriveSeries } from "../data/drive/driveSource";
 import {
   driveDivTkey, driveFiltersForTkey, driveTournamentMatches, driveQueryString, driveRepDivision, legacyDriveT, parseDriveQuery,
   resolveDriveTkey, type DriveUrlState,
@@ -161,7 +161,16 @@ function DriveContent() {
   // ── CircuitShell: entries a partir da lista CRUA (não-expandida) ─────────
   // O IntlTournView desenha as tabs de ronda a partir de results.players[].roundScores;
   // as secções Inscritos/Draw vêm de _admissions/_draws (anexados por tcode base).
-  // Anos disponíveis — só os que têm torneios reais na série activa (exclui sub-rondas expandidas)
+  // Todos os torneios (resultados + por jogar), sem filtros: deep-links e `?t=`.
+  const allSrc = useMemo(() => {
+    if (raw.length === 0) return [];
+    attachDriveAdmissions(raw, admDrawsIdx);
+    return buildDriveSource(raw, admDrawsIdx);
+  }, [raw, admDrawsIdx]);
+  const ofSeries = useCallback((sr: DriveUrlState["series"]) =>
+    allSrc.filter(t => sr === "all" || (t.series || "tour") === sr), [allSrc]);
+  // Anos disponíveis na série — os dos torneios com resultados (exclui sub-rondas
+  // expandidas) e os dos que só têm inscrições (a época seguinte já anunciada).
   const yearsOf = useCallback((sr: DriveUrlState["series"]) => {
     const s = new Set<string>();
     for (const t of data?.tournaments ?? []) {
@@ -170,14 +179,16 @@ function DriveContent() {
         if (y) s.add(y);
       }
     }
+    for (const t of ofSeries(sr)) { const y = t.date?.slice(0, 4); if (y) s.add(y); }
     return [...s].sort((a, b) => b.localeCompare(a));
-  }, [data]);
+  }, [data, ofSeries]);
   const availYears = useMemo(() => yearsOf(series), [yearsOf, series]);
 
   // Ano do URL só se existir na série (um `year` de outra série é ignorado, sem
-  // reescrever o URL); por omissão o mais recente disponível.
+  // reescrever o URL); por omissão o do próximo torneio (driveDefaultYear) — o
+  // mesmo que o filterDriveSource usa para a lista.
   const yearFilter = st.year && (availYears.length === 0 || availYears.includes(st.year)) ? st.year : null;
-  const activeYear = yearFilter ?? availYears[0] ?? null;
+  const activeYear = yearFilter ?? driveDefaultYear(ofSeries(series)) ?? availYears[0] ?? null;
   const escLookup = useMemo(() => buildEscLookup(pdb, data?.tournaments ?? []), [pdb, data]);
   // Lookup temporal: fedCode → Map<year, escalão> — construído dos torneios Challenge históricos
   const temporalEscLookup = useMemo(
@@ -185,12 +196,6 @@ function DriveContent() {
     [data]
   );
   const admissionsReady = admissionsMeta.length > 0;
-  // Todos os torneios (resultados + por jogar), sem filtros: deep-links e `?t=`.
-  const allSrc = useMemo(() => {
-    if (raw.length === 0) return [];
-    attachDriveAdmissions(raw, admDrawsIdx);
-    return buildDriveSource(raw, admDrawsIdx);
-  }, [raw, admDrawsIdx]);
   const driveEntries = useMemo(() => {
     if (allSrc.length === 0) return [];
     const src = filterDriveSource(allSrc, { series, year: yearFilter, region: regionFilter });
@@ -342,7 +347,7 @@ function DriveContent() {
               onChange={(k) => {
                 const kk = k as DriveUrlState["series"];
                 const ys = yearsOf(kk);
-                const year = yearFilter && ys.includes(yearFilter) ? yearFilter : kk === "all" ? (ys[0] ?? null) : null;
+                const year = yearFilter && ys.includes(yearFilter) ? yearFilter : kk === "all" ? driveDefaultYear(ofSeries(kk)) : null;
                 go({ series: kk, region: null, esc: [], year });
               }}
             />

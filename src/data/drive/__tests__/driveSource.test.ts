@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { attachDriveAdmissions, buildDriveSource, filterDriveSource, inferDriveRegion, type DriveAdmissionsIndex } from "../driveSource";
+import { attachDriveAdmissions, buildDriveSource, driveDefaultYear, filterDriveSource, inferDriveRegion, type DriveAdmissionsIndex } from "../driveSource";
 import type { Tournament } from "../../fpgTypes";
 
 const T = (o: Partial<Tournament>): Tournament => ({ ccode: "988", tcode: "1", name: "x", date: "2026-01-01", series: "tour", players: [], playerCount: 0, ...o } as Tournament);
@@ -30,5 +30,12 @@ describe("driveSource", () => {
     expect(filterDriveSource(src, { series: "tour", year: null, region: null }).map((t) => t.tcode)).toEqual(["a", "c"]);
     expect(filterDriveSource(src, { series: "all", year: null, region: null }).map((t) => t.tcode)).toEqual(["b"]);
     expect(filterDriveSource(src, { series: "tour", year: "2025", region: "norte" }).map((t) => t.tcode)).toEqual(["c"]);
+  });
+  it("ano por omissão = o do próximo torneio; sem nenhum por jogar, o mais recente", () => {
+    const src = [T({ date: "2026-10-25" }), T({ date: "2026-11-07" }), T({ date: "2027-01-23" }), T({ date: "2027-02-27" })];
+    expect(driveDefaultYear(src, "2026-10-30")).toBe("2026");  // a final de 07/11 antes da época 2027
+    expect(driveDefaultYear(src, "2026-12-01")).toBe("2027");
+    expect(driveDefaultYear(src, "2027-06-01")).toBe("2027");
+    expect(driveDefaultYear([], "2026-10-30")).toBeNull();
   });
 });
