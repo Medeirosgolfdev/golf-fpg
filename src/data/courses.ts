@@ -72,8 +72,13 @@ export function buildAllCourses(input: CoursesInput): Course[] {
     for (const t of tees) {
       const k = teeKey(t);
       const prev = seen.get(k);
-      // Guardar o tee com mais dados; rejeitar tees completamente vazios
-      if (!prev || teeScore(t) > teeScore(prev)) seen.set(k, t);
+      // Guardar o tee com mais dados; rejeitar tees completamente vazios.
+      // Empate (mesmo tee com ratings de anos diferentes): fica o rating da
+      // volta mais recente (lastPlayed, dos campos away) — 30/10/2026.
+      const better = !prev
+        || teeScore(t) > teeScore(prev)
+        || (teeScore(t) === teeScore(prev) && (t.lastPlayed ?? "") > (prev.lastPlayed ?? ""));
+      if (better) seen.set(k, t);
     }
     // Filtragem de tees:
     //  1) fora os completamente vazios (sem buracos, sem distância, sem CR);
@@ -90,14 +95,33 @@ export function buildAllCourses(input: CoursesInput): Course[] {
     const grp = (t: Course["master"]["tees"][number]) =>
       teeGroupHex(t.teeName, t.scorecardMeta?.teeColor);
     const geomGroups = new Set(vals.filter(hasGeom).map(grp));
-    return vals.filter((t) => {
+    // Mesma marca com metros e do MESMO sexo → o tee sem metros é ruído.
+    // Do OUTRO sexo → é o rating do outro sexo no mesmo tee físico: fica, e
+    // herda os metros desse tee (um tee é cor + distância; M/F são só ratings).
+    const geomBySexGroup = new Map<string, Course["master"]["tees"][number]>();
+    for (const t of vals.filter(hasGeom)) {
+      const k = `${grp(t)}|${t.sex}`;
+      const prev = geomBySexGroup.get(k);
+      if (!prev || (t.lastPlayed ?? "") > (prev.lastPlayed ?? "")) geomBySexGroup.set(k, t);
+    }
+    const geomOfGroup = (g: string) => [...geomBySexGroup.entries()].find(([k]) => k.startsWith(`${g}|`))?.[1];
+    return vals.flatMap((t) => {
       const empty =
         (t.distances?.holesCount ?? 0) === 0 &&
         (t.distances?.total ?? 0) === 0 &&
         (t.ratings?.holes18?.courseRating ?? 0) === 0;
-      if (empty) return false;
-      if (!hasGeom(t) && geomGroups.has(grp(t))) return false;
-      return true;
+      if (empty) return [];
+      if (!hasGeom(t) && geomGroups.has(grp(t))) {
+        if (t.sex === "U" || geomBySexGroup.has(`${grp(t)}|${t.sex}`)) return [];
+        const src = geomOfGroup(grp(t));
+        if (!src || (src.holes?.length ?? 0) !== (t.holes?.length ?? 0)) return [];
+        return [{
+          ...t,
+          holes: (t.holes ?? []).map((h, i) => ({ ...h, distance: src.holes![i]?.distance ?? h.distance })),
+          distances: { ...src.distances },
+        }];
+      }
+      return [t];
     });
   }
 

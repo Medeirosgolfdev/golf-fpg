@@ -1677,6 +1677,49 @@ const terreDeiConsoli: Course = {
 };
 const terreDelConsoli = semTees({ ...terreDeiConsoli, courseKey: "away-terre-del-consoli-golf-club", master: { ...terreDeiConsoli.master, courseId: "away-terre-del-consoli-golf-club", name: "Terre Del Consoli Golf Club" } });
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Golf de Chantilly — Old Vineuil (European Ladies' Team Championship 2025)
+   Percurso misto Vineuil/Longères, par 70 — não é o «Vineuil New» das provas
+   U14 (par 71). O pipeline separa-o pelo desenho de par (parRoutes no
+   course-aliases.json). Cartão da brochura oficial da EGA («ELTC Information
+   Brochure», 2025): tee Yellow, SSS 75,4 / Slope 141, 5744 m; os cartões dos
+   clubes chamavam-lhe «AZUIS»/«VERMELHAS» e davam 5841 m.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const oldVineuilPar = [4,4,3,4,4,3,4,5,4, 4,4,4,4,3,4,3,4,5]; // 70
+const oldVineuilSI  = [15,6,18,13,2,7,11,9,3, 10,5,16,1,12,4,17,8,14];
+const oldVineuilYellow = [400,284,142,297,357,160,319,472,379, 370,320,328,379,168,378,159,368,464]; // 5744 m
+
+const chantillyOldVineuil: Course = {
+  courseKey: "away-golf-de-chantilly-old-vineuil",
+  master: {
+    courseId: "away-golf-de-chantilly-old-vineuil",
+    name: "Golf de Chantilly - Old Vineuil",
+    country: "França",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: [
+        {
+          label: "ELTC 2025 - Information Brochure (scorecard)",
+          url: "https://ega-golf.ch/sites/ega/files/2025-07/ELTC%20INFORMATION%20BROCHURE%20FINAL_.pdf",
+        },
+      ],
+    },
+    tees: [
+      {
+        teeId: "chantilly-old-vineuil-yellow-f",
+        sex: "F",
+        teeName: "Yellow (ELTC 2025)",
+        scorecardMeta: { teeColor: "#fbbf24" },
+        ratings: { holes18: { par: 70, courseRating: 75.4, slopeRating: 141 } },
+        holes: vHoles(oldVineuilPar, oldVineuilYellow, oldVineuilSI),
+        distances: vDist(oldVineuilYellow),
+      },
+    ],
+  },
+};
+
 const craigielawMain = craigielaw("away-craigielaw-golf-club", "Craigielaw Golf Club");
 const craigielawGralha: Course = (() => {
   const c = craigielaw("away-cragielaw", "Cragielaw");
@@ -1717,5 +1760,6 @@ export function getExtraCourses(): Course[] {
     craigielawGralha,
     terreDeiConsoli,
     terreDelConsoli,
+    chantillyOldVineuil,
   ];
 }

@@ -25,6 +25,7 @@
 const fs   = require("fs");
 const path = require("path");
 const { writeAtomic, writeJsonAtomic } = require("../lib/atomic-write");
+const { lisbonCivilDayStr } = require("../lib/helpers");
 
 /** Ler JSON de ficheiro, removendo BOM se existir */
 function readJSON(fpath) {
@@ -164,13 +165,16 @@ function teeSexFromCounts(c) {
 
 /* ── 2. Carregar course-aliases.json ── */
 
-let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {}, extraLinksMap = {};
+let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {}, extraLinksMap = {}, parRoutesMap = {};
 
 if (fs.existsSync(aliasPath)) {
   try {
     const ad = readJSON(aliasPath);
     aliasMap         = ad.aliases       || {};
     nameOverridesMap = ad.nameOverrides || {};
+    // parRoutes: { campo canónico (norm) → { par dos 18 buracos ("443443…") → outro campo (norm) } }
+    // Para o mesmo nome usado em dois percursos diferentes (Chantilly Vineuil New vs Old Vineuil).
+    parRoutesMap = ad.parRoutes || {};
 
     // ptVariants: nomes alternativos de campos PT → excluir dos away
     const ptv = ad.ptVariants || {};
@@ -203,6 +207,13 @@ if (fs.existsSync(aliasPath)) {
  * Resolve um nome normalizado seguindo a cadeia de aliases.
  * Devolve o canonical norm (o último da cadeia).
  */
+/** Campo pelo desenho de par, quando o mesmo nome cobre dois percursos (parRoutes). */
+function routeByPar(canonicalNorm, pars) {
+  const routes = parRoutesMap[canonicalNorm];
+  if (!routes || !Array.isArray(pars) || pars.length !== 18) return canonicalNorm;
+  return routes[pars.join("")] || canonicalNorm;
+}
+
 function resolveAlias(n, maxHops = 8) {
   let cur = n;
   for (let i = 0; i < maxHops; i++) {
@@ -308,7 +319,8 @@ if (fs.existsSync(outputRoot)) {
           const courseNorm = norm(courseName);
           if (shouldExclude(courseNorm)) continue;
 
-          const canonicalNorm = resolveAlias(courseNorm);
+          const cardPars = Array.from({ length: 18 }, (_, i) => toNum(rec[`par_${i + 1}`]));
+          const canonicalNorm = routeByPar(resolveAlias(courseNorm), cardPars);
           if (shouldExclude(canonicalNorm)) continue;
 
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
@@ -344,9 +356,15 @@ if (fs.existsSync(outputRoot)) {
               holes,
               teeColorId: rec.tee_color_id || null,
               sexCount: { M: 0, F: 0 },
+              lastPlayedMs: 0,
             });
           }
-          if (playerSex) entry.tees.get(teeKey).sexCount[playerSex]++;
+          const teeEntry = entry.tees.get(teeKey);
+          if (playerSex) teeEntry.sexCount[playerSex]++;
+          // Data da volta mais recente com esta configuração (o mesmo tee é
+          // re-avaliado ao longo dos anos: a app prefere o rating mais recente).
+          const playedMs = Number((String(rec.played_at || "").match(/\d+/) || [0])[0]);
+          if (playedMs > teeEntry.lastPlayedMs) teeEntry.lastPlayedMs = playedMs;
         }
       } catch {}
     }
@@ -485,7 +503,8 @@ if (fs.existsSync(outputRoot)) {
           const courseNorm = norm(courseName);
           if (shouldExclude(courseNorm)) continue;
 
-          const canonicalNorm = resolveAlias(courseNorm);
+          const roundPars = data.HOLES && data.HOLES[r.scoreId] ? data.HOLES[r.scoreId].p : null;
+          const canonicalNorm = routeByPar(resolveAlias(courseNorm), roundPars);
           if (shouldExclude(canonicalNorm)) continue;
 
           const courseKey = `away-${canonicalNorm.replace(/\s+/g, "-")}`;
@@ -575,6 +594,7 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
     teeArr.push({
       teeId:   `${courseKey}-${idx++}`,
       sex:     teeSexFromCounts(t.sexCount),
+      ...(t.lastPlayedMs ? { lastPlayed: lisbonCivilDayStr(t.lastPlayedMs) } : {}),
       teeName: t.teeName,
       ratings: {
         holes18: { par: is18 ? parTotal : null, courseRating: t.cr, slopeRating: t.slope },

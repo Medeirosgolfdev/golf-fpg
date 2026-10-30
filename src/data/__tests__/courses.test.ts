@@ -64,6 +64,31 @@ describe("buildAllCourses", () => {
     expect(am.holes!.map((h) => h.si)).toEqual(siReal);
   });
 
+  it("o mesmo tee com ratings de anos diferentes fica com o mais recente", () => {
+    const t = (cr: number, lastPlayed: string) => ({
+      teeId: `b-${cr}`, teeName: "Brancas", sex: "M", lastPlayed,
+      distances: { total: 5800, holesCount: 18 },
+      ratings: { holes18: { par: 72, courseRating: cr, slopeRating: 130 } },
+      holes: Array.from({ length: 18 }, (_, i) => ({ hole: i + 1, par: 4, si: i + 1, distance: 322 })),
+    });
+    const away = { courseKey: "away-z", master: { courseId: "away-z", name: "Z", links: { fpg: null, scorecards: null },
+      tees: [t(74, "2021-09-23"), t(72, "2025-09-18"), t(72.4, "2024-09-19")] } } as unknown as Course;
+    const out = buildAllCourses({ fpg: [], pipelineAway: [away], melhoriasAway: [], extra: [] });
+    expect(out[0].master.tees.map((x) => x.ratings.holes18?.courseRating)).toEqual([72]);
+  });
+
+  it("tee sem metros do outro sexo fica e herda os metros do mesmo tee físico", () => {
+    const holes = (d: number) => Array.from({ length: 18 }, (_, i) => ({ hole: i + 1, par: 4, si: null, distance: d }));
+    const away = { courseKey: "away-w", master: { courseId: "away-w", name: "W", links: { fpg: null, scorecards: null }, tees: [
+      { teeId: "bm", teeName: "Brancas", sex: "M", distances: { total: 5760, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: 72, slopeRating: 140 } }, holes: holes(320) },
+      { teeId: "bf", teeName: "Brancas", sex: "F", distances: { total: 0, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: 76, slopeRating: 145 } }, holes: holes(0) },
+      { teeId: "bm2", teeName: "Brancas", sex: "M", distances: { total: 0, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: 70, slopeRating: 130 } }, holes: holes(0) },
+    ] } } as unknown as Course;
+    const out = buildAllCourses({ fpg: [], pipelineAway: [away], melhoriasAway: [], extra: [] });
+    const tees = out[0].master.tees;
+    expect(tees.map((x) => `${x.sex} ${x.ratings.holes18?.courseRating} ${x.distances.total}`).sort()).toEqual(["F 76 5760", "M 72 5760"]);
+  });
+
   it("campos away: SI seguido sem outro tee com SI verdadeiro fica sem SI", () => {
     const seq = Array.from({ length: 18 }, (_, i) => i + 1);
     const away = {

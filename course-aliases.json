@@ -309,7 +309,8 @@
     "away-zarapicos-golf-country-club": "Zarapicos Golf & Country Club",
     "away-terre-dei-consoli-golf-club": "Terre Dei Consoli Golf Club",
     "away-porters-park-golf-club": "Porters Park Golf Club",
-    "away-craigielaw-golf-club": "Craigielaw Golf Club"
+    "away-craigielaw-golf-club": "Craigielaw Golf Club",
+    "away-golf-de-chantilly-old-vineuil": "Golf de Chantilly - Old Vineuil"
   },
   "skipped": [
     "away-isla-canela|||away-isla-canela-links",
@@ -661,12 +662,18 @@
     "away-the-gog-magog-wandlebury-course-inglaterra": "Inglaterra",
     "away-upsala-golf-klub": "Suécia",
     "away-villamayor-golf-country-club": "Espanha",
-    "away-zarapicos-golf-country-club": "Espanha"
+    "away-zarapicos-golf-country-club": "Espanha",
+    "away-golf-de-chantilly-old-vineuil": "França"
   },
   "blacklist": [
     "none",
     "internacional",
     "ribagolfe i",
     "ribagolfe ii"
-  ]
+  ],
+  "parRoutes": {
+    "golf de chantilly": {
+      "443443454444434345": "golf de chantilly old vineuil"
+    }
+  }
 }

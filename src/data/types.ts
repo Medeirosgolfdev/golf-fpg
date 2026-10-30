@@ -50,6 +50,9 @@ export type Tee = {
   };
   holes: Hole[];
   distances: Distances;
+  /** Campos away: dia (Lisboa) da volta mais recente com esta configuração
+   *  (nome + CR/Slope) — o mesmo tee re-avaliado ganha pelo rating mais novo. */
+  lastPlayed?: string;
 };
 
 type ExtraLink = {
