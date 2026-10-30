@@ -123,8 +123,10 @@ const marcoSimoneTees: Tee[] = [
 ];
 
 /* Marco Simone — tees USKids (distâncias oficiais do torneio) */
-// CR/Slope: "US Kids 2025 Boys 9-11 & Girls 10-14" — ReportTabellaEgaWHS_us_kids.pdf
-// Gialli (CR 65.5 / SR 114) ≈ Boys 11/10; Verdi (CR 63.1 / SR 108) ≈ Boys 9
+// CR/Slope: PDFs USKids «Marco Simone 2025/2026 – Course Rating and Slope»
+// (marco_simone_2025/2026_-_course_rating_and_slope.pdf, iguais nos dois anos):
+// Boys 9 63,1/108 · Boys 10 e 11 65,5/114 · Boys 12 68,1/120. Os de Boys 9-11
+// já vinham do ReportTabellaEgaWHS_us_kids.pdf (Gialli/Verdi).
 const marcoSimoneUSKidsTees: Tee[] = [
   {
     teeId: "ms-uk-boys12",
@@ -132,7 +134,7 @@ const marcoSimoneUSKidsTees: Tee[] = [
     teeName: "USKids Boys 12",
     scorecardMeta: { teeColor: "#f97316" }, // laranja (arancio)
     ratings: {
-      holes18: { par: 72, courseRating: null, slopeRating: null }, // sem rating oficial para este tee
+      holes18: { par: 72, courseRating: 68.1, slopeRating: 120 },
     },
     holes: msHoles(msDistUKBoys12),
     distances: msDist(msDistUKBoys12),
@@ -174,6 +176,10 @@ const marcoSimone: Course = {
         {
           label: "US Kids Golf – Resultados",
           url: "https://tournaments.uskidsgolf.com/node/514018",
+        },
+        {
+          label: "US Kids Marco Simone 2026 - Course Rating & Slope",
+          url: "https://tournaments.uskidsgolf.com/sites/default/files/marco_simone_2026_-_course_rating_and_slope.pdf",
         },
       ],
     },
@@ -1487,6 +1493,53 @@ function slieveRussell(courseKey: string, name: string): Course {
 const slieveRussellMain = slieveRussell("away-pga-national-slieve-russell-golf", "PGA National Slieve Russell Golf");
 const slieveRussellIrlanda = slieveRussell("away-pga-national-slieve-russell-golf-irlanda", "PGA National Slieve Russell Golf (Irlanda)");
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Parador de Málaga Golf (Espanha) — Campeonato Internacional de Andalucía 2026
+   Três entradas do mesmo campo («Parador Málaga del Golf», «Parador, Málaga»,
+   «Parador Malaga Espanha»), todas da mesma prova (31/07–02/08/2026). Os
+   clubes registaram dois tees: AZUIS 75,1/134 e BRANCAS 73,2/132. Par e SI do
+   cartão do campo (GolfingRecord), iguais ao cartão do clube que trazia SI;
+   os outros tinham SI 1..18 seguido ou par 4×18 (inventados). Sem metros por
+   tee: o cartão do campo (5900 m) não diz de que tee é.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const paradorMalagaPar = [5,4,4,4,4,3,4,4,3, 4,3,5,3,5,4,5,4,4]; // 72
+const paradorMalagaSI  = [18,13,15,2,5,9,1,14,8, 11,6,7,12,10,4,17,16,3];
+
+function paradorMalagaTee(teeId: string, teeName: string, cr: number, slope: number): Tee {
+  return {
+    teeId,
+    sex: "U",
+    teeName,
+    ratings: { holes18: { par: 72, courseRating: cr, slopeRating: slope } },
+    holes: paradorMalagaPar.map((p, i) => ({ hole: i + 1, par: p, si: paradorMalagaSI[i], distance: null })),
+    distances: { total: null, front9: null, back9: null, holesCount: 18, complete18: true },
+  };
+}
+
+function paradorMalaga(courseKey: string, name: string): Course {
+  return {
+    courseKey,
+    master: {
+      courseId: courseKey,
+      name,
+      country: "Espanha",
+      links: {
+        fpg: null,
+        scorecards: "https://www.golfingrecord.com/golf-scorecard/9d36bc4e-9a9e-2d73-1366-d8a208bf6288",
+      },
+      tees: [
+        paradorMalagaTee("parador-malaga-azuis", "AZUIS", 75.1, 134),
+        paradorMalagaTee("parador-malaga-brancas", "BRANCAS", 73.2, 132),
+      ],
+    },
+  };
+}
+
+const paradorMalagaDelGolf = paradorMalaga("away-parador-malaga-del-golf", "Parador Málaga del Golf");
+const paradorMalagaVirgula = paradorMalaga("away-parador-malaga", "Parador, Málaga");
+const paradorMalagaEspanha = paradorMalaga("away-parador-malaga-espanha", "Parador Malaga Espanha");
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -1512,5 +1565,8 @@ export function getExtraCourses(): Course[] {
     pgaNationalFazio,
     slieveRussellMain,
     slieveRussellIrlanda,
+    paradorMalagaDelGolf,
+    paradorMalagaVirgula,
+    paradorMalagaEspanha,
   ];
 }

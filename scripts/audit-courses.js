@@ -51,10 +51,10 @@ const Module = require("module");
 const BASELINE = {
   /** Inclui um par legítimo (Penina Golf Course ≠ Penina Resort Course, dois
    *  percursos do mesmo resort) — o mínimo realista é 1. */
-  duplicateGroups: 4,
+  duplicateGroups: 2, // 4 → 2 a 30/10/2026: Parador Málaga e Vidago Palace fundidos
   tournamentsAsCourses: 4,
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
-  awayWithoutDistances: 34, // 35 → 34 a 30/10/2026: Slieve Russell com o cartão oficial do ELTC
+  awayWithoutDistances: 31, // 35 → 31 a 30/10/2026: Slieve Russell (cartão ELTC) e entradas repetidas fundidas
   maxTeesPerCourse: 13,
 };
 

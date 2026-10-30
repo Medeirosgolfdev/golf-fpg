@@ -127,6 +127,13 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "pga catalunya resort, spain": "PGA Catalunya Resort",
   // ELTC 2026: o mesmo campo registado com e sem «(Irlanda)» (2026-10-30).
   "pga national slieve russell golf (irlanda)": "PGA National Slieve Russell Golf",
+  // Mesmo campo com o nome escrito de outra maneira pelos clubes (2026-10-30):
+  // Andalucía 2026 (Parador Málaga), European Young Masters 2026 (El Saler) e
+  // Super Bock Ladies Open 2025 (Vidago Palace, campo FPG — ficam os tees FPG).
+  "parador, málaga": "Parador Málaga del Golf",
+  "parador malaga espanha": "Parador Málaga del Golf",
+  "parador de el saler, spain": "Parador De El Saler",
+  "vidago palace golf": "Vidago Palace",
 
   // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
   // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,
