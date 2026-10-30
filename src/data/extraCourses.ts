@@ -1171,6 +1171,259 @@ const zarapicos: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   The Alto Club (Espanha) — US Kids Golf Spanish Open 2025
+   Fonte: «U.S. Kids Golf Spanish Open 2025 – The Alto Club – Meters»
+   (spanish_open_distances_-_meters_0.pdf — a versão corrigida: bate com a de
+   jardas; a primeira tinha o tee 6 com 5741 m) e «Spanish Open 2025 – Course
+   Rating and S.R.» (so25). Os escalões de 9 buracos jogam o 10–18.
+   É o antigo Almenara, em Sotogrande. SI do cartão do campo (AllSquare,
+   «almenara-golf-sotogrande»: um só SI, igual para homens e senhoras; os tees
+   Bull 69,7/126 e Vulture 72,1/128 dão os mesmos CR/Slope do PDF USKids). O
+   campo é par 71: a USKids joga o buraco 2 como par 5.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const altoPar = [5,5,4,3,4,4,3,5,3, 4,3,4,5,4,4,3,5,4]; // 72 (USKids)
+const altoSI  = [10,4,6,14,16,1,18,15,12, 9,17,8,11,2,7,5,13,3];
+const altoTee6 = [440,380,335,125,301,377,150,484,165, 344,153,351,422,368,312,160,413,335]; // 5615m — Boys 13-18
+const altoTee5 = [434,355,300,109,257,357,114,410,145, 317,124,340,390,343,253,150,407,306]; // 5111m — Boys 12 / Girls 13-18
+const altoTee4 = [360,355,280,101,245,285,89,360,126, 280,120,280,350,285,225,136,353,268];  // 4498m — Boys 11 / 10
+const altoTee3 = [315,311,245,97,214,249,85,315,110, 245,105,245,306,249,197,119,309,235];   // 3952m — Boys 9 / Girls 11-12
+const altoTee2  = [210,90,210,255,214,169,102,250,201]; // 1701m — Boys 8 / Girls 9-10 (10–18)
+const altoTee1  = [175,75,175,213,178,141,85,208,168];  // 1417m — Boys 7 (10–18)
+const altoTeeRS = [140,60,140,170,143,113,68,167,134];  // 1134m — Boys 6&U / Girls 8&U (10–18)
+
+const SPANISH_OPEN_2025_LINKS = [
+  {
+    label: "US Kids Spanish Open 2025 - Distances (Meters)",
+    url: "https://tournaments.uskidsgolf.com/sites/default/files/spanish_open_distances_-_meters_0.pdf",
+  },
+  {
+    label: "US Kids Spanish Open 2025 - Course Rating & Slope",
+    url: "https://tournaments.uskidsgolf.com/sites/default/files/so25_-_course_rating_and_slopes.pdf",
+  },
+];
+
+/** Nove buracos jogados no 10–18 (holes numerados 10..18). */
+function backNineHoles(par: number[], si: number[] | null, dist: number[]): Hole[] {
+  return dist.map((d, i) => ({ hole: i + 10, par: par[i], si: si?.[i] ?? null, distance: d }));
+}
+
+function backNineDist(dist: number[]): { total: number; front9: null; back9: number; holesCount: 9; complete18: false } {
+  const back9 = dist.reduce((a, b) => a + b, 0);
+  return { total: back9, front9: null, back9, holesCount: 9, complete18: false };
+}
+
+const theAltoClub: Course = {
+  courseKey: "away-the-alto-club",
+  master: {
+    courseId: "away-the-alto-club",
+    name: "The Alto Club (Sotogrande)",
+    country: "Espanha",
+    links: { fpg: null, scorecards: null, extra: SPANISH_OPEN_2025_LINKS },
+    tees: [
+      {
+        teeId: "alto-uk-boys1318",
+        sex: "M",
+        teeName: "USKids Boys 13-18",
+        scorecardMeta: { teeColor: "#111827" }, // Longleaf Tee 6
+        ratings: { holes18: { par: 72, courseRating: 69.7, slopeRating: 126 } },
+        holes: vHoles(altoPar, altoTee6, altoSI),
+        distances: vDist(altoTee6),
+      },
+      {
+        teeId: "alto-uk-boys12",
+        sex: "M",
+        teeName: "USKids Boys 12",
+        scorecardMeta: { teeColor: "#ffffff" }, // Longleaf Tee 5
+        ratings: { holes18: { par: 72, courseRating: 67.5, slopeRating: 119 } },
+        holes: vHoles(altoPar, altoTee5, altoSI),
+        distances: vDist(altoTee5),
+      },
+      {
+        teeId: "alto-uk-girls1318",
+        sex: "F",
+        teeName: "USKids Girls 13-18",
+        scorecardMeta: { teeColor: "#ffffff" }, // Longleaf Tee 5 (o mesmo do Boys 12)
+        ratings: { holes18: { par: 72, courseRating: 72.1, slopeRating: 128 } },
+        holes: vHoles(altoPar, altoTee5, altoSI),
+        distances: vDist(altoTee5),
+      },
+      {
+        teeId: "alto-uk-boys11",
+        sex: "M",
+        teeName: "USKids Boys 11 / 10",
+        scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+        ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+        holes: vHoles(altoPar, altoTee4, altoSI),
+        distances: vDist(altoTee4),
+      },
+      {
+        teeId: "alto-uk-boys9",
+        sex: "U",
+        teeName: "USKids Boys 9 / Girls 11-12",
+        scorecardMeta: { teeColor: "#f97316" }, // Longleaf Tee 3
+        ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+        holes: vHoles(altoPar, altoTee3, altoSI),
+        distances: vDist(altoTee3),
+      },
+      {
+        teeId: "alto-uk-tee2",
+        sex: "U",
+        teeName: "USKids Boys 8 / Girls 9-10",
+        scorecardMeta: { teeColor: "#fbbf24" }, // Longleaf Tee 2
+        ratings: { holes9Back: { par: 36, courseRating: null, slopeRating: null } },
+        holes: backNineHoles(altoPar.slice(9), altoSI.slice(9), altoTee2),
+        distances: backNineDist(altoTee2),
+      },
+      {
+        teeId: "alto-uk-tee1",
+        sex: "M",
+        teeName: "USKids Boys 7",
+        scorecardMeta: { teeColor: "#1e3a8a" }, // Longleaf Tee 1
+        ratings: { holes9Back: { par: 36, courseRating: null, slopeRating: null } },
+        holes: backNineHoles(altoPar.slice(9), altoSI.slice(9), altoTee1),
+        distances: backNineDist(altoTee1),
+      },
+      {
+        teeId: "alto-uk-teers",
+        sex: "U",
+        teeName: "USKids Boys 6&U / Girls 8&U",
+        scorecardMeta: { teeColor: null }, // tee RS
+        ratings: { holes9Back: { par: 36, courseRating: null, slopeRating: null } },
+        holes: backNineHoles(altoPar.slice(9), altoSI.slice(9), altoTeeRS),
+        distances: backNineDist(altoTeeRS),
+      },
+    ],
+  },
+};
+
+/* ─────────────────────────────────────────────────────────────────────────
+   PGA National (Palm Beach Gardens, EUA) — US Kids Golf Holiday Classic 2025
+   Fonte: «2025 Holiday Classic Yardages» (2025_holiday_classic_yardages.pdf,
+   «Subject to Change»). Distâncias em JARDAS no PDF — guardadas tal como lá
+   estão e convertidas para metros (×0,9144). Sem CR/Slope publicados.
+   SI do Palmer e do Fazio: cartões do campo na GolfPass (pares iguais ao PDF
+   buraco a buraco) — tee M e misto com o SI de homens, tee F com o de senhoras.
+   O Match fica sem SI: o «The Match» da GolfPass é outro percurso (par 67,
+   pares diferentes do PDF). Nomes dos campos iguais aos dos resultados USKids.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const yd2m = (yd: number[]) => yd.map((y) => Math.round(y * 0.9144));
+
+const HOLIDAY_CLASSIC_2025_LINKS = [
+  {
+    label: "US Kids Holiday Classic 2025 - Yardages",
+    url: "https://tournaments.uskidsgolf.com/sites/default/files/2025_holiday_classic_yardages.pdf",
+  },
+  {
+    label: "US Kids Holiday Classic 2025 - Player Information",
+    url: "https://tournaments.uskidsgolf.com/sites/default/files/holiday_classic_player_email_2025.pdf",
+  },
+];
+
+// Palmer — par 72
+const pgaPalmerPar = [4,3,4,5,3,4,4,5,4, 3,4,5,3,4,4,4,4,5];
+const pgaPalmerSIM = [9,17,3,1,15,7,11,5,13, 16,6,2,18,14,12,10,8,4];
+const pgaPalmerSIF = [11,17,7,3,15,9,13,1,5, 16,6,4,18,14,12,8,10,2];
+const pgaPalmerB1314 = yd2m([377,147,347,498,154,384,345,472,356, 156,357,455,126,299,343,368,377,550]); // 6111 yd — Tee 7
+const pgaPalmerG1314 = yd2m([337,123,337,440,125,324,291,467,351, 120,342,425,121,295,289,357,302,546]); // 5592 yd — Tee 6
+const pgaPalmerG12   = yd2m([332,96,332,436,120,320,271,428,290, 117,300,399,105,285,267,346,292,479]);   // 5215 yd — Tee 5
+
+// Match — par 72
+const pgaMatchPar = [5,3,4,3,5,3,4,4,5, 5,3,4,3,4,5,4,5,3];
+const pgaMatchTee4 = yd2m([400,110,255,108,425,119,275,295,403, 391,124,244,117,258,430,268,349,130]); // 4701 yd — Girls 11 / Boys 10
+const pgaMatchTee3 = yd2m([365,100,216,98,383,107,256,234,344, 368,87,200,112,225,386,229,320,118]);   // 4148 yd — Girls 10 / Boys 9
+
+// Fazio — par 72; os escalões de 9 buracos jogam o 1–9 ou o 10–18
+const pgaFazioPar = [5,4,4,5,3,4,3,4,4, 4,4,5,3,4,4,3,5,4];
+const pgaFazioSIM = [5,13,9,1,17,11,15,3,7, 12,8,2,18,4,14,16,6,10];
+const pgaFazioB12  = yd2m([499,328,320,466,127,306,131,318,345, 322,325,480,115,312,293,139,458,349]); // 5633 yd — Tee 6
+const pgaFazioB11  = yd2m([475,302,300,430,110,285,125,275,312, 280,305,452,108,305,285,135,421,310]); // 5215 yd — Tee 5
+const pgaFazioF9T1 = yd2m([241,175,181,232,65,162,76,188,199]);  // 1519 yd — Girls 8 / Boys 7 (1–9)
+const pgaFazioF9RS = yd2m([212,121,142,201,63,148,66,137,141]);  // 1231 yd — Girls 7&U / Boys 6&U (1–9)
+const pgaFazioB9T2 = yd2m([217,233,297,101,196,241,83,311,209]); // 1888 yd — Boys 8 / Girls 9 (10–18)
+
+function pgaTee18(teeId: string, sex: "M" | "F" | "U", teeName: string, teeColor: string | null, par: number[], dist: number[], si?: number[]): Tee {
+  return {
+    teeId, sex, teeName,
+    scorecardMeta: { teeColor },
+    ratings: { holes18: { par: 72, courseRating: null, slopeRating: null } },
+    holes: vHoles(par, dist, si),
+    distances: vDist(dist),
+  };
+}
+
+const pgaNationalPalmer: Course = {
+  courseKey: "away-pga-national-golf-club-palmer",
+  master: {
+    courseId: "away-pga-national-golf-club-palmer",
+    name: "PGA National Golf Club - Palmer",
+    country: "EUA",
+    links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
+    tees: [
+      pgaTee18("pga-palmer-uk-b1314", "M", "USKids Boys 13-14", null, pgaPalmerPar, pgaPalmerB1314, pgaPalmerSIM), // Tee 7
+      pgaTee18("pga-palmer-uk-g1314", "F", "USKids Girls 13-14", "#111827", pgaPalmerPar, pgaPalmerG1314, pgaPalmerSIF), // Tee 6
+      pgaTee18("pga-palmer-uk-g12", "F", "USKids Girls 12", "#ffffff", pgaPalmerPar, pgaPalmerG12, pgaPalmerSIF), // Tee 5
+    ],
+  },
+};
+
+const pgaNationalMatch: Course = {
+  courseKey: "away-pga-national-golf-club-match",
+  master: {
+    courseId: "away-pga-national-golf-club-match",
+    name: "PGA National Golf Club - Match",
+    country: "EUA",
+    links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
+    tees: [
+      pgaTee18("pga-match-uk-tee4", "U", "USKids Girls 11 / Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4), // Tee 4
+      pgaTee18("pga-match-uk-tee3", "U", "USKids Girls 10 / Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3), // Tee 3
+    ],
+  },
+};
+
+const pgaNationalFazio: Course = {
+  courseKey: "away-pga-national-golf-club-fazio",
+  master: {
+    courseId: "away-pga-national-golf-club-fazio",
+    name: "PGA National Golf Club - Fazio",
+    country: "EUA",
+    links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
+    tees: [
+      pgaTee18("pga-fazio-uk-b12", "M", "USKids Boys 12", "#111827", pgaFazioPar, pgaFazioB12, pgaFazioSIM), // Tee 6
+      pgaTee18("pga-fazio-uk-b11", "M", "USKids Boys 11", "#ffffff", pgaFazioPar, pgaFazioB11, pgaFazioSIM), // Tee 5
+      {
+        teeId: "pga-fazio-uk-tee2",
+        sex: "U",
+        teeName: "USKids Boys 8 / Girls 9",
+        scorecardMeta: { teeColor: "#fbbf24" }, // Tee 2 — 10–18
+        ratings: { holes9Back: { par: 36, courseRating: null, slopeRating: null } },
+        holes: backNineHoles(pgaFazioPar.slice(9), pgaFazioSIM.slice(9), pgaFazioB9T2),
+        distances: backNineDist(pgaFazioB9T2),
+      },
+      {
+        teeId: "pga-fazio-uk-tee1",
+        sex: "U",
+        teeName: "USKids Girls 8 / Boys 7",
+        scorecardMeta: { teeColor: "#1e3a8a" }, // Tee 1 — 1–9
+        ratings: { holes9Front: { par: 36, courseRating: null, slopeRating: null } },
+        holes: vHoles(pgaFazioPar.slice(0, 9), pgaFazioF9T1, pgaFazioSIM.slice(0, 9)),
+        distances: vDist(pgaFazioF9T1),
+      },
+      {
+        teeId: "pga-fazio-uk-teers",
+        sex: "U",
+        teeName: "USKids Girls 7&U / Boys 6&U",
+        scorecardMeta: { teeColor: null }, // tee RS — 1–9
+        ratings: { holes9Front: { par: 36, courseRating: null, slopeRating: null } },
+        holes: vHoles(pgaFazioPar.slice(0, 9), pgaFazioF9RS, pgaFazioSIM.slice(0, 9)),
+        distances: vDist(pgaFazioF9RS),
+      },
+    ],
+  },
+};
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -1190,5 +1443,9 @@ export function getExtraCourses(): Course[] {
     galzignano,
     golfParisValDEurope,
     zarapicos,
+    theAltoClub,
+    pgaNationalPalmer,
+    pgaNationalMatch,
+    pgaNationalFazio,
   ];
 }

@@ -133,6 +133,15 @@ const TOURNAMENT_RX = new RegExp(
   "i",
 );
 
+/**
+ * Campos reais cujo nome cai no TOURNAMENT_RX (ex.: o «Match Course» do PGA
+ * National, Holiday Classic USKids). Lista curta e por courseKey — não é uma
+ * forma de calar torneios a sério, esses vão para tournamentCourses.ts.
+ */
+const REAL_COURSES_LIKE_TOURNAMENT = new Set([
+  "away-pga-national-golf-club-match",
+]);
+
 const tees = (c) => (c.master && c.master.tees) || [];
 const hasAnyDistance = (c) => tees(c).some((t) => t.distances && t.distances.total > 0);
 const isAway = (c) => String(c.courseKey).startsWith("away-");
@@ -160,7 +169,7 @@ function auditCatalog({ simCourses, tournamentCourses, rawAway, masterNames, nor
 
   /* 2 ─ Torneios como campos (não marcados em tournamentCourses.ts) */
   findings.tournamentsAsCourses = simCourses
-    .filter((c) => isAway(c) && TOURNAMENT_RX.test(c.master.name))
+    .filter((c) => isAway(c) && TOURNAMENT_RX.test(c.master.name) && !REAL_COURSES_LIKE_TOURNAMENT.has(c.courseKey))
     .map((c) => ({ name: c.master.name, key: c.courseKey }));
 
   /* 3 ─ Campos away sem uma única distância */

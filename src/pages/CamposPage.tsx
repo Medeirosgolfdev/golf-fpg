@@ -67,9 +67,14 @@ function loadCoursePlayerMeta(): Promise<CoursePlayerMeta> {
 
 
 
-type OriginFilter = "ALL" | "PT" | "INTL" | "TOURN";
+type OriginFilter = "ALL" | "PT" | "INTL" | "TOURN" | "USKIDS";
 
 /* ——— Helpers ——— */
+
+/** Campo de torneio USKids = tem pelo menos um tee «USKids …» (distâncias dos PDFs do torneio). */
+function isUSKidsCourse(c: Course): boolean {
+  return c.master.tees.some((t) => /^USKids\b/i.test(t.teeName));
+}
 
 /** Mapa de paises conhecidos — fallback para quando country nao vem nos dados */
 const KNOWN_AWAY: Record<string, { country: string; flag: string }> = {
@@ -1379,6 +1384,8 @@ export default function CamposPage() {
       list = list.filter((c) => c.courseKey.startsWith("away-") && !isTournamentCourse(c.courseKey));
     } else if (originFilter === "TOURN") {
       list = list.filter((c) => isTournamentCourse(c.courseKey));
+    } else if (originFilter === "USKIDS") {
+      list = list.filter(isUSKidsCourse);
     } else {
       // ALL: esconde os torneios (só visíveis no separador "Torneios")
       list = list.filter((c) => !isTournamentCourse(c.courseKey));
@@ -1508,8 +1515,9 @@ export default function CamposPage() {
           <option value="PT">{"\ud83c\uddf5\ud83c\uddf9"} Portugal</option>
           <option value="INTL">{"\ud83c\udf0d"} Internacional</option>
           <option value="TOURN">{"\ud83c\udfc6"} Torneios</option>
+          <option value="USKIDS">{"\u26f3"} USKids</option>
         </select>
-        {(originFilter === "INTL" || originFilter === "ALL" || originFilter === "TOURN") && (
+        {originFilter !== "PT" && (
           <select
             className="select"
             value={countryFilter}

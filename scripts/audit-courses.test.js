@@ -45,6 +45,14 @@ describe("audit-courses — métricas", () => {
     expect(f.tournamentsAsCourses.map((r) => r.key)).toEqual(["away-campeonato-andalucia-sub-16"]);
   });
 
+  it("não conta campos reais com nome de torneio (PGA National - Match)", () => {
+    const f = run([
+      course("away-pga-national-golf-club-match", "PGA National Golf Club - Match", [tee("USKids Boys 10", 4300)]),
+      course("away-match-play-cup", "Match Play Cup", [tee("Blancas", 6000)]),
+    ]);
+    expect(f.tournamentsAsCourses.map((r) => r.key)).toEqual(["away-match-play-cup"]);
+  });
+
   it("conta campos away sem uma única distância e o pior nº de tees", () => {
     const f = run([
       course("away-sem-metros", "Sem Metros", [tee("Amarelas"), tee("Vermelhas")]),

@@ -404,3 +404,11 @@ voltas» (`src/ui/RoundAnalysisPanel.tsx`) aparece no separador **Resumo**
 só com essa volta contra a anterior (`RoundAnalysisFor`, calculada com as voltas
 até ela). Não aparece no Draw, na R1 nem nos Scorecards. Manuel por omissão; o
 campo são as mesmas opções do Resumo (`shareOptionsForTournament`).
+
+## Filtro «Origem» — USKids (2026-10-30)
+
+Na `/campos`, o filtro Origem tem Portugal · Internacional · Torneios · **USKids**.
+USKids = campo com pelo menos um tee cujo nome começa por «USKids» (`isUSKidsCourse`
+na `CamposPage`) — os tees de torneio curados dos PDFs em `extraCourses.ts`. Um campo
+novo de torneio USKids entra aí sozinho se os tees se chamarem «USKids …». O SI não
+vem nos PDFs da USKids: tirá-lo do cartão do campo, conferindo os pares buraco a buraco.
