@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-29T18:52:15.512Z",
+  "generatedAt": "2026-10-30T13:04:34.389Z",
   "juniors": [
     {
       "id": "u391389",
@@ -102574,7 +102574,7 @@
       "sources": {
         "uskids": {
           "memberId": "526417",
-          "ageGroupCurrent": "Boys 12-14"
+          "ageGroupCurrent": "Boys 13-14"
         },
         "_secondary": [
           {
@@ -362718,7 +362718,8 @@
         "uskids-23784",
         "uskids-23785",
         "uskids-23786",
-        "uskids-23788"
+        "uskids-23788",
+        "uskids-23789"
       ],
       "_match": {
         "confidence": "strong",
@@ -442849,7 +442850,8 @@
         "uskids-22209",
         "uskids-22211",
         "uskids-22210",
-        "uskids-23787"
+        "uskids-23787",
+        "uskids-23789"
       ],
       "_match": {
         "confidence": "strong",
@@ -532316,7 +532318,7 @@
         "ffgolf": {
           "lic": "530265348",
           "club": "Rennes St Jacques",
-          "hcp": 2.1,
+          "hcp": -1.3,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "2133"
@@ -532324,6 +532326,7 @@
       },
       "tournamentIds": [
         "fpg-000-10872-20251205-all",
+        "ffgolf-2601483390",
         "ffgolf-2601407890",
         "ffgolf-2501378082",
         "ffgolf-2501382476",
@@ -532366,6 +532369,13 @@
         "egr-egr11373"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": -1.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-03-07",
           "hcpExact": 2.1,
@@ -894628,19 +894638,27 @@
         "ffgolf": {
           "lic": "538212292",
           "club": "St Jean / Monts",
-          "hcp": 8.3,
+          "hcp": 8.4,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0277"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2401226113",
         "ffgolf-2401204834",
         "ffgolf-2200848438",
         "ffgolf-2200840623"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 8.4,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2024-07-10",
           "hcpExact": 8.3,
@@ -894796,7 +894814,7 @@
         "ffgolf": {
           "lic": "535623291",
           "club": "Bourgenay",
-          "hcp": -2.2,
+          "hcp": -2,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0413"
@@ -894809,6 +894827,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601484428",
         "ffgolf-2501378076",
         "ffgolf-2501375332",
@@ -894854,6 +894873,13 @@
         "egr-egr11373"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": -2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-17",
           "hcpExact": -2.2,
@@ -930552,13 +930578,14 @@
         "ffgolf": {
           "lic": "526386314",
           "club": "Pornic",
-          "hcp": 7.7,
+          "hcp": 8.3,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0581"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601444772",
         "ffgolf-2501369357",
         "ffgolf-2501346286",
@@ -930586,6 +930613,13 @@
         "ffgolf-2200797883"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 8.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 7.7,
@@ -931429,19 +931463,27 @@
         "ffgolf": {
           "lic": "048159314",
           "club": "St Jean / Monts",
-          "hcp": 6.4,
+          "hcp": 6.3,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0277"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2401271583",
         "ffgolf-2401204834",
         "ffgolf-2200848438"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 6.4,
@@ -931657,13 +931699,14 @@
         "ffgolf": {
           "lic": "530144308",
           "club": "Le Mans Sarge",
-          "hcp": 8.1,
+          "hcp": 7.5,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0743"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601448904",
         "ffgolf-2601444772",
         "ffgolf-2601403603",
@@ -931690,6 +931733,13 @@
         "ffgolf-2200840623"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 7.5,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-07-04",
           "hcpExact": 8.1,
@@ -931949,13 +931999,14 @@
         "ffgolf": {
           "lic": "525569324",
           "club": "Le Mans",
-          "hcp": 6.3,
+          "hcp": 6.4,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0076"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601405897",
         "ffgolf-2601406855",
         "ffgolf-2601404393",
@@ -931985,6 +932036,13 @@
         "ffgolf-2200848438"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.4,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-05-23",
           "hcpExact": 6.3,
@@ -932313,13 +932371,14 @@
         "ffgolf": {
           "lic": "528423332",
           "club": "Le Mans Sarge",
-          "hcp": 3.4,
+          "hcp": 3.3,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0743"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601459964",
         "ffgolf-2601463024",
@@ -932360,6 +932419,13 @@
         "ffgolf-2200840623"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 3.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-28",
           "hcpExact": 3.4,
@@ -938589,6 +938655,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2501382476",
         "ffgolf-2501375332",
@@ -938626,6 +938693,13 @@
         "ffgolf-2200804688"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 2.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 2.9,
@@ -938902,13 +938976,14 @@
         "ffgolf": {
           "lic": "526571328",
           "club": "Rennes St Jacques",
-          "hcp": 6.3,
+          "hcp": 7.2,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "2133"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601459964",
         "ffgolf-2601463024",
         "ffgolf-2601419693",
@@ -938947,6 +939022,13 @@
         "ffgolf-2200786624"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 7.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-05",
           "hcpExact": 6.3,
@@ -939498,13 +939580,14 @@
         "ffgolf": {
           "lic": "535461322",
           "club": "Cice Blossac",
-          "hcp": 12,
+          "hcp": 10.6,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601438552",
         "ffgolf-2501346291",
         "ffgolf-2501333000",
@@ -939523,6 +939606,13 @@
         "ffgolf-2200845487"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 10.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 12,
@@ -939660,13 +939750,14 @@
         "ffgolf": {
           "lic": "525655310",
           "club": "Cice Blossac",
-          "hcp": 7.1,
+          "hcp": 6.6,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601463024",
         "ffgolf-2601419693",
@@ -939688,6 +939779,13 @@
         "ffgolf-2200898732"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 7.1,
@@ -941928,17 +942026,25 @@
         "ffgolf": {
           "lic": "520255332",
           "club": "Brest Iroise",
-          "hcp": 14.6,
+          "hcp": 14.1,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0117"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2501372042",
         "ffgolf-2401226113"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 14.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2025-09-13",
           "hcpExact": 14.6,
@@ -990326,13 +990432,14 @@
         "ffgolf": {
           "lic": "519500257",
           "club": "Val De L'Indre",
-          "hcp": 12.6,
+          "hcp": 10.7,
           "region": "CENTRE-VAL DE LOIRE",
           "sex": "M",
           "glfLic": "0265"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601409009",
         "ffgolf-2601405897",
         "ffgolf-2501310018",
@@ -990347,6 +990454,13 @@
         "ffgolf-2200786651"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 10.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-19",
           "hcpExact": 12.6,
@@ -991521,13 +991635,14 @@
         "ffgolf": {
           "lic": "047032339",
           "club": "Le Mans",
-          "hcp": 4.2,
+          "hcp": 2.2,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0076"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601403603",
         "ffgolf-2501307376",
         "ffgolf-2401240416",
@@ -991542,6 +991657,13 @@
         "ffgolf-2200848438"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 2.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-03-28",
           "hcpExact": 4.2,
@@ -1009015,18 +1009137,19 @@
       "nationality": "FR",
       "country": "FR",
       "region": "BRETAGNE",
-      "club": "Freslonniere",
+      "club": "Rennes St Jacques",
       "sources": {
         "ffgolf": {
           "lic": "530361341",
-          "club": "Freslonniere",
-          "hcp": 7.1,
+          "club": "Rennes St Jacques",
+          "hcp": 2.5,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0059"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2501346291",
         "ffgolf-2501342552",
         "ffgolf-2501333000",
@@ -1009057,6 +1009180,13 @@
         "ffgolf-2200826499"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 2.5,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2025-07-11",
           "hcpExact": 7.1,
@@ -1013524,13 +1013654,14 @@
         "ffgolf": {
           "lic": "041792351",
           "club": "La Domangere",
-          "hcp": 10.6,
+          "hcp": 8.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0413"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601465699",
         "ffgolf-2601463024",
@@ -1013561,6 +1013692,13 @@
         "ffgolf-2200848438"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 8.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 10.6,
@@ -1013795,6 +1013933,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601448806",
         "ffgolf-2601463024",
@@ -1013831,6 +1013970,13 @@
         "ffgolf-2200848438"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 4.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 4.3,
@@ -1014941,7 +1015087,7 @@
         "ffgolf": {
           "lic": "526098322",
           "club": "Le Mans Sarge",
-          "hcp": 16.1,
+          "hcp": 14.7,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0076"
@@ -1065791,13 +1065937,14 @@
         "ffgolf": {
           "lic": "049283302",
           "club": "St Jean / Monts",
-          "hcp": 4,
+          "hcp": 3.7,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0748"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601465699",
         "ffgolf-2601444772",
@@ -1065826,6 +1065973,13 @@
         "ffgolf-2300999742"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 3.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 4,
@@ -1092345,13 +1092499,14 @@
         "ffgolf": {
           "lic": "526013323",
           "club": "St Jean / Monts",
-          "hcp": 16.3,
+          "hcp": 15.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0277"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601465699",
         "ffgolf-2601444772",
@@ -1092370,6 +1092525,13 @@
         "ffgolf-2300999742"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 15.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 16.3,
@@ -1092507,13 +1092669,14 @@
         "ffgolf": {
           "lic": "526381346",
           "club": "Bourgenay",
-          "hcp": 4.3,
+          "hcp": 3.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0937"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601475733",
         "ffgolf-2601459964",
@@ -1092538,6 +1092701,13 @@
         "ffgolf-2200878934"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 3.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 4.3,
@@ -1092906,12 +1093076,12 @@
       "nationality": "FR",
       "country": "FR",
       "region": "PAYS DE LA LOIRE",
-      "club": "Bauge",
+      "club": "Le Mans",
       "sources": {
         "ffgolf": {
           "lic": "545599353",
-          "club": "Bauge",
-          "hcp": 11.8,
+          "club": "Le Mans",
+          "hcp": 10.5,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "1309"
@@ -1092924,6 +1093094,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601441516",
         "ffgolf-2501382476",
         "ffgolf-2501364543",
@@ -1092932,6 +1093103,13 @@
         "ffgolf-2301023458"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 10.5,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 11.8,
@@ -1093327,7 +1093505,7 @@
         "ffgolf": {
           "lic": "527386321",
           "club": "Pornic",
-          "hcp": 15.4,
+          "hcp": 14.8,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0581"
@@ -1140012,13 +1140190,14 @@
         "ffgolf": {
           "lic": "535519350",
           "club": "Cice Blossac",
-          "hcp": 8.8,
+          "hcp": 7.2,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601475733",
         "ffgolf-2601459964",
@@ -1140041,6 +1140220,13 @@
         "ffgolf-2401186077"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 7.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 8.8,
@@ -1196692,7 +1196878,7 @@
         "ffgolf": {
           "lic": "513736353",
           "club": "L'Odet",
-          "hcp": 2.5,
+          "hcp": 1.9,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0304"
@@ -1196705,6 +1196891,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601475733",
         "ffgolf-2601465699",
@@ -1196733,6 +1196920,13 @@
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 1.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 2.5,
@@ -1196948,13 +1197142,14 @@
         "ffgolf": {
           "lic": "539702359",
           "club": "Brest Iroise",
-          "hcp": 13.4,
+          "hcp": 12.8,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0584"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601448904",
         "ffgolf-2601438552",
@@ -1196965,6 +1197160,13 @@
         "ffgolf-2300998958"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 12.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 13.4,
@@ -1197342,13 +1197544,14 @@
         "ffgolf": {
           "lic": "539368355",
           "club": "Cice Blossac",
-          "hcp": 5.4,
+          "hcp": 4.6,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601475733",
         "ffgolf-2601459964",
@@ -1197372,6 +1197575,13 @@
         "ffgolf-2401184315"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 4.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 5.4,
@@ -1198124,13 +1198334,14 @@
         "ffgolf": {
           "lic": "540355357",
           "club": "Rennes St Jacques",
-          "hcp": 9.6,
+          "hcp": 9,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0572"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601459964",
         "ffgolf-2601465699",
@@ -1198162,6 +1198373,13 @@
         "ffgolf-2300974679"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 9.6,
@@ -1198396,7 +1198614,7 @@
         "ffgolf": {
           "lic": "526570329",
           "club": "Rennes St Jacques",
-          "hcp": 18.2,
+          "hcp": 16.6,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0572"
@@ -1198598,13 +1198816,14 @@
         "ffgolf": {
           "lic": "046381349",
           "club": "Baie De Morlaix",
-          "hcp": 12.1,
+          "hcp": 10.9,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1179"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601448904",
         "ffgolf-2601419693",
         "ffgolf-2501333000",
@@ -1198612,6 +1198831,13 @@
         "ffgolf-2401203249"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 10.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-07-04",
           "hcpExact": 12.1,
@@ -1199561,13 +1199787,14 @@
         "ffgolf": {
           "lic": "527742338",
           "club": "Laval",
-          "hcp": 15,
+          "hcp": 14.1,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0110"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601463024",
         "ffgolf-2601448904",
         "ffgolf-2601419693",
@@ -1199581,6 +1199808,13 @@
         "ffgolf-2401186077"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 14.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-08-19",
           "hcpExact": 15,
@@ -1199823,7 +1200057,7 @@
         "ffgolf": {
           "lic": "003547353",
           "club": "La Domangere",
-          "hcp": 6.1,
+          "hcp": 6.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0413"
@@ -1199840,6 +1200074,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601476325",
         "ffgolf-2601465699",
@@ -1199880,6 +1200115,13 @@
         "ffgolf-2401204834"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 6.1,
@@ -1213635,18 +1213877,26 @@
         "ffgolf": {
           "lic": "530271322",
           "club": "Bourges",
-          "hcp": 26.6,
+          "hcp": 27.2,
           "region": "CENTRE-VAL DE LOIRE",
           "sex": "M",
           "glfLic": "0563"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601405897",
         "ffgolf-2501310018",
         "ffgolf-2401226113"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 27.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-05-23",
           "hcpExact": 26.6,
@@ -1213693,19 +1213943,27 @@
         "ffgolf": {
           "lic": "512924375",
           "club": "Baie De Morlaix",
-          "hcp": 7.9,
+          "hcp": 5.9,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1179"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601448904",
         "ffgolf-2601419693",
         "ffgolf-2501333000",
         "ffgolf-2401226113"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 5.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-07-04",
           "hcpExact": 7.9,
@@ -1213809,17 +1214067,25 @@
         "ffgolf": {
           "lic": "527531333",
           "club": "Baie De Morlaix",
-          "hcp": 16.4,
+          "hcp": 12.4,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1179"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601438552",
         "ffgolf-2401226113"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 12.4,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 16.4,
@@ -1214057,18 +1214323,26 @@
         "ffgolf": {
           "lic": "526459334",
           "club": "Bourges",
-          "hcp": 23.8,
+          "hcp": 24.2,
           "region": "CENTRE-VAL DE LOIRE",
           "sex": "M",
           "glfLic": "0563"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601405897",
         "ffgolf-2501310018",
         "ffgolf-2401226113"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 24.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-05-23",
           "hcpExact": 23.8,
@@ -1214489,13 +1214763,14 @@
         "ffgolf": {
           "lic": "541588354",
           "club": "Baie De Morlaix",
-          "hcp": 12.8,
+          "hcp": 12.7,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1179"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601448904",
         "ffgolf-2601419693",
@@ -1214503,6 +1214778,13 @@
         "ffgolf-2501372042"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 12.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 12.8,
@@ -1240145,7 +1240427,7 @@
         "ffgolf": {
           "lic": "529325311",
           "club": "Cice Blossac",
-          "hcp": 4.9,
+          "hcp": 3.8,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
@@ -1240158,6 +1240440,7 @@
         ]
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601475733",
         "ffgolf-2601476325",
@@ -1240184,6 +1240467,13 @@
         "ffgolf-2301083006"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 3.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 4.9,
@@ -1240649,7 +1240939,7 @@
         "ffgolf": {
           "lic": "526347339",
           "club": "Rennes St Jacques",
-          "hcp": 7.5,
+          "hcp": 6.5,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
@@ -1240769,7 +1241059,7 @@
         "ffgolf": {
           "lic": "043433375",
           "club": "Cice Blossac",
-          "hcp": 10.6,
+          "hcp": 10.1,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "1029"
@@ -1256590,13 +1256880,14 @@
         "ffgolf": {
           "lic": "527659321",
           "club": "La Domangere",
-          "hcp": 10.6,
+          "hcp": 8.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0748"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601405350",
         "ffgolf-2601444772",
         "ffgolf-2601406855",
@@ -1256609,6 +1256900,13 @@
         "ffgolf-2401271583"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 8.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-19",
           "hcpExact": 10.6,
@@ -1256704,18 +1257002,26 @@
         "ffgolf": {
           "lic": "524930345",
           "club": "La Domangere",
-          "hcp": 27.4,
+          "hcp": 28,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0413"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601441516",
         "ffgolf-2501347448"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 28,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 27.4,
@@ -1256888,13 +1257194,14 @@
         "ffgolf": {
           "lic": "535426352",
           "club": "Bourgenay",
-          "hcp": 8.6,
+          "hcp": 7.2,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0768"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601465699",
         "ffgolf-2601448904",
@@ -1256907,6 +1257214,13 @@
         "ffgolf-2501347485"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 7.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 8.6,
@@ -1257058,13 +1257372,14 @@
         "ffgolf": {
           "lic": "530297331",
           "club": "Le Mans",
-          "hcp": 10.4,
+          "hcp": 12.7,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0076"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601469691",
         "ffgolf-2601432264",
         "ffgolf-2601441516",
@@ -1257079,6 +1257394,13 @@
         "ffgolf-2501338141"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 12.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 10.4,
@@ -1257188,7 +1257510,7 @@
         "ffgolf": {
           "lic": "536256356",
           "club": "La Domangere",
-          "hcp": 13.3,
+          "hcp": 11.8,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0413"
@@ -1257428,7 +1257750,7 @@
         "ffgolf": {
           "lic": "535813335",
           "club": "Bourgenay",
-          "hcp": 28.6,
+          "hcp": 26.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0768"
@@ -1257478,17 +1257800,25 @@
         "ffgolf": {
           "lic": "530880389",
           "club": "Le Mans Sarge",
-          "hcp": 20.4,
+          "hcp": 16.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0743"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601441516",
         "ffgolf-2501347485"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 16.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 20.4,
@@ -1257884,17 +1258214,25 @@
         "ffgolf": {
           "lic": "522516341",
           "club": "Le Mans",
-          "hcp": 32.7,
+          "hcp": 27.7,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0076"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601403603",
         "ffgolf-2501347485"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 27.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-03-28",
           "hcpExact": 32.7,
@@ -1286277,7 +1286615,7 @@
         "ffgolf": {
           "lic": "042476376",
           "club": "Rennes St Jacques",
-          "hcp": 15,
+          "hcp": 14.5,
           "region": "BRETAGNE",
           "sex": "M",
           "glfLic": "0059"
@@ -1289277,17 +1289615,25 @@
         "ffgolf": {
           "lic": "527554381",
           "club": "Nantes Erdre",
-          "hcp": 9.4,
+          "hcp": 8.3,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0721"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601441516"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 8.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 9.4,
@@ -1289375,7 +1289721,7 @@
         "ffgolf": {
           "lic": "003854397",
           "club": "Le Mans Sarge",
-          "hcp": 23,
+          "hcp": 17.5,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0743"
@@ -1289635,17 +1289981,25 @@
         "ffgolf": {
           "lic": "534050358",
           "club": "Laval",
-          "hcp": 25.7,
+          "hcp": 24.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0110"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601477509",
         "ffgolf-2601441516"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 24.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-10-10",
           "hcpExact": 25.7,
@@ -1290031,16 +1290385,24 @@
         "ffgolf": {
           "lic": "534255388",
           "club": "Nantes Erdre",
-          "hcp": 17.5,
+          "hcp": 17.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0721"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601441516"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 17.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 17.5,
@@ -1290073,18 +1290435,26 @@
         "ffgolf": {
           "lic": "511571392",
           "club": "Bourgenay",
-          "hcp": 13.7,
+          "hcp": 13.3,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0768"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601475733",
         "ffgolf-2601441516",
         "ffgolf-2601411598"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 13.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-09-26",
           "hcpExact": 13.7,
@@ -1290131,16 +1290501,24 @@
         "ffgolf": {
           "lic": "528864375",
           "club": "Nantes Erdre",
-          "hcp": 29.8,
+          "hcp": 24.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0721"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601441516"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 24.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 29.8,
@@ -1294832,6 +1295210,7 @@
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601463024",
         "ffgolf-2601448904",
         "ffgolf-2601444772",
@@ -1294841,6 +1295220,13 @@
         "ffgolf-2601417157"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-08-19",
           "hcpExact": 6.1,
@@ -1294915,7 +1295301,7 @@
         "ffgolf": {
           "lic": "531835284",
           "club": "Pornic",
-          "hcp": 12,
+          "hcp": 10.4,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0030"
@@ -1294957,7 +1295343,7 @@
         "ffgolf": {
           "lic": "536366353",
           "club": "Pornic",
-          "hcp": 9.3,
+          "hcp": 8.6,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0030"
@@ -1295041,16 +1295427,24 @@
         "ffgolf": {
           "lic": "533814356",
           "club": "Pornic",
-          "hcp": 20,
+          "hcp": 19.9,
           "region": "PAYS DE LA LOIRE",
           "sex": "M",
           "glfLic": "0030"
         }
       },
       "tournamentIds": [
+        "ffgolf-2601483390",
         "ffgolf-2601444772"
       ],
       "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 19.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
         {
           "date": "2026-06-13",
           "hcpExact": 20,
@@ -1317578,6 +1317972,1296 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:047533387"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g533480298",
+      "canonicalName": "Keelyan Isaac",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Le Mans Sarge",
+      "sources": {
+        "ffgolf": {
+          "lic": "533480298",
+          "club": "Le Mans Sarge",
+          "hcp": 6.3,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0743"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2300999742"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 6.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2023-04-15",
+          "hcpExact": 32.6,
+          "source": "ffg",
+          "tcode": "2300999742",
+          "label": "8EME GRAND PRIX JEUNES DU GOLF ILE D'OR"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:533480298"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g522573388",
+      "canonicalName": "Louis Puech",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Laval",
+      "sources": {
+        "ffgolf": {
+          "lic": "522573388",
+          "club": "Laval",
+          "hcp": 19.9,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0110"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 19.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:522573388"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g047333357",
+      "canonicalName": "Henry Weidner",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Bourges",
+      "sources": {
+        "ffgolf": {
+          "lic": "047333357",
+          "club": "Bourges",
+          "hcp": 20.3,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0563"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2501310018"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 20.3,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2025-06-07",
+          "hcpExact": 30,
+          "source": "ffg",
+          "tcode": "2501310018",
+          "label": "GRAND-PRIX JEUNES DE BOURGES 2025"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:047333357"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g539070372",
+      "canonicalName": "Robin Carton",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Brest Iroise",
+      "sources": {
+        "ffgolf": {
+          "lic": "539070372",
+          "club": "Brest Iroise",
+          "hcp": 19.9,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0117"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 19.9,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:539070372"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g045785352",
+      "canonicalName": "Lucas Van Cleven",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "L'Odet",
+      "sources": {
+        "ffgolf": {
+          "lic": "045785352",
+          "club": "L'Odet",
+          "hcp": 13.7,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0304"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2601448904",
+        "ffgolf-2200826499"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 13.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2026-07-04",
+          "hcpExact": 15.6,
+          "source": "ffg",
+          "tcode": "2601448904",
+          "label": "Grand Prix Jeunes de l'Odet"
+        },
+        {
+          "date": "2022-04-23",
+          "hcpExact": 36.6,
+          "source": "ffg",
+          "tcode": "2200826499",
+          "label": "GRAND PRIX JEUNES DE L'ODET 2022"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:045785352"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g527291389",
+      "canonicalName": "Thibault Quere",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Carquefou",
+      "sources": {
+        "ffgolf": {
+          "lic": "527291389",
+          "club": "Carquefou",
+          "hcp": 27.4,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "1161"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 27.4,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:527291389"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g041894347",
+      "canonicalName": "Noah Berrou",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "L'Odet",
+      "sources": {
+        "ffgolf": {
+          "lic": "041894347",
+          "club": "L'Odet",
+          "hcp": 10.8,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0304"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 10.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:041894347"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g529267367",
+      "canonicalName": "Timothé Lepage",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Laval",
+      "sources": {
+        "ffgolf": {
+          "lic": "529267367",
+          "club": "Laval",
+          "hcp": 18.7,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0110"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 18.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:529267367"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g527392323",
+      "canonicalName": "Arthus Isaia",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "527392323",
+          "club": "Pornic",
+          "hcp": 9.2,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0030"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 9.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:527392323"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g043135369",
+      "canonicalName": "Edhan Grelet",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Val De L'Indre",
+      "sources": {
+        "ffgolf": {
+          "lic": "043135369",
+          "club": "Val De L'Indre",
+          "hcp": 17.5,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0265"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 17.5,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:043135369"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g513562353",
+      "canonicalName": "Jean Gabriel Bizien",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Baie De Morlaix",
+      "sources": {
+        "ffgolf": {
+          "lic": "513562353",
+          "club": "Baie De Morlaix",
+          "hcp": 25.8,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "1179"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 25.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:513562353"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g044154384",
+      "canonicalName": "Martin Auber",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Bourgenay",
+      "sources": {
+        "ffgolf": {
+          "lic": "044154384",
+          "club": "Bourgenay",
+          "hcp": 24.6,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0768"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 24.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:044154384"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g529416375",
+      "canonicalName": "Nohlan Flottes",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Carquefou",
+      "sources": {
+        "ffgolf": {
+          "lic": "529416375",
+          "club": "Carquefou",
+          "hcp": 16.7,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "1161"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 16.7,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:529416375"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g041024374",
+      "canonicalName": "Maxence Longein",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Val De L'Indre",
+      "sources": {
+        "ffgolf": {
+          "lic": "041024374",
+          "club": "Val De L'Indre",
+          "hcp": 25.2,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0265"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 25.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:041024374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g528432368",
+      "canonicalName": "Cylian Yvelin",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "L'Odet",
+      "sources": {
+        "ffgolf": {
+          "lic": "528432368",
+          "club": "L'Odet",
+          "hcp": 11.6,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0304"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 11.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:528432368"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g049733365",
+      "canonicalName": "Clément Hyon",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Carquefou",
+      "sources": {
+        "ffgolf": {
+          "lic": "049733365",
+          "club": "Carquefou",
+          "hcp": 19.6,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "1161"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 19.6,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:049733365"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g531198366",
+      "canonicalName": "Ioan Blanchard",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "St Jean / Monts",
+      "sources": {
+        "ffgolf": {
+          "lic": "531198366",
+          "club": "St Jean / Monts",
+          "hcp": 27.8,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0277"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2601475733",
+        "ffgolf-2601465699"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 27.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2026-09-26",
+          "hcpExact": 28.5,
+          "source": "ffg",
+          "tcode": "2601475733",
+          "label": "GRAND PRIX JEUNES BOURGENAY GOLF CLUB 26"
+        },
+        {
+          "date": "2026-08-25",
+          "hcpExact": 28.8,
+          "source": "ffg",
+          "tcode": "2601465699",
+          "label": "Grand Prix Jeunes de La Baule 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:531198366"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g519050369",
+      "canonicalName": "Pierre Fauvel",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Carquefou",
+      "sources": {
+        "ffgolf": {
+          "lic": "519050369",
+          "club": "Carquefou",
+          "hcp": 23.8,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "1161"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 23.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:519050369"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g525837301",
+      "canonicalName": "Gabriel Labbe",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Laval",
+      "sources": {
+        "ffgolf": {
+          "lic": "525837301",
+          "club": "Laval",
+          "hcp": 27.4,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0110"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 27.4,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:525837301"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g541266371",
+      "canonicalName": "Charles Pradeau",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "L'Odet",
+      "sources": {
+        "ffgolf": {
+          "lic": "541266371",
+          "club": "L'Odet",
+          "hcp": 25.2,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0304"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2501372042"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 25.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2025-09-13",
+          "hcpExact": 32.8,
+          "source": "ffg",
+          "tcode": "2501372042",
+          "label": "Grand Prix Jeunes de l'Odet"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:541266371"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g041539349",
+      "canonicalName": "César Chayla",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Nantes Erdre",
+      "sources": {
+        "ffgolf": {
+          "lic": "041539349",
+          "club": "Nantes Erdre",
+          "hcp": 25.1,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0721"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 25.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:041539349"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g526473336",
+      "canonicalName": "Clément Knockaert",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Bourges",
+      "sources": {
+        "ffgolf": {
+          "lic": "526473336",
+          "club": "Bourges",
+          "hcp": 20,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0563"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390",
+        "ffgolf-2601405897",
+        "ffgolf-2501310018"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 20,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        },
+        {
+          "date": "2026-05-23",
+          "hcpExact": 25.2,
+          "source": "ffg",
+          "tcode": "2601405897",
+          "label": "GRAND-PRIX JEUNES DE BOURGES 2026"
+        },
+        {
+          "date": "2025-06-07",
+          "hcpExact": 35.5,
+          "source": "ffg",
+          "tcode": "2501310018",
+          "label": "GRAND-PRIX JEUNES DE BOURGES 2025"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:526473336"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g538893388",
+      "canonicalName": "Alessio Trochet",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Val De L'Indre",
+      "sources": {
+        "ffgolf": {
+          "lic": "538893388",
+          "club": "Val De L'Indre",
+          "hcp": 31.8,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0265"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 31.8,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:538893388"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g524111346",
+      "canonicalName": "Eliott Duranel",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "CENTRE-VAL DE LOIRE",
+      "club": "Bourges",
+      "sources": {
+        "ffgolf": {
+          "lic": "524111346",
+          "club": "Bourges",
+          "hcp": 32,
+          "region": "CENTRE-VAL DE LOIRE",
+          "sex": "M",
+          "glfLic": "0563"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 32,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:524111346"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g539677360",
+      "canonicalName": "Laurent Peron-Su",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "BRETAGNE",
+      "club": "Brest Iroise",
+      "sources": {
+        "ffgolf": {
+          "lic": "539677360",
+          "club": "Brest Iroise",
+          "hcp": 33.1,
+          "region": "BRETAGNE",
+          "sex": "M",
+          "glfLic": "0117"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 33.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:539677360"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g526594296",
+      "canonicalName": "Adam Gaignard",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Pornic",
+      "sources": {
+        "ffgolf": {
+          "lic": "526594296",
+          "club": "Pornic",
+          "hcp": 30.5,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0030"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 30.5,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:526594296"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g543721375",
+      "canonicalName": "Edouard Loiret",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Nantes Erdre",
+      "sources": {
+        "ffgolf": {
+          "lic": "543721375",
+          "club": "Nantes Erdre",
+          "hcp": 32.2,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "0721"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 32.2,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:543721375"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g542823374",
+      "canonicalName": "Arthur Rigaud",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "PAYS DE LA LOIRE",
+      "club": "Carquefou",
+      "sources": {
+        "ffgolf": {
+          "lic": "542823374",
+          "club": "Carquefou",
+          "hcp": 46.1,
+          "region": "PAYS DE LA LOIRE",
+          "sex": "M",
+          "glfLic": "1161"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601483390"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-10-28",
+          "hcpExact": 46.1,
+          "source": "ffg",
+          "tcode": "2601483390",
+          "label": "Promotion Inter Région Ouest U16 Garçons 2026"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:542823374"
+        ],
+        "mergedFromSources": [
+          "ffgolf"
+        ]
+      }
+    },
+    {
+      "id": "g540342389",
+      "canonicalName": "Pacôme Metayer",
+      "aliases": [],
+      "dob": null,
+      "sex": "M",
+      "nationality": "FR",
+      "country": "FR",
+      "region": "REUNION",
+      "club": "Bourgenay",
+      "sources": {
+        "ffgolf": {
+          "lic": "540342389",
+          "club": "Bourgenay",
+          "hcp": 15.1,
+          "region": "REUNION",
+          "sex": "M",
+          "glfLic": "0768"
+        }
+      },
+      "tournamentIds": [
+        "ffgolf-2601399765"
+      ],
+      "hcpHistory": [
+        {
+          "date": "2026-02-14",
+          "hcpExact": 16.7,
+          "source": "ffg",
+          "tcode": "2601399765",
+          "label": "Grand Prix Jeunes du Bassin Bleu"
+        }
+      ],
+      "_match": {
+        "confidence": "strong",
+        "evidence": [
+          "ffgolf:540342389"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -1360481,48 +1362165,6 @@
       }
     },
     {
-      "id": "g533480298",
-      "canonicalName": "Keelyan Isaac",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "PAYS DE LA LOIRE",
-      "club": "Le Mans Sarge",
-      "sources": {
-        "ffgolf": {
-          "lic": "533480298",
-          "club": "Le Mans Sarge",
-          "hcp": 32.6,
-          "region": "PAYS DE LA LOIRE",
-          "sex": "M",
-          "glfLic": "0743"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2300999742"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2023-04-15",
-          "hcpExact": 32.6,
-          "source": "ffg",
-          "tcode": "2300999742",
-          "label": "8EME GRAND PRIX JEUNES DU GOLF ILE D'OR"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:533480298"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "g047808368",
       "canonicalName": "Théotime Lasierra",
       "aliases": [],
@@ -1361519,56 +1363161,6 @@
       }
     },
     {
-      "id": "g531198366",
-      "canonicalName": "Ioan Blanchard",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "PAYS DE LA LOIRE",
-      "club": "St Jean / Monts",
-      "sources": {
-        "ffgolf": {
-          "lic": "531198366",
-          "club": "St Jean / Monts",
-          "hcp": 28.5,
-          "region": "PAYS DE LA LOIRE",
-          "sex": "M",
-          "glfLic": "0277"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601475733",
-        "ffgolf-2601465699"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-09-26",
-          "hcpExact": 28.5,
-          "source": "ffg",
-          "tcode": "2601475733",
-          "label": "GRAND PRIX JEUNES BOURGENAY GOLF CLUB 26"
-        },
-        {
-          "date": "2026-08-25",
-          "hcpExact": 28.8,
-          "source": "ffg",
-          "tcode": "2601465699",
-          "label": "Grand Prix Jeunes de La Baule 2026"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:531198366"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
       "id": "g510681346",
       "canonicalName": "Arthur Rahimian",
       "aliases": [],
@@ -1361690,56 +1363282,6 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:535397358"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g045785352",
-      "canonicalName": "Lucas Van Cleven",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "BRETAGNE",
-      "club": "L'Odet",
-      "sources": {
-        "ffgolf": {
-          "lic": "045785352",
-          "club": "L'Odet",
-          "hcp": 15.6,
-          "region": "BRETAGNE",
-          "sex": "M",
-          "glfLic": "0304"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601448904",
-        "ffgolf-2200826499"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-07-04",
-          "hcpExact": 15.6,
-          "source": "ffg",
-          "tcode": "2601448904",
-          "label": "Grand Prix Jeunes de l'Odet"
-        },
-        {
-          "date": "2022-04-23",
-          "hcpExact": 36.6,
-          "source": "ffg",
-          "tcode": "2200826499",
-          "label": "GRAND PRIX JEUNES DE L'ODET 2022"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:045785352"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -1362342,48 +1363884,6 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:534447359"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g541266371",
-      "canonicalName": "Charles Pradeau",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "BRETAGNE",
-      "club": "L'Odet",
-      "sources": {
-        "ffgolf": {
-          "lic": "541266371",
-          "club": "L'Odet",
-          "hcp": 32.8,
-          "region": "BRETAGNE",
-          "sex": "M",
-          "glfLic": "0304"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2501372042"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-09-13",
-          "hcpExact": 32.8,
-          "source": "ffg",
-          "tcode": "2501372042",
-          "label": "Grand Prix Jeunes de l'Odet"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:541266371"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -1363575,98 +1365075,6 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:044808345"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g047333357",
-      "canonicalName": "Henry Weidner",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "CENTRE-VAL DE LOIRE",
-      "club": "Bourges",
-      "sources": {
-        "ffgolf": {
-          "lic": "047333357",
-          "club": "Bourges",
-          "hcp": 30,
-          "region": "CENTRE-VAL DE LOIRE",
-          "sex": "M",
-          "glfLic": "0563"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2501310018"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2025-06-07",
-          "hcpExact": 30,
-          "source": "ffg",
-          "tcode": "2501310018",
-          "label": "GRAND-PRIX JEUNES DE BOURGES 2025"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:047333357"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g526473336",
-      "canonicalName": "Clément Knockaert",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "CENTRE-VAL DE LOIRE",
-      "club": "Bourges",
-      "sources": {
-        "ffgolf": {
-          "lic": "526473336",
-          "club": "Bourges",
-          "hcp": 25.2,
-          "region": "CENTRE-VAL DE LOIRE",
-          "sex": "M",
-          "glfLic": "0563"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601405897",
-        "ffgolf-2501310018"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-05-23",
-          "hcpExact": 25.2,
-          "source": "ffg",
-          "tcode": "2601405897",
-          "label": "GRAND-PRIX JEUNES DE BOURGES 2026"
-        },
-        {
-          "date": "2025-06-07",
-          "hcpExact": 35.5,
-          "source": "ffg",
-          "tcode": "2501310018",
-          "label": "GRAND-PRIX JEUNES DE BOURGES 2025"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:526473336"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -1368111,48 +1369519,6 @@
         "confidence": "strong",
         "evidence": [
           "ffgolf:537148355"
-        ],
-        "mergedFromSources": [
-          "ffgolf"
-        ]
-      }
-    },
-    {
-      "id": "g540342389",
-      "canonicalName": "Pacôme Metayer",
-      "aliases": [],
-      "dob": null,
-      "sex": "M",
-      "nationality": "FR",
-      "country": "FR",
-      "region": "REUNION",
-      "club": "Bassin Bleu",
-      "sources": {
-        "ffgolf": {
-          "lic": "540342389",
-          "club": "Bassin Bleu",
-          "hcp": 16.7,
-          "region": "REUNION",
-          "sex": "M",
-          "glfLic": "0782"
-        }
-      },
-      "tournamentIds": [
-        "ffgolf-2601399765"
-      ],
-      "hcpHistory": [
-        {
-          "date": "2026-02-14",
-          "hcpExact": 16.7,
-          "source": "ffg",
-          "tcode": "2601399765",
-          "label": "Grand Prix Jeunes du Bassin Bleu"
-        }
-      ],
-      "_match": {
-        "confidence": "strong",
-        "evidence": [
-          "ffgolf:540342389"
         ],
         "mergedFromSources": [
           "ffgolf"
@@ -2260210,9 +2261576,9 @@
     }
   ],
   "stats": {
-    "total": 38606,
-    "droppedNoTourn": 32568,
-    "strong": 34872,
+    "total": 38628,
+    "droppedNoTourn": 32591,
+    "strong": 34894,
     "probable": 3734,
     "manual": 0,
     "strongMerges": 9007,
