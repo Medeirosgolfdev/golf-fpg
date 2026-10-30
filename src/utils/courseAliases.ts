@@ -134,6 +134,8 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "parador malaga espanha": "Parador Málaga del Golf",
   "parador de el saler, spain": "Parador De El Saler",
   "vidago palace golf": "Vidago Palace",
+  // R&A Girls' Amateur 2026 — gralha do clube no nome do campo.
+  "cragielaw": "Craigielaw Golf Club",
 
   // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
   // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,

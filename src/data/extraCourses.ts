@@ -1540,6 +1540,93 @@ const paradorMalagaDelGolf = paradorMalaga("away-parador-malaga-del-golf", "Para
 const paradorMalagaVirgula = paradorMalaga("away-parador-malaga", "Parador, Málaga");
 const paradorMalagaEspanha = paradorMalaga("away-parador-malaga-espanha", "Parador Malaga Espanha");
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Craigielaw Golf Club (Aberlady, Escócia) — par 71
+   Duas entradas do mesmo campo: «Craigielaw Golf Club» (um cartão «BRANCAS»
+   com par 4×18, o CR do tee White e, como «metros», as JARDAS do Tee 4 da
+   USKids) e «Cragielaw» (gralha; R&A Girls' Amateur 2026, cartão «VERMELHAS»
+   CR 76,2/138, SI 1..18 inventado, sem metros). Agora:
+   - tees do clube White/Blue/Red: jardas, par, SI e CR/Slope da GolfPass
+     (White 72,5/129 confirmado na página da qualificação do The Open);
+   - R&A Girls' Amateur 2026 (10–11/08): par 71, 6090 jd (R&A); CR/Slope do
+     cartão da prova; sem metros por buraco publicados;
+   - USKids Boys 11 do European Championship 2026: Tee 4, 5218 jd, par
+     USKids 72 (uskids-results), CR 66,9/118 (course_rating_and_slope_-_euc_2026.pdf).
+   A chave da gralha fica sem tees: só leva as voltas para a fusão por nome
+   (alias «cragielaw» em courseAliases.ts) e assim é a entrada certa que dá
+   o nome e o URL ao campo.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const craigPar = [4,5,3,5,4,3,4,3,4, 3,5,4,4,4,4,4,3,5]; // 71
+const craigSI  = [9,11,15,1,5,13,3,7,17, 10,12,6,4,8,18,2,16,14];
+const craigWhite = yd2m([327,558,155,583,424,174,366,186,342, 174,540,445,403,407,346,467,161,543]); // 6601 yd
+const craigBlue  = yd2m([291,509,149,535,393,149,351,138,328, 157,507,411,369,381,336,425,149,465]); // 6043 yd
+const craigRed   = yd2m([272,464,132,474,355,129,274,122,300, 133,452,378,333,352,276,378,138,411]); // 5373 yd
+const craigUKPar = [4,5,3,5,5,3,4,3,4, 3,5,5,4,4,4,4,3,4]; // par USKids 72
+const craigUKB11 = yd2m([270,439,134,434,393,122,272,126,295, 133,455,370,333,352,275,329,136,350]); // 5218 yd — Tee 4
+
+function craigTee(teeId: string, sex: "M" | "F", teeName: string, teeColor: string, dist: number[], cr: number, slope: number): Tee {
+  return {
+    teeId, sex, teeName,
+    scorecardMeta: { teeColor },
+    ratings: { holes18: { par: 71, courseRating: cr, slopeRating: slope } },
+    holes: vHoles(craigPar, dist, craigSI),
+    distances: vDist(dist),
+  };
+}
+
+function craigielaw(courseKey: string, name: string): Course {
+  return {
+    courseKey,
+    master: {
+      courseId: courseKey,
+      name,
+      country: "Escócia",
+      links: {
+        fpg: null,
+        scorecards: "https://www.golfpass.com/courses/16702-craigielaw-golf-club/scorecard-and-layout",
+        extra: [
+          {
+            label: "US Kids European Championship 2026 - Course Rating & Slope",
+            url: "https://tournaments.uskidsgolf.com/sites/default/files/course_rating_and_slope_-_euc_2026.pdf",
+          },
+        ],
+      },
+      tees: [
+        craigTee("craig-white-m", "M", "White", "#ffffff", craigWhite, 72.5, 129),
+        craigTee("craig-blue-m", "M", "Blue", "#3b82f6", craigBlue, 70.0, 124),
+        craigTee("craig-blue-f", "F", "Blue", "#3b82f6", craigBlue, 76.0, 137),
+        craigTee("craig-red-m", "M", "Red", "#ef4444", craigRed, 66.9, 118),
+        craigTee("craig-red-f", "F", "Red", "#ef4444", craigRed, 72.4, 129),
+        {
+          teeId: "craig-randa-girls-2026",
+          sex: "F",
+          teeName: "R&A Girls' Amateur 2026",
+          scorecardMeta: { teeColor: null },
+          ratings: { holes18: { par: 71, courseRating: 76.2, slopeRating: 138 } },
+          holes: craigPar.map((p, i) => ({ hole: i + 1, par: p, si: craigSI[i], distance: null })),
+          distances: { total: Math.round(6090 * 0.9144), front9: null, back9: null, holesCount: 18, complete18: true },
+        },
+        {
+          teeId: "craig-uk-boys11",
+          sex: "M",
+          teeName: "USKids Boys 11",
+          scorecardMeta: { teeColor: "#ef4444" }, // Longleaf Tee 4
+          ratings: { holes18: { par: 72, courseRating: 66.9, slopeRating: 118 } },
+          holes: vHoles(craigUKPar, craigUKB11, craigSI),
+          distances: vDist(craigUKB11),
+        },
+      ],
+    },
+  };
+}
+
+const craigielawMain = craigielaw("away-craigielaw-golf-club", "Craigielaw Golf Club");
+const craigielawGralha: Course = (() => {
+  const c = craigielaw("away-cragielaw", "Cragielaw");
+  return { ...c, master: { ...c.master, tees: [] } };
+})();
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -1568,5 +1655,7 @@ export function getExtraCourses(): Course[] {
     paradorMalagaDelGolf,
     paradorMalagaVirgula,
     paradorMalagaEspanha,
+    craigielawMain,
+    craigielawGralha,
   ];
 }

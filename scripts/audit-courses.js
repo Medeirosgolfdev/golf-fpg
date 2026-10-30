@@ -54,7 +54,7 @@ const BASELINE = {
   duplicateGroups: 2, // 4 → 2 a 30/10/2026: Parador Málaga e Vidago Palace fundidos
   tournamentsAsCourses: 4,
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
-  awayWithoutDistances: 31, // 35 → 31 a 30/10/2026: Slieve Russell (cartão ELTC) e entradas repetidas fundidas
+  awayWithoutDistances: 30, // 35 → 30 a 30/10/2026: Slieve Russell, Craigielaw e entradas repetidas fundidas
   maxTeesPerCourse: 13,
 };
 

@@ -27,10 +27,12 @@ export function sortTees(tees: Tee[]): Tee[] {
   });
 }
 
-/** Filtra tees por sexo */
+/** Filtra tees por sexo. Um tee «U» (sexo por saber — os cartões dos clubes
+ *  vêm muitas vezes assim) conta nos dois: senão o filtro Masculino/Feminino
+ *  escondia-o no Scorecard e na contagem, mas o Comparar mostrava-o. */
 export function filterTees(tees: Tee[], sex: SexFilter): Tee[] {
   if (sex === "ALL") return tees;
-  return tees.filter((t) => t.sex === sex);
+  return tees.filter((t) => t.sex === sex || t.sex === "U");
 }
 
 /** Resolve a cor hex de um objecto Tee (usa scorecardMeta se disponível) */
