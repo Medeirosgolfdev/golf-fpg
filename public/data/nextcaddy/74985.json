@@ -1,9 +1,9 @@
 {
   "tourId": 74985,
   "url": "https://www.nextcaddy.com/tour/74985",
-  "scrapedAt": "2026-10-30T14:29:40.326Z",
+  "scrapedAt": "2026-10-30T18:39:30.558Z",
   "meta": {
-    "name": null,
+    "name": "TORNEO INFANTIL 18 HOYOS",
     "organizer": null,
     "course": "la Monacilla Golf Club",
     "courseCode": "AMG8",
@@ -26,8 +26,63 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Manuel Rosa Curcho",
+      "licencia": "AMG8948451",
+      "hcp": 16.8,
+      "nivel": "C"
+    },
+    {
+      "orden": 1,
+      "name": "Mar Rosa Curcho",
+      "licencia": "AMG8952909",
+      "hcp": 36,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Julia Coello Baquero",
+      "licencia": "AMG8989359",
+      "hcp": 23.4,
+      "nivel": "I"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Manuel Rosa Curcho",
+          "hcp": 16.8,
+          "ins": "2438485",
+          "jid": "80351",
+          "nivel": "C"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Mar Rosa Curcho",
+          "hcp": 36,
+          "ins": "2438486",
+          "jid": "80351",
+          "nivel": "I"
+        },
+        {
+          "time": "09:00",
+          "tee": 10,
+          "name": "Julia Coello Baquero",
+          "hcp": 23.4,
+          "ins": "2438487",
+          "jid": "80351",
+          "nivel": "I"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},

@@ -1,9 +1,9 @@
 {
   "tourId": 74933,
   "url": "https://www.nextcaddy.com/tour/74933",
-  "scrapedAt": "2026-10-30T14:29:39.014Z",
+  "scrapedAt": "2026-10-30T18:39:28.797Z",
   "meta": {
-    "name": null,
+    "name": "TORNEO INFANTIL 9 HOYOS",
     "organizer": null,
     "course": "la Monacilla Golf Club",
     "courseCode": "AMG8",
@@ -26,8 +26,143 @@
   "leaderboard": [],
   "leaderboardPdfOnly": true,
   "categoryNames": {},
-  "inscritos": [],
-  "horarios": [],
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "GONZALO CHAO AMBROSY,",
+      "licencia": "DDFF475522",
+      "hcp": 54,
+      "nivel": "Mid"
+    },
+    {
+      "orden": 2,
+      "name": "Liberto Quinta Rodriguez",
+      "licencia": "AMG8519270",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 3,
+      "name": "Roger William Magnusson Hernandez",
+      "licencia": "AMG8086937",
+      "hcp": 54,
+      "nivel": "B"
+    },
+    {
+      "orden": 4,
+      "name": "Marcoarturo Ayala Galan",
+      "licencia": "AM07952951",
+      "hcp": 47.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 5,
+      "name": "Daniel Villaran Grygorenko",
+      "licencia": "AMG8517616",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "MENCIA CHAO AMBROSY",
+      "licencia": "DFG4587123",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Ana Coello Baquero",
+      "licencia": "AMG8353564",
+      "hcp": 47.3,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Marina Gonzalez Lopez",
+      "licencia": "AMG8022546",
+      "hcp": 54,
+      "nivel": "B"
+    }
+  ],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Ana Coello Baquero",
+          "hcp": 47.3,
+          "ins": "2438492",
+          "jid": "80298",
+          "nivel": "B"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Marcoarturo Ayala Galan",
+          "hcp": 47.9,
+          "ins": "2438494",
+          "jid": "80298",
+          "nivel": "I"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Marina Gonzalez Lopez",
+          "hcp": 54,
+          "ins": "2438495",
+          "jid": "80298",
+          "nivel": "B"
+        },
+        {
+          "time": "09:20",
+          "tee": 10,
+          "name": "Daniel Villaran Grygorenko",
+          "hcp": 54,
+          "ins": "2438517",
+          "jid": "80298",
+          "nivel": "A"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "GONZALO CHAO AMBROSY,",
+          "hcp": 54,
+          "ins": "2438489",
+          "jid": "80298",
+          "nivel": "M"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "MENCIA CHAO AMBROSY",
+          "hcp": 54,
+          "ins": "2438490",
+          "jid": "80298",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Liberto Quinta Rodriguez",
+          "hcp": 54,
+          "ins": "2438491",
+          "jid": "80298",
+          "nivel": "I"
+        },
+        {
+          "time": "09:30",
+          "tee": 10,
+          "name": "Roger William Magnusson Hernandez",
+          "hcp": 54,
+          "ins": "2438493",
+          "jid": "80298",
+          "nivel": "B"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},

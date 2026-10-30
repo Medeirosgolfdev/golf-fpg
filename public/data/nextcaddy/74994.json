@@ -69,7 +69,67 @@
       "nivel": "S"
     }
   ],
-  "horarios": [],
+  "horarios": [
+    {
+      "round": 1,
+      "players": [
+        {
+          "time": "08:00",
+          "tee": 10,
+          "name": "Antonio Rider Perez",
+          "hcp": 10.3,
+          "ins": "2438388",
+          "jid": "80360",
+          "nivel": "S"
+        },
+        {
+          "time": "08:00",
+          "tee": 10,
+          "name": "Obdulio Rodriguez-Armijo Sanchez",
+          "hcp": 25.4,
+          "ins": "2438386",
+          "jid": "80360",
+          "nivel": "S"
+        },
+        {
+          "time": "08:00",
+          "tee": 10,
+          "name": "Jose Luis De Los Santos Leon",
+          "hcp": 36,
+          "ins": "2438387",
+          "jid": "80360",
+          "nivel": "S"
+        },
+        {
+          "time": "08:10",
+          "tee": 10,
+          "name": "Pablo Cascajo Lopez",
+          "hcp": 13,
+          "ins": "2438391",
+          "jid": "80360",
+          "nivel": "S"
+        },
+        {
+          "time": "08:10",
+          "tee": 10,
+          "name": "Juan Manuel Gines Dorado",
+          "hcp": 20.9,
+          "ins": "2438389",
+          "jid": "80360",
+          "nivel": "S"
+        },
+        {
+          "time": "08:10",
+          "tee": 10,
+          "name": "Anselmo Lopez Díaz Torres",
+          "hcp": 24,
+          "ins": "2438402",
+          "jid": "80360",
+          "nivel": "M"
+        }
+      ]
+    }
+  ],
   "estadisticas": {
     "0": {},
     "1": {},
@@ -90,5 +150,5 @@
     "https://www.nextcaddy.com/uploads/competiciones/pdf/",
     "/uploads/competiciones/cartel/1698370887_74994-torneo-farmaceuticos.pdf"
   ],
-  "horariosScrapedAt": "2026-10-30T14:09:33.486Z"
+  "horariosScrapedAt": "2026-10-30T18:40:53.667Z"
 }
