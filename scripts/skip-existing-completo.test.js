@@ -10,7 +10,7 @@ import os from "node:os";
 import path from "node:path";
 
 const require = createRequire(import.meta.url);
-const { existingIsComplete, fimDoScope } = require("./scrape-nextcaddy.js");
+const { existingIsComplete, fimDoScope, preservarDoAnterior } = require("./scrape-nextcaddy.js");
 const { lgsCompleto } = require("./scrape-livegolfscoring.js");
 
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), "skip-existing-"));
@@ -35,6 +35,22 @@ describe("NextCaddy — existingIsComplete", () => {
   it("sem jogadores nem PDF → relê sempre; sem data → regra antiga", () => {
     expect(existingIsComplete(ficheiro({ leaderboard: [], meta: {}, scrapedAt: "2026-09-01T00:00:00Z" }), "2026-08-02")).toBe(false);
     expect(existingIsComplete(ficheiro({ ...comJogadores, scrapedAt: "2026-06-01T00:00:00Z" }), undefined)).toBe(true);
+  });
+});
+
+describe("NextCaddy — preservarDoAnterior (releitura sem --scorecards)", () => {
+  it("mantém cartões, campo e horários que a releitura não traz", () => {
+    const ant = ficheiro({
+      course: { par: [4, 3, 5], si: [1, 2, 3], meters: [300, 150, 450] },
+      horarios: [{ round: 1, players: [{ name: "A" }] }],
+      leaderboard: [{ players: [{ inscribedId: 7, name: "A", roundScores: [{ round: 1, scores: [4, 3, 5] }] }, { licencia: "AM1", name: "B" }] }],
+    });
+    const novo = { course: { parTotal: 12, parInferred: true }, horarios: [], leaderboard: [{ players: [{ inscribedId: 7, name: "A", rounds: [{ round: 1, gross: 12 }] }, { licencia: "AM1", name: "B" }] }] };
+    preservarDoAnterior(novo, ant);
+    expect(novo.leaderboard[0].players[0].roundScores).toEqual([{ round: 1, scores: [4, 3, 5] }]);
+    expect(novo.leaderboard[0].players[1].roundScores).toBeUndefined();
+    expect(novo.course.par).toEqual([4, 3, 5]);
+    expect(novo.horarios).toHaveLength(1);
   });
 });
 

@@ -74,6 +74,32 @@ function existingIsComplete(file, fimIso) {
   }
 }
 
+/** Releitura sem --scorecards: os cartões (p.roundScores, da 2.ª passagem) e o
+ *  campo (par/SI/metros) que já estavam no ficheiro passam para a versão nova —
+ *  a releitura só traz a classificação. O mesmo para os horários, se a leitura
+ *  nova os trouxer vazios. Casa por inscribedId, senão licença. Devolve `novo`. */
+function preservarDoAnterior(novo, file) {
+  let ant;
+  try { ant = JSON.parse(fs.readFileSync(file, "utf8")); } catch { return novo; }
+  const chave = (p) => (p && (p.inscribedId || p.licencia)) || null;
+  const cartoes = new Map();
+  for (const p of (ant.leaderboard || []).flatMap((c) => c.players || [])) {
+    if (chave(p) && (p.roundScores || []).length) cartoes.set(chave(p), p.roundScores);
+  }
+  if (cartoes.size) {
+    for (const p of (novo.leaderboard || []).flatMap((c) => c.players || [])) {
+      if (!(p.roundScores || []).length && cartoes.has(chave(p))) p.roundScores = cartoes.get(chave(p));
+    }
+    if (ant.course && Array.isArray(ant.course.par) && ant.course.par.length
+      && !(novo.course && Array.isArray(novo.course.par) && novo.course.par.length)) novo.course = ant.course;
+  }
+  if (!(novo.horarios || []).length && (ant.horarios || []).length) {
+    novo.horarios = ant.horarios;
+    if (ant.horariosScrapedAt) novo.horariosScrapedAt = ant.horariosScrapedAt;
+  }
+  return novo;
+}
+
 /** Último dia de um torneio a partir da data do scope ("13 jun 2026" ou ISO)
  *  e do nº de voltas (uma por dia; sem voltas conta 1). */
 function fimDoScope(data, rondas) {
@@ -986,6 +1012,7 @@ async function main() {
           ok++; continue;
         }
         r = await scrapeTour(tid, { scorecards: fetchScorecards, discoveredDate: scopeDateById.get(tid) });
+        if (!fetchScorecards && fs.existsSync(outFile)) preservarDoAnterior(r, outFile);
         const g = writeJsonGuarded(outFile, r, { count: contarTour, maxDrop: 0.3, label: `nextcaddy/${tid}.json` });
         if (!g.written) { skipped++; continue; }
         const allLbPlayers = (r.leaderboard || []).flatMap((t) => t.players || []);
@@ -1015,4 +1042,4 @@ if (require.main === module) {
   main().catch((e) => { console.error(e); process.exit(1); });
 }
 
-module.exports = { existingIsComplete, fimDoScope, scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };
+module.exports = { existingIsComplete, fimDoScope, preservarDoAnterior, scrapeTour, discoverTours, discoverToursMultiYear, parseClasificaciones, parseClasificacionesMeta, parsePdfsAttached, parseHorarios, parseInscritos, parseEstadisticas, parseTourMeta, parseDiscoveryCards, parseScorecard, fetchScorecard };
