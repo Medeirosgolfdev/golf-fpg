@@ -27,6 +27,7 @@ type Prova = [string | null, string, string, string, number[], number | null, nu
 export interface MeriteFile {
   generatedAt: string;
   month: string;
+  /** `parution` = data da PRÓXIMA edição (a FFG chama-lhe assim: a de Setembro dizia 01/10, a de Outubro 05/11). */
   info: Record<"M" | "F", { nb: number; title: string; from: string; to: string; parution: string }>;
   cols: string[];
   rows: (string | number | null)[][];
@@ -155,7 +156,7 @@ export function FFGMeriteView() {
         title="🏅 Mérite Jeunes FFG"
         sub={
           <span className="muted">
-            {info.title} · 12 meses de {info.from} a {info.to} · publicado a {info.parution} ·{" "}
+            {info.title} · 12 meses de {info.from} a {info.to} · próxima actualização a {info.parution} ·{" "}
             <b>{info.nb.toLocaleString("pt")}</b> classificados · clica numa linha para ver as provas
           </span>
         }
