@@ -147,6 +147,9 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "campeonato andalucia sub 16 y sub 18 mas. y femen.": "Parador Málaga del Golf",
   "campeonato internacional de andalucia sub18 e sub1": "Parador Málaga del Golf",
   "castro marim-guadiana+atlantico drive (par)": "Castro Marim-Guadiana+Atlântico",
+  "el saler, valencia": "Parador De El Saler",
+  "terre del consoli golf club": "Terre Dei Consoli Golf Club",
+  "salamanca golf & country club - zarapicos": "Zarapicos Golf & Country Club",
 
   // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
   // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,

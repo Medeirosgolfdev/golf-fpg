@@ -1626,6 +1626,57 @@ function craigielaw(courseKey: string, name: string): Course {
   };
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   Terre dei Consoli Golf Club (Roma) — US Kids Rome Classic
+   CR/Slope dos PDFs USKids «Rome Classic 2025/2026 – Course Rating and S.R.»
+   (iguais nos dois anos): Boys 11 64,4/107 (o Manuel, 2025); Boys 8 29,5/95
+   (9 buracos, 10–18 — o cartão «AMARELAS» de 2026). Metros e par do Boys 11
+   dos resultados USKids. Sem SI: a GolfPass tem o cartão estragado (par 3 de
+   603 jd), não serve. «Terre Del Consoli» (gralha) junta-se pelo alias.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const tdcParB11 = [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4];
+const tdcB11 = [193,390,119,266,254,282,270,350,94, 262,350,229,110,283,224,134,350,260]; // 4420 m
+
+const terreDeiConsoli: Course = {
+  courseKey: "away-terre-dei-consoli-golf-club",
+  master: {
+    courseId: "away-terre-dei-consoli-golf-club",
+    name: "Terre Dei Consoli Golf Club",
+    country: "Itália",
+    links: {
+      fpg: null,
+      scorecards: null,
+      extra: [
+        {
+          label: "US Kids Rome Classic 2026 - Course Rating & Slope",
+          url: "https://tournaments.uskidsgolf.com/sites/default/files/rome_classic_2026_-_course_rating_and_slope.pdf",
+        },
+      ],
+    },
+    tees: [
+      {
+        teeId: "tdc-uk-boys11",
+        sex: "M",
+        teeName: "USKids Boys 11",
+        ratings: { holes18: { par: 72, courseRating: 64.4, slopeRating: 107 } },
+        holes: vHoles(tdcParB11, tdcB11),
+        distances: vDist(tdcB11),
+      },
+      {
+        teeId: "tdc-uk-boys8",
+        sex: "M",
+        teeName: "USKids Boys 8",
+        scorecardMeta: { teeColor: "#fbbf24" }, // Longleaf Tee 2
+        ratings: { holes9Back: { par: 36, courseRating: 29.5, slopeRating: 95 } },
+        holes: [4,5,4,3,4,4,3,5,4].map((p, i) => ({ hole: i + 10, par: p, si: null, distance: null })),
+        distances: { total: null, front9: null, back9: null, holesCount: 9, complete18: false },
+      },
+    ],
+  },
+};
+const terreDelConsoli = semTees({ ...terreDeiConsoli, courseKey: "away-terre-del-consoli-golf-club", master: { ...terreDeiConsoli.master, courseId: "away-terre-del-consoli-golf-club", name: "Terre Del Consoli Golf Club" } });
+
 const craigielawMain = craigielaw("away-craigielaw-golf-club", "Craigielaw Golf Club");
 const craigielawGralha: Course = (() => {
   const c = craigielaw("away-cragielaw", "Cragielaw");
@@ -1664,5 +1715,7 @@ export function getExtraCourses(): Course[] {
     paradorMalagaTorneio2,
     craigielawMain,
     craigielawGralha,
+    terreDeiConsoli,
+    terreDelConsoli,
   ];
 }

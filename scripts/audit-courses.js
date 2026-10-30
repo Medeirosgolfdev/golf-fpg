@@ -54,7 +54,7 @@ const BASELINE = {
   duplicateGroups: 2, // 4 → 2 a 30/10/2026: Parador Málaga e Vidago Palace fundidos
   tournamentsAsCourses: 0, // 4 → 0 a 30/10/2026: nomes de torneio trocados pelo campo (aliases/nameOverrides)
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
-  awayWithoutDistances: 26, // 35 → 26 a 30/10/2026: revisão de todos os campos (fusões e cartões oficiais)
+  awayWithoutDistances: 25, // 35 → 25 a 30/10/2026: revisão de todos os campos (fusões e cartões oficiais)
   maxTeesPerCourse: 13,
 };
 
