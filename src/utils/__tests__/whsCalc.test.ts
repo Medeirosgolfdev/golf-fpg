@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  calcSD, calcCourseHcp, calcPlayingHcp, strokesOnHole, ndbCaps, ndbCapsForRound, expectedSD9,
+  calcSD, calcCourseHcp, calcPlayingHcp, strokesOnHole, ndbCaps, ndbCapsForRound, expectedSD9, strokesPerHole, medalNet, stablefordNet,
   scoreDifferential, scoreForDifferential, sd18FromSd9, roundDifferential,
   whsQtyCalc, tableAdjustment, exceptionalAdjustment, applyCaps, historicExceptionalAdj,
   hiAdjustment, addRoundToPool, grossTargets, topIds, windowAverage, indexFromWindow,
@@ -33,6 +33,29 @@ describe("strokesOnHole + ndbCaps (Net Double Bogey)", () => {
     const si = [1, 8, 4, 6, 9, 2, 5, 3, 7];
     // HI 18, CR 34, Slope 113, par 34 → CH de 9 = 9 → uma pancada em cada buraco
     expect(ndbCapsForRound(par, si, 34, 113, 18, 9)).toEqual(par.map((p) => p + 3));
+  });
+});
+
+describe("Medal Net e Stableford Net (classificação do tab Scorecard)", () => {
+  it("distribui o handicap pelo SI e devolve pancadas com handicap plus", () => {
+    expect(strokesPerHole([1, 2, 3], 2, 3)).toEqual([1, 1, 0]);
+    expect(strokesPerHole([1, 2, 3], 4, 3)).toEqual([2, 1, 1]);
+    expect(strokesPerHole([1, 2, 3], -1, 3)).toEqual([0, 0, -1]);
+  });
+  it("Medal Net = gross − HCP de jogo", () => {
+    expect(medalNet(78, 4)).toBe(74);
+  });
+  it("Stableford: 2 pontos no par líquido, nunca menos de 0; buraco riscado vale 0", () => {
+    // par 4 4 3 · SI 1 2 3 · HCP 1 → pancada só no SI 1
+    expect(stablefordNet([4, 4, 3], [4, 4, 3], [1, 2, 3], 1)).toBe(3 + 2 + 2);
+    expect(stablefordNet([9, 0, 2], [4, 4, 3], [1, 2, 3], 1)).toBe(0 + 0 + 3);
+  });
+  it("bate com a FPG: Manuel no RALI 2026 (78 pancadas, HCP de jogo 4) = 34 pontos, 74 Medal Net", () => {
+    const sc = [4, 3, 4, 3, 5, 4, 4, 6, 4, 4, 6, 5, 5, 5, 3, 6, 4, 4];
+    const par = [4, 4, 5, 3, 4, 4, 5, 3, 4, 4, 5, 4, 4, 4, 3, 5, 3, 4];
+    const si = [15, 13, 5, 11, 1, 7, 3, 17, 9, 6, 14, 10, 4, 8, 16, 2, 18, 12];
+    expect(stablefordNet(sc, par, si, 4)).toBe(34);
+    expect(medalNet(78, 4)).toBe(74);
   });
 });
 

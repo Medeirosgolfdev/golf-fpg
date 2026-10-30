@@ -27,6 +27,7 @@ import SortableHdr from "../../ui/SortableHdr";
 import { MANUEL_FED } from "../../constants/manuel";
 import { norm, shortDateSlash } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
+import termosJson from "../../data/omCgssTermos.json";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -164,6 +165,35 @@ export function omLevelOf(t: Tournament): Level | null {
   if (/\b9\s*buracos?\b/i.test(name)) return null; // 9B não conta
   for (const { rx, level } of OM_LEVELS) if (rx.test(name)) return level;
   return null;
+}
+
+/* ── Termos da Competição de cada prova (o que dizem sobre os juniores) ──
+   Fonte única: src/data/omCgssTermos.json (também lida pelo build da OM). */
+interface OmTermosProva { ano: number; prova: string; padrao: string; ficheiro: string | null; juniores: "medal" | null; termo?: string; texto: string; desempate: string; }
+const TERMOS_PROVAS = (termosJson as { termos: Record<string, OmTermosProva> }).termos;
+/** Termos de uma prova da OM: pelo tcode (do mesmo ano — a FPG reutiliza tcodes);
+ *  sem ele (torneio só-draw 9xxxx, antes de a prova ter o tcode real), pelo nome. */
+export function omTermosOf(t: Tournament): OmTermosProva | null {
+  if (!omLevelOf(t)) return null;
+  const ano = Number(String(t.date || "").slice(0, 4));
+  const porTcode = TERMOS_PROVAS[String(t.tcode)];
+  if (porTcode && porTcode.ano === ano) return porTcode;
+  return Object.values(TERMOS_PROVAS).find(x => x.ano === ano && new RegExp(x.padrao, "i").test(t.name || "")) ?? null;
+}
+/** Pill 📜 do cabeçalho da prova: o que os Termos dizem sobre os juniores —
+ *  a palavra tal como está escrita (Stroke Play / Medal), ou «nada». */
+export function OmTermosPill({ tournament }: { tournament: Tournament }) {
+  if (!omLevelOf(tournament)) return null;
+  const t = omTermosOf(tournament);
+  if (t?.juniores === "medal" && t.termo) {
+    return <ModalidadePill nome={`📜 Juniores: ${t.termo}`} title={`Termos da Competição: «${t.texto}»`} />;
+  }
+  return (
+    <span className="p p-sm" style={{ background: "transparent", color: "var(--text-2)", border: "1px dashed var(--text-3)" }}
+      title={t ? `Termos da Competição: ${t.texto} Conta a classificação da prova.` : "Ainda não lemos os Termos desta prova."}>
+      📜 {t ? "Juniores: Termos não dizem nada" : "Termos por ler"}
+    </span>
+  );
 }
 
 const LEVEL_LABEL: Record<Level, string> = { A: "Nível A (Major)", B: "Nível B", C: "Nível C" };

@@ -105,49 +105,12 @@ const PENDING_EVENTS = [
 ];
 
 /* ── O que os Termos da Competição de cada prova dizem sobre os JUNIORES ──
- * Lido dos PDFs em OneDrive\Golfe\Arquivo_GOLF\{ano}\…_CGSS_Termos_Competicao_*.pdf
- * (Mariana, 02/10/2026: «a OM tem de seguir os Termos de cada torneio»).
- *   juniores: "medal" → os Termos mandam pontuar os juniores em pancadas brutas
- *             (STROKEPLAY / MEDAL, «limite máximo de 10 pancadas por buraco»);
- *             null    → os Termos não dizem nada sobre juniores → conta a
- *             classificação principal da prova (o que o clube publica).
- * Prova sem entrada aqui = Termos ainda não lidos → classificação da prova, e a
- * página assinala-o. Ao chegarem os Termos de uma prova nova, acrescentá-la. */
-const TERMOS = {
-  "10983": { prova: "Inverno", ficheiro: "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf", juniores: "medal", termo: "Stroke Play",
-    texto: "Na categoria JUNIOR, pontuam em STROKEPLAY com limite máximo de 10 pancadas por buraco.",
-    desempate: "Não define; o Desertas conta como últimos 9." },
-  "10986": { prova: "Restauração", ficheiro: "2026-01-24_CGSS_Termos_Competicao_Torneio_Restauracao.pdf", juniores: "medal", termo: "Medal",
-    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
-    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-  "10994": { prova: "Carnaval", ficheiro: "2026-02-14_CGSS_Termos_Competicao_Torneio_Carnaval.pdf", juniores: "medal", termo: "Medal",
-    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
-    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-  "11001": { prova: "Primavera", ficheiro: null, juniores: null,
-    texto: "Não há Termos de 2026: o site do clube tem os de 2025 (que não falam de juniores).",
-    desempate: "—" },
-  "11025": { prova: "NOS Empresas", ficheiro: "2026-05-23_CGSS_Termos_Competicao_Torneio_NOS_Empresas.pdf", juniores: "medal", termo: "Medal",
-    texto: "Na categoria JUNIOR, pontuam em MEDAL com limite máximo de 10 pancadas por buraco.",
-    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-  "11050": { prova: "RALI", ficheiro: "2026-08-01_CGSS_Termos_Competicao_Torneio_RALI.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores.",
-    desempate: "Não define; o Desertas conta como últimos 9." },
-  "11057": { prova: "8.º OM NOS", ficheiro: "2026-08-29_CGSS_Termos_Competicao_8_Torneio_OM_NOS.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores.",
-    desempate: "Não define; o Machico conta como últimos 9." },
-  "11064": { prova: "Barbeito", ficheiro: "2026-09-08_CGSS_Termos_Competicao_XIII_Torneio_Barbeito_Madeira.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores.",
-    desempate: "Não define; o Desertas conta como últimos 9." },
-  "11071": { prova: "Taça do Clube", ficheiro: "2026-09-26_CGSS_Termos_Competicao_Taca_do_Clube.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores (a prova é Medal Net, máximo 10 pancadas por buraco).",
-    desempate: "WHS mais ALTO primeiro; depois últimos 9 do Desertas." },
-  "11075": { prova: "Troféu João Sousa", ficheiro: "2026-10-10_CGSS_Termos_Competicao_Trofeu_Joao_Sousa.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A).",
-    desempate: "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-  "11084": { prova: "Taça Presidente", ficheiro: "2026-10-31_CGSS_Termos_Competicao_Taca_Presidente.pdf", juniores: null,
-    texto: "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A; Desertas–Serras, 31/10/2026).",
-    desempate: "Últimos 9 (o Serras conta sempre como últimos 9), 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-};
+ * Vivem em src/data/omCgssTermos.json (o site também os lê: pill 📜 de cada
+ * prova). juniores: "medal" → os Termos mandam pontuar os juniores em pancadas
+ * brutas; null → não dizem nada → conta a classificação principal da prova.
+ * Prova sem entrada = Termos ainda não lidos → classificação da prova, e a
+ * página assinala-o. Ao chegarem os Termos de uma prova nova, acrescentá-la lá. */
+const TERMOS = require("../src/data/omCgssTermos.json").termos;
 
 /* Cartões da prova (pull-torneios001 = só CGSS), para o «máximo de 10 pancadas
  * por buraco»: o gross oficial perde o excesso acima de 10 em cada buraco. */

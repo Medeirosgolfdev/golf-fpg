@@ -67,11 +67,43 @@ export function strokesOnHole(si: number, courseHcp: number): number {
  *  9 buracos jogados. */
 export function ndbCaps(par: number[], si: number[], courseHcp: number, nholes: number): number[] {
   const n = Math.min(nholes, par.length, si.length);
-  const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => si[a] - si[b]);
-  const strokes = new Array(n).fill(0);
-  let rem = Math.max(0, Math.round(courseHcp));
-  while (rem > 0 && n > 0) { for (const idx of order) { if (rem <= 0) break; strokes[idx]++; rem--; } }
+  const strokes = strokesPerHole(si, Math.max(0, courseHcp), n);
   return par.slice(0, n).map((p, i) => p + 2 + strokes[i]);
+}
+
+/** Pancadas de handicap em cada buraco jogado: o handicap distribui-se pelos
+ *  buracos por ordem de SI (em 9 buracos ordenam-se os SI de 1 a 18), uma volta
+ *  de cada vez. Handicap «plus» (negativo) devolve pancadas, a começar no SI
+ *  mais alto. */
+export function strokesPerHole(si: number[], hcp: number, nholes: number): number[] {
+  const n = Math.min(nholes, si.length);
+  const strokes = new Array(n).fill(0);
+  const h = Math.round(hcp);
+  if (n === 0 || h === 0) return strokes;
+  const order = Array.from({ length: n }, (_, i) => i).sort((a, b) => si[a] - si[b]);
+  if (h < 0) order.reverse();
+  let rem = Math.abs(h);
+  while (rem > 0) { for (const idx of order) { if (rem <= 0) break; strokes[idx] += h > 0 ? 1 : -1; rem--; } }
+  return strokes;
+}
+
+/** Medal Net (pancadas com handicap): gross − Playing Handicap. */
+export function medalNet(gross: number, playingHcp: number): number {
+  return gross - Math.round(playingHcp);
+}
+
+/** Pontos Stableford Net de um cartão: em cada buraco 2 + par + pancadas de
+ *  handicap − pancadas dadas, nunca menos de 0. Buraco sem pancadas (0 = não
+ *  jogado ou riscado) vale 0. */
+export function stablefordNet(scores: number[], par: number[], si: number[], playingHcp: number): number {
+  const n = Math.min(scores.length, par.length, si.length);
+  const strokes = strokesPerHole(si, playingHcp, n);
+  let pts = 0;
+  for (let i = 0; i < n; i++) {
+    if (!(scores[i] > 0)) continue;
+    pts += Math.max(0, 2 + par[i] + strokes[i] - scores[i]);
+  }
+  return pts;
 }
 
 /** Caps do Net Double Bogey de um cartão, a partir do HI (Course Handicap de

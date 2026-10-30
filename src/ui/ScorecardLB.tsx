@@ -14,6 +14,7 @@ import type { Player, Tournament, ScorecardOptions, PlayerFilter, SDResult } fro
 import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBlankHoles, isRoundInProgress } from "../data/fpgUtils";
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
+import { medalNet, stablefordNet } from "../utils/whsCalc";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -69,7 +70,19 @@ type SortKey =
   | "bog"
   | "f9"
   | "b9"
+  | "modo"
   | `hole:${number}`;
+
+/** Modalidade da classificação (Mariana, 30/10/2026: «ver as três modalidades no
+ *  tab de resultados» — os torneios do clube são quase sempre por pontos).
+ *  Stroke Play = pancadas sem handicap (a grelha de sempre); Medal Net e
+ *  Stableford Net contam com o HCP de jogo de cada um (whsCalc). */
+type Modo = "stroke" | "medalNet" | "stbNet";
+const MODOS: Array<{ key: Modo; label: string; title: string }> = [
+  { key: "stroke", label: "Stroke Play", title: "Pancadas, sem handicap" },
+  { key: "medalNet", label: "Medal Net", title: "Pancadas menos o HCP de jogo" },
+  { key: "stbNet", label: "Stableford Net", title: "Pontos Stableford com o HCP de jogo (2 pontos no par líquido)" },
+];
 
 export function ScorecardLB({
   tournament,
@@ -132,6 +145,7 @@ export function ScorecardLB({
   const noInfer = options?.noInferBlanks ?? false;
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
+  const [modo, setModo] = useState<Modo>("stroke");
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
   // Reset filtros quando muda de torneio
@@ -235,7 +249,13 @@ export function ScorecardLB({
   // ninguém tem buracos e a chave é neutra.
   const holesOf = (p: Player) => (p.scores || []).filter(Boolean).length;
   const anyHoles = nonWD.some((p) => holesOf(p) > 0);
-  const done = (p: Player) => (anyHoles ? (holesOf(p) === nh ? 1 : 0) : 1);
+  // Buraco riscado (0 pancadas, com o gross oficial a contá-lo) não é volta a
+  // decorrer — a regra do isRoundInProgress. Contar só os buracos com pancadas
+  // punha o Diogo Gouveia (79, buraco 15 riscado) em 37.º no RALI 2026 em vez
+  // de 7.º (30/10/2026).
+  const emCurso = (p: Player) => holesOf(p) < nh && (!(numGross(p) > 0)
+    || isRoundInProgress({ gross: numGross(p), scores: p.roundScores?.[0]?.scores ?? p.scores, pars: p.roundScores?.[0]?.pars ?? p.par }));
+  const done = (p: Player) => (anyHoles ? (emCurso(p) ? 0 : 1) : 1);
   const byGross = [...nonWD].sort((a, b) => (done(b) - done(a)) || (numGross(a) - numGross(b)));
   let posCounter = 1;
   byGross.forEach((p, i) => {
@@ -246,6 +266,39 @@ export function ScorecardLB({
   wdOnly.forEach((p) => {
     (p as any)._pos = 9999;
   });
+
+  // Medal Net / Stableford Net: precisam do HCP de jogo e do SI. O selector só
+  // aparece quando a maioria do campo tem HCP de jogo (torneios da FPG). Contas
+  // no whsCalc, sobre o cartão tal como está (buraco a 0 = 0 pontos).
+  const siOf = (p: Player): number[] => (p.si?.length ? p.si : p.roundScores?.[0]?.si) || si;
+  const cardOf = (p: Player): number[] => (p.scores?.length ? p.scores : p.roundScores?.[0]?.scores) || [];
+  const comHcpJogo = nonWD.filter((p) => p.hcpPlay != null);
+  const temModos = hasPar && comHcpJogo.length > 0 && comHcpJogo.length * 2 >= nonWD.length && si.length >= nh;
+  const modoAtivo: Modo = temModos ? modo : "stroke";
+  /** Valor do jogador na modalidade activa (null = não se calcula: sem HCP de jogo
+   *  ou, no Stableford, sem cartão buraco a buraco). */
+  const valorModo = (p: Player): number | null => {
+    if (modoAtivo === "stroke" || p._wd || p.hcpPlay == null) return null;
+    const g = numGross(p);
+    if (!(g > 0) || g >= 900) return null;
+    if (modoAtivo === "medalNet") return medalNet(g, p.hcpPlay);
+    const card = cardOf(p);
+    return card.some((v) => v > 0) ? stablefordNet(card, playerPar(p), siOf(p), p.hcpPlay) : null;
+  };
+  // Posição na modalidade: menos pancadas (Medal Net) ou mais pontos
+  // (Stableford) primeiro; empates partilham a posição; quem ainda vai a meio
+  // da volta fica depois de quem acabou; sem valor, no fim.
+  const posModo = new Map<Player, number>();
+  if (modoAtivo !== "stroke") {
+    const melhor = (v: number) => (modoAtivo === "stbNet" ? -v : v);
+    const comValor = nonWD.filter((p) => valorModo(p) != null)
+      .sort((a, b) => (done(b) - done(a)) || (melhor(valorModo(a)!) - melhor(valorModo(b)!)));
+    comValor.forEach((p, i) => {
+      const prev = comValor[i - 1];
+      posModo.set(p, i > 0 && valorModo(p) === valorModo(prev) && done(p) === done(prev) ? posModo.get(prev)! : i + 1);
+    });
+  }
+  const posOf = (p: Player): number => (modoAtivo === "stroke" ? (p as any)._pos : posModo.get(p) ?? (p._wd ? 9999 : 9998));
   // A média só junta voltas COMPLETAS (do tamanho da grelha) — misturar quem
   // fez 9 buracos com quem fez 18 dava "Média 44.6 (−26)" numa ronda a decorrer.
   // "completa" = buracos com score, não o tamanho do array (os buracos por
@@ -274,9 +327,10 @@ export function ScorecardLB({
   // Calcular colSpan dinâmico: base 5 (ESC+FED+CLUBE+HCP+TEE) menos as colunas
   // ocultas, mais 1 se IDADE estiver ligada (showAge)
   const parLabelColSpan =
-    parLabelColSpanProp ??
+    (parLabelColSpanProp ??
     (5 - (hideEsc ? 1 : 0) - (hideFed ? 1 : 0) - (hideClub_ ? 1 : 0) - (hideHCP_ ? 1 : 0) - (hideTee ? 1 : 0)
-       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0));
+       + (showAge_ ? 1 : 0) + (showClass_ ? 1 : 0)))
+    + (modoAtivo !== "stroke" ? 1 : 0);
   const filteredPlayers = useMemo(
     () => filterPlayers(rawPlayers, filter, escLookup, playersDB, { tournamentDate: tournament.date, fedBirthdates }),
     [rawPlayers, filter, escLookup, playersDB, tournament.date, fedBirthdates]
@@ -340,8 +394,9 @@ export function ScorecardLB({
       let av: any, bv: any;
       switch (sortKey) {
         case "pos":
-          av = (a as any)._pos ?? 999;
-          bv = (b as any)._pos ?? 999;
+        case "modo":
+          av = posOf(a) ?? 999;
+          bv = posOf(b) ?? 999;
           break;
         case "name":
           av = a.name;
@@ -410,7 +465,7 @@ export function ScorecardLB({
         return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
       return sortDir === "asc" ? av - bv : bv - av;
     });
-  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates, statsByPlayer]);
+  }, [filteredPlayers, sortKey, sortDir, parTotal, escLookup, playersDB, tournament.date, fedBirthdates, statsByPlayer, posModo]);
 
   // Agora é seguro fazer early return — todos os hooks já foram chamados
   if (!rawPlayers.length) return <EmptyState size="sm" message="Scorecards não disponíveis." />;
@@ -418,11 +473,13 @@ export function ScorecardLB({
   const rows: ScorecardRow[] = sorted.map((p, idx) => {
     const isWDPlayer = !!p._wd || p.grossTotal == null || numGross(p) >= 999;
     const gross = isWDPlayer ? 0 : numGross(p);
-    const dp = (p as any)._pos;
-    const showPos = idx === 0 || dp !== (sorted[idx - 1] as any)._pos;
+    const dp = posOf(p);
+    const showPos = idx === 0 || dp !== posOf(sorted[idx - 1]);
     const medalEmoji = dp === 1 ? "🥇" : dp === 2 ? "🥈" : dp === 3 ? "🥉" : null;
+    const vModo = valorModo(p);
+    const semModo = modoAtivo !== "stroke" && vModo == null;
     const posDisplay =
-      isWDPlayer ? "WD" : sortKey === "pos" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
+      isWDPlayer ? "WD" : semModo ? "–" : sortKey === "pos" || sortKey === "modo" ? (showPos ? medalEmoji ?? dp : "") : medalEmoji ?? dp;
     const esc = resolveEsc(p, escLookup, { tournamentDate: tournament.date, playersDB, fedBirthdates }) || tournament.escalao || "";
     const { sd } = sdOf(p);
     const rowManuel = isManuel(p);
@@ -679,6 +736,13 @@ export function ScorecardLB({
               <TeeDot teeName={p.teeName} />
             </td>
           )}
+          {/* Valor na modalidade escolhida, ao lado do ± e do Tot (que ficam em pancadas). */}
+          {modoAtivo !== "stroke" && (
+            <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)" }}
+              title={vModo == null ? (p.hcpPlay == null ? "Sem HCP de jogo" : "Sem cartão buraco a buraco") : `HCP de jogo ${p.hcpPlay}`}>
+              {vModo ?? <span className="muted">–</span>}
+            </td>
+          )}
         </>
       ),
       postScorecardCells: (
@@ -752,6 +816,16 @@ export function ScorecardLB({
             ))}
           </InfoGroup>
           <RatingFontes list={tournament._ratingFontes} />
+          {temModos && (
+            <div className="segmented-toggle seg-sm" role="tablist" aria-label="Modalidade da classificação">
+              {MODOS.map((m) => (
+                <button key={m.key} role="tab" aria-selected={modoAtivo === m.key} title={m.title}
+                  className={`seg-btn${modoAtivo === m.key ? " active" : ""}`} onClick={() => setModo(m.key)}>
+                  <span className="seg-label">{m.label}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </>
       }
       filterBar={
@@ -836,6 +910,18 @@ export function ScorecardLB({
               className="lb-tee"
             >
               TEE
+            </SortableHdr>
+          )}
+          {modoAtivo !== "stroke" && (
+            <SortableHdr
+              k="modo"
+              sortKey={sortKey}
+              sortDir={sortDir}
+              onSort={handleSort}
+              className="lb-modo"
+              title={modoAtivo === "medalNet" ? "Medal Net: pancadas menos o HCP de jogo" : "Stableford Net: pontos com o HCP de jogo"}
+            >
+              {modoAtivo === "medalNet" ? "Net" : "Pts"}
             </SortableHdr>
           )}
         </>
