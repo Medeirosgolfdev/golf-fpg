@@ -185,16 +185,16 @@ describe("loadRfegDivisionData — uma prova de cada fonte", () => {
         [
           22,
           {
-            "clube": null,
+            "clube": "Real Club de Golf Vista Hermosa",
             "country": null,
-            "fed": "79879",
+            "fed": "AM05415928",
             "hcp": 4.1,
             "isPortuguese": false,
             "nome": "Beltran Dauthieu Domecq",
             "tee": "5358 m",
           },
-          1,
-          1,
+          22,
+          22,
         ]
       `);
   });

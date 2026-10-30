@@ -25,7 +25,7 @@ export type RfegDrawDetail = RFEGDetail & {
   _ncHorarios?: NCHorario[] | null;
   _lgsHorarios?: LgsHorarioRound[] | null;
   _teeMetersByIns?: Record<string, number>;
-  _drawInfoByIns?: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }>;
+  _drawInfoByIns?: Record<string, { dob: string | null; name: string | null; licencia?: string | null; club?: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }>;
 };
 
 export interface RfegRoundDraw {
@@ -34,7 +34,7 @@ export interface RfegRoundDraw {
   /** O draw da volta pedida (ou da 1.ª, se essa não existir); null sem jogadores. */
   draw: FpgDraw | null;
   playersDB: PlayersDB;
-  /** Resultado da volta por federado/jid e por nome normalizado. */
+  /** Resultado da volta por federado/licença e por nome normalizado. */
   results: Map<string, { gross: number; toPar: number | null }>;
   tournamentDate: string | null;
 }
@@ -100,17 +100,21 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   }
 
   // Enriquecer como a FPG: playersDB (escalão via dob) + resultados ±/Tot da ronda.
-  // NextCaddy cruza o jogador do draw (jid) com o leaderboard via inscribedId (ins);
+  // NextCaddy cruza o jogador do draw com o leaderboard via inscribedId (ins) e
+  // identifica-o pela LICENÇA. ⚠ Não pelo `jid`: em provas de uma volta o jid é
+  // o id da VOLTA, igual para todos — cada linha ficava com os dados do último
+  // (Gran Premio Alevín La Cañada 2026: todos «115 +44», FED «64827»).
   // mitarjeta cruza por nome (mitaByName).
+  const ncKey = (p: { ins?: string }): string | null => (p.ins && drawInfo[String(p.ins)]?.licencia) || null;
   const playersDB: PlayersDB = {};
   if (isNc) {
     for (const rd of (horarios || [])) {
       for (const p of rd.players) {
-        if (!p.jid || !p.ins) continue;
+        const key = ncKey(p);
+        if (!key) continue;
         const info = drawInfo[String(p.ins)];
-        if (!info) continue;
         const esc = escaloEsForPlayer(null, info.dob, detail.meta.dateStart) || undefined;
-        playersDB[p.jid] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
+        playersDB[key] = { dob: info.dob || undefined, escalao: esc, name: info.name || undefined, country: "ES" };
       }
     }
   } else {
@@ -128,9 +132,10 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
   if (isNc) {
     const rd = (horarios || []).find((x) => x.round === round) || (horarios || [])[0];
     for (const p of (rd?.players || [])) {
-      if (!p.jid || !p.ins) continue;
+      const key = ncKey(p);
+      if (!key) continue;
       const rr = drawInfo[String(p.ins)]?.rounds.find((x) => x.round === round);
-      if (rr && rr.gross != null) results.set(p.jid, { gross: rr.gross, toPar: rr.toPar });
+      if (rr && rr.gross != null) results.set(key, { gross: rr.gross, toPar: rr.toPar });
     }
   } else if (lgsGrossByRound.size) {
     // livegolfscoring: o gross é o DA RONDA que este draw mostra. Uma ronda
@@ -168,8 +173,9 @@ export function rfegRoundDraw(detail: RfegDrawDetail, entry: RFEGIndexEntry, rou
         const dist = p.ins ? teeByIns[String(p.ins)] : undefined;   // distância do tee (cruzada do cartão)
         return {
           nome: formatPlayerName(p.name),
-          clube: null,
-          fed: isNc ? (p.jid || null) : null,   // jid NC / licencia mitarjeta
+          // NC: clube da tabela de licenças (a fonte não o publica); mitarjeta mais abaixo.
+          clube: isNc && p.ins && drawInfo[String(p.ins)]?.club ? displayName(drawInfo[String(p.ins)].club!) : null,
+          fed: isNc ? ncKey(p) : null,   // licença NC (pelo ins) / licencia mitarjeta mais abaixo
           hcp: isNc ? p.hcp : null,
           tee: dist ? `${dist} m` : null, // DrawTab mostra p.tee — aqui a distância do jogador (NC)
           isPortuguese: isPtCountry(null),

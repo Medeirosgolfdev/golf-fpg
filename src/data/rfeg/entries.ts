@@ -262,6 +262,17 @@ export function buildRfegEntries(
   const usedGrpIds = new Set<string>();
 
   for (const group of byKey.values()) {
+   // Prova sozinha no balde: guarda como alias o id de grupo que teria tido —
+   // um link antigo `grp-…` (ex. Gran Premio La Cañada 2026, que perdeu o
+   // Benjamín de 9 buracos a 30/10/2026) continua a abrir a prova que ficou.
+   if (group.length === 1) {
+     const t = group[0];
+     const base = rfegBaseName(t) || t.name || "";
+     const nm = (t.year != null && !base.includes(String(t.year))) ? `${base} ${t.year}` : base;
+     const e = single(t);
+     entries.push({ ...e, memberIds: [`${t.source}:grp-${slugify(nm)}`] });
+     continue;
+   }
    // Cada balde produz as suas entradas num array local para podermos desambiguar
    // os labels em colisão (mesmo nome+ano) só entre si, antes de juntar ao total.
    const localEntries: CircuitEntry[] = [];

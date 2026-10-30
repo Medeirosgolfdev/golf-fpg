@@ -206,10 +206,12 @@ export function ncCatSex(name?: string | null): "M" | "F" | null {
 
 export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: HcpLookup): RFEGDetail {
   // Data: o NextCaddy não a expõe nos endpoints, mas muitos nomes trazem-na no fim
-  // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome.
+  // (ex.: "...9P3 HOYOS 13-06-26"). Extrai DD-MM-YY[YY] / DD/MM/YYYY do nome;
+  // sem ela no nome, a data da listagem que o scraper grava (meta.dateStart) —
+  // sem nenhuma, o draw ficava sem escalão nem idade (Gran Premio La Cañada 2026).
   const ncDate: string | null = (() => {
     const m = /(\d{1,2})[-/.](\d{1,2})[-/.](\d{2,4})(?!\d)/.exec(nc.meta?.name || "");
-    if (!m) return null;
+    if (!m) return /^\d{4}-\d{2}-\d{2}/.test(nc.meta?.dateStart || "") ? nc.meta!.dateStart!.slice(0, 10) : null;
     const day = parseInt(m[1], 10), month = parseInt(m[2], 10);
     let y = m[3]; if (y.length === 2) y = (parseInt(y, 10) >= 70 ? "19" : "20") + y;
     if (month < 1 || month > 12 || day < 1 || day > 31) return null;
@@ -231,7 +233,7 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
   const teeMetersByLic: Record<string, number> = {};
   const teeMetersByIns: Record<string, number> = {};
   // Info por inscribedId para enriquecer o Draw como na FPG (escalão + ±/Tot por ronda).
-  const drawInfoByIns: Record<string, { dob: string | null; name: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
+  const drawInfoByIns: Record<string, { dob: string | null; name: string | null; licencia: string | null; club: string | null; rounds: { round: number; gross: number | null; toPar: number | null }[] }> = {};
   const ncParTotal = Array.isArray(nc.course?.par) ? nc.course!.par!.reduce((a, b) => a + (b || 0), 0) : 0;
   const lbPlayers: RFEGPlayer[] = [];
   // O NextCaddy publica o MESMO torneio em classificações Scratch E Handicap
@@ -276,8 +278,12 @@ export function adaptNextCaddy(nc: NCDetail, dobLookup?: DobLookup, hcpLookup?: 
       }
       if (p.inscribedId) {
         drawInfoByIns[String(p.inscribedId)] = {
-          dob: e ? e.dob : null,
+          // ISO: o DrawTab lê o ano dos 4 primeiros caracteres — com «13/05/2014»
+          // a coluna Nasc. mostrava «13» e o escalão ficava vazio.
+          dob: e ? (e.dobIso || e.dob) : null,
           name: p.name ?? null,
+          licencia: p.licencia ? p.licencia.trim().toUpperCase() : null,
+          club: e ? e.club : null,   // o NextCaddy não publica o clube; a tabela de licenças sim
           rounds: rs.map((r) => {
             const g = typeof r.total === "number" ? r.total
               : (Array.isArray(r.scores) ? (r.scores.filter((x) => x > 0).reduce((a, b) => a + b, 0) || null) : null);

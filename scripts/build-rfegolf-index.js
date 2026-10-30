@@ -144,13 +144,15 @@ function buracosDoNome(nome) {
 }
 function buracosNC(j, nome) {
   // O nome manda quando diz menos buracos: os de 4/5 buracos vêm com cartão de 9.
+  // O cartão é o que se jogou; o par do campo é o do campo todo (o Gran Premio
+  // Benjamín La Cañada 2026 tem par de 18 e cartões de 9).
   const pNome = buracosDoNome(nome);
-  const par = j && j.course && Array.isArray(j.course.par) ? j.course.par.length : 0;
-  let dados = par === 9 || par === 18 ? par : null;
+  const p = ((j && j.leaderboard) || []).flatMap((c) => (c && c.players) || []).find((x) => (x.roundScores || []).length);
+  const s = p && p.roundScores[0] && p.roundScores[0].scores;
+  let dados = Array.isArray(s) && (s.length === 9 || s.length === 18) ? s.length : null;
   if (!dados) {
-    const p = ((j && j.leaderboard) || []).flatMap((c) => (c && c.players) || []).find((x) => (x.roundScores || []).length);
-    const s = p && p.roundScores[0] && p.roundScores[0].scores;
-    if (Array.isArray(s) && (s.length === 9 || s.length === 18)) dados = s.length;
+    const par = j && j.course && Array.isArray(j.course.par) ? j.course.par.length : 0;
+    dados = par === 9 || par === 18 ? par : null;
   }
   if (pNome && (!dados || pNome < dados)) return pNome;
   return dados;

@@ -223,6 +223,8 @@ export interface NCDetail {
     organizer?: string | null;
     format?: string | null;
     categories?: string[];
+    /** Data da listagem (scope da descoberta), injectada pelo scraper — "YYYY-MM-DD". */
+    dateStart?: string | null;
   };
   /** Horarios (draw / tee times). Populado por scripts/scrape-nextcaddy-horarios.js. */
   horarios?: NCHorario[];
