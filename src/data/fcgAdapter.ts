@@ -228,7 +228,7 @@ export function adaptFcg(d: FCGDetail, dobLookup?: DobLookup, _hcpLookup?: HcpLo
       style: null,
       category: allCatText || null,
       sex,
-      federation: "Federación Catalana de Golf",
+      federation: (game.tournament && game.tournament.clientName) || "Federación Catalana de Golf",
       federationCatId: null,
     },
     coursePar,
@@ -352,6 +352,10 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       });
     }
   }
+
+  // Prova ainda por jogar (só inscritos/horários): sem classificação — senão
+  // aparecia toda a gente como WD e a página abria no Scorecard vazio.
+  if (!players.some((p) => p.rounds.length > 0 || p.total != null)) return null;
 
   // Ordenar por posição (pos), depois por nome
   players.sort((a, b) => {

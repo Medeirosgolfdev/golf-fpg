@@ -1,0 +1,177 @@
+{
+  "gameId": "6943eb634d9bda753002bebf",
+  "fetchedAt": "2026-10-30T19:35:52.681Z",
+  "game": {
+    "_id": "6943eb634d9bda753002bebf",
+    "name": "Final Liga Gallega Juvenil Sub-18",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-15T09:00:29.939Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "green",
+    "defaultTeeColorFemale": "green",
+    "tournament": {
+      "_id": "6943eb634d9bda753002beef",
+      "name": "Final Liga Gallega Juvenil Sub-18",
+      "clientName": "Federación Gallega de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "63bce36aee9ad94f40e74d6e",
+      "name": "CLUB COMPOSTELA PITCH & PUTT",
+      "city": "SANTIAGO DE COMPOSTELA",
+      "state": "A CORUÑA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "670744147f54a90aa0ae41f1",
+      "name": "COMPOSTELA P&P LARGO",
+      "isShort": true,
+      "isPitchAndPutt": true
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "green",
+        "lap": "lap18",
+        "rating": 49.6,
+        "slope": 60,
+        "par": 54,
+        "_id": "69e867278510e14eee18e841"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "green",
+        "lap": "lap18",
+        "rating": 51,
+        "slope": 67,
+        "par": 54,
+        "_id": "69e867278510e14eee18e82d"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6943eb644d9bda7530034bb1",
+      "name": "BOY/GIRL SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bb7",
+      "name": "CADETE SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bbd",
+      "name": "INFANTIL SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bc3",
+      "name": "ALEVIN SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bb4",
+      "name": "BOY/GIRL HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bba",
+      "name": "CADETE HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bc0",
+      "name": "INFANTIL HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bc6",
+      "name": "ALEVIN HÁNDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943eb644d9bda7530034bc9",
+      "name": "GENERAL SCRATCH ",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

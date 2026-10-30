@@ -1,10 +1,10 @@
 {
   "gameId": "68aee61aac5ab10a416dbbc6",
-  "fetchedAt": "2026-06-12T14:50:00.875Z",
+  "fetchedAt": "2026-10-30T19:33:02.627Z",
   "game": {
     "_id": "68aee61aac5ab10a416dbbc6",
     "name": "CAMPIONAT DE CATALUNYA MATCH-PLAY SOTS-18 2025",
-    "status": "scheduled",
+    "status": "finished",
     "scheduleStartDate": "2025-09-20T07:00:00.000Z",
     "scheduleEndDate": null,
     "federation": "ESP",
@@ -43,6 +43,15 @@
       },
       {
         "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 73.6,
+        "slope": 135,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc87"
+      },
+      {
+        "gender": "M",
         "color": "red",
         "lap": "lap18",
         "rating": 67.2,
@@ -58,27 +67,9 @@
         "slope": 128,
         "par": 72,
         "_id": "68aee61aac5ab10a416dbcc0"
-      },
-      {
-        "gender": "M",
-        "color": "white",
-        "lap": "lap18",
-        "rating": 73.6,
-        "slope": 135,
-        "par": 72,
-        "_id": "68aee61aac5ab10a416dbc87"
       }
     ],
     "teesFemale": [
-      {
-        "gender": "F",
-        "color": "blue",
-        "lap": "lap18",
-        "rating": 73.6,
-        "slope": 126,
-        "par": 72,
-        "_id": "68aee61aac5ab10a416dbc9a"
-      },
       {
         "gender": "F",
         "color": "red",
@@ -87,6 +78,15 @@
         "slope": 122,
         "par": 72,
         "_id": "68aee61aac5ab10a416dbc74"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.6,
+        "slope": 126,
+        "par": 72,
+        "_id": "68aee61aac5ab10a416dbc9a"
       },
       {
         "gender": "F",

@@ -437,7 +437,7 @@ for (const file of lgsFiles) {
   } catch (e) { console.warn("skip lgs " + file + ": " + e.message); skipped++; }
 }
 
-// ── 4) GolfDirecto / FCG (Federación Catalana, descoberto 2026-05-09) ──
+// ── 4) GolfDirecto — Federació Catalana (2026-05-09) e Federación Gallega (30/10/2026) ──
 const FCG_ROOT = path.resolve(__dirname, "../public/data/fcg");
 const fcgFiles = fs.existsSync(FCG_ROOT)
   ? fs.readdirSync(FCG_ROOT).filter(f => /^[0-9a-f]{24}\.json$/.test(f)).sort()
@@ -450,7 +450,9 @@ for (const file of fcgFiles) {
     const game = j.game;
     const cats = j.categories || [];
     const totalPlayers = cats.reduce((acc, c) => acc + (c.players || []).length, 0);
-    if (totalPlayers === 0 && game.status === "scheduled") { skipped++; continue; }
+    // Sem jogadores não há nada para mostrar — nem nas agendadas, nem nas que o
+    // golfdirecto dá como terminadas sem publicar classificação (match play, …).
+    if (totalPlayers === 0) { skipped++; continue; }
 
     const tName = (game.tournament && game.tournament.name) || game.name || j.gameId;
     const dateIso = game.scheduleStartDate ? game.scheduleStartDate.slice(0, 10) : null;
@@ -489,7 +491,8 @@ for (const file of fcgFiles) {
       dateStartIso: dateIso,
       dateEndIso: game.scheduleEndDate ? game.scheduleEndDate.slice(0, 10) : dateIso,
       course: (game.course && game.course.name) || (game.club && game.club.name) || null,
-      courseCode: "CB", // prefixo licença catalã
+      // prefixo das licenças (CB Catalunha, GC Galiza…) — do 1.º jogador
+      courseCode: ((cats.flatMap((c) => c.players || []).find((p) => p && p.license) || {}).license || "").slice(0, 2) || null,
       organizer: (game.tournament && game.tournament.clientName) || "Federación Catalana de Golf",
       format: game.pointMode || null,
       categories: cats.map(c => c.name).filter(Boolean),

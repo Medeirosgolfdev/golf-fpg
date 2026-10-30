@@ -1,0 +1,179 @@
+{
+  "gameId": "69e77fd48510e14eee693022",
+  "fetchedAt": "2026-10-30T19:35:54.337Z",
+  "game": {
+    "_id": "69e77fd48510e14eee693022",
+    "name": "Campeonato de Galicia Match Play Juvenil",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-22T09:00:25.156Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "matchPlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "69e77fd48510e14eee693050",
+      "name": "Campeonato de Galicia Match Play Juvenil",
+      "clientName": "Federación Gallega de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a744d36dfe90dea39d7",
+      "name": "REAL AERO CLUB DE SANTIAGO",
+      "city": "AMEIXENDA",
+      "state": "A CORUÑA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "67736d21d9137fe85f0ea11c",
+      "name": "RAC SANTIAGO",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 71.8,
+        "slope": 140,
+        "par": 71,
+        "_id": "69e77fd48510e14eee6930e7"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.3,
+        "slope": 135,
+        "par": 71,
+        "_id": "69e77fd48510e14eee69310f"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 67.5,
+        "slope": 129,
+        "par": 71,
+        "_id": "69e77fd48510e14eee693137"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 65.7,
+        "slope": 121,
+        "par": 71,
+        "_id": "69e77fd48510e14eee69315f"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.1,
+        "slope": 130,
+        "par": 71,
+        "_id": "69e77fd48510e14eee693123"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.3,
+        "slope": 127,
+        "par": 71,
+        "_id": "69e77fd48510e14eee69314b"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 78,
+        "slope": 132,
+        "par": 71,
+        "_id": "69e77fd48510e14eee6930d3"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 75.5,
+        "slope": 128,
+        "par": 71,
+        "_id": "69e77fd48510e14eee6930fb"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "69e77fd48510e14eee693062",
+      "name": "BOY/GIRL",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69e77fd48510e14eee693065",
+      "name": "CADETE",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69e77fd48510e14eee693068",
+      "name": "INFANTIL",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69e77fd48510e14eee69306b",
+      "name": "ALEVÍN",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69e77fd48510e14eee69306e",
+      "name": "BENJAMÍN",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

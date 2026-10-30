@@ -1,7 +1,8 @@
 /**
  * scripts/aggregator/sources/fcg.js
  *
- * Adapter FCG (Federació Catalana de Golf, via golfdirecto.com).
+ * Adapter FCG (Federació Catalana de Golf, via golfdirecto.com) — e, desde
+ * 30/10/2026, a Federación Gallega, que publica na mesma plataforma.
  *
  * Lê:
  *   - fcg-rivals.json (gerado por scripts/build-fcg-rivals.js)
@@ -32,8 +33,15 @@ function ageRange(ag) {
   return { ageMin: null, ageMax: null };
 }
 
-function seriesFor(name) {
+function seriesFor(name, organizer) {
   const n = String(name || "");
+  // Galiza (30/10/2026): a FGG também publica no golfdirecto.
+  if (/gallega|galicia/i.test(String(organizer || "")) || /gallega|galicia/i.test(n)) {
+    if (/Liga Gallega/i.test(n)) return { id: "fgg-liga-juvenil", label: "Liga Gallega Juvenil" };
+    if (/Galicia Junior Cup/i.test(n)) return { id: "fgg-junior-cup", label: "Galicia Junior Cup" };
+    if (/Campeonato/i.test(n)) return { id: "fgg-campeonato", label: "Campeonato de Galicia" };
+    return { id: "fgg", label: "Federación Gallega" };
+  }
   if (/Copa Catalunya/i.test(n)) return { id: "fcg-copa-catalunya", label: "Copa Catalunya" };
   if (/Campionat|Campeonato/i.test(n)) return { id: "fcg-campionat", label: "Campionat de Catalunya" };
   if (/Circuit/i.test(n)) return { id: "fcg-circuit", label: "Circuit Juvenil FCG" };
@@ -101,7 +109,7 @@ function load() {
     });
 
     const { ageMin, ageMax } = ageRange(t.ageGroup);
-    const series = seriesFor(t.gameName || t.name);
+    const series = seriesFor(t.gameName || t.name, t.organizer);
     tournaments.push({
       sourceKey: tid,
       name: t.gameName || t.name || `FCG ${tid}`,

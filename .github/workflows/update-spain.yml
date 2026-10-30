@@ -9,6 +9,7 @@ name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
 #   • livegolfscoring.com (scorecards hbh + par real) — scrape-livegolfscoring.js
 #   • NextCaddy (RFGA Andaluzia + FGM Madrid + outras) — scrape-nextcaddy.js
 #   • Federació Catalana de Golf (golfdirecto.com) — scrape-fcg.js
+#   • Federación Gallega de Golf (fggolf.com → golfdirecto.com) — discover-fgg-scope.js + scrape-fcg.js
 #
 # Todos os portais são públicos (sem cookies/secrets). Node puro, sem Playwright.
 #
@@ -133,6 +134,15 @@ jobs:
           fi
           exit $CODE
 
+      # Galiza: a FGG também usa o golfdirecto; a lista sai do fggolf.com/torneos.aspx
+      # (só as juvenis; o scope acumula as épocas anteriores). Exit 2 = nada de novo.
+      - name: Discovery FGG (fggolf.com → fgg-scope.json)
+        id: disc_fgg
+        if: env.DO_DISCOVERY == 'true'
+        continue-on-error: true
+        timeout-minutes: 5
+        run: node scripts/discover-fgg-scope.js || [ $? -eq 2 ]
+
       - name: Discovery NextCaddy (→ nextcaddy-scope-all.json)
         id: disc_nc
         if: env.DO_DISCOVERY == 'true'
@@ -211,6 +221,12 @@ jobs:
             exit 0
           fi
           exit $CODE
+
+      - name: Scrape FGG — Galiza (golfdirecto.com)
+        id: fgg
+        continue-on-error: true
+        timeout-minutes: 20
+        run: node scripts/scrape-fcg.js --scope scripts/fgg-scope.json --concurrency 3 $SKIP_FLAG || [ $? -eq 2 ]
 
       # ── Enrichment + index + lookups (rápidos, não usam rede excepto enrich-lgs-dates) ──
       - name: Enrich LGS dates
@@ -295,7 +311,7 @@ jobs:
                public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
                public/data/spain-players.json public/data/rfegolf-rivals.json \
                public/data/fcg-rivals.json public/data/spain-player-tournaments.json \
-               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json \
+               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json scripts/fgg-scope.json \
                scripts/nextcaddy-scope-all.json
 
       # ── Verificação final: falhar ALTO se algum scraper falhou ──
@@ -315,6 +331,8 @@ jobs:
           [ "${{ steps.nc_horarios.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-horarios"
           [ "${{ steps.nc_scorecards.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-scorecards"
           [ "${{ steps.fcg.outcome }}"         = "failure" ] && FAILED="$FAILED FCG"
+          [ "${{ steps.disc_fgg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FGG"
+          [ "${{ steps.fgg.outcome }}"         = "failure" ] && FAILED="$FAILED FGG"
           [ "${{ steps.enrich_lgs.outcome }}"  = "failure" ] && FAILED="$FAILED enrich-LGS"
           [ "${{ steps.enrich_lgs_stats.outcome }}" = "failure" ] && FAILED="$FAILED enrich-LGS-stats"
           [ "${{ steps.lgs_matchplay.outcome }}" = "failure" ] && FAILED="$FAILED match-play-LGS"

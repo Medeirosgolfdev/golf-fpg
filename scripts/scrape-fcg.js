@@ -6,17 +6,17 @@
  * scorecards hbh dos torneios juvenis (e outros).
  *
  * Endpoints públicos descobertos via Chrome MCP em 2026-05-09:
- *   - GET /web/home/game/{gameId}
+ *   - GET /api/v2/public/game/{gameId}
  *       → metadata + categories[] (cada uma com _id, name, gender)
- *   - GET /web/home/score/ranking/entry?game=X&category=Y
+ *   - GET /api/v2/public/score/ranking/entry?game=X&category=Y
  *       → leaderboard por categoria (player, view.day, view.acc, previous[])
- *   - GET /web/home/score/player/{pid}/result?game=X&category=Y
+ *   - GET /api/v2/public/score/player/{pid}/result?game=X&category=Y
  *       → scorecard hbh COMPLETO (gameTee.par1-18, score.gross1-18, ...)
- *   - GET /web/home/card?game=X
+ *   - GET /api/v2/public/card?game=X
  *       → tee times + grupos
- *   - GET /web/home/player?game=X
+ *   - GET /api/v2/public/player?game=X
  *       → lista global de inscritos
- *   - GET /web/home/statistics?game=X&handicap=net[&category[]=N&gender=M&teeColor=Z]
+ *   - GET /api/v2/public/statistics?game=X&handicap=net[&category[]=N&gender=M&teeColor=Z]
  *       → estatísticas (eagles/birdies/etc)
  *
  * Sem auth. Headers normais de browser bastam.
@@ -43,6 +43,9 @@ const OUT_DIR = path.resolve(REPO, "public", "data", "fcg");
 if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const BASE = "https://www.golfdirecto.com";
+// Set/2026: o golfdirecto mudou para uma app Nuxt e a API passou de /web/home/
+// para /api/v2/public/ (mesmos caminhos e parâmetros). O antigo dá 404.
+const API = "/api/v2/public";
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
 
 const AGENT = new https.Agent({ keepAlive: true, maxSockets: 8, keepAliveMsecs: 5000 });
@@ -57,6 +60,12 @@ const CLI_GAMES = argVal("--games", null);
 const SCOPE_FILE = argVal("--scope", null);
 const SKIP_EXISTING = argFlag("--skip-existing");
 const SKIP_SCORECARDS = argFlag("--skip-scorecards");
+
+/** O ficheiro em disco é de um jogo já terminado (game.status «finished»)? */
+function jogoTerminado(file) {
+  try { return (JSON.parse(fs.readFileSync(file, "utf8")).game || {}).status === "finished"; }
+  catch { return false; }   // ilegível → reler
+}
 const SKIP_CARD = argFlag("--skip-card");
 const CONCURRENCY = parseInt(argVal("--concurrency", "3"), 10);
 const DELAY_MS = parseInt(argVal("--delay", "100"), 10);
@@ -111,19 +120,19 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 /* ── golfdirecto API wrappers ───────────────────────────────────────────── */
 
 async function fetchGame(gameId) {
-  return fetchJson("/web/home/game/" + gameId);
+  return fetchJson(API + "/game/" + gameId);
 }
 
 async function fetchCard(gameId) {
-  return fetchJson("/web/home/card?game=" + gameId);
+  return fetchJson(API + "/card?game=" + gameId);
 }
 
 async function fetchRanking(gameId, categoryId) {
-  return fetchJson("/web/home/score/ranking/entry?game=" + gameId + "&category=" + categoryId);
+  return fetchJson(API + "/score/ranking/entry?game=" + gameId + "&category=" + categoryId);
 }
 
 async function fetchPlayerScorecard(playerId, gameId, categoryId) {
-  return fetchJson("/web/home/score/player/" + playerId + "/result?game=" + gameId + "&category=" + categoryId);
+  return fetchJson(API + "/score/player/" + playerId + "/result?game=" + gameId + "&category=" + categoryId);
 }
 
 /* ── Slim helpers ───────────────────────────────────────────────────────── */
@@ -230,6 +239,15 @@ async function scrapeGame(gameId) {
     card: card,
   };
 
+  // Cada jogador fica numa só categoria. A Federação Galega publica cada escalão
+  // duas vezes (Scratch e Hándicap, as mesmas pessoas) e ainda uma «General»
+  // com todos — sem isto cada um aparecia 3× na classificação e nos rivais.
+  // Ordem: Scratch do escalão → outras do escalão → General; quem já apareceu
+  // sai das seguintes, e a categoria que fica vazia não se grava.
+  const peso = (c) => (/general|absolut/i.test(c.name || "") ? 2 : (/h[aá]ndicap|\bhcp\b|neto/i.test(c.name || "") ? 1 : 0));
+  categories.sort((a, b) => peso(a) - peso(b));
+  const vistos = new Set();
+
   for (const cat of categories) {
     const catOut = Object.assign({}, cat, { players: [], rankingError: null, scorecardErrors: [] });
     console.log("[scrape] " + gameId + " ─ category \"" + cat.name + "\" (" + cat._id + ")");
@@ -273,6 +291,18 @@ async function scrapeGame(gameId) {
       previous: Array.isArray(entry.previous) ? entry.previous.map((p) => ({ day: p.day, acc: p.acc })) : [],
       scorecard: null,
     }));
+    const antes = catOut.players.length;
+    catOut.players = catOut.players.filter((p) => {
+      const k = p._id || p.license;
+      if (!k) return true;
+      if (vistos.has(k)) return false;
+      vistos.add(k);
+      return true;
+    });
+    if (antes && !catOut.players.length) {
+      console.log("[scrape] " + gameId + "/" + cat._id + " ─ \"" + cat.name + "\" só repete jogadores de outra categoria — não se grava");
+      continue;
+    }
 
     if (!SKIP_SCORECARDS) {
       const players = catOut.players;
@@ -367,9 +397,12 @@ async function main() {
   let okCount = 0, skipped = 0, errs = 0;
   for (const gameId of games) {
     const outFile = path.join(OUT_DIR, gameId + ".json");
-    if (SKIP_EXISTING && fs.existsSync(outFile)) {
+    // Só se salta um jogo já TERMINADO: um lido antes de se jogar ficava
+    // congelado em «scheduled» (30/10/2026: o Campionat de Catalunya Sub-18 i
+    // Sub-16 2026, lido a 14/09 e jogado a 2/10, estava sem resultados).
+    if (SKIP_EXISTING && fs.existsSync(outFile) && jogoTerminado(outFile)) {
       skipped++;
-      if (VERBOSE) console.log("[fcg] " + gameId + " ─ skip (exists)");
+      if (VERBOSE) console.log("[fcg] " + gameId + " ─ skip (exists, finished)");
       continue;
     }
     try {
@@ -401,4 +434,4 @@ if (require.main === module) {
   main().catch((e) => { console.error("[fcg] FATAL:", e.stack || e); process.exit(1); });
 }
 
-module.exports = { scrapeGame, fetchGame, fetchCard, fetchRanking, fetchPlayerScorecard, slimGameTee, slimGross };
+module.exports = { jogoTerminado, scrapeGame, fetchGame, fetchCard, fetchRanking, fetchPlayerScorecard, slimGameTee, slimGross };

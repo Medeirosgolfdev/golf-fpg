@@ -1,0 +1,236 @@
+{
+  "gameId": "6943ee1b4d9bda7530e8a08c",
+  "fetchedAt": "2026-10-30T19:34:42.244Z",
+  "game": {
+    "_id": "6943ee1b4d9bda7530e8a08c",
+    "name": "Puntuable Zonal Infantiles y Cadetes- 1ª jornada",
+    "status": "finished",
+    "scheduleStartDate": "2026-05-30T08:00:40.870Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6943ee1b4d9bda7530e8a0bc",
+      "name": "Puntuable Zonal Infantiles y Cadetes- 1ª jornada ",
+      "clientName": "Federación Gallega de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a674d36dfe90dea2b13",
+      "name": "GOLF MUNICIPAL DE GIJON",
+      "city": "GIJÓN",
+      "state": "ASTURIAS",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a674d36dfe90dea2b14",
+      "name": "GOLF GIJON LA LLOREA",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "black",
+        "lap": "lap18",
+        "rating": 72.2,
+        "slope": 127,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a153"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.4,
+        "slope": 124,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a177"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 71.4,
+        "slope": 126,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a19b"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 67.9,
+        "slope": 115,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a1bf"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 114,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a1d1"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 63.6,
+        "slope": 104,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a1f5"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 118,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a1ad"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 68,
+        "slope": 111,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a1e3"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.3,
+        "slope": 123,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a165"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 75.2,
+        "slope": 124,
+        "par": 72,
+        "_id": "6943ee1b4d9bda7530e8a189"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6943ee1b4d9bda7530e8a0ce",
+      "name": "CADETE MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0d1",
+      "name": "CADETE FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0d4",
+      "name": "INFANTIL MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0d7",
+      "name": "INFANTIL FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0da",
+      "name": "ALEVÍN MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0dd",
+      "name": "ALEVÍN FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0e0",
+      "name": "SCRATCH MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6943ee1b4d9bda7530e8a0e3",
+      "name": "SCRATCH FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

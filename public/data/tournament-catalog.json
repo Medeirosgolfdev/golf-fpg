@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-10-30T18:32:04.049Z",
+  "generatedAt": "2026-10-30T19:41:29.411Z",
   "series": [
     {
       "id": "rfeg-circuit",
@@ -1709,6 +1709,65 @@
       "editionsCount": 60
     },
     {
+      "id": "fcg",
+      "label": "FCG",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg67604efaac677e17ac049cab_Cadete_049cdf",
+        "fcg-fcg67604efaac677e17ac049cab_Infantil_049ce2",
+        "fcg-fcg67604efaac677e17ac049cab_Alevín_049ce5",
+        "fcg-fcg6787922548269479c6315a32_Cadete_315a67",
+        "fcg-fcg6787922548269479c6315a32_Infantil_315a6a",
+        "fcg-fcg6787922548269479c6315a32_Alevín_315a6d",
+        "fcg-fcg67a20894d61687af2b262b0d_Cadete_262b42",
+        "fcg-fcg67a20894d61687af2b262b0d_Infantil_262b45",
+        "fcg-fcg67a20894d61687af2b262b0d_Alevín_262b48",
+        "fcg-fcg67a20894d61687af2b262b0d_Sub-18_025031",
+        "fcg-fcg67a2111a67edb43b19085615_Cadete_08564a",
+        "fcg-fcg67a2111a67edb43b19085615_Infantil_08564d",
+        "fcg-fcg67a2111a67edb43b19085615_Alevín_085650",
+        "fcg-fcg67a2111a67edb43b19085615_Sub-18_93da09",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18400",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18403",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18406",
+        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18409",
+        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f5",
+        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f8",
+        "fcg-fcg681c8efbdfbc8a5102cf1034_Cadete_cf1074",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc41",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc44",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc47",
+        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc4a",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_3cf50b",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Infantil_3cf50e",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Alevín_3cf511",
+        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_ea4471",
+        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_57f1df",
+        "fcg-fcg697dcb926609fc834e57f1a3_Infantil_57f1e2",
+        "fcg-fcg697dcb926609fc834e57f1a3_Alevín_57f1e5",
+        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_10d414",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a54e",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a551",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a554",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a557",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a55a",
+        "fcg-fcg69bc03d58369e10820b8a511_Sub-18_b8a55d",
+        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedc9",
+        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedcc",
+        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedcf",
+        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedd2",
+        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e74",
+        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e77",
+        "fcg-fcg6aa00d2c6717d5b07d3d7ccc_Junior_3d7d09",
+        "fcg-fcg6aa00d2c6717d5b07d3d7ccc_Junior_3d7d0c",
+        "fcg-fcg6aa00d2c6717d5b07d3d7ccc_Cadete_3d7d0f",
+        "fcg-fcg6aa00d2c6717d5b07d3d7ccc_Cadete_3d7d12"
+      ],
+      "firstDate": "2025-02-01",
+      "lastDate": "2026-10-02",
+      "editionsCount": 49
+    },
+    {
       "id": "uskids-laurel-island-links",
       "label": "Laurel Island Links",
       "sourceId": "uskids",
@@ -2320,53 +2379,6 @@
       ],
       "firstDate": "2017-11-25",
       "lastDate": "2026-01-17",
-      "editionsCount": 37
-    },
-    {
-      "id": "fcg",
-      "label": "FCG",
-      "sourceId": "fcg",
-      "tournamentIds": [
-        "fcg-fcg67604efaac677e17ac049cab_Cadete_049cdf",
-        "fcg-fcg67604efaac677e17ac049cab_Infantil_049ce2",
-        "fcg-fcg67604efaac677e17ac049cab_Alevín_049ce5",
-        "fcg-fcg6787922548269479c6315a32_Cadete_315a67",
-        "fcg-fcg6787922548269479c6315a32_Infantil_315a6a",
-        "fcg-fcg6787922548269479c6315a32_Alevín_315a6d",
-        "fcg-fcg67a20894d61687af2b262b0d_Cadete_262b42",
-        "fcg-fcg67a20894d61687af2b262b0d_Infantil_262b45",
-        "fcg-fcg67a20894d61687af2b262b0d_Alevín_262b48",
-        "fcg-fcg67a2111a67edb43b19085615_Cadete_08564a",
-        "fcg-fcg67a2111a67edb43b19085615_Infantil_08564d",
-        "fcg-fcg67a2111a67edb43b19085615_Alevín_085650",
-        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18400",
-        "fcg-fcg6809f9d7523b9365e3b183c3_Infantil_b18403",
-        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18406",
-        "fcg-fcg6809f9d7523b9365e3b183c3_Alevín_b18409",
-        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f5",
-        "fcg-fcg680a4a31523b9365e346a9b8_Benjamín_46a9f8",
-        "fcg-fcg681c8efbdfbc8a5102cf1034_Cadete_cf1074",
-        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc41",
-        "fcg-fcg68d1364d931cf6a0b6eebc02_Junior_eebc44",
-        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc47",
-        "fcg-fcg68d1364d931cf6a0b6eebc02_Cadete_eebc4a",
-        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_3cf50b",
-        "fcg-fcg697dc8e26609fc834e3cf4cf_Infantil_3cf50e",
-        "fcg-fcg697dc8e26609fc834e3cf4cf_Alevín_3cf511",
-        "fcg-fcg697dc8e26609fc834e3cf4cf_Cadete_ea4471",
-        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_57f1df",
-        "fcg-fcg697dcb926609fc834e57f1a3_Infantil_57f1e2",
-        "fcg-fcg697dcb926609fc834e57f1a3_Alevín_57f1e5",
-        "fcg-fcg697dcb926609fc834e57f1a3_Cadete_10d414",
-        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedc9",
-        "fcg-fcg69e7837119dbb562774fed8d_Infantil_4fedcc",
-        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedcf",
-        "fcg-fcg69e7837119dbb562774fed8d_Alevín_4fedd2",
-        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e74",
-        "fcg-fcg69e787be19dbb56277141e37_Benjamín_141e77"
-      ],
-      "firstDate": "2025-02-01",
-      "lastDate": "2026-05-16",
       "editionsCount": 37
     },
     {
@@ -3016,6 +3028,44 @@
       ],
       "firstDate": "2020-07-09",
       "lastDate": "2026-10-04",
+      "editionsCount": 28
+    },
+    {
+      "id": "fgg-liga-juvenil",
+      "label": "Liga Gallega Juvenil",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg69412fe2892dbc936397de2b_Junior_97de74",
+        "fcg-fcg69412fe2892dbc936397de2b_Cadete_97de7a",
+        "fcg-fcg69412fe2892dbc936397de2b_Infantil_97de80",
+        "fcg-fcg69412fe2892dbc936397de2b_Alevín_97de86",
+        "fcg-fcg694144c2892dbc93633d155d_Junior_3d15a6",
+        "fcg-fcg694144c2892dbc93633d155d_Cadete_3d15ac",
+        "fcg-fcg694144c2892dbc93633d155d_Infantil_3d15b2",
+        "fcg-fcg694144c2892dbc93633d155d_Alevín_3d15b8",
+        "fcg-fcg69414d45892dbc9363047f31_Junior_047f7a",
+        "fcg-fcg69414d45892dbc9363047f31_Cadete_047f80",
+        "fcg-fcg69414d45892dbc9363047f31_Infantil_047f86",
+        "fcg-fcg69414d45892dbc9363047f31_Alevín_047f8c",
+        "fcg-fcg6942723a341e2d6e82032404_Junior_03244d",
+        "fcg-fcg6942723a341e2d6e82032404_Cadete_032453",
+        "fcg-fcg6942723a341e2d6e82032404_Infantil_032459",
+        "fcg-fcg6942723a341e2d6e82032404_Alevín_03245f",
+        "fcg-fcg694296bc341e2d6e828200d7_Junior_820120",
+        "fcg-fcg694296bc341e2d6e828200d7_Cadete_820126",
+        "fcg-fcg694296bc341e2d6e828200d7_Infantil_82012c",
+        "fcg-fcg694296bc341e2d6e828200d7_Alevín_820132",
+        "fcg-fcg6943d1aa4d9bda75308c9576_Junior_8c95bf",
+        "fcg-fcg6943d1aa4d9bda75308c9576_Cadete_8c95c5",
+        "fcg-fcg6943d1aa4d9bda75308c9576_Infantil_8c95cb",
+        "fcg-fcg6943d1aa4d9bda75308c9576_Alevín_8c95d1",
+        "fcg-fcg6943e9f34d9bda7530c4f945_Junior_c4f98e",
+        "fcg-fcg6943e9f34d9bda7530c4f945_Cadete_c4f994",
+        "fcg-fcg6943e9f34d9bda7530c4f945_Infantil_c4f99a",
+        "fcg-fcg6943e9f34d9bda7530c4f945_Alevín_c4f9a0"
+      ],
+      "firstDate": "2026-02-21",
+      "lastDate": "2026-11-01",
       "editionsCount": 28
     },
     {
@@ -8771,6 +8821,30 @@
       ],
       "firstDate": "2021-07-25",
       "lastDate": "2026-07-12",
+      "editionsCount": 14
+    },
+    {
+      "id": "fgg",
+      "label": "Federación Gallega",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg6942a4fe341e2d6e8259d460_Infantil_59d4a3",
+        "fcg-fcg6942a4fe341e2d6e8259d460_Infantil_59d4a6",
+        "fcg-fcg6942a4fe341e2d6e8259d460_Alevín_59d4ac",
+        "fcg-fcg6942a4fe341e2d6e8259d460_Alevín_59d4af",
+        "fcg-fcg69a32cb5cee307b836e555db_Cadete_e55619",
+        "fcg-fcg69a32cb5cee307b836e555db_Cadete_e5561c",
+        "fcg-fcg69a32cb5cee307b836e555db_Infantil_e5561f",
+        "fcg-fcg69a32cb5cee307b836e555db_Infantil_e55622",
+        "fcg-fcg69a32cb5cee307b836e555db_Alevín_e55625",
+        "fcg-fcg69a32cb5cee307b836e555db_Alevín_e55628",
+        "fcg-fcg6aa579c8414dc7b1c1aacd36_Infantil_aacd77",
+        "fcg-fcg6aa579c8414dc7b1c1aacd36_Infantil_aacd7a",
+        "fcg-fcg6aa579c8414dc7b1c1aacd36_Alevín_aacd80",
+        "fcg-fcg6aa579c8414dc7b1c1aacd36_Alevín_aacd83"
+      ],
+      "firstDate": "2026-03-01",
+      "lastDate": "2026-09-13",
       "editionsCount": 14
     },
     {
@@ -15980,6 +16054,25 @@
       "editionsCount": 9
     },
     {
+      "id": "fgg-junior-cup",
+      "label": "Galicia Junior Cup",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg6941357b892dbc9363fa68f4_Sub-18_fa6939",
+        "fcg-fcg6941487d892dbc936383f25b_Sub-18_83f2a0",
+        "fcg-fcg69414eb9892dbc93632901c1_Sub-18_290206",
+        "fcg-fcg694270bd341e2d6e82ef525b_Sub-18_ef52a0",
+        "fcg-fcg6942839d341e2d6e8202b1c8_Sub-18_02b20d",
+        "fcg-fcg6942985e341e2d6e82ce6743_Sub-18_ce67aa",
+        "fcg-fcg6943d7994d9bda75300eba29_Sub-18_0eba6e",
+        "fcg-fcg6943e7134d9bda7530f13b7f_Sub-18_f13bc4",
+        "fcg-fcg698493b36689311e9ad9fe19_Sub-18_d9fe5d"
+      ],
+      "firstDate": "2026-02-22",
+      "lastDate": "2026-10-31",
+      "editionsCount": 9
+    },
+    {
       "id": "evianjc",
       "label": "Evian Juniors Cup",
       "sourceId": "evianjc",
@@ -21076,8 +21169,8 @@
         "fm-ftm_fm_2025",
         "fm-ftm_fm_2026"
       ],
-      "firstDate": "2019-06-23",
-      "lastDate": "2026-06-21",
+      "firstDate": "2019-06-22",
+      "lastDate": "2026-06-20",
       "editionsCount": 7
     },
     {
@@ -28791,9 +28884,9 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-271900",
-        "wagr-235865",
         "wagr-260403",
         "wagr-225888",
+        "wagr-235865",
         "wagr-219502"
       ],
       "firstDate": "2022-09-17",
@@ -29851,21 +29944,6 @@
       "editionsCount": 5
     },
     {
-      "id": "wagr-hope-valley-junior-invitational",
-      "label": "Hope Valley Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259604",
-        "wagr-235031",
-        "wagr-271309",
-        "wagr-225120",
-        "wagr-75920"
-      ],
-      "firstDate": "2022-08-02",
-      "lastDate": "2026-08-04",
-      "editionsCount": 5
-    },
-    {
       "id": "wagr-korea-junior-championship-blue-one-cup",
       "label": "Korea Junior Championship - Blue One Cup",
       "sourceId": "wagr",
@@ -29986,6 +30064,21 @@
       "editionsCount": 5
     },
     {
+      "id": "wagr-georgia-junior-championship",
+      "label": "Georgia Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270174",
+        "wagr-258188",
+        "wagr-233854",
+        "wagr-223986",
+        "wagr-74879"
+      ],
+      "firstDate": "2022-06-20",
+      "lastDate": "2026-07-06",
+      "editionsCount": 5
+    },
+    {
       "id": "wagr-georgia-pga-junior-championship",
       "label": "Georgia PGA Junior Championship",
       "sourceId": "wagr",
@@ -30013,6 +30106,21 @@
       ],
       "firstDate": "2022-08-01",
       "lastDate": "2026-07-27",
+      "editionsCount": 5
+    },
+    {
+      "id": "wagr-hope-valley-junior-invitational",
+      "label": "Hope Valley Junior Invitational",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-271309",
+        "wagr-259604",
+        "wagr-235031",
+        "wagr-225120",
+        "wagr-75920"
+      ],
+      "firstDate": "2022-08-02",
+      "lastDate": "2026-08-04",
       "editionsCount": 5
     },
     {
@@ -37034,20 +37142,6 @@
       "editionsCount": 4
     },
     {
-      "id": "wagr-cga-dogwood-state-junior-boys-championship",
-      "label": "CGA Dogwood State Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259377",
-        "wagr-234649",
-        "wagr-271132",
-        "wagr-224807"
-      ],
-      "firstDate": "2023-07-18",
-      "lastDate": "2026-07-27",
-      "editionsCount": 4
-    },
-    {
       "id": "wagr-copa-alianza-centro-u18",
       "label": "Copa Alianza Centro (U18)",
       "sourceId": "wagr",
@@ -37269,20 +37363,6 @@
       ],
       "firstDate": "2022-07-25",
       "lastDate": "2026-07-07",
-      "editionsCount": 4
-    },
-    {
-      "id": "wagr-georgia-junior-championship",
-      "label": "Georgia Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270174",
-        "wagr-258188",
-        "wagr-233854",
-        "wagr-223986"
-      ],
-      "firstDate": "2023-06-19",
-      "lastDate": "2026-07-06",
       "editionsCount": 4
     },
     {
@@ -47839,8 +47919,8 @@
       "sourceId": "wagr",
       "tournamentIds": [
         "wagr-258636",
-        "wagr-234217",
-        "wagr-270533"
+        "wagr-270533",
+        "wagr-234217"
       ],
       "firstDate": "2024-07-01",
       "lastDate": "2026-06-22",
@@ -47873,19 +47953,6 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-visit-owensboro-junior-championship",
-      "label": "Visit Owensboro Junior Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-269461",
-        "wagr-257236",
-        "wagr-251444"
-      ],
-      "firstDate": "2024-05-03",
-      "lastDate": "2026-04-30",
-      "editionsCount": 3
-    },
-    {
       "id": "wagr-visit-goldsboro-nc-junior-championship",
       "label": "Visit Goldsboro NC Junior Championship",
       "sourceId": "wagr",
@@ -47896,19 +47963,6 @@
       ],
       "firstDate": "2024-04-11",
       "lastDate": "2026-04-16",
-      "editionsCount": 3
-    },
-    {
-      "id": "wagr-north-carolina-junior-boys-championship",
-      "label": "North Carolina Junior Boys Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-233861",
-        "wagr-258192",
-        "wagr-270178"
-      ],
-      "firstDate": "2024-06-19",
-      "lastDate": "2026-06-23",
       "editionsCount": 3
     },
     {
@@ -48458,16 +48512,16 @@
       "editionsCount": 3
     },
     {
-      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
-      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "id": "wagr-cga-dogwood-state-junior-boys-championship",
+      "label": "CGA Dogwood State Junior Boys Championship",
       "sourceId": "wagr",
       "tournamentIds": [
-        "wagr-269997",
-        "wagr-257942",
-        "wagr-251448"
+        "wagr-271132",
+        "wagr-234649",
+        "wagr-224807"
       ],
-      "firstDate": "2024-06-04",
-      "lastDate": "2026-05-26",
+      "firstDate": "2023-07-18",
+      "lastDate": "2026-07-27",
       "editionsCount": 3
     },
     {
@@ -48819,6 +48873,19 @@
       ],
       "firstDate": "2022-08-02",
       "lastDate": "2025-08-05",
+      "editionsCount": 3
+    },
+    {
+      "id": "wagr-ochsner-health-ajga-new-orleans-classic",
+      "label": "Ochsner Health / AJGA New Orleans Classic",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269997",
+        "wagr-257942",
+        "wagr-251448"
+      ],
+      "firstDate": "2024-06-04",
+      "lastDate": "2026-05-26",
       "editionsCount": 3
     },
     {
@@ -67904,6 +67971,18 @@
       "editionsCount": 2
     },
     {
+      "id": "wagr-vaughn-taylor-championship",
+      "label": "Vaughn Taylor Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-270071",
+        "wagr-77024"
+      ],
+      "firstDate": "2022-06-14",
+      "lastDate": "2026-06-15",
+      "editionsCount": 2
+    },
+    {
       "id": "wagr-ajga-junior-at-rayburn-resort-presented-by-city-of-jasper",
       "label": "AJGA Junior at Rayburn Resort presented by City of Jasper",
       "sourceId": "wagr",
@@ -68429,18 +68508,6 @@
       ],
       "firstDate": "2022-03-17",
       "lastDate": "2023-03-15",
-      "editionsCount": 2
-    },
-    {
-      "id": "wagr-campeonato-de-catalunya-u18",
-      "label": "Campeonato de Catalunya U18",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-272185",
-        "wagr-76341"
-      ],
-      "firstDate": "2022-02-25",
-      "lastDate": "2026-10-02",
       "editionsCount": 2
     },
     {
@@ -69056,18 +69123,6 @@
       "editionsCount": 2
     },
     {
-      "id": "wagr-jimmy-anderson-junior-boys",
-      "label": "Jimmy Anderson Junior Boys",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-236605",
-        "wagr-261130"
-      ],
-      "firstDate": "2024-10-19",
-      "lastDate": "2025-10-25",
-      "editionsCount": 2
-    },
-    {
       "id": "wagr-north-and-south-junior-amateur",
       "label": "North and South Junior Amateur",
       "sourceId": "wagr",
@@ -69617,6 +69672,18 @@
       ],
       "firstDate": "2025-05-18",
       "lastDate": "2026-05-17",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-north-carolina-junior-boys-championship",
+      "label": "North Carolina Junior Boys Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-258192",
+        "wagr-270178"
+      ],
+      "firstDate": "2025-06-17",
+      "lastDate": "2026-06-23",
       "editionsCount": 2
     },
     {
@@ -71297,6 +71364,18 @@
       ],
       "firstDate": "2022-07-13",
       "lastDate": "2023-07-11",
+      "editionsCount": 2
+    },
+    {
+      "id": "wagr-tennessee-junior-amateur",
+      "label": "Tennessee Junior Amateur",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-234076",
+        "wagr-224241"
+      ],
+      "firstDate": "2023-06-27",
+      "lastDate": "2024-06-24",
       "editionsCount": 2
     },
     {
@@ -96470,6 +96549,17 @@
       "editionsCount": 1
     },
     {
+      "id": "fgg-campeonato",
+      "label": "Campeonato de Galicia",
+      "sourceId": "fcg",
+      "tournamentIds": [
+        "fcg-fcg69414c61892dbc9363e213ec_Cadete_cdf249"
+      ],
+      "firstDate": "2026-04-05",
+      "lastDate": "2026-04-05",
+      "editionsCount": 1
+    },
+    {
       "id": "england-bronte-law-junior-series-cumberwell-park",
       "label": "Bronte Law Junior Series  - Cumberwell Park",
       "sourceId": "england",
@@ -109615,17 +109705,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-vaughn-taylor-championship",
-      "label": "Vaughn Taylor Championship",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-270071"
-      ],
-      "firstDate": "2026-06-15",
-      "lastDate": "2026-06-15",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-etapa-2-sur-campestre-cocoyoc",
       "label": "Etapa 2 Sur Campestre Cocoyoc",
       "sourceId": "wagr",
@@ -111749,6 +111828,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-visit-owensboro-junior-championship",
+      "label": "Visit Owensboro Junior Championship",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-269461"
+      ],
+      "firstDate": "2026-04-30",
+      "lastDate": "2026-04-30",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-gba-junior-golf-tour-leg-2",
       "label": "GBA Junior Golf Tour Leg 2",
       "sourceId": "wagr",
@@ -113630,6 +113720,17 @@
       "editionsCount": 1
     },
     {
+      "id": "wagr-jimmy-anderson-junior-boys",
+      "label": "Jimmy Anderson Junior Boys",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-261130"
+      ],
+      "firstDate": "2025-10-25",
+      "lastDate": "2025-10-25",
+      "editionsCount": 1
+    },
+    {
       "id": "wagr-tyga-bojangles-junior-open",
       "label": "TYGA Bojangles Junior Open",
       "sourceId": "wagr",
@@ -114397,17 +114498,6 @@
       ],
       "firstDate": "2024-08-30",
       "lastDate": "2024-08-30",
-      "editionsCount": 1
-    },
-    {
-      "id": "wagr-haskins-junior-invitational",
-      "label": "Haskins Junior Invitational",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-259106"
-      ],
-      "firstDate": "2025-07-15",
-      "lastDate": "2025-07-15",
       "editionsCount": 1
     },
     {
@@ -120032,17 +120122,6 @@
       "editionsCount": 1
     },
     {
-      "id": "wagr-tennessee-junior-amateur",
-      "label": "Tennessee Junior Amateur",
-      "sourceId": "wagr",
-      "tournamentIds": [
-        "wagr-234076"
-      ],
-      "firstDate": "2024-06-24",
-      "lastDate": "2024-06-24",
-      "editionsCount": 1
-    },
-    {
       "id": "wagr-jay-don-blake-jr",
       "label": "Jay Don Blake Jr.",
       "sourceId": "wagr",
@@ -120898,6 +120977,17 @@
       ],
       "firstDate": "2022-03-11",
       "lastDate": "2022-03-11",
+      "editionsCount": 1
+    },
+    {
+      "id": "wagr-campeonato-de-catalunya-u18",
+      "label": "Campeonato de Catalunya U18",
+      "sourceId": "wagr",
+      "tournamentIds": [
+        "wagr-76341"
+      ],
+      "firstDate": "2022-02-25",
+      "lastDate": "2022-02-25",
       "editionsCount": 1
     },
     {

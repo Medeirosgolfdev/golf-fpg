@@ -145,7 +145,10 @@ function build() {
       if (!cat.players || cat.players.length === 0) continue; // skip vazios
       totalCategories++;
 
-      const ageGroup = ageKeyFromCategory(cat.name);
+      // Categoria só «Scratch» numa prova juvenil de todas as idades (Galicia
+      // Junior Cup): Sub-18, sem faixa de idades — nunca «Other», que sai do Kids 2.
+      let ageGroup = ageKeyFromCategory(cat.name);
+      if (ageGroup === "Other" && /junior|juvenil/i.test(tournamentName)) ageGroup = "Sub-18";
       const tid = `fcg${gameId}_${ageGroup}_${cat._id.slice(-6)}`;
 
       // Determinar par/SI/holes a partir de UM scorecard
@@ -208,6 +211,8 @@ function build() {
         gameName: game.name,
         tournamentName: tournamentName,
         tournamentId: tournamentId,
+        // Federació Catalana ou Federación Gallega (as duas usam o golfdirecto)
+        organizer: (game.tournament && game.tournament.clientName) || null,
         category: cat.name,
         categoryId: cat._id,
         gender: cat.gender || genderFromCategory(cat.name, cat.gender),

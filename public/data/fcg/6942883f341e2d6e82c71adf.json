@@ -1,0 +1,140 @@
+{
+  "gameId": "6942883f341e2d6e82c71adf",
+  "fetchedAt": "2026-10-30T19:34:50.717Z",
+  "game": {
+    "_id": "6942883f341e2d6e82c71adf",
+    "name": "XI Campeonato Internacional Juvenil Noroeste Península Ibérica",
+    "status": "finished",
+    "scheduleStartDate": "2026-07-02T08:00:47.168Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "matchPlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6942883f341e2d6e82c71b0d",
+      "name": "XI Campeonato Internacional Juvenil Noroeste Península Ibérica",
+      "clientName": "Federación Gallega de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a724d36dfe90dea37a1",
+      "name": "CLUB DE GOLF RIA DE VIGO",
+      "city": "MOAÑA",
+      "state": "PONTEVEDRA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a724d36dfe90dea37a2",
+      "name": "RIA DE VIGO GOLF",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.8,
+        "slope": 137,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79bd7"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 72.1,
+        "slope": 136,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79bea"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.2,
+        "slope": 127,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79c10"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.4,
+        "slope": 123,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79c23"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.1,
+        "slope": 143,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79b9e"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.7,
+        "slope": 132,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79bb1"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 78.3,
+        "slope": 141,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79bc4"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 74.4,
+        "slope": 136,
+        "par": 72,
+        "_id": "6942883f341e2d6e82c79bfd"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6942883f341e2d6e82c71b22",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6942883f341e2d6e82c71b25",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}
