@@ -16,10 +16,10 @@ import { useCourses } from "../context/CoursesContext";
 import TeeBadge from "../ui/TeeBadge";
 import SexBadge from "../ui/SexBadge";
 import { teeCanonicalLabel, teeGroupHex, teeBorder } from "../utils/teeColors";
-import { fmt, fmtCR, norm, sumRange, fmtToPar } from "../utils/format";
+import { fmt, fmtCR, norm, sumRange, fmtToPar, titleCase } from "../utils/format";
 import { flag } from "../utils/flagUtils";
 import { fixMojibake } from "../utils/fixEncoding";
-import { sortTees, filterTees } from "../utils/teeUtils";
+import { sortTees, filterTees, teeHexFromTee } from "../utils/teeUtils";
 import { PillBadge, EscPill } from "../ui/PillBadge";
 import ExtLink from "../ui/ExternalLink";
 import { useSort } from "../hooks/useSort";
@@ -30,6 +30,7 @@ import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
 import { calcSD, round1 } from "../utils/whsCalc";
+import { resolvePlayedTee } from "../utils/playedDistance";
 import { canonicalCourseName, resolveCourseKeyByPar } from "../utils/courseAliases";
 import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
@@ -496,7 +497,7 @@ function buildSummaries(
   raw: Course["master"]["_players"],
   players: Record<string, { name?: string } | undefined>,
   nameMap: Record<string, string>,
-  teeFilter?: (tee: string | null) => boolean,
+  teeFilter?: (tee: string | null, fed: string) => boolean,
 ): PlayerSummary[] {
   if (!raw || Object.keys(raw).length === 0) return [];
   const out: PlayerSummary[] = [];
@@ -511,7 +512,7 @@ function buildSummaries(
       : typeof val === "string"
         ? [{ date: val, gross: null, toPar: null, tee: null, event: null, sd: null }]
         : [];
-    const rounds = teeFilter ? allRounds.filter((r) => teeFilter(r.tee)) : allRounds;
+    const rounds = teeFilter ? allRounds.filter((r) => teeFilter(r.tee, nfed)) : allRounds;
     if (rounds.length === 0) continue;
     const sortedRounds = [...rounds].sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
     const r18: CoursePlayerRound[] = [];
@@ -737,11 +738,32 @@ const NO_TEE_LABEL = "Sem tee";
 const teeTint = (c: string, pct: number) => `color-mix(in srgb, ${c} ${pct}%, var(--bg-card))`;
 const teeDot = (hex: string, sz = 12): CSSProperties => ({ width: sz, height: sz, borderRadius: "50%", background: hex, border: teeBorder(hex) || "1px solid rgba(0,0,0,0.15)", display: "inline-block", flex: "none" });
 type TeeInfo = { dist: number; hex: string; group: PhysTeeGroup };
+/** Rótulo do tee de uma VOLTA: liga-a ao tee do campo (nome exacto, «Boys 12» ↔
+ *  «USKids Boys 12», override do Manuel — resolvePlayedTee) e usa a cor real
+ *  desse tee; só sem tee no campo vale a cor do nome gravado. Mesma chave do
+ *  useTeeInfoMap. */
+const _roundTeeLabelCache = new WeakMap<Course, Map<string, string>>();
+function roundTeeLabel(course: Course, tee: string | null, fed: string): string {
+  if (!tee) return NO_TEE_LABEL;
+  let cache = _roundTeeLabelCache.get(course);
+  if (!cache) { cache = new Map(); _roundTeeLabelCache.set(course, cache); }
+  const ck = `${fed === MANUEL_FED ? "M" : ""}|${tee}`;
+  const hit = cache.get(ck);
+  if (hit) return hit;
+  const t = resolvePlayedTee(course.master.name, tee, [course], fed);
+  const label = t ? teeCanonicalLabel(titleCase(t.teeName), teeHexFromTee(t)) : teeCanonicalLabel(tee);
+  cache.set(ck, label);
+  return label;
+}
+
 function useTeeInfoMap(course: Course): Map<string, TeeInfo> {
   return useMemo(() => {
     const m = new Map<string, TeeInfo>();
     for (const g of physicalTeeGroups(course.master.tees || [])) {
-      const label = teeCanonicalLabel(g.label);
+      // Pela cor REAL do tee (scorecardMeta): «USKids Boys 12» (marcas Red) e
+      // «USKids Boys 14» (Yellow) não têm cor no nome — sem a cor caíam os dois
+      // no rótulo por omissão («Júnior») e misturavam-se (Glen, 30/10/2026).
+      const label = teeCanonicalLabel(g.label, g.colorHex);
       const dist = Math.round(g.teeHoles?.distances?.total ?? 0);
       if (!m.has(label)) m.set(label, { dist, hex: g.colorHex, group: g });
     }
@@ -814,7 +836,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
     const raw = course.master._players;
     const empty = { tees: [] as { label: string; players: Set<string>; nRounds: number; esc: Map<string, Map<string, EscRec>>; dist: number }[], manuel: [] as ManuelRec[], lastDate: null as string | null };
     if (!raw || Object.keys(raw).length === 0) return empty;
-    const labelOf = (tee: string | null) => (tee ? teeCanonicalLabel(tee) : NO_TEE_LABEL);
+    const labelOf = (tee: string | null, fed = "") => roundTeeLabel(course, tee, fed);
     const nameOf = (fed: string) => {
       const p = players[fed];
       return (p?.name && p.name !== fed ? p.name : null)
@@ -833,7 +855,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
         const rv = roundValue(r, volta);
         if (!rv) continue;
         if (r.date && (!lastDate || r.date > lastDate)) lastDate = r.date;
-        const label = labelOf(r.tee);
+        const label = labelOf(r.tee, fed);
         // Cartão do Manuel — independente do filtro de sexo.
         if (isManuelPlayer) {
           const cur = manuelByTee.get(label);
@@ -1024,16 +1046,16 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
     const raw = course.master._players;
     if (!raw || Object.keys(raw).length === 0) return [];
     // Rótulo canónico do tee de cada volta (agrupa variantes M/F da mesma cor).
-    const labelOf = (tee: string | null) => (tee ? teeCanonicalLabel(tee) : NO_TEE_LABEL);
+    const labelOf = (tee: string | null, fed = "") => roundTeeLabel(course, tee, fed);
     const labels = new Set<string>();
-    for (const val of Object.values(raw)) {
-      if (Array.isArray(val)) for (const r of val) labels.add(labelOf(r.tee));
+    for (const [fed, val] of Object.entries(raw)) {
+      if (Array.isArray(val)) for (const r of val) labels.add(labelOf(r.tee, fed));
     }
     return [...labels]
       .filter((label) => !teeLabel || label === teeLabel)
       .map((label) => ({
         label,
-        entries: buildSummaries(raw, players, nameMap, (tee) => labelOf(tee) === label),
+        entries: buildSummaries(raw, players, nameMap, (tee, fed) => labelOf(tee, fed) === label),
       }))
       .filter((g) => g.entries.length > 0)
       .sort((a, b) => {
