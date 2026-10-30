@@ -219,20 +219,65 @@ export function buildAllCourses(input: CoursesInput): Course[] {
   // do mesmo campo têm-no (via scorecards FPG). Copiar o SI dos que têm para
   // os que não têm (casando por nº de buracos), para o scorecard do campo
   // ficar tão rico como o do jogador.
+  //
+  // Antes disso, nos campos away (cartões dos clubes, não oficiais), o que é
+  // claramente INVENTADO passa a «sem dado» (30/10/2026, revisão dos campos):
+  // SI 1..n seguido e par 4 em todos os buracos. O par vem depois de outro tee
+  // do mesmo campo com par verdadeiro; se não houver, fica sem par.
+  for (const [key, c] of finalMap) {
+    if (!key.startsWith("away-")) continue;
+    let changed = false;
+    const tees = c.master.tees.map((t) => {
+      const h = t.holes ?? [];
+      if (h.length < 9) return t;
+      const fakeSI = h.every((x, i) => x.si === i + 1);
+      const fakePar = h.every((x) => x.par === 4);
+      if (!fakeSI && !fakePar) return t;
+      changed = true;
+      return { ...t, holes: h.map((x) => ({ ...x, si: fakeSI ? null : x.si, par: fakePar ? null : x.par })) };
+    });
+    if (changed) finalMap.set(key, { ...c, master: { ...c.master, tees } });
+  }
+
   for (const [key, c] of finalMap) {
     const tees = c.master.tees;
     if (tees.length < 2) continue;
-    // SI de referência por nº de buracos
+    // SI de referência por nº de buracos: o que mais tees repetem (consenso
+    // entre cartões), não o primeiro que aparece.
     const refByN = new Map<number, (number | null)[]>();
+    const votes = new Map<number, Map<string, number>>();
     for (const t of tees) {
       const n = t.holes?.length ?? 0;
-      if (n && !refByN.has(n) && t.holes!.some(h => h.si != null && h.si > 0)) {
-        refByN.set(n, t.holes!.map(h => h.si ?? null));
+      if (!n || !t.holes!.every(h => h.si != null && h.si > 0)) continue;
+      const sig = JSON.stringify(t.holes!.map(h => h.si));
+      const m = votes.get(n) ?? new Map<string, number>();
+      m.set(sig, (m.get(sig) ?? 0) + 1);
+      votes.set(n, m);
+    }
+    for (const [n, m] of votes) {
+      const best = [...m.entries()].sort((a, b) => b[1] - a[1])[0][0];
+      refByN.set(n, JSON.parse(best));
+    }
+    // Par de referência (só para preencher tees sem par — nunca troca um par existente)
+    const parRefByN = new Map<number, number[]>();
+    for (const t of tees) {
+      const n = t.holes?.length ?? 0;
+      if (n && !parRefByN.has(n) && t.holes!.every(h => h.par != null && h.par > 0)) {
+        parRefByN.set(n, t.holes!.map(h => h.par as number));
       }
     }
-    if (refByN.size === 0) continue;
     let changed = false;
-    const newTees = tees.map(t => {
+    const withPar = tees.map(t => {
+      const ref = parRefByN.get(t.holes?.length ?? 0);
+      if (!ref || !t.holes || !t.holes.some(h => h.par == null)) return t;
+      changed = true;
+      return { ...t, holes: t.holes.map((h, i) => (h.par != null ? h : { ...h, par: ref[i] })) };
+    });
+    if (refByN.size === 0) {
+      if (changed) finalMap.set(key, { ...c, master: { ...c.master, tees: withPar } });
+      continue;
+    }
+    const newTees = withPar.map(t => {
       const ref = refByN.get(t.holes?.length ?? 0);
       if (!ref || !t.holes) return t;
       if (t.holes.every(h => h.si != null && h.si > 0)) return t;
