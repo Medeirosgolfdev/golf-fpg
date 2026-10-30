@@ -55,7 +55,7 @@ const BASELINE = {
   tournamentsAsCourses: 0, // 4 → 0 a 30/10/2026: nomes de torneio trocados pelo campo (aliases/nameOverrides)
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
   awayWithoutDistances: 24, // 35 → 24 a 30/10/2026: revisão de todos os campos (fusões e cartões oficiais)
-  maxTeesPerCourse: 13,
+  maxTeesPerCourse: 13, // tees FÍSICOS (M e F do mesmo tee contam 1) desde 30/10/2026: PGA National com os tees da USGA
 };
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -81,6 +81,7 @@ function loadSiteModules() {
         'export { extractAwayCourses } from "./src/data/melhoriasLoader";',
         'export { getExtraCourses } from "./src/data/extraCourses";',
         'export { norm, canonicalCourseName } from "./src/utils/courseAliases";',
+        'export { physicalTeeGroups } from "./src/utils/teeGroups";',
       ].join("\n"),
       resolveDir: ROOT,
       loader: "ts",
@@ -152,8 +153,11 @@ const isAway = (c) => String(c.courseKey).startsWith("away-");
  *   rawAway      — away-courses.json tal como está no disco (só para informação)
  *   masterNames  — Set dos nomes canónicos normalizados do master
  */
-function auditCatalog({ simCourses, tournamentCourses, rawAway, masterNames, norm, canonicalCourseName }) {
+function auditCatalog({ simCourses, tournamentCourses, rawAway, masterNames, norm, canonicalCourseName, physicalTeeGroups }) {
   const findings = {};
+  // Tee físico = cor + distância; M e F do mesmo tee contam uma vez (regra do
+  // projecto, 30/10/2026 — um campo com todos os tees oficiais H e F não é «sujo»).
+  const nTees = (c) => (physicalTeeGroups ? physicalTeeGroups(tees(c)).length : tees(c).length);
 
   /* 1 ─ Grupos duplicados: o mesmo campo físico mostrado mais de uma vez */
   const bySig = new Map();
@@ -177,9 +181,9 @@ function auditCatalog({ simCourses, tournamentCourses, rawAway, masterNames, nor
     .filter((c) => isAway(c) && !hasAnyDistance(c))
     .map((c) => ({ name: c.master.name, key: c.courseKey, tees: tees(c).length }));
 
-  /* 4 ─ Tees a mais (depois do colapso do site) */
+  /* 4 ─ Tees físicos a mais (depois do colapso do site) */
   const rank = simCourses
-    .map((c) => ({ name: c.master.name, key: c.courseKey, tees: tees(c).length }))
+    .map((c) => ({ name: c.master.name, key: c.courseKey, tees: nTees(c) }))
     .sort((a, b) => b.tees - a.tees);
   findings.worstTeeCount = rank.length ? rank[0].tees : 0;
   findings.teeRanking = rank.slice(0, 5);
@@ -232,7 +236,7 @@ function audit() {
     (master.courses || []).map((c) => norm(canonicalCourseName(c.master.name) || c.master.name)),
   );
 
-  const findings = auditCatalog({ simCourses, tournamentCourses, rawAway: away, masterNames, norm, canonicalCourseName });
+  const findings = auditCatalog({ simCourses, tournamentCourses, rawAway: away, masterNames, norm, canonicalCourseName, physicalTeeGroups: site.physicalTeeGroups });
 
   const totals = {
     masterCourses: (master.courses || []).length,

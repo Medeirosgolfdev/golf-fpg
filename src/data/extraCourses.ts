@@ -253,6 +253,59 @@ function doralDist18(dist: number[]): { total: number; front9: number; back9: nu
 }
 
 // Red Tiger — agrupado num único Course com 2 tees (por escalão)
+/* Tees do resort — USGA National Course Rating Database (ncrdb.usga.org, lida a
+   30/10/2026 pelo browser; sem data de rating): CR/Slope por tee e sexo e o comprimento
+   total (jardas × 0,9144). Sem metros por buraco nem SI oficiais — par por buraco do
+   cartão já usado nos tees USKids quando é o mesmo desenho; sem ele, par só no total. */
+function ncrdbTee(teeId: string, sex: "M" | "F", teeName: string, par: number[] | null, parTotal: number, cr: number, slope: number, yards: number, teeColor?: string): Tee {
+  return {
+    teeId, sex, teeName,
+    ...(teeColor ? { scorecardMeta: { teeColor } } : {}),
+    ratings: { holes18: { par: parTotal, courseRating: cr, slopeRating: slope } },
+    holes: par ? par.map((p, i) => ({ hole: i + 1, par: p, si: null, distance: null })) : [],
+    distances: { total: Math.round(yards * 0.9144), front9: null, back9: null, holesCount: 18, complete18: false },
+  };
+}
+
+const doralGPUsgaTees: Tee[] = [
+  ncrdbTee("doralGP-black-m", "M", "Black", doralGPPar, 71, 74.2, 139, 6807, "#000000"),
+  ncrdbTee("doralGP-gold-m", "M", "Gold", doralGPPar, 71, 72, 134, 6332, "#daa520"),
+  ncrdbTee("doralGP-blue-m", "M", "Blue", doralGPPar, 71, 69.9, 133, 5958, "#3b82f6"),
+  ncrdbTee("doralGP-white-m", "M", "White", doralGPPar, 71, 68.6, 128, 5656, "#ffffff"),
+  ncrdbTee("doralGP-red-m", "M", "Red", doralGPPar, 71, 65.1, 121, 4858, "#ef4444"),
+  ncrdbTee("doralGP-white-f", "F", "White", doralGPPar, 71, 74.8, 142, 5656, "#ffffff"),
+  ncrdbTee("doralGP-red-f", "F", "Red", doralGPPar, 71, 70.2, 132, 4858, "#ef4444"),
+];
+const doralRTUsgaTees: Tee[] = [
+  ncrdbTee("doralRT-black-m", "M", "Black", null, 72, 71.8, 136, 6395, "#000000"),
+  ncrdbTee("doralRT-gold-m", "M", "Gold", null, 72, 69.6, 132, 5918, "#daa520"),
+  ncrdbTee("doralRT-blue-m", "M", "Blue", null, 72, 68.6, 127, 5660, "#3b82f6"),
+  ncrdbTee("doralRT-white-m", "M", "White", null, 72, 66.2, 120, 5229, "#ffffff"),
+  ncrdbTee("doralRT-red-m", "M", "Red", null, 72, 63.4, 115, 4525, "#ef4444"),
+  ncrdbTee("doralRT-gold-f", "F", "Gold", null, 72, 75.6, 140, 5918, "#daa520"),
+  ncrdbTee("doralRT-blue-f", "F", "Blue", null, 72, 74.2, 137, 5660, "#3b82f6"),
+  ncrdbTee("doralRT-white-f", "F", "White", null, 72, 71.9, 132, 5229, "#ffffff"),
+  ncrdbTee("doralRT-red-f", "F", "Red", null, 72, 67.9, 123, 4525, "#ef4444"),
+];
+const doralSFUsgaTees: Tee[] = [
+  ncrdbTee("doralSF-black-m", "M", "Black", doralSFPar, 71, 74.9, 148, 6906, "#000000"),
+  ncrdbTee("doralSF-gold-m", "M", "Gold", doralSFPar, 71, 72.6, 143, 6398, "#daa520"),
+  ncrdbTee("doralSF-blue-m", "M", "Blue", doralSFPar, 71, 69.8, 135, 5861, "#3b82f6"),
+  ncrdbTee("doralSF-white-m", "M", "White", doralSFPar, 71, 67.6, 128, 5462, "#ffffff"),
+  ncrdbTee("doralSF-red-m", "M", "Red", doralSFPar, 71, 63.6, 120, 4478, "#ef4444"),
+  ncrdbTee("doralSF-white-f", "F", "White", doralSFPar, 71, 73.5, 141, 5462, "#ffffff"),
+  ncrdbTee("doralSF-red-f", "F", "Red", doralSFPar, 71, 67.8, 121, 4478, "#ef4444"),
+];
+const doralBMUsgaTees: Tee[] = [
+  ncrdbTee("doralBM-black-m", "M", "Black", doralBMPar, 72, 77.4, 146, 7545, "#000000"),
+  ncrdbTee("doralBM-gold-m", "M", "Gold", doralBMPar, 72, 75, 140, 7023, "#daa520"),
+  ncrdbTee("doralBM-blue-m", "M", "Blue", doralBMPar, 72, 73.5, 139, 6721, "#3b82f6"),
+  ncrdbTee("doralBM-white-m", "M", "White", doralBMPar, 72, 71.7, 139, 6360, "#ffffff"),
+  ncrdbTee("doralBM-red-m", "M", "Red", doralBMPar, 72, 67.6, 132, 5480, "#ef4444"),
+  ncrdbTee("doralBM-white-f", "F", "White", doralBMPar, 72, 78.8, 144, 6360, "#ffffff"),
+  ncrdbTee("doralBM-red-f", "F", "Red", doralBMPar, 72, 72.9, 138, 5480, "#ef4444"),
+];
+
 const doralRedTiger: Course = {
   courseKey: "away-doral-red-tiger",
   master: {
@@ -280,6 +333,7 @@ const doralRedTiger: Course = {
         holes: doralHoles9(doralRTParB9, doralRTDistB7, 10),
         distances: { total: doralRTDistB7.reduce((a,b)=>a+b,0), front9: 0, back9: doralRTDistB7.reduce((a,b)=>a+b,0), holesCount: 9, complete18: false },
       },
+      ...doralRTUsgaTees,
     ],
   },
 };
@@ -310,6 +364,7 @@ const doralGoldenPalm: Course = {
         holes: doralHoles18(doralGPPar, doralGPDistB1415),
         distances: doralDist18(doralGPDistB1415),
       },
+      ...doralGPUsgaTees,
     ],
   },
 };
@@ -331,6 +386,7 @@ const doralSilverFox: Course = {
         holes: doralHoles18(doralSFPar, doralSFDistB1213),
         distances: doralDist18(doralSFDistB1213),
       },
+      ...doralSFUsgaTees,
     ],
   },
 };
@@ -352,6 +408,7 @@ const doralBlueMonster: Course = {
         holes: doralHoles18(doralBMPar, doralBMDistB1618),
         distances: doralDist18(doralBMDistB1618),
       },
+      ...doralBMUsgaTees,
     ],
   },
 };
@@ -1861,6 +1918,51 @@ function pgaTee18(teeId: string, sex: "M" | "F" | "U", teeName: string, teeColor
   };
 }
 
+const pgaFazioUsgaTees: Tee[] = [
+  ncrdbTee("pgaFazio-haig-m", "M", "Haig", pgaFazioPar, 72, 73.9, 130, 6977),
+  ncrdbTee("pgaFazio-1-m", "M", "Tee 1", pgaFazioPar, 72, 71.9, 127, 6551),
+  ncrdbTee("pgaFazio-2-m", "M", "Tee 2", pgaFazioPar, 72, 70, 125, 6187),
+  ncrdbTee("pgaFazio-23-m", "M", "Tee 2/3", pgaFazioPar, 72, 68.5, 122, 5966),
+  ncrdbTee("pgaFazio-3-m", "M", "Tee 3", pgaFazioPar, 72, 67.2, 117, 5574),
+  ncrdbTee("pgaFazio-34-m", "M", "Tee 3/4", pgaFazioPar, 72, 66.3, 114, 5395),
+  ncrdbTee("pgaFazio-4-m", "M", "Tee 4", pgaFazioPar, 72, 65.2, 112, 5117),
+  ncrdbTee("pgaFazio-5-m", "M", "Tee 5", pgaFazioPar, 72, 60.7, 103, 4054),
+  ncrdbTee("pgaFazio-1-f", "F", "Tee 1", pgaFazioPar, 72, 77.5, 137, 6551),
+  ncrdbTee("pgaFazio-2-f", "F", "Tee 2", pgaFazioPar, 72, 76.1, 134, 6187),
+  ncrdbTee("pgaFazio-23-f", "F", "Tee 2/3", pgaFazioPar, 72, 74.3, 130, 5966),
+  ncrdbTee("pgaFazio-3-f", "F", "Tee 3", pgaFazioPar, 72, 72.8, 126, 5574),
+  ncrdbTee("pgaFazio-34-f", "F", "Tee 3/4", pgaFazioPar, 72, 71.5, 124, 5395),
+  ncrdbTee("pgaFazio-4-f", "F", "Tee 4", pgaFazioPar, 72, 70.1, 121, 5117),
+  ncrdbTee("pgaFazio-5-f", "F", "Tee 5", pgaFazioPar, 72, 64.4, 106, 4054),
+];
+const pgaPalmerUsgaTees: Tee[] = [
+  ncrdbTee("pgaPalmer-king-m", "M", "King", pgaPalmerPar, 72, 74.7, 142, 7077),
+  ncrdbTee("pgaPalmer-1-m", "M", "Tee 1", pgaPalmerPar, 72, 72.9, 139, 6690),
+  ncrdbTee("pgaPalmer-12-m", "M", "Tee 1/2", pgaPalmerPar, 72, 71.1, 138, 6329),
+  ncrdbTee("pgaPalmer-2-m", "M", "Tee 2", pgaPalmerPar, 72, 70.3, 133, 6127),
+  ncrdbTee("pgaPalmer-23-m", "M", "Tee 2/3", pgaPalmerPar, 72, 69.4, 127, 5855),
+  ncrdbTee("pgaPalmer-3-m", "M", "Tee 3", pgaPalmerPar, 72, 67.8, 121, 5518),
+  ncrdbTee("pgaPalmer-34-m", "M", "Tee 3/4", pgaPalmerPar, 72, 66.3, 117, 5177),
+  ncrdbTee("pgaPalmer-4-m", "M", "Tee 4", pgaPalmerPar, 72, 63.8, 116, 4766),
+  ncrdbTee("pgaPalmer-5-m", "M", "Tee 5", pgaPalmerPar, 72, 61.3, 108, 4044),
+  ncrdbTee("pgaPalmer-1-f", "F", "Tee 1", pgaPalmerPar, 72, 79.4, 149, 6690),
+  ncrdbTee("pgaPalmer-12-f", "F", "Tee 1/2", pgaPalmerPar, 72, 77.5, 145, 6329),
+  ncrdbTee("pgaPalmer-2-f", "F", "Tee 2", pgaPalmerPar, 72, 76.3, 143, 6127),
+  ncrdbTee("pgaPalmer-23-f", "F", "Tee 2/3", pgaPalmerPar, 72, 74.8, 139, 5855),
+  ncrdbTee("pgaPalmer-3-f", "F", "Tee 3", pgaPalmerPar, 72, 72.9, 135, 5518),
+  ncrdbTee("pgaPalmer-34-f", "F", "Tee 3/4", pgaPalmerPar, 72, 71, 129, 5177),
+  ncrdbTee("pgaPalmer-4-f", "F", "Tee 4", pgaPalmerPar, 72, 69, 119, 4766),
+  ncrdbTee("pgaPalmer-5-f", "F", "Tee 5", pgaPalmerPar, 72, 63.8, 103, 4044),
+];
+const pgaMatchUsgaTees: Tee[] = [
+  ncrdbTee("pgaMatch-anchor-m", "M", "Anchor", null, 67, 69.1, 130, 5789),
+  ncrdbTee("pgaMatch-sailboat-m", "M", "Sailboat", null, 67, 64.5, 118, 4889),
+  ncrdbTee("pgaMatch-helm-m", "M", "Helm", null, 67, 60.9, 109, 3980),
+  ncrdbTee("pgaMatch-anchor-f", "F", "Anchor", null, 67, 74.2, 136, 5789),
+  ncrdbTee("pgaMatch-sailboat-f", "F", "Sailboat", null, 67, 69.1, 125, 4889),
+  ncrdbTee("pgaMatch-helm-f", "F", "Helm", null, 67, 64, 109, 3980),
+];
+
 const pgaNationalPalmer: Course = {
   courseKey: "away-pga-national-golf-club-palmer",
   master: {
@@ -1873,6 +1975,7 @@ const pgaNationalPalmer: Course = {
       pgaTee18("pga-palmer-uk-g1314", "F", "USKids Girls 13-14", "#111827", pgaPalmerPar, pgaPalmerG1314, pgaPalmerSIF), // Tee 6
       pgaTee18("pga-palmer-uk-g12", "F", "USKids Girls 12", "#ffffff", pgaPalmerPar, pgaPalmerG12, pgaPalmerSIF), // Tee 5
       pgaTee18("pga-palmer-uk-g11", "F", "USKids Girls 11 (2021–2024)", "#ef4444", pgaPalmerPar, pgaPalmerG11, pgaPalmerSIF), // Tee 4
+      ...pgaPalmerUsgaTees,
     ],
   },
 };
@@ -1887,6 +1990,7 @@ const pgaNationalMatch: Course = {
     tees: [
       pgaTee18("pga-match-uk-tee4", "U", "USKids Girls 11 / Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4, pgaMatchSIM), // Tee 4
       pgaTee18("pga-match-uk-tee3", "U", "USKids Girls 10 / Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3, pgaMatchSIM), // Tee 3
+      ...pgaMatchUsgaTees,
     ],
   },
 };
@@ -1928,6 +2032,7 @@ const pgaNationalFazio: Course = {
         holes: vHoles(pgaFazioPar.slice(0, 9), pgaFazioF9RS, pgaFazioSIM.slice(0, 9)),
         distances: vDist(pgaFazioF9RS),
       },
+      ...pgaFazioUsgaTees,
     ],
   },
 };

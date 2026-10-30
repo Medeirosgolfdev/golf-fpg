@@ -322,7 +322,11 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                   <td key={i + 10} className="ta-c">{fmt(byHole.get(i + 10)?.distance ?? null)}</td>
                 ))}
                 <td className="ta-c sc-tot-val sc-col-in">{fmt(inn)}</td>
-                <td className="ta-c sc-tot-val">{fmt(tot || null)}</td>
+                {/* Sem metros por buraco (ex.: tees da USGA, só o total publicado):
+                    o TOT mostra o comprimento total do tee. */}
+                <td className="ta-c sc-tot-val" title={!tot && myTot ? "Só o comprimento total é publicado — sem metros por buraco" : undefined}>
+                  {fmt(tot || myTot || null)}
+                </td>
                 {showDelta && (
                   <td
                     className="ta-c sc-tot-val"
