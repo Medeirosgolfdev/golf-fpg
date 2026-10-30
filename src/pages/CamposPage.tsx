@@ -213,8 +213,14 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
   // Por sexo: CR · Slope · «SD par» (o SD de quem fizer o par do campo nesse tee).
   const labelSpan = 1 + sexes.length * 3;
   const fallbackPar = sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null);
+  // Quando os tees não têm todos o mesmo par (ex. Glen: Red par 69 e USKids Boys 12
+  // par 72 nas mesmas marcas), o par de cada tee aparece ao lado do nome — senão o
+  // «SD par» parece incoerente para tees com o mesmo CR/Slope.
+  const teeParOf = (g: PhysTeeGroup) => teeParRange(g.teeHoles, 1, 18) ?? fallbackPar;
+  const showTeePar = new Set(groups.map(teeParOf).filter((p) => p != null)).size > 1;
 
   return (
+    <>
     <div className="sc-wrap">
       <table className="sc-table sc-grid">
         <thead>
@@ -294,6 +300,9 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
               <tr key={g.key} className="sc-tee-row" style={isSel ? { background: "var(--accent-light)" } : undefined}>
                 <td className="sc-sticky sc-tee-cell" style={isSel ? { background: "var(--accent-light)" } : undefined}>
                   <TeeBadge label={g.label} colorHex={g.colorHex} />
+                  {showTeePar && teeParOf(g) != null && (
+                    <span className="muted" style={{ fontSize: "var(--fs-10)", marginLeft: 6, whiteSpace: "nowrap" }}>par {teeParOf(g)}</span>
+                  )}
                 </td>
                 {sexes.flatMap((s) => {
                   const r = g.h18[s];
@@ -333,6 +342,17 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
         </tbody>
       </table>
     </div>
+      {showTeePar && (
+        <p className="muted" style={{ fontSize: "var(--fs-12)", margin: "8px 0 0", lineHeight: 1.5 }}>
+          <strong>Nota — tees com o mesmo CR/Slope e «SD par» diferente.</strong> Neste campo os tees
+          não têm todos o mesmo par (está ao lado do nome de cada tee). O CR e o Slope são do tee físico
+          — as marcas e as distâncias —, mas o par pode mudar: as provas de escalão (USKids, por
+          exemplo) passam alguns buracos a par 5 para os miúdos. Fazer o par é então um número de
+          pancadas diferente (ex.: 69 ou 72) e o SD sai diferente: com CR 68,3 e Slope 119, 69
+          pancadas dão SD +0,7 e 72 dão +3,5. O SD é calculado sempre sobre o CR, nunca sobre o par.
+        </p>
+      )}
+    </>
   );
 }
 
