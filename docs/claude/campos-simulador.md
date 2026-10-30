@@ -422,3 +422,19 @@ AZUIS/VERMELHAS/AMARELAS, todos CR 77,1/139). Resolve-se em três sítios: alias
 `extract-courses.js` funde na próxima corrida do update-data) e um tee oficial em
 `extraCourses.ts` posto nas DUAS chaves, para a fusão por nome não trazer de volta
 os tees dos cartões. Dados do tee: do organizador (brochura, EGA), nunca dos cartões.
+
+## Revisão de todos os campos (2026-10-30)
+
+- **Ratings da FPG:** `node scripts/check-fpg-course-ratings.js` confere o
+  `master-courses.json` com o cartão oficial (`show_card.asp`), tee a tee e sexo a
+  sexo. Corrigidos 51 ratings: o master (junção manual «lean-2») tinha os Azuis «M»
+  com o rating de senhoras copiado, tees de senhoras com o de homens e ratings
+  antigos. As colunas do cartão seguem `scorecardMeta.teeOrder.oldIndex`.
+- **Cartões dos clubes (campos away):** SI 1..n seguido e par 4 em todos os
+  buracos são inventados — o `buildAllCourses` trata-os como «sem dado» e preenche
+  com o SI/par de outro tee do mesmo campo (o SI mais repetido entre cartões).
+- **Fusões:** um nome que é alias nunca fica como canónico; entradas com nome de
+  torneio/gralha que só trazem voltas ficam em `extraCourses.ts` sem tees.
+- Por resolver: Guardizela (tees com metade do cartão FPG), «Vidago» antigo,
+  Chantilly (dois desenhos de campo na mesma entrada: U14 e ELTC 2025), Evian
+  (tees iguais com ratings de anos/sexos diferentes — fica o do 1.º cartão).
