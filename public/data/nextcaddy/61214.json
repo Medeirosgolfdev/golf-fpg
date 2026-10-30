@@ -1,7 +1,7 @@
 {
   "tourId": 61214,
   "url": "https://www.nextcaddy.com/tour/61214",
-  "scrapedAt": "2026-10-30T14:28:32.947Z",
+  "scrapedAt": "2026-10-30T16:32:19.712Z",
   "meta": {
     "name": "Pequecircuito Zona E",
     "organizer": "Real Federacion Andaluza de Golf",
@@ -22,11 +22,40 @@
     "year": 2026
   },
   "course": {
-    "parTotal": 29,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      4,
+      3,
+      3,
+      3,
+      3,
+      4,
+      3,
+      3,
+      3
+    ],
+    "si": [
+      1,
+      9,
+      17,
+      3,
+      15,
+      11,
+      5,
+      13,
+      7
+    ],
+    "meters": [
+      210,
+      140,
+      49,
+      118,
+      59,
+      221,
+      83,
+      115,
+      77
+    ],
+    "parTotal": 29
   },
   "leaderboard": [
     {
@@ -55,7 +84,35 @@
           "hcpJuego": [],
           "total": 41,
           "toPar": 12,
-          "inscribedId": 2408083
+          "inscribedId": 2408083,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                4,
+                4,
+                6,
+                3,
+                6,
+                3,
+                3,
+                4
+              ],
+              "total": 41,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -67,7 +124,35 @@
           "hcpJuego": [],
           "total": 74,
           "toPar": 45,
-          "inscribedId": 2403249
+          "inscribedId": 2403249,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                9,
+                9,
+                8,
+                9,
+                8,
+                8,
+                7,
+                9,
+                7
+              ],
+              "total": 74,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         }
       ]
     },
@@ -97,7 +182,35 @@
           "hcpJuego": [],
           "total": 35,
           "toPar": 6,
-          "inscribedId": 2406580
+          "inscribedId": 2406580,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4
+              ],
+              "total": 35,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 2,
@@ -109,7 +222,35 @@
           "hcpJuego": [],
           "total": 43,
           "toPar": 14,
-          "inscribedId": 2407352
+          "inscribedId": 2407352,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                5,
+                7,
+                4,
+                5,
+                3,
+                6,
+                5,
+                4,
+                4
+              ],
+              "total": 43,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 3,
@@ -121,7 +262,35 @@
           "hcpJuego": [],
           "total": 46,
           "toPar": 17,
-          "inscribedId": 2398250
+          "inscribedId": 2398250,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                6,
+                4,
+                6,
+                4,
+                7,
+                4,
+                5,
+                6
+              ],
+              "total": 46,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 4,
@@ -133,7 +302,35 @@
           "hcpJuego": [],
           "total": 53,
           "toPar": 24,
-          "inscribedId": 2408952
+          "inscribedId": 2408952,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                6,
+                4,
+                5,
+                6,
+                9,
+                6,
+                6,
+                5
+              ],
+              "total": 53,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 5,
@@ -145,7 +342,35 @@
           "hcpJuego": [],
           "total": 57,
           "toPar": 28,
-          "inscribedId": 2401358
+          "inscribedId": 2401358,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                9,
+                4,
+                9,
+                4,
+                9,
+                3,
+                5,
+                8
+              ],
+              "total": 57,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 6,
@@ -157,7 +382,35 @@
           "hcpJuego": [],
           "total": 57,
           "toPar": 28,
-          "inscribedId": 2398181
+          "inscribedId": 2398181,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                9,
+                5,
+                6,
+                5,
+                8,
+                9,
+                4,
+                4
+              ],
+              "total": 57,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         },
         {
           "pos": 7,
@@ -169,7 +422,35 @@
           "hcpJuego": [],
           "total": 60,
           "toPar": 31,
-          "inscribedId": 2401359
+          "inscribedId": 2401359,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                7,
+                9,
+                6,
+                7,
+                6,
+                8,
+                6,
+                6,
+                5
+              ],
+              "total": 60,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         }
       ]
     },
@@ -199,7 +480,35 @@
           "hcpJuego": [],
           "total": 53,
           "toPar": 24,
-          "inscribedId": 2387376
+          "inscribedId": 2387376,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                6,
+                7,
+                5,
+                4,
+                8,
+                8,
+                5,
+                7,
+                3
+              ],
+              "total": 53,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         }
       ]
     },
@@ -229,7 +538,35 @@
           "hcpJuego": [],
           "total": 35,
           "toPar": 6,
-          "inscribedId": 2406580
+          "inscribedId": 2406580,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                4,
+                5,
+                3,
+                3,
+                4,
+                5,
+                4,
+                3,
+                4
+              ],
+              "total": 35,
+              "meters": [
+                210,
+                140,
+                49,
+                118,
+                59,
+                221,
+                83,
+                115,
+                77
+              ]
+            }
+          ]
         }
       ]
     }

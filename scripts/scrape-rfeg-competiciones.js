@@ -156,6 +156,48 @@ async function inscritosGolfBox(cids, anoProva) {
   return { tipo, admitidos, reservas };
 }
 
+/** GetSchedule → [{ id, nome, iniIso }] (CompetitionData.S{ano}.Months.M{n}.Entries.E{id}). */
+function agendaGolfBox(s) {
+  const out = [];
+  for (const S of Object.values((s && s.CompetitionData) || {})) {
+    for (const M of Object.values(S.Months || {})) {
+      for (const E of Object.values(M.Entries || {})) {
+        const m = /^(\d{4})(\d{2})(\d{2})T/.exec(E.StartDate || "");
+        if (E.ID && E.Name && m) out.push({ id: E.ID, nome: E.Name, iniIso: `${m[1]}-${m[2]}-${m[3]}` });
+      }
+    }
+  }
+  return out;
+}
+
+const VAZIAS = new Set(["de", "del", "la", "el", "y", "e", "en", "mem", "memorial", "campeonato", "espana"]);
+const palavras = (s) => new Set(nomeBase(s).split(" ").filter((w) => w.length > 1 && !VAZIAS.has(w)));
+/** A prova do calendário GolfBox com o mesmo dia de início (ou a 1 dia — o
+ *  CE FFAA Infantil 2027 começa a 09/10 no GolfBox e a 10/10 na RFEG; o mesmo
+ *  dia ganha) e o mesmo nome em palavras (≥ 75% das palavras do nome mais
+ *  curto; a ordem não conta: «Infantil, Alevín y Benjamín» = «Benjamín, Alevín
+ *  e Infantil»). Masculino e Femenino nunca casam um com o outro. */
+function casarAgenda(agenda, nome, iniIso) {
+  if (!iniIso) return null;
+  const p = palavras(nome);
+  const sexo = (w) => (w.has("masculino") ? "M" : w.has("femenino") || w.has("fem") ? "F" : null);
+  const dia = (iso) => Date.parse(iso + "T12:00:00Z") / 86400000;
+  let melhor = null, melhorNota = 0;
+  for (const a of agenda) {
+    const dif = Math.abs(dia(a.iniIso) - dia(iniIso));
+    if (!(dif <= 1)) continue;
+    const q = palavras(a.nome);
+    if (sexo(p) && sexo(q) && sexo(p) !== sexo(q)) continue;
+    const comuns = [...p].filter((w) => q.has(w)).length;
+    // ≥ 2 palavras em comum: «P&P» some (letras soltas) e «Campeonato de España
+    // Masculino P&P» ficava só com «masculino» — casava com o Match Cuadrangular.
+    if (comuns < 2) continue;
+    const nota = comuns / Math.max(1, Math.min(p.size, q.size)) - dif * 0.01;
+    if (nota >= 0.75 && nota > melhorNota) { melhor = a; melhorNota = nota; }
+  }
+  return melhor;
+}
+
 // ── Ficheiros existentes ────────────────────────────────────────────
 function indiceExistentes() {
   const out = [];
@@ -200,6 +242,15 @@ async function main() {
     await sleep(PAUSA_MS);
   }
 
+  // Calendário do próprio GolfBox: tem os ids das provas antes de a página da
+  // RFEG os ligar (2027 já lá estava a 30/10/2026, com as páginas sem fases).
+  const agenda = [];
+  for (const ano of anos) {
+    try { agenda.push(...agendaGolfBox(await fetchJsonp(`${GB}/Handlers/ScheduleHandler/GetSchedule/CustomerId/2/Season/${ano}/CompetitionId/0/language/1034/?callback=x`))); }
+    catch (e) { console.log(`  ⚠ calendário GolfBox ${ano}: ${e.message}`); }
+    await sleep(PAUSA_MS);
+  }
+
   const existentes = indiceExistentes();
   let gravados = 0, iguais = 0, falhas = 0;
   for (const l of linhas) {
@@ -211,6 +262,10 @@ async function main() {
       const nome = pg.nome || l.nome;
       const iniIso = isoDeDmy(pg.competicao.ini) || l.inicio || null;
       const anoProva = iniIso ? +iniIso.slice(0, 4) : anoDe(nome);
+      if (!pg.cids.length) {
+        const a = casarAgenda(agenda, nome, iniIso);
+        if (a) pg.cids.push(a.id);
+      }
       const gb = pg.cids.length ? await inscritosGolfBox(pg.cids, anoProva) : { tipo: null, admitidos: [], reservas: [] };
 
       const ex = casar(existentes, wpId, nome, iniIso);
@@ -276,4 +331,4 @@ async function main() {
 }
 
 if (require.main === module) main().catch((e) => { console.error(e); process.exitCode = 1; });
-module.exports = { linhasCalendario, lerPagina, ehJuvenil, casar, nomeBase };
+module.exports = { linhasCalendario, lerPagina, ehJuvenil, casar, nomeBase, agendaGolfBox, casarAgenda };

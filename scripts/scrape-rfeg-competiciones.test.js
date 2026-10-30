@@ -7,7 +7,35 @@ import { describe, it, expect } from "vitest";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
-const { linhasCalendario, lerPagina, ehJuvenil, casar, nomeBase } = require("./scrape-rfeg-competiciones.js");
+const { linhasCalendario, lerPagina, ehJuvenil, casar, nomeBase, agendaGolfBox, casarAgenda } = require("./scrape-rfeg-competiciones.js");
+
+describe("calendário do GolfBox (ids antes de a página da RFEG os ligar)", () => {
+  const agenda = agendaGolfBox({ CompetitionData: { S2027: { Months: {
+    M2: { Entries: {
+      E769: { ID: 769, Name: "PUNTUABLE NACIONAL JUVENIL FEMENINO", StartDate: "20270205T000000" },
+      E777: { ID: 777, Name: "PUNTUABLE NACIONAL JUVENIL MASCULINO", StartDate: "20270205T000000" },
+    } },
+    M6: { Entries: { E784: { ID: 784, Name: "CAMPEONATO DE ESPAÑA BENJAMÍN, ALEVÍN E INFANTIL \"Mem. Juan Andreu\"", StartDate: "20270625T000000" } } },
+    M10: { Entries: { E813: { ID: 813, Name: "CAMPEONATO DE ESPAÑA DE FFAA INFANTIL \"Mem. Blanca Mayor\"", StartDate: "20271009T000000" } } },
+  } } } });
+  it("lê as provas da época", () => {
+    expect(agenda.map((a) => a.id)).toEqual([769, 777, 784, 813]);
+    expect(agenda[0].iniIso).toBe("2027-02-05");
+  });
+  it("mesmo dia + mesmas palavras; Masculino nunca casa com Femenino", () => {
+    expect(casarAgenda(agenda, "Puntuable Nacional Juvenil Masculino 2027", "2027-02-05").id).toBe(777);
+    expect(casarAgenda(agenda, "Puntuable Nacional Juvenil Femenino 2027", "2027-02-05").id).toBe(769);
+    expect(casarAgenda(agenda, "Campeonato de España Infantil, Alevín y Benjamín 2027", "2027-06-25").id).toBe(784);
+  });
+  it("uma palavra em comum não chega (P&P × Match Cuadrangular, 30/10/2026)", () => {
+    const ag = [{ id: 126, nome: "CAMPEONATO DE ESPAÑA MASCULINO P&P", iniIso: "2026-03-07" }];
+    expect(casarAgenda(ag, "Match Cuadrangular Sub-18 Masculino 2026", "2026-03-06")).toBeNull();
+  });
+  it("aceita 1 dia de diferença, não mais", () => {
+    expect(casarAgenda(agenda, "Campeonato de España de FFAA Infantil \"Mem. Blanca Mayor\" 2027", "2027-10-10").id).toBe(813);
+    expect(casarAgenda(agenda, "Puntuable Nacional Juvenil Masculino 2027", "2027-02-08")).toBeNull();
+  });
+});
 
 const CAL = `<div class="wpe-mes-body"> <a href="https://rfegolf.es/competicion/campeonato-de-espana-sub-16-masculino" class="wpe-fila-evento" data-id="158989" data-titulo="campeonato de españa sub-16 masculino 2026" data-sede="infinitum" data-estado="finalizado" data-inicio="2026-05-01" data-mes-grupo="2026-05" data-comite="comité juvenil"> <div class="wpe-fila-fecha"><span class='wpe-mes'>MAY</span></div> <div class="wpe-fila-info"> <span class="wpe-fila-titulo">Campeonato de España Sub-16 Masculino 2026</span></div></a>
 <a href="https://rfegolf.es/competicion/campeonato-de-espana-absoluto-masculino" class="wpe-fila-evento" data-id="158001" data-titulo="campeonato de españa absoluto masculino 2026" data-sede="x" data-estado="finalizado" data-inicio="2026-06-01" data-comite="comité masculino"><span class="wpe-fila-titulo">Campeonato de España Absoluto Masculino 2026</span></a>

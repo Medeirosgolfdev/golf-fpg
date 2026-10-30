@@ -1,7 +1,7 @@
 {
   "tourId": 73124,
   "url": "https://www.nextcaddy.com/tour/73124",
-  "scrapedAt": "2026-10-30T14:28:09.661Z",
+  "scrapedAt": "2026-10-30T16:33:29.864Z",
   "meta": {
     "name": "CAMPEONATO JUVENIL DEL FRESNILLO  - BENJAMINES",
     "organizer": null,
@@ -24,11 +24,40 @@
     "year": 2026
   },
   "course": {
-    "parTotal": 36,
-    "parInferred": true,
-    "parConfidence": "total-high",
-    "si": null,
-    "meters": null
+    "par": [
+      5,
+      4,
+      3,
+      4,
+      5,
+      4,
+      4,
+      4,
+      3
+    ],
+    "si": [
+      18,
+      2,
+      8,
+      10,
+      12,
+      16,
+      6,
+      4,
+      14
+    ],
+    "meters": [
+      383,
+      323,
+      163,
+      271,
+      359,
+      235,
+      302,
+      328,
+      132
+    ],
+    "parTotal": 36
   },
   "leaderboard": [
     {
@@ -57,7 +86,35 @@
           "hcpJuego": [],
           "total": 59,
           "toPar": 23,
-          "inscribedId": 2396645
+          "inscribedId": 2396645,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                6,
+                5,
+                7,
+                10,
+                5,
+                7,
+                6,
+                5
+              ],
+              "total": 59,
+              "meters": [
+                383,
+                323,
+                163,
+                271,
+                359,
+                235,
+                302,
+                328,
+                132
+              ]
+            }
+          ]
         }
       ]
     },
@@ -87,7 +144,35 @@
           "hcpJuego": [],
           "total": 45,
           "toPar": 9,
-          "inscribedId": 2396645
+          "inscribedId": 2396645,
+          "roundScores": [
+            {
+              "round": 1,
+              "scores": [
+                8,
+                6,
+                5,
+                7,
+                10,
+                5,
+                7,
+                6,
+                5
+              ],
+              "total": 59,
+              "meters": [
+                383,
+                323,
+                163,
+                271,
+                359,
+                235,
+                302,
+                328,
+                132
+              ]
+            }
+          ]
         }
       ]
     }
