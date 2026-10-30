@@ -37,6 +37,7 @@ const outputRoot    = path.join(process.cwd(), "output");
 const masterPath    = path.join(process.cwd(), "public", "data", "master-courses.json");
 const melhoriasPath = path.join(process.cwd(), "melhorias.json");
 const aliasPath     = path.join(process.cwd(), "course-aliases.json");
+const federadosPath = path.join(process.cwd(), "public", "data", "federados.json");
 const outPath       = path.join(process.cwd(), "public", "data", "away-courses.json");
 const cachePath     = path.join(process.cwd(), "output", "extract-courses-cache.json");
 
@@ -46,7 +47,7 @@ function computeCacheFingerprint() {
   const parts = [];
 
   // 1. Config files
-  for (const fp of [masterPath, melhoriasPath, aliasPath]) {
+  for (const fp of [masterPath, melhoriasPath, aliasPath, federadosPath]) {
     try { parts.push(`${fp}:${fs.statSync(fp).mtimeMs}`); }
     catch { parts.push(`${fp}:missing`); }
   }
@@ -131,6 +132,34 @@ if (fs.existsSync(masterPath)) {
   } catch (e) {
     console.warn("  Aviso: nao consegui ler master-courses.json:", e.message);
   }
+}
+
+/* ── 1.5. Sexo de cada federado (para dar sexo aos tees dos cartões) ──
+   O cartão do clube não diz se o CR/Slope é de homens ou de senhoras, mas cada
+   cartão está na pasta de um federado e o federados.json tem o sexo dele. */
+
+const fedSex = {};
+if (fs.existsSync(federadosPath)) {
+  try {
+    for (const p of (readJSON(federadosPath).players || [])) {
+      const g = String(p.gender || "").toUpperCase();
+      if (g === "M" || g === "F") fedSex[String(Number(p.federation_code))] = g;
+    }
+    console.log(`  Federados: sexo de ${Object.keys(fedSex).length} jogadores`);
+  } catch (e) {
+    console.warn("  Aviso: nao consegui ler federados.json:", e.message);
+  }
+}
+
+/** Sexo do tee pelos cartões que o trouxeram: um sexo só, ou ≥ 90% de um
+ *  deles → esse sexo; misturado ou sem federados conhecidos → "U". */
+function teeSexFromCounts(c) {
+  if (!c) return "U";
+  const t = c.M + c.F;
+  if (!t) return "U";
+  if (c.M / t >= 0.9) return "M";
+  if (c.F / t >= 0.9) return "F";
+  return "U";
 }
 
 /* ── 2. Carregar course-aliases.json ── */
@@ -263,6 +292,7 @@ if (fs.existsSync(outputRoot)) {
     const baseDir = path.join(outputRoot, fedDir);
     const cardMap = loadScorecardsByScoreId(baseDir);
     if (cardMap.size === 0) continue;
+    const playerSex = fedSex[String(Number(fedDir))] || null;
 
     for (const [, rec] of cardMap.entries()) {
       totalFiles++;
@@ -313,8 +343,10 @@ if (fs.existsSync(outputRoot)) {
               slope,
               holes,
               teeColorId: rec.tee_color_id || null,
+              sexCount: { M: 0, F: 0 },
             });
           }
+          if (playerSex) entry.tees.get(teeKey).sexCount[playerSex]++;
         }
       } catch {}
     }
@@ -542,7 +574,7 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
 
     teeArr.push({
       teeId:   `${courseKey}-${idx++}`,
-      sex:     "U",
+      sex:     teeSexFromCounts(t.sexCount),
       teeName: t.teeName,
       ratings: {
         holes18: { par: is18 ? parTotal : null, courseRating: t.cr, slopeRating: t.slope },
