@@ -1,0 +1,3382 @@
+{
+  "tournament": "Campeonato de España de FFAA SUB 16 Femenino 2025",
+  "slug": "lgs-334",
+  "year": 2025,
+  "format": "Cruces",
+  "parentCompetitionId": 334,
+  "startDate": "2025-09-10",
+  "endDate": "2025-09-07",
+  "flights": [
+    {
+      "competitionId": 334,
+      "name": "1º Flight",
+      "format": null,
+      "parentId": null,
+      "isCompleted": true,
+      "source": "https://mitarjeta.golf/torneos/matchplay/334",
+      "rounds": [
+        {
+          "number": 2,
+          "name": "Día 2 - Cuartos de final",
+          "date": "2025-09-11",
+          "matches": [
+            {
+              "teamMatchId": 1160,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "4 - 1",
+              "label": "1 vs 8",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 4,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Marta Muñoz Escudero",
+                      "Rut Diaz Garcia"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Sofia Martin Del Cid",
+                      "Daniela Patricia Castillo Caba"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Angela Revuelta Goicoechea",
+                      "Blanca Gomez-Balboa Garcia"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Caterina Aviño Garcia",
+                      "Teresa Calvar Mas"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "8/7",
+                  "playedHoles": 11,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rut Diaz Garcia"
+                    ],
+                    "result": "8/7",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Caterina Aviño Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": null,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Marta Muñoz Escudero"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Daniela Patricia Castillo Caba"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": null,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Angela Revuelta Goicoechea"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Teresa Calvar Mas"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1161,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "1 - 4",
+              "label": "4 vs 5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 4,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "6/5",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Daniela Gallego Meseguer",
+                      "Ariana Perez Ruiz"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Africa Oliva Cardell",
+                      "Indira Gomez Montalva"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Lucia Albacete Carmona",
+                      "Luna Isabella Valencia Mejia"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Clara Uso Jurado",
+                      "Carlota Lopez Minguela"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Lucia Albacete Carmona"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Clara Uso Jurado"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Daniela Gallego Meseguer"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Africa Oliva Cardell"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Luna Isabella Valencia Mejia"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Carlota Lopez Minguela"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1162,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "2.5 - 2.5",
+              "label": "3 vs 6",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cataluña",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Ana Carlon Obregon",
+                      "Daniela Guerrero Alcoba"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Paula Jimenez Martinez",
+                      "Lola Cabanes Cisneros"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez",
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Marta Bertran Herraiz",
+                      "Fiona Del Olmo Bak"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "H.19",
+                  "playedHoles": 19,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Marta Bertran Herraiz"
+                    ],
+                    "result": "H.19",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Daniela Guerrero Alcoba"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Fiona Del Olmo Bak"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "H19",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez"
+                    ],
+                    "result": "H19",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Paula Jimenez Martinez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1163,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 3",
+              "label": "2 vs 7",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Julia Moreno Aguirre",
+                      "Martina Bedmar Acien"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Nadia Salas Agbusi",
+                      "Naia Goikoetxea Zapirain"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan",
+                      "Sofia Gamilla Karpa"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Martina Miranda Arana",
+                      "Inza Iraola Paniagua"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Sofia Gamilla Karpa"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Nadia Salas Agbusi"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Julia Moreno Aguirre"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Martina Miranda Arana"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "H19",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Inza Iraola Paniagua"
+                    ],
+                    "result": "H19",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Día 3 - Semifinales",
+          "date": "2025-09-12",
+          "matches": [
+            {
+              "teamMatchId": 1175,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "4 - 1",
+              "label": "G.1-8 VS 4-5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 4,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rut Diaz Garcia",
+                      "Marta Muñoz Escudero"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Indira Gomez Montalva",
+                      "Africa Oliva Cardell"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Blanca Gomez-Balboa Garcia",
+                      "Angela Revuelta Goicoechea"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Carlota Lopez Minguela",
+                      "Clara Uso Jurado"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Blanca Gomez-Balboa Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Clara Uso Jurado"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "6/5",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Marta Muñoz Escudero"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Africa Oliva Cardell"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "6/5",
+                  "playedHoles": 11,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Angela Revuelta Goicoechea"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Carlota Lopez Minguela"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1177,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "3 - 2",
+              "label": "G. 3-6 VS 2-7",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Daniela Guerrero Alcoba",
+                      "Ana Carlon Obregon"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Nadia Salas Agbusi",
+                      "Naia Goikoetxea Zapirain"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "4/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez",
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Inza Iraola Paniagua",
+                      "Martina Miranda Arana"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Nadia Salas Agbusi"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 12,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Daniela Guerrero Alcoba"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Naia Goikoetxea Zapirain"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 11,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Inza Iraola Paniagua"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1176,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "0.5 - 2.5",
+              "label": "P. 1-8 VS 4-5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Daniela Patricia Castillo Caba",
+                      "Sofia Martin Del Cid"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Lucia Albacete Carmona",
+                      "Ariana Perez Ruiz"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "7/6",
+                  "playedHoles": 12,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Caterina Aviño Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Daniela Gallego Meseguer"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Teresa Calvar Mas"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Luna Isabella Valencia Mejia"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1178,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "P.3-6 VS 2-7",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Cataluña",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Paula Jimenez Martinez",
+                      "Lola Cabanes Cisneros"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan",
+                      "Martina Bedmar Acien"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Marta Bertran Herraiz"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Sofia Gamilla Karpa"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Fiona Del Olmo Bak"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Julia Moreno Aguirre"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Día 4 - Final",
+          "date": "2025-09-13",
+          "matches": [
+            {
+              "teamMatchId": 1189,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "1.5 - 3.5",
+              "label": "3 vs 4",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 3.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Africa Oliva Cardell",
+                      "Indira Gomez Montalva"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Nadia Salas Agbusi",
+                      "Naia Goikoetxea Zapirain"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Carlota Lopez Minguela",
+                      "Clara Uso Jurado"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Martina Miranda Arana",
+                      "Inza Iraola Paniagua"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Indira Gomez Montalva"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Martina Miranda Arana"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Clara Uso Jurado"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Naia Goikoetxea Zapirain"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Carlota Lopez Minguela"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Inza Iraola Paniagua"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1188,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "3 - 2",
+              "label": "1 vs 2",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rut Diaz Garcia",
+                      "Marta Muñoz Escudero"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Daniela Guerrero Alcoba",
+                      "Ana Carlon Obregon"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "5/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Angela Revuelta Goicoechea",
+                      "Blanca Gomez-Balboa Garcia"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez",
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rut Diaz Garcia"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Carmen Garcia Gonzalez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 4,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Marta Muñoz Escudero"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Daniela Guerrero Alcoba"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 5,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Angela Revuelta Goicoechea"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Cristina Garcia Gonzalez"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1180,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "0 - 3",
+              "label": "7º Y 8º",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Sofia Martin Del Cid",
+                      "Daniela Patricia Castillo Caba"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Julia Moreno Aguirre",
+                      "Martina Bedmar Acien"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Caterina Aviño Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Sofia Gamilla Karpa"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Teresa Calvar Mas"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1179,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "5º Y 6º",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cataluña",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Lucia Albacete Carmona",
+                      "Ariana Perez Ruiz"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Lola Cabanes Cisneros",
+                      "Paula Jimenez Martinez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Daniela Gallego Meseguer"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Marta Bertran Herraiz"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Luna Isabella Valencia Mejia"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cataluña",
+                    "players": [
+                      "Fiona Del Olmo Bak"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "competitionId": 334,
+      "name": "2º Flight",
+      "format": null,
+      "parentId": null,
+      "isCompleted": true,
+      "source": "https://mitarjeta.golf/torneos/matchplay/334",
+      "rounds": [
+        {
+          "number": 2,
+          "name": "Día 2 - Cuartos de final",
+          "date": "2025-09-11",
+          "matches": [
+            {
+              "teamMatchId": 1164,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "9 vs 16",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Saioa Ozcoidi Martinez",
+                      "Rocio Lasheras Salinas"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Maria Del Pino Uribe De Leon",
+                      "Valeria Armas Mateo"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Marina Guezuraga Berraondo"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Lucia Uribe De Leon"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Aroa Gonzalez Hernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Isabel Ping Martinez Guerra"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1165,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "12 vs 13",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Sara Pedreira Luna",
+                      "Sonsoles Garcia Parrado"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Paula Valls Alesanco",
+                      "Judith Perez Martínez"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Gabriela Gallart Noval"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Ines Losada Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Alejandra Huici Cano"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1166,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "3 - 0",
+              "label": "11 vs 14",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Ines Maria Garcia Hidalgo",
+                      "Isabel Gallego Muñoz"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Martina Gracia Fondevila",
+                      "Elena Carrillo Odriozola"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Maria Francisca Salgado"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Constanza Beamonte Escartin"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Carlota Alejandra Burcio Macias"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Ioana Garcia Trifu"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1167,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "10 vs 15",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Lucia Ulloa Moreno",
+                      "Catalina Agrasar Fernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Lucía Gonzalez Ortega",
+                      "Elsa Gil Prada"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jimena Maria Garcia Mateo"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Sara Cirajas Calvo"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": null,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Elena Isorna Felpeto"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Maria Martinez Navarro"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Día 3 - Semifinales",
+          "date": "2025-09-12",
+          "matches": [
+            {
+              "teamMatchId": 1168,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "G. 9/16 vs 12/13",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "7/6",
+                  "playedHoles": 3,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Saioa Ozcoidi Martinez",
+                      "Rocio Lasheras Salinas"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Paula Valls Alesanco",
+                      "Judith Perez Martínez"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Marina Guezuraga Berraondo"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Ines Losada Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Aroa Gonzalez Hernandez"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1169,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "G. 11/14 vs 10/15",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Isabel Gallego Muñoz",
+                      "Maria Francisca Salgado"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Lucia Ulloa Moreno",
+                      "Catalina Agrasar Fernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Ines Maria Garcia Hidalgo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jimena Maria Garcia Mateo"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": null,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Carlota Alejandra Burcio Macias"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Elena Isorna Felpeto"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1170,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "0 - 1",
+              "label": "Enfrentamiento Liguilla 1",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "6/5",
+                  "playedHoles": 4,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Gabriela Gallart Noval",
+                      "Sonsoles Garcia Parrado"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Constanza Beamonte Escartin",
+                      "Ioana Garcia Trifu"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1171,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento Liguilla 2",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "7/6",
+                  "playedHoles": 3,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Elena Carrillo Odriozola",
+                      "Martina Gracia Fondevila"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Amelia Sanz Pasadas",
+                      "Sofia Diaz Jimenez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1172,
+              "matchNo": 5,
+              "startTime": null,
+              "result": "0 - 1",
+              "label": "Enfrentamiento Liguilla 3",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Maria Martinez Navarro",
+                      "Sara Cirajas Calvo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Lucia Uribe De Leon",
+                      "Valeria Armas Mateo"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1173,
+              "matchNo": 6,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento Liguilla 4",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Alejandra Huici Cano",
+                      "Sara Pedreira Luna"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Lucía Gonzalez Ortega",
+                      "Elsa Gil Prada"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1174,
+              "matchNo": 7,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento Liguilla 5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Isabel Ping Martinez Guerra",
+                      "Maria Del Pino Uribe De Leon"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Martina Gutierrez Garcia",
+                      "Elvira Herraiz Lopez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Día 4 - Final",
+          "date": "2025-09-13",
+          "matches": [
+            {
+              "teamMatchId": 1183,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento liguilla 1",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "9/7",
+                  "playedHoles": 2,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Sara Pedreira Luna",
+                      "Sonsoles Garcia Parrado"
+                    ],
+                    "result": "9/7",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Amelia Sanz Pasadas",
+                      "Sofia Diaz Jimenez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1184,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento liguilla 2",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "6/5",
+                  "playedHoles": 4,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Ioana Garcia Trifu",
+                      "Martina Gracia Fondevila"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Valeria Armas Mateo",
+                      "Maria Del Pino Uribe De Leon"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1185,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento liguilla 3",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Maria Martinez Navarro",
+                      "Sara Cirajas Calvo"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Martina Gutierrez Garcia",
+                      "Elvira Herraiz Lopez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1186,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "0 - 1",
+              "label": "Enfrentamiento liguilla 4",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Alejandra Huici Cano",
+                      "Gabriela Gallart Noval"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Isabel Ping Martinez Guerra",
+                      "Lucia Uribe De Leon"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1187,
+              "matchNo": 5,
+              "startTime": null,
+              "result": "1 - 0",
+              "label": "Enfrentamiento liguilla 5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Constanza Beamonte Escartin",
+                      "Elena Carrillo Odriozola"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Elsa Gil Prada",
+                      "Lucía Gonzalez Ortega"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1181,
+              "matchNo": 6,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "11º Y 12º",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Judith Perez Martínez",
+                      "Paula Valls Alesanco"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Carlota Alejandra Burcio Macias",
+                      "Isabel Gallego Muñoz"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "7/6",
+                  "playedHoles": 3,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Ines Losada Garcia"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Ines Maria Garcia Hidalgo"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Maria Francisca Salgado"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1182,
+              "matchNo": 7,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "9º Y 10º",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Rocio Lasheras Salinas",
+                      "Saioa Ozcoidi Martinez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Catalina Agrasar Fernandez",
+                      "Lucia Ulloa Moreno"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "6/5",
+                  "playedHoles": 4,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Marina Guezuraga Berraondo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jimena Maria Garcia Mateo"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Aroa Gonzalez Hernandez"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Elena Isorna Felpeto"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "standings": [
+    {
+      "pos": 1,
+      "name": "Madrid"
+    },
+    {
+      "pos": 2,
+      "name": "Castilla y León"
+    },
+    {
+      "pos": 3,
+      "name": "País Vasco"
+    },
+    {
+      "pos": 4,
+      "name": "C. Valenciana"
+    },
+    {
+      "pos": 5,
+      "name": "Murcia"
+    },
+    {
+      "pos": 6,
+      "name": "Andalucía"
+    },
+    {
+      "pos": 7,
+      "name": "Cataluña"
+    },
+    {
+      "pos": 8,
+      "name": "Baleares"
+    },
+    {
+      "pos": 9,
+      "name": "Galicia"
+    },
+    {
+      "pos": 10,
+      "name": "Navarra"
+    },
+    {
+      "pos": 11,
+      "name": "La Rioja"
+    },
+    {
+      "pos": 12,
+      "name": "Extremadura"
+    },
+    {
+      "pos": 13,
+      "name": "Aragón"
+    },
+    {
+      "pos": 14,
+      "name": "Canarias"
+    },
+    {
+      "pos": 15,
+      "name": "Pdo. Asturias"
+    },
+    {
+      "pos": 16,
+      "name": "Cantabria"
+    },
+    {
+      "pos": 17,
+      "name": "Castilla La Mancha"
+    }
+  ],
+  "scrapedAt": "2026-10-30T15:06:30.838Z"
+}

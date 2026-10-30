@@ -219,6 +219,15 @@ jobs:
         timeout-minutes: 15
         run: node scripts/enrich-lgs-dates.js || [ $? -eq 2 ]
 
+      # Campeonatos por equipas (FFAA…): os cruzamentos de match play depois do
+      # stroke play, do mitarjeta → public/data/lgs-matchplay/{id}.json (aba
+      # «Match Play» na /rfeg). Precisa das datas do passo anterior.
+      - name: Match play LGS (campeonatos por equipas)
+        id: lgs_matchplay
+        continue-on-error: true
+        timeout-minutes: 20
+        run: node scripts/scrape-lgs-matchplay.js || [ $? -eq 2 ]
+
       - name: Enrich LGS stats (metros + SI por buraco)
         id: enrich_lgs_stats
         continue-on-error: true
@@ -272,7 +281,7 @@ jobs:
         timeout-minutes: 20
         run: |
           bash scripts/ci/push-generated.sh -m "data: update Espanha (RFEG + LGS + NC + FCG) $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ \
+            -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ public/data/lgs-matchplay/ \
                public/data/nextcaddy/ public/data/fcg/ public/data/rfegolf-resultats-index.json \
                public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
                public/data/spain-players.json public/data/rfegolf-rivals.json \
@@ -299,6 +308,7 @@ jobs:
           [ "${{ steps.fcg.outcome }}"         = "failure" ] && FAILED="$FAILED FCG"
           [ "${{ steps.enrich_lgs.outcome }}"  = "failure" ] && FAILED="$FAILED enrich-LGS"
           [ "${{ steps.enrich_lgs_stats.outcome }}" = "failure" ] && FAILED="$FAILED enrich-LGS-stats"
+          [ "${{ steps.lgs_matchplay.outcome }}" = "failure" ] && FAILED="$FAILED match-play-LGS"
           [ "${{ steps.infer_par.outcome }}"   = "failure" ] && FAILED="$FAILED infer-par-NC"
           # Os builds e o commit não têm continue-on-error: se falharem o job já
           # está vermelho; aqui só se diz qual foi.

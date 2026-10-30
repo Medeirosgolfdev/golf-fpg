@@ -400,6 +400,8 @@ async function rfegLoadDivisions(
     // Draw por ronda intercalado (ver roundDraws acima) — sem aba "Draw" agregada.
     roundDraws: roundDraws.length ? roundDraws : undefined,
     links: d.links.length ? d.links : undefined,
+    // Campeonatos por equipas (FFAA): os cruzamentos depois do stroke play → aba «Match Play».
+    matchplay: d.matchplay ?? undefined,
     // Sem SD: a RFEG não publica o SD dos jogadores e o site só mostra SD oficiais.
     scOptions: { ...lgsScorecardOptions(), hideSD: true },
   };

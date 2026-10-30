@@ -74,6 +74,9 @@ export interface MatchplayTeamMatch {
   home: MatchplaySide | null;
   away: MatchplaySide | null;
   winner: "home" | "away" | null;
+  /** O que se disputa neste confronto, quando a fonte o diz (mitarjeta:
+   *  «1 - 2 Puesto», «3 y 4 Puesto») — coluna «Disputa» da ronda. */
+  label?: string | null;
   games: MatchplayGame[];
   /** Confronto a N lados (3-way match play): TODOS os lados, com os pontos de
    *  cada um; `home`/`away` ficam com os dois primeiros. Os jogos são os
@@ -108,6 +111,8 @@ export interface MatchplayFile {
   startDate?: string;
   endDate?: string;
   flights: MatchplayFlight[];
+  /** Classificação final por equipas, quando a fonte a publica (mitarjeta). */
+  standings?: { pos: number; name: string }[];
   scrapedAt: string;
   /** Com isto, a vista avisa dos confrontos sem resultado (`isSettled` falso)
    *  e explica porquê com este texto. */

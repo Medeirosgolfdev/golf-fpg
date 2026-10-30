@@ -1,0 +1,2804 @@
+{
+  "tournament": "Castilla y Le&oacute;n vs Andalic&iacute;a",
+  "slug": "lgs-285",
+  "year": 2024,
+  "format": "Cruces",
+  "parentCompetitionId": 285,
+  "startDate": "2024-10-27",
+  "endDate": "2024-10-27",
+  "flights": [
+    {
+      "competitionId": 285,
+      "name": "1º Flight",
+      "format": null,
+      "parentId": null,
+      "isCompleted": true,
+      "source": "https://mitarjeta.golf/torneos/matchplay/285",
+      "rounds": [
+        {
+          "number": 2,
+          "name": "Día 2 - Cuartos de final",
+          "date": "2024-10-28",
+          "matches": [
+            {
+              "teamMatchId": 1011,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "3 - 0",
+              "label": "1 VS 8",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Roberto Cascon Lopez",
+                      "Alberto De Antonio Palermo"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Ángel Rios Victoria",
+                      "Francisco Javier Pérez Martínez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Fernando Cabezudo San Jose"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Borja Placido Vera Ruiz"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "7/6",
+                  "playedHoles": 12,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Jose M. Ortíz De Pinedo Fernández"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Jesus Soler Cordoba"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1012,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "0 - 3",
+              "label": "4 VS 5",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Jose Maria Pardo Picazo",
+                      "Carlos Javier Gutiérrez García"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Marcial Dominguez Cabrera",
+                      "Carlos Vega Gonzalez"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Juan Pardo Picazo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Cesar Crespo"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "7/5",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Pablo Hernandez De Torres"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Bernabe Gonzalez Alonso"
+                    ],
+                    "result": "7/5",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1013,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "3 VS 6",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan",
+                      "James Ducker"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "David Benitez Saenz",
+                      "Jesus Peña Azofra"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "6/5",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Laurentino Gil Salas"
+                    ],
+                    "result": "6/5",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Javier Perez Gomez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Juan Ramon Izquierdo Santamaria"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1014,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "0.5 - 2.5",
+              "label": "2 VS 7",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Jose Luis Marcilla Roza",
+                      "Ignacio Martinez De Azcoitia Fernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Luis Montero Aisa",
+                      "Fernando Mata Tornos"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Jose Miguel Fernandez Cañamero"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Javier Niederleytner García-Ll"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Luis Jose Neira Alcazar"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rafael Santonja Hernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Día 3 - Semifinales",
+          "date": "2024-10-29",
+          "matches": [
+            {
+              "teamMatchId": 1019,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "G (1-8) VS (4-5)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Roberto Cascon Lopez",
+                      "Alberto De Antonio Palermo"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Carlos Vega Gonzalez",
+                      "Marcial Dominguez Cabrera"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Fernando Cabezudo San Jose"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Bernabe Gonzalez Alonso"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Jose M. Ortíz De Pinedo Fernández"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Cesar Crespo"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1021,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "G (3-6) VS (2-7)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan",
+                      "James Ducker"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Fernando Mata Tornos",
+                      "Rafael Santonja Hernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Javier Perez Gomez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Javier Niederleytner García-Ll"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Laurentino Gil Salas"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Luis Montero Aisa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1020,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "0.5 - 2.5",
+              "label": "P (1-8) VS (4-5)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Ángel Rios Victoria",
+                      "Francisco Javier Pérez Martínez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Jose Maria Pardo Picazo",
+                      "Carlos Javier Gutiérrez García"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Borja Placido Vera Ruiz"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Pablo Hernandez De Torres"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Jesus Soler Cordoba"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Juan Pardo Picazo"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1022,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "P (3-6) VS (2-7)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "7/5",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Jesus Peña Azofra",
+                      "Juan Ramon Izquierdo Santamaria"
+                    ],
+                    "result": "7/5",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Jose Luis Marcilla Roza",
+                      "Ignacio Martinez De Azcoitia Fernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Jose Miguel Fernandez Cañamero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "David Benitez Saenz"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Luis Jose Neira Alcazar"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Día 4 - Final",
+          "date": "2024-10-30",
+          "matches": [
+            {
+              "teamMatchId": 1032,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "Puesto 7 - 8",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Murcia",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Pdo. Asturias",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Ángel Rios Victoria",
+                      "Jesus Soler Cordoba"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Luis Jose Neira Alcazar",
+                      "Jose Miguel Fernandez Cañamero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Francisco Javier Pérez Martínez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Jose Luis Marcilla Roza"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "4/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Murcia",
+                    "players": [
+                      "Borja Placido Vera Ruiz"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Pdo. Asturias",
+                    "players": [
+                      "Ignacio Martinez De Azcoitia Fernandez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1031,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "Puesto 5 - 6",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla La Mancha",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "La Rioja",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Jose Maria Pardo Picazo",
+                      "Carlos Javier Gutiérrez García"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "David Benitez Saenz",
+                      "Clara Valls Alesanco"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Pablo Hernandez De Torres"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Juan Ramon Izquierdo Santamaria"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla La Mancha",
+                    "players": [
+                      "Juan Pardo Picazo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "La Rioja",
+                    "players": [
+                      "Jesus Peña Azofra"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1028,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "Puestos 3 - 4",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Canarias",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Madrid",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Carlos Vega Gonzalez",
+                      "Marcial Dominguez Cabrera"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Rafael Santonja Hernandez",
+                      "Javier Niederleytner García-Ll"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Cesar Crespo"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Fernando Mata Tornos"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Canarias",
+                    "players": [
+                      "Bernabe Gonzalez Alonso"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Madrid",
+                    "players": [
+                      "Luis Montero Aisa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1027,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "1.5 - 1.5",
+              "label": "Puestos 1 - 2",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Castilla y León",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Andalucía",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Roberto Cascon Lopez",
+                      "Alberto De Antonio Palermo"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Chanya Huaysan",
+                      "James Ducker"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Fernando Cabezudo San Jose"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Javier Perez Gomez"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Castilla y León",
+                    "players": [
+                      "Jose M. Ortíz De Pinedo Fernández"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Andalucía",
+                    "players": [
+                      "Laurentino Gil Salas"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "competitionId": 285,
+      "name": "2º Flight",
+      "format": null,
+      "parentId": null,
+      "isCompleted": true,
+      "source": "https://mitarjeta.golf/torneos/matchplay/285",
+      "rounds": [
+        {
+          "number": 2,
+          "name": "Día 2 - Cuartos de final",
+          "date": "2024-10-28",
+          "matches": [
+            {
+              "teamMatchId": 1015,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "1.5 - 1.5",
+              "label": "9 vs 16",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jose Angel Perez Reñones",
+                      "Fernando Agrelo Perez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Vicente Lopez Iglesias",
+                      "Adolfo Lena Marin"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Daniel Varela Tubio"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Jose Miguel Herreros Perez"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Marcos Gomez Dominguez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Jesus Rodriguez Diaz"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1016,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "2.5 - 0.5",
+              "label": "12 vs 13",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 0.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "David Abadia Beriain",
+                      "Cesar Galdeano Huarte"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Blanca Maicas Redondo",
+                      "Regina Cano Urbano"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jesus Casajus Gorostiaga"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Lucas Berges Abad"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jorge Zubieta Laseca"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Manuel Brosed Capistros"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1017,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "3 - 0",
+              "label": "11 vs 14",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Carlos De Diego Palacios",
+                      "Samuel Abbisogno San Miguel"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Madamar Miralles Colomo",
+                      "Andoni Latorre Salsidua"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "German Gutierrez Fernandez"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Raul Martin Maes"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Andrea Noriega Puente"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Ion Izulain Santos"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1018,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "10 vs 15",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Hugo Kestas Nustedt",
+                      "Joan Deya Llopis"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Geronimo Palacio Leal",
+                      "Sergi Lopez Bernabeu"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Miquel Deya Llopis"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Mario Atienza Devis"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Astin Richard Nustedt"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Ruben Sanchez Garcia"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Día 3 - Semifinales",
+          "date": "2024-10-29",
+          "matches": [
+            {
+              "teamMatchId": 1023,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "G (9-16) VS (12-13)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jose Angel Perez Reñones",
+                      "Fernando Agrelo Perez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "David Abadia Beriain",
+                      "Cesar Galdeano Huarte"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Daniel Varela Tubio"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jorge Zubieta Laseca"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Marcos Gomez Dominguez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jesus Casajus Gorostiaga"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1025,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "2 - 1",
+              "label": "G (11-14) VS (10-15)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Carlos De Diego Palacios",
+                      "Samuel Abbisogno San Miguel"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Hugo Kestas Nustedt",
+                      "Joan Deya Llopis"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "German Gutierrez Fernandez"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Miquel Deya Llopis"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Andrea Noriega Puente"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Astin Richard Nustedt"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1024,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "3 - 0",
+              "label": "P (9-16) VS (12-13)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Jose Miguel Herreros Perez",
+                      "Vicente Lopez Iglesias"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Blanca Maicas Redondo",
+                      "Regina Cano Urbano"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Jesus Rodriguez Diaz"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Manuel Brosed Capistros"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Adolfo Lena Marin"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Lucas Berges Abad"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1026,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "P (11-14) VS (10-15)",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "5/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Ion Izulain Santos",
+                      "Raul Martin Maes"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Mario Atienza Devis",
+                      "Ruben Sanchez Garcia"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Madamar Miralles Colomo"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Sergi Lopez Bernabeu"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Andoni Latorre Salsidua"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Geronimo Palacio Leal"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Día 4 - Final",
+          "date": "2024-10-30",
+          "matches": [
+            {
+              "teamMatchId": 1034,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "0 - 3",
+              "label": "Puestos 15-16",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Aragón",
+                "iso": null,
+                "country": null,
+                "points": 0,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "País Vasco",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Lucas Berges Abad",
+                      "Regina Cano Urbano"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Ion Izulain Santos",
+                      "Andoni Latorre Salsidua"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Manuel Brosed Capistros"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Raul Martin Maes"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Aragón",
+                    "players": [
+                      "Blanca Maicas Redondo"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "País Vasco",
+                    "players": [
+                      "Madamar Miralles Colomo"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1033,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "Puestos 13-14",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Extremadura",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "C. Valenciana",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Vicente Lopez Iglesias",
+                      "Jose Miguel Herreros Perez"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Ruben Sanchez Garcia",
+                      "Sergi Lopez Bernabeu"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Jesus Rodriguez Diaz"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Mario Atienza Devis"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Extremadura",
+                    "players": [
+                      "Adolfo Lena Marin"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "C. Valenciana",
+                    "players": [
+                      "Geronimo Palacio Leal"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1030,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "1.5 - 1.5",
+              "label": "Puestos 11 - 12",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Galicia",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Baleares",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Jose Angel Perez Reñones",
+                      "Fernando Agrelo Perez"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Hugo Kestas Nustedt",
+                      "Joan Deya Llopis"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Daniel Varela Tubio"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Miquel Deya Llopis"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Galicia",
+                    "players": [
+                      "Marcos Gomez Dominguez"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Baleares",
+                    "players": [
+                      "Astin Richard Nustedt"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1029,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "1 - 2",
+              "label": "Puestos 9 - 10",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Navarra",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Cantabria",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "7/6",
+                  "playedHoles": 12,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "David Abadia Beriain",
+                      "Cesar Galdeano Huarte"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Andrea Noriega Puente",
+                      "Samuel Abbisogno San Miguel"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 2,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jesus Casajus Gorostiaga"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "German Gutierrez Fernandez"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 3,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Navarra",
+                    "players": [
+                      "Jorge Zubieta Laseca"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Cantabria",
+                    "players": [
+                      "Carlos De Diego Palacios"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "standings": [
+    {
+      "pos": 1,
+      "name": "Andalucía"
+    },
+    {
+      "pos": 2,
+      "name": "Castilla y León"
+    },
+    {
+      "pos": 3,
+      "name": "Canarias"
+    },
+    {
+      "pos": 4,
+      "name": "Madrid"
+    },
+    {
+      "pos": 5,
+      "name": "Castilla La Mancha"
+    },
+    {
+      "pos": 6,
+      "name": "La Rioja"
+    },
+    {
+      "pos": 7,
+      "name": "Murcia"
+    },
+    {
+      "pos": 8,
+      "name": "Pdo. Asturias"
+    },
+    {
+      "pos": 9,
+      "name": "Cantabria"
+    },
+    {
+      "pos": 10,
+      "name": "Navarra"
+    },
+    {
+      "pos": 11,
+      "name": "Galicia"
+    },
+    {
+      "pos": 12,
+      "name": "Baleares"
+    },
+    {
+      "pos": 13,
+      "name": "C. Valenciana"
+    },
+    {
+      "pos": 14,
+      "name": "Extremadura"
+    },
+    {
+      "pos": 15,
+      "name": "País Vasco"
+    },
+    {
+      "pos": 16,
+      "name": "Aragón"
+    }
+  ],
+  "scrapedAt": "2026-10-30T15:05:06.255Z"
+}

@@ -1,0 +1,4516 @@
+{
+  "tournament": "Match Octogonal Masculino 2025",
+  "slug": "lgs-291",
+  "year": 2025,
+  "format": "Cruces",
+  "parentCompetitionId": 291,
+  "startDate": "2025-01-25",
+  "endDate": "2025-01-25",
+  "flights": [
+    {
+      "competitionId": 291,
+      "name": "1º Flight",
+      "format": null,
+      "parentId": null,
+      "isCompleted": true,
+      "source": "https://mitarjeta.golf/torneos/matchplay/291",
+      "rounds": [
+        {
+          "number": 2,
+          "name": "Match Play",
+          "date": "2025-01-26",
+          "matches": [
+            {
+              "teamMatchId": 1053,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "6 - 3",
+              "label": "3rd & 4th Place",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Spain",
+                "iso": null,
+                "country": null,
+                "points": 6,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Portugal",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar",
+                      "Pablo Alperi López"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro",
+                      "Diogo Rocha"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal",
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira",
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander",
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso",
+                      "João Pereira"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pablo Alperi López"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1052,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "4.5 - 4.5",
+              "label": "1st & 2nd Place",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "England",
+                "iso": null,
+                "country": null,
+                "points": 4.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Switzerland",
+                "iso": null,
+                "country": null,
+                "points": 4.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne",
+                      "Dan Hayes"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam",
+                      "Alex Amey"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford",
+                      "Ben Bolton"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann",
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge",
+                      "Eliot Baker"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas",
+                      "Tom Mao"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dan Hayes"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Alex Amey"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Ben Bolton"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Eliot Baker"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1054,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "6 - 3",
+              "label": "7th & 8th Position",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Netherland",
+                "iso": null,
+                "country": null,
+                "points": 6,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Germany",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering",
+                      "Björn Driessen"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung",
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens",
+                      "Denny Kloeth"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm",
+                      "Anton Von L`estocq"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Ian Groenendijk",
+                      "Guus Lafeber"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener",
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "4/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Anton Von L`estocq"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1055,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "3 - 6",
+              "label": "5th &6th Place",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Ireland",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Italy",
+                "iso": null,
+                "country": null,
+                "points": 6,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill",
+                      "John Doyle"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Bruno Frontero",
+                      "Pietro Boeris"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran",
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi",
+                      "Carlo Roman"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan",
+                      "Adam Fahey"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano",
+                      "Michele Ferrero"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "7/6",
+                  "playedHoles": 3,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "John Doyle"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Bruno Frontero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Carlo Roman"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Michele Ferrero"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 3,
+          "name": "Match Play",
+          "date": "2025-01-27",
+          "matches": [
+            {
+              "teamMatchId": 1050,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "7 - 2",
+              "label": "C vs B",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "England",
+                "iso": null,
+                "country": null,
+                "points": 7,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Spain",
+                "iso": null,
+                "country": null,
+                "points": 2,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne",
+                      "Dan Hayes"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar",
+                      "Pablo Alperi López"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford",
+                      "Ben Bolton"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal",
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge",
+                      "Eliot Baker"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander",
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dan Hayes"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pablo Alperi López"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Ben Bolton"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Eliot Baker"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1051,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "4 - 5",
+              "label": "A vs D",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Netherland",
+                "iso": null,
+                "country": null,
+                "points": 4,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Ireland",
+                "iso": null,
+                "country": null,
+                "points": 5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens",
+                      "Denny Kloeth"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill",
+                      "John Doyle"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering",
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey",
+                      "Paul Caughlan"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen",
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran",
+                      "Rory Gallagher"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "John Doyle"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Rory Gallagher"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1049,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "4 - 5",
+              "label": "F vs G",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Switzerland",
+                "iso": null,
+                "country": null,
+                "points": 4,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Portugal",
+                "iso": null,
+                "country": null,
+                "points": 5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas",
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro",
+                      "Diogo Rocha"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann",
+                      "Miles Wennestam"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira",
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao",
+                      "Alex Amey"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso",
+                      "João Pereira"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Alex Amey"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1048,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "4.5 - 4.5",
+              "label": "E vs H",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Germany",
+                "iso": null,
+                "country": null,
+                "points": 4.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Italy",
+                "iso": null,
+                "country": null,
+                "points": 4.5,
+                "isLead": false
+              },
+              "winner": null,
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener",
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi",
+                      "Carlo Roman"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung",
+                      "Anton Von L`estocq"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris",
+                      "Bruno Frontero"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "7/6",
+                  "playedHoles": 3,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm",
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano",
+                      "Michele Ferrero"
+                    ],
+                    "result": "7/6",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Bruno Frontero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Carlo Roman"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Anton Von L`estocq"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Maximilian Franck"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Michele Ferrero"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 4,
+          "name": "Match Play",
+          "date": "2025-01-28",
+          "matches": [
+            {
+              "teamMatchId": 1044,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "2.5 - 6.5",
+              "label": "A vs C",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Netherland",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "England",
+                "iso": null,
+                "country": null,
+                "points": 6.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens",
+                      "Scott Woltering"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne",
+                      "Dan Hayes"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth",
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford",
+                      "Ben Bolton"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen",
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge",
+                      "Eliot Baker"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dan Hayes"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Ben Bolton"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Eliot Baker"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1046,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "6.5 - 2.5",
+              "label": "B vs D",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Spain",
+                "iso": null,
+                "country": null,
+                "points": 6.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Ireland",
+                "iso": null,
+                "country": null,
+                "points": 2.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal",
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "John Doyle",
+                      "Luke O'neill"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "1 up",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander",
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": "1 up",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan",
+                      "Brian Doran"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "2UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar",
+                      "Pablo Alperi López"
+                    ],
+                    "result": "2UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey",
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "John Doyle"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pablo Alperi López"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1045,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "3.5 - 5.5",
+              "label": "E vs G",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Germany",
+                "iso": null,
+                "country": null,
+                "points": 3.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Portugal",
+                "iso": null,
+                "country": null,
+                "points": 5.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm",
+                      "Anton Von L`estocq"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira",
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener",
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira",
+                      "Miguel Cardoso"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung",
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha",
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Anton Von L`estocq"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1047,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "5.5 - 3.5",
+              "label": "F vs H",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Switzerland",
+                "iso": null,
+                "country": null,
+                "points": 5.5,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Italy",
+                "iso": null,
+                "country": null,
+                "points": 3.5,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann",
+                      "Mischa Candinas"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano",
+                      "Michele Ferrero"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam",
+                      "Ben Steinmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris",
+                      "Bruno Frontero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Alex Amey",
+                      "Tom Mao"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi",
+                      "Carlo Roman"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Michele Ferrero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Alex Amey"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Carlo Roman"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Bruno Frontero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "number": 5,
+          "name": "Match Play",
+          "date": "2025-01-29",
+          "matches": [
+            {
+              "teamMatchId": 1040,
+              "matchNo": 1,
+              "startTime": null,
+              "result": "3 - 6",
+              "label": "A vs B",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Netherland",
+                "iso": null,
+                "country": null,
+                "points": 3,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Spain",
+                "iso": null,
+                "country": null,
+                "points": 6,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "6UP",
+                  "playedHoles": 13,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens",
+                      "Scott Woltering"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander",
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": "6UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3UP",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth",
+                      "Ian Groenendijk"
+                    ],
+                    "result": "3UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal",
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen",
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar",
+                      "Pablo Alperi López"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Thijmen Batens"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Alberto Dominguez Ávila"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "1 up",
+                  "playedHoles": 18,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Scott Woltering"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Daniel Martinez Regal"
+                    ],
+                    "result": "1 up",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Denny Kloeth"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Esteban Vazquez Martín"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Ian Groenendijk"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pedro Marin Santander"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Guus Lafeber"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Pablo Alperi López"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Netherland",
+                    "players": [
+                      "Björn Driessen"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Spain",
+                    "players": [
+                      "Marcel Fonseca Aguilar"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1041,
+              "matchNo": 2,
+              "startTime": null,
+              "result": "8 - 1",
+              "label": "C vs D",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "England",
+                "iso": null,
+                "country": null,
+                "points": 8,
+                "isLead": true
+              },
+              "away": {
+                "teamId": null,
+                "name": "Ireland",
+                "iso": null,
+                "country": null,
+                "points": 1,
+                "isLead": false
+              },
+              "winner": "home",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne",
+                      "Dan Hayes"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan",
+                      "Brian Doran"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford",
+                      "Ben Bolton"
+                    ],
+                    "result": "3/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey",
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge",
+                      "Eliot Baker"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill",
+                      "John Doyle"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "6/4",
+                  "playedHoles": 14,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Tom Osborne"
+                    ],
+                    "result": "6/4",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Luke O'neill"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dan Hayes"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Paul Caughlan"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 15,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Dylan Shaw-Radford"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "John Doyle"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 17,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Eliot Baker"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Adam Fahey"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "4/2",
+                  "playedHoles": 16,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Charlie Rusbridge"
+                    ],
+                    "result": "4/2",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Rory Gallagher"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "England",
+                    "players": [
+                      "Ben Bolton"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Ireland",
+                    "players": [
+                      "Brian Doran"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1042,
+              "matchNo": 3,
+              "startTime": null,
+              "result": "1.5 - 7.5",
+              "label": "E vs F",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Germany",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Switzerland",
+                "iso": null,
+                "country": null,
+                "points": 7.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "1 up",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung",
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann",
+                      "Mischa Candinas"
+                    ],
+                    "result": "1 up",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Anton Von L`estocq",
+                      "Leo Böhm"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao",
+                      "Alex Amey"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "8/7",
+                  "playedHoles": 2,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener",
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann",
+                      "Miles Wennestam"
+                    ],
+                    "result": "8/7",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leonas Jung"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Jean Leon Aeschimann"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Maximilian Franck"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Alex Amey"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Leo Böhm"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Ben Steinmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Anton Von L`estocq"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Mischa Candinas"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Lauri Diener"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Tom Mao"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Germany",
+                    "players": [
+                      "Colin Bärmann"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Switzerland",
+                    "players": [
+                      "Miles Wennestam"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                }
+              ]
+            },
+            {
+              "teamMatchId": 1043,
+              "matchNo": 4,
+              "startTime": null,
+              "result": "1.5 - 7.5",
+              "label": "G vs H",
+              "isSettled": true,
+              "isStarted": true,
+              "home": {
+                "teamId": null,
+                "name": "Portugal",
+                "iso": null,
+                "country": null,
+                "points": 1.5,
+                "isLead": false
+              },
+              "away": {
+                "teamId": null,
+                "name": "Italy",
+                "iso": null,
+                "country": null,
+                "points": 7.5,
+                "isLead": true
+              },
+              "winner": "away",
+              "games": [
+                {
+                  "matchNo": 1,
+                  "order": 1,
+                  "format": "foursome",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira",
+                      "Miguel Cardoso"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Michele Ferrero",
+                      "Filippo Ponzano"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 2,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha",
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi",
+                      "Carlo Roman"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 3,
+                  "format": "foursome",
+                  "result": "3/2",
+                  "playedHoles": 7,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira",
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris",
+                      "Bruno Frontero"
+                    ],
+                    "result": "3/2",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 1,
+                  "order": 4,
+                  "format": "single",
+                  "result": "4/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "João Pereira"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Filippo Ponzano"
+                    ],
+                    "result": "4/3",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 2,
+                  "order": 5,
+                  "format": "single",
+                  "result": "1UP",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Miguel Cardoso"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Giovanni Binaghi"
+                    ],
+                    "result": "1UP",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 3,
+                  "order": 6,
+                  "format": "single",
+                  "result": "AS",
+                  "playedHoles": 9,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Diogo Rocha"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Michele Ferrero"
+                    ],
+                    "result": null,
+                    "won": false
+                  }
+                },
+                {
+                  "matchNo": 4,
+                  "order": 7,
+                  "format": "single",
+                  "result": "5/4",
+                  "playedHoles": 5,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Bernardo Pinheiro"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Bruno Frontero"
+                    ],
+                    "result": "5/4",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 5,
+                  "order": 8,
+                  "format": "single",
+                  "result": "2/1",
+                  "playedHoles": 8,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "Afonso Oliveira"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Carlo Roman"
+                    ],
+                    "result": "2/1",
+                    "won": true
+                  }
+                },
+                {
+                  "matchNo": 6,
+                  "order": 9,
+                  "format": "single",
+                  "result": "5/3",
+                  "playedHoles": 6,
+                  "startTime": null,
+                  "isFinal": true,
+                  "home": {
+                    "teamId": null,
+                    "name": "Portugal",
+                    "players": [
+                      "José Miguel Franco De Sousa"
+                    ],
+                    "result": null,
+                    "won": false
+                  },
+                  "away": {
+                    "teamId": null,
+                    "name": "Italy",
+                    "players": [
+                      "Pietro Boeris"
+                    ],
+                    "result": "5/3",
+                    "won": true
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "standings": [
+    {
+      "pos": 1,
+      "name": "England"
+    },
+    {
+      "pos": 2,
+      "name": "Switzerland"
+    },
+    {
+      "pos": 3,
+      "name": "Spain"
+    },
+    {
+      "pos": 4,
+      "name": "Portugal"
+    },
+    {
+      "pos": 5,
+      "name": "Italy"
+    },
+    {
+      "pos": 6,
+      "name": "Ireland"
+    },
+    {
+      "pos": 7,
+      "name": "Netherland"
+    },
+    {
+      "pos": 8,
+      "name": "Germany"
+    }
+  ],
+  "scrapedAt": "2026-10-30T15:05:16.574Z"
+}

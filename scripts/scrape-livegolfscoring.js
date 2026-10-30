@@ -40,19 +40,24 @@ const MESES_ES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, 
 function lgsCompleto(file) {
   try {
     const d = JSON.parse(fs.readFileSync(file, "utf-8"));
-    const m = d.meta || {};
-    const r = /(\d+)\s+([a-z]+)\s*-\s*(\d+)\s+([a-z]+)/i.exec(m.dateRange || "");
-    const mesFim = r && MESES_ES[r[4].toLowerCase()];
-    if (m.year && mesFim) {
-      const mesIni = MESES_ES[r[2].toLowerCase()];
-      const ano = m.year + (mesIni && mesFim < mesIni ? 1 : 0);   // "28 diciembre - 02 enero"
-      const fim = `${ano}-${String(mesFim).padStart(2, "0")}-${r[3].padStart(2, "0")}`;
-      return String(d.scrapedAt || "").slice(0, 10) > fim;
-    }
+    const fim = lgsFimIso(d.meta);
+    if (fim) return String(d.scrapedAt || "").slice(0, 10) > fim;
     return !(d.rounds || []).some((rd) => !(rd.players || []).length || rd.players.some((p) => p._partial));
   } catch {
     return false; // ilegível → reler
   }
+}
+
+/** Último dia ("YYYY-MM-DD") de um torneio LGS: meta.year + "dd mes - dd mes";
+ *  null sem ano ou sem datas legíveis. */
+function lgsFimIso(meta) {
+  const m = meta || {};
+  const r = /(\d+)\s+([a-z]+)\s*-\s*(\d+)\s+([a-z]+)/i.exec(m.dateRange || "");
+  const mesFim = r && MESES_ES[r[4].toLowerCase()];
+  if (!m.year || !mesFim) return null;
+  const mesIni = MESES_ES[r[2].toLowerCase()];
+  const ano = m.year + (mesIni && mesFim < mesIni ? 1 : 0);   // "28 diciembre - 02 enero"
+  return `${ano}-${String(mesFim).padStart(2, "0")}-${r[3].padStart(2, "0")}`;
 }
 
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36";
@@ -757,7 +762,7 @@ if (require.main === module) {
 
 // Exportados para testes (o main() só corre quando o ficheiro é o entrypoint).
 module.exports = {
-  lgsCompleto, scrapeTorneo, httpGet,
+  lgsCompleto, lgsFimIso, scrapeTorneo, httpGet,
   parseHoyoAHoyo, parseClasificacion, parseEstadisticas, parseCourseValue,
   parseTorneoMeta, parseHorarios, parseHorarioRounds,
 };

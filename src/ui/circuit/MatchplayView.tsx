@@ -19,6 +19,9 @@
  *   - jogadores com identidade (`playerRefs`): link para /jogadores/:fed e
  *     gross (±par) ao lado do nome;
  *   - `pendingNote` no ficheiro: aviso dos confrontos sem resultado;
+ *   - `label` por confronto (coluna «Disputa», ex. «1 - 2 Puesto») e
+ *     `standings` (classificação final) — campeonatos por equipas do
+ *     mitarjeta, `scripts/scrape-lgs-matchplay.js` (/rfeg);
  *   - prop `roundPicker`: selector das rondas (ex.: Dia 1 / Dia 2 / Total).
  */
 import { Fragment, useMemo, useState, type CSSProperties } from "react";
@@ -266,7 +269,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
   );
 }
 
-type MatchSortKey = "no" | "home" | "res" | "away" | "time";
+type MatchSortKey = "no" | "home" | "res" | "away" | "label" | "time";
 
 /** Tabela de confrontos de UMA ronda (Quarter/Semi/Final). */
 function RoundTable({ round }: { round: MatchplayRound }) {
@@ -284,6 +287,7 @@ function RoundTable({ round }: { round: MatchplayRound }) {
         case "home": return m.home?.name ?? "";
         case "res": return m.result ?? "";
         case "away": return m.away?.name ?? "";
+        case "label": return m.label ?? "";
         case "time": return m.startTime ?? "";
       }
     };
@@ -329,6 +333,12 @@ function RoundTable({ round }: { round: MatchplayRound }) {
     );
   };
 
+  // «Disputa» (mitarjeta: «1 - 2 Puesto») só quando a fonte a dá; a Hora só
+  // quando há horas — sem nenhuma das duas a tabela fica como era.
+  const hasLabel = round.matches.some(m => m.label);
+  const hasTime = !hasLabel || round.matches.some(m => m.startTime);
+  const nCols = 5 + (hasLabel ? 1 : 0) + (hasTime ? 1 : 0);   // # Casa Resultado Fora Jogos (+ Disputa, Hora)
+
   return (
     <div style={{ overflowX: "auto" }}>
       <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
@@ -338,7 +348,8 @@ function RoundTable({ round }: { round: MatchplayRound }) {
             <SortableHdr k="home" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "right", width: "34%" }}>Casa</SortableHdr>
             <SortableHdr k="res" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ textAlign: "center" }}>Resultado</SortableHdr>
             <SortableHdr k="away" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} style={{ width: "34%" }}>Fora</SortableHdr>
-            <SortableHdr k="time" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Hora</SortableHdr>
+            {hasLabel && <SortableHdr k="label" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Disputa</SortableHdr>}
+            {hasTime && <SortableHdr k="time" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Hora</SortableHdr>}
             <th className="tight">Jogos</th>
           </tr>
         </thead>
@@ -370,14 +381,15 @@ function RoundTable({ round }: { round: MatchplayRound }) {
                     )}
                   </td>
                   <td>{teamCell(m.away, m.winner === "away", settled, "left")}</td>
-                  <td className="tight" style={{ color: "var(--text-muted)" }}>{m.startTime ?? "—"}</td>
+                  {hasLabel && <td className="tight" style={{ color: "var(--text-muted)", whiteSpace: "nowrap" }}>{m.label ?? "—"}</td>}
+                  {hasTime && <td className="tight" style={{ color: "var(--text-muted)" }}>{m.startTime ?? "—"}</td>}
                   <td className="tight" style={{ color: "var(--text-muted)" }}>
                     {m.games.length ? `${m.games.length} ${isExpanded ? "▴" : "▾"}` : "—"}
                   </td>
                 </tr>
                 {isExpanded && (
                   <tr className="row-expanded">
-                    <td colSpan={6} style={{ background: "var(--bg-card)", padding: "8px 12px 12px" }}>
+                    <td colSpan={nCols} style={{ background: "var(--bg-card)", padding: "8px 12px 12px" }}>
                       <GamesTable games={m.games} home={m.home} away={m.away} />
                     </td>
                   </tr>
@@ -492,6 +504,36 @@ function MultiWayRoundTable({ round }: { round: MatchplayRound }) {
   );
 }
 
+/** Classificação final por equipas (quando a fonte a publica — mitarjeta). */
+function StandingsTable({ rows }: { rows: { pos: number; name: string }[] }) {
+  const { sortKey, sortDir, toggleSort } = useSort<"pos" | "name">("pos");
+  const sorted = useMemo(() => {
+    const dir = sortDir === "asc" ? 1 : -1;
+    return [...rows].sort((a, b) => (sortKey === "pos" ? a.pos - b.pos : a.name.localeCompare(b.name, "pt")) * dir);
+  }, [rows, sortKey, sortDir]);
+  return (
+    <div style={{ marginBottom: 20 }}>
+      <div className="fw-700" style={{ marginBottom: 4 }}>Classificação final</div>
+      <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "auto", minWidth: 260 }}>
+        <thead>
+          <tr>
+            <SortableHdr k="pos" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">#</SortableHdr>
+            <SortableHdr k="name" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Equipa</SortableHdr>
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map(r => (
+            <tr key={`${r.pos}-${r.name}`} className={`player-list-row${sideIsPt({ teamId: null, name: r.name, iso: null, country: null, points: null, isLead: false }) ? " row-portuguese" : ""}`}>
+              <td className="num">{r.pos}</td>
+              <td style={{ fontWeight: r.pos <= 3 ? 700 : 400 }}>{r.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
 function FlightSection({ fl, showTitle, roundFilter }: { fl: MatchplayFlight; showTitle: boolean; /** Só esta ronda (null = todas). */ roundFilter: number | null }) {
   const rounds = useMemo(
     () => [...fl.rounds].filter(r => roundFilter == null || r.number === roundFilter).sort((a, b) => a.number - b.number),
@@ -566,7 +608,9 @@ export default function MatchplayView({ data, roundPicker = false }: {
           ⚠ <strong>{pendentes}</strong> {pendentes === 1 ? "confronto sem resultado publicado" : "confrontos sem resultado publicado"} — {data.pendingNote}
         </div>
       )}
-      {data.flights.map(fl => <FlightSection key={fl.competitionId} fl={fl} roundFilter={roundFilter} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
+      {data.standings?.length ? <StandingsTable rows={data.standings} /> : null}
+      {/* Chave com o nome: no mitarjeta os flights partilham o id do torneio. */}
+      {data.flights.map(fl => <FlightSection key={`${fl.competitionId}-${fl.name}`} fl={fl} roundFilter={roundFilter} showTitle={multiFlight || !!(fl.format && fl.format !== "KnockOut")} />)}
       {/* Só faz sentido com confrontos de equipas (quadros individuais não têm jogos). */}
       {anyGames && <div style={{ fontSize: "var(--fs-11)", color: "var(--text-muted)" }}>
         {nway

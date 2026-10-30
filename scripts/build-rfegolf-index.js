@@ -340,6 +340,7 @@ for (const file of ncFiles) {
 
 // ── 3) Livegolfscoring (HTML hbh — fonte rica de scorecards) ─────────
 const LGS_ROOT = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
+const LGS_MP_ROOT = path.resolve(__dirname, "../public/data/lgs-matchplay");
 const lgsFiles = fs.existsSync(LGS_ROOT)
   ? fs.readdirSync(LGS_ROOT).filter(f => /^\d+\.json$/.test(f)).sort()
   : [];
@@ -376,6 +377,8 @@ for (const file of lgsFiles) {
       leaderboardPlayers: totalPlayers,
       nRounds: (j.rounds || []).length,
       roster: rosterFrom((j.rounds && j.rounds[0] && j.rounds[0].players) || []),
+      // Fase de match play (campeonatos por equipas) — scrape-lgs-matchplay.js.
+      matchplayFile: fs.existsSync(path.join(LGS_MP_ROOT, file)) ? `lgs-matchplay/${file}` : undefined,
       scrapedAt: j.scrapedAt || null,
     });
   } catch (e) { console.warn("skip lgs " + file + ": " + e.message); skipped++; }

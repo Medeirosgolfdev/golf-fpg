@@ -14,6 +14,7 @@ import type { TotalsPlayer } from "../../ui/circuit/TotalsResumo";
 import type { Tournament as FPGTournament, Player as FPGPlayer } from "../fpgTypes";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../nacional2026Loader";
 import type { CircuitLink } from "../../ui/circuit/types";
+import type { MatchplayFile } from "../../ui/circuit/matchplayTypes";
 import { loadFedByName, loadGolfboxPlayers, type FedByNameEntry } from "../playerLookups";
 import type { RFEGDetail, RFEGIndexEntry, RFEGPlayer, NCDetail, LgsDetail, DobLookup, HcpLookup } from "./types";
 import { esDateToIso } from "./text";
@@ -186,6 +187,8 @@ export interface RfegDivisionData {
   /** NextCaddy com rapazes E raparigas: o leaderboard partido por sexo
    *  (desconhecidos ficam com os rapazes para não desaparecerem). */
   bySex: { M: FPGPlayer[]; F: FPGPlayer[] } | null;
+  /** LGS por equipas (FFAA…): a fase de match play depois do stroke play. */
+  matchplay: MatchplayFile | null;
 }
 
 /** Carrega e converte o detalhe de um torneio. `null` se o ficheiro não existir.
@@ -289,5 +292,8 @@ export async function loadRfegDivisionData(
     ncTotals,
     ncHighlights,
     bySex,
+    matchplay: t.matchplayFile
+      ? await cachedFetchJson<MatchplayFile>(`/data/${t.matchplayFile}`).catch(() => null)
+      : null,
   };
 }
