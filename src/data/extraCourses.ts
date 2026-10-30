@@ -1521,6 +1521,67 @@ const elPratAzul = elPratRoute("azul", "Azul", pratAzulTees);
 const elPratVioleta = elPratRoute("violeta", "Violeta", pratVioletaTees);
 const elPratValles = elPratRoute("valles", "El Vallès (9 buracos ×2)", pratVallesTees);
 
+/* ─────────────────────────────────────────────────────────────────────────
+   The Vale Resort (Hensol, Gales) — US Kids British Kids Championship 2026
+   (27–28/10/2026). Escalões por percurso da página de inscrições: Boys 10–18 no
+   Wales National; Boys 9 e raparigas no Lake; os de 9 buracos na volta da frente
+   do Lake. Metros e par dos resultados USKids (jardas × 0,9144) — só rapazes.
+   Sem CR/Slope: a USKids não publicou (procurado a 30/10/2026; há as regras
+   locais local_rules_bkc_2026_-_wales_national.pdf e _-_lake.pdf).
+   ───────────────────────────────────────────────────────────────────────── */
+
+const valeWNPar = [4,5,3,5,4,4,4,3,4, 5,4,3,4,3,5,4,4,4]; // par USKids 72
+const valeWNB1314 = [293,437,125,409,306,294,315,140,280, 438,260,114,357,115,385,305,336,296]; // 5205 m
+const valeWNB12   = [283,411,125,377,306,225,242,105,280, 395,260,114,328,96,327,296,336,267];  // 4773 m
+const valeWNB1011 = [251,356,116,344,256,225,242,105,239, 358,260,105,221,96,327,250,259,231];  // 4241 m
+const valeLakePar = [3,5,3,4,4,5,5,3,4, 3,4,4,3,5,4,5,4,4]; // par USKids 72
+const valeLakeB9  = [116,307,114,232,229,315,304,115,224, 83,223,197,92,299,197,238,208,205];   // 3698 m
+const valeLakeB8  = [77,254,73,196,194,264,242,82,201]; // 1583 m, buracos 1–9
+const valeLakeB7  = [77,216,69,150,145,212,203,73,161]; // 1306 m, buracos 1–9
+
+function valeTee(teeId: string, teeName: string, par: number[], dist: number[]): Tee {
+  return {
+    teeId, sex: "M", teeName,
+    ratings: { holes18: { par: par.slice(0, dist.length).reduce((a, b) => a + b, 0), courseRating: null, slopeRating: null } },
+    holes: vHoles(par, dist),
+    distances: vDist(dist),
+  };
+}
+
+const BKC26_LINKS = [
+  { label: "US Kids British Kids Championship 2026", url: "https://tournaments.uskidsgolf.com/tournaments/international/find-tournament/518958/british-kids-championship-2026" },
+];
+
+const valeWalesNational: Course = {
+  courseKey: "away-the-vale-resort-wales-national",
+  master: {
+    courseId: "away-the-vale-resort-wales-national",
+    name: "The Vale Resort - Wales National Course",
+    country: "Gales",
+    links: { fpg: null, scorecards: "https://www.valeresort.com/the-wales-national-course/", extra: BKC26_LINKS },
+    tees: [
+      valeTee("vale-wn-uk-b1314", "USKids Boys 13-14", valeWNPar, valeWNB1314),
+      valeTee("vale-wn-uk-b12", "USKids Boys 12", valeWNPar, valeWNB12),
+      valeTee("vale-wn-uk-b1011", "USKids Boys 11 / 10", valeWNPar, valeWNB1011),
+    ],
+  },
+};
+
+const valeLake: Course = {
+  courseKey: "away-the-vale-resort-lake",
+  master: {
+    courseId: "away-the-vale-resort-lake",
+    name: "The Vale Resort - Lake Course",
+    country: "Gales",
+    links: { fpg: null, scorecards: "https://www.valeresort.com/the-lake-course/", extra: BKC26_LINKS },
+    tees: [
+      valeTee("vale-lake-uk-b9", "USKids Boys 9", valeLakePar, valeLakeB9),
+      valeTee("vale-lake-uk-b8", "USKids Boys 8", valeLakePar, valeLakeB8),
+      valeTee("vale-lake-uk-b7", "USKids Boys 7 & Under", valeLakePar, valeLakeB7),
+    ],
+  },
+};
+
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
@@ -2349,6 +2410,8 @@ export function getExtraCourses(): Course[] {
     villaPadiernaFlamingos2,
     sanRoqueOld,
     sanRoqueNew,
+    valeWalesNational,
+    valeLake,
     elPratRosa,
     elPratAmarillo,
     elPratVerde,
