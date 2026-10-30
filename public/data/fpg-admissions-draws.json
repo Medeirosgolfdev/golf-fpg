@@ -1,6 +1,6 @@
 {
-  "scrapedAt": "2026-10-30T17:27:32.626Z",
-  "total": 1238,
+  "scrapedAt": "2026-10-30T17:33:27.117Z",
+  "total": 1251,
   "source": "scrape-fpg-admissions-draws-node.js (linkpage cross-domain)",
   "tournaments": [
     {
@@ -401734,13 +401734,12 @@
       "tcode": "11084",
       "name": "TAÇA PRESIDENTE CGSS 2026",
       "date": "2026-10-31",
-      "expectedYear": 2026,
       "admissions": {
         "name": "TAÇA PRESIDENTE CGSS 2026",
         "date": "2026-10-31",
         "totalInscritos": 1,
         "reservas": 0,
-        "status": "Inscrições em curso",
+        "status": "Inscrições fechadas",
         "rounds": 1,
         "tcode": "11084",
         "ccode": "007",
@@ -401756,6 +401755,18 @@
             "status": "confirmed"
           }
         ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "007",
+      "tcode": "90078",
+      "name": "TAÇA PRESIDENTE CGSS 2026",
+      "date": "2026-10-31",
+      "expectedYear": "2026",
+      "admissions": {
+        "error": "param-errors",
+        "players": []
       },
       "draws": {}
     },
@@ -404694,6 +404705,234 @@
             "country": "Portugal"
           }
         ]
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10255",
+      "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 18",
+      "date": "2027-01-23",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 18",
+        "date": "2027-01-23",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10255",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10256",
+      "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 14",
+      "date": "2027-01-23",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 14",
+        "date": "2027-01-23",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10256",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10257",
+      "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 12",
+      "date": "2027-01-23",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 12",
+        "date": "2027-01-23",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10257",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10258",
+      "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 10",
+      "date": "2027-01-23",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Tejo -Qtª Peru - Sub 10",
+        "date": "2027-01-23",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10258",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "987",
+      "tcode": "10259",
+      "name": "1º Torneio Drive Challenge Norte - Miramar - Sub18",
+      "date": "2027-02-08",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Norte - Miramar - Sub18",
+        "date": "2027-02-08",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10259",
+        "ccode": "987",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "987",
+      "tcode": "10260",
+      "name": "1º Torneio Drive Challenge Norte - Miramar - Sub14",
+      "date": "2027-02-08",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Norte - Miramar - Sub14",
+        "date": "2027-02-08",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10260",
+        "ccode": "987",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "987",
+      "tcode": "10261",
+      "name": "1º Torneio Drive Challenge Norte - Miramar - Sub12",
+      "date": "2027-02-08",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Norte - Miramar - Sub12",
+        "date": "2027-02-08",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10261",
+        "ccode": "987",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "987",
+      "tcode": "10262",
+      "name": "1º Torneio Drive Challenge Norte - Miramar - Sub10",
+      "date": "2027-02-08",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "1º Torneio Drive Challenge Norte - Miramar - Sub10",
+        "date": "2027-02-08",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10262",
+        "ccode": "987",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10259",
+      "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 18",
+      "date": "2027-02-27",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 18",
+        "date": "2027-02-27",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10259",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10260",
+      "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 14",
+      "date": "2027-02-27",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 14",
+        "date": "2027-02-27",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10260",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10261",
+      "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 12",
+      "date": "2027-02-27",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 12",
+        "date": "2027-02-27",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10261",
+        "ccode": "985",
+        "players": []
+      },
+      "draws": {}
+    },
+    {
+      "ccode": "985",
+      "tcode": "10262",
+      "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 10",
+      "date": "2027-02-27",
+      "expectedYear": "2027",
+      "admissions": {
+        "name": "2º Torneio Drive Challenge Tejo - Montado - Sub 10",
+        "date": "2027-02-27",
+        "totalInscritos": 0,
+        "reservas": 0,
+        "status": "Inscrições ainda não abertas",
+        "rounds": 1,
+        "tcode": "10262",
+        "ccode": "985",
+        "players": []
       },
       "draws": {}
     }
