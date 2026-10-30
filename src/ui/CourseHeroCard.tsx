@@ -196,7 +196,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   onClick={() => setViewMode(m)}
                   style={{
                     padding: "4px 12px", fontSize: "var(--fs-11)", fontWeight: 700,
-                    border: "none", borderRadius: 6, cursor: "pointer",
+                    border: "none", borderRadius: "var(--radius)", cursor: "pointer",
                     background: viewMode === m ? "var(--bg-card)" : "transparent",
                     color: viewMode === m ? "var(--text)" : "var(--text-3)",
                     boxShadow: viewMode === m ? "var(--shadow-sm)" : "none",
@@ -343,7 +343,7 @@ export default function CourseHeroCard({ course, tee }: { course: Course; tee: T
                   return (
                     <span key={p} style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                       <span style={{
-                        width: 16, height: 16, borderRadius: 4,
+                        width: 16, height: 16, borderRadius: "var(--radius-sm)",
                         background: sample.bg,
                         border: `1px solid ${sample.border}`,
                       }} />

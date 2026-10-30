@@ -429,7 +429,7 @@ function ListView({ events, onSelect, scrollSignal = 0 }: { events: CalEvent[]; 
                     background: hl ? hl.bg : c, flexShrink: 0 }} />
                   <div className="flex-1" style={{ minWidth: 0 }}>
                     <div className="text-ellipsis fs-13 fw-600" style={{ color: "var(--text)" }}>
-                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm" style={{ marginRight: 4, fontWeight: 800, fontSize: 9 }} title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
+                      {hl ? `${hl.icon} ` : ""}{omNivel(e) ? <span className="p p-sm" style={{ marginRight: 4, fontWeight: 800, fontSize: "var(--fs-9)" }} title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`}>{omNivel(e)}</span> : null}{e.title}
                     </div>
                     <div className="fs-11 c-text-3 mt-4" >
                       {e.modalidade}{e.modalidade && " · "}{e.campo}
@@ -895,7 +895,7 @@ function CalendarioContent({ players }: { players?: PlayersDb }) {
                               {omNivel(e) ? (
                                 <span title={`Ordem de Mérito CGSS — Nível ${omNivel(e)}`} style={{
                                   display: "inline-block", minWidth: 10, marginRight: 3,
-                                  padding: "0 3px", borderRadius: 2, fontSize: 8, fontWeight: 800,
+                                  padding: "0 3px", borderRadius: "var(--radius-xs)", fontSize: "var(--fs-8)", fontWeight: 800,
                                   background: "rgba(255,255,255,0.85)", color: "var(--text)",
                                   lineHeight: 1.6, verticalAlign: "middle",
                                 }}>{omNivel(e)}</span>

@@ -184,7 +184,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {resolved.note && (
         <div className="muted fs-11" style={{
           padding: "6px 10px", background: "var(--bg-muted)",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
+          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: "var(--radius)",
         }}>
           ⚠ {resolved.note}
         </div>
@@ -202,7 +202,7 @@ export default function PrevisaoTab({ torneio, escalaoNome, mh }: {
       {resolved.ratingApprox && (
         <div className="muted fs-11" style={{
           padding: "6px 10px", background: "var(--bg-muted)",
-          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: 6,
+          border: "1px solid var(--color-warn-alpha, var(--border))", borderRadius: "var(--radius)",
         }}>
           ⚠ CR/Slope estimados por interpolação entre os tees com rating oficial — este tee de torneio não tem rating publicado.
         </div>

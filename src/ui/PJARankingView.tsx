@@ -54,7 +54,7 @@ const RankingNotas = ({ year }: { year: string | number }) => {
             borderRadius: 8, padding: "9px 12px",
           }}
         >
-          <span style={{ fontSize: 14, lineHeight: 1.25 }}>{n.tipo === "info" ? "📅" : "⚠️"}</span>
+          <span style={{ fontSize: "var(--fs-14)", lineHeight: 1.25 }}>{n.tipo === "info" ? "📅" : "⚠️"}</span>
           <span>
             <b style={{ display: "block", fontSize: 12.5, marginBottom: 2 }}>{n.titulo}</b>
             <span className="muted" style={{ fontSize: 11.5 }}>{n.texto}</span>
@@ -635,7 +635,7 @@ export function PJARankingView({
                   <td className="cs-s-games cs-grp"
                       title={cortadas > 0 ? `${contadas} das ${row.voltas} voltas contam para o total` : undefined}>
                     {cortadas > 0
-                      ? <>{contadas}<span className="muted" style={{ fontSize: 9 }}>/{row.voltas}</span></>
+                      ? <>{contadas}<span className="muted" style={{ fontSize: "var(--fs-9)" }}>/{row.voltas}</span></>
                       : row.voltas}
                   </td>
                   <td className="cs-s-pts cs-col" style={{ fontWeight: 800, color: "var(--color-warn-dark)", fontVariantNumeric: "tabular-nums" }}
@@ -645,7 +645,7 @@ export function PJARankingView({
                       : cortadas > 0
                         // Na MESMA linha (não empilhado): empilhar punha esta
                         // linha da tabela a quase o dobro da altura das outras.
-                        ? <>{fmtPts(row.total)}<span className="muted" style={{ fontSize: 9, fontWeight: 500 }}>/{fmtPts(totalTodas)}</span></>
+                        ? <>{fmtPts(row.total)}<span className="muted" style={{ fontSize: "var(--fs-9)", fontWeight: 500 }}>/{fmtPts(totalTodas)}</span></>
                         : fmtPts(row.total)}
                   </td>
                 </tr>

@@ -293,7 +293,7 @@ export default function AtletaSearchPanel({
             maxWidth: 480,
             padding: "8px 12px",
             border: "1px solid var(--border)",
-            borderRadius: 6,
+            borderRadius: "var(--radius)",
             fontSize: "var(--fs-14)",
             background: "var(--bg-card)",
             color: "var(--text-1)",
@@ -416,7 +416,7 @@ export default function AtletaSearchPanel({
                 fontSize: "var(--fs-12)",
                 background: "var(--bg-card)",
                 border: "1px solid var(--border)",
-                borderRadius: 4,
+                borderRadius: "var(--radius-sm)",
                 cursor: "pointer",
                 color: "var(--text-1)",
               }}

@@ -552,7 +552,7 @@ export default function TabelaGlobal({ autoRivals, futureCols, fieldData, KidsLi
         <div style={{ display:"flex", gap:6, flexWrap:"nowrap", overflowX:"auto", marginBottom:12, alignItems:"stretch", scrollbarWidth:"none" }}>
           <KpiCard
             label="MANUEL — TOTAL"
-            labelStyle={{ color:"var(--color-info-alt)", fontSize: 9, marginBottom:3 }}
+            labelStyle={{ color:"var(--color-info-alt)", fontSize: "var(--fs-9)", marginBottom:3 }}
             value={
               <div style={{ display:"flex", gap:8, alignItems:"baseline" }}>
                 <span><span className="fw-800 fs-14">{manuelKpis.torn}</span><span style={{ fontSize: "var(--fs-9)", color:"var(--text-3)", marginLeft:2 }}>T</span></span>

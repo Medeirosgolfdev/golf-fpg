@@ -239,7 +239,7 @@ function FilePopover({
     overflow: "auto",
     background: "var(--bg-card)",
     border: "1px solid var(--border)",
-    borderRadius: 6,
+    borderRadius: "var(--radius)",
     boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
     padding: "6px 0",
     fontSize: "var(--fs-11)",
@@ -426,7 +426,7 @@ function DataSourcesPanel({
     overflow: "auto",
     background: "var(--bg-card)",
     border: "1px solid var(--border)",
-    borderRadius: 6,
+    borderRadius: "var(--radius)",
     boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
     padding: "6px 0",
   };

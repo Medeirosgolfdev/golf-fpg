@@ -203,7 +203,7 @@ function TeamCard({ team, model, sel }: { team: TsTeam; model: TsModel; sel: Rou
     }}>
       <div style={{ background: team.color, color: "#fff", padding: "8px 12px", display: "flex", alignItems: "center", gap: 10 }}>
         {model.showLetter && team.letter && (
-          <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-20)", lineHeight: 1 }}>
+          <div className="shrink-0 fw-900" style={{ width: 34, height: 34, background: "rgba(255,255,255,0.18)", borderRadius: "var(--radius)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--fs-20)", lineHeight: 1 }}>
             {team.letter}
           </div>
         )}
@@ -324,7 +324,7 @@ function TeamList({ model, catKey, label, nLabel }: { model: TsModel; catKey: st
                     title="Clicar para ver os jogadores">
                     <td className="ta-c fw-700">{c.pos != null ? (medal(c.pos) ?? c.pos) : "–"}</td>
                     <td style={{ textAlign: "left", whiteSpace: "nowrap" }}>
-                      {t.isMulti && <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: 2, background: t.color, display: "inline-block", marginRight: 6 }} />}
+                      {t.isMulti && <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: "var(--radius-xs)", background: t.color, display: "inline-block", marginRight: 6 }} />}
                       {model.showLetter && t.letter && <b style={{ marginRight: 6 }}>{t.letter}</b>}
                       {t.name}{t.sub && <span className="muted fs-11"> · {t.sub}</span>}
                       <span className="muted fs-11"> {open ? "▾" : "▸"}</span>
@@ -468,7 +468,7 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
     const active = sel === col;
     return (
       <button type="button" onClick={() => toggleSort(col)} style={{
-        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: 4,
+        fontSize: "var(--fs-11)", fontWeight: active ? 700 : 500, padding: "3px 9px", borderRadius: "var(--radius-sm)",
         border: `1px solid ${active ? "var(--accent)" : "var(--border)"}`, background: active ? "var(--accent)" : "var(--bg-hover)",
         color: active ? "#fff" : "var(--text-muted)", cursor: "pointer",
       }}>{label}{active ? (sortDir === "asc" ? " ▲" : " ▼") : ""}</button>
@@ -512,8 +512,8 @@ export default function TeamStrokeStandings({ model, intro, initialView, footnot
       {model.legend.length > 0 && view !== "jogadores" && (
         <div className="flex-wrap mb-12" style={{ display: "flex", gap: 6 }}>
           {model.legend.map(l => (
-            <span key={l.clube} style={{ fontSize: "var(--fs-10)", display: "inline-flex", alignItems: "center", gap: 5, border: `1px solid ${l.color}`, borderRadius: 4, padding: "2px 8px", background: `${l.color}12` }}>
-              <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: 2, background: l.color, display: "inline-block" }} />
+            <span key={l.clube} style={{ fontSize: "var(--fs-10)", display: "inline-flex", alignItems: "center", gap: 5, border: `1px solid ${l.color}`, borderRadius: "var(--radius-sm)", padding: "2px 8px", background: `${l.color}12` }}>
+              <span className="shrink-0" style={{ width: 9, height: 9, borderRadius: "var(--radius-xs)", background: l.color, display: "inline-block" }} />
               <strong style={{ color: l.color }}>{l.teams}</strong>
               <span style={{ color: "var(--text-muted)" }}>— {l.clube}</span>
             </span>

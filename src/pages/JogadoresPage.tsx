@@ -456,7 +456,7 @@ export default function JogadoresPage() {
                     const s = stats[esc];
                     if (!s || s.total === 0) return null;
                     return (
-                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg-card)", borderRadius: 4, fontSize: "var(--fs-11)" }}>
+                      <div key={esc} style={{ padding: "4px 6px", background: "var(--bg-card)", borderRadius: "var(--radius-sm)", fontSize: "var(--fs-11)" }}>
                         <div className="fw-700">{esc}</div>
                         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                           <b>{s.total}</b>

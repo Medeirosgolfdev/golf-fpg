@@ -118,7 +118,7 @@ function GameHolesStrip({ g, flipped }: { g: MatchplayGame; flipped: boolean }) 
   return (
     // Sem header próprio: os nomes e o badge do resultado estão na linha do jogo
     // logo acima — repeti-los aqui era ruído (visto no ETC Boys 2026).
-    <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)", margin: "2px 0 6px" }}>
+    <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)", margin: "2px 0 6px" }}>
       <div style={{ overflowX: "auto" }}>
         {/* Grelha estilo scorecard da casa: banda verde nos buracos, banda PAR
             subtil, estados por baixo. 100% de largura — sem coluna filler morta. */}
@@ -204,7 +204,7 @@ function GamesTable({ games, home, away, multi = false }: { games: MatchplayGame
   };
 
   return (
-    <div style={{ border: "1px solid var(--border)", borderRadius: 6, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
+    <div style={{ border: "1px solid var(--border)", borderRadius: "var(--radius)", overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,.06)" }}>
       <table className="player-list-table" style={{ fontSize: "var(--fs-12)", width: "100%" }}>
         <thead>
           <tr>

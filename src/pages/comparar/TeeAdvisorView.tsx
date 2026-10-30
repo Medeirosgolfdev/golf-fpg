@@ -791,14 +791,14 @@ export default function TeeAdvisorView({ simCourses, initialCourseKey }: { simCo
           value={habEff != null ? Math.round(habEff) : ""}
           onChange={e => { const v = parseFloat(e.target.value); setHabOverride(Number.isFinite(v) ? v : null); }}
           title="Distância de referência a que o jogador está habituado — edita para simular outro cenário"
-          style={{ width: 110, padding: "6px 10px", fontFamily: MONO, fontSize: 17, fontWeight: 700 }}
+          style={{ width: 110, padding: "6px 10px", fontFamily: MONO, fontSize: "var(--fs-17)", fontWeight: 700 }}
         />
         <span style={{ fontWeight: 700, fontSize: "var(--fs-15)" }}>m</span>
         {habOverride != null ? (
           <button
             type="button"
             onClick={() => setHabOverride(null)}
-            style={{ padding: "4px 10px", fontSize: "var(--fs-12)", fontWeight: 600, background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: 6, cursor: "pointer", color: "var(--text-2)" }}
+            style={{ padding: "4px 10px", fontSize: "var(--fs-12)", fontWeight: 600, background: "var(--bg-muted)", border: "1px solid var(--border)", borderRadius: "var(--radius)", cursor: "pointer", color: "var(--text-2)" }}
           >
             ↺ Repor automático{hab.value != null ? ` (${hab.value.toFixed(0)} m)` : ""}
           </button>

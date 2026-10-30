@@ -384,10 +384,10 @@ function ScoreDistribution({ slots, allAgg }: { slots: Slot[]; allAgg: (AggStats
                       <span style={{ fontSize: "var(--fs-11)", width: 60, textAlign: "right", color: COLORS[x.i], fontWeight: 600, flexShrink: 0 }}>
                         {firstName(x.s.player.name)}
                       </span>
-                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: 4, height: 18, overflow: "hidden" }}>
+                      <div style={{ flex: 1, background: "var(--bg-subtle)", borderRadius: "var(--radius-sm)", height: 18, overflow: "hidden" }}>
                         <div style={{
                           width: `${barW}%`, height: "100%", background: COLORS[x.i],
-                          borderRadius: 4, opacity: 0.75,
+                          borderRadius: "var(--radius-sm)", opacity: 0.75,
                         }} />
                       </div>
                       <span style={{ fontSize: "var(--fs-11)", fontFamily: "var(--font-mono)", fontWeight: 700, width: 46, textAlign: "right", color: "var(--text-2)" }}>
@@ -769,7 +769,7 @@ export default function CompararPage({ players }: { players: PlayersDb }) {
           <div style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "center", marginTop: 16 }}>
             {["Perfil radar", "Tabela detalhada", "Distribuição de scores", "Buraco a buraco", "Head-to-head", "Evolução HCP"].map(label => (
               <span key={label} style={{
-                padding: "4px 12px", borderRadius: 12, background: "var(--bg-subtle)",
+                padding: "4px 12px", borderRadius: "var(--radius-xl)", background: "var(--bg-subtle)",
                 fontSize: "var(--fs-11)", fontWeight: 600, color: "var(--text-2)",
               }}>{label}</span>
             ))}

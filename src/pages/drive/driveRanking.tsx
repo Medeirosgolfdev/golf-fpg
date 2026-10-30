@@ -87,7 +87,7 @@ function EvolutionChart({ rows }: { rows: Sub12Row[] }) {
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border-light)" />
             <XAxis dataKey="date" tick={{ fontSize: 10 }} />
             <YAxis tick={{ fontSize: 10 }} domain={["dataMin - 2", "dataMax + 2"]} />
-            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 11 }}
+            <Tooltip contentStyle={{ background: "var(--bg-card)", border: "1px solid var(--border)", borderRadius: "var(--radius)", fontSize: "var(--fs-11)" }}
               formatter={(value, name) => { const p = top.find(x => x.fed === name); return [value != null ? (value as number).toFixed(1) : "", p?.name || name]; }} />
             <Legend formatter={(value: string) => { const p = top.find(x => x.fed === value); return <span className="fs-10">{p?.name || value}</span>; }} />
             <ReferenceLine y={36} stroke="var(--color-danger)" strokeDasharray="4 4" strokeWidth={1} />

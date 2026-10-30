@@ -154,7 +154,7 @@ function HcpHistoryModal({
             style={{
               background: "transparent",
               border: "1px solid var(--border-light, #e5e7eb)",
-              borderRadius: 4,
+              borderRadius: "var(--radius-sm)",
               padding: "4px 10px",
               cursor: "pointer",
               fontSize: "var(--fs-13)",

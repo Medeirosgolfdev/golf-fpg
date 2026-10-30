@@ -368,7 +368,7 @@ export default function TopClubesPanel({
                                   alignItems: "center",
                                   gap: 6,
                                   padding: "3px 8px",
-                                  borderRadius: 12,
+                                  borderRadius: "var(--radius-xl)",
                                   background: "var(--bg-card)",
                                   border: "1px solid var(--border-light)",
                                   fontSize: "var(--fs-12)",

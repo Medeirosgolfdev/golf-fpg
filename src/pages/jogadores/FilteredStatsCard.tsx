@@ -155,7 +155,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                   <span className="fw-500">{c.name} <span className="muted fs-10">({code})</span></span>
                   <span className="fw-700">{c.count}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
                   <div style={{ width: barPct(c.count, maxClub), height: "100%", background: "var(--color-good)" }} />
                 </div>
               </div>
@@ -172,7 +172,7 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
                   <span className="fw-500">{r}</span>
                   <span className="fw-700">{n}</span>
                 </div>
-                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ height: 4, background: "var(--bg-subtle)", borderRadius: "var(--radius-xs)", overflow: "hidden" }}>
                   <div style={{ width: barPct(n, maxRegion), height: "100%", background: "var(--chart-2)" }} />
                 </div>
               </div>

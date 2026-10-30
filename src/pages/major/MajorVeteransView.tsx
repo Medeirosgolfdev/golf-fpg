@@ -242,7 +242,7 @@ export default function MajorVeteransView({ sourceLabels = {}, sourceColors = {}
                                     key={id} to={`/major/${source}/${year}`}
                                     className="fs-12"
                                     style={{
-                                      textDecoration: "none", padding: "1px 8px", borderRadius: 6,
+                                      textDecoration: "none", padding: "1px 8px", borderRadius: "var(--radius)",
                                       border: `1px solid ${sourceColors[source] ?? "var(--border, #d1d5db)"}`,
                                       color: "var(--text)", whiteSpace: "nowrap",
                                     }}

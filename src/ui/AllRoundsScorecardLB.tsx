@@ -93,7 +93,7 @@ export function AllRoundsScorecardLB({
     return (
       <span
         title={tee}
-        style={{ display: "inline-block", width: 12, height: 12, borderRadius: 2, background: hex, border: bdr }}
+        style={{ display: "inline-block", width: 12, height: 12, borderRadius: "var(--radius-xs)", background: hex, border: bdr }}
       />
     );
   }

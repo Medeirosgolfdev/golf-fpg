@@ -967,7 +967,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
   };
   /** Marcador de posição para o 2º/3º (o 1º leva o pill do escalão). */
   const rankBadge = (i: number) => (
-    <span aria-hidden style={{ justifySelf: "center", alignSelf: "center", width: 15, height: 15, borderRadius: "50%", background: "var(--bg-hover, rgba(0,0,0,0.06))", color: "var(--text-muted)", fontSize: 9, fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span>
+    <span aria-hidden style={{ justifySelf: "center", alignSelf: "center", width: 15, height: 15, borderRadius: "50%", background: "var(--bg-hover, rgba(0,0,0,0.06))", color: "var(--text-muted)", fontSize: "var(--fs-9)", fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" }}>{i + 1}</span>
   );
 
   return (
@@ -992,7 +992,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
 
       {/* Cartão do Manuel — recorde por tee */}
       {manuel.length > 0 && (
-        <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--accent)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", marginBottom: 12 }}>
+        <div style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--accent)", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", marginBottom: 12 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "7px 12px", background: tint("var(--accent)", 12), borderBottom: "1px solid var(--border-light, var(--border))", fontWeight: 800 }}>
             <span style={{ fontSize: "var(--fs-15, 15px)" }}>🧒 Manuel</span>
             <span className="muted" style={{ fontWeight: 400, fontSize: "var(--fs-11)" }}>recorde por tee · {voltaLabel}</span>
@@ -1031,7 +1031,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
             const dist = distFor(c.label);
             const escs = ESC_KPI_ORDER.filter((e) => c.esc.has(e));
             return (
-              <div key={c.label} style={{ flex: "1 1 300px", minWidth: 282, maxWidth: 460, borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column" }}>
+              <div key={c.label} style={{ flex: "1 1 300px", minWidth: 282, maxWidth: 460, borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)", display: "flex", flexDirection: "column" }}>
                 {/* Header do tee (banda tingida) */}
                 <div style={{ padding: "7px 12px", background: tint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -1127,7 +1127,7 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
           const dist = info?.dist ?? 0;
           const rM = info?.group.h18.M, rF = info?.group.h18.F;
           return (
-            <div key={g.label} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
+            <div key={g.label} style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", border: "1px solid var(--border)", borderTop: `3px solid ${stripe}`, background: "var(--bg-card)", boxShadow: "0 1px 3px rgba(0,0,0,0.05)" }}>
               {/* Header do tee (banda tingida) — mesmo look dos KPIs */}
               <div style={{ padding: "7px 12px", background: teeTint(hex, 13), borderBottom: "1px solid var(--border-light, var(--border))" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 8 }}>

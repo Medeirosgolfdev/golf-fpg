@@ -157,7 +157,7 @@ export default function FederadoOnlyDetail({ player }: { player: MergedPlayer & 
         {f.photo && (
           <img src={`https://hcp-portugal.datagolf.pt/photos/${f.photo}`}
             alt={f.name}
-            style={{ width: 200, maxHeight: 260, borderRadius: 6, objectFit: "cover", flexShrink: 0 }}
+            style={{ width: 200, maxHeight: 260, borderRadius: "var(--radius)", objectFit: "cover", flexShrink: 0 }}
             onError={e => { (e.currentTarget as HTMLImageElement).style.display = "none"; }} />
         )}
         <div style={{ flex: 1, minWidth: 0 }}>

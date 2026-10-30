@@ -16,7 +16,7 @@ const TONE_ICON: Record<Insight["tone"], string> = { good: "▲", bad: "▼", ne
 function Line({ i }: { i: Insight }) {
   return (
     <li className="fs-13" style={{ display: "flex", gap: 8, alignItems: "baseline", lineHeight: 1.45 }}>
-      <span style={{ color: TONE_COLOR[i.tone], fontSize: 10, flexShrink: 0, width: 10 }}>{TONE_ICON[i.tone]}</span>
+      <span style={{ color: TONE_COLOR[i.tone], fontSize: "var(--fs-10)", flexShrink: 0, width: 10 }}>{TONE_ICON[i.tone]}</span>
       <span>{i.text}</span>
     </li>
   );

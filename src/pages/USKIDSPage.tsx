@@ -757,8 +757,8 @@ export default function USKidsFieldPage() {
                   : <span style={{ color:"var(--color-danger)", marginLeft:4 }}>cheio</span>}
               </span>
             </div>
-            <div style={{ height:4, borderRadius:2, background:"var(--border)", overflow:"hidden" }}>
-              <div style={{ height:"100%", borderRadius:2, width:`${pct}%`, background:"var(--accent)" }} />
+            <div style={{ height:4, borderRadius:"var(--radius-xs)", background:"var(--border)", overflow:"hidden" }}>
+              <div style={{ height:"100%", borderRadius:"var(--radius-xs)", width:`${pct}%`, background:"var(--accent)" }} />
             </div>
           </div>
         )}

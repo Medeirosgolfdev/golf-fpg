@@ -33,7 +33,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
           marginLeft: 6,
           padding: "1px 5px",
           border: "1px dashed var(--border-light)",
-          borderRadius: 4,
+          borderRadius: "var(--radius-sm)",
           fontStyle: "italic",
           whiteSpace: "nowrap",
         }}
@@ -52,7 +52,7 @@ export default function RotatedNotice({ rotated, inline }: Props) {
         padding: "6px 10px",
         background: "transparent",
         borderLeft: "3px solid var(--color-notice)",
-        borderRadius: 4,
+        borderRadius: "var(--radius-sm)",
         fontStyle: "italic",
         lineHeight: 1.5,
       }}

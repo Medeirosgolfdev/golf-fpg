@@ -190,7 +190,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
     return (
       <section>
         <h3 style={{ margin: "8px 0 10px", fontSize: "var(--fs-14)", fontWeight: 700, color: "var(--text)" }}>Análise</h3>
-        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 16px", background: "var(--bg-muted)", borderRadius: 6 }}>
+        <div style={{ fontSize: "var(--fs-12)", color: "var(--text-3)", padding: "12px 16px", background: "var(--bg-muted)", borderRadius: "var(--radius)" }}>
           — sem scorecards hole-by-hole disponíveis para análise —
         </div>
       </section>
@@ -219,7 +219,7 @@ export default function AnaliseSection({ data, junior, filterTids }: Props) {
             style={{
               flex: 1, maxWidth: 460, padding: "5px 8px",
               fontSize: "var(--fs-12)", fontWeight: 500,
-              border: "1px solid var(--border)", borderRadius: 6,
+              border: "1px solid var(--border)", borderRadius: "var(--radius)",
               background: "var(--bg)", color: "var(--text)",
               cursor: "pointer",
             }}
@@ -370,7 +370,7 @@ function NineSplitPane({ cards, fieldCards }: { cards: DerivedCard[]; fieldCards
   const item = (label: string, toPar: number | null, dist: ScoringDist, fieldToPar: number | null) => {
     const pp = distPct(dist);
     return (
-      <div style={{ padding: "14px 16px", border: "1px solid var(--border-light)", borderRadius: 6, background: "var(--bg)" }}>
+      <div style={{ padding: "14px 16px", border: "1px solid var(--border-light)", borderRadius: "var(--radius)", background: "var(--bg)" }}>
         <div style={{ fontSize: "var(--fs-11)", color: "var(--text-3)", letterSpacing: 0.6, fontWeight: 700, marginBottom: 4, textTransform: "uppercase" }}>{label}</div>
         <div style={{ display: "flex", alignItems: "baseline", gap: 8, marginBottom: 10 }}>
           <span style={{ fontSize: "var(--fs-28)", fontWeight: 800, color: toPar == null ? "var(--text-3)" : tpColor(toPar) ?? "var(--text)", fontVariantNumeric: "tabular-nums" }}>
@@ -484,8 +484,8 @@ function HolesPane({ player, field }: {
         </div>
       </div>
       <div style={{ display: "flex", gap: 14, fontSize: "var(--fs-10)", color: "var(--text-3)", marginTop: 8, justifyContent: "center" }}>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: 2, marginRight: 4 }} />jogador</span>
-        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: 2, marginRight: 4 }} />field (escalão)</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--accent)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />jogador</span>
+        <span><span style={{ display: "inline-block", width: 10, height: 10, background: "var(--text-3)", borderRadius: "var(--radius-xs)", marginRight: 4 }} />field (escalão)</span>
       </div>
     </div>
   );

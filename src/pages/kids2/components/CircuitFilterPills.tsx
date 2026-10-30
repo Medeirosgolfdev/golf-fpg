@@ -81,7 +81,7 @@ export default function CircuitFilterPills({ data, junior, active, onChange }: P
     <div style={{
       padding: "10px 12px",
       background: "var(--bg-muted)",
-      borderRadius: 6,
+      borderRadius: "var(--radius)",
       marginBottom: 10,
     }}>
       <div style={{ fontSize: "var(--fs-10)", fontWeight: 700, color: "var(--text-3)", textTransform: "uppercase", letterSpacing: 0.5, marginBottom: 6 }}>

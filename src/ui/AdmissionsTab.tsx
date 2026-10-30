@@ -406,9 +406,9 @@ export default function AdmissionsTab({
               {isDesist
                 ? <span
                     title={desinscritoEm ? `Desinscreveu-se em ${desinscritoEm}` : "Desinscreveu-se"}
-                    style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
+                    style={{ background: "color-mix(in srgb, var(--danger, #dc2626) 12%, transparent)", color: "var(--danger, #dc2626)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: "var(--radius-lg)", border: "1px solid color-mix(in srgb, var(--danger, #dc2626) 32%, transparent)", whiteSpace: "nowrap" }}>desistiu</span>
                 : isReserva
-                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: 10, border: "1px solid var(--border-light)" }}>{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
+                ? <span style={{ background: "var(--bg-muted)", color: "var(--text-muted)", fontSize: "var(--fs-10)", padding: "1px 6px", borderRadius: "var(--radius-lg)", border: "1px solid var(--border-light)" }}>{reservaLabel ?? (convocados ? "por inscrever" : "pendente")}</span>
                 : <span className="muted fs-10">✓</span>}
             </td>
           </>
@@ -481,7 +481,7 @@ export default function AdmissionsTab({
       </div>
       {/* Inscrições e desistências recentes (era o aviso do painel dos Nacionais). */}
       {(recentes.length > 0 || removidos.length > 0) && (
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px", background: "var(--bg-muted)", borderRadius: 6, margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, padding: "6px 12px", background: "var(--bg-muted)", borderRadius: "var(--radius)", margin: "4px 0 6px", fontSize: "var(--fs-12)" }}>
           {recentes.length > 0 && (
             <span style={{ color: "var(--color-good)" }}>
               <span className="fw-700">+{recentes.length} inscrito{recentes.length > 1 ? "s" : ""} ({recentHours}h):</span>{" "}

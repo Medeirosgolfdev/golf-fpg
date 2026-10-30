@@ -242,7 +242,7 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
               <button
                 key={bin}
                 onClick={() => onHcpBinDrill(isActive ? null : bin)}
-                style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: 4, padding: 2, cursor: "pointer", minWidth: 0 }}
+                style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100%", justifyContent: "flex-end", background: isActive ? "var(--bg-hover)" : "transparent", border: isActive ? "1px solid var(--accent)" : "1px solid transparent", borderRadius: "var(--radius-sm)", padding: 2, cursor: "pointer", minWidth: 0 }}
                 title={`Clica para ver top 15 (HCP ${label})`}
               >
                 <div className="fw-700 fs-12" style={{ marginBottom: 4 }}>

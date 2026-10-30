@@ -144,7 +144,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
     if (!r || (!r.editions.length && !r.form && !r.forecast)) return null;
     const f = r.form;
     return (
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 18, fontSize: 12 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 18, fontSize: "var(--fs-12)" }}>
         {r.editions.length > 0 && (
           <div>
             <div className="fw-700">Nesta prova</div>
@@ -215,7 +215,7 @@ export default function FpgScout({ current, previous, playersDB, h2hManuel }: {
         {emAlta ? <span className="muted"> · Em alta: <b style={{ color: "var(--text)" }}>{emAlta.name}</b> ({n1(emAlta.form!.avgSD5)} nas últimas 5, contra {n1(emAlta.form!.avgSD20)} de média)</span> : null}
       </>}
       rodape={
-        <details style={{ marginTop: 8, fontSize: 12, color: "var(--text-muted)" }}>
+        <details style={{ marginTop: 8, fontSize: "var(--fs-12)", color: "var(--text-muted)" }}>
           <summary style={{ cursor: "pointer" }}>Como são feitas a «Forma WHS», o «vs Campo» e a «Previsão»</summary>
           <p style={{ margin: "6px 0" }}>
             Tudo em <b>score differential</b> — <code>(113/Slope) × (gross − CR − PCC)</code> — que

@@ -83,7 +83,7 @@ export default function TeeBars({ tees, nine, onSelectTee, selectedTeeId, onSele
                     title="Seleccionar este rating para o cálculo"
                     style={{
                       display: "inline-flex", alignItems: "center", gap: 5,
-                      padding: "3px 8px", borderRadius: 6, cursor: "pointer", fontSize: "var(--fs-12)",
+                      padding: "3px 8px", borderRadius: "var(--radius)", cursor: "pointer", fontSize: "var(--fs-12)",
                       border: `1.5px solid ${active ? "var(--accent)" : "var(--border)"}`,
                       background: active ? "var(--accent-light)" : "var(--bg-card)",
                       color: active ? "var(--accent-text)" : "var(--text-2)",

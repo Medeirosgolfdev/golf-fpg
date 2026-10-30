@@ -9,7 +9,7 @@ export default function PosBadge({ pos }: { pos: number }) {
   const s = styles[pos] || { bg: "var(--bg-muted)", fg: "var(--text-2)", label: pos + "º" };
   return (
     <span style={{
-      display: "inline-block", padding: "2px 6px", borderRadius: 4,
+      display: "inline-block", padding: "2px 6px", borderRadius: "var(--radius-sm)",
       background: s.bg, color: s.fg, fontWeight: 700, fontSize: "var(--fs-11)",
       whiteSpace: "nowrap", letterSpacing: 0.2,
     }}>

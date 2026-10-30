@@ -1288,7 +1288,7 @@ export default function DrawsPage() {
                                 n > 0 ? <span title={`${n} ${label}`} style={{ flex: n, background: color }} /> : null;
                               return (
                                 <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
-                                  <span style={{ display: "flex", height: 8, width: 160, borderRadius: 4, overflow: "hidden", background: "var(--bg-hover)" }}>
+                                  <span style={{ display: "flex", height: 8, width: 160, borderRadius: "var(--radius-sm)", overflow: "hidden", background: "var(--bg-hover)" }}>
                                     {seg(rec.w, "var(--color-good)", "vitórias do Manuel")}
                                     {seg(rec.d, "var(--text-muted)", "empates")}
                                     {seg(rec.l, "var(--color-danger)", "vitórias do companheiro")}

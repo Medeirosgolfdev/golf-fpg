@@ -121,7 +121,7 @@ function TierBadge({ tier }: { tier: TierKey }) {
   const c = getTierColors(tier);
   return (
     <span style={{
-      display: "inline-block", padding: "2px 8px", borderRadius: 12,
+      display: "inline-block", padding: "2px 8px", borderRadius: "var(--radius-xl)",
       fontSize: "var(--fs-11)", fontWeight: 700,
       background: c.bg, color: c.fg, whiteSpace: "nowrap",
     }}>
@@ -319,7 +319,7 @@ export default function RankingPage() {
             placeholder="🔍 Nome do jogador…"
             style={{
               marginLeft: "auto", padding: "5px 10px", fontSize: "var(--fs-13)",
-              border: "1px solid var(--border-light)", borderRadius: 6,
+              border: "1px solid var(--border-light)", borderRadius: "var(--radius)",
               background: "var(--bg-card)", color: "var(--text)", minWidth: 200,
             }}
           />
@@ -334,7 +334,7 @@ export default function RankingPage() {
               const c = getTierColors(t);
               return (
                 <span key={t} style={{
-                  padding: "1px 8px", borderRadius: 10,
+                  padding: "1px 8px", borderRadius: "var(--radius-lg)",
                   fontSize: "var(--fs-11)", fontWeight: 600,
                   background: c.bg, color: c.fg,
                 }}>
