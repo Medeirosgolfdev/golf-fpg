@@ -184,10 +184,16 @@ export function buildAllCourses(input: CoursesInput): Course[] {
   //     inflacionava campos registados como o Aroeira para dezenas de tees).
   //     O mergeCourses já descarta os tees away quando a base é FPG.
   //  2) Entre campos da mesma origem, o que tiver mais tees ganha.
+  //  3) Um nome que é ALIAS (gralha, nome do torneio no lugar do campo…) nunca
+  //     é o canónico: o campo fica com o nome certo e o seu URL (30/10/2026).
+  const isAliasName = (c: Course) => canonicalCourseName(c.master.name) !== c.master.name;
   const ordered = [...map.values()].sort((a, b) => {
     const aAway = a.courseKey.startsWith("away-") ? 1 : 0;
     const bAway = b.courseKey.startsWith("away-") ? 1 : 0;
     if (aAway !== bAway) return aAway - bAway;
+    const aAlias = isAliasName(a) ? 1 : 0;
+    const bAlias = isAliasName(b) ? 1 : 0;
+    if (aAlias !== bAlias) return aAlias - bAlias;
     return b.master.tees.length - a.master.tees.length;
   });
 

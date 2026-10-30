@@ -52,9 +52,9 @@ const BASELINE = {
   /** Inclui um par legítimo (Penina Golf Course ≠ Penina Resort Course, dois
    *  percursos do mesmo resort) — o mínimo realista é 1. */
   duplicateGroups: 2, // 4 → 2 a 30/10/2026: Parador Málaga e Vidago Palace fundidos
-  tournamentsAsCourses: 4,
+  tournamentsAsCourses: 0, // 4 → 0 a 30/10/2026: nomes de torneio trocados pelo campo (aliases/nameOverrides)
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
-  awayWithoutDistances: 30, // 35 → 30 a 30/10/2026: Slieve Russell, Craigielaw e entradas repetidas fundidas
+  awayWithoutDistances: 26, // 35 → 26 a 30/10/2026: revisão de todos os campos (fusões e cartões oficiais)
   maxTeesPerCourse: 13,
 };
 

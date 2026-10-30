@@ -136,6 +136,17 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "vidago palace golf": "Vidago Palace",
   // R&A Girls' Amateur 2026 — gralha do clube no nome do campo.
   "cragielaw": "Craigielaw Golf Club",
+  // Revisão de todos os campos (2026-10-30): mesmo campo com outro nome —
+  // pares (e SI/CR quando há) iguais buraco a buraco.
+  "porters park golf clun": "Porters Park Golf Club",
+  "porterspark gc": "Porters Park Golf Club",
+  "costa navarino grécia": "Costa Navarino Hills",
+  "costa navarina, grécia": "Costa Navarino Hills",
+  "club zaudín golf - sevilha": "Club Zaudín Golf",
+  "campeonato internacional espanha sub 18 masculino": "Club Zaudín Golf",
+  "campeonato andalucia sub 16 y sub 18 mas. y femen.": "Parador Málaga del Golf",
+  "campeonato internacional de andalucia sub18 e sub1": "Parador Málaga del Golf",
+  "castro marim-guadiana+atlantico drive (par)": "Castro Marim-Guadiana+Atlântico",
 
   // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
   // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,

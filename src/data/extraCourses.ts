@@ -1539,6 +1539,11 @@ function paradorMalaga(courseKey: string, name: string): Course {
 const paradorMalagaDelGolf = paradorMalaga("away-parador-malaga-del-golf", "Parador Málaga del Golf");
 const paradorMalagaVirgula = paradorMalaga("away-parador-malaga", "Parador, Málaga");
 const paradorMalagaEspanha = paradorMalaga("away-parador-malaga-espanha", "Parador Malaga Espanha");
+// Duas entradas com o nome do TORNEIO no lugar do campo (mesmos pares e SI):
+// sem tees, só levam as voltas para a fusão por nome (aliases em courseAliases.ts).
+const semTees = (c: Course): Course => ({ ...c, master: { ...c.master, tees: [] } });
+const paradorMalagaTorneio1 = semTees(paradorMalaga("away-campeonato-andalucia-sub-16-y-sub-18-mas-y-femen", "Campeonato Andalucia Sub 16 Y Sub 18 Mas. Y Femen."));
+const paradorMalagaTorneio2 = semTees(paradorMalaga("away-campeonato-internacional-de-andalucia-sub18-e-sub1", "Campeonato Internacional de Andalucia Sub18 e Sub1"));
 
 /* ─────────────────────────────────────────────────────────────────────────
    Craigielaw Golf Club (Aberlady, Escócia) — par 71
@@ -1655,6 +1660,8 @@ export function getExtraCourses(): Course[] {
     paradorMalagaDelGolf,
     paradorMalagaVirgula,
     paradorMalagaEspanha,
+    paradorMalagaTorneio1,
+    paradorMalagaTorneio2,
     craigielawMain,
     craigielawGralha,
   ];
