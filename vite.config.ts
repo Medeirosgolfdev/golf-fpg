@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { join, extname } from 'path'
 import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync, renameSync, unlinkSync } from 'fs'
-import { fetchSessaoPublica } from './api/inscricoes.js'
+import { fetchSessaoPublica, parseTournStatus } from './api/inscricoes.js'
 
 function loadEnvLocal() {
   const p = join(process.cwd(), '.env.local')
@@ -884,7 +884,7 @@ export default defineConfig({
             console.log('[inscricoes] tcode=' + tcode + ' -> ' + jogadores.length + ' inscritos, ficheiro actualizado (fonte viva: ' + liveSource + ')')
 
             res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-cache' })
-            res.end(JSON.stringify({ ...entry, fromCache: false, diff, diagnostics, liveSource }))
+            res.end(JSON.stringify({ ...entry, estado: parseTournStatus(html), fromCache: false, diff, diagnostics, liveSource }))
 
           } catch (err) {
             console.error('[inscricoes] Erro tcode=' + tcode + ':', err)

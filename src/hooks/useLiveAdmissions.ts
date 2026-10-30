@@ -18,6 +18,8 @@ export interface LiveAdmissionsState {
   status: "idle" | "loading" | "live" | "error";
   players: FpgAdmissionPlayer[];
   fetchedAt: string | null;
+  /** Estado das inscrições lido agora na FPG («Inscrições em curso», …). */
+  estado?: string | null;
   error?: string;
 }
 
@@ -64,6 +66,7 @@ export function useLiveAdmissions(
           status: "live",
           players,
           fetchedAt: j.lastFetched || new Date().toISOString(),
+          estado: j.estado ?? null,
         };
         cache.set(key, { ts: Date.now(), state: st });
         if (alive) setState(st);

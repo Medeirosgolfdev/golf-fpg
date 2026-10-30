@@ -311,6 +311,16 @@ function parseAdmissionsTable(html) {
    (`fetchAdmissionsSessaoPublica` em scripts/scrape-fpg-admissions-draws-node.js,
    sessão como a `Sessao` de scripts/lib/fpg-session.js). Redirects seguidos à
    mão para não perder os cookies pelo caminho. */
+/* Estado das inscrições tal como a FPG o escreve («Inscrições em curso»,
+   «… ainda não abertas», «… fechadas»). Vai na resposta para a página não
+   mostrar a lista live com o estado do último scrape. */
+export function parseTournStatus(html) {
+  const m = String(html || "").match(/<span[^>]*id=["']lblTournStatus["'][^>]*>([^<]*)<\/span>/i);
+  if (!m) return null;
+  const s = m[1].replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n))).replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").trim();
+  return s || null;
+}
+
 // Exportada: o servidor local (middleware em vite.config.ts) usa a mesma.
 export async function fetchSessaoPublica(ccode, tcode) {
   const jar = new Map();
@@ -499,6 +509,7 @@ export default async function handler(req, res) {
       ccode, tcode, ...meta,
       totalInscritos: jogadores.length,
       jogadores,
+      estado: parseTournStatus(result.html),
       lastFetched: new Date().toISOString(),
       fpgUrl,
       fromCache: false,

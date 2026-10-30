@@ -124,11 +124,15 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   // Lista de convocados (final Drive): a lista live cruza-se outra vez com os
   // convocados — quem não está inscrito continua convocado, não «saiu».
   const convocados = admissions?._apuradosBase;
-  const effAdmissions = useMemo(() => (liveActive
-    ? convocados
-      ? crossApuradosInscritos<FpgAdmissions>({ players: convocados }, { ...(admissions || {}), players: live.players, error: undefined })
-      : { ...(admissions || {}), players: live.players, totalInscritos: live.players.length, reservas: 0, error: undefined }
-    : admissions), [liveActive, admissions, convocados, live.players]);
+  // O estado («Inscrições em curso», …) também vem do live: o do scrape pode
+  // ter dias e dizer «ainda não abertas» ao lado de uma lista já cheia.
+  const effAdmissions = useMemo(() => {
+    if (!liveActive) return admissions;
+    const base = { ...(admissions || {}), ...(live.estado ? { status: live.estado } : {}), players: live.players, error: undefined };
+    return convocados
+      ? crossApuradosInscritos<FpgAdmissions>({ players: convocados }, base)
+      : { ...base, totalInscritos: live.players.length, reservas: 0 };
+  }, [liveActive, admissions, convocados, live.players, live.estado]);
   const admissionsDiff = useMemo(() => {
     if (!liveActive) return null;
     // Convocados: compara só com quem já estava inscrito no último scrape.
