@@ -1303,10 +1303,17 @@ const theAltoClub: Course = {
    Fonte: «2025 Holiday Classic Yardages» (2025_holiday_classic_yardages.pdf,
    «Subject to Change»). Distâncias em JARDAS no PDF — guardadas tal como lá
    estão e convertidas para metros (×0,9144). Sem CR/Slope publicados.
-   SI do Palmer e do Fazio: cartões do campo na GolfPass (pares iguais ao PDF
-   buraco a buraco) — tee M e misto com o SI de homens, tee F com o de senhoras.
-   O Match fica sem SI: o «The Match» da GolfPass é outro percurso (par 67,
-   pares diferentes do PDF). Nomes dos campos iguais aos dos resultados USKids.
+   SI dos cartões do campo na GolfPass — tee M e misto com o SI de homens, tee
+   F com o de senhoras. Palmer e Fazio: pares iguais ao PDF buraco a buraco.
+   Match: é o «The Match» (par 67) com par USKids 72 — os par 3 estão nos
+   mesmos buracos (2,4,6,11,13,18) e o 3 tem 255 jd como o tee Helm; a USKids
+   faz par 5 de cinco par 4 compridos (1,9,10,15,17). O SI é o do campo.
+   CR/Slope: a USGA (NCRDB) só tem os tees do resort (Fazio: Haig, 1…5; Match:
+   Anchor, Sailboat, Helm, Pelican; Palmer); os tees USKids misturam marcas
+   buraco a buraco e não têm rating — fica null, não se estima.
+   Campos por escalão iguais de 2021 a 2025 (PDFs de cada ano e
+   uskids-results); excepção: Girls 11 no Palmer até 2024 e no Match em 2025.
+   Nomes dos campos iguais aos dos resultados USKids.
    ───────────────────────────────────────────────────────────────────────── */
 
 const yd2m = (yd: number[]) => yd.map((y) => Math.round(y * 0.9144));
@@ -1328,10 +1335,12 @@ const pgaPalmerSIM = [9,17,3,1,15,7,11,5,13, 16,6,2,18,14,12,10,8,4];
 const pgaPalmerSIF = [11,17,7,3,15,9,13,1,5, 16,6,4,18,14,12,8,10,2];
 const pgaPalmerB1314 = yd2m([377,147,347,498,154,384,345,472,356, 156,357,455,126,299,343,368,377,550]); // 6111 yd — Tee 7
 const pgaPalmerG1314 = yd2m([337,123,337,440,125,324,291,467,351, 120,342,425,121,295,289,357,302,546]); // 5592 yd — Tee 6
+const pgaPalmerG11   = yd2m([282,94,303,401,88,316,237,417,286, 115,296,395,100,232,229,310,260,456]); // 4817 yd — Tee 4, Girls 11 (2021–2024)
 const pgaPalmerG12   = yd2m([332,96,332,436,120,320,271,428,290, 117,300,399,105,285,267,346,292,479]);   // 5215 yd — Tee 5
 
 // Match — par 72
-const pgaMatchPar = [5,3,4,3,5,3,4,4,5, 5,3,4,3,4,5,4,5,3];
+const pgaMatchPar = [5,3,4,3,5,3,4,4,5, 5,3,4,3,4,5,4,5,3]; // par USKids (o campo é par 67)
+const pgaMatchSIM = [5,17,3,15,11,13,1,7,9, 2,14,6,18,12,8,16,4,10];
 const pgaMatchTee4 = yd2m([400,110,255,108,425,119,275,295,403, 391,124,244,117,258,430,268,349,130]); // 4701 yd — Girls 11 / Boys 10
 const pgaMatchTee3 = yd2m([365,100,216,98,383,107,256,234,344, 368,87,200,112,225,386,229,320,118]);   // 4148 yd — Girls 10 / Boys 9
 
@@ -1365,6 +1374,7 @@ const pgaNationalPalmer: Course = {
       pgaTee18("pga-palmer-uk-b1314", "M", "USKids Boys 13-14", null, pgaPalmerPar, pgaPalmerB1314, pgaPalmerSIM), // Tee 7
       pgaTee18("pga-palmer-uk-g1314", "F", "USKids Girls 13-14", "#111827", pgaPalmerPar, pgaPalmerG1314, pgaPalmerSIF), // Tee 6
       pgaTee18("pga-palmer-uk-g12", "F", "USKids Girls 12", "#ffffff", pgaPalmerPar, pgaPalmerG12, pgaPalmerSIF), // Tee 5
+      pgaTee18("pga-palmer-uk-g11", "F", "USKids Girls 11 (2021–2024)", "#ef4444", pgaPalmerPar, pgaPalmerG11, pgaPalmerSIF), // Tee 4
     ],
   },
 };
@@ -1377,8 +1387,8 @@ const pgaNationalMatch: Course = {
     country: "EUA",
     links: { fpg: null, scorecards: null, extra: HOLIDAY_CLASSIC_2025_LINKS },
     tees: [
-      pgaTee18("pga-match-uk-tee4", "U", "USKids Girls 11 / Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4), // Tee 4
-      pgaTee18("pga-match-uk-tee3", "U", "USKids Girls 10 / Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3), // Tee 3
+      pgaTee18("pga-match-uk-tee4", "U", "USKids Girls 11 / Boys 10", "#ef4444", pgaMatchPar, pgaMatchTee4, pgaMatchSIM), // Tee 4
+      pgaTee18("pga-match-uk-tee3", "U", "USKids Girls 10 / Boys 9", "#f97316", pgaMatchPar, pgaMatchTee3, pgaMatchSIM), // Tee 3
     ],
   },
 };
@@ -1424,6 +1434,59 @@ const pgaNationalFazio: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   PGA National Slieve Russell (Irlanda) — European Ladies' Team Championship 2026
+   Três portuguesas jogaram-no (7–8/07/2026) e os clubes delas registaram o
+   mesmo tee como «AZUIS», «VERMELHAS» e «AMARELAS», em duas entradas de campo
+   («… Golf» e «… Golf (Irlanda)»). Era um tee só: o da prova, CR 77,1 /
+   Slope 139 (EGA, «HCP Adjustment Data – ELTC 2026»). Buracos, par e SI do
+   cartão da brochura oficial (Golf Ireland, «ELTC26 Information Brochure»,
+   rascunho de 04/03/2026) — distâncias em JARDAS, convertidas aqui; o cartão
+   «AMARELAS» tinha-as copiado como metros. O SI bate com os cartões dos
+   clubes; no 10 a brochura dá 384 jd e o cartão 390 (fica a brochura).
+   As duas chaves recebem o mesmo tee para a fusão por nome (alias em
+   courseAliases.ts) não trazer de volta os tees dos cartões.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const slievePar = [4,4,4,3,4,5,3,4,5, 4,3,4,5,4,4,3,4,5]; // 72
+const slieveSI  = [9,1,6,18,4,15,17,13,12, 10,16,2,3,14,7,11,8,5];
+const slieveELTC = yd2m([384,366,369,135,369,478,185,329,498, 384,135,376,497,348,397,160,382,469]);
+
+function slieveRussell(courseKey: string, name: string): Course {
+  return {
+    courseKey,
+    master: {
+      courseId: courseKey,
+      name,
+      country: "Irlanda",
+      links: {
+        fpg: null,
+        scorecards: null,
+        extra: [
+          {
+            label: "ELTC 2026 - Information Brochure (scorecard)",
+            url: "https://www.ega-golf.ch/sites/ega/files/2026-03/ELTC26_IRL_Information%20Brochure_Final.pdf",
+          },
+        ],
+      },
+      tees: [
+        {
+          teeId: "slieve-eltc-2026",
+          sex: "F",
+          teeName: "European Ladies Team Championship",
+          scorecardMeta: { teeColor: null },
+          ratings: { holes18: { par: 72, courseRating: 77.1, slopeRating: 139 } },
+          holes: vHoles(slievePar, slieveELTC, slieveSI),
+          distances: vDist(slieveELTC),
+        },
+      ],
+    },
+  };
+}
+
+const slieveRussellMain = slieveRussell("away-pga-national-slieve-russell-golf", "PGA National Slieve Russell Golf");
+const slieveRussellIrlanda = slieveRussell("away-pga-national-slieve-russell-golf-irlanda", "PGA National Slieve Russell Golf (Irlanda)");
+
 export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
@@ -1447,5 +1510,7 @@ export function getExtraCourses(): Course[] {
     pgaNationalPalmer,
     pgaNationalMatch,
     pgaNationalFazio,
+    slieveRussellMain,
+    slieveRussellIrlanda,
   ];
 }

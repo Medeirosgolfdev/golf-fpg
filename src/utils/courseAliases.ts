@@ -125,6 +125,8 @@ const COURSE_NAME_ALIASES: Record<string, string> = {
   "vierumakki": "vierumaki golf club",
   "454golf du médoc": "Golf du Médoc",
   "pga catalunya resort, spain": "PGA Catalunya Resort",
+  // ELTC 2026: o mesmo campo registado com e sem «(Irlanda)» (2026-10-30).
+  "pga national slieve russell golf (irlanda)": "PGA National Slieve Russell Golf",
 
   // ── Nomes curtos FPG p/ campos PT do master (2026-06-13) ──
   // Estavam só na cópia dos scripts: o pipeline já gravava o nome canónico,

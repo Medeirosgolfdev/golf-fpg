@@ -412,3 +412,13 @@ USKids = campo com pelo menos um tee cujo nome começa por «USKids» (`isUSKids
 na `CamposPage`) — os tees de torneio curados dos PDFs em `extraCourses.ts`. Um campo
 novo de torneio USKids entra aí sozinho se os tees se chamarem «USKids …». O SI não
 vem nos PDFs da USKids: tirá-lo do cartão do campo, conferindo os pares buraco a buraco.
+
+## Duplicados com nome de país e tees inventados pelos clubes (2026-10-30)
+
+O mesmo campo pode chegar em duas entradas away («X» e «X (Irlanda)») e com o
+mesmo tee físico registado com cores diferentes por cada clube (Slieve Russell:
+AZUIS/VERMELHAS/AMARELAS, todos CR 77,1/139). Resolve-se em três sítios: alias em
+`courseAliases.ts` (a app funde já), alias em `course-aliases.json` (o
+`extract-courses.js` funde na próxima corrida do update-data) e um tee oficial em
+`extraCourses.ts` posto nas DUAS chaves, para a fusão por nome não trazer de volta
+os tees dos cartões. Dados do tee: do organizador (brochura, EGA), nunca dos cartões.

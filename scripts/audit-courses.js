@@ -54,7 +54,7 @@ const BASELINE = {
   duplicateGroups: 4,
   tournamentsAsCourses: 4,
   /** Cartões antigos só com CR/Slope; desce com curadoria ou cartões novos. */
-  awayWithoutDistances: 35,
+  awayWithoutDistances: 34, // 35 → 34 a 30/10/2026: Slieve Russell com o cartão oficial do ELTC
   maxTeesPerCourse: 13,
 };
 
