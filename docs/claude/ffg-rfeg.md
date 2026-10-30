@@ -288,3 +288,16 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
   o ano do nome quando a página não o traz (Interclubes, Adaptado).
 - `build-lgs-twins` ignora a edição em numeração romana ao casar nomes
   («XIV Memorial Blanca Mayor» RFEG = «Memorial Blanca Mayor» LGS).
+
+### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
+
+- **Mérite Jeunes** — `pages.ffgolf.org/merite/datas/jeunes/{messieurs|dames}/{AAAAMM}` (JSON, sem login, mensal desde 202411; 757 rapazes classificados em Out/2026, ~2,5 mil com os não classificados). Traz `CATEGORIE` (Poucet 1 … Minime 2), que é o **ano de nascimento exacto**, coisa que o portal de resultados não dá (ver «Categoria FFG de um jogador», acima, inferida). Ficha: `/merite/merite_details/{AAAAMM}/jeunes?h={CODE}` (index FFG e Moy.SSS por prova).
+- **SSS que a FFG usou numa prova** = média das voltas − Moy.SSS da ficha. Ricardo Castro Ferreira (Out/2026): GPJ PIF 1 68,9 (CR RMS9 67,9), PIF 2 70,0 (68,0), PIF 3 69,0 (67,0), PIF 5 2025 65,5 (64,5) — 1 a 2 pancadas acima do CR, ou seja a FFG aplicou PCC nesses dias. É a mesma ordem do +1/+2 que aparece nos SD importados pela FPG.
+- **Guide des golfs** — `guidegolfs.ffgolf.org/fcapi/golfs/…` (calculadora de handicap de jogo): Slope/SSS/par de cada repère normal de todos os campos franceses, por sexo. Os repères das provas jovens não estão lá (só no RMS9).
+- Endereços e exemplos em `docs/links-conhecidos.html`.
+
+**Ligado ao site (30/10/2026)** — `scripts/scrape-ffgolf-merite.js` (workflow `update-ffgolf-merite.yml`, dias 6 e 12):
+- `public/data/ffgolf-merite-jeunes.json`: `players` por `sexo|APELIDO|NOME` (escalão, `by` = ano de nascimento = ano do mês − idade do escalão, lugar, médias, index da ficha) e `rows` (trnId → jogador → voltas + Moy.SSS). Aditivo: o que sai da janela de 12 meses fica. `--history` lê os meses desde 202411.
+- **Escalão exacto:** o `build-france-players.js` liga por sexo + `nameNom` + `namePrenom` (homónimos no portal não se ligam) e põe `birthYear`, `catSrc: "merite"`, `merite {rank, rankAnn, moy, moy6, nbt, idx, cat, month}`; o `cat` passa a ser o do ano corrente pelo ano de nascimento. 4437 de 13502 ligados; 1891 mudaram de escalão (quase todos por a inferência ser de uma época antiga, ou por jogarem acima do escalão). Colunas «Nasc.» e «Mérite» na /ffg/info/joueurs.
+- **SSS por série:** cada linha da ficha liga-se ao jogador no ficheiro de resultados por nome E voltas iguais; SSS = média das voltas − Moy.SSS, mediana por série (`serieCourseKey`) → `public/data/ffgolf-merite-sss.json` `{ tournaments: { trnId: { SERIE: { sss, n, lo, hi } } } }` (402 séries de 125 provas; em quase todas `lo = hi`). O site mostra «SSS FFG» ao lado do RMS9/HCP de jogo (`ratingSss`) e, **sem PCC escrito à mão**, `withMeritePcc` (`ffgEntries.ts`) põe PCC = arred.(SSS − CR) em todas as voltas, se a faixa ≤ 1,5 e o PCC em −1…+3. Os `pcc` à mão do `ffgolf-course-overrides.json` ganham sempre.
+- ⚠️ Onde há PCC à mão (deduzido dos SD da FPG), o SSS da FFG concorda nas PIF 2/3 2026 e PIF 5 2025, mas não na PIF 1 2026 (FFG +1, FPG +2), na 2e Division B U16, no Evian 2026 e nos Internacionais U14 2026 (FFG 0, FPG +2). Fica o da FPG, que é o que dá os SD oficiais.

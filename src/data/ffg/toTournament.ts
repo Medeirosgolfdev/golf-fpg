@@ -37,6 +37,11 @@ export function ratingFontes(sc: FFGSerieCourse | null | undefined): NonNullable
   if (h && h.slope[1] - h.slope[0] <= 15 && h.cr[1] - h.cr[0] <= 1.5) out.push({ fonte: "HCP de jogo",
     cr: faixa(h.cr[0], h.cr[1], fmtCr), slope: faixa(h.slope[0], h.slope[1], String),
     title: `Deduzido do handicap de jogo dos ${h.n} jogadores (por volta) da lista de partidas do RMS9: só estes CR/Slope dão o HCP de todos` });
+  const s = sc.ratingSss;
+  if (s) out.push({ fonte: "SSS FFG", cr: fmtCr(s.sss), slope: "",
+    title: `SSS que a FFG usou nesta série (Mérite Jeunes): média das voltas − média vs SSS, mediana de ${s.n} jogador${s.n === 1 ? "" : "es"}`
+      + (s.n > 1 ? ` (${fmtCr(s.lo)} a ${fmtCr(s.hi)})` : "")
+      + (sc.courseRating != null ? `. SSS − CR = ${(s.sss - sc.courseRating).toFixed(1).replace(".", ",")} (PCC médio da prova)` : "") });
   return out;
 }
 

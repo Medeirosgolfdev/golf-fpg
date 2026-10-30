@@ -45,6 +45,20 @@ const isIntlName = (name?: string | null) => /\binternationa(l|ux?)\b/i.test(nam
 
 /* ── FFG Resultats (portal) ── */
 
+/** Sem PCC escrito à mão, o PCC sai do SSS que a FFG usou (Mérite): arred.(SSS − CR),
+ *  igual em todas as voltas (o Mérite só dá a média da prova). Só quando o SSS é
+ *  coerente (faixa ≤ 1,5 entre jogadores, ou 1 só jogador) e o PCC cabe no WHS (−1 a +3) —
+ *  fora disso o tee da série não é o do CR e não se mexe. */
+export function withMeritePcc(sc: FFGSerieCourse): FFGSerieCourse {
+  const s = sc.ratingSss;
+  if (!s || sc.pcc || sc.courseRating == null || s.hi - s.lo > 1.5) return sc;
+  const pcc = Math.round(s.sss - sc.courseRating);
+  if (pcc < -1 || pcc > 3) return sc;
+  const nota = `PCC ${pcc > 0 ? "+" : ""}${pcc} = SSS da FFG ${s.sss.toFixed(1).replace(".", ",")} (Mérite Jeunes, ${s.n} jogador${s.n === 1 ? "" : "es"}) − CR ${sc.courseRating.toFixed(1).replace(".", ",")}; igual nas voltas todas.`;
+  return { ...sc, pcc: [pcc, pcc, pcc, pcc], pccNota: nota,
+    ratingNota: `${(sc.ratingNota ?? "").replace(" Assume PCC 0.", "")} ${nota}`.trim() };
+}
+
 /** Distâncias por série de um torneio do portal FFG, se publicadas (null = não há). */
 async function loadFfgSerieCourses(trnId: string): Promise<Record<string, FFGSerieCourse> | null> {
   type Series = Record<string, FFGSerieCourse>;
@@ -52,15 +66,17 @@ async function loadFfgSerieCourses(trnId: string): Promise<Record<string, FFGSer
   // Por ordem de força: tees do RMS9 do organizador (scrape-ffgolf-rms9-tees.js),
   // o CR/Slope deduzido do HCP de jogo (ffgolf-rms9-hcp.json) e, por cima, os
   // overrides escritos à mão (misto, PCC, notas).
-  const [rms, hcp, ov] = await Promise.all([
+  const [rms, hcp, ov, sss] = await Promise.all([
     get<{ tournaments?: Record<string, { series?: Series }> }>("/data/ffgolf-rms9-tees.json"),
     get<{ tournaments?: Record<string, Record<string, FFGSerieCourse["ratingHcp"]>> }>("/data/ffgolf-rms9-hcp.json"),
     get<{ resultats?: Record<string, { series?: Series }> }>("/data/ffgolf-course-overrides.json"),
+    get<{ tournaments?: Record<string, Record<string, FFGSerieCourse["ratingSss"]>> }>("/data/ffgolf-merite-sss.json"),
   ]);
   const out: Series = {};
   for (const [k, s] of Object.entries(rms?.tournaments?.[trnId]?.series ?? {})) out[k] = { ...s };
   for (const [k, h] of Object.entries(hcp?.tournaments?.[trnId] ?? {})) if (out[k] && h) out[k] = { ...out[k], ratingHcp: h };
   for (const [k, s] of Object.entries(ov?.resultats?.[trnId]?.series ?? {})) out[k] = { ...(out[k] ?? {}), ...s };
+  for (const [k, s] of Object.entries(sss?.tournaments?.[trnId] ?? {})) if (out[k] && s) out[k] = withMeritePcc({ ...out[k], ratingSss: s });
   return Object.keys(out).length ? out : null;
 }
 

@@ -313,6 +313,9 @@ export interface FFGSerieCourse {
   /** CR/Slope que cabem no handicap de jogo de TODOS os `n` jogadores da lista
    *  de partidas do RMS9: HCP = arred.(Index × Slope/113 + CR − Par). */
   ratingHcp?: { cr: [number, number]; slope: [number, number]; n: number };
+  /** SSS que a FFG usou (Mérite Jeunes: média das voltas − Moy.SSS de cada jogador;
+   *  mediana de `n` jogadores da série, entre `lo` e `hi`). SSS − CR = PCC médio da prova. */
+  ratingSss?: { sss: number; n: number; lo: number; hi: number };
 }
 
 /** «U12G»/«U12 G»/«BG»/«MF» → chave única U12G/U14G/U16F… (BG/BF = Benjamins = U14,

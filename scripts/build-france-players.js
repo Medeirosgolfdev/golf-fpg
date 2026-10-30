@@ -13,6 +13,9 @@
  *   license, name, sex, country, glfLic          — identidade
  *   club, region, lastSerie                      — do torneio MAIS RECENTE
  *   cat, catYear                                 — escalão (ver categoriaDe)
+ *   birthYear, catSrc, merite                    — do Mérite Jeunes da FFG, quando o jogador lá está:
+ *                                                  ano de nascimento EXACTO (o `cat` passa a sair dele,
+ *                                                  catSrc "merite") e lugar/médias do ranking
  *   hcp, hcpDate                                 — HCP mais recente COM valor
  *   tot, ano, firstSeenIso, lastSeenIso          — contagem/período (por trnId)
  *
@@ -40,6 +43,7 @@ const OUT = path.join(DATA, "france-players.json");
 const OUT_TWINS = path.join(DATA, "ffgolf-gg-twins.json");
 const OUT_TOURNS = path.join(DATA, "ffgolf-player-tournaments.json");
 const IDX_RES = path.join(DATA, "ffgolf-resultats-index.json");
+const MERITE = path.join(DATA, "ffgolf-merite-jeunes.json");
 
 const CUR_YEAR = new Date().getFullYear();
 
@@ -197,7 +201,7 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
           hcp: undefined, hcpDate: undefined,
           tot: 0, ano: 0, firstSeenIso: null, lastSeenIso: null,
           _lastDate: "", _lastHcpDate: "", _seen: new Set(), _escByYear: new Map(),
-          _apps: new Map(),
+          _apps: new Map(), _nom: "", _prenom: "",
         };
         players.set(lic, e);
       }
@@ -205,6 +209,7 @@ for (const f of fs.existsSync(DIR) ? fs.readdirSync(DIR) : []) {
       if (!e.sex && (p.sex === "M" || p.sex === "F")) e.sex = p.sex;
       if (!e.country && p.nationality) e.country = p.nationality;
       if (!e.glfLic && p.glfLic) e.glfLic = p.glfLic;
+      if (p.nameNom && iso >= e._lastDate) { e._nom = p.nameNom; e._prenom = p.namePrenom; }
 
       // Contagem por torneio (dedup por trnId — o mesmo jogador pode surgir
       // em mais do que uma série do mesmo torneio).
@@ -369,9 +374,33 @@ const byLicense = {};
 const tournsByLicense = {};
 let nApps = 0, nMismatch = 0;
 
-let nSemCat = 0;
+// Mérite Jeunes (scrape-ffgolf-merite.js): ano de nascimento exacto. Liga por
+// sexo + apelido + nome; um homónimo no Mérite (2 registos com a mesma chave)
+// não se usa.
+const meriteNorm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toUpperCase().replace(/[^A-Z0-9]+/g, " ").trim();
+let merite = {};
+try { merite = JSON.parse(fs.readFileSync(MERITE, "utf8")).players || {}; } catch { /* sem Mérite → só a inferência */ }
+const meriteCount = new Map();
+for (const p of [...players.values()]) {
+  const k = `${p.sex}|${meriteNorm(p._nom)}|${meriteNorm(p._prenom)}`;
+  meriteCount.set(k, (meriteCount.get(k) || 0) + 1);
+}
+
+let nSemCat = 0, nMerite = 0, nMeriteMuda = 0;
 for (const [lic, e] of players) {
   Object.assign(e, categoriaDe(e));
+  const mk = `${e.sex}|${meriteNorm(e._nom)}|${meriteNorm(e._prenom)}`;
+  const m = e._nom && meriteCount.get(mk) === 1 ? merite[mk] : null;
+  if (m) {
+    nMerite++;
+    e.merite = { rank: m.rank, rankAnn: m.rankAnn, moy: m.moy, moy6: m.moy6, nbt: m.nbt, idx: m.idx, cat: m.cat, month: m.month };
+    if (m.by) {
+      e.birthYear = m.by;
+      const cat = ffgEscalaoCanonico(`U${CUR_YEAR - m.by}`);
+      if (cat && cat !== e.cat) nMeriteMuda++;
+      if (cat) { e.cat = cat; e.catYear = CUR_YEAR; e.catSrc = "merite"; }
+    }
+  }
   if (!e.cat) nSemCat++;
   const rows = [...e._apps.values()].sort((a, b) => {
     const da = tourns[a[0]].date || "", db = tourns[b[0]].date || "";
@@ -382,7 +411,7 @@ for (const [lic, e] of players) {
   // A tabela mostra `tot`; a lista expansível mostra estas linhas. Divergirem
   // seria um bug silencioso (o utilizador conta e não bate certo).
   if (rows.length !== e.tot) nMismatch++;
-  const { _lastDate, _lastHcpDate, _seen, _escByYear, _apps, ...rec } = e;
+  const { _lastDate, _lastHcpDate, _seen, _escByYear, _apps, _nom, _prenom, ...rec } = e;
   byLicense[lic] = rec;
   if (rec.name) {
     const k = norm(rec.name);
@@ -398,6 +427,7 @@ const out = {
   byLicense,
 };
 writeJsonGuarded(OUT, out, { spaces: 0, failOnRefuse: true });
+console.log(`Mérite Jeunes: ${nMerite} jogadores ligados (escalão exacto; ${nMeriteMuda} mudaram de escalão face à inferência).`);
 console.log(`Categoria resolvida para ${players.size - nSemCat}/${players.size} jogadores (${nSemCat} sem sinal de idade em nenhuma prova).`);
 console.log(`${OUT} escrito (${(fs.statSync(OUT).size / 1024).toFixed(1)} KB).`);
 

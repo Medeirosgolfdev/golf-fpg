@@ -1,0 +1,62 @@
+name: Actualizar FFGolf — Mérite Jeunes (mensal)
+
+# Mérite National Jeunes da FFG (pages.ffgolf.org/merite/…, sem login): o
+# escalão exacto (= ano de nascimento) de cada júnior francês e, nas fichas, o
+# SSS que a FFG usou em cada prova (→ PCC das provas FFG). Ver
+# scripts/scrape-ffgolf-merite.js e docs/claude/ffg-rfeg.md.
+#
+# O Mérite sai uma vez por mês (o de Outubro de 2026 tem parution a 05/11), por
+# isso corre nos dias 6 e 12: o segundo apanha um mês publicado com atraso. Cada
+# corrida lê ~1 mil fichas, uma de cada vez (~10 min).
+on:
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Mês AAAAMM. Vazio = o mais recente publicado.'
+        required: false
+        default: ''
+  schedule:
+    - cron: '0 6 6,12 * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  update-ffgolf-merite:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: main
+          fetch-depth: 1
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+          cache: 'npm'
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Mérite Jeunes (listas + fichas)
+        run: |
+          ARGS=""
+          if [ -n "${{ github.event.inputs.month }}" ]; then ARGS="--month ${{ github.event.inputs.month }}"; fi
+          node scripts/scrape-ffgolf-merite.js $ARGS
+
+      # O escalão exacto entra no roster FR (france-players.json).
+      - name: Regenerar roster FR
+        run: node scripts/build-france-players.js
+
+      - name: Commit e push (se houver mudanças)
+        run: |
+          bash scripts/ci/push-generated.sh -m "data: FFGolf Mérite Jeunes $(date -u +'%Y-%m-%d %H:%M UTC')" \
+            -f ffgolf -- public/data/ffgolf-merite-jeunes.json public/data/ffgolf-merite-sss.json

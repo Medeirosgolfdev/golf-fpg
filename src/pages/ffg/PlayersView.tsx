@@ -46,6 +46,11 @@ interface FrancePlayer {
    *  recente com sinal de idade). Fallback à série para ficheiros antigos. */
   cat?: string;
   catYear?: number;
+  /** Ano de nascimento EXACTO, do Mérite Jeunes da FFG (`catSrc: "merite"` → o `cat` sai dele). */
+  birthYear?: number;
+  catSrc?: "merite";
+  /** Lugar e médias no Mérite Jeunes (mês `month`, AAAAMM). */
+  merite?: { rank: number | null; rankAnn: number | null; moy: number | null; moy6: number | null; nbt: number; idx: number | null; cat: string | null; month: string };
   hcp?: number;
   hcpDate?: string;
   /** Contagem de torneios (portal FFGolf resultats) bakada pelo builder. */
@@ -76,7 +81,7 @@ function splitCat(cat: string): { sub: string; fr: string | null } {
   return m ? { sub: m[1].replace("-", " "), fr: m[2] } : { sub: cat.replace(/^Sub-/, "Sub "), fr: null };
 }
 
-type SK = "name" | "license" | "cat" | "sex" | "hcp" | "club" | "region" | "tot" | "ano" | "hcpDate";
+type SK = "name" | "license" | "cat" | "birth" | "merite" | "sex" | "hcp" | "club" | "region" | "tot" | "ano" | "hcpDate";
 
 const PAGE_SIZE = 100;
 const CUR_YEAR = new Date().getFullYear();
@@ -192,13 +197,15 @@ export function FFGPlayersView() {
     region: all.some((p) => !!p._region),
     sex: all.some((p) => p.sex === "M" || p.sex === "F"),
     cat: all.some((p) => !!p._cat),
+    birth: all.some((p) => !!p.birthYear),
+    merite: all.some((p) => p.merite?.rank != null),
     tot: all.some((p) => p._tot > 0),
     hcpDate: all.some((p) => !!p.hcpDate),
   }), [all]);
 
   /** Nº de colunas visíveis — o colSpan da linha expandida tem de bater certo. */
   const colCount = 3 + (has.club ? 1 : 0) + (has.region ? 1 : 0) + (has.sex ? 1 : 0)
-    + (has.cat ? 1 : 0) + (has.tot ? 2 : 0) + (has.hcpDate ? 1 : 0);
+    + (has.cat ? 1 : 0) + (has.birth ? 1 : 0) + (has.merite ? 1 : 0) + (has.tot ? 2 : 0) + (has.hcpDate ? 1 : 0);
 
   const catOptions = useMemo(() => {
     const s = new Set<string>();
@@ -236,6 +243,8 @@ export function FFGPlayersView() {
         case "name":    v = a._name.localeCompare(b._name, "fr"); break;
         case "license": v = a.license.localeCompare(b.license); break;
         case "cat":     v = (a._cat || "~").localeCompare(b._cat || "~", "fr"); break;
+        case "birth":   v = (a.birthYear ?? INF) - (b.birthYear ?? INF); break;
+        case "merite":  v = (a.merite?.rank ?? INF) - (b.merite?.rank ?? INF); break;
         case "sex":     v = (a.sex || "~").localeCompare(b.sex || "~"); break;
         case "hcp":     v = (a.hcp ?? INF) - (b.hcp ?? INF); break;
         case "club":    v = (a._club || "~").localeCompare(b._club || "~", "fr"); break;
@@ -324,7 +333,9 @@ export function FFGPlayersView() {
                   {has.region && <SortableHdr k="region" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort}>Ligue</SortableHdr>}
                   <SortableHdr k="hcp" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num">HCP</SortableHdr>
                   {has.sex && <SortableHdr k="sex" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight">Sexo</SortableHdr>}
-                  {has.cat && <SortableHdr k="cat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Escalão mais novo em que competiu na última época com sinal de idade (série ou nome da prova). A FFG não expõe data de nascimento; jogar acima do escalão é permitido, abaixo não — daí o mínimo.">Catégorie</SortableHdr>}
+                  {has.cat && <SortableHdr k="cat" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="tight" title="Escalão do Mérite Jeunes da FFG (ano de nascimento exacto) quando o jogador lá está; senão, o escalão mais novo em que competiu na última época (série ou nome da prova) — jogar acima do escalão é permitido, abaixo não.">Catégorie</SortableHdr>}
+                  {has.birth && <SortableHdr k="birth" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Ano de nascimento — do escalão do Mérite Jeunes da FFG">Nasc.</SortableHdr>}
+                  {has.merite && <SortableHdr k="merite" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Lugar no Mérite National Jeunes da FFG (12 meses)">Mérite</SortableHdr>}
                   {has.tot && <SortableHdr k="tot" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Total de torneios FFGolf em que apareceu">📊 Tot</SortableHdr>}
                   {has.tot && <SortableHdr k="ano" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title={`Torneios em ${CUR_YEAR}`}>🗓 {CUR_YEAR}</SortableHdr>}
                   {has.hcpDate && <SortableHdr k="hcpDate" sortKey={sortKey} sortDir={sortDir} onSort={toggleSort} className="num" title="Data do torneio com o HCP mais recente">Últ. HCP</SortableHdr>}
@@ -367,7 +378,7 @@ export function FFGPlayersView() {
                       <td style={{ textAlign: "right", fontWeight: 600 }}>{r.hcp != null ? r.hcp.toFixed(1) : MUTED}</td>
                       {has.sex && <td>{r.sex === "M" || r.sex === "F" ? <SexBadge sex={r.sex} /> : MUTED}</td>}
                       {has.cat && (
-                        <td title={[r.catYear ? `Época ${r.catYear}` : null, r.lastSerie ? `Série mais recente: ${r.lastSerie}` : null].filter(Boolean).join(" · ") || undefined}>
+                        <td title={[r.catSrc === "merite" ? `Mérite Jeunes: ${r.merite?.cat ?? ""} (nascido em ${r.birthYear})` : r.catYear ? `Época ${r.catYear} (inferido das provas)` : null, r.lastSerie ? `Série mais recente: ${r.lastSerie}` : null].filter(Boolean).join(" · ") || undefined}>
                           {catParts ? (
                             r._young ? (
                               <>
@@ -379,6 +390,13 @@ export function FFGPlayersView() {
                               <span className="muted fs-11">{r._cat}</span>
                             )
                           ) : MUTED}
+                        </td>
+                      )}
+                      {has.birth && <td style={{ textAlign: "right" }}>{r.birthYear ?? MUTED}</td>}
+                      {has.merite && (
+                        <td style={{ textAlign: "right" }}
+                          title={r.merite ? [`Mérite Jeunes ${r.merite.month.slice(4)}/${r.merite.month.slice(0, 4)}`, r.merite.rankAnn ? `${r.merite.rankAnn}.º do ano de nascimento` : null, `${r.merite.nbt} provas`, r.merite.moy != null ? `média ${r.merite.moy > 0 ? "+" : ""}${r.merite.moy.toFixed(2)} vs SSS` : null, r.merite.idx != null ? `index ${r.merite.idx.toFixed(1)}` : null].filter(Boolean).join(" · ") : undefined}>
+                          {r.merite?.rank != null ? `${r.merite.rank}.º` : MUTED}
                         </td>
                       )}
                       {has.tot && <td style={{ textAlign: "right", color: r._tot ? undefined : "var(--text-muted)" }}>{r._tot || "—"}</td>}

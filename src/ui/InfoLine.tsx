@@ -75,7 +75,7 @@ export function RatingFontes({ list }: { list?: { fonte: string; cr: string; slo
   if (!list?.length) return null;
   return (
     <InfoGroup>
-      {list.map((f) => <InfoItem key={f.fonte} pre={f.fonte} v={`${f.cr} / ${f.slope}`} title={f.title} />)}
+      {list.map((f) => <InfoItem key={f.fonte} pre={f.fonte} v={f.slope ? `${f.cr} / ${f.slope}` : f.cr} title={f.title} />)}
     </InfoGroup>
   );
 }
