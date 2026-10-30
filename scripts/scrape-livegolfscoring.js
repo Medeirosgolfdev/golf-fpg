@@ -670,7 +670,7 @@ async function main() {
   }
 
   console.log(`livegolfscoring.es scrape: ${ids.length} ids, concurrency=${concurrency}`);
-  let ok = 0, fail = 0, skip = 0;
+  let ok = 0, fail = 0, vazio = 0, skip = 0;
   let cursor = 0;
   async function worker() {
     while (cursor < ids.length) {
@@ -705,6 +705,11 @@ async function main() {
           const nP = result.rounds.reduce((a, r) => a + (r.players?.length || 0), 0);
           const mt = result.course ? `, ${result.course.metersTotal}m` : "";
           console.log(`  ${id}: ${result.meta.name?.slice(0, 48) || "?"} (${result.rounds.length} R, ${nP} entries${mt})`);
+        } else if (result.error === "no_data") {
+          // Id sem torneio (a varredura 1-1000 passa por ~700 assim): a página
+          // responde 200 sem dados. Não é falha — senão, numa semana sem
+          // torneios novos (ok=0), o passo ficava vermelho (30/10/2026).
+          vazio++;
         } else {
           fail++;
         }
@@ -714,7 +719,7 @@ async function main() {
   const workers = [];
   for (let i = 0; i < concurrency; i++) workers.push(worker());
   await Promise.all(workers);
-  console.log(`\nDone: ok=${ok} fail=${fail} skip=${skip}`);
+  console.log(`\nDone: ok=${ok} fail=${fail} vazio=${vazio} skip=${skip}`);
   // Exit: 0 gravou · 2 nada gravado · 1 tudo falhou.
   if (fail > 0 && ok === 0) process.exitCode = 1;
   else if (ok === 0) process.exitCode = 2;
