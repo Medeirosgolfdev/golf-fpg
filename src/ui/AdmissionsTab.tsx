@@ -12,7 +12,7 @@
  * sabe ordenar pos/name/gross/toPar por ele próprio).
  */
 
-import { useMemo, useState, type ReactNode } from "react";
+import { useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import type { FpgAdmissions, FpgAdmissionPlayer } from "../data/nacional2026Loader";
 import { fmtHcp, ageAtDate, escalaoAtDate, birthYearOf } from "../utils/format";
 import { formatPlayerName } from "../utils/playerUtils";
@@ -29,6 +29,11 @@ import SortableHdr from "./SortableHdr";
 import { displayFed } from "../utils/fedKeys";
 import { RowsFilterBar, filterRows } from "./PlayerFilterBar";
 import { EMPTY_FILTER, type PlayerFilter, type MultiRoundRow } from "./multiRoundTypes";
+import { KidsLinkCtx } from "./KidsLink";
+import { normName } from "../data/KIDSdataLoader";
+import { cachedFetchJson } from "../data/fetchCache";
+import { formaMedia, type ScoutFile, type JuniorScout } from "./circuit/scoutModel";
+import { getTierLabel, type TierKey } from "../pages/kids2/juniorCalc";
 
 interface Props {
   admissions: FpgAdmissions;
@@ -64,6 +69,10 @@ interface Props {
    *  traz federado — para comparar com o HCP da inscrição (listas em PDF de
    *  semanas atrás; 29/10/2026). */
   hcpActual?: boolean;
+  /** Colunas do Kids 2 (nível, torneios, vitórias, forma) para quem casa com
+   *  uma ficha — circuitos de fora, onde a inscrição só traz nome e cidade
+   *  (USKids, 30/10/2026). */
+  kidsCols?: boolean;
 }
 
 /** Coluna própria (ordenável) da AdmissionsTab. */
@@ -96,6 +105,11 @@ function fmtRegisto(s: string | null | undefined): string {
 type SortKey = "pos" | "nome" | "esc" | "fed" | "clube" | "hcp" | "nasc" | "pts" | "vac" | "registo" | "status" | `x:${string}`;
 
 
+/** Chave da ficha do Kids 2 — as colunas recebem a cópia enriquecida do jogador. */
+const scoutKey = (p: FpgAdmissionPlayer) => `${p.fed ?? ""}|${p.nome ?? ""}`;
+
+const TIER_ORDEM: TierKey[] = ["elite", "strong", "solid", "developing", "beginner"];
+
 const NO_COLS: AdmissionsExtraCol[] = [];
 const NO_HIDE: NonNullable<Props["hideCols"]> = {};
 const NO_NAMES: string[] = [];
@@ -104,7 +118,7 @@ export default function AdmissionsTab({
   admissions, playersDB, date, fpgUrl,
   tournamentEscalao, tournamentSex, hidePostCols, teeRule,
   extraCols: extraColsProp = NO_COLS, hideCols = NO_HIDE, recentHours = 48, removidos = NO_NAMES, infoExtra, reservaLabel, posContent,
-  hcpActual = false,
+  hcpActual = false, kidsCols = false,
 }: Props) {
   // A MESMA barra de filtros do scorecard e do draw (13/10/2026 — «tudo igual»).
   const [pFilter, setPFilter] = useState<PlayerFilter>(EMPTY_FILTER);
@@ -112,17 +126,60 @@ export default function AdmissionsTab({
   const fedBirthdates = useFedBirthdates();
   const fedGenders = useFedGenders();
   const fedHcp = useFedHcp();
-  const extraCols = useMemo<AdmissionsExtraCol[]>(() => !hcpActual ? extraColsProp : [...extraColsProp, {
-    key: "hcpActual", label: "HCP actual", title: "Handicap de hoje na FPG (só quem tem federado)",
-    sort: (p) => (p.fed ? fedHcp.get(p.fed) : undefined) ?? null,
-    cell: (p) => fmtHcp(p.fed ? fedHcp.get(p.fed) : undefined),
-  }], [hcpActual, extraColsProp, fedHcp]);
+  const players = admissions.players || [];
+  // Ficha do Kids 2 de cada inscrito (pelo nome, como a seta ↗ e o Scout; um
+  // homónimo com outro federado não conta). Dá a data de nascimento a quem a
+  // inscrição não traz e, com `kidsCols`, as colunas do Kids 2. Só a data
+  // completa (`d`) — nunca o ano estimado do ranking.
+  const kidsMap = useContext(KidsLinkCtx);
+  const precisaScout = kidsMap.size > 0 && (kidsCols || players.some(p => !p.dob && !p.fed));
+  const [scout, setScout] = useState<ScoutFile | null>(null);
+  useEffect(() => {
+    if (!precisaScout) return;
+    let vivo = true;
+    cachedFetchJson<ScoutFile>("/data/juniors-scout.json").then(d => { if (vivo) setScout(d ?? null); }).catch(() => {});
+    return () => { vivo = false; };
+  }, [precisaScout]);
+  const scoutOf = useMemo(() => {
+    const m = new Map<string, JuniorScout>();
+    if (!scout) return m;
+    for (const p of players) {
+      const kid = kidsMap.get(normName(p.nome || ""));
+      if (!kid?.id || (p.fed && kid.fed && kid.fed !== p.fed)) continue;
+      const sc = scout.players[kid.id];
+      if (sc) m.set(scoutKey(p), sc);
+    }
+    return m;
+  }, [scout, players, kidsMap]);
+  const extraCols = useMemo<AdmissionsExtraCol[]>(() => {
+    const cols = [...extraColsProp];
+    if (hcpActual) cols.push({
+      key: "hcpActual", label: "HCP actual", title: "Handicap de hoje na FPG (só quem tem federado)",
+      sort: (p) => (p.fed ? fedHcp.get(p.fed) : undefined) ?? null,
+      cell: (p) => fmtHcp(p.fed ? fedHcp.get(p.fed) : undefined),
+    });
+    if (kidsCols && scoutOf.size > 0) {
+      const sc = (p: FpgAdmissionPlayer) => scoutOf.get(scoutKey(p));
+      const sem = <span className="muted">–</span>;
+      cols.push(
+        { key: "k2nivel", label: "Nível", title: "Nível no Kids 2 (pela carreira)",
+          sort: (p) => { const t = sc(p)?.t; return t ? TIER_ORDEM.indexOf(t) : null; }, cell: (p) => { const t = sc(p)?.t; return t ? getTierLabel(t) : sem; } },
+        { key: "k2n", label: "Torn.", title: "Torneios na carreira (Kids 2)", dir: "desc",
+          sort: (p) => sc(p)?.n ?? null, cell: (p) => sc(p)?.n ?? sem },
+        { key: "k2w", label: "Vit.", title: "Vitórias na carreira (Kids 2)", dir: "desc",
+          sort: (p) => sc(p)?.w ?? null, cell: (p) => sc(p) ? (sc(p)!.w ?? 0) : sem },
+        { key: "k2forma", label: "Forma", title: "±par médio por 18 buracos nos últimos torneios (Kids 2)",
+          sort: (p) => formaMedia(sc(p)?.f),
+          cell: (p) => { const f = formaMedia(sc(p)?.f); return f == null ? sem : f > 0 ? `+${f}` : f === 0 ? "E" : `${f}`.replace("-", "−"); } },
+      );
+    }
+    return cols;
+  }, [hcpActual, extraColsProp, fedHcp, kidsCols, scoutOf]);
   const { sortKey, sortDir, toggleSort } = useSort<SortKey>("pos", "asc", {
     pts: "desc", ...Object.fromEntries(extraCols.filter(c => c.dir).map(c => [`x:${c.key}`, c.dir!])),
   });
   const isNovo = (p: { dataInscricao?: string | null }) => recentHours != null && isRecentHours(p.dataInscricao, recentHours);
 
-  const players = admissions.players || [];
   // Listas de apurados (finais Drive) trazem os pontos do ranking que os apurou.
   const hasPts = players.some(p => p.pts != null);
   const confirmedCount = admissions.totalInscritos ?? players.filter(p => p.status === "confirmed").length;
@@ -141,7 +198,8 @@ export default function AdmissionsTab({
     // para quem nao tem federado portugues — sem ela os internacionais ficam
     // sem escalao e sem marcacao calculada pelo regulamento.
     const dob: string | undefined =
-      p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob;
+      p.dob || bd?.dob || (p.fed ? fedBirthdates.get(p.fed) : undefined) || (p as any)._rfeg?.dob ||
+      (/^\d{4}-\d{2}-\d{2}/.test(scoutOf.get(scoutKey(p))?.d ?? "") ? scoutOf.get(scoutKey(p))!.d : undefined);
     const dobYear = birthYearOf(dob);
     let clube = p.clube;
     if (!clube && bd) {
@@ -170,7 +228,21 @@ export default function AdmissionsTab({
       _escHist: escHist,
       _ruleTee: ruleTee,
     };
-  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex]);
+  }), [players, playersDB, fedBirthdates, fedGenders, date, teeRule, tournamentSex, scoutOf]);
+
+  // Colunas sem nada para mostrar escondem-se sozinhas; o ESC. também quando
+  // todos são do mesmo escalão (USKids: a divisão já é o escalão, 30/10/2026).
+  const hide = useMemo(() => {
+    const escs = new Set(enriched.map(p => p._escHist || ""));
+    return {
+      ...hideCols,
+      esc: hideCols.esc || escs.size <= 1,
+      nasc: hideCols.nasc || !enriched.some(p => p._dob),
+      fed: hideCols.fed || !enriched.some(p => displayFed(p.fed)),
+      hcp: !enriched.some(p => p.hcp != null),
+      tee: hideCols.tee || (!teeName && !enriched.some(p => p._ruleTee || p.teeName)),
+    };
+  }, [hideCols, enriched, teeName]);
 
   // Cada inscrito na forma das linhas do scorecard, para a barra de filtros comum.
   const asRow = (p: (typeof enriched)[number], i: number): MultiRoundRow => ({
@@ -281,11 +353,11 @@ export default function AdmissionsTab({
           : nameWithTags,
         prefixCells: (
           <>
-            {!hideCols.esc && <td className="lb-esc">
+            {!hide.esc && <td className="lb-esc">
               {p._escHist ? <EscPill esc={p._escHist} /> : <span className="muted">–</span>}
             </td>}
             {/* Nasc. + Idade como no Resumo (pílulas neutras, colunas próprias). */}
-            {!hideCols.nasc && <>
+            {!hide.nasc && <>
             <td className="lb-esc" title={p._dob ? `${p._dob} (${age ?? "?"} anos à data)` : ""}>
               {p._dobYear != null ? <BirthPill>{p._dobYear}</BirthPill> : <span className="muted">–</span>}
             </td>
@@ -297,10 +369,10 @@ export default function AdmissionsTab({
                 nome — mostrar "–", que e a informacao verdadeira: sem federado.
                 O `fed` cru continua a ir para o TournPName, que precisa dele
                 para o perfil e para o link ↗. */}
-            {!hideCols.fed && <td className="lb-fed">{displayFed(p.fed) || "–"}</td>}
+            {!hide.fed && <td className="lb-fed">{displayFed(p.fed) || "–"}</td>}
             <td className="lb-club" title={p._clube}>{p._clube || "–"}</td>
-            <td className="lb-hcp">{fmtHcp(p.hcp)}</td>
-            {!hideCols.tee && <td className="lb-tee">{
+            {!hide.hcp && <td className="lb-hcp">{fmtHcp(p.hcp)}</td>}
+            {!hide.tee && <td className="lb-tee">{
               // 1) tee do regulamento (escalão+sexo) → quadradinho de cor;
               // 2) teeName explícito (ex.: NextCaddy = distância "5498 m") → texto;
               // 3) fallback: tee genérico do escalão global → quadradinho.
@@ -324,8 +396,8 @@ export default function AdmissionsTab({
         ),
         postScorecardCells: hidePostCols ? undefined : (
           <>
-            {!hideCols.vac && <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>}
-            {!hideCols.registo && <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
+            {!hide.vac && <td className="lb-hcp" style={{ fontWeight: 600 }}>{fmtHcp(p.vac)}</td>}
+            {!hide.registo && <td className="fs-11 muted" style={{ whiteSpace: "nowrap" }}>
               {fmtRegisto(p.dataInscricao)}
               {novo && <span className="p p-sm fs-10 fw-700" style={{ background: "var(--score-eagle)", color: "#fff", marginLeft: 4, padding: "1px 5px", borderRadius: 8 }}
                 title={`Inscrito nas últimas ${recentHours} h`}>NOVO</span>}
@@ -343,7 +415,7 @@ export default function AdmissionsTab({
         ),
       };
     });
-  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados, extraCols, hideCols, recentHours, reservaLabel, posContent]);
+  }, [sorted, playersDB, fedCountries, teeName, date, hidePostCols, hasPts, convocados, extraCols, hide, recentHours, reservaLabel, posContent]);
 
   if (admissions.error) {
     return <div className="detail-toolbar" style={{ padding: 16 }}>
@@ -358,20 +430,20 @@ export default function AdmissionsTab({
 
   const effDate = date ?? admissions.date ?? null;
   const recentes = players.filter(p => p.status !== "desistente" && isNovo(p));
-  const nPost = hidePostCols ? 0 : 3 - (hideCols.vac ? 1 : 0) - (hideCols.registo ? 1 : 0);
+  const nPost = hidePostCols ? 0 : 3 - (hide.vac ? 1 : 0) - (hide.registo ? 1 : 0);
 
   const prefixHeaderCells = (
     <>
       {/* Ordem e aspecto das colunas = Resumo: ESC. · Nasc. · Idade · FED · Clube · HCP · TEE */}
-      {!hideCols.esc && <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
-      {!hideCols.nasc && <>
+      {!hide.esc && <SortableHdr k="esc"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">ESC.</SortableHdr>}
+      {!hide.nasc && <>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Nasc.</SortableHdr>
       <SortableHdr k="nasc"   sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-esc">Idade</SortableHdr>
       </>}
-      {!hideCols.fed && <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
+      {!hide.fed && <SortableHdr k="fed"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-fed">FED</SortableHdr>}
       <SortableHdr k="clube"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-club">Clube</SortableHdr>
-      <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>
-      {!hideCols.tee && <th className="lb-tee">TEE</th>}
+      {!hide.hcp && <SortableHdr k="hcp"    sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">HCP</SortableHdr>}
+      {!hide.tee && <th className="lb-tee">TEE</th>}
       {hasPts && (
         <SortableHdr k="pts" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)}
           style={{ textAlign: "center" }} title="Pontos no ranking que o apurou (e a posição nesse ranking)">PTS</SortableHdr>
@@ -384,8 +456,8 @@ export default function AdmissionsTab({
   );
   const postScorecardHeaderCells = (
     <>
-      {!hideCols.vac && <SortableHdr k="vac"     sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">VAC</SortableHdr>}
-      {!hideCols.registo && <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Registo</SortableHdr>}
+      {!hide.vac && <SortableHdr k="vac"     sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} className="lb-hcp">VAC</SortableHdr>}
+      {!hide.registo && <SortableHdr k="registo" sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Registo</SortableHdr>}
       <SortableHdr k="status"  sortKey={sortKey} sortDir={sortDir} onSort={(k) => toggleSort(k as SortKey)} >Status</SortableHdr>
     </>
   );

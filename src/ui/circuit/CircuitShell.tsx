@@ -187,7 +187,8 @@ function DivisionAdmissions({ admissions, date }: { admissions: FpgAdmissions; d
   const ps = admissions.players ?? [];
   // VAC/Registo/Status só quando a fonte os tem (a FPG tem; Espanha não).
   const hidePostCols = !ps.some(p => p.vac != null || p.dataInscricao);
-  return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} />;
+  // Circuitos de fora: a inscrição só traz nome e cidade — o Kids 2 completa.
+  return <AdmissionsTab admissions={admissions} date={date} hidePostCols={hidePostCols} kidsCols />;
 }
 
 /** Draws por ronda numa só secção (quando não há resultados de ronda onde os intercalar). */
