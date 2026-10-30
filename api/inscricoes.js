@@ -311,7 +311,8 @@ function parseAdmissionsTable(html) {
    (`fetchAdmissionsSessaoPublica` em scripts/scrape-fpg-admissions-draws-node.js,
    sessão como a `Sessao` de scripts/lib/fpg-session.js). Redirects seguidos à
    mão para não perder os cookies pelo caminho. */
-async function fetchSessaoPublica(ccode, tcode) {
+// Exportada: o servidor local (middleware em vite.config.ts) usa a mesma.
+export async function fetchSessaoPublica(ccode, tcode) {
   const jar = new Map();
   const get = async (url) => {
     let actual = url;

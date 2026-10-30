@@ -47,6 +47,9 @@ export function useLiveAdmissions(
         const r = await fetch(`/api/inscricoes?ccode=${encodeURIComponent(String(ccode))}&tcode=${encodeURIComponent(String(tcode))}`);
         const j = await r.json();
         if (!r.ok || j?.error) throw new Error(j?.error || `HTTP ${r.status}`);
+        // Servidor local: quando nenhuma fonte responde devolve a última cache
+        // (`fromCache`) — não é live, por isso cai no último scrape.
+        if (j?.fromCache) throw new Error(`FPG sem resposta${j.warning ? ` (${j.warning})` : ""}`);
         const players: FpgAdmissionPlayer[] = (j.jogadores || []).map((p: any, i: number) => ({
           pos: i + 1,
           fed: p.fed ?? null,

@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { join, extname } from 'path'
 import { existsSync, statSync, createReadStream, readFileSync, writeFileSync, mkdirSync, renameSync, unlinkSync } from 'fs'
+import { fetchSessaoPublica } from './api/inscricoes.js'
 
 function loadEnvLocal() {
   const p = join(process.cwd(), '.env.local')
@@ -716,13 +717,27 @@ export default defineConfig({
           const merged = new Map<string, Jogador>()  // fed → jogador
           let bestStatus = 0
           let bestHtml = ''
+          // 0) Sessão PÚBLICA (sem cookies) — a 1.ª fonte, como em produção
+          //    (api/inscricoes.js, desde 26/10/2026). As cookies e o admissions.asp
+          //    deixaram de responder a 22/10; sem isto o servidor local caía na
+          //    cache do inscricoes_nacionais.json e mostrava-a como «live».
+          const publica = await fetchSessaoPublica(ccode, tcode)
+          if (publica) {
+            const parsed = parseAdmissionsTable(publica.html, '[inscricoes] tcode=' + tcode + ' [sessao-publica]')
+            for (const j of parsed) merged.set(j.fed || '_noFed_' + (j.nome || '').slice(0, 50), j)
+            diagnostics.push({ label: 'sessao-publica', http: publica.status, paramErr: false, parsed: parsed.length, unique: merged.size })
+            if (merged.size > 0) { bestStatus = publica.status; bestHtml = publica.html }
+          }
           // Contabilidade: `parsed` é quantas linhas a fonte extraiu; `unique` é
           // quantas CONTRIBUIU que eram novas (fed ainda não visto). A segunda
           // é o que importa para avaliar se uma fonte acrescenta valor.
           const parsedByLabel: Record<string, number> = {}
           const uniqueByLabel: Record<string, number> = {}
+          if (publica) parsedByLabel['sessao-publica'] = uniqueByLabel['sessao-publica'] = merged.size
           let dgWarmupDone = false
           for (const att of attempts) {
+            // A sessão pública traz a lista completa: as cookies ficam de reserva.
+            if (publica && merged.size > 0) continue
             // O fallback directo só serve para salvar o caso em que o linkpage
             // não cobre o ccode; se as fontes anteriores já deram inscritos,
             // poupa-se o warmup + pedido extra.
