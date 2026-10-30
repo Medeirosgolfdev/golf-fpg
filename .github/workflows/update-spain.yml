@@ -5,7 +5,7 @@ name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
 #   - A pedido (botão "Run workflow" no GitHub)
 #
 # Pipeline única que cobre toda a Espanha:
-#   • RFEGolf microsite (Campeonatos Nacionais) — scrape-rfegolf-node.js
+#   • RFEG site novo (calendário + inscritos GolfBox) — scrape-rfeg-competiciones.js
 #   • livegolfscoring.com (scorecards hbh + par real) — scrape-livegolfscoring.js
 #   • NextCaddy (RFGA Andaluzia + FGM Madrid + outras) — scrape-nextcaddy.js
 #   • Federació Catalana de Golf (golfdirecto.com) — scrape-fcg.js
@@ -33,10 +33,6 @@ on:
         options: ['false', 'true']
       lgs_range:
         description: 'Range de IDs livegolfscoring (ex: "1-500"). Default: "1-500".'
-        required: false
-        default: ''
-      rfegolf_range:
-        description: 'Range de compIds RFEGolf (ex: "13500-17000"). Se vazio, usa --scope.'
         required: false
         default: ''
       fcg_years:
@@ -110,13 +106,6 @@ jobs:
           else
             echo "LGS_RANGE=1-1000" >> $GITHUB_ENV
           fi
-          # RFEGolf range (se especificado, usa range em vez de scope)
-          if [ -n "${{ github.event.inputs.rfegolf_range }}" ]; then
-            echo "RFEGOLF_MODE=range" >> $GITHUB_ENV
-            echo "RFEGOLF_RANGE=${{ github.event.inputs.rfegolf_range }}" >> $GITHUB_ENV
-          else
-            echo "RFEGOLF_MODE=scope" >> $GITHUB_ENV
-          fi
           # FCG years
           if [ -n "${{ github.event.inputs.fcg_years }}" ]; then
             echo "FCG_YEARS=${{ github.event.inputs.fcg_years }}" >> $GITHUB_ENV
@@ -151,36 +140,17 @@ jobs:
         timeout-minutes: 15
         run: node scripts/scrape-nextcaddy.js --discover --out scripts/nextcaddy-scope-all.json || [ $? -eq 2 ]
 
-      # Descobre CompIds RFEGolf NOVOS numa janela recente e une-os ao scope
-      # curado (--merge nunca remove). Sem este passo o scope ficava congelado
-      # e Campeonatos criados depois da última descoberta nunca eram apanhados
-      # (ex: Campeonato de España Infantil Masculino 16187, criado depois de
-      # 2026-05-08). Só corre em modo scope (no modo range explícito é redundante).
-      - name: Discovery RFEGolf (janela recente → rfegolf-scope.json)
-        id: disc_rfeg
-        if: env.DO_DISCOVERY == 'true' && env.RFEGOLF_MODE == 'scope'
-        continue-on-error: true
-        timeout-minutes: 30
-        run: node scripts/discover-rfegolf-comps.js --range 15500-17200 --concurrency 6 --merge || [ $? -eq 2 ]
-
       # ── Scrapers (paralelos seriam ideais mas mantemos sequencial pelo git push) ──
-      - name: Scrape RFEGolf (Campeonatos Nacionais)
+      # RFEG: o site antigo (CompetenciaPaginas/*.aspx) morreu em Set/2026. As
+      # provas juvenis saem do calendário novo e os inscritos do GolfBox
+      # espanhol; actualiza os rfegolf-resultats/{compId}.json existentes e cria
+      # as provas novas (compId = id do post WordPress). Os resultados continuam
+      # a vir do mitarjeta/LGS.
+      - name: Scrape RFEG (calendário + inscritos GolfBox)
         id: rfegolf
         continue-on-error: true
-        timeout-minutes: 30
-        run: |
-          if [ "$RFEGOLF_MODE" = "range" ]; then
-            echo "Modo range: --range $RFEGOLF_RANGE --filter juvenil --concurrency 15"
-            node scripts/scrape-rfegolf-node.js --range "$RFEGOLF_RANGE" --filter juvenil --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
-          else
-            if [ -f scripts/rfegolf-scope.json ]; then
-              echo "Modo scope: scripts/rfegolf-scope.json"
-              node scripts/scrape-rfegolf-node.js --scope scripts/rfegolf-scope.json --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
-            else
-              echo "Sem scope file — a usar range default 13500-17000"
-              node scripts/scrape-rfegolf-node.js --range 13500-17000 --filter juvenil --concurrency 15 $SKIP_FLAG || [ $? -eq 2 ]
-            fi
-          fi
+        timeout-minutes: 20
+        run: node scripts/scrape-rfeg-competiciones.js || [ $? -eq 2 ]
 
       - name: Scrape livegolfscoring (scorecards hbh)
         id: lgs
@@ -308,7 +278,7 @@ jobs:
                public/data/spain-players.json public/data/rfegolf-rivals.json \
                public/data/fcg-rivals.json public/data/spain-player-tournaments.json \
                public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json \
-               scripts/nextcaddy-scope-all.json scripts/rfegolf-scope.json
+               scripts/nextcaddy-scope-all.json
 
       # ── Verificação final: falhar ALTO se algum scraper falhou ──
       # Os scrapers correm com continue-on-error para que a falha de um portal
@@ -321,8 +291,7 @@ jobs:
           FAILED=""
           [ "${{ steps.disc_fcg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FCG"
           [ "${{ steps.disc_nc.outcome }}"     = "failure" ] && FAILED="$FAILED discovery-NextCaddy"
-          [ "${{ steps.disc_rfeg.outcome }}"   = "failure" ] && FAILED="$FAILED discovery-RFEGolf"
-          [ "${{ steps.rfegolf.outcome }}"     = "failure" ] && FAILED="$FAILED RFEGolf"
+          [ "${{ steps.rfegolf.outcome }}"     = "failure" ] && FAILED="$FAILED RFEG"
           [ "${{ steps.lgs.outcome }}"         = "failure" ] && FAILED="$FAILED livegolfscoring"
           [ "${{ steps.nextcaddy.outcome }}"   = "failure" ] && FAILED="$FAILED NextCaddy"
           [ "${{ steps.nc_horarios.outcome }}" = "failure" ] && FAILED="$FAILED NextCaddy-horarios"

@@ -126,7 +126,8 @@ function rfegHasPt(j) {
   const ins = (j && j.inscritos) || {};
   for (const k of ["admitidos", "reservas", "invitados", "provisional", "noAdmitidos"]) {
     for (const p of (ins[k] || [])) {
-      if (p && typeof p.pais === "string" && /PORTUGAL/i.test(p.pais)) return true;
+      // microsite antigo: "PORTUGAL" por extenso; GolfBox (site novo): ISO "PT"
+      if (p && typeof p.pais === "string" && /^(PORTUGAL|PT|PRT|POR)$/i.test(p.pais.trim())) return true;
     }
   }
   return false;

@@ -187,12 +187,11 @@ erro). Regras actuais (`update-spain.yml` trata o exit 2 de todos):
   Por torneio: um `nextcaddy/{id}.json` com >30% menos jogadores
   (classificação + inscritos) não substitui o do disco. Exit 1 se todos falharam,
   2 se nada foi gravado.
-- **`discover-rfegolf-comps.js --merge`**: scope existente ilegível é ERRO (antes
-  gravava só a janela desta corrida por cima dos ~400 comps curados); perda >10%
-  recusada; exit 2 sem compIds novos.
-- **`scrape-rfegolf-node.js`**: um `{ok:false}` nunca substitui um
-  `rfegolf-resultats/{cid}.json` bom; perda >50% de inscritos+resultados
-  recusada. Exit 1 se tudo falhou, 2 se nada gravado.
+- **`scrape-rfeg-competiciones.js`** (30/10/2026, substitui o discovery e o
+  scraper do microsite antigo, arquivados em `scripts/_archive/rfegolf-site-antigo/`):
+  calendário vazio = ERRO (a página mudou); perda >50% de inscritos recusada;
+  sem inscritos novos ficam os que estavam; resultados e palmarés nunca se
+  tocam. Exit 1 se tudo falhou, 2 se nada gravado.
 - **`scrape-livegolfscoring.js`** (>30% menos entradas) e
   **`scrape-nextcaddy-horarios.js`** (horários com <70% dos jogadores já
   guardados) também já não regravam por cima; os dois e os `enrich-lgs-*`
@@ -258,3 +257,34 @@ Scripts (lib partilhada `scripts/lib/rfeg-web.js`):
   (`HeroIdentity`) — pill do HCP RFEG com a data e pills «Nº de N · Ranking …».
 - Workflow `update-rfeg-rankings.yml` (terça 05:00 UTC) → agregador → push.
   Testes: `scripts/lib/rfeg-oficial.test.js`.
+
+## Espanha — provas da RFEG no site novo (2026-10-30)
+
+O microsite antigo (`CompetenciaPaginas/*.aspx`) morreu em Set/2026: redirecciona
+para a página inicial (403 a partir do GitHub). A 12/10 o scraper antigo gravou
+a página inicial como prova «ok»; a 19/10 o erro por cima (9 provas repostas).
+
+**`scripts/scrape-rfeg-competiciones.js`** (corre no `update-spain.yml`):
+1. Calendário `rfegolf.es/competiciones/calendario-torneos?wpe_anyo=AAAA` (só o
+   ano corrente e o seguinte); fica o comité juvenil + títulos juvenis.
+2. Página `rfegolf.es/competicion/<slug>`: nome, datas de inscrição/competição,
+   campo e ids GolfBox das fases (`data-cid`).
+3. GolfBox espanhol `scores.golfbox.es` (handlers iguais aos do
+   `scrape-golfbox.js`): tipo da prova e **inscritos** (`GetPlayers`) com
+   licença, nascimento completo, clube, HCP (−20000 = +2,0, confirmado contra o
+   hándicap oficial) e país ISO-2.
+
+Grava `rfegolf-resultats/{compId}.json` no formato de sempre. Prova que já
+existia (mesmo nome+ano, ou nome-base + mesmo dia) → actualiza esse ficheiro
+(mantém compId, nome, categoria, estilo, palmarés e resultados). Prova nova →
+compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
+
+- **Os leaderboards do GolfBox da RFEG vêm vazios** (Sub-16/Sub-18 2026): os
+  resultados continuam no mitarjeta/LGS. O GolfBox serve para os inscritos.
+- A /rfeg só mostra provas com inscritos ou resultados — as de 2027 aparecem
+  quando a RFEG abrir as inscrições.
+- **LGS → mitarjeta.golf:** `rfegolf.livegolfscoring.es` responde 301 para
+  `mitarjeta.golf` desde Out/2026; o `enrich-lgs-dates` segue o redirect e tira
+  o ano do nome quando a página não o traz (Interclubes, Adaptado).
+- `build-lgs-twins` ignora a edição em numeração romana ao casar nomes
+  («XIV Memorial Blanca Mayor» RFEG = «Memorial Blanca Mayor» LGS).

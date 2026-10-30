@@ -1,5 +1,8 @@
 # Pipeline de scrape Espanha (RFEG / RFEGolf / livegolfscoring / NextCaddy)
 
+> ⚠ **30/10/2026:** o site antigo da RFEG (`CompetenciaPaginas/*.aspx`) já não existe. `discover-rfegolf-comps.js`, `discover-rfegolf-calendar.js` e `scrape-rfegolf-node.js` estão em `scripts/_archive/rfegolf-site-antigo/`; o substituto é `scripts/scrape-rfeg-competiciones.js` — ver `docs/claude/ffg-rfeg.md`, «provas da RFEG no site novo».
+
+
 Este documento consolida tudo o que aprendemos sobre as fontes de dados de
 torneios espanhois e os scripts/JSONs que produzem. Estado: 2026-05-09.
 

@@ -23,10 +23,13 @@ const LGS_DIR = path.join(REPO, "public", "data", "rfegolf-livegolfscoring");
 const OUT = path.join(REPO, "public", "data", "rfegolf-lgs-twins.json");
 
 function rj(f) { const r = fs.readFileSync(f, "utf8"); try { return JSON.parse(r); } catch (e) { return JSON.parse(r.slice(0, r.lastIndexOf("}") + 1)); } }
-// normaliza nome: minúsculas, sem acentos, sem o ano, espaços colapsados
+// normaliza nome: minúsculas, sem acentos, sem o ano nem a edição em numeração
+// romana ("XIV Memorial Blanca Mayor" na RFEG = "Memorial Blanca Mayor" no LGS),
+// espaços colapsados
 function norm(s) {
   return String(s || "").toLowerCase().normalize("NFD")
-    .replace(/[^a-z0-9 ]+/g, " ").replace(/\b20\d\d\b/g, " ").replace(/\s+/g, " ").trim();
+    .replace(/[^a-z0-9 ]+/g, " ").replace(/\b20\d\d\b/g, " ")
+    .replace(/\b[ivxlc]{2,}\b/g, " ").replace(/\s+/g, " ").trim();
 }
 
 // 1) Índice LGS por nome+ano. Guarda também se tem hbh (preferir os que têm).

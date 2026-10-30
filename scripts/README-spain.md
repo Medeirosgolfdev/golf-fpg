@@ -1,5 +1,8 @@
 # Scrapers Espanha — RFEGolf + NextCaddy
 
+> ⚠ **30/10/2026:** o site antigo da RFEG (`CompetenciaPaginas/*.aspx`) já não existe. `discover-rfegolf-comps.js`, `discover-rfegolf-calendar.js` e `scrape-rfegolf-node.js` estão em `scripts/_archive/rfegolf-site-antigo/`; o substituto é `scripts/scrape-rfeg-competiciones.js` — ver `docs/claude/ffg-rfeg.md`, «provas da RFEG no site novo».
+
+
 Pipeline para descobrir e scrapar torneios juvenis (Sub-10 a Sub-18) das duas
 plataformas espanholas:
 

@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-26T09:55:00.860Z",
+  "generatedAt": "2026-10-30T13:41:02.827Z",
   "source": "scripts/build-rfegolf-index.js",
-  "total": 5211,
-  "totalCompetitions": 5211,
-  "skipped": 14,
+  "total": 5236,
+  "totalCompetitions": 5236,
+  "skipped": 5,
   "byYear": {
     "2017": 1,
-    "2018": 9,
+    "2018": 10,
     "2019": 46,
     "2020": 62,
     "2021": 104,
@@ -14,17 +14,18 @@
     "2023": 267,
     "2024": 275,
     "2025": 342,
-    "2026": 3992
+    "2026": 4001,
+    "2027": 15
   },
   "byCategory": {
+    "Infantil": 253,
+    "Sub-16": 86,
+    "Sub-18": 114,
+    "Alevín": 98,
+    "Juvenil": 296,
     "Benjamín": 94,
-    "Juvenil": 292,
-    "Infantil": 249,
-    "Alevín": 96,
-    "Junior": 77,
+    "Junior": 78,
     "Sub-14": 3,
-    "Sub-16": 81,
-    "Sub-18": 106,
     "Cadete": 32,
     "Sub-25": 6,
     "Senior": 3,
@@ -32,12 +33,492 @@
     "Absoluta": 9
   },
   "bySource": {
+    "rfegolf": 547,
     "nextcaddy": 4373,
     "livegolfscoring": 295,
-    "rfegolf": 522,
     "golfdirecto": 21
   },
   "tournaments": [
+    {
+      "source": "rfegolf",
+      "id": 169117,
+      "compId": 169117,
+      "file": "169117.json",
+      "filePath": "rfegolf-resultats/169117.json",
+      "name": "Campeonato de España de FFAA Infantil \"Mem. Blanca Mayor\" 2027",
+      "year": 2027,
+      "category": "Infantil",
+      "sex": null,
+      "dateStart": "10/10/2027",
+      "dateEnd": "13/10/2027",
+      "dateStartIso": "2027-10-10",
+      "dateEndIso": "2027-10-13",
+      "course": "Norba Club de Golf",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:39:05.594Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 169064,
+      "compId": 169064,
+      "file": "169064.json",
+      "filePath": "rfegolf-resultats/169064.json",
+      "name": "Campeonato de España de FFAA Sub-16 Femenino 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": "F",
+      "dateStart": "02/09/2027",
+      "dateEnd": "05/09/2027",
+      "dateStartIso": "2027-09-02",
+      "dateEndIso": "2027-09-05",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:39:03.583Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16241,
+      "compId": 16241,
+      "file": "16241.json",
+      "filePath": "rfegolf-resultats/16241.json",
+      "name": "Internacional de España Sub-18 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "01/09/2027",
+      "dateEnd": "04/09/2027",
+      "dateStartIso": "2027-09-01",
+      "dateEndIso": "2027-09-04",
+      "course": "GOLF Dirección AUTOVIA A",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": 4.5,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-09-21T09:54:50.653Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 169062,
+      "compId": 169062,
+      "file": "169062.json",
+      "filePath": "rfegolf-resultats/169062.json",
+      "name": "Campeonato de España Interclubes Infantil 2027",
+      "year": 2027,
+      "category": "Infantil",
+      "sex": null,
+      "dateStart": "28/08/2027",
+      "dateEnd": "29/08/2027",
+      "dateStartIso": "2027-08-28",
+      "dateEndIso": "2027-08-29",
+      "course": "Lauro Golf",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:39:01.578Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 169061,
+      "compId": 169061,
+      "file": "169061.json",
+      "filePath": "rfegolf-resultats/169061.json",
+      "name": "Campeonato de España Sub-16 y Benjamín de Pitch & Putt 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": null,
+      "dateStart": "05/08/2027",
+      "dateEnd": "07/08/2027",
+      "dateStartIso": "2027-08-05",
+      "dateEndIso": "2027-08-07",
+      "course": "Club de Golf Paderne",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:59.616Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16214,
+      "compId": 16214,
+      "file": "16214.json",
+      "filePath": "rfegolf-resultats/16214.json",
+      "name": "Campeonato de España Sub-16 de Pitch & Putt 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": null,
+      "dateStart": "05/08/2027",
+      "dateEnd": "06/08/2027",
+      "dateStartIso": "2027-08-05",
+      "dateEndIso": "2027-08-06",
+      "course": "GOLF CLUB CALATAYUD Dirección CALLE Sierra de Armantes",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-09-21T09:54:49.107Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 169059,
+      "compId": 169059,
+      "file": "169059.json",
+      "filePath": "rfegolf-resultats/169059.json",
+      "name": "Campeonato Interclubes Invitacional Sub-18 \"Copa José María Olazabal\" 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": null,
+      "dateStart": "14/07/2027",
+      "dateEnd": "15/07/2027",
+      "dateStartIso": "2027-07-14",
+      "dateEndIso": "2027-07-15",
+      "course": "Real Golf Club de San Sebastian",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:57.645Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 169057,
+      "compId": 169057,
+      "file": "169057.json",
+      "filePath": "rfegolf-resultats/169057.json",
+      "name": "Campeonato de España Infantil, Alevín y Benjamín 2027",
+      "year": 2027,
+      "category": "Alevín",
+      "sex": null,
+      "dateStart": "25/06/2027",
+      "dateEnd": "27/06/2027",
+      "dateStartIso": "2027-06-25",
+      "dateEndIso": "2027-06-27",
+      "course": "Real Club de Golf el Prat",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:55.645Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 168481,
+      "compId": 168481,
+      "file": "168481.json",
+      "filePath": "rfegolf-resultats/168481.json",
+      "name": "Campeonato de España Sub-16 Femenino 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": "F",
+      "dateStart": "30/04/2027",
+      "dateEnd": "02/05/2027",
+      "dateStartIso": "2027-04-30",
+      "dateEndIso": "2027-05-02",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:53.679Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 168479,
+      "compId": 168479,
+      "file": "168479.json",
+      "filePath": "rfegolf-resultats/168479.json",
+      "name": "Campeonato de España Sub-16 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-16",
+      "sex": "M",
+      "dateStart": "30/04/2027",
+      "dateEnd": "02/05/2027",
+      "dateStartIso": "2027-04-30",
+      "dateEndIso": "2027-05-02",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:51.699Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 168476,
+      "compId": 168476,
+      "file": "168476.json",
+      "filePath": "rfegolf-resultats/168476.json",
+      "name": "Campeonato de España de FFAA Sub-18 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "22/04/2027",
+      "dateEnd": "25/04/2027",
+      "dateStartIso": "2027-04-22",
+      "dateEndIso": "2027-04-25",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:49.699Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16235,
+      "compId": 16235,
+      "file": "16235.json",
+      "filePath": "rfegolf-resultats/16235.json",
+      "name": "Campeonato de España Sub-18 Masculino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "21/03/2027",
+      "dateEnd": "24/03/2027",
+      "dateStartIso": "2027-03-21",
+      "dateEndIso": "2027-03-24",
+      "course": "Club la Valmuza Golf Salamanca",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:47.711Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 167650,
+      "compId": 167650,
+      "file": "167650.json",
+      "filePath": "rfegolf-resultats/167650.json",
+      "name": "Campeonato de España Sub-18 Femenino 2027",
+      "year": 2027,
+      "category": "Sub-18",
+      "sex": "F",
+      "dateStart": "18/03/2027",
+      "dateEnd": "21/03/2027",
+      "dateStartIso": "2027-03-18",
+      "dateEndIso": "2027-03-21",
+      "course": "Infinitum",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:45.703Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 167602,
+      "compId": 167602,
+      "file": "167602.json",
+      "filePath": "rfegolf-resultats/167602.json",
+      "name": "Puntuable Nacional Juvenil Masculino 2027",
+      "year": 2027,
+      "category": "Juvenil",
+      "sex": "M",
+      "dateStart": "05/02/2027",
+      "dateEnd": "07/02/2027",
+      "dateStartIso": "2027-02-05",
+      "dateEndIso": "2027-02-07",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:43.712Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 167601,
+      "compId": 167601,
+      "file": "167601.json",
+      "filePath": "rfegolf-resultats/167601.json",
+      "name": "Puntuable Nacional Juvenil Femenino 2027",
+      "year": 2027,
+      "category": "Juvenil",
+      "sex": "F",
+      "dateStart": "05/02/2027",
+      "dateEnd": "07/02/2027",
+      "dateStartIso": "2027-02-05",
+      "dateEndIso": "2027-02-07",
+      "course": null,
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:41.669Z"
+    },
     {
       "source": "nextcaddy",
       "id": 68574,
@@ -4124,6 +4605,38 @@
       "scrapedAt": "2026-06-24T14:59:00.644Z"
     },
     {
+      "source": "rfegolf",
+      "id": 16059,
+      "compId": 16059,
+      "file": "16059.json",
+      "filePath": "rfegolf-resultats/16059.json",
+      "name": "Match Sudoeste Francia - España Sub 18 Masculino 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "14/11/2026",
+      "dateEnd": "15/11/2026",
+      "dateStartIso": "2026-11-14",
+      "dateEndIso": "2026-11-15",
+      "course": "CAMPO DE GOLF BALNEARIO DE MONDARIZ Dirección CALLE ENRIQUE PEINADOR",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play + Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-09-21T09:54:48.600Z"
+    },
+    {
       "source": "nextcaddy",
       "id": 74640,
       "tourId": 74640,
@@ -6307,6 +6820,38 @@
       "leaderboardPlayers": 0,
       "roster": [],
       "scrapedAt": "2026-06-24T14:58:57.059Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16044,
+      "compId": 16044,
+      "file": "16044.json",
+      "filePath": "rfegolf-resultats/16044.json",
+      "name": "Match España - Francia Juvenil 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": "Mixto",
+      "dateStart": "31/10/2026",
+      "dateEnd": "01/11/2026",
+      "dateStartIso": "2026-10-31",
+      "dateEndIso": "2026-11-01",
+      "course": "Real Golf Club de San Sebastian",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Match Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:39.694Z"
     },
     {
       "source": "nextcaddy",
@@ -18304,6 +18849,38 @@
       "scrapedAt": "2026-06-24T14:58:47.644Z"
     },
     {
+      "source": "rfegolf",
+      "id": 16043,
+      "compId": 16043,
+      "file": "16043.json",
+      "filePath": "rfegolf-resultats/16043.json",
+      "name": "Campeonato de España de FFAA Infantil 2026 \"XIV Memorial Blanca Mayor\"",
+      "year": 2026,
+      "category": "Infantil",
+      "sex": "Mixto",
+      "dateStart": "11/10/2026",
+      "dateEnd": "14/10/2026",
+      "dateStartIso": "2026-10-11",
+      "dateEndIso": "2026-10-14",
+      "course": "Campo de Golf Balneario de Mondariz",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Stroke Play + Match Play",
+      "hcpLimitMen": 36,
+      "hcpLimitWomen": 36,
+      "counts": {
+        "admitidos": 119,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:36.644Z"
+    },
+    {
       "source": "livegolfscoring",
       "id": 393,
       "file": "393.json",
@@ -26784,6 +27361,38 @@
       "scrapedAt": "2026-06-24T14:58:42.146Z"
     },
     {
+      "source": "rfegolf",
+      "id": 16029,
+      "compId": 16029,
+      "file": "16029.json",
+      "filePath": "rfegolf-resultats/16029.json",
+      "name": "World Junior Girls' Championship 2026",
+      "year": 2026,
+      "category": "Junior",
+      "sex": "F",
+      "dateStart": "30/09/2026",
+      "dateEnd": "03/10/2026",
+      "dateStartIso": "2026-09-30",
+      "dateEndIso": "2026-10-03",
+      "course": "GOLF Dirección AVENIDA CIBELES",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:32.346Z"
+    },
+    {
       "source": "nextcaddy",
       "id": 74195,
       "tourId": 74195,
@@ -32602,6 +33211,38 @@
         "yolanda litran gonzalez"
       ],
       "scrapedAt": "2026-10-12T12:08:24.461Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 16042,
+      "compId": 16042,
+      "file": "16042.json",
+      "filePath": "rfegolf-resultats/16042.json",
+      "name": "The Amundi Evian Juniors Cup 2026",
+      "year": 2026,
+      "category": null,
+      "sex": null,
+      "dateStart": "22/09/2026",
+      "dateEnd": "24/09/2026",
+      "dateStartIso": "2026-09-22",
+      "dateEndIso": "2026-09-24",
+      "course": "GOLF Dirección AVENIDA CIBELES",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:30.346Z"
     },
     {
       "source": "nextcaddy",
@@ -43272,7 +43913,7 @@
       "dateEnd": "08/09/2026",
       "dateStartIso": "2026-09-07",
       "dateEndIso": "2026-09-08",
-      "course": "Golf Balneario de Mondariz",
+      "course": "bernardus",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Match Play",
@@ -43288,7 +43929,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-09-21T09:54:47.844Z"
+      "scrapedAt": "2026-10-30T13:38:28.367Z"
     },
     {
       "source": "nextcaddy",
@@ -45970,7 +46611,7 @@
       "dateEnd": "06/09/2026",
       "dateStartIso": "2026-09-03",
       "dateEndIso": "2026-09-06",
-      "course": "GOLF CLUB CALATAYUD Dirección CALLE Sierra de Armantes",
+      "course": "Gambito Golf Club Calatayud",
       "courseClubId": null,
       "mode": "Por Equipos",
       "style": "Stroke Play + Match Play",
@@ -45987,7 +46628,7 @@
       "leaderboardPlayers": 0,
       "nRounds": 1,
       "roster": [],
-      "scrapedAt": "2026-09-21T09:54:58.263Z"
+      "scrapedAt": "2026-10-30T13:38:26.405Z"
     },
     {
       "source": "livegolfscoring",
@@ -46511,7 +47152,7 @@
       "dateEnd": "05/09/2026",
       "dateStartIso": "2026-09-02",
       "dateEndIso": "2026-09-05",
-      "course": "GOLF Dirección GLORIETA DEL ZAUDÍN Y PUERTA DE LA MARISMA EN TOMARES",
+      "course": "Club Zaudín Golf",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -46589,7 +47230,7 @@
         "yague cuadros xavi",
         "zyla alexander"
       ],
-      "scrapedAt": "2026-09-07T09:13:50.722Z"
+      "scrapedAt": "2026-10-30T13:38:24.386Z"
     },
     {
       "source": "livegolfscoring",
@@ -49256,7 +49897,7 @@
       "dateEnd": "30/08/2026",
       "dateStartIso": "2026-08-29",
       "dateEndIso": "2026-08-30",
-      "course": "GOLF Dirección CARRETERA A-",
+      "course": "Lauro Golf",
       "courseClubId": null,
       "mode": "Por Equipos",
       "style": "Stroke Play",
@@ -49273,7 +49914,7 @@
       "leaderboardPlayers": 0,
       "nRounds": 1,
       "roster": [],
-      "scrapedAt": "2026-09-14T09:52:52.661Z"
+      "scrapedAt": "2026-10-30T13:38:22.321Z"
     },
     {
       "source": "nextcaddy",
@@ -54182,7 +54823,7 @@
       "dateEnd": "22/08/2026",
       "dateStartIso": "2026-08-21",
       "dateEndIso": "2026-08-22",
-      "course": "GOLF CLUB DE SAN SEBASTIAN Dirección CALLE CHALET BORDAGAIN S",
+      "course": "the island gc",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play + Match Play",
@@ -54198,7 +54839,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-09-07T09:13:51.873Z"
+      "scrapedAt": "2026-10-30T13:38:19.015Z"
     },
     {
       "source": "nextcaddy",
@@ -55953,7 +56594,7 @@
       "dateEnd": "20/08/2026",
       "dateStartIso": "2026-08-18",
       "dateEndIso": "2026-08-20",
-      "course": "golf español. Los triunfos de Cayetana Fernández y Adriana García Terol en",
+      "course": "gog magog & wandlebury",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -55969,7 +56610,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-09-07T09:13:49.761Z"
+      "scrapedAt": "2026-10-30T13:38:17.047Z"
     },
     {
       "source": "nextcaddy",
@@ -66176,7 +66817,7 @@
       "dateEnd": "08/08/2026",
       "dateStartIso": "2026-08-06",
       "dateEndIso": "2026-08-08",
-      "course": "Golf Club Calatayud",
+      "course": "C.d. Barbanza Pitch And Putt",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -66192,7 +66833,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-08-24T04:59:00.301Z"
+      "scrapedAt": "2026-10-30T13:38:15.031Z"
     },
     {
       "source": "nextcaddy",
@@ -73964,7 +74605,7 @@
       "dateEnd": "25/07/2026",
       "dateStartIso": "2026-07-23",
       "dateEndIso": "2026-07-25",
-      "course": "golf español",
+      "course": "Campo de Golf el Saler",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -73980,7 +74621,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-08-10T05:44:21.480Z"
+      "scrapedAt": "2026-10-30T13:38:11.856Z"
     },
     {
       "source": "nextcaddy",
@@ -77537,7 +78178,7 @@
       "dateEnd": "18/07/2026",
       "dateStartIso": "2026-07-16",
       "dateEndIso": "2026-07-18",
-      "course": "Golf los días",
+      "course": "kaskáda golf resort",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -77553,7 +78194,39 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-08-03T07:22:38.497Z"
+      "scrapedAt": "2026-10-30T13:38:09.886Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 158821,
+      "compId": 158821,
+      "file": "158821.json",
+      "filePath": "rfegolf-resultats/158821.json",
+      "name": "Campeonato Interclubes Invitacional Sub-18 \"Copa José María Olazabal\" 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": null,
+      "dateStart": "15/07/2026",
+      "dateEnd": "17/07/2026",
+      "dateStartIso": "2026-07-15",
+      "dateEndIso": "2026-07-17",
+      "course": "Real Nuevo Club S.sebastian Basozabal",
+      "courseClubId": null,
+      "mode": null,
+      "style": null,
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:38:07.877Z"
     },
     {
       "source": "nextcaddy",
@@ -82725,7 +83398,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-30T18:17:06.629Z"
+      "scrapedAt": "2026-10-30T13:38:05.818Z"
     },
     {
       "source": "rfegolf",
@@ -82741,7 +83414,7 @@
       "dateEnd": "11/07/2026",
       "dateStartIso": "2026-07-07",
       "dateEndIso": "2026-07-11",
-      "course": "Club de Golf Zaudín",
+      "course": "golf & cc zürich",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play + Match Play",
@@ -82757,7 +83430,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-30T18:16:52.521Z"
+      "scrapedAt": "2026-10-30T13:38:03.865Z"
     },
     {
       "source": "nextcaddy",
@@ -86104,7 +86777,7 @@
       "dateEnd": "04/07/2026",
       "dateStartIso": "2026-07-02",
       "dateEndIso": "2026-07-04",
-      "course": "golf español",
+      "course": "royal waterloo",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -86120,7 +86793,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-24T23:47:38.914Z"
+      "scrapedAt": "2026-10-30T13:38:01.925Z"
     },
     {
       "source": "nextcaddy",
@@ -90693,6 +91366,38 @@
       "scrapedAt": "2026-06-24T14:57:46.611Z"
     },
     {
+      "source": "rfegolf",
+      "id": 158827,
+      "compId": 158827,
+      "file": "158827.json",
+      "filePath": "rfegolf-resultats/158827.json",
+      "name": "Campeonato de España Infantil, Alevín y Benjamín 2026",
+      "year": 2026,
+      "category": "Alevín",
+      "sex": null,
+      "dateStart": "26/06/2026",
+      "dateEnd": "28/06/2026",
+      "dateStartIso": "2026-06-26",
+      "dateEndIso": "2026-06-28",
+      "course": "Real la Manga Club",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:37:59.883Z"
+    },
+    {
       "source": "nextcaddy",
       "id": 71976,
       "tourId": 71976,
@@ -93878,7 +94583,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-07-13T07:09:02.603Z"
+      "scrapedAt": "2026-10-30T13:37:56.901Z"
     },
     {
       "source": "nextcaddy",
@@ -144390,7 +145095,7 @@
       "dateEnd": "03/05/2026",
       "dateStartIso": "2026-05-01",
       "dateEndIso": "2026-05-03",
-      "course": "Golf de la Rioja Fed. de Golf Canaria Fed. Melillense Fed. de Golf Catalana Fed. Extr",
+      "course": "Infinitum",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -144469,7 +145174,7 @@
         "yrizar tejada teresa",
         "zavoralova zoe"
       ],
-      "scrapedAt": "2026-06-24T14:51:33.080Z"
+      "scrapedAt": "2026-10-30T13:37:54.907Z"
     },
     {
       "source": "rfegolf",
@@ -144485,7 +145190,7 @@
       "dateEnd": "03/05/2026",
       "dateStartIso": "2026-05-01",
       "dateEndIso": "2026-05-03",
-      "course": "Golf de la Rioja Fed. de Golf Canaria Fed. Melillense Fed. de Golf Catalana Fed. Extr",
+      "course": "Infinitum",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -144564,7 +145269,7 @@
         "wang xu jim",
         "white dominguez liam"
       ],
-      "scrapedAt": "2026-06-24T14:51:31.288Z"
+      "scrapedAt": "2026-10-30T13:37:51.718Z"
     },
     {
       "source": "nextcaddy",
@@ -150716,6 +151421,38 @@
         "sergio barroso caceres"
       ],
       "scrapedAt": "2026-10-12T12:04:47.609Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 158976,
+      "compId": 158976,
+      "file": "158976.json",
+      "filePath": "rfegolf-resultats/158976.json",
+      "name": "Campeonato de España de FFAA Sub-18 Masculino - Primera División 2026",
+      "year": 2026,
+      "category": "Sub-18",
+      "sex": "M",
+      "dateStart": "23/04/2026",
+      "dateEnd": "26/04/2026",
+      "dateStartIso": "2026-04-23",
+      "dateEndIso": "2026-04-26",
+      "course": "Rioja Alta Golf Club",
+      "courseClubId": null,
+      "mode": "Por Equipos",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:37:48.427Z"
     },
     {
       "source": "nextcaddy",
@@ -162022,6 +162759,38 @@
       "scrapedAt": "2026-06-28T10:03:21.134Z"
     },
     {
+      "source": "rfegolf",
+      "id": 158972,
+      "compId": 158972,
+      "file": "158972.json",
+      "filePath": "rfegolf-resultats/158972.json",
+      "name": "Match España - Inglaterra Juvenil 2026",
+      "year": 2026,
+      "category": "Juvenil",
+      "sex": null,
+      "dateStart": "11/04/2026",
+      "dateEnd": "12/04/2026",
+      "dateStartIso": "2026-04-11",
+      "dateEndIso": "2026-04-12",
+      "course": "Centro Nacional de Golf",
+      "courseClubId": null,
+      "mode": null,
+      "style": "KnockOut",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 8,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-10-30T13:37:43.501Z"
+    },
+    {
       "source": "nextcaddy",
       "id": 69751,
       "tourId": 69751,
@@ -169478,7 +170247,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-06-24T14:49:46.412Z"
+      "scrapedAt": "2026-10-30T13:37:40.233Z"
     },
     {
       "source": "livegolfscoring",
@@ -171149,7 +171918,7 @@
       "dateEnd": "01/04/2026",
       "dateStartIso": "2026-03-29",
       "dateEndIso": "2026-04-01",
-      "course": "GOLF LOS LAGOS Dirección CAMINO VIÑALES S",
+      "course": "Golf los Lagos",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -171231,7 +172000,7 @@
         "vidal reig nicolas",
         "yague cuadros xavi"
       ],
-      "scrapedAt": "2026-06-24T14:49:45.501Z"
+      "scrapedAt": "2026-10-30T13:37:38.209Z"
     },
     {
       "source": "nextcaddy",
@@ -181622,7 +182391,7 @@
         "valls alesanco clara",
         "vigon garcia adriana"
       ],
-      "scrapedAt": "2026-06-24T14:49:48.344Z"
+      "scrapedAt": "2026-10-30T13:37:35.219Z"
     },
     {
       "source": "nextcaddy",
@@ -196732,7 +197501,7 @@
       },
       "leaderboardPlayers": 0,
       "roster": [],
-      "scrapedAt": "2026-06-24T14:50:55.040Z"
+      "scrapedAt": "2026-10-30T13:37:32.275Z"
     },
     {
       "source": "rfegolf",
@@ -196748,7 +197517,7 @@
       "dateEnd": "08/03/2026",
       "dateStartIso": "2026-03-06",
       "dateEndIso": "2026-03-08",
-      "course": "REAL CLUB DE GOLF TENERIFE Dirección CALLE CAMPO DE GOLF",
+      "course": "Real Club de Golf Tenerife",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -196820,7 +197589,7 @@
         "vargas tejerina sergio",
         "white dominguez liam"
       ],
-      "scrapedAt": "2026-06-24T14:50:31.256Z"
+      "scrapedAt": "2026-10-30T13:37:30.280Z"
     },
     {
       "source": "nextcaddy",
@@ -202737,7 +203506,7 @@
       "dateEnd": "01/03/2026",
       "dateStartIso": "2026-02-27",
       "dateEndIso": "2026-03-01",
-      "course": "CAMPO DE GOLF DE SALAMANCA Dirección CALLE MONTE DE ZARAPICOS S",
+      "course": "Campo de Golf de Salamanca",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -202810,7 +203579,7 @@
         "vargas tejerina sergio",
         "white dominguez liam"
       ],
-      "scrapedAt": "2026-06-24T14:50:24.996Z"
+      "scrapedAt": "2026-10-30T13:37:27.091Z"
     },
     {
       "source": "rfegolf",
@@ -202826,7 +203595,7 @@
       "dateEnd": "01/03/2026",
       "dateStartIso": "2026-02-27",
       "dateEndIso": "2026-03-01",
-      "course": "GOLF Dirección AVENIDA DDEL TORMES",
+      "course": "Salamanca Forum Golf",
       "courseClubId": null,
       "mode": "Individual",
       "style": "Stroke Play",
@@ -202896,7 +203665,7 @@
         "valencia mejia luna isabella",
         "venneri arnau aurora"
       ],
-      "scrapedAt": "2026-06-24T14:50:26.217Z"
+      "scrapedAt": "2026-10-30T13:37:25.105Z"
     },
     {
       "source": "nextcaddy",
@@ -310464,6 +311233,38 @@
       "leaderboardPlayers": 0,
       "roster": [],
       "scrapedAt": "2026-06-24T14:35:54.945Z"
+    },
+    {
+      "source": "rfegolf",
+      "id": 12952,
+      "compId": 12952,
+      "file": "12952.json",
+      "filePath": "rfegolf-resultats/12952.json",
+      "name": "TORNEO INFANTIL \"EL ENCÍN\"",
+      "year": 2018,
+      "category": "Infantil",
+      "sex": null,
+      "dateStart": "26/05/2018",
+      "dateEnd": "27/05/2108",
+      "dateStartIso": "2018-05-26",
+      "dateEndIso": "2108-05-27",
+      "course": "GOLF Dirección AUTOVIA A",
+      "courseClubId": null,
+      "mode": "Individual",
+      "style": "Stroke Play",
+      "hcpLimitMen": null,
+      "hcpLimitWomen": null,
+      "counts": {
+        "admitidos": 0,
+        "reservas": 0,
+        "bajas": 0,
+        "invitados": 0,
+        "noAdmitidos": 0,
+        "provisional": 0
+      },
+      "leaderboardPlayers": 0,
+      "roster": [],
+      "scrapedAt": "2026-09-21T09:54:51.664Z"
     },
     {
       "source": "rfegolf",
