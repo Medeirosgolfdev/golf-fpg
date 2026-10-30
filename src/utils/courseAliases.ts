@@ -474,6 +474,24 @@ export function resolveRibagolfeKeyByPar(name: string | null | undefined, pars: 
 // Fallback por nome (voltas sem scorecard). I=Lakes / II=Oaks VERIFICADO por par:
 // 459 voltas resolvidas por par são 100% consistentes (I→Lakes 273, II→Oaks 186).
 const RIBAGOLFE_NAME_TO_KEY: Record<string, string> = { i: "ribagolfe-lakes", ii: "ribagolfe-oaks" };
+/* Guardizela mudou de desenho em 2026 (cartão FPG 107-1): o actual é um 9
+ * buracos par 36 (4,4,3,4,3,5,5,4,4); o antigo era par 31 (4,4,3,4,3,4,3,3,3),
+ * hoje «guardizela-antigo». Uma volta de 9 ou de 18 vai para o desenho do seu
+ * par; sem par fica pelo nome (o actual). 30/10/2026. */
+const GUARDIZELA_NINE_TO_KEY: Record<string, string> = {
+  "[4,4,3,4,3,5,5,4,4]": "guardizela",
+  "[4,4,3,4,3,4,3,3,3]": "guardizela-antigo",
+};
+export function resolveGuardizelaKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
+  if (!/^\s*guardizela\b/i.test(String(name || "")) || !Array.isArray(pars)) return null;
+  if (pars.length === 9) return GUARDIZELA_NINE_TO_KEY[JSON.stringify(pars)] || null;
+  if (pars.length === 18) {
+    const f = GUARDIZELA_NINE_TO_KEY[JSON.stringify(pars.slice(0, 9))];
+    return f && f === GUARDIZELA_NINE_TO_KEY[JSON.stringify(pars.slice(9))] ? f : null;
+  }
+  return null;
+}
+
 export function resolveRibagolfeKeyByName(name: string | null | undefined): string | null {
   const m = String(name || "").match(/^\s*ribagolfe\s+(i{1,2})\b/i);
   return m ? (RIBAGOLFE_NAME_TO_KEY[m[1].toLowerCase()] || null) : null;
@@ -532,7 +550,7 @@ export function resolveSantoDaSerraKeyByName(name: string | null | undefined): s
  *  Serra, multi-loop, Ribagolfe) — a ordem dos nines não conta. Mesma ordem
  *  do scripts/build-course-players.js; null quando o par não decide. */
 export function resolveCourseKeyByPar(name: string | null | undefined, pars: number[] | null | undefined): string | null {
-  return resolveSantoDaSerraKeyByPar(name, pars) || resolveMultiloopKeyByPar(name, pars) || resolveRibagolfeKeyByPar(name, pars);
+  return resolveSantoDaSerraKeyByPar(name, pars) || resolveMultiloopKeyByPar(name, pars) || resolveRibagolfeKeyByPar(name, pars) || resolveGuardizelaKeyByPar(name, pars);
 }
 
 /** O courseKey do master só pelo NOME (Santo da Serra «Desertas-Serras»,

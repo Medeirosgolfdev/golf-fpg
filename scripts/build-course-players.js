@@ -34,10 +34,18 @@ const numOr = (v) => (Number.isFinite(v) ? v : null);
 
 /** Resolve o courseKey do master para uma ronda, usando a MESMA canonização
  *  da app (courseAliases). Ordem:
- *   1) Santo da Serra por par[] (combos/loops) e Ribagolfe I/II por par[]
+ *   1) Santo da Serra por par[] (combos/loops), Ribagolfe I/II e Guardizela (desenho antigo/actual) por par[]
  *   2) fallback Santo da Serra só por nome (sem par)
  *   3) canonicalCourseName (sufixos + aliases) + Aroeira II por par → masterByNorm
  *  Devolve null se nenhum campo PT do master corresponder. */
+/** Guardizela mudou de desenho entre 24/04 e 25/07/2026 (antigo par 31/62 →
+ *  actual par 36/72). Uma volta sem par (sem cartão, ou recuperada do ficheiro
+ *  anterior) vai pelo dia: antes de 1/07/2026 é do desenho antigo. */
+const GUARDIZELA_MUDANCA = "2026-07-01";
+function guardizelaPorData(key, isoDate) {
+  return key === "guardizela" && isoDate && isoDate < GUARDIZELA_MUDANCA ? "guardizela-antigo" : key;
+}
+
 function resolveCourseKey(rawName, pars18or9, masterByNorm, masterKeys) {
   if (!rawName) return null;
   let key =
@@ -45,6 +53,7 @@ function resolveCourseKey(rawName, pars18or9, masterByNorm, masterKeys) {
     ALIAS.resolveSantoDaSerraKeyByPar(rawName, pars18or9) ||
     ALIAS.resolveMultiloopKeyByPar(rawName, pars18or9) ||
     ALIAS.resolveRibagolfeKeyByPar(rawName, pars18or9) ||
+    ALIAS.resolveGuardizelaKeyByPar(rawName, pars18or9) ||
     // 2) Fallbacks por nome (voltas sem scorecard / par em falta).
     ALIAS.resolveSantoDaSerraKeyByName(rawName) ||
     ALIAS.resolveMultiloopKeyByName(rawName) ||
@@ -90,8 +99,9 @@ function main() {
           // SdS/Ribagolfe/Aroeira; gross usado p/ os splits Front 9 / Back 9.
           const pars = Array.isArray(HOLES[r.scoreId]?.p) ? HOLES[r.scoreId].p : null;
           const gArr = Array.isArray(HOLES[r.scoreId]?.g) ? HOLES[r.scoreId].g : null;
-          const key = resolveCourseKey(name, pars, masterByNorm, masterKeys);
+          let key = resolveCourseKey(name, pars, masterByNorm, masterKeys);
           if (!key) { unmatched[name] = (unmatched[name] || 0) + 1; continue; }
+          if (!pars) key = guardizelaPorData(key, toIso(r.date));
           // Sentinelas: gross 0 / 998 / 999 ("sem cartão") → null (não contam p/ stats)
           let gross = numOr(r.gross);
           if (gross != null && (gross <= 0 || gross >= 200)) gross = null;
@@ -158,12 +168,19 @@ function main() {
   if (!REBUILD && fs.existsSync(outPath)) {
     try {
       const antigo = JSON.parse(fs.readFileSync(outPath, "utf8")).players || {};
-      for (const [key, porFed] of Object.entries(antigo)) {
-        for (const [nfed, rondas] of Object.entries(porFed || {})) {
-          if (players[key]?.[nfed]) continue;   // o build novo tem-no: ganha
-          (players[key] ||= {})[nfed] = rondas;
-          preservados++;
-          totalLinks++;
+      for (const [key0, porFed] of Object.entries(antigo)) {
+        for (const [nfed, rondas0] of Object.entries(porFed || {})) {
+          // Guardizela: as voltas guardadas repartem-se pelo dia (ver acima).
+          const porChave = {};
+          for (const r of rondas0 || []) (porChave[guardizelaPorData(key0, r.date)] ||= []).push(r);
+          const doBuildNovo = (k) => Boolean(players[k]?.[nfed]);
+          const jaNoBuild = Object.keys(porChave).some(doBuildNovo) || doBuildNovo(key0);
+          for (const [key, rondas] of Object.entries(porChave)) {
+            if (jaNoBuild) break;   // o build novo tem este jogador neste campo: ganha
+            (players[key] ||= {})[nfed] = rondas;
+            preservados++;
+            totalLinks++;
+          }
         }
       }
     } catch { /* ficheiro corrompido — segue com o build novo */ }
