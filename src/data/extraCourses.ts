@@ -1611,7 +1611,7 @@ const golfParisValDEurope: Course = {
       {
         teeId: "paris-bleus-m",
         sex: "M",
-        teeName: "Bleus / USKids Boys 12",
+        teeName: "Bleus / USKids Girls 13-18 / Boys 12", // Tee 5 USKids: Girls 13-18 e Boys 12
         scorecardMeta: { teeColor: "#3b82f6" },
         ratings: { holes18: { par: 72, courseRating: 67.8, slopeRating: 119 } },
         holes: parisHoles(parisBleus),
@@ -1620,7 +1620,7 @@ const golfParisValDEurope: Course = {
       {
         teeId: "paris-bleus-f",
         sex: "F",
-        teeName: "Bleus",
+        teeName: "Bleus / USKids Girls 13-18 / Boys 12",
         scorecardMeta: { teeColor: "#3b82f6" },
         ratings: { holes18: { par: 72, courseRating: 72.8, slopeRating: 132 } },
         holes: parisHoles(parisBleus),

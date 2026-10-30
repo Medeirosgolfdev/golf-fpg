@@ -100,6 +100,16 @@ describe("buildAllCourses", () => {
     expect(tees.map((t) => `${t.teeName} ${t.distances.total ?? 0}`)).toEqual(["USKids Boys 13-18 5729", "USKids Girls 15-18 0", "USKids Girls 9-10 0"]);
   });
 
+  it("tee «U» com a mesma distância e CR/Slope de um tee com sexo é cópia e sai", () => {
+    const holes = Array.from({ length: 18 }, (_, i) => ({ hole: i + 1, par: 4, si: null, distance: 279 }));
+    const t = (teeId: string, teeName: string, sex: string, cr: number) => ({ teeId, teeName, sex, distances: { total: 5029, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: cr, slopeRating: 119 } }, holes });
+    const away = { courseKey: "away-v", master: { courseId: "away-v", name: "V", links: { fpg: null, scorecards: null }, tees: [
+      t("b", "Bleus / USKids Boys 12", "M", 67.8), t("u", "Boys 12", "U", 67.8), t("u2", "Outro", "U", 70),
+    ] } } as unknown as Course;
+    const tees = buildAllCourses({ fpg: [], pipelineAway: [away], melhoriasAway: [], extra: [] })[0].master.tees;
+    expect(tees.map((x) => x.teeName)).toEqual(["Bleus / USKids Boys 12", "Outro"]);
+  });
+
   it("campos away: SI seguido sem outro tee com SI verdadeiro fica sem SI", () => {
     const seq = Array.from({ length: 18 }, (_, i) => i + 1);
     const away = {

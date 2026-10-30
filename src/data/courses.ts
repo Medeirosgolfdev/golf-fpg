@@ -111,6 +111,12 @@ export function buildAllCourses(input: CoursesInput): Course[] {
         (t.distances?.total ?? 0) === 0 &&
         (t.ratings?.holes18?.courseRating ?? 0) === 0;
       if (empty) return [];
+      // Tee sem sexo («U», de um cartão) com a mesma distância e o mesmo CR/Slope
+      // de um tee com sexo é cópia dele: sai (Val d'Europe «Boys 12» = «Bleus», 30/10/2026).
+      const r18 = t.ratings?.holes18;
+      if (t.sex === "U" && hasGeom(t) && r18?.courseRating != null && vals.some((o) => o !== t && o.sex !== "U"
+        && Math.round(o.distances?.total ?? 0) === Math.round(t.distances?.total ?? 0)
+        && o.ratings?.holes18?.courseRating === r18.courseRating && o.ratings?.holes18?.slopeRating === r18.slopeRating)) return [];
       // Tees USKids são por escalão, não por cor: um sem metros (raparigas do
       // Rome Classic, 30/10/2026) não é ruído nem herda os metros de outro.
       if (!hasGeom(t) && !/^uskids\b/i.test(t.teeName) && geomGroups.has(grp(t))) {
