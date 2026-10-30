@@ -89,6 +89,17 @@ describe("buildAllCourses", () => {
     expect(tees.map((x) => `${x.sex} ${x.ratings.holes18?.courseRating} ${x.distances.total}`).sort()).toEqual(["F 76 5760", "M 72 5760"]);
   });
 
+  it("tee USKids sem metros fica como está (é por escalão, não por cor)", () => {
+    const holes = (d: number | null, n = 18) => Array.from({ length: n }, (_, i) => ({ hole: i + 1, par: 4, si: null, distance: d }));
+    const extra = { courseKey: "away-u", master: { courseId: "away-u", name: "U", links: { fpg: null, scorecards: null }, tees: [
+      { teeId: "b", teeName: "USKids Boys 13-18", sex: "M", distances: { total: 5729, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: 70.9, slopeRating: 124 } }, holes: holes(318) },
+      { teeId: "g", teeName: "USKids Girls 15-18", sex: "F", distances: { total: null, holesCount: 18 }, ratings: { holes18: { par: 72, courseRating: 72.2, slopeRating: 121 } }, holes: holes(null) },
+      { teeId: "g9", teeName: "USKids Girls 9-10", sex: "F", distances: { total: null, holesCount: 9 }, ratings: { holes9Back: { par: 36, courseRating: 31.2, slopeRating: 96 } }, holes: holes(null, 9) },
+    ] } } as unknown as Course;
+    const tees = buildAllCourses({ fpg: [], pipelineAway: [], melhoriasAway: [], extra: [extra] })[0].master.tees;
+    expect(tees.map((t) => `${t.teeName} ${t.distances.total ?? 0}`)).toEqual(["USKids Boys 13-18 5729", "USKids Girls 15-18 0", "USKids Girls 9-10 0"]);
+  });
+
   it("campos away: SI seguido sem outro tee com SI verdadeiro fica sem SI", () => {
     const seq = Array.from({ length: 18 }, (_, i) => i + 1);
     const away = {

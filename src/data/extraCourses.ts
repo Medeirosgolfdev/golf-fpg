@@ -391,6 +391,80 @@ function ltDist(dist: number[]): { total: number; front9: number; back9: number;
   return { total: front9 + back9, front9, back9, holesCount: 18, complete18: true };
 }
 
+/* Tees do clube — FFGolf (SSS e slope oficiais, «officiellement étalonné», lidos a
+   30/10/2026; golf 0065, terrain 12 = La Forêt, 02 = La Mer) + cartões do clube (Resonance
+   Golf, Abril 2023: par, SI e metros). La Forêt: o «Vermelho» do torneio são os metros do
+   Rouge, mas com o rating do European Open (71,5/120 ≠ Rouge 66,1/117 H · 71,0/125 F) — fica.
+   La Mer: o clube tem par 71 (buraco 11 par 4); o tee BJGT tem par 72. As «jardas» do BJGT
+   coincidem com os METROS do Blanc em 16 dos 18 buracos — a confirmar antes de mexer.
+   Sem rating de senhoras nos tees de trás. */
+const ltForetFfgPar = [5,4,4,4,5,3,4,3,4,4,5,3,4,4,3,5,4,4];
+const ltForetFfgSI = [9,11,13,3,7,15,5,17,1,4,10,16,2,14,18,12,6,8];
+const ltForetFfgBlanc = [440,294,330,415,472,152,354,153,382,335,482,161,349,310,145,454,373,314]; // 5915 m
+const ltForetFfgJaune = [422,286,312,400,446,135,337,135,366,320,466,148,334,295,134,436,354,295]; // 5621 m
+const ltForetFfgBleu = [390,262,278,360,405,130,314,133,326,281,401,133,294,273,119,417,335,269]; // 5120 m
+const ltForetFfgRouge = [382,251,251,336,375,116,295,121,310,281,369,129,285,263,114,378,300,249]; // 4805 m
+const ltForetFfgViolet = [315,210,251,282,350,105,267,121,215,239,369,105,250,205,95,315,260,249]; // 4203 m
+const ltForetFfgTees: Tee[] = [
+  { teeId: "ltForetFfg-blanc-m", sex: "M", teeName: "Blanc", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 71.7, slopeRating: 131 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgBlanc, ltForetFfgSI), distances: vDist(ltForetFfgBlanc) },
+  { teeId: "ltForetFfg-jaune-m", sex: "M", teeName: "Jaune", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 70.2, slopeRating: 126 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgJaune, ltForetFfgSI), distances: vDist(ltForetFfgJaune) },
+  { teeId: "ltForetFfg-bleu-m", sex: "M", teeName: "Bleu", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 67.7, slopeRating: 121 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgBleu, ltForetFfgSI), distances: vDist(ltForetFfgBleu) },
+  { teeId: "ltForetFfg-rouge-m", sex: "M", teeName: "Rouge", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 66.1, slopeRating: 117 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgRouge, ltForetFfgSI), distances: vDist(ltForetFfgRouge) },
+  { teeId: "ltForetFfg-violet-m", sex: "M", teeName: "Violet", scorecardMeta: { teeColor: "#8b5cf6" },
+    ratings: { holes18: { par: 72, courseRating: 62.8, slopeRating: 114 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgViolet, ltForetFfgSI), distances: vDist(ltForetFfgViolet) },
+  { teeId: "ltForetFfg-jaune-f", sex: "F", teeName: "Jaune", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 75.9, slopeRating: 132 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgJaune, ltForetFfgSI), distances: vDist(ltForetFfgJaune) },
+  { teeId: "ltForetFfg-bleu-f", sex: "F", teeName: "Bleu", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 72.8, slopeRating: 125 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgBleu, ltForetFfgSI), distances: vDist(ltForetFfgBleu) },
+  { teeId: "ltForetFfg-rouge-f", sex: "F", teeName: "Rouge", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 71, slopeRating: 125 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgRouge, ltForetFfgSI), distances: vDist(ltForetFfgRouge) },
+  { teeId: "ltForetFfg-violet-f", sex: "F", teeName: "Violet", scorecardMeta: { teeColor: "#8b5cf6" },
+    ratings: { holes18: { par: 72, courseRating: 67.2, slopeRating: 122 } },
+    holes: vHoles(ltForetFfgPar, ltForetFfgViolet, ltForetFfgSI), distances: vDist(ltForetFfgViolet) },
+];
+const ltMerFfgPar = [5,3,4,5,4,4,3,4,4,3,4,4,4,4,5,3,4,4];
+const ltMerFfgSI = [12,8,18,16,6,14,10,4,2,15,1,7,11,5,17,13,3,9];
+const ltMerFfgNoir = [482,208,350,455,420,319,146,349,413,139,437,367,416,416,487,170,410,384]; // 6368 m
+const ltMerFfgBlanc = [469,198,336,455,409,319,146,349,406,139,422,367,382,377,465,170,373,384]; // 6166 m
+const ltMerFfgJaune = [445,175,321,428,371,296,134,329,370,128,405,351,334,322,433,155,347,373]; // 5717 m
+const ltMerFfgBleu = [429,151,294,398,354,279,109,297,315,113,378,324,312,303,405,139,327,340]; // 5267 m
+const ltMerFfgRouge = [409,134,277,369,310,269,101,272,278,104,330,280,261,279,374,122,307,334]; // 4810 m
+const ltMerFfgTees: Tee[] = [
+  { teeId: "ltMerFfg-noir-m", sex: "M", teeName: "Noir", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 71, courseRating: 73.7, slopeRating: 138 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgNoir, ltMerFfgSI), distances: vDist(ltMerFfgNoir) },
+  { teeId: "ltMerFfg-blanc-m", sex: "M", teeName: "Blanc", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 71, courseRating: 72.8, slopeRating: 134 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgBlanc, ltMerFfgSI), distances: vDist(ltMerFfgBlanc) },
+  { teeId: "ltMerFfg-jaune-m", sex: "M", teeName: "Jaune", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 71, courseRating: 70.6, slopeRating: 127 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgJaune, ltMerFfgSI), distances: vDist(ltMerFfgJaune) },
+  { teeId: "ltMerFfg-bleu-m", sex: "M", teeName: "Bleu", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 71, courseRating: 68.3, slopeRating: 123 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgBleu, ltMerFfgSI), distances: vDist(ltMerFfgBleu) },
+  { teeId: "ltMerFfg-rouge-m", sex: "M", teeName: "Rouge", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 66, slopeRating: 119 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgRouge, ltMerFfgSI), distances: vDist(ltMerFfgRouge) },
+  { teeId: "ltMerFfg-bleu-f", sex: "F", teeName: "Bleu", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 71, courseRating: 73.7, slopeRating: 128 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgBleu, ltMerFfgSI), distances: vDist(ltMerFfgBleu) },
+  { teeId: "ltMerFfg-rouge-f", sex: "F", teeName: "Rouge", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 70.9, slopeRating: 121 } },
+    holes: vHoles(ltMerFfgPar, ltMerFfgRouge, ltMerFfgSI), distances: vDist(ltMerFfgRouge) },
+];
+
 const leToquet_LaForet: Course = {
   courseKey: "away-letouquet-foret",
   master: {
@@ -413,6 +487,7 @@ const leToquet_LaForet: Course = {
         holes: ltHoles(ltForetPar, ltForetSI, ltForetDistVermelho),
         distances: ltDist(ltForetDistVermelho),
       },
+    ...ltForetFfgTees,
     ],
   },
 };
@@ -439,6 +514,7 @@ const leToquet_LaMer: Course = {
         holes: ltHoles(ltMerPar, ltMerSI, ltMerDistWhiteBJGT),
         distances: ltDist(ltMerDistWhiteBJGT),
       },
+    ...ltMerFfgTees,
     ],
   },
 };
@@ -671,6 +747,10 @@ const VENICE_PDF_LINKS = [
     label: "US Kids Venice Open 2025 - Course Rating & Slope",
     url: "/data/venice_open_2025_course_rating_slope.pdf",
   },
+  {
+    label: "US Kids Venice Open 2026 - Course Rating & Slope",
+    url: "https://tournaments.uskidsgolf.com/sites/default/files/course_rating_and_slope_-_venice_open_2026.pdf",
+  },
 ];
 
 function vHoles(par: number[], dist: number[], si?: number[]): Hole[] {
@@ -696,6 +776,11 @@ const montWRBoys12 = [401,145,300,310,280,330,128,290,390, 305,150,410,280,283,3
 const montWRBoys11 = [389,145,262,266,280,289,128,290,350, 255,122,330,230,265,284,290,115,325]; // 4615m
 const montRG       = [255,122,330,230,265,284,290,115,325, 263,350,287,120,250,103,244,340,250]; // 4423m (Boys 10, Girls 11/12)
 const montGW       = [220,300,240,100,210,90,210,300,230, 300,110,225,230,210,230,95,215,290];   // 3805m (Boys 9, Girls 10)
+// Venice Open 2026 (resultados USKids, jardas × 0,9144): os Boys 10 jogaram o tee dos Boys 11 e
+// os Boys 9 também o White/Red — CR/Slope do PDF 2026 (B10 64,8/111, B9 61,0/103). O Red/Green
+// e o Green/White acima são do Venice Open 2024 (ratings do PDF de 2024). Raparigas 2026
+// (G12/G11 69,8/115, G10 65,1/105) ficam de fora: o PDF não diz em que percurso jogaram.
+const montWRBoys9_2026 = [300,110,225,230,210,230,95,215,290, 210,115,294,204,235,252,258,85,289]; // 3847m
 
 // 3 percursos de 18 = 3 campos distintos (combinações dos nines White/Red/Green)
 
@@ -728,6 +813,23 @@ const montecchiaWhiteRed: Course = {
         ratings: { holes18: { par: 72, courseRating: 64.8, slopeRating: 111 } },
         holes: vHoles(montWRPar, montWRBoys11, montWRSI),
         distances: vDist(montWRBoys11),
+      },
+      {
+        teeId: "mont-wr-uk-boys10-2026",
+        sex: "M",
+        teeName: "USKids Boys 10",
+        scorecardMeta: { teeColor: "#ef4444" }, // = Boys 11
+        ratings: { holes18: { par: 72, courseRating: 64.8, slopeRating: 111 } },
+        holes: vHoles(montWRPar, montWRBoys11, montWRSI),
+        distances: vDist(montWRBoys11),
+      },
+      {
+        teeId: "mont-wr-uk-boys9-2026",
+        sex: "M",
+        teeName: "USKids Boys 9",
+        ratings: { holes18: { par: 72, courseRating: 61.0, slopeRating: 103 } },
+        holes: vHoles(montWRPar, montWRBoys9_2026, montWRSI),
+        distances: vDist(montWRBoys9_2026),
       },
     ],
   },
@@ -956,6 +1058,31 @@ const vpFlamingosTees: Tee[] = [
   },
 ];
 
+/* Tees do clube — página da RFEG (rfegolf.es/club/villa-padierna-golf-club, «Recorrido y
+   Hoyos», lida a 30/10/2026; = tabela slope do clube de 18/06/2019): par, SI e metros por
+   buraco. Nenhum é o tee do WJGC (5295 m, entre as Amarillas 5456 e as Rojas 4828); o
+   66,4/132 desse tee vem do cartão FPG e junta o CR de homens das Rojas (66,4) ao slope
+   de senhoras (132) — fica como foi lançado. Sem rating de senhoras nas Blancas/Amarillas. */
+const vpFlamRfegPar = [5,3,4,3,4,5,4,3,4,4,5,3,4,4,5,3,4,4];
+const vpFlamRfegSI = [4,10,6,18,16,8,14,12,2,1,7,9,15,11,5,13,17,3];
+const vpFlamRfegBlancas = [440,190,367,150,319,467,322,160,336,360,488,164,311,369,450,137,294,390]; // 5714 m
+const vpFlamRfegAmarillas = [429,174,346,136,301,457,316,152,316,351,471,149,295,348,435,123,276,381]; // 5456 m
+const vpFlamRfegRojas = [414,144,313,117,268,420,290,125,262,322,417,119,254,311,384,93,237,338]; // 4828 m
+const vpFlamRfegTees: Tee[] = [
+  { teeId: "vpFlamRfeg-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 71, courseRating: 70.7, slopeRating: 141 } },
+    holes: vHoles(vpFlamRfegPar, vpFlamRfegBlancas, vpFlamRfegSI), distances: vDist(vpFlamRfegBlancas) },
+  { teeId: "vpFlamRfeg-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 71, courseRating: 69.5, slopeRating: 139 } },
+    holes: vHoles(vpFlamRfegPar, vpFlamRfegAmarillas, vpFlamRfegSI), distances: vDist(vpFlamRfegAmarillas) },
+  { teeId: "vpFlamRfeg-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 70.9, slopeRating: 132 } },
+    holes: vHoles(vpFlamRfegPar, vpFlamRfegRojas, vpFlamRfegSI), distances: vDist(vpFlamRfegRojas) },
+  { teeId: "vpFlamRfeg-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 66.4, slopeRating: 126 } },
+    holes: vHoles(vpFlamRfegPar, vpFlamRfegRojas, vpFlamRfegSI), distances: vDist(vpFlamRfegRojas) },
+];
+
 function vpFlamingosCourse(courseKey: string): Course {
   return {
     courseKey,
@@ -963,8 +1090,11 @@ function vpFlamingosCourse(courseKey: string): Course {
       courseId: courseKey,
       name: "Villa Padierna - Flamingos",
       country: "Espanha",
-      links: { fpg: null, scorecards: "https://www.villapadiernagolfclub.es" },
-      tees: vpFlamingosTees,
+      links: {
+        fpg: null, scorecards: "https://www.villapadiernagolfclub.es",
+        extra: [{ label: "RFEG — Villa Padierna (Recorrido y Hoyos)", url: "https://rfegolf.es/club/villa-padierna-golf-club" }],
+      },
+      tees: [...vpFlamingosTees, ...vpFlamRfegTees],
     },
   };
 }
@@ -1629,14 +1759,37 @@ function craigielaw(courseKey: string, name: string): Course {
 /* ─────────────────────────────────────────────────────────────────────────
    Terre dei Consoli Golf Club (Roma) — US Kids Rome Classic
    CR/Slope dos PDFs USKids «Rome Classic 2025/2026 – Course Rating and S.R.»
-   (iguais nos dois anos): Boys 11 64,4/107 (o Manuel, 2025); Boys 8 29,5/95
-   (9 buracos, 10–18 — o cartão «AMARELAS» de 2026). Metros e par do Boys 11
-   dos resultados USKids. Sem SI: a GolfPass tem o cartão estragado (par 3 de
+   (iguais nos dois anos; 12 escalões desde 30/10/2026): Boys 11 64,4/107 (o Manuel,
+   2025); os de 9 buracos (Boys 8 29,5/95, Boys 7, Girls 9-10 e 8) no 10–18. Metros e
+   par dos rapazes dos resultados USKids. Sem SI: a GolfPass tem o cartão estragado (par 3 de
    603 jd), não serve. «Terre Del Consoli» (gralha) junta-se pelo alias.
    ───────────────────────────────────────────────────────────────────────── */
 
 const tdcParB11 = [4,5,3,4,4,4,4,5,3, 4,5,4,3,4,4,3,5,4];
-const tdcB11 = [193,390,119,266,254,282,270,350,94, 262,350,229,110,283,224,134,350,260]; // 4420 m
+const tdcB11 = [193,390,119,266,254,282,270,350,94, 262,350,229,110,283,224,134,350,260]; // 4420 m (= Boys 10)
+// Resultados USKids do Rome Classic 2026 (jardas × 0,9144; iguais em 2025).
+const tdcB1318 = [297,488,150,339,337,334,366,460,123, 325,441,270,143,352,320,158,432,394]; // 5729 m
+const tdcB12   = [255,442,125,298,293,315,326,379,106, 262,390,239,110,283,301,134,379,333]; // 4970 m
+const tdcB9    = [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260];   // 4046 m
+const tdcB8    = [180,300,170,91,200,191,70,300,223]; // 1725 m, buracos 10–18
+const tdcB7    = [150,240,142,67,160,160,59,240,160]; // 1378 m, buracos 10–18
+
+function tdcTee(id: string, sex: "M" | "F", teeName: string, cr: number, slope: number, dist: number[] | null, teeColor?: string): Tee {
+  const back9 = dist?.length === 9 || (!dist && cr < 40);
+  const par = back9 ? tdcParB11.slice(9) : tdcParB11;
+  const holes: Hole[] = par.map((p, i) => ({ hole: i + (back9 ? 10 : 1), par: p, si: null, distance: dist?.[i] ?? null }));
+  const r = { par: par.reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope };
+  return {
+    teeId: id, sex, teeName,
+    ...(teeColor ? { scorecardMeta: { teeColor } } : {}),
+    ratings: back9 ? { holes9Back: r } : { holes18: r },
+    holes,
+    distances: dist ? (back9
+      ? { total: dist.reduce((a, b) => a + b, 0), front9: null, back9: dist.reduce((a, b) => a + b, 0), holesCount: 9, complete18: false }
+      : vDist(dist))
+      : { total: null, front9: null, back9: null, holesCount: back9 ? 9 : 18, complete18: false },
+  };
+}
 
 const terreDeiConsoli: Course = {
   courseKey: "away-terre-dei-consoli-golf-club",
@@ -1654,24 +1807,21 @@ const terreDeiConsoli: Course = {
         },
       ],
     },
+    // Os 12 escalões do PDF 2026 (= 2025). Raparigas sem distâncias: os resultados
+    // USKids que temos só trazem as dos rapazes.
     tees: [
-      {
-        teeId: "tdc-uk-boys11",
-        sex: "M",
-        teeName: "USKids Boys 11",
-        ratings: { holes18: { par: 72, courseRating: 64.4, slopeRating: 107 } },
-        holes: vHoles(tdcParB11, tdcB11),
-        distances: vDist(tdcB11),
-      },
-      {
-        teeId: "tdc-uk-boys8",
-        sex: "M",
-        teeName: "USKids Boys 8",
-        scorecardMeta: { teeColor: "#fbbf24" }, // Longleaf Tee 2
-        ratings: { holes9Back: { par: 36, courseRating: 29.5, slopeRating: 95 } },
-        holes: [4,5,4,3,4,4,3,5,4].map((p, i) => ({ hole: i + 10, par: p, si: null, distance: null })),
-        distances: { total: null, front9: null, back9: null, holesCount: 9, complete18: false },
-      },
+      tdcTee("tdc-uk-boys1318", "M", "USKids Boys 13-18", 70.9, 124, tdcB1318),
+      tdcTee("tdc-uk-boys12", "M", "USKids Boys 12", 67.1, 115, tdcB12),
+      tdcTee("tdc-uk-boys11", "M", "USKids Boys 11", 64.4, 107, tdcB11),
+      tdcTee("tdc-uk-boys10", "M", "USKids Boys 10", 64.4, 107, tdcB11),
+      tdcTee("tdc-uk-boys9", "M", "USKids Boys 9", 62.5, 105, tdcB9),
+      tdcTee("tdc-uk-boys8", "M", "USKids Boys 8", 29.5, 95, tdcB8, "#fbbf24"), // Longleaf Tee 2
+      tdcTee("tdc-uk-boys7", "M", "USKids Boys 7 & Under", 27.8, 87, tdcB7),
+      tdcTee("tdc-uk-girls1518", "F", "USKids Girls 15-18", 72.2, 121, null),
+      tdcTee("tdc-uk-girls1314", "F", "USKids Girls 13-14", 68.9, 114, null),
+      tdcTee("tdc-uk-girls1112", "F", "USKids Girls 11-12", 66.6, 109, null),
+      tdcTee("tdc-uk-girls910", "F", "USKids Girls 9-10", 31.2, 96, null),
+      tdcTee("tdc-uk-girls8", "F", "USKids Girls 8 & Under", 27.4, 80, null),
     ],
   },
 };

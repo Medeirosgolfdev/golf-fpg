@@ -111,7 +111,9 @@ export function buildAllCourses(input: CoursesInput): Course[] {
         (t.distances?.total ?? 0) === 0 &&
         (t.ratings?.holes18?.courseRating ?? 0) === 0;
       if (empty) return [];
-      if (!hasGeom(t) && geomGroups.has(grp(t))) {
+      // Tees USKids são por escalão, não por cor: um sem metros (raparigas do
+      // Rome Classic, 30/10/2026) não é ruído nem herda os metros de outro.
+      if (!hasGeom(t) && !/^uskids\b/i.test(t.teeName) && geomGroups.has(grp(t))) {
         if (t.sex === "U" || geomBySexGroup.has(`${grp(t)}|${t.sex}`)) return [];
         const src = geomOfGroup(grp(t));
         if (!src || (src.holes?.length ?? 0) !== (t.holes?.length ?? 0)) return [];
