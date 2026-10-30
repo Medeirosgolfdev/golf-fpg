@@ -300,9 +300,14 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
   séries `fgg-*` no agregador. Prova sem jogadores não entra no índice.
 - **Valência (FGCV)** → `scrape-fgcv.js` (PDFs Mastergolf cifrados, decifrados
   pelas licenças dos inscritos).
+- **País Basco (FVG)** → `scrape-fvg.js` (`public/data/fvg/{uuid}.json`).
+  Calendário: `POST wp-admin/admin-ajax.php` `action=fvgolf_get_torneos_por_anyo&anyo=AAAA`.
+  Resultados só em PDF, um programa por clube; lêem-se por coordenadas os
+  formatos com cabeçalho «LICENCIA»+«NOMBRE»: federação (R1..R4 em ±par; par da
+  volta = moda de (STRS−TOT)/voltas), Laukariz/Vizcaya e o dos clubes (total =
+  último número da linha). PDFs em imagem e listas só de campeões ficam de fora.
 - **Andaluzia, Madrid, Canárias, Castela e Leão** → NextCaddy.
-- Por ligar: País Basco (fvgolf.com, resultados nos clubes), Baleares, Múrcia,
-  Aragão, Astúrias e as mais pequenas.
+- Por ligar: Baleares, Múrcia, Aragão, Astúrias e as mais pequenas.
 
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
 
