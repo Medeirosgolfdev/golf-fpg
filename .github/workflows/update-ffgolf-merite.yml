@@ -59,4 +59,4 @@ jobs:
       - name: Commit e push (se houver mudanças)
         run: |
           bash scripts/ci/push-generated.sh -m "data: FFGolf Mérite Jeunes $(date -u +'%Y-%m-%d %H:%M UTC')" \
-            -f ffgolf -- public/data/ffgolf-merite-jeunes.json public/data/ffgolf-merite-sss.json
+            -f ffgolf -- public/data/ffgolf-merite-jeunes.json public/data/ffgolf-merite-sss.json public/data/ffgolf-merite-ranking.json

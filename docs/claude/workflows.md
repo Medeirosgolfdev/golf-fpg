@@ -42,7 +42,7 @@ continuam autenticadas.
 | **`update-uskids-rich-players.yml`** | ✅ | `scripts/fetch-uskids-rich-players-node.js` | Segunda 02:00 UTC | Ver "fetch-uskids-rich-players-node.js". |
 | **`update-ffgolf-calendar-jeunes.yml`** | ✅ | calendário FFG jovens | Segunda 01:30 UTC | |
 | **`update-ffgolf-teesheet.yml`** | ✅ | tee sheets FFG | Diário 20:00 UTC | Ver "FFG tee sheet". |
-| **`update-ffgolf-merite.yml`** | ✅ Novo 2026-10-30 | `scripts/scrape-ffgolf-merite.js` + `build-france-players.js` | Dias 6 e 12 de cada mês, 06:00 UTC | **Sem secrets.** Mérite Jeunes da FFG: listas do mês e ~1 mil fichas, uma de cada vez (~10 min). Output: `ffgolf-merite-jeunes.json` (escalão/ano de nascimento + linhas das fichas, aditivo) e `ffgolf-merite-sss.json` (SSS por série → PCC). workflow_dispatch com `month`. |
+| **`update-ffgolf-merite.yml`** | ✅ Novo 2026-10-30 | `scripts/scrape-ffgolf-merite.js` + `build-france-players.js` | Dias 6 e 12 de cada mês, 06:00 UTC | **Sem secrets.** Mérite Jeunes da FFG: listas do mês e ~1 mil fichas, uma de cada vez (~10 min). Output: `ffgolf-merite-jeunes.json` (escalão/ano de nascimento + linhas das fichas, aditivo) e `ffgolf-merite-sss.json` (SSS por série → PCC) e `ffgolf-merite-ranking.json` (vista 🏅 Mérite Jeunes). workflow_dispatch com `month`. |
 | **`update-om-cgss-junior.yml`** | ✅ | `scripts/build-om-cgss-junior.js` | Domingo 22:30 UTC | OM CGSS Júnior. Secret `DATAGOLF_SCORING_COOKIES` só de fallback. |
 | **`cookie-health.yml`** | ✅ | `test-fpg-auth.js` + `test-datagolf-node.js` + `test-fpg-admissions-auth.js` | Quinta 09:00 UTC | Ver "Cookie health". |
 | **`prune-vercel-deployments.yml`** | ✅ | `scripts/prune-vercel-deployments.js` | Segunda 04:00 UTC | Ver "Deployment Storage do Vercel". Secret: `VERCEL_TOKEN`. |

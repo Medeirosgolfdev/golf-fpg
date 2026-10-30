@@ -25,6 +25,8 @@
  *   public/data/ffgolf-merite-jeunes.json — jogadores (escalão, ano de nascimento, lugar, médias)
  *                                           e as linhas das fichas (para o builder; o site não o lê)
  *   public/data/ffgolf-merite-sss.json    — { tournaments: { trnId: { SERIE: { sss, n, lo, hi } } } } (site)
+ *   public/data/ffgolf-merite-ranking.json — a classificação do mês, como a da FFG, e as provas de cada
+ *                                            classificado (vista «Mérite Jeunes» da /ffg)
  */
 const fs = require("fs");
 const path = require("path");
@@ -33,6 +35,7 @@ const { writeJsonGuarded } = require("./lib/shrink-guard");
 const DATA = path.resolve(__dirname, "../public/data");
 const OUT = path.join(DATA, "ffgolf-merite-jeunes.json");
 const OUT_SSS = path.join(DATA, "ffgolf-merite-sss.json");
+const OUT_RANK = path.join(DATA, "ffgolf-merite-ranking.json");
 const INDEX = path.join(DATA, "ffgolf-resultats-index.json");
 const RES_DIR = path.join(DATA, "ffgolf-resultats");
 const BASE = "https://pages.ffgolf.org/merite";
@@ -81,10 +84,10 @@ const serieCourseKey = (label) => {
 };
 
 const strip = (s) => s.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim();
-/** Ficha HTML → { idx, rows: [{ date, trnId, t:[…], moy }] }. */
+/** Ficha HTML → { idx, rows: [{ date, trnId, t:[…], moy }] (as que têm Moy.SSS), all: [todas as provas] }. */
 function parseDetail(html) {
   const idx = num((html.match(/Index:\s*<span[^>]*>([^<]*)</) || [])[1]);
-  const rows = [];
+  const rows = [], all = [];
   const body = html.split(/<tbody>/i).slice(2).join(" ") || html; // 2.ª tabela = provas
   for (const tr of body.split(/<tr[\s>]/i).slice(1)) {
     const tds = [...tr.matchAll(/<td[^>]*>([\s\S]*?)<\/td>/gi)].map((m) => m[1]);
@@ -92,11 +95,14 @@ function parseDetail(html) {
     const link = tds[3].match(/resultats-details\/([0-9a-f]+)\/(\d+)/i);
     const t = tds.slice(5, 9).map((x) => num(strip(x))).filter((x) => x != null);
     const moy = num(strip(tds[11]));
-    if (!link || !t.length || moy == null) continue;
+    const nome = strip(tds[3]);
+    if (!link && !nome) continue;
     const [d, m, y] = strip(tds[0]).split("/");
-    rows.push({ date: `${y}-${m}-${d}`, trnId: link[2], t, moy });
+    const date = `${y}-${m}-${d}`;
+    all.push({ date, trnId: link ? link[2] : null, name: nome, place: strip(tds[4]), t, pts: num(strip(tds[10])), moy });
+    if (link && t.length && moy != null) rows.push({ date, trnId: link[2], t, moy });
   }
-  return { idx, rows };
+  return { idx, rows, all };
 }
 
 function monthsBack(from, to) {
@@ -151,6 +157,9 @@ function monthsBack(from, to) {
   addList("M", lists.M, month);
   addList("F", lists.F, month);
 
+  let prevRank = null;
+  try { prevRank = JSON.parse(fs.readFileSync(OUT_RANK, "utf8")); } catch { /* 1.ª vez */ }
+  const provBy = prevRank?.month === month ? { ...(prevRank.prov || {}) } : {};
   if (DETAILS) {
     const todo = ["M", "F"].flatMap((sex) => lists[sex].datas.filter((p) => p.RANK !== "-").map((p) => ({ sex, p })));
     let n = 0, nRows = 0;
@@ -159,7 +168,8 @@ function monthsBack(from, to) {
       if (++n % 100 === 0) console.log(`  ${n}/${todo.length} fichas…`);
       if (!html) continue;
       const k = pkey(sex, p.NOM, p.PRENOM);
-      const { idx, rows } = parseDetail(html);
+      const { idx, rows, all } = parseDetail(html);
+      provBy[k] = all;
       if (idx != null) players[k].idx = idx;
       for (const r of rows) { (rowsBy[r.trnId] ||= {})[k] = [...r.t, r.moy]; nRows++; }
       await sleep(150);
@@ -204,5 +214,25 @@ function monthsBack(from, to) {
     { spaces: 0, failOnRefuse: true, count: (o) => Object.keys(o.players).length });
   writeJsonGuarded(OUT_SSS, { generatedAt: new Date().toISOString(), month, tournaments: Object.fromEntries(Object.entries(sss).sort(([a], [b]) => a.localeCompare(b))) },
     { spaces: 0, failOnRefuse: true, count: (o) => Object.keys(o.tournaments).length });
+  // Classificação do mês para a vista (todas as linhas, como a FFG; os não
+  // classificados vêm com rank null). Provas: [trnId, data, nome, lugar, [voltas], pontos, Moy.SSS].
+  const inIx = new Set(ix.map((t) => t.trnId));
+  const rank = { generatedAt: new Date().toISOString(), month,
+    info: Object.fromEntries(["M", "F"].map((s) => [s, { nb: Number(lists[s].nb), title: lists[s].ma_title, from: lists[s].date_debut, to: lists[s].date_fin, parution: lists[s].date_parution }])),
+    cols: ["s", "rank", "rankPrev", "nom", "prenom", "cat", "by", "golf", "moy", "moy6", "nbt", "div", "total", "rankAnn", "statut", "idx"],
+    rows: [], prov: {} };
+  const seen = {};
+  for (const s of ["M", "F"]) {
+    for (const p of lists[s].datas) {
+      // Valores da própria linha (dois homónimos partilham a chave em `players`; só as provas e o index vêm de lá).
+      const k = pkey(s, p.NOM, p.PRENOM), rec = players[k], { cat, age } = categoria(p.CATEGORIE);
+      const homonimo = (seen[k] = (seen[k] || 0) + 1) > 1 || lists[s].datas.filter((x) => pkey(s, x.NOM, x.PRENOM) === k).length > 1;
+      rank.rows.push([s, p.RANK === "-" ? null : Number(p.RANK), Number(p.RANKANC) || null, p.NOM, p.PRENOM, cat, age ? +month.slice(0, 4) - age : null,
+        p.GOLF || null, num(p.MOY_SSS), num(p.MOY_SSS_6), Number(p.NBTOURNOIS) || 0, Number(p.DIVISOR) || null, num(p.TOTAL),
+        Number(p.RANKANN) || null, p.STATUT || null, homonimo ? null : rec.idx]);
+      if (provBy[k] && !homonimo) rank.prov[k] = provBy[k].map((r) => [inIx.has(r.trnId) ? r.trnId : null, r.date, r.name, r.place, r.t, r.pts, r.moy]);
+    }
+  }
+  writeJsonGuarded(OUT_RANK, rank, { spaces: 0, failOnRefuse: true, count: (o) => o.rows.length });
   console.log(`Mérite: ${nP} jogadores (${Object.values(players).filter((p) => p.by).length} com ano de nascimento)`);
 })();

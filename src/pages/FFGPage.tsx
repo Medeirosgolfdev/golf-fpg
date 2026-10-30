@@ -26,6 +26,7 @@ import CircuitShell from "../ui/circuit/CircuitShell";
 import type { CircuitConfig, CircuitSpecialItem } from "../ui/circuit/types";
 import { tournamentFamilyKey } from "../ui/circuit/pastEditions";
 import { FFGPlayersView } from "./ffg/PlayersView";
+import { FFGMeriteView } from "./ffg/MeriteView";
 import type { FFGCategoriesData, LGPIDFTournament } from "../data/ffg/types";
 import type { FfgRenderers } from "../data/ffg/ffgEntries";
 import { useFfgData } from "../data/ffg/useFfgData";
@@ -245,6 +246,7 @@ function FFGShellContent() {
   const config = useMemo<CircuitConfig>(() => {
     const specialItems: CircuitSpecialItem[] = [
       { key: "joueurs", label: "👥 Joueurs de France", render: () => <FFGPlayersView /> },
+      { key: "merite", label: "🏅 Mérite Jeunes", render: () => <FFGMeriteView /> },
       ...(ffgCategories
         ? [{ key: "categorias", label: "📚 Catégories d'âge FFG", render: () => <CategoriesView data={ffgCategories} /> }]
         : []),
