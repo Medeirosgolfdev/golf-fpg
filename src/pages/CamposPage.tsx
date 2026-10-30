@@ -161,6 +161,25 @@ function isAway(c: Course): boolean {
 }
 
 
+/* ——— «SD par»: o Score Differential de quem fizer o par do campo num tee ———
+ * Coluna calculada (não vem do cartão), por isso com destaque próprio. */
+const SD_PAR_TITLE = "Score Differential de quem fizer o par do campo neste tee (sem PCC) — calculado, não vem do cartão";
+const sdParHead: React.CSSProperties = { padding: "2px 6px", fontWeight: 700, color: "var(--accent-text)", background: "var(--accent-light)" };
+const sdParCell: React.CSSProperties = { fontSize: "var(--fs-12)", fontWeight: 700, color: "var(--accent-text)", background: "var(--accent-light)" };
+
+/** Par de um tee nos buracos [from, to] (todos com par), ou null. */
+function teeParRange(t: Tee | undefined, from: number, to: number): number | null {
+  const hs = (t?.holes ?? []).filter((h) => h.hole >= from && h.hole <= to);
+  if (hs.length !== to - from + 1 || hs.some((h) => h.par == null)) return null;
+  return hs.reduce((a, h) => a + (h.par as number), 0);
+}
+
+function fmtSdPar(par: number | null, r: { cr: number; sl: number } | undefined): string {
+  if (!r || par == null || !r.sl) return "";
+  const v = round1(calcSD(par, r.cr, r.sl));
+  return `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(1).replace(".", ",")}`;
+}
+
 /* ——— Componente: Grelha Scorecard Multi-Tee ——— */
 
 function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }) {
@@ -192,16 +211,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
   // de rating, alinhado à direita, junto ao início dos dados (sem riscos).
   // Por sexo: CR · Slope · «SD par» (o SD de quem fizer o par do campo nesse tee).
   const labelSpan = 1 + sexes.length * 3;
-  const courseParOf = (t: Tee): number | null => {
-    const h = t.holes ?? [];
-    return h.length === 18 && h.every((x) => x.par != null) ? h.reduce((a, x) => a + (x.par as number), 0) : null;
-  };
   const fallbackPar = sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null);
-  const fmtSdPar = (par: number | null, r: { cr: number; sl: number } | undefined): string => {
-    if (!r || par == null || !r.sl) return "";
-    const v = round1(calcSD(par, r.cr, r.sl));
-    return `${v > 0 ? "+" : ""}${v.toFixed(1).replace(".", ",")}`;
-  };
 
   return (
     <div className="sc-wrap">
@@ -262,7 +272,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             {sexes.flatMap((s) => [
               <th key={`h-${s}-cr`} className="sc-h" style={{ borderLeft: sepL, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
               <th key={`h-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
-              <th key={`h-${s}-sd`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }} title="Score Differential de quem fizer o par do campo neste tee (sem PCC)">SD par</th>,
+              <th key={`h-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
             ])}
           </tr>
         </thead>
@@ -286,7 +296,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 </td>
                 {sexes.flatMap((s) => {
                   const r = g.h18[s];
-                  const teePar = courseParOf(g.teeHoles) ?? fallbackPar;
+                  const teePar = teeParRange(g.teeHoles, 1, 18) ?? fallbackPar;
                   return [
                     <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepL }}>
                       {r ? fmtCR(r.cr) : ""}
@@ -294,7 +304,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                     <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>
                       {r ? r.sl : ""}
                     </td>,
-                    <td key={`r-${s}-sd`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin, fontWeight: 600 }}>
+                    <td key={`r-${s}-sd`} className="ta-c" style={{ ...sdParCell, borderLeft: sepThin }} title={SD_PAR_TITLE}>
                       {fmtSdPar(teePar, r)}
                     </td>,
                   ];
@@ -342,6 +352,11 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
   const sepL = "1px solid var(--border)";
   const sepThin = "1px solid var(--border-light)";
   const sexBadge = (s: SexKey) => (s === "M" || s === "F") ? <SexBadge sex={s} /> : "—";
+  // Par do nove quando o tee não traz os 9 buracos com par: o de outro tee do campo.
+  const refPar = (from: number, to: number): number | null => {
+    for (const g of groups) { const v = teeParRange(g.teeHoles, from, to); if (v != null) return v; }
+    return null;
+  };
 
   return (
     <details className="m-14-0" open>
@@ -353,13 +368,13 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
             <tr>
               <th className="sc-sticky" rowSpan={3}>Tee</th>
               {nines.map((n) => (
-                <th key={n.id} className="sc-h" colSpan={n.sexes.length * 2} style={{ borderLeft: sepL, textAlign: "center", padding: "2px 6px" }}>{n.label}</th>
+                <th key={n.id} className="sc-h" colSpan={n.sexes.length * 3} style={{ borderLeft: sepL, textAlign: "center", padding: "2px 6px" }}>{n.label}</th>
               ))}
             </tr>
             {/* Linha 2: sexo (abrange CR+Slope) — caixa sem linhas internas */}
             <tr>
               {nines.flatMap((n) => n.sexes.map((s, i) => (
-                <th key={`${n.id}-${s}`} className="sc-h" colSpan={2} style={{ borderLeft: i === 0 ? sepL : sepThin, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+                <th key={`${n.id}-${s}`} className="sc-h" colSpan={3} style={{ borderLeft: i === 0 ? sepL : sepThin, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
                   {sexBadge(s)}
                 </th>
               )))}
@@ -369,6 +384,7 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
               {nines.flatMap((n) => n.sexes.flatMap((s, i) => [
                 <th key={`${n.id}-${s}-cr`} className="sc-h" style={{ borderLeft: i === 0 ? sepL : sepThin, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
                 <th key={`${n.id}-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+                <th key={`${n.id}-${s}-sd`} className="sc-h" style={{ ...sdParHead, borderLeft: sepThin }} title={SD_PAR_TITLE}>SD par</th>,
               ]))}
             </tr>
           </thead>
@@ -378,9 +394,11 @@ function CourseNineRatings({ tees }: { tees: Tee[] }) {
                 <td className="sc-sticky sc-tee-cell"><TeeBadge label={g.label} colorHex={g.colorHex} /></td>
                 {nines.flatMap((n) => n.sexes.flatMap((s, i) => {
                   const r = n.get(g)[s];
+                  const ninePar = n.id === "f9" ? teeParRange(g.teeHoles, 1, 9) ?? refPar(1, 9) : teeParRange(g.teeHoles, 10, 18) ?? refPar(10, 18);
                   return [
                     <td key={`${n.id}-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: i === 0 ? sepL : sepThin }}>{r ? fmtCR(r.cr) : ""}</td>,
                     <td key={`${n.id}-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>{r ? r.sl : ""}</td>,
+                    <td key={`${n.id}-${s}-sd`} className="ta-c" style={{ ...sdParCell, borderLeft: sepThin }} title={SD_PAR_TITLE}>{fmtSdPar(ninePar, r)}</td>,
                   ];
                 }))}
               </tr>
