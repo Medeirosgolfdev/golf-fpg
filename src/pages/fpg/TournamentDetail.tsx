@@ -26,9 +26,10 @@ import { FEATURED_TOURNAMENTS } from "../../data/featuredTournaments";
 import { useLiveAdmissions } from "../../hooks/useLiveAdmissions";
 import {
   EscPill, RoundPill, NineHPill, SserraPill, NacionalPill, JuniorPill,
-  ClubePill, ManuelPill, OmPill, PccPill,
+  ClubePill, ManuelPill, ModalidadePill, OmPill, PccPill,
 } from "../../ui/PillBadge";
-import { omLevelOf, useOmData, buildOmLookup, OmTermosPill } from "./fpgOmRanking";
+import { omLevelOf, omTermosOf, useOmData, buildOmLookup, OmTermosPill } from "./fpgOmRanking";
+import { useModalidadeProva } from "../../data/fpgModalidades";
 import { SSERRA_CCODE } from "../../ui/TournSidebarItem";
 import { LinksBar } from "../../ui/LinksBar";
 import { ScorecardLB, AccumulatedLB, AllRoundsScorecardLB } from "../../ui/LeaderboardComponents";
@@ -339,6 +340,13 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   const omData = useOmData(isCgss);
   const omLookup = useMemo(() => buildOmLookup(omData), [omData]);
 
+  // Modalidade oficial da prova (FPG, pelos Termos da Competição): pill no
+  // cabeçalho, e o «Scorecard» abre já nela. Prova que a FPG ainda não lista
+  // (Taça Presidente na véspera, só-draw 9xxxx) → a dos Termos da OM, se a houver.
+  const modalidadeFpg = useModalidadeProva(tournament.ccode, tournament.tcode);
+  const modalidade = modalidadeFpg ?? omTermosOf(tournament)?.modalidade ?? null;
+  const lbOptions = useMemo(() => ({ ...options, modalidade }), [options, modalidade]);
+
   // curT só é relevante para round/resumo tabs (lógica existente)
   const expandedIdxForCurT = isResumoTab
     ? expanded.findIndex((e: any) => e._isTotal)
@@ -517,6 +525,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
             {/JUNIOR|J[ÚU]NIOR/i.test(tournament.name || "") && <JuniorPill />}
             {tournament.ccode === SSERRA_CCODE && <SserraPill />}
             {tournament.ccode !== SSERRA_CCODE && <ClubePill clube={tournament.clube} ccode={tournament.ccode} />}
+            {modalidade && <ModalidadePill nome={modalidade}
+              title={`Modalidade da prova: ${modalidade}${modalidadeFpg ? " (como o clube a configurou na FPG, pelos Termos da Competição)" : " (pelos Termos da Competição)"}`} />}
             {omLevelOf(tournament) && <OmPill level={omLevelOf(tournament)} />}
             <OmTermosPill tournament={tournament} />
             {tournamentPccs(tournament).map(x => <PccPill key={x.round} pcc={x.pcc} round={nRounds > 1 ? x.round : undefined} />)}
@@ -645,13 +655,13 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
         if (isAnaliseAroeiraTab)
           return <Aroeira2AnaliseView tournament={tournament} />;
         if (isPreCutTab && preCutTourn)
-          return <AccumulatedLB tournament={preCutTourn} nRounds={cutAfterRound!} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} />;
+          return <AccumulatedLB tournament={preCutTourn} nRounds={cutAfterRound!} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
         if (isAcc) {
-          const accLB = <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} />;
+          const accLB = <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
           return renderAccSection ? <>{renderAccSection(accLB)}{shareRounds}</> : <>{accHeader}{accLB}{accExtra}{shareRounds}</>;
         }
         if (isRoundTab || !isMulti) {
-          const roundLB = <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} siLabel={siLabel} options={options} />;
+          const roundLB = <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} siLabel={siLabel} options={lbOptions} />;
           // Volta 2+: análise dessa volta contra a anterior
           const roundAn = isMulti && isRoundTab && roundIdx >= 1
             ? <RoundAnalysisFor key={`${tournament.tcode}-an${roundIdx}`} rounds={expanded.filter((e: any) => !e._isTotal)} round={roundIdx + 1} />

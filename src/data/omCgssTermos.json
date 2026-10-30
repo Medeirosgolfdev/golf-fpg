@@ -1,5 +1,5 @@
 {
-  "_leia": "O que os Termos da Competição de cada prova da OM CGSS dizem sobre os JUNIORES, lido dos PDFs em OneDrive\\Golfe\\Arquivo_GOLF\\{ano}\\…_CGSS_Termos_Competicao_*.pdf (Mariana, 02/10/2026: «a OM tem de seguir os Termos de cada torneio»). Chave = tcode FPG (clube 007). juniores: \"medal\" → os Termos mandam pontuar os juniores em pancadas brutas (STROKEPLAY / MEDAL, «limite máximo de 10 pancadas por buraco»); null → os Termos não dizem nada sobre juniores → conta a classificação principal da prova. termo = a palavra tal como está escrita. padrao = regex do nome da prova, para a reconhecer antes de ter o tcode real (ex.: torneio só-draw 9xxxx). Lido por scripts/build-om-cgss-junior.js e pelo site (omTermosOf). Ao chegarem os Termos de uma prova nova, acrescentá-la.",
+  "_leia": "O que os Termos da Competição de cada prova da OM CGSS dizem sobre os JUNIORES, lido dos PDFs em OneDrive\\Golfe\\Arquivo_GOLF\\{ano}\\…_CGSS_Termos_Competicao_*.pdf (Mariana, 02/10/2026: «a OM tem de seguir os Termos de cada torneio»). Chave = tcode FPG (clube 007). juniores: \"medal\" → os Termos mandam pontuar os juniores em pancadas brutas (STROKEPLAY / MEDAL, «limite máximo de 10 pancadas por buraco»); null → os Termos não dizem nada sobre juniores → conta a classificação principal da prova. termo = a palavra tal como está escrita. padrao = regex do nome da prova, para a reconhecer antes de ter o tcode real (ex.: torneio só-draw 9xxxx). modalidade = a da prova pelos Termos, só onde a FPG ainda não a lista (public/data/fpg-modalidades.json manda). Lido por scripts/build-om-cgss-junior.js e pelo site (omTermosOf). Ao chegarem os Termos de uma prova nova, acrescentá-la.",
   "termos": {
     "10983": { "ano": 2026, "prova": "Inverno", "padrao": "\\binverno\\b", "ficheiro": "2026-01-17_CGSS_Termos_Competicao_Torneio_Inverno.pdf", "juniores": "medal", "termo": "Stroke Play",
       "texto": "Na categoria JUNIOR, pontuam em STROKEPLAY com limite máximo de 10 pancadas por buraco.",
@@ -31,7 +31,7 @@
     "11075": { "ano": 2026, "prova": "Troféu João Sousa", "padrao": "\\btrof[eé]u\\s+jo[aã]o\\s+sousa\\b", "ficheiro": "2026-10-10_CGSS_Termos_Competicao_Trofeu_Joao_Sousa.pdf", "juniores": null,
       "texto": "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A).",
       "desempate": "Últimos 9, 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." },
-    "11084": { "ano": 2026, "prova": "Taça Presidente", "padrao": "\\bta[cç]a\\s+presidente\\b", "ficheiro": "2026-10-31_CGSS_Termos_Competicao_Taca_Presidente.pdf", "juniores": null,
+    "11084": { "ano": 2026, "prova": "Taça Presidente", "padrao": "\\bta[cç]a\\s+presidente\\b", "ficheiro": "2026-10-31_CGSS_Termos_Competicao_Taca_Presidente.pdf", "juniores": null, "modalidade": "Stableford Net",
       "texto": "Não diz nada sobre como pontuam os juniores (a prova é Stableford Net a 100%, Nível A; Desertas–Serras, 31/10/2026).",
       "desempate": "Últimos 9 (o Serras conta sempre como últimos 9), 6, 3 e último buraco; depois WHS mais baixo; depois sorteio." }
   }

@@ -64,7 +64,7 @@ type MRSortKey =
   | "acc:eag" | "acc:bird" | "acc:par" | "acc:bog"
   | `gross:${number}` | `rtp:${number}`
   | `sd:${number}` | `eag:${number}` | `bird:${number}` | `par:${number}` | `bog:${number}`
-  | `x:${number}`;
+  | `x:${number}` | "modo";
 
 /* ══════════════════════════════════════════════════════════════
    COMPONENTE PRINCIPAL
@@ -107,6 +107,9 @@ interface MultiRoundLBProps {
   renderName?: (row: MultiRoundRow) => React.ReactNode;
   /** CR/Slope estimados → SD a vermelho com esta nota (ver Tournament._sdEstimate). */
   sdEstimate?: string;
+  /** Classificação noutra modalidade (Medal Net, Stableford Net): a posição sai deste
+   *  valor em vez do gross, e aparece uma coluna com ele ao lado do Total. */
+  rankBy?: { label: string; higherIsBetter?: boolean; value: (r: MultiRoundRow) => number | null };
 }
 
 export function MultiRoundLeaderboard({
@@ -119,6 +122,7 @@ export function MultiRoundLeaderboard({
   extraColumns,
   renderName,
   sdEstimate,
+  rankBy,
 }: MultiRoundLBProps) {
   const {
     esc: wantEsc = true,
@@ -187,18 +191,21 @@ export function MultiRoundLeaderboard({
   /* Posições — apenas jogadores completos e não-WD */
   const withPos: RowWithPos[] = useMemo(() => {
     // Sem resultado (gross null) não há posição — nem «1.º empatado» de todos.
-    const forRank = complete.filter(r => r.gross != null).sort((a, b) => (a.gross as number) - (b.gross as number));
+    // Com `rankBy` (Medal Net / Stableford Net) a ordem sai desse valor.
+    const val = (r: MultiRoundRow) => (rankBy ? rankBy.value(r) : r.gross);
+    const melhor = (v: number) => (rankBy?.higherIsBetter ? -v : v);
+    const forRank = complete.filter(r => val(r) != null).sort((a, b) => melhor(val(a) as number) - melhor(val(b) as number));
     let counter = 1;
     const posMap = new Map<string, number>();
     forRank.forEach((r, i) => {
-      if (i > 0 && r.gross !== forRank[i - 1].gross) counter = i + 1;
+      if (i > 0 && val(r) !== val(forRank[i - 1])) counter = i + 1;
       posMap.set(r.key || r.name, counter);
     });
     return rows.map(r => ({
       ...r,
       _pos: (r.isIncomplete || r.isWD || r.isCut) ? null : (posMap.get(r.key || r.name) ?? null),
     }));
-  }, [rows]);
+  }, [rows, rankBy]);
 
   /* Filtro — passa playersDB para resolver sexo de jogadores sem fedCode */
   const sexByName = useMemo(() => buildSexByName(playersDB), [playersDB]);
@@ -282,6 +289,10 @@ export function MultiRoundLeaderboard({
       case "tee":   return sortDir === "asc" ? (a.teeName||"").localeCompare(b.teeName||"") : (b.teeName||"").localeCompare(a.teeName||"");
       case "fed":   return sortDir === "asc" ? (a.fed||"").localeCompare(b.fed||"") : (b.fed||"").localeCompare(a.fed||"");
       case "hcp":   return sortDir === "asc" ? (a.hcp ?? INF) - (b.hcp ?? INF) : (b.hcp ?? INF) - (a.hcp ?? INF);
+      case "modo": {
+        const v = (r: RowWithPos) => { const x = rankBy?.value(r); return x == null ? INF : rankBy?.higherIsBetter ? -x : x; };
+        return sortDir === "asc" ? v(a) - v(b) : v(b) - v(a);
+      }
       case "gross": return sortDir === "asc" ? (a.gross ?? INF) - (b.gross ?? INF) : (b.gross ?? INF) - (a.gross ?? INF);
       case "toPar": {
         // O ±par da linha quando existe (fontes com ±par próprio); senão gross − par.
@@ -389,6 +400,7 @@ export function MultiRoundLeaderboard({
               {/* ±Par ANTES de Total */}
               {showToPar && <SHdr k="toPar" className="lb-topar">±Par</SHdr>}
               {showGross && <SHdr k="gross" className="lb-gross">{isMulti ? "Total" : "Tot"}</SHdr>}
+              {rankBy && <SHdr k="modo" className="lb-modo">{rankBy.label}</SHdr>}
 
               {/* Acumulados multi-ronda (entre Total e R1) */}
               {isMulti && showRoundStats && <>
@@ -558,6 +570,7 @@ export function MultiRoundLeaderboard({
                   {/* ±Par ANTES de Total */}
                   {showToPar && <td className="lb-topar" style={{ color: tpCol, opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{fmtTP(tp)}</td>}
                   {showGross && <td className="lb-gross" style={{ opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{(row.gross ?? 0) > 0 ? row.gross : "–"}</td>}
+                  {rankBy && <td className="lb-modo" style={{ textAlign: "center", fontWeight: 700, color: "var(--accent)", opacity: (isInc || isWD) ? 0.5 : isCut ? 0.85 : 1 }}>{rankBy.value(row) ?? "–"}</td>}
 
                   {/* Acumulados multi-ronda */}
                   {isMulti && showRoundStats && (() => {

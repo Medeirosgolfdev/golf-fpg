@@ -4,7 +4,7 @@
  * Extracted from LeaderboardComponents.tsx
  * Displays accumulated scores across multiple rounds.
  */
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import type { EscLookup } from "../utils/playerUtils";
 import type { Tournament } from "../data/fpgTypes";
 import { numGross, resolveEsc, playerDob, computeSD, playedParTotal, isRoundInProgress } from "../data/fpgUtils";
@@ -16,6 +16,15 @@ import EmptyState from "./EmptyState";
 import { isManuel, type PlayersDB } from "./tournamentPrimitives";
 import { useFedBirthdates } from "./InscricoesComponents";
 import type { MultiRoundRow as MRRow, MRRound, ExtraColumn } from "./multiRoundTypes";
+import { medalNet, stablefordNet } from "../utils/whsCalc";
+import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
+
+/** As mesmas três modalidades do tab da volta (ScorecardLB). */
+const MODOS: Array<{ key: ModoClassif; label: string; title: string }> = [
+  { key: "stroke", label: "Stroke Play", title: "Pancadas, sem handicap" },
+  { key: "medalNet", label: "Medal Net", title: "Pancadas menos o HCP de jogo, somadas as voltas" },
+  { key: "stbNet", label: "Stableford Net", title: "Pontos Stableford com o HCP de jogo, somadas as voltas" },
+];
 
 export function AccumulatedLB({
   tournament,
@@ -26,7 +35,10 @@ export function AccumulatedLB({
   extraColumns,
   renderName,
   showCourse,
+  modalidade,
 }: {
+  /** Modalidade oficial da prova (FPG/Termos) — o selector abre nela. */
+  modalidade?: string | null;
   /** Campo na linha de informação (torneios com um campo por escalão). */
   showCourse?: boolean;
   tournament: Tournament;
@@ -63,6 +75,43 @@ export function AccumulatedLB({
   };
   const parRef = complete.find((p) => (p.roundScores?.length ?? 0) >= nRounds);
   const parTorneio = sumRoundPars(parRef) ?? (parPerRound != null ? parPerRound * nRounds : null);
+
+  // Medal Net / Stableford Net: soma das voltas com o HCP de jogo do jogador
+  // (a FPG guarda um por jogador, não por volta). Só com HCP de jogo na maioria
+  // do campo e SI nos cartões.
+  const modoDaProva = modoDaModalidade(modalidade);
+  const [modoEscolhido, setModo] = useState<ModoClassif | null>(null);
+  // A escolha vale até mudar de torneio.
+  const [lastTcode, setLastTcode] = useState(tournament.tcode);
+  if (tournament.tcode !== lastTcode) { setLastTcode(tournament.tcode); setModo(null); }
+  const comHcpJogo = complete.filter((p) => p.hcpPlay != null);
+  const temModos = comHcpJogo.length > 0 && comHcpJogo.length * 2 >= complete.length
+    && comHcpJogo.some((p) => p.roundScores?.some((rs) => rs.si?.length && rs.pars?.length));
+  const modo: ModoClassif = temModos ? (modoEscolhido ?? modoDaProva ?? "stroke") : "stroke";
+  const valorModo = useMemo(() => {
+    const m = new Map<string, number | null>();
+    if (modo === "stroke") return m;
+    for (const p of rawPlayers) {
+      const rss = p.roundScores || [];
+      const ok = p.hcpPlay != null && rss.length > 0 && rss.every((rs) => (rs.gross ?? 0) > 0 && (rs.gross ?? 0) < 900);
+      let v: number | null = null;
+      if (ok) {
+        v = 0;
+        for (const rs of rss) {
+          if (modo === "medalNet") v += medalNet(rs.gross, p.hcpPlay!);
+          else if (rs.scores?.some((x) => x > 0) && rs.si?.length && rs.pars?.length) v += stablefordNet(rs.scores, rs.pars, rs.si, p.hcpPlay!);
+          else { v = null; break; }
+        }
+      }
+      m.set(p.scoreId || p.name, v);
+    }
+    return m;
+  }, [rawPlayers, modo]);
+  const rankBy = useMemo(() => modo === "stroke" ? undefined : {
+    label: modo === "medalNet" ? "Net" : "Pts",
+    higherIsBetter: modo === "stbNet",
+    value: (r: MRRow) => valorModo.get(r.key || r.name) ?? null,
+  }, [modo, valorModo]);
 
   // useMemo ANTES do early return — regra dos hooks React
   const rows: MRRow[] = useMemo(() => {
@@ -218,6 +267,17 @@ export function AccumulatedLB({
           {slope && <InfoItem pre="Slope" v={slope} l={tournament._sdEstimate ? "(estimados)" : undefined} title={tournament._sdEstimate} />}
         </InfoGroup>
         <RatingFontes list={tournament._ratingFontes} />
+        {temModos && (
+          <div className="segmented-toggle seg-sm" role="tablist" aria-label="Modalidade da classificação">
+            {MODOS.map((m) => (
+              <button key={m.key} role="tab" aria-selected={modo === m.key}
+                title={modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title}
+                className={`seg-btn${modo === m.key ? " active" : ""}`} onClick={() => setModo(m.key)}>
+                <span className="seg-label">{m.label}{modoDaProva === m.key ? " ✓" : ""}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
       <MultiRoundLeaderboard
         rows={rows}
@@ -230,6 +290,7 @@ export function AccumulatedLB({
         extraColumns={extraColumns}
         renderName={renderName}
         sdEstimate={tournament._sdEstimate}
+        rankBy={rankBy}
       />
     </div>
   );

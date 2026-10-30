@@ -28,6 +28,7 @@ import { MANUEL_FED } from "../../constants/manuel";
 import { norm, shortDateSlash } from "../../utils/format";
 import { estadoProva, pontosEmJogo, projectar, type OmLevel } from "./omProjection";
 import termosJson from "../../data/omCgssTermos.json";
+import { ModalidadePill } from "../../ui/PillBadge";
 
 /* ── Tipos do om-cgss-junior.json ── */
 type Level = "A" | "B" | "C";
@@ -169,7 +170,9 @@ export function omLevelOf(t: Tournament): Level | null {
 
 /* ── Termos da Competição de cada prova (o que dizem sobre os juniores) ──
    Fonte única: src/data/omCgssTermos.json (também lida pelo build da OM). */
-interface OmTermosProva { ano: number; prova: string; padrao: string; ficheiro: string | null; juniores: "medal" | null; termo?: string; texto: string; desempate: string; }
+interface OmTermosProva { ano: number; prova: string; padrao: string; ficheiro: string | null; juniores: "medal" | null; termo?: string; texto: string; desempate: string;
+  /** Modalidade da prova segundo os Termos — só para as provas que a FPG ainda não lista (fpg-modalidades.json manda). */
+  modalidade?: string; }
 const TERMOS_PROVAS = (termosJson as { termos: Record<string, OmTermosProva> }).termos;
 /** Termos de uma prova da OM: pelo tcode (do mesmo ano — a FPG reutiliza tcodes);
  *  sem ele (torneio só-draw 9xxxx, antes de a prova ter o tcode real), pelo nome. */
@@ -670,16 +673,6 @@ function LevelPill({ level, curto }: { level: Level; curto?: boolean }) {
   // O A (Major) é o que mais pesa: dourado vivo, contorno e estrela.
   const txt = curto ? level : `Nível ${level}`;
   return <span className={`p p-sm p-lvl p-lvl-${level}`}>{level === "A" ? `★ ${txt}` : txt}</span>;
-}
-
-/** Pill da modalidade de jogo, com a palavra tal como vem escrita (FPG ou
- *  Termos): uma cor por modalidade — Stroke Play/Medal (pancadas, sem handicap)
- *  verde · Medal Net azul · Stableford Net azul-petróleo · Stableford Gross
- *  castanho. Quebra em 2 linhas quando a coluna é estreita. */
-function ModalidadePill({ nome, title }: { nome: string; title?: string }) {
-  const net = /\bnet\b/i.test(nome);
-  const cls = /stableford/i.test(nome) ? (net ? "p-mod-stbnet" : "p-mod-stbgross") : (net ? "p-mod-medalnet" : "p-mod-stroke");
-  return <span className={`p p-sm p-mod ${cls}`} title={title}>{nome}</span>;
 }
 
 /** Tabela «Como se pontuam os juniores em cada prova»: a modalidade da prova,

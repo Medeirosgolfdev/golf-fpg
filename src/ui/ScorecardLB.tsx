@@ -15,6 +15,7 @@ import { numGross, resolveEsc, playerDob, computeRoundSD, filterPlayers, fillBla
 import { useSort } from "../hooks/useSort";
 import { fmtHcp, ageAtDate, fmtDobPt } from "../utils/format";
 import { medalNet, stablefordNet } from "../utils/whsCalc";
+import { modoDaModalidade, type ModoClassif } from "../data/fpgModalidades";
 import { flag as flagOf, normCountry } from "../utils/flagUtils";
 import { EMPTY_FILTER } from "./multiRoundTypes";
 import { ScorecardLeaderboard, type ScorecardRow } from "./ScorecardLeaderboard";
@@ -77,7 +78,7 @@ type SortKey =
  *  tab de resultados» — os torneios do clube são quase sempre por pontos).
  *  Stroke Play = pancadas sem handicap (a grelha de sempre); Medal Net e
  *  Stableford Net contam com o HCP de jogo de cada um (whsCalc). */
-type Modo = "stroke" | "medalNet" | "stbNet";
+type Modo = ModoClassif;
 const MODOS: Array<{ key: Modo; label: string; title: string }> = [
   { key: "stroke", label: "Stroke Play", title: "Pancadas, sem handicap" },
   { key: "medalNet", label: "Medal Net", title: "Pancadas menos o HCP de jogo" },
@@ -145,7 +146,11 @@ export function ScorecardLB({
   const noInfer = options?.noInferBlanks ?? false;
   const { sortKey, sortDir, toggleSort: handleSort } = useSort<SortKey>("pos");
   const [showScorecard, setShowScorecard] = useState(true);
-  const [modo, setModo] = useState<Modo>("stroke");
+  // Abre na modalidade oficial da prova (options.modalidade, Mariana 30/10/2026);
+  // escolha de quem está a ver ganha, até mudar de torneio.
+  const modoDaProva = modoDaModalidade(options?.modalidade);
+  const [modoEscolhido, setModo] = useState<Modo | null>(null);
+  const modo: Modo = modoEscolhido ?? modoDaProva ?? "stroke";
   const [filter, setFilter] = useState<PlayerFilter>(EMPTY_FILTER);
 
   // Reset filtros quando muda de torneio
@@ -153,6 +158,7 @@ export function ScorecardLB({
   if (tournament.tcode !== lastTcode) {
     setLastTcode(tournament.tcode);
     setFilter(EMPTY_FILTER);
+    setModo(null);
   }
 
   // Quem tem cartão buraco a buraco e, numa volta em que há cartões, também
@@ -819,9 +825,10 @@ export function ScorecardLB({
           {temModos && (
             <div className="segmented-toggle seg-sm" role="tablist" aria-label="Modalidade da classificação">
               {MODOS.map((m) => (
-                <button key={m.key} role="tab" aria-selected={modoAtivo === m.key} title={m.title}
+                <button key={m.key} role="tab" aria-selected={modoAtivo === m.key}
+                  title={modoDaProva === m.key ? `${m.title} — a modalidade desta prova` : m.title}
                   className={`seg-btn${modoAtivo === m.key ? " active" : ""}`} onClick={() => setModo(m.key)}>
-                  <span className="seg-label">{m.label}</span>
+                  <span className="seg-label">{m.label}{modoDaProva === m.key ? " ✓" : ""}</span>
                 </button>
               ))}
             </div>

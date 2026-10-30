@@ -261,6 +261,16 @@ export function OmPill({ level }: { level?: string | null }) {
   return <span className="p p-sm p-tourn" style={PILL_OM} title={t}>OM{level ? `·${level}` : ""}</span>;
 }
 
+/** Pill da modalidade de jogo, com a palavra tal como vem escrita (FPG ou
+ *  Termos): uma cor por modalidade — Stroke Play/Medal (pancadas, sem handicap)
+ *  verde · Medal Net azul · Stableford Net azul-petróleo · Stableford Gross
+ *  castanho. Quebra em 2 linhas quando a coluna é estreita. */
+export function ModalidadePill({ nome, title }: { nome: string; title?: string }) {
+  const net = /\bnet\b/i.test(nome);
+  const cls = /stableford/i.test(nome) ? (net ? "p-mod-stbnet" : "p-mod-stbgross") : (net ? "p-mod-medalnet" : "p-mod-stroke");
+  return <span className={`p p-sm p-mod ${cls}`} title={title}>{nome}</span>;
+}
+
 /** PCC oficial ≠ 0 de uma volta. `round` só em torneios de várias voltas. */
 export function PccPill({ pcc, round }: { pcc: number; round?: number }) {
   if (!pcc) return null;

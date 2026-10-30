@@ -181,6 +181,11 @@ jobs:
           # dos 18 rapazes da coorte, com o detalhe por jogador que a tabela
           # mostra ao expandir uma linha (exit 2 = sem mudanças)
           corre scripts/build-percurso-path.js
+          # Modalidade de cada torneio (Stroke Play / Medal Net / Stableford Net)
+          # pela lista de torneios de cada clube, gateway público, um pedido de
+          # cada vez → pill no cabeçalho da prova e o «Scorecard» abre nela.
+          # Só o ano corrente se volta a pedir (exit 2 = sem mudanças).
+          corre scripts/build-fpg-modalidades.js
           echo "failed=$FAILED" >> $GITHUB_OUTPUT
           exit 0
 
@@ -247,7 +252,7 @@ jobs:
                public/data/away-courses.json public/data/master-courses.json \
                public/data/course-player-names.json public/data/course-players.json \
                public/data/recent-tournaments.json public/data/recent-tournaments-scrape-scope.json \
-               public/data/classificacoes.json 'public/data/pull-torneios*.json' \
+               public/data/classificacoes.json public/data/fpg-modalidades.json 'public/data/pull-torneios*.json' \
                'public/data/drive-data-*.json' 'public/data/aquapor-data-*.json' \
                'public/data/jovens_*.json' players.json
 

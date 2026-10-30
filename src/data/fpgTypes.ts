@@ -133,6 +133,8 @@ export interface GrupoEntry   { grupo: string; clube: string; jogadores: GrupoJo
 export interface ScorecardOptions {
   /** Mostrar o campo na linha de informação (torneios com um campo por escalão/volta). */
   showCourse?: boolean;
+  /** Modalidade oficial da prova (FPG/Termos: «Stableford Net», «Stroke Play»…) — o selector do Scorecard abre nela. */
+  modalidade?: string | null;
   hideHCP?: boolean;      // ocultar coluna HCP
   hideSD?: boolean;       // ocultar coluna SD
   hideEsc?: boolean;      // ocultar coluna ESC (escalão)
