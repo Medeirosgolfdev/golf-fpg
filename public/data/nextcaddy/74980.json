@@ -1,0 +1,516 @@
+{
+  "tourId": 74980,
+  "url": "https://www.nextcaddy.com/tour/74980",
+  "scrapedAt": "2026-10-30T13:53:33.617Z",
+  "meta": {
+    "name": "torneo viernes tarde 2",
+    "organizer": null,
+    "course": "Lauro Golf",
+    "courseCode": "AM83",
+    "dateStart": "2026-10-29",
+    "dateEnd": null,
+    "format": "Stableford (Handicap)  Señoras  Caballer",
+    "categories": [
+      "Señoras",
+      "Caballeros",
+      "Infantil",
+      "Profesional",
+      "Senior",
+      "Juvenil"
+    ],
+    "dateIso": "2026-10-29",
+    "year": 2026
+  },
+  "course": {
+    "parTotal": 32,
+    "parInferred": true,
+    "parConfidence": "total-low",
+    "si": null,
+    "meters": null
+  },
+  "leaderboard": [
+    {
+      "category": 1,
+      "categoryName": "Handicap General",
+      "expectedJugadores": 6,
+      "header": [
+        "Pos",
+        "Jugador",
+        "Jugador",
+        "Licencia",
+        "Hcp",
+        "Nivel",
+        "HcpJuego",
+        "Total",
+        ""
+      ],
+      "players": [
+        {
+          "pos": 1,
+          "name": "Enzo Tirado Alvarez",
+          "licencia": "AM83946335",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 25,
+          "toPar": -7,
+          "inscribedId": 2438036
+        },
+        {
+          "pos": 2,
+          "name": "Carolina Borrey Wust",
+          "licencia": "AM83988830",
+          "hcp": null,
+          "nivel": "I",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 23,
+          "toPar": -5,
+          "inscribedId": 2438037
+        },
+        {
+          "pos": 3,
+          "name": "Leone Saponaro Nieto",
+          "licencia": "AM83026032",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2438041
+        },
+        {
+          "pos": 4,
+          "name": "Alba Ruiz Macias",
+          "licencia": "AM83351545",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 21,
+          "toPar": -3,
+          "inscribedId": 2438038
+        },
+        {
+          "pos": 5,
+          "name": "Claudia Casasola Garcia",
+          "licencia": "AM83947915",
+          "hcp": null,
+          "nivel": "A",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 19,
+          "toPar": -1,
+          "inscribedId": 2438039
+        },
+        {
+          "pos": 6,
+          "name": "Hermes Stuart Cañizares Plaja",
+          "licencia": "AM83155360",
+          "hcp": null,
+          "nivel": "B",
+          "rounds": [],
+          "hcpJuego": [],
+          "total": 18,
+          "toPar": null,
+          "inscribedId": 2438040
+        }
+      ]
+    }
+  ],
+  "leaderboardPdfOnly": false,
+  "categoryNames": {
+    "1": {
+      "name": "Handicap General",
+      "jugadores": 6
+    }
+  },
+  "inscritos": [
+    {
+      "orden": 1,
+      "name": "Enzo Tirado Alvarez",
+      "licencia": "AM83946335",
+      "hcp": 48.9,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Hermes Stuart Cañizares Plaja",
+      "licencia": "AM83155360",
+      "hcp": 12.5,
+      "nivel": "B"
+    },
+    {
+      "orden": 3,
+      "name": "Leone Saponaro Nieto",
+      "licencia": "AM83026032",
+      "hcp": 37.5,
+      "nivel": "A"
+    },
+    {
+      "orden": 1,
+      "name": "Carolina Borrey Wust",
+      "licencia": "AM83988830",
+      "hcp": 54,
+      "nivel": "I"
+    },
+    {
+      "orden": 2,
+      "name": "Alba Ruiz Macias",
+      "licencia": "AM83351545",
+      "hcp": 54,
+      "nivel": "A"
+    },
+    {
+      "orden": 3,
+      "name": "Claudia Casasola Garcia",
+      "licencia": "AM83947915",
+      "hcp": 5.4,
+      "nivel": "A"
+    }
+  ],
+  "horarios": [],
+  "estadisticas": {
+    "0": {
+      "p": {
+        "id": 162330,
+        "datos": [
+          [
+            "Tipo",
+            "Total"
+          ],
+          [
+            "Par",
+            12
+          ],
+          [
+            "Birdie",
+            3
+          ],
+          [
+            "Eagle",
+            0
+          ],
+          [
+            "Bogey",
+            11
+          ],
+          [
+            "Peor",
+            27
+          ]
+        ]
+      },
+      "bvg": {
+        "id": 162331,
+        "datos": [
+          [
+            "Hoyo",
+            "Sobrepar"
+          ],
+          [
+            "1",
+            10
+          ],
+          [
+            "2",
+            7
+          ],
+          [
+            "3",
+            12
+          ],
+          [
+            "4",
+            9
+          ],
+          [
+            "5",
+            12
+          ],
+          [
+            "6",
+            7
+          ],
+          [
+            "7",
+            9
+          ],
+          [
+            "8",
+            12
+          ],
+          [
+            "9",
+            5
+          ]
+        ]
+      }
+    },
+    "1": {
+      "lxy": {
+        "id": 162332,
+        "datos": [
+          [
+            "Hoyo",
+            "ENZO TIRADO ALVAREZ",
+            "carolins borrey wust",
+            "LEONE SAPONARO NIETO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -3,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 3",
+            -1,
+            -3,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -3,
+            -3,
+            0
+          ],
+          [
+            "Hoyo 5",
+            -2,
+            -5,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -4,
+            -6,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -6,
+            -8,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -7,
+            -7,
+            1
+          ],
+          [
+            "Hoyo 9",
+            -7,
+            -5,
+            -3
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      },
+      "hvg": {
+        "id": 162333,
+        "datos": [
+          [
+            "Hoyo",
+            "ENZO TIRADO ALVAREZ",
+            "carolins borrey wust",
+            "LEONE SAPONARO NIETO"
+          ],
+          [
+            "Hoyo 0",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 1",
+            0,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 2",
+            -3,
+            -1,
+            -1
+          ],
+          [
+            "Hoyo 3",
+            2,
+            -1,
+            1
+          ],
+          [
+            "Hoyo 4",
+            -2,
+            0,
+            -1
+          ],
+          [
+            "Hoyo 5",
+            1,
+            -2,
+            0
+          ],
+          [
+            "Hoyo 6",
+            -2,
+            -1,
+            0
+          ],
+          [
+            "Hoyo 7",
+            -2,
+            -2,
+            1
+          ],
+          [
+            "Hoyo 8",
+            -1,
+            1,
+            0
+          ],
+          [
+            "Hoyo 9",
+            0,
+            2,
+            -4
+          ],
+          [
+            "Hoyo 10",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 11",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 12",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 13",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 14",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 15",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 16",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 17",
+            0,
+            0,
+            0
+          ],
+          [
+            "Hoyo 18",
+            0,
+            0,
+            0
+          ]
+        ]
+      }
+    }
+  },
+  "roundIds": [
+    {
+      "roundNumber": 1,
+      "roundId": 80346
+    }
+  ],
+  "scoreTypes": [],
+  "pdfs": [
+    "https://www.nextcaddy.com/uploads/competiciones/pdf/"
+  ],
+  "horariosScrapedAt": "2026-10-30T13:54:27.245Z"
+}
