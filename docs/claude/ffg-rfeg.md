@@ -306,8 +306,19 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
   formatos com cabeçalho «LICENCIA»+«NOMBRE»: federação (R1..R4 em ±par; par da
   volta = moda de (STRS−TOT)/voltas), Laukariz/Vizcaya e o dos clubes (total =
   último número da linha). PDFs em imagem e listas só de campeões ficam de fora.
+- **Baleares, Aragão, Múrcia, Cantábria, Extremadura (e País Basco, Valência)
+  no golfdirecto** → `discover-golfdirecto-scope.js`: lista oficial
+  `api/v2/public/tournament/last?limit=100&offset=…&filter[gameStatus][0]=finished|scheduled&filter[profile]=official&filter[name]=…`
+  (o filtro por cliente dá erro — filtra-se depois por `client._id`, ids em
+  `CLIENTES`). Cada torneio = um jogo (`nextGame._id`).
+  - **Voltas:** um jogo «Ronda 2» só traz o cartão dessa volta; as anteriores
+    estão em `previous[].day.strokeNumber`. Quando a soma do `previous` dá o
+    acumulado, o `previous` já inclui a volta do jogo (provas de 1 volta).
+  - **Gémeos com PDF** (`scripts/lib/golfdirecto-twins.js`): jogos a ±1 dia
+    com ≥75% dos jogadores do PDF FVG/FGCV → o PDF sai do índice e dos rivais.
+  - A Cantábria publica as provas sem classificação (0 jogadores).
 - **Andaluzia, Madrid, Canárias, Castela e Leão** → NextCaddy.
-- Por ligar: Baleares, Múrcia, Aragão, Astúrias e as mais pequenas.
+- Por ligar: Astúrias, Navarra, Rioja, Castela-La Mancha.
 
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
 
