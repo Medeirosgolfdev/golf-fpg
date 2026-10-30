@@ -314,11 +314,35 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
   - **Voltas:** um jogo «Ronda 2» só traz o cartão dessa volta; as anteriores
     estão em `previous[].day.strokeNumber`. Quando a soma do `previous` dá o
     acumulado, o `previous` já inclui a volta do jogo (provas de 1 volta).
-  - **Gémeos com PDF** (`scripts/lib/golfdirecto-twins.js`): jogos a ±1 dia
-    com ≥75% dos jogadores do PDF FVG/FGCV → o PDF sai do índice e dos rivais.
+  - **Gémeos com PDF** (`scripts/lib/golfdirecto-twins.js`): provas golfdirecto
+    **ou NextCaddy** a ±1 dia com ≥75% das licenças do PDF → o PDF sai do índice
+    e dos rivais. Entre dois PDFs regionais só no **mesmo dia** (`registar`): as
+    jornadas dos Juegos Deportivos de Navarra e os Puntuables da FGCLM em dias
+    seguidos têm os mesmos jogadores e não são a mesma prova.
   - A Cantábria publica as provas sem classificação (0 jogadores).
-- **Andaluzia, Madrid, Canárias, Castela e Leão** → NextCaddy.
-- Por ligar: Astúrias, Navarra, Rioja, Castela-La Mancha.
+- **Navarra (FNG), Castela-La Mancha (FGCLM), Rioja (FRG)** → `scrape-fed-pdfs.js`
+  (`public/data/{fng,fgclm,frg}/{chave}.json`; só relê quando a lista de PDFs muda).
+  - FNG: `fnavarragolf.com/campeonatos/clasificaciones/` — título + PDFs. Ficam
+    Zonais da Zona 9, Campeonato Sub-21, Juegos Deportivos a 18 buracos; fora
+    todas as Ligas (9/4 buracos; a de Verão são várias jornadas num título).
+    Um título com PDFs de semanas diferentes divide-se em ficheiros `{chave}-{aaaammdd}`.
+  - FGCLM: `fedgolfclm.com/wp-json/wp/v2/posts?categories=198` (Juvenil); os
+    PDFs de resultados acabam em `-01-AAAA.pdf`. Os Puntuables IX/X 2026 só
+    estão no live scoring `backend.torneodegolf.es/public-ranking/data?id=N`
+    (cartões e nome completo, **sem licença**) — não ligado.
+  - FRG: notícias «Puntuable Zonal» (`frgolf.es/wp-json`, PDFs nos shortcodes
+    `url:https%3A…`). PDF da Rioja Alta **sem licença** (só nome). Uma notícia
+    pode repetir os PDFs da anterior — cada PDF fica na primeira.
+  - Leitor comum: `scripts/lib/pdf-classificacoes.js` (também o da FVG) —
+    formatos FGCLM «Puesto Jugador … Golpes» com «+6 (78)», Navarra «Tot 1ª 2ª»,
+    programa do Gorraiz («POS JUGADOR», colunas coladas), Medal Bruto do Zuasti.
+    A scratch geral (vários escalões) divide-se por escalão e sexo.
+- **Astúrias:** `fedegolfasturias.com` só tem inscritos e circulares; sem
+  resultados por prova publicados (30/10/2026). O Zonal Galiza–Astúrias vem da FGG.
+- **Andaluzia, Madrid, Canárias, Castela e Leão** → NextCaddy (alguns clubes da
+  Navarra e o I Zonal Madrid–CLM também).
+- Prova de 1 volta só com totais: o `TournamentDetail` mostra a aba
+  «Classificação» (AccumulatedLB) em vez do Scorecard vazio.
 
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
 
