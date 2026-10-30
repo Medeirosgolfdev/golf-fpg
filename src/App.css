@@ -1342,13 +1342,6 @@ tr.cross-current { background: var(--bg-success); }
 .score-dist-pct { font-size: var(--fs-10); font-weight: 700; color: var(--text-2); margin-top: 2px; font-variant-numeric: tabular-nums; }
 .score-dist-lbl { font-size: var(--fs-9); color: var(--text-3); text-transform: uppercase; letter-spacing: 0.03em; }
 
-/* ─── HoleStatsSection Table Cells ─── */
-.hs-cell { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); }
-.hs-label { padding: 4px 6px 4px 8px; text-align: left; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); border-right: 2px solid var(--border-light); white-space: nowrap; min-width: 70px; }
-.hs-out { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
-.hs-in { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); border-right: 1px solid var(--border-light); }
-.hs-total { padding: 4px 6px; text-align: center; font-size: var(--fs-11); border-bottom: 1px solid var(--bg-hover); background: var(--bg-muted); border-left: 1px solid var(--border-light); font-weight: 800; }
-
 /* ─── FRAG Scorecard (injected HTML fragments) ─── */
 .scHost table { border-collapse: collapse; font-size: var(--fs-11); }
 .scHost td, .scHost th { padding: 2px 4px; text-align: center; border: 1px solid var(--border-light); }

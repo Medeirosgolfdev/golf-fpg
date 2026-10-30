@@ -81,8 +81,8 @@ export default function FilteredStatsCard({ filtered, viewMode, onPickPlayer, ac
       </div>
 
       {/* KPIs */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))", gap: 10, marginBottom: 16 }}>
-        <KpiCard label="Total" value={filtered.length} big />
+      <div className="kpi-row">
+        <KpiCard label="Total" value={filtered.length} />
         <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={male} pct={male / filtered.length} />
         <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={female} pct={female / filtered.length} />
         {withHcp > 0 && <KpiCard label="Com HCP" value={withHcp} sub={`média ${avgHcp.toFixed(1)}`} />}

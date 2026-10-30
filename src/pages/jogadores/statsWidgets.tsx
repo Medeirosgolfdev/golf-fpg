@@ -19,21 +19,13 @@ export function barPct(v: number, max: number): string {
   return `${Math.max(2, (v / Math.max(1, max)) * 100)}%`;
 }
 
-/* Adaptador fino (stats) → delega na definição única ui/KpiCard.
-   Valor numérico formatado pt-PT, centrado, com percentagem opcional. */
-export function KpiCard({ label, value, pct, big, sub }: {
-  label: React.ReactNode; value: number; pct?: number; big?: boolean; sub?: string;
+/* Adaptador fino (stats) → delega na definição única ui/KpiCard, com o mesmo
+   tamanho e alinhamento dos KPIs das outras vistas (30/10/2026: eram maiores e
+   centrados só aqui). Valor numérico formatado pt-PT, percentagem opcional. */
+export function KpiCard({ label, value, pct, sub }: {
+  label: React.ReactNode; value: number; pct?: number; sub?: string;
 }) {
-  return (
-    <UiKpiCard
-      label={label}
-      value={value.toLocaleString("pt-PT")}
-      size={big ? "lg" : "md"}
-      pct={pct}
-      sub={sub}
-      align="center"
-    />
-  );
+  return <UiKpiCard label={label} value={value.toLocaleString("pt-PT")} pct={pct} sub={sub} />;
 }
 
 /** Barra horizontal stacked M/F sobre fundo subtle. `widthPct` = largura da

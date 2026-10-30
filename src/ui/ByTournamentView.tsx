@@ -70,30 +70,28 @@ function TournRoundRow({ r, idx: _idx, data }: {
   );
 }
 
-/* Comparison table helper: generic row */
-function CompRow({ label, hc: _hc, is9, frontEnd, cells, outVal, inVal, totalVal, style, sepRow, outWeight, inWeight, className }: {
+/* Comparação de voltas: linhas na grelha global do cartão (.sc-table-ec, a do
+   eclético) — rótulo, buracos, Out/In/Total por classe, sem estilos à mão. */
+function CompRow({ label, hc: _hc, is9, frontEnd, cells, outVal, inVal, totalVal, head, sepRow, className }: {
   label: string; hc: number; is9: boolean; frontEnd: number;
   cells: string[]; outVal?: string; inVal?: string; totalVal?: string;
-  style?: React.CSSProperties; sepRow?: boolean; outWeight?: number; inWeight?: number;
+  /** Linha do cabeçalho (Buraco): células <th>. */
+  head?: boolean; sepRow?: boolean;
   className?: string;
 }) {
-  const cs: React.CSSProperties = { padding: "3px 6px", textAlign: "center", fontSize: "var(--fs-12)", borderBottom: "1px solid var(--border-light)", ...style };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
-  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: outWeight };
-  const colIn: React.CSSProperties = { ...colOut, fontWeight: inWeight };
-  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)", fontWeight: 700 };
-  if (sepRow) { cs.borderBottom = "2px solid var(--border)"; colLabel.borderBottom = "2px solid var(--border)"; colOut.borderBottom = "2px solid var(--border)"; colIn.borderBottom = "2px solid var(--border)"; colTot.borderBottom = "2px solid var(--border)"; }
+  const C = head ? "th" : "td";
+  const h = head ? "hole-header " : "";
   return (
-    <tr className={className}>
-      <td style={colLabel}>{label}</td>
+    <tr className={[className, sepRow ? "sep-row" : ""].filter(Boolean).join(" ") || undefined}>
+      <C className="row-label">{label}</C>
       {cells.map((c, i) => (
         <React.Fragment key={i}>
-          <td style={cs}>{c}</td>
-          {i === frontEnd - 1 && !is9 && <td style={colOut}>{outVal}</td>}
+          <C className={head ? "hole-header" : undefined}>{c}</C>
+          {i === frontEnd - 1 && !is9 && <C className={h + "col-out"}>{outVal}</C>}
         </React.Fragment>
       ))}
-      <td style={is9 ? colTot : colIn}>{inVal}</td>
-      {!is9 && <td style={colTot}>{totalVal}</td>}
+      <C className={h + (is9 ? "col-total" : "col-in")}>{inVal}</C>
+      {!is9 && <C className={h + "col-total"}>{totalVal}</C>}
     </tr>
   );
 }
@@ -104,13 +102,7 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   gross: (number | null)[]; par: (number | null)[] | null;
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  // Linhas dos dias ESTREITAS (2026-08-15): padding vertical mínimo e o
-  // ±par dos totais em linha (ao lado do gross), não empilhado por baixo.
-  const cs: React.CSSProperties = { padding: "2px 6px", textAlign: "center", fontSize: "var(--fs-12)", borderBottom: "1px solid var(--border-light)" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)" };
-  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)", fontWeight: 700, whiteSpace: "nowrap" };
-  const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)", fontWeight: 700, whiteSpace: "nowrap" };
+  // O ±par dos totais em linha (ao lado do gross), não empilhado por baixo.
   const inlineTp: React.CSSProperties = { display: "inline", marginLeft: 4 };
 
   const toParSpan = (g: number, p: number) => {
@@ -124,21 +116,21 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
   const tp = par ? totalG - totalP : null;
 
   return (
-    <tr>
-      <td style={colLabel}><span className="p" style={{ background: labelBg, color: labelFg }}>{label}</span></td>
+    <tr className="ec-round-row">
+      <td className="row-label"><span className="p" style={{ background: labelBg, color: labelFg }}>{label}</span></td>
       {Array.from({ length: hc }, (_, i) => {
         const gv = gross[i];
         const pv = par ? par[i] : null;
         const cls = gv != null && gv > 0 && pv != null ? scClass(gv, pv) : "";
         return (
           <React.Fragment key={i}>
-            <td style={cs}>
+            <td>
               {gv != null && gv > 0
                 ? <span className={`sc-score ${cls}`}>{gv}</span>
                 : ""}
             </td>
             {i === frontEnd - 1 && !is9 && (
-              <td style={colOut}>
+              <td className="col-out">
                 {sumArr(gross, 0, frontEnd)}
                 {par && toParSpan(sumArr(gross, 0, frontEnd), sumArr(par, 0, frontEnd))}
               </td>
@@ -146,12 +138,12 @@ function CompScoreRow({ label, labelBg, labelFg, gross, par, hc, is9, frontEnd, 
           </React.Fragment>
         );
       })}
-      <td style={is9 ? colTot : colIn}>
+      <td className={is9 ? "col-total" : "col-in"}>
         {is9 ? totalG : sumArr(gross, backStart, hc)}
         {par && toParSpan(is9 ? totalG : sumArr(gross, backStart, hc), is9 ? totalP : sumArr(par, backStart, hc))}
       </td>
       {!is9 && (
-        <td style={colTot}>
+        <td className="col-total">
           {totalG}
           {tp != null && <span className={`sc-topar ${toParClass(tp)}`} style={inlineTp}>{fmtToPar(tp, "")}</span>}
         </td>
@@ -165,11 +157,6 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   first: (number | null)[]; last: (number | null)[];
   hc: number; is9: boolean; frontEnd: number; backStart: number;
 }) {
-  const cs: React.CSSProperties = { padding: "2px 6px", textAlign: "center", fontSize: "var(--fs-11)", borderBottom: "1px solid var(--border-light)" };
-  const colLabel: React.CSSProperties = { ...cs, textAlign: "left", paddingLeft: 8, borderRight: "1px solid var(--border-light)", fontWeight: 700, color: "var(--text-3)" };
-  const colOut: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border-light)", borderRight: "1px solid var(--border-light)" };
-  const colIn: React.CSSProperties = { ...colOut };
-  const colTot: React.CSSProperties = { ...cs, borderLeft: "1px solid var(--border)" };
 
   const fmtDelta = (d: number | null) => {
     if (d == null) return { text: "", color: "var(--text-muted)", weight: 400 as const };
@@ -178,18 +165,18 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
   };
 
   return (
-    <tr className="bg-detail bt-heavy">
-      <td style={colLabel}>Δ</td>
+    <tr className="ec-ref-row bt-heavy">
+      <td className="row-label">Δ</td>
       {Array.from({ length: hc }, (_, i) => {
         const d = last[i] != null && first[i] != null ? last[i]! - first[i]! : null;
         const f = fmtDelta(d);
         return (
           <React.Fragment key={i}>
-            <td style={{ ...cs, color: f.color, fontWeight: f.weight }}>{f.text}</td>
+            <td style={{ color: f.color, fontWeight: f.weight }}>{f.text}</td>
             {i === frontEnd - 1 && !is9 && (() => {
               const dOut = sumArr(last, 0, frontEnd) - sumArr(first, 0, frontEnd);
               const fo = fmtDelta(dOut);
-              return <td style={{ ...colOut, color: fo.color, fontWeight: fo.weight }}>{fo.text}</td>;
+              return <td className="col-out" style={{ color: fo.color, fontWeight: fo.weight }}>{fo.text}</td>;
             })()}
           </React.Fragment>
         );
@@ -197,12 +184,12 @@ function CompDeltaRow({ first, last, hc, is9, frontEnd, backStart }: {
       {(() => {
         const dIn = (is9 ? sumArr(last, 0, hc) : sumArr(last, backStart, hc)) - (is9 ? sumArr(first, 0, hc) : sumArr(first, backStart, hc));
         const fi = fmtDelta(dIn);
-        return <td style={{ ...(is9 ? colTot : colIn), color: fi.color, fontWeight: fi.weight }}>{fi.text}</td>;
+        return <td className={is9 ? "col-total" : "col-in"} style={{ color: fi.color, fontWeight: fi.weight }}>{fi.text}</td>;
       })()}
       {!is9 && (() => {
         const dTot = sumArr(last, 0, hc) - sumArr(first, 0, hc);
         const ft = fmtDelta(dTot);
-        return <td style={{ ...colTot, color: ft.color }}>{ft.text}</td>;
+        return <td className="col-total" style={{ color: ft.color }}>{ft.text}</td>;
       })()}
     </tr>
   );
@@ -246,38 +233,38 @@ function TournamentComparison({ rounds, holesData }: {
         <span>Par {totalPar || ""}</span>
       </div>
       <div className="scroll-x">
-        <table className="w-full fs-12 bc-collapse">
+        <table className="sc-table-ec sc-grid">
           <thead>
             <CompRow label="Buraco" hc={hc} is9={is9} frontEnd={frontEnd}
               cells={Array.from({ length: hc }, (_, i) => String(i + 1))}
               outVal="Out" inVal={is9 ? "TOTAL" : "In"} totalVal={is9 ? undefined : "TOTAL"}
-              className="fw-700 fs-11 bb-light c-text-3" style={{ background: "var(--bg-detail)" }}
+              head
             />
           </thead>
           <tbody>
             {allSameCourse && meters && meters.some(v => v != null && Number(v) > 0) && (
               <CompRow label="Metros" hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={meters.slice(0, hc).map(v => v != null ? String(v) : "")}
-                outVal={String(sumArr(meters, 0, frontEnd))} outWeight={600}
-                inVal={String(is9 ? sumArr(meters, 0, hc) : sumArr(meters, backStart, hc))} inWeight={600}
+                outVal={String(sumArr(meters, 0, frontEnd))}
+                inVal={String(is9 ? sumArr(meters, 0, hc) : sumArr(meters, backStart, hc))}
                 totalVal={is9 ? undefined : String(sumArr(meters, 0, hc))}
-                className="c-muted fs-10"
+                className="ec-ref-row"
               />
             )}
             {allSameCourse && si && si.some(v => v != null) && (
               <CompRow label="S.I." hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={si.slice(0, hc).map(v => v != null ? String(v) : "")}
                 outVal="" inVal="" totalVal={is9 ? undefined : ""}
-                className="c-muted fs-10"
+                className="ec-ref-row"
               />
             )}
             {allSameCourse && par && par.some(v => v != null) && (
               <CompRow label="Par" hc={hc} is9={is9} frontEnd={frontEnd}
                 cells={par.slice(0, hc).map(v => v != null ? String(v) : "–")}
-                outVal={String(sumArr(par, 0, frontEnd))} outWeight={700}
-                inVal={String(is9 ? sumArr(par, 0, hc) : sumArr(par, backStart, hc))} inWeight={700}
+                outVal={String(sumArr(par, 0, frontEnd))}
+                inVal={String(is9 ? sumArr(par, 0, hc) : sumArr(par, backStart, hc))}
                 totalVal={is9 ? undefined : String(sumArr(par, 0, hc))}
-                className="fw-600 c-muted fs-11 bt-heavy"
+                className="ec-ref-row"
                 sepRow
               />
             )}
@@ -298,19 +285,19 @@ function TournamentComparison({ rounds, holesData }: {
                       {ownH!.m && ownH!.m.some(v => v != null && Number(v) > 0) && (
                         <CompRow label={`m (${rd.course.split(" ")[0]})`} hc={hc} is9={is9} frontEnd={frontEnd}
                           cells={ownH!.m.slice(0, hc).map(v => v != null ? String(v) : "")}
-                          outVal={String(sumArr(ownH!.m, 0, frontEnd))} outWeight={600}
-                          inVal={String(is9 ? sumArr(ownH!.m, 0, hc) : sumArr(ownH!.m, backStart, hc))} inWeight={600}
+                          outVal={String(sumArr(ownH!.m, 0, frontEnd))}
+                          inVal={String(is9 ? sumArr(ownH!.m, 0, hc) : sumArr(ownH!.m, backStart, hc))}
                           totalVal={is9 ? undefined : String(sumArr(ownH!.m, 0, hc))}
-                          className="c-muted fs-10"
+                          className="ec-ref-row"
                         />
                       )}
                       {ownH!.p && ownH!.p.some(v => v != null) && (
                         <CompRow label="Par" hc={hc} is9={is9} frontEnd={frontEnd}
                           cells={ownH!.p.slice(0, hc).map(v => v != null ? String(v) : "–")}
-                          outVal={String(sumArr(ownH!.p, 0, frontEnd))} outWeight={700}
-                          inVal={String(is9 ? sumArr(ownH!.p, 0, hc) : sumArr(ownH!.p, backStart, hc))} inWeight={700}
+                          outVal={String(sumArr(ownH!.p, 0, frontEnd))}
+                          inVal={String(is9 ? sumArr(ownH!.p, 0, hc) : sumArr(ownH!.p, backStart, hc))}
                           totalVal={is9 ? undefined : String(sumArr(ownH!.p, 0, hc))}
-                          className="fw-600 c-muted fs-11 bt-heavy"
+                          className="ec-ref-row"
                           sepRow
                         />
                       )}

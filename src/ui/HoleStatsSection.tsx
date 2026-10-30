@@ -332,99 +332,101 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
       <details className="details-block mt-10">
         <summary className="details-summary">Detalhe buraco a buraco <span className="muted fs-11">(tabela completa)</span></summary>
         <div className="scroll-x mt-6">
-            <table className="w-full fs-11 bc-collapse hs-uniform">
-              <tbody>
+            <table className="sc-table-modern sc-grid">
+              <thead>
                 {/* Buraco row */}
-                <tr className="bg-detail">
-                  <td className="fw-700 hs-label c-text-3" style={{ borderBottom: "1px solid var(--border-light)" }}>Buraco</td>
+                <tr>
+                  <th className="row-label">Buraco</th>
                   {stats.holes.slice(0, hc).map((_, i) => (
                     <React.Fragment key={i}>
-                      <td className="fw-700 hs-cell c-text-3" style={{ borderBottom: "1px solid var(--border-light)" }}>{i + 1}</td>
-                      {i === fe - 1 && !is9 && <td className="fw-700 hs-out c-text-3" style={{ borderBottom: "1px solid var(--border-light)" }}>Out</td>}
+                      <th className="hole-header">{i + 1}</th>
+                      {i === fe - 1 && !is9 && <th className="hole-header col-out">Out</th>}
                     </React.Fragment>
                   ))}
-                  <td className={`fw-700 c-text-3 ${is9 ? "hs-total" : "hs-in"}`} style={{ borderBottom: "1px solid var(--border-light)" }}>{is9 ? "TOTAL" : "In"}</td>
-                  {!is9 && <td className="fw-700 hs-total c-text-2" style={{ borderBottom: "1px solid var(--border-light)" }}>TOTAL</td>}
+                  <th className={`hole-header ${is9 ? "col-total" : "col-in"}`}>{is9 ? "TOTAL" : "In"}</th>
+                  {!is9 && <th className="hole-header col-total">TOTAL</th>}
                 </tr>
+              </thead>
+              <tbody>
                 {/* SI row */}
                 {stats.holes.some(h => h.si != null) && (
                   <tr>
-                    <td className="hs-label c-muted">S.I.</td>
+                    <td className="row-label c-muted">S.I.</td>
                     {stats.holes.slice(0, hc).map((h, i) => (
                       <React.Fragment key={i}>
-                        <td className="hs-cell c-muted">{h.si ?? ""}</td>
-                        {i === fe - 1 && !is9 && <td className="hs-out" />}
+                        <td className="c-muted">{h.si ?? ""}</td>
+                        {i === fe - 1 && !is9 && <td className="col-out" />}
                       </React.Fragment>
                     ))}
-                    <td className={is9 ? "hs-total" : "hs-in"} />
-                    {!is9 && <td className="hs-total" />}
+                    <td className={is9 ? "col-total" : "col-in"} />
+                    {!is9 && <td className="col-total" />}
                   </tr>
                 )}
                 {/* Par row */}
-                <tr>
-                  <td className="fw-700 hs-label c-muted" style={{ borderBottom: "2px solid var(--border)" }}>Par</td>
+                <tr className="sep-row">
+                  <td className="fw-700 row-label c-muted">Par</td>
                   {stats.holes.slice(0, hc).map((h, i) => (
                     <React.Fragment key={i}>
-                      <td className="hs-cell" style={{ borderBottom: "2px solid var(--border)" }}>{h.par ?? ""}</td>
-                      {i === fe - 1 && !is9 && <td className="fw-700 hs-out" style={{ borderBottom: "2px solid var(--border)" }}>{sumArr(parArr, 0, fe)}</td>}
+                      <td>{h.par ?? ""}</td>
+                      {i === fe - 1 && !is9 && <td className="fw-700 col-out">{sumArr(parArr, 0, fe)}</td>}
                     </React.Fragment>
                   ))}
-                  <td className={`fw-700 ${is9 ? "hs-total" : "hs-in"}`} style={{ borderBottom: "2px solid var(--border)" }}>
+                  <td className={`fw-700 ${is9 ? "col-total" : "col-in"}`}>
                     {is9 ? sumArr(parArr, 0, hc) : sumArr(parArr, 9, hc)}
                   </td>
-                  {!is9 && <td className="fw-700 hs-total" style={{ borderBottom: "2px solid var(--border)" }}>{sumArr(parArr, 0, hc)}</td>}
+                  {!is9 && <td className="fw-700 col-total">{sumArr(parArr, 0, hc)}</td>}
                 </tr>
                 {/* Avg row */}
                 <tr>
-                  <td className="fw-700 hs-label">Média</td>
+                  <td className="fw-700 row-label">Média</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const vp = h.avg != null && h.par != null ? h.avg - h.par : null;
                     const col = vp == null ? SC.muted : vp <= -0.1 ? SC.good : vp <= 0.3 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
-                        <td className="fw-700 hs-cell" style={{ color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
-                        {i === fe - 1 && !is9 && <td className="fw-700 hs-out">{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
+                        <td className="fw-700" style={{ color: col }}>{h.avg?.toFixed(1) ?? ""}</td>
+                        {i === fe - 1 && !is9 && <td className="fw-700 col-out">{(stats.holes.slice(0, fe).reduce((s, x) => s + (x.avg ?? 0), 0)).toFixed(1)}</td>}
                       </React.Fragment>
                     );
                   })}
-                  <td className={`fw-700 ${is9 ? "hs-total" : "hs-in"}`}>
+                  <td className={`fw-700 ${is9 ? "col-total" : "col-in"}`}>
                     {(is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}
                   </td>
-                  {!is9 && <td className="fw-700 hs-total">{stats.holes.slice(0, hc).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}</td>}
+                  {!is9 && <td className="fw-700 col-total">{stats.holes.slice(0, hc).reduce((s, x) => s + (x.avg ?? 0), 0).toFixed(1)}</td>}
                 </tr>
                 {/* Best row */}
                 <tr>
-                  <td className="fw-700 hs-label" style={{ color: SC.good }}>Melhor</td>
+                  <td className="fw-700 row-label" style={{ color: SC.good }}>Melhor</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.best != null && h.par != null ? scClass(h.best, h.par) : "";
                     return (
                       <React.Fragment key={i}>
-                        <td className="hs-cell">{h.best != null ? <span className={`sc-score ${cls}`}>{h.best}</span> : ""}</td>
-                        {i === fe - 1 && !is9 && <td className="hs-out" />}
+                        <td>{h.best != null ? <span className={`sc-score ${cls}`}>{h.best}</span> : ""}</td>
+                        {i === fe - 1 && !is9 && <td className="col-out" />}
                       </React.Fragment>
                     );
                   })}
-                  <td className={is9 ? "hs-total" : "hs-in"} />
-                  {!is9 && <td className="hs-total" />}
+                  <td className={is9 ? "col-total" : "col-in"} />
+                  {!is9 && <td className="col-total" />}
                 </tr>
                 {/* Worst row */}
                 <tr>
-                  <td className="fw-700 hs-label" style={{ color: SC.danger }}>Pior</td>
+                  <td className="fw-700 row-label" style={{ color: SC.danger }}>Pior</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const cls = h.worst != null && h.par != null ? scClass(h.worst, h.par) : "";
                     return (
                       <React.Fragment key={i}>
-                        <td className="hs-cell">{h.worst != null ? <span className={`sc-score ${cls}`}>{h.worst}</span> : ""}</td>
-                        {i === fe - 1 && !is9 && <td className="hs-out" />}
+                        <td>{h.worst != null ? <span className={`sc-score ${cls}`}>{h.worst}</span> : ""}</td>
+                        {i === fe - 1 && !is9 && <td className="col-out" />}
                       </React.Fragment>
                     );
                   })}
-                  <td className={is9 ? "hs-total" : "hs-in"} />
-                  {!is9 && <td className="hs-total" />}
+                  <td className={is9 ? "col-total" : "col-in"} />
+                  {!is9 && <td className="col-total" />}
                 </tr>
                 {/* Strokes lost row */}
                 <tr>
-                  <td className="fw-700 hs-label c-text-3">Panc. perd.</td>
+                  <td className="fw-700 row-label c-text-3">Panc. perd.</td>
                   {stats.holes.slice(0, hc).map((h, i) => {
                     const sl = h.strokesLost ?? 0;
                     let slBg = "";
@@ -436,19 +438,19 @@ function HoleStatsSection({ stats }: { stats: HoleStatsData }) {
                     const slCol = sl <= -0.3 ? SC.good : sl <= 0.15 ? SC.muted : SC.danger;
                     return (
                       <React.Fragment key={i}>
-                        <td className="fw-700 hs-cell" style={{ background: slBg, color: slCol }}>{h.n > 0 ? fD(sl) : ""}</td>
+                        <td className="fw-700" style={{ background: slBg, color: slCol }}>{h.n > 0 ? fD(sl) : ""}</td>
                         {i === fe - 1 && !is9 && (() => {
                           const outSL = stats.holes.slice(0, fe).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                          return <td className="fw-700 hs-out" style={{ color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
+                          return <td className="fw-700 col-out" style={{ color: sc2(outSL, 0) }}>{fD(outSL)}</td>;
                         })()}
                       </React.Fragment>
                     );
                   })}
                   {(() => {
                     const inSL = (is9 ? stats.holes.slice(0, hc) : stats.holes.slice(9, hc)).reduce((s, x) => s + (x.strokesLost ?? 0), 0);
-                    return <td className={`fw-700 ${is9 ? "hs-total" : "hs-in"}`} style={{ color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
+                    return <td className={`fw-700 ${is9 ? "col-total" : "col-in"}`} style={{ color: sc2(inSL, 0) }}>{fD(inSL)}</td>;
                   })()}
-                  {!is9 && <td className="fw-700 hs-total" style={{ color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
+                  {!is9 && <td className="fw-700 col-total" style={{ color: sc2(stats.totalStrokesLost, 0) }}>{fD(stats.totalStrokesLost)}</td>}
                 </tr>
               </tbody>
             </table>

@@ -204,8 +204,8 @@ export default function FederadosStatsPanel({ stats, drillDown, onDrillDown, hcp
       </div>
 
       {/* KPIs — 6 cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 16 }}>
-        <KpiCard label="Total" value={stats.total} big />
+      <div className="kpi-row">
+        <KpiCard label="Total" value={stats.total} />
         <KpiCard label={<><SexBadge sex="M" /> Masculino</>} value={stats.male} pct={stats.male / stats.total} />
         <KpiCard label={<><SexBadge sex="F" /> Feminino</>} value={stats.female} pct={stats.female / stats.total} />
         <KpiCard label="🇵🇹 Portugueses" value={ptCount} pct={ptCount / stats.total} />
@@ -493,8 +493,8 @@ function DrillDownCard({ drillDown, stats, onClose, onPickPlayer }: {
       </div>
 
       {/* KPIs do drill */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))", gap: 8, marginBottom: 12 }}>
-        <KpiCard label="Total" value={members.length} big />
+      <div className="kpi-row">
+        <KpiCard label="Total" value={members.length} />
         <KpiCard label={<SexBadge sex="M" />} value={male} pct={male / members.length} />
         <KpiCard label={<SexBadge sex="F" />} value={female} pct={female / members.length} />
         <KpiCard label="Com HCP" value={withHcp} sub={`média ${avgHcp.toFixed(1)}`} />
