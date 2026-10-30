@@ -438,3 +438,7 @@ os tees dos cartões. Dados do tee: do organizador (brochura, EGA), nunca dos ca
 - Por resolver: Guardizela (tees com metade do cartão FPG), «Vidago» antigo,
   Chantilly (dois desenhos de campo na mesma entrada: U14 e ELTC 2025), Evian
   (tees iguais com ratings de anos/sexos diferentes — fica o do 1.º cartão).
+
+- **parRoutes** (course-aliases.json, `extract-courses.js`): o mesmo nome em dois percursos separa-se pelo par dos 18 buracos (Chantilly: Vineuil New par 71 vs Old Vineuil par 70, ELTC 2025).
+- **lastPlayed** nos tees away: o mesmo tee re-avaliado fica com o rating da volta mais recente; um tee sem metros do outro sexo herda os metros do tee físico (não se perde).
+- **Guardizela** mudou de desenho em 2026: `guardizela` = cartão actual, `guardizela-antigo` = par 62; voltas pelo par (`resolveGuardizelaKeyByPar`) ou, sem par, pelo dia (antes de 1/07/2026 = antigo, no `build-course-players.js`). «Vidago» (par 73) fica com o desenho antigo — todas as voltas nossas são dele.
