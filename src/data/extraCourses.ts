@@ -1592,6 +1592,124 @@ const valeLake: Course = {
   },
 };
 
+/* ─────────────────────────────────────────────────────────────────────────
+   US Kids German Masters 2026 (Golf Valley München, 3–4/10/2026) e
+   US Kids World Championship 2026 (Pinehurst, EUA, 30/07–1/08/2026).
+   Par e jardas por buraco dos resultados USKids (jardas × 0,9144).
+   CR/Slope oficiais: german_masters_2026_-_course_rating_and_slope.pdf (só
+   Boys 12, 13-14, 15-18 e Girls 15-18; as Girls 15-18 não estão nos
+   resultados → sem metros) e a imagem new_worlds_sr.png do Player Info Hub
+   do Mundial (um escalão por campo; 9 buracos = rating de 9).
+   Cores = Longleaf Tee System (o Tee 7 e o RS ficam sem cor).
+   ───────────────────────────────────────────────────────────────────────── */
+
+const gvmPar = [5,4,4,3,4,5,3,4,4,4,5,3,4,5,4,3,4,4]; // par USKids 72
+const gvmB1518 = [480,380,334,162,360,485,152,362,345,317,489,142,352,505,371,128,335,372]; // 6071 jd = 5549 m
+const gvmB1314 = [425,367,311,155,360,423,152,362,335,265,461,130,314,472,346,110,324,362]; // 5674 jd = 5189 m
+const gvmB12 = [382,316,288,140,315,412,132,320,295,254,439,119,284,410,320,102,282,319]; // 5129 jd = 4691 m
+const gvmB1011 = [340,270,245,129,265,366,116,270,252,218,385,116,237,341,255,84,261,309]; // 4459 jd = 4078 m
+const gvmB9 = [297,236,215,120,232,320,110,236,221,191,337,108,208,299,223,84,228,270]; // 3935 jd = 3600 m
+const gvmB8 = [255,203,184,103,199,275,94,203,189]; // 1705 jd = 1559 m, buracos 1–9
+const gvmB7 = [212,169,153,86,166,229,79,169,158]; // 1421 jd = 1300 m, buracos 1–9
+const gvmB6 = [170,135,123,69,133,183,63,135,126]; // 1137 jd = 1038 m, buracos 1–9
+
+const wc26B12 = { par: [4,5,4,4,3,5,4,3,4,4,5,4,3,4,3,4,5,4], yd: [321,490,301,342,117,450,346,152,336,356,510,353,134,348,127,330,489,303] }; // Pinehurst No. 8, 5805 jd = 5308 m, buracos 1–18
+const wc26B11 = { par: [5,3,4,5,3,4,4,4,4,4,5,4,3,4,3,5,4,4], yd: [437,121,334,470,110,304,372,319,257,285,448,348,119,295,143,428,292,345] }; // Talamore Golf Club, 5427 jd = 4964 m, buracos 1–18
+const wc26B10 = { par: [4,5,4,4,3,5,4,4,3,4,3,4,5,4,4,4,3,5], yd: [251,440,289,278,90,419,302,238,121,255,107,306,415,233,312,280,102,408] }; // Legacy Golf Links, 4846 jd = 4430 m, buracos 1–18
+const wc26B9 = { par: [4,5,4,5,3,4,3,4,3,4,4,3,5,4,4,4,4,5], yd: [237,391,251,343,94,279,103,247,109,244,255,97,366,224,235,215,285,389] }; // Pinehurst No. 1, 4364 jd = 3994 m, buracos 1–18
+const wc26B8 = { par: [4,3,4,3,4,5,4,5,4], yd: [220,112,204,105,219,368,234,350,217] }; // Mid Pines (Back), 2029 jd = 1854 m, buracos 10–18
+const wc26B7 = { par: [4,3,4,4,5,5,4,3,4], yd: [190,64,189,176,290,285,187,86,195] }; // Mid Pines (Front), 1662 jd = 1521 m, buracos 1–9
+const wc26B6 = { par: [4,3,4,4,5,4,5,3,4], yd: [158,79,162,148,218,154,205,74,161] }; // Longleaf (Back), 1359 jd = 1241 m, buracos 10–18
+const wc26G12 = { par: [4,5,4,4,3,4,4,4,4,4,4,3,5,3,4,5,4,4], yd: [310,414,289,323,118,319,288,290,285,288,287,94,439,106,276,470,303,305] }; // Pinehurst No. 5, 5204 jd = 4757 m, buracos 1–18
+const wc26G11 = { par: [4,5,3,4,4,5,3,4,4,4,4,4,3,4,5,3,5,4], yd: [240,420,114,310,322,400,131,296,254,225,280,272,104,278,415,130,377,293] }; // Pinehurst No. 6, 4861 jd = 4444 m, buracos 1–18
+const wc26G10 = { par: [4,4,3,5,4,4,3,5,4,4,3,4,3,4,5,5,4,4], yd: [247,255,118,341,232,240,89,335,236,249,97,257,114,255,358,330,257,226] }; // Quail Ridge, 4236 jd = 3873 m, buracos 1–18
+const wc26G9 = { par: [4,4,4,3,5,3,4,5,4], yd: [218,190,182,98,316,92,220,301,225] }; // Longleaf (Front), 1842 jd = 1684 m, buracos 1–9
+const wc26G8 = { par: [4,3,4,4,5,4,5,3,4], yd: [158,99,207,177,222,191,282,95,177] }; // Longleaf (Back), 1608 jd = 1471 m, buracos 10–18
+const wc26G7 = { par: [4,4,4,3,5,3,4,5,4], yd: [165,146,142,84,210,92,149,195,165] }; // Longleaf (Front), 1348 jd = 1233 m, buracos 1–9
+function ukYdTee(
+  teeId: string, sex: "M" | "F", teeName: string, par: number[], yd: number[] | null,
+  start: 1 | 10, cr: number | null, slope: number | null, teeColor?: string | null,
+): Tee {
+  const n = yd?.length ?? par.length;
+  const dist = yd ? yd.map((y) => Math.round(y * 0.9144)) : null;
+  const total = dist ? dist.reduce((a, b) => a + b, 0) : null;
+  const r = { par: par.slice(0, n).reduce((a, b) => a + b, 0), courseRating: cr, slopeRating: slope };
+  return {
+    teeId, sex, teeName,
+    ...(teeColor !== undefined ? { scorecardMeta: { teeColor } } : {}),
+    ratings: n === 18 ? { holes18: r } : start === 10 ? { holes9Back: r } : { holes9Front: r },
+    holes: par.slice(0, n).map((p, i) => ({ hole: start + i, par: p, si: null, distance: dist?.[i] ?? null })),
+    distances: !dist
+      ? { total: null, front9: null, back9: null, holesCount: n, complete18: false }
+      : n === 18 ? vDist(dist)
+        : { total, front9: start === 1 ? total : null, back9: start === 10 ? total : null, holesCount: 9, complete18: false },
+  };
+}
+
+const GM26_LINKS = [
+  { label: "US Kids German Masters 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/german_masters_2026_-_course_rating_and_slope.pdf" },
+];
+const WC26_LINKS = [
+  { label: "US Kids World Championship 2026 - Course Rating & Slope", url: "https://tournaments.uskidsgolf.com/sites/default/files/new_worlds_sr.png" },
+];
+
+const golfValleyMunchen: Course = {
+  courseKey: "away-golf-valley-munchen",
+  master: {
+    courseId: "away-golf-valley-munchen",
+    name: "Golf Valley München",
+    country: "Alemanha",
+    links: { fpg: null, scorecards: null, extra: GM26_LINKS },
+    tees: [
+      ukYdTee("gvm-uk-b1518", "M", "USKids Boys 15-18", gvmPar, gvmB1518, 1, 73.5, 131), // Tee 7
+      ukYdTee("gvm-uk-g1518", "F", "USKids Girls 15-18", gvmPar, null, 1, 74.6, 129),
+      ukYdTee("gvm-uk-b1314", "M", "USKids Boys 13-14", gvmPar, gvmB1314, 1, 71.7, 129, "#111827"), // Tee 6
+      ukYdTee("gvm-uk-b12", "M", "USKids Boys 12", gvmPar, gvmB12, 1, 68.8, 122, "#ffffff"), // Tee 5
+      ukYdTee("gvm-uk-b1011", "M", "USKids Boys 11 / 10", gvmPar, gvmB1011, 1, null, null, "#ef4444"), // Tee 4
+      ukYdTee("gvm-uk-b9", "M", "USKids Boys 9", gvmPar, gvmB9, 1, null, null, "#f97316"), // Tee 3
+      ukYdTee("gvm-uk-b8", "M", "USKids Boys 8", gvmPar, gvmB8, 1, null, null, "#fbbf24"), // Tee 2
+      ukYdTee("gvm-uk-b7", "M", "USKids Boys 7", gvmPar, gvmB7, 1, null, null, "#1e3a8a"), // Tee 1
+      ukYdTee("gvm-uk-b6", "M", "USKids Boys 6 & Under", gvmPar, gvmB6, 1, null, null, null), // Tee RS
+    ],
+  },
+};
+
+function wc26Course(key: string, name: string, tees: Tee[]): Course {
+  return { courseKey: `away-${key}`, master: { courseId: `away-${key}`, name, country: "EUA", links: { fpg: null, scorecards: null, extra: WC26_LINKS }, tees } };
+}
+
+const pinehurstNo8 = wc26Course("pinehurst-no-8", "Pinehurst No. 8", [
+  ukYdTee("ph8-uk-b12", "M", "USKids Boys 12", wc26B12.par, wc26B12.yd, 1, 68, 119, "#ffffff"), // Tee 5
+]);
+const pinehurstNo5 = wc26Course("pinehurst-no-5", "Pinehurst No. 5", [
+  ukYdTee("ph5-uk-g12", "F", "USKids Girls 12", wc26G12.par, wc26G12.yd, 1, 70.6, 121, "#ef4444"), // Tee 4
+]);
+const pinehurstNo6 = wc26Course("pinehurst-no-6", "Pinehurst No. 6", [
+  ukYdTee("ph6-uk-g11", "F", "USKids Girls 11", wc26G11.par, wc26G11.yd, 1, 69.2, 123, "#ef4444"), // Tee 4
+]);
+const pinehurstNo1 = wc26Course("pinehurst-no-1", "Pinehurst No. 1", [
+  ukYdTee("ph1-uk-b9", "M", "USKids Boys 9", wc26B9.par, wc26B9.yd, 1, 62.4, 100, "#f97316"), // Tee 3
+]);
+const talamoreGolfClub = wc26Course("talamore-golf-club", "Talamore Golf Club", [
+  ukYdTee("tal-uk-b11", "M", "USKids Boys 11", wc26B11.par, wc26B11.yd, 1, 67.2, 125, "#ffffff"), // Tee 5
+]);
+const legacyGolfLinks = wc26Course("legacy-golf-links", "Legacy Golf Links", [
+  ukYdTee("leg-uk-b10", "M", "USKids Boys 10", wc26B10.par, wc26B10.yd, 1, 64.6, 114, "#ef4444"), // Tee 4
+]);
+const quailRidge = wc26Course("quail-ridge", "Quail Ridge", [
+  ukYdTee("qr-uk-g10", "F", "USKids Girls 10", wc26G10.par, wc26G10.yd, 1, 65, 113, "#f97316"), // Tee 3
+]);
+const longleafGolf = wc26Course("longleaf-golf-family-club", "Longleaf Golf & Family Club", [
+  ukYdTee("ll-uk-g9", "F", "USKids Girls 9", wc26G9.par, wc26G9.yd, 1, 30.5, 107, "#fbbf24"), // Tee 2, 1–9
+  ukYdTee("ll-uk-g8", "F", "USKids Girls 8", wc26G8.par, wc26G8.yd, 10, 29.8, 102, "#1e3a8a"), // Tee 1, 10–18
+  ukYdTee("ll-uk-g7", "F", "USKids Girls 7 & Under", wc26G7.par, wc26G7.yd, 1, 29.2, 97, null), // Tee RS, 1–9
+  ukYdTee("ll-uk-b6", "M", "USKids Boys 6 & Under", wc26B6.par, wc26B6.yd, 10, 27.8, 85, null), // Tee RS, 10–18
+]);
+const midPines = wc26Course("mid-pines", "Mid Pines", [
+  ukYdTee("mp-uk-b8", "M", "USKids Boys 8", wc26B8.par, wc26B8.yd, 10, 30.6, 113, "#fbbf24"), // Tee 2, 10–18
+  ukYdTee("mp-uk-b7", "M", "USKids Boys 7", wc26B7.par, wc26B7.yd, 1, 28.7, 106, "#1e3a8a"), // Tee 1, 1–9
+]);
+
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
@@ -2424,6 +2542,16 @@ export function getExtraCourses(): Course[] {
     sanRoqueNew,
     valeWalesNational,
     valeLake,
+    golfValleyMunchen,
+    pinehurstNo8,
+    pinehurstNo5,
+    pinehurstNo6,
+    pinehurstNo1,
+    talamoreGolfClub,
+    legacyGolfLinks,
+    quailRidge,
+    longleafGolf,
+    midPines,
     elPratRosa,
     elPratAmarillo,
     elPratVerde,
