@@ -12,9 +12,21 @@ const ROOT = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
 const UA = "Mozilla/5.0";
 const AGENT = new https.Agent({ keepAlive: true, maxSockets: 8 });
 
-function get(url) {
+// Out/2026: o rfegolf.livegolfscoring.es responde 301 → mitarjeta.golf; sem
+// seguir o redirect o corpo era a página do 301 e todas as provas novas falhavam.
+function get(url, hops = 0) {
   return new Promise((resolve, reject) => {
     https.get(url, { headers: { "User-Agent": UA }, agent: AGENT, timeout: 15000 }, (res) => {
+      if (res.statusCode >= 300 && res.statusCode < 400 && res.headers.location && hops < 5) {
+        res.resume();
+        resolve(get(new URL(res.headers.location, url).toString(), hops + 1));
+        return;
+      }
+      if (res.statusCode !== 200) {
+        res.resume();
+        reject(new Error(`HTTP ${res.statusCode}`));
+        return;
+      }
       const chunks = [];
       res.on("data", c => chunks.push(c));
       res.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
@@ -33,11 +45,12 @@ function mesLower(s) {
 
 async function enrich(file) {
   const fp = path.join(ROOT, file);
-  const d = JSON.parse(fs.readFileSync(fp, "utf-8"));
+  const raw = fs.readFileSync(fp, "utf-8");
+  const d = JSON.parse(raw);
   if (d.meta && d.meta.year && d.meta.dateIso) return { skipped: true };
   const id = d.id;
   try {
-    const html = await get(`https://rfegolf.livegolfscoring.es/torneos/imprimir/${id}`);
+    const html = await get(`https://mitarjeta.golf/torneos/imprimir/${id}`);
     // ⚠ "Fecha: 03/09/2026 11:42" é a data em que a PÁGINA foi gerada (= agora),
     // não a do torneio: num torneio a decorrer dá o dia de hoje, e num torneio
     // antigo scrapado hoje daria o ano errado. A data real do torneio está no
@@ -50,6 +63,10 @@ async function enrich(file) {
     let dateIso = null;
     if (delM && delM[5]) year = parseInt(delM[5], 10);
     if (!year && fechaM) year = parseInt(fechaM[2], 10);
+    // Interclubes/Adaptado: a página não traz "Fecha:" nem o ano no "Del" —
+    // o ano vem no nome da prova ("... Interclubes Masculino 2026").
+    const nomeAno = /\b(20\d{2})\b/.exec((d.meta && d.meta.name) || "");
+    if (!year && nomeAno) year = parseInt(nomeAno[1], 10);
     const mesIni = delM ? MESES[mesLower(delM[2])] : null;
     if (year && mesIni) {
       dateIso = `${year}-${mesIni}-${String(delM[1]).padStart(2, "0")}`;
@@ -60,10 +77,11 @@ async function enrich(file) {
     if (year || dateIso) {
       d.meta.year = year;
       d.meta.dateIso = dateIso;
-      writeAtomic(fp, JSON.stringify(d, null, 2));
+      // manter o formato do scraper (compacto) ou o antigo (indentado)
+      writeAtomic(fp, raw.includes("\n") ? JSON.stringify(d, null, 2) : JSON.stringify(d));
       return { ok: true, year, dateIso };
     }
-    return { ok: false };
+    return { semData: true };
   } catch (e) {
     return { error: e.message };
   }
@@ -72,7 +90,7 @@ async function enrich(file) {
 (async () => {
   const files = fs.readdirSync(ROOT).filter(f => /^\d+\.json$/.test(f));
   console.log(`Enriching ${files.length} files...`);
-  let ok = 0, fail = 0, skip = 0;
+  let ok = 0, fail = 0, skip = 0, semData = 0;
   const concurrency = 10;
   let cursor = 0;
   async function worker() {
@@ -81,14 +99,17 @@ async function enrich(file) {
       const r = await enrich(f);
       if (r.skipped) skip++;
       else if (r.ok) { ok++; }
-      else fail++;
+      else if (r.semData) { semData++; console.log(`  ${f}: a página não traz a data`); }
+      else { fail++; console.log(`  ${f}: ${r.error}`); }
     }
   }
   const ws = [];
   for (let i = 0; i < concurrency; i++) ws.push(worker());
   await Promise.all(ws);
-  console.log(`ok=${ok} fail=${fail} skip=${skip}`);
+  console.log(`ok=${ok} fail=${fail} sem-data=${semData} skip=${skip}`);
   // Exit: 0 gravou · 2 nada de novo · 1 tudo falhou (antes acabava sempre em 0).
+  // «sem-data» (a página respondeu mas não tem a data) não é erro: senão as
+  // provas que nunca a terão punham o passo vermelho em todas as corridas.
   if (fail > 0 && ok === 0) process.exitCode = 1;
   else if (ok === 0) process.exitCode = 2;
 })().catch((e) => { console.error(e); process.exit(1); });

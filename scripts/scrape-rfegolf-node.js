@@ -109,7 +109,7 @@ function httpGet(urlStr, retries = 2) {
         res.on("data", (c) => chunks.push(c));
         res.on("end", () => {
           const buf = Buffer.concat(chunks);
-          resolve({ status: res.statusCode, body: buf.toString("utf8") });
+          resolve({ status: res.statusCode, body: buf.toString("utf8"), url: urlStr });
         });
       });
       req.on("error", (err) => {
@@ -630,6 +630,12 @@ async function scrapeComp(compId) {
   };
 
   const micro = await httpGet(baseUrl("CompetitionMicrosite"));
+  // Set/2026: a RFEG passou para WordPress e os .aspx redireccionam para a
+  // página inicial (200, ~600 KB). A 12/10 isso foi gravado como prova "ok"
+  // com o nome "Real Federación Española de Golf | SOMOS GOLF" — é falha.
+  if (!/CompetitionMicrosite\.aspx/i.test(micro.url || "")) {
+    return { compId, ok: false, error: "Microsite redirecciona para " + micro.url + " (site antigo da RFEG desactivado)" };
+  }
   if (micro.status !== 200 || micro.body.length < 5000) {
     return { compId, ok: false, error: "Microsite status=" + micro.status + " size=" + micro.body.length };
   }
