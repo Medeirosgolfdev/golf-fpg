@@ -1102,6 +1102,368 @@ function vpFlamingosCourse(courseKey: string): Course {
 const villaPadiernaFlamingos  = vpFlamingosCourse("away-villa-padierna-flamingos-espanha");
 const villaPadiernaFlamingos2 = vpFlamingosCourse("away-villa-padierna-flamingos");
 
+/* ─────────────────────────────────────────────────────────────────────────
+   San Roque (Cádis) — Old Course (The San Roque Club) e New Course (San Roque
+   Golf & Resort). Spanish Open USKids 2026 (20–22/11) joga-se nos dois.
+   Tudo da página de cada clube na RFEG («Recorrido y Hoyos», lida a 30/10/2026):
+   CR/Slope por barra e sexo, par, SI e metros por buraco. O Old já com o 17 par 5 e
+   o 18 par 4 (Members Book, Maio 2026); SI diferente em Blancas/Amarillas e
+   Azules/Rojas, como a RFEG publica. O New substitui os tees dos cartões dos clubes
+   (ratings trocados: «VERMELHAS F 75,6/134» era o das Amarillas, «BRANCAS 72/113»
+   tinha os metros das Negras, «AMARELAS 72,6/132» o rating das Blancas). Sem rating
+   oficial: Old Blancas/Amarillas F, New Negras/Blancas F e Rojas M.
+   O «San Roque Golf Resort» de 2024 (outro desenho de par) fica como está.
+   ───────────────────────────────────────────────────────────────────────── */
+
+const srOldPar = [5,4,4,4,3,4,3,5,4,4,4,3,4,5,4,3,5,4];
+const srOldSI = [13,1,5,11,7,15,17,9,3,6,8,18,14,16,2,12,10,4];
+const srOldSI1 = [3,9,13,11,15,7,17,1,5,6,12,18,10,2,14,16,8,4];
+const srOldBlancas = [479,403,363,405,161,327,156,447,390,376,418,152,343,466,399,177,446,403]; // 6311 m
+const srOldAmarillas = [452,379,341,388,155,313,148,446,367,357,397,130,317,448,390,172,441,385]; // 6026 m
+const srOldAzules = [442,372,334,382,144,303,125,389,366,343,391,116,274,408,284,155,430,304]; // 5562 m
+const srOldRojas = [403,326,271,287,110,262,107,389,309,287,306,92,272,407,284,102,356,304]; // 4874 m
+const srOldTees: Tee[] = [
+  { teeId: "srOld-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 74.1, slopeRating: 133 } },
+    holes: vHoles(srOldPar, srOldBlancas, srOldSI), distances: vDist(srOldBlancas) },
+  { teeId: "srOld-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 72.6, slopeRating: 131 } },
+    holes: vHoles(srOldPar, srOldAmarillas, srOldSI), distances: vDist(srOldAmarillas) },
+  { teeId: "srOld-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 75.6, slopeRating: 131 } },
+    holes: vHoles(srOldPar, srOldAzules, srOldSI1), distances: vDist(srOldAzules) },
+  { teeId: "srOld-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 70.1, slopeRating: 126 } },
+    holes: vHoles(srOldPar, srOldAzules, srOldSI1), distances: vDist(srOldAzules) },
+  { teeId: "srOld-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 71.3, slopeRating: 121 } },
+    holes: vHoles(srOldPar, srOldRojas, srOldSI1), distances: vDist(srOldRojas) },
+  { teeId: "srOld-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 66.4, slopeRating: 120 } },
+    holes: vHoles(srOldPar, srOldRojas, srOldSI1), distances: vDist(srOldRojas) },
+];
+const srNewPar = [4,5,4,3,4,4,5,3,4,4,5,4,3,4,4,5,3,4];
+const srNewSI = [13,15,9,7,17,5,1,11,3,16,2,18,14,4,8,10,12,6];
+const srNewNegras = [408,483,339,177,347,331,524,206,395,341,565,312,167,416,418,457,197,414]; // 6497 m
+const srNewBlancas = [365,473,316,164,334,316,513,188,372,318,515,279,160,403,377,433,166,387]; // 6079 m
+const srNewAmarillas = [332,454,289,144,307,284,479,161,359,297,481,252,137,367,358,405,137,332]; // 5575 m
+const srNewAzules = [302,418,271,112,283,257,432,132,326,267,439,215,113,335,334,367,111,296]; // 5010 m
+const srNewRojas = [259,367,253,108,257,238,404,110,304,232,410,193,93,325,324,367,86,263]; // 4593 m
+const srNewTees: Tee[] = [
+  { teeId: "srNew-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 74.7, slopeRating: 137 } },
+    holes: vHoles(srNewPar, srNewNegras, srNewSI), distances: vDist(srNewNegras) },
+  { teeId: "srNew-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 72.6, slopeRating: 132 } },
+    holes: vHoles(srNewPar, srNewBlancas, srNewSI), distances: vDist(srNewBlancas) },
+  { teeId: "srNew-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 75.6, slopeRating: 134 } },
+    holes: vHoles(srNewPar, srNewAmarillas, srNewSI), distances: vDist(srNewAmarillas) },
+  { teeId: "srNew-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 69.5, slopeRating: 132 } },
+    holes: vHoles(srNewPar, srNewAmarillas, srNewSI), distances: vDist(srNewAmarillas) },
+  { teeId: "srNew-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 71.8, slopeRating: 132 } },
+    holes: vHoles(srNewPar, srNewAzules, srNewSI), distances: vDist(srNewAzules) },
+  { teeId: "srNew-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 66.7, slopeRating: 121 } },
+    holes: vHoles(srNewPar, srNewAzules, srNewSI), distances: vDist(srNewAzules) },
+  { teeId: "srNew-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 69, slopeRating: 127 } },
+    holes: vHoles(srNewPar, srNewRojas, srNewSI), distances: vDist(srNewRojas) },
+];
+
+const sanRoqueOld: Course = {
+  courseKey: "away-the-san-roque-club-old",
+  master: {
+    courseId: "away-the-san-roque-club-old",
+    name: "The San Roque Club - Old Course",
+    country: "Espanha",
+    links: { fpg: null, scorecards: "https://rfegolf.es/club/san-roque-club" },
+    tees: srOldTees,
+  },
+};
+
+const sanRoqueNew: Course = {
+  courseKey: "away-san-roque",
+  master: {
+    courseId: "away-san-roque",
+    name: "San Roque - New Course",
+    country: "Espanha",
+    links: { fpg: null, scorecards: "https://rfegolf.es/club/san-roque-golf-resort" },
+    tees: srNewTees,
+  },
+};
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Real Club de Golf El Prat (Terrassa) — 45 buracos, um campo por percurso.
+   Página do clube na RFEG («Recorrido y Hoyos», lida a 30/10/2026): CR/Slope por
+   barra e sexo, par, SI e metros por buraco. Composição dos nines só publicada para
+   Rosa, Amarillo e Verde. Os ratings do site do clube (um só valor por barra, sem
+   data) são diferentes — mais antigos; ficam os da RFEG. A entrada «Real Club de Golf
+   El Prat» do pipeline (Copa La Reina, par do Rosa; o Manuel em 2023, 9 buracos com o
+   par do Amarillo) fica como está. Sem a montagem «Cto Barcelona» (é de competição).
+   ───────────────────────────────────────────────────────────────────────── */
+
+const pratRosaPar = [5,4,3,4,4,3,4,4,5,5,3,4,3,4,4,4,4,5];
+const pratRosaSI = [9,3,17,11,13,5,7,1,15,4,16,8,12,10,18,6,2,14];
+const pratRosaNegras = [542,346,138,342,358,213,379,411,510,530,168,324,203,348,325,425,397,494]; // 6453 m
+const pratRosaBlancas = [523,333,130,330,353,185,367,392,498,521,159,323,186,328,296,404,373,485]; // 6186 m
+const pratRosaAmarillas = [503,317,121,322,339,162,352,375,485,502,149,298,171,300,272,380,364,472]; // 5884 m
+const pratRosaAzules = [463,294,106,283,299,146,303,351,441,405,133,270,146,275,240,349,324,429]; // 5257 m
+const pratRosaRojas = [443,283,97,270,290,135,271,341,436,383,126,247,136,258,227,321,316,420]; // 5000 m
+const pratRosaTees: Tee[] = [
+  { teeId: "pratRosa-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 81.9, slopeRating: 152 } },
+    holes: vHoles(pratRosaPar, pratRosaNegras, pratRosaSI), distances: vDist(pratRosaNegras) },
+  { teeId: "pratRosa-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 76, slopeRating: 147 } },
+    holes: vHoles(pratRosaPar, pratRosaNegras, pratRosaSI), distances: vDist(pratRosaNegras) },
+  { teeId: "pratRosa-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 80.3, slopeRating: 148 } },
+    holes: vHoles(pratRosaPar, pratRosaBlancas, pratRosaSI), distances: vDist(pratRosaBlancas) },
+  { teeId: "pratRosa-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 74.4, slopeRating: 146 } },
+    holes: vHoles(pratRosaPar, pratRosaBlancas, pratRosaSI), distances: vDist(pratRosaBlancas) },
+  { teeId: "pratRosa-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 78.5, slopeRating: 144 } },
+    holes: vHoles(pratRosaPar, pratRosaAmarillas, pratRosaSI), distances: vDist(pratRosaAmarillas) },
+  { teeId: "pratRosa-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 72.6, slopeRating: 143 } },
+    holes: vHoles(pratRosaPar, pratRosaAmarillas, pratRosaSI), distances: vDist(pratRosaAmarillas) },
+  { teeId: "pratRosa-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 74.7, slopeRating: 136 } },
+    holes: vHoles(pratRosaPar, pratRosaAzules, pratRosaSI), distances: vDist(pratRosaAzules) },
+  { teeId: "pratRosa-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 69.5, slopeRating: 133 } },
+    holes: vHoles(pratRosaPar, pratRosaAzules, pratRosaSI), distances: vDist(pratRosaAzules) },
+  { teeId: "pratRosa-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 73.1, slopeRating: 133 } },
+    holes: vHoles(pratRosaPar, pratRosaRojas, pratRosaSI), distances: vDist(pratRosaRojas) },
+  { teeId: "pratRosa-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 68.1, slopeRating: 129 } },
+    holes: vHoles(pratRosaPar, pratRosaRojas, pratRosaSI), distances: vDist(pratRosaRojas) },
+];
+
+const pratAmarilloPar = [4,3,4,5,4,3,4,4,5,4,5,3,4,4,4,5,3,4];
+const pratAmarilloSI = [3,17,15,13,9,5,7,1,11,4,16,14,8,12,10,6,18,2];
+const pratAmarilloNegras = [390,169,340,492,350,187,390,406,499,416,520,187,399,424,428,493,147,424]; // 6661 m
+const pratAmarilloBlancas = [371,156,321,480,340,178,384,385,480,395,498,163,377,389,413,478,137,407]; // 6352 m
+const pratAmarilloAmarillas = [344,142,298,449,312,166,371,360,474,369,473,147,357,369,381,456,126,364]; // 5958 m
+const pratAmarilloAzules = [320,118,272,404,283,139,344,345,432,343,458,115,340,343,367,435,116,337]; // 5511 m
+const pratAmarilloRojas = [294,109,249,383,263,118,332,329,404,319,426,104,325,319,339,387,97,315]; // 5112 m
+const pratAmarilloTees: Tee[] = [
+  { teeId: "pratAmarillo-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 82.3, slopeRating: 141 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloNegras, pratAmarilloSI), distances: vDist(pratAmarilloNegras) },
+  { teeId: "pratAmarillo-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 75.3, slopeRating: 138 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloNegras, pratAmarilloSI), distances: vDist(pratAmarilloNegras) },
+  { teeId: "pratAmarillo-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 80.3, slopeRating: 137 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloBlancas, pratAmarilloSI), distances: vDist(pratAmarilloBlancas) },
+  { teeId: "pratAmarillo-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 73.7, slopeRating: 135 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloBlancas, pratAmarilloSI), distances: vDist(pratAmarilloBlancas) },
+  { teeId: "pratAmarillo-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 78, slopeRating: 133 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloAmarillas, pratAmarilloSI), distances: vDist(pratAmarilloAmarillas) },
+  { teeId: "pratAmarillo-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 71.5, slopeRating: 131 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloAmarillas, pratAmarilloSI), distances: vDist(pratAmarilloAmarillas) },
+  { teeId: "pratAmarillo-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 74.9, slopeRating: 131 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloAzules, pratAmarilloSI), distances: vDist(pratAmarilloAzules) },
+  { teeId: "pratAmarillo-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 69.1, slopeRating: 124 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloAzules, pratAmarilloSI), distances: vDist(pratAmarilloAzules) },
+  { teeId: "pratAmarillo-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 72.4, slopeRating: 127 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloRojas, pratAmarilloSI), distances: vDist(pratAmarilloRojas) },
+  { teeId: "pratAmarillo-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 67.1, slopeRating: 120 } },
+    holes: vHoles(pratAmarilloPar, pratAmarilloRojas, pratAmarilloSI), distances: vDist(pratAmarilloRojas) },
+];
+
+const pratVerdePar = [4,5,3,4,4,5,3,4,3,4,4,4,3,5,4,5,3,4];
+const pratVerdeSI = [1,13,9,3,5,17,11,7,15,14,16,10,12,6,8,4,18,2];
+const pratVerdeNegras = [416,520,187,399,424,451,161,357,173,300,345,338,151,474,428,493,147,424]; // 6188 m
+const pratVerdeBlancas = [395,498,163,377,389,446,156,352,152,288,332,323,145,468,413,478,137,407]; // 5919 m
+const pratVerdeAmarillas = [369,473,147,357,369,432,140,334,146,264,324,317,128,461,381,456,126,364]; // 5588 m
+const pratVerdeAzules = [343,458,115,340,343,376,114,303,117,237,280,271,111,416,367,435,116,337]; // 5079 m
+const pratVerdeRojas = [319,426,104,325,319,347,95,280,96,231,258,250,101,397,339,387,97,315]; // 4686 m
+const pratVerdeTees: Tee[] = [
+  { teeId: "pratVerde-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 71, courseRating: 79, slopeRating: 138 } },
+    holes: vHoles(pratVerdePar, pratVerdeNegras, pratVerdeSI), distances: vDist(pratVerdeNegras) },
+  { teeId: "pratVerde-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 71, courseRating: 72.7, slopeRating: 132 } },
+    holes: vHoles(pratVerdePar, pratVerdeNegras, pratVerdeSI), distances: vDist(pratVerdeNegras) },
+  { teeId: "pratVerde-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 71, courseRating: 77.2, slopeRating: 135 } },
+    holes: vHoles(pratVerdePar, pratVerdeBlancas, pratVerdeSI), distances: vDist(pratVerdeBlancas) },
+  { teeId: "pratVerde-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 71, courseRating: 71.2, slopeRating: 127 } },
+    holes: vHoles(pratVerdePar, pratVerdeBlancas, pratVerdeSI), distances: vDist(pratVerdeBlancas) },
+  { teeId: "pratVerde-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 71, courseRating: 75.3, slopeRating: 132 } },
+    holes: vHoles(pratVerdePar, pratVerdeAmarillas, pratVerdeSI), distances: vDist(pratVerdeAmarillas) },
+  { teeId: "pratVerde-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 71, courseRating: 69.4, slopeRating: 124 } },
+    holes: vHoles(pratVerdePar, pratVerdeAmarillas, pratVerdeSI), distances: vDist(pratVerdeAmarillas) },
+  { teeId: "pratVerde-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 71, courseRating: 72.2, slopeRating: 126 } },
+    holes: vHoles(pratVerdePar, pratVerdeAzules, pratVerdeSI), distances: vDist(pratVerdeAzules) },
+  { teeId: "pratVerde-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 71, courseRating: 66.9, slopeRating: 116 } },
+    holes: vHoles(pratVerdePar, pratVerdeAzules, pratVerdeSI), distances: vDist(pratVerdeAzules) },
+  { teeId: "pratVerde-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 69.8, slopeRating: 122 } },
+    holes: vHoles(pratVerdePar, pratVerdeRojas, pratVerdeSI), distances: vDist(pratVerdeRojas) },
+  { teeId: "pratVerde-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 71, courseRating: 64.9, slopeRating: 112 } },
+    holes: vHoles(pratVerdePar, pratVerdeRojas, pratVerdeSI), distances: vDist(pratVerdeRojas) },
+];
+
+const pratAzulPar = [4,3,4,5,4,3,4,4,5,5,4,3,4,4,3,4,4,5];
+const pratAzulSI = [3,17,15,13,9,5,7,1,11,8,4,18,12,14,10,6,2,16];
+const pratAzulNegras = [390,169,340,492,350,187,390,406,499,542,346,138,342,358,213,379,411,510]; // 6462 m
+const pratAzulBlancas = [371,156,321,480,340,178,384,385,480,523,333,130,330,353,185,367,392,498]; // 6206 m
+const pratAzulAmarillas = [344,142,298,449,312,166,371,360,474,503,317,121,322,339,162,352,375,485]; // 5892 m
+const pratAzulAzules = [320,118,272,404,283,139,344,345,432,463,294,106,283,299,146,303,351,441]; // 5343 m
+const pratAzulRojas = [294,109,249,383,263,118,332,329,404,443,283,97,270,290,135,271,341,436]; // 5047 m
+const pratAzulTees: Tee[] = [
+  { teeId: "pratAzul-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 81.4, slopeRating: 144 } },
+    holes: vHoles(pratAzulPar, pratAzulNegras, pratAzulSI), distances: vDist(pratAzulNegras) },
+  { teeId: "pratAzul-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 74.9, slopeRating: 139 } },
+    holes: vHoles(pratAzulPar, pratAzulNegras, pratAzulSI), distances: vDist(pratAzulNegras) },
+  { teeId: "pratAzul-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 79.8, slopeRating: 141 } },
+    holes: vHoles(pratAzulPar, pratAzulBlancas, pratAzulSI), distances: vDist(pratAzulBlancas) },
+  { teeId: "pratAzul-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 73.6, slopeRating: 138 } },
+    holes: vHoles(pratAzulPar, pratAzulBlancas, pratAzulSI), distances: vDist(pratAzulBlancas) },
+  { teeId: "pratAzul-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 77.9, slopeRating: 136 } },
+    holes: vHoles(pratAzulPar, pratAzulAmarillas, pratAzulSI), distances: vDist(pratAzulAmarillas) },
+  { teeId: "pratAzul-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 71.8, slopeRating: 136 } },
+    holes: vHoles(pratAzulPar, pratAzulAmarillas, pratAzulSI), distances: vDist(pratAzulAmarillas) },
+  { teeId: "pratAzul-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 74.3, slopeRating: 133 } },
+    holes: vHoles(pratAzulPar, pratAzulAzules, pratAzulSI), distances: vDist(pratAzulAzules) },
+  { teeId: "pratAzul-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 68.8, slopeRating: 124 } },
+    holes: vHoles(pratAzulPar, pratAzulAzules, pratAzulSI), distances: vDist(pratAzulAzules) },
+  { teeId: "pratAzul-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 72.4, slopeRating: 130 } },
+    holes: vHoles(pratAzulPar, pratAzulRojas, pratAzulSI), distances: vDist(pratAzulRojas) },
+  { teeId: "pratAzul-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 67.2, slopeRating: 123 } },
+    holes: vHoles(pratAzulPar, pratAzulRojas, pratAzulSI), distances: vDist(pratAzulRojas) },
+];
+
+const pratVioletaPar = [4,5,3,4,4,4,5,3,4,5,3,4,3,4,4,4,4,5];
+const pratVioletaSI = [3,15,13,7,11,9,5,17,1,4,16,8,12,10,18,6,2,14];
+const pratVioletaNegras = [416,520,187,399,424,428,493,147,424,530,168,324,203,348,325,425,397,494]; // 6652 m
+const pratVioletaBlancas = [395,498,163,377,389,413,478,137,407,521,159,323,186,328,296,404,373,485]; // 6332 m
+const pratVioletaAmarillas = [369,473,147,357,369,381,456,126,364,502,149,298,171,300,272,380,364,472]; // 5950 m
+const pratVioletaAzules = [343,458,115,340,343,367,435,116,337,405,133,270,146,275,240,349,324,429]; // 5425 m
+const pratVioletaRojas = [319,426,104,325,319,339,387,97,315,383,126,247,136,258,227,321,316,420]; // 5065 m
+const pratVioletaTees: Tee[] = [
+  { teeId: "pratVioleta-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 82.8, slopeRating: 148 } },
+    holes: vHoles(pratVioletaPar, pratVioletaNegras, pratVioletaSI), distances: vDist(pratVioletaNegras) },
+  { teeId: "pratVioleta-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 72, courseRating: 76.4, slopeRating: 147 } },
+    holes: vHoles(pratVioletaPar, pratVioletaNegras, pratVioletaSI), distances: vDist(pratVioletaNegras) },
+  { teeId: "pratVioleta-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 80.8, slopeRating: 145 } },
+    holes: vHoles(pratVioletaPar, pratVioletaBlancas, pratVioletaSI), distances: vDist(pratVioletaBlancas) },
+  { teeId: "pratVioleta-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 72, courseRating: 74.5, slopeRating: 143 } },
+    holes: vHoles(pratVioletaPar, pratVioletaBlancas, pratVioletaSI), distances: vDist(pratVioletaBlancas) },
+  { teeId: "pratVioleta-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 78.6, slopeRating: 141 } },
+    holes: vHoles(pratVioletaPar, pratVioletaAmarillas, pratVioletaSI), distances: vDist(pratVioletaAmarillas) },
+  { teeId: "pratVioleta-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 72, courseRating: 72.3, slopeRating: 139 } },
+    holes: vHoles(pratVioletaPar, pratVioletaAmarillas, pratVioletaSI), distances: vDist(pratVioletaAmarillas) },
+  { teeId: "pratVioleta-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 75.3, slopeRating: 135 } },
+    holes: vHoles(pratVioletaPar, pratVioletaAzules, pratVioletaSI), distances: vDist(pratVioletaAzules) },
+  { teeId: "pratVioleta-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 72, courseRating: 69.8, slopeRating: 133 } },
+    holes: vHoles(pratVioletaPar, pratVioletaAzules, pratVioletaSI), distances: vDist(pratVioletaAzules) },
+  { teeId: "pratVioleta-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 73.1, slopeRating: 131 } },
+    holes: vHoles(pratVioletaPar, pratVioletaRojas, pratVioletaSI), distances: vDist(pratVioletaRojas) },
+  { teeId: "pratVioleta-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 72, courseRating: 70.3, slopeRating: 127 } },
+    holes: vHoles(pratVioletaPar, pratVioletaRojas, pratVioletaSI), distances: vDist(pratVioletaRojas) },
+];
+
+const pratVallesPar = [4,3,5,5,3,4,3,4,4,4,3,5,5,3,4,3,4,4];
+const pratVallesSI = [7,9,1,15,5,3,11,13,17,8,10,2,16,6,4,12,14,18];
+const pratVallesNegras = [338,151,474,451,161,357,173,300,345,338,151,474,451,161,357,173,300,345]; // 5500 m
+const pratVallesBlancas = [323,145,468,446,156,352,152,288,332,323,145,468,446,156,352,152,288,332]; // 5324 m
+const pratVallesAmarillas = [317,128,461,432,140,334,146,264,324,317,128,461,432,140,334,146,264,324]; // 5092 m
+const pratVallesAzules = [271,111,416,376,114,303,117,237,280,271,111,416,376,114,303,117,237,280]; // 4450 m
+const pratVallesRojas = [250,101,397,347,95,280,96,231,258,250,101,397,347,95,280,96,231,258]; // 4110 m
+const pratVallesTees: Tee[] = [
+  { teeId: "pratValles-negras-f", sex: "F", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 70, courseRating: 74.4, slopeRating: 132 } },
+    holes: vHoles(pratVallesPar, pratVallesNegras, pratVallesSI), distances: vDist(pratVallesNegras) },
+  { teeId: "pratValles-negras-m", sex: "M", teeName: "Negras", scorecardMeta: { teeColor: "#000000" },
+    ratings: { holes18: { par: 70, courseRating: 68.8, slopeRating: 123 } },
+    holes: vHoles(pratVallesPar, pratVallesNegras, pratVallesSI), distances: vDist(pratVallesNegras) },
+  { teeId: "pratValles-blancas-f", sex: "F", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 70, courseRating: 73.2, slopeRating: 130 } },
+    holes: vHoles(pratVallesPar, pratVallesBlancas, pratVallesSI), distances: vDist(pratVallesBlancas) },
+  { teeId: "pratValles-blancas-m", sex: "M", teeName: "Blancas", scorecardMeta: { teeColor: "#ffffff" },
+    ratings: { holes18: { par: 70, courseRating: 67.8, slopeRating: 120 } },
+    holes: vHoles(pratVallesPar, pratVallesBlancas, pratVallesSI), distances: vDist(pratVallesBlancas) },
+  { teeId: "pratValles-amarillas-f", sex: "F", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 70, courseRating: 71.8, slopeRating: 128 } },
+    holes: vHoles(pratVallesPar, pratVallesAmarillas, pratVallesSI), distances: vDist(pratVallesAmarillas) },
+  { teeId: "pratValles-amarillas-m", sex: "M", teeName: "Amarillas", scorecardMeta: { teeColor: "#facc15" },
+    ratings: { holes18: { par: 70, courseRating: 66.6, slopeRating: 116 } },
+    holes: vHoles(pratVallesPar, pratVallesAmarillas, pratVallesSI), distances: vDist(pratVallesAmarillas) },
+  { teeId: "pratValles-azules-f", sex: "F", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 70, courseRating: 68, slopeRating: 120 } },
+    holes: vHoles(pratVallesPar, pratVallesAzules, pratVallesSI), distances: vDist(pratVallesAzules) },
+  { teeId: "pratValles-azules-m", sex: "M", teeName: "Azules", scorecardMeta: { teeColor: "#3b82f6" },
+    ratings: { holes18: { par: 70, courseRating: 63.8, slopeRating: 103 } },
+    holes: vHoles(pratVallesPar, pratVallesAzules, pratVallesSI), distances: vDist(pratVallesAzules) },
+  { teeId: "pratValles-rojas-f", sex: "F", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 70, courseRating: 66, slopeRating: 114 } },
+    holes: vHoles(pratVallesPar, pratVallesRojas, pratVallesSI), distances: vDist(pratVallesRojas) },
+  { teeId: "pratValles-rojas-m", sex: "M", teeName: "Rojas", scorecardMeta: { teeColor: "#ef4444" },
+    ratings: { holes18: { par: 70, courseRating: 61.8, slopeRating: 103 } },
+    holes: vHoles(pratVallesPar, pratVallesRojas, pratVallesSI), distances: vDist(pratVallesRojas) },
+];
+
+function elPratRoute(key: string, nome: string, tees: Tee[]): Course {
+  return {
+    courseKey: `away-el-prat-${key}`,
+    master: {
+      courseId: `away-el-prat-${key}`,
+      name: `Real Club de Golf El Prat - ${nome}`,
+      country: "Espanha",
+      links: { fpg: null, scorecards: "https://rfegolf.es/club/real-club-de-golf-el-prat" },
+      tees,
+    },
+  };
+}
+const elPratRosa = elPratRoute("rosa", "Rosa (Bosque + Arriba)", pratRosaTees);
+const elPratAmarillo = elPratRoute("amarillo", "Amarillo (Piscina + Abajo)", pratAmarilloTees);
+const elPratVerde = elPratRoute("verde", "Verde (Abajo + Vallès)", pratVerdeTees);
+const elPratAzul = elPratRoute("azul", "Azul", pratAzulTees);
+const elPratVioleta = elPratRoute("violeta", "Violeta", pratVioletaTees);
+const elPratValles = elPratRoute("valles", "El Vallès (9 buracos ×2)", pratVallesTees);
+
 /* Exportacao */
 
 /** Campos extra adicionados manualmente (ainda sem rondas no melhorias.json) */
@@ -1880,6 +2242,14 @@ export function getExtraCourses(): Course[] {
   return [
     villaPadiernaFlamingos,
     villaPadiernaFlamingos2,
+    sanRoqueOld,
+    sanRoqueNew,
+    elPratRosa,
+    elPratAmarillo,
+    elPratVerde,
+    elPratAzul,
+    elPratVioleta,
+    elPratValles,
     marcoSimone,
     doralRedTiger,
     doralGoldenPalm,
