@@ -687,6 +687,8 @@ async function scrapeTour(tourId, opts) {
   const [pageR, clasR, inscR, horaR, estR, roundsR, scoreTypesR] = tasks;
 
   const meta = pageR.status === 200 ? parseTourMeta(pageR.body) : {};
+  // Nome da listagem quando a página não o deu (provas futuras: meta.name vinha null).
+  if (!meta.name && opts.discoveredName) meta.name = opts.discoveredName;
   // Data da descoberta (scope, "13 jun 2026") → meta.dateIso/dateStart/year quando
   // a página não a expôs. Torna o ficheiro auto-suficiente (o detalhe NextCaddy
   // não traz data própria).
@@ -906,12 +908,14 @@ async function main() {
   // expõe data; o scope sim. Injectamos no meta para o ficheiro ser auto-suficiente.
   const scopeDateById = new Map();
   const scopeFimById = new Map();   // último dia (para o --skip-existing não congelar torneios lidos antes do fim)
+  const scopeNomeById = new Map();  // nome da listagem (a página de uma prova futura não o traz)
   if (tourArg) tours = tourArg.split(",").map((s) => parseInt(s.trim(), 10));
   if (scopeArg) {
     const sc = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), scopeArg), "utf8"));
     const list = sc.tours || sc.tournaments || sc;
     for (const t of list) {
       const id = t.tourId || t.id;
+      if (id != null && t && t.name) scopeNomeById.set(id, t.name);
       if (id != null && t && t.date) {
         scopeDateById.set(id, t.date);
         const fim = fimDoScope(t.date, t.rounds);
@@ -1011,7 +1015,7 @@ async function main() {
           console.log(`  [${idx + 1}/${tours.length}] ${tid}: ${(r.meta && r.meta.name) || "?"} (patch +${appliedCount}/${uniqueMissing.length}${remaining > 0 ? `, ${remaining} ainda em falta` : ""}${appliedCount === 0 ? " — sem alterações" : ""}${statsStr ? ` [${statsStr}]` : ""}, ${elapsed}s)`);
           ok++; continue;
         }
-        r = await scrapeTour(tid, { scorecards: fetchScorecards, discoveredDate: scopeDateById.get(tid) });
+        r = await scrapeTour(tid, { scorecards: fetchScorecards, discoveredDate: scopeDateById.get(tid), discoveredName: scopeNomeById.get(tid) });
         if (!fetchScorecards && fs.existsSync(outFile)) preservarDoAnterior(r, outFile);
         const g = writeJsonGuarded(outFile, r, { count: contarTour, maxDrop: 0.3, label: `nextcaddy/${tid}.json` });
         if (!g.written) { skipped++; continue; }

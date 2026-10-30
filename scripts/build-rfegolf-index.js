@@ -133,6 +133,23 @@ function rfegHasPt(j) {
   return false;
 }
 
+// ── Escalões pelas CLASSIFICAÇÕES (NextCaddy) ──────────────────
+// O nome nem sempre diz o escalão («Puntuable Zonal Nacional (masculino)») e as
+// categorias de inscrição trazem «Profesional»/«Senior» mesmo em provas só de
+// juniores — ficavam fora da /rfeg (30/10/2026). As classificações dizem o que
+// se jogou: se TODAS são juvenis, a prova é juvenil e estes são os seus escalões.
+// O Pequecircuito da RFGA (iniciação, campo de ~1.100 m, categorias por idade)
+// fica de fora de propósito: escalões muito novos (pedido da Mariana).
+const ESC_ORDEM = ["Sub-8", "Sub-10", "Benjamín", "Sub-12", "Alevín", "Sub-14", "Infantil", "Sub-16", "Cadete", "Sub-18", "Junior", "Juvenil", "Sub-21", "Sub-25"];
+function escaloesDasClassificacoes(j) {
+  const cats = ((j && j.leaderboard) || []).filter((c) => (c.players || []).length).map((c) => c.categoryName || "");
+  if (!cats.length) return [];
+  const escs = cats.map(extractCategoryFromName);
+  if (escs.some((e) => !e)) return [];   // há uma classificação de adultos (ou desconhecida) → não é juvenil
+  const ord = (e) => { const i = ESC_ORDEM.indexOf(e); return i < 0 ? 99 : i; };
+  return [...new Set(escs)].sort((a, b) => ord(a) - ord(b));
+}
+
 // ── Nº de buracos ──────────────────────────────────────────────
 // Provas de 4/5/9 buracos (escalões muito novos) saem da /rfeg — a Mariana não
 // as quer (30/10/2026). Dos dados quando os há (par do campo ou o 1.º cartão),
@@ -271,7 +288,7 @@ function loadNextcaddyScopeDates() {
       const id = t.tourId || t.id;
       if (id == null || !t.date) continue;
       const prev = m.get(id);
-      if (!prev || !prev.date) m.set(id, { date: t.date, year: t.year || null });
+      if (!prev || !prev.date) m.set(id, { date: t.date, year: t.year || null, name: t.name || null });
     }
   }
   return m;
@@ -288,7 +305,9 @@ for (const file of ncFiles) {
     if (!j || !j.tourId) { skipped++; continue; }
     const tourId = j.tourId;
     const meta = j.meta || {};
-    const name = meta.name || "";
+    // Provas futuras: a página do NextCaddy não traz o nome onde o scraper o lê
+    // (ficava null) — o da listagem (scope) serve (ex. Circuito Juvenil Zona E, 14/11/2026).
+    const name = meta.name || (ncScopeDates.get(tourId) || {}).name || "";
     const inscCount = (j.inscritos || []).length;
     const lbCount = (j.leaderboard || []).reduce((acc, t) => acc + (t.players ? t.players.length : 0), 0);
 
@@ -328,6 +347,8 @@ for (const file of ncFiles) {
         category = extractCategoryFromName(juvCat);
       }
     }
+    const escaloesLb = escaloesDasClassificacoes(j);
+    if (!category && escaloesLb.length) category = escaloesLb[0];
 
     let sex = extractSexFromName(name);
     if (!sex && Array.isArray(meta.categories)) {
@@ -355,6 +376,8 @@ for (const file of ncFiles) {
       },
       leaderboardPlayers: lbCount,
       holes: buracosNC(j, name) || undefined,
+      // Vários escalões jogados (Sub 12 + Infantil + Cadete…) → a prova aparece em todos os filtros.
+      escaloes: escaloesLb.length > 1 ? escaloesLb : undefined,
       roster: rosterFrom((j.leaderboard || []).flatMap((t) => (t && t.players) || [])),
       scrapedAt: j.scrapedAt || null,
     });

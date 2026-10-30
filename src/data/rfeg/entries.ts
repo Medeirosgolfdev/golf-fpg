@@ -231,6 +231,7 @@ export function buildRfegEntries(
       ? { men: t.hcpLimitMen ?? undefined, women: t.hcpLimitWomen ?? undefined }
       : undefined,
     escalao: t.category ?? undefined,
+    escaloes: t.escaloes?.length ? t.escaloes : undefined,
     sex: rfegSex(t.sex),
     federation: t.federation ?? undefined,
     hasManuel: t.hasManuel ?? undefined,

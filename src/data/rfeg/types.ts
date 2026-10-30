@@ -55,6 +55,9 @@ export interface RFEGIndexEntry {
   /** Nº de buracos (dos dados ou do nome — build-rfegolf-index.js). Menos de
    *  18 = escalões muito novos (4/5/9 buracos): saem da /rfeg. */
   holes?: number;
+  /** NextCaddy: escalões das classificações quando são vários (ex. Puntuable
+   *  Zonal: Sub-12, Infantil, Cadete) — para o filtro de escalão. */
+  escaloes?: string[];
   /** LGS por equipas: ficheiro da fase de match play (MatchplayFile), gerado
    *  pelo scrape-lgs-matchplay.js — ex. "lgs-matchplay/393.json". */
   matchplayFile?: string;
