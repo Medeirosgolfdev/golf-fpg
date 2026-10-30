@@ -289,6 +289,21 @@ compId = id do post WordPress (6 dígitos; os CompId antigos têm 5).
 - `build-lgs-twins` ignora a edição em numeração romana ao casar nomes
   («XIV Memorial Blanca Mayor» RFEG = «Memorial Blanca Mayor» LGS).
 
+## Espanha — federações regionais (2026-10-30)
+
+- **Catalunha (FCG) e Galiza (FGG) → golfdirecto**, um só scraper
+  (`scrape-fcg.js`). Listas: `discover-fcg-scope.js` (catgolf.com) e
+  `discover-fgg-scope.js` (`fggolf.com/torneos.aspx`, só juvenis, acumula
+  épocas). **API: `/api/v2/public/`** desde ~14/09/2026 (o `/web/home/` dá 404).
+  A FGG repete cada escalão em Scratch/Hándicap/General — o scraper deixa cada
+  jogador só na primeira (Scratch). Organizador = `game.tournament.clientName`;
+  séries `fgg-*` no agregador. Prova sem jogadores não entra no índice.
+- **Valência (FGCV)** → `scrape-fgcv.js` (PDFs Mastergolf cifrados, decifrados
+  pelas licenças dos inscritos).
+- **Andaluzia, Madrid, Canárias, Castela e Leão** → NextCaddy.
+- Por ligar: País Basco (fvgolf.com, resultados nos clubes), Baleares, Múrcia,
+  Aragão, Astúrias e as mais pequenas.
+
 ### Mérite Jeunes e Guide des golfs (pesquisa de 30/10/2026)
 
 - **Mérite Jeunes** — `pages.ffgolf.org/merite/datas/jeunes/{messieurs|dames}/{AAAAMM}` (JSON, sem login, mensal desde 202411; 757 rapazes classificados em Out/2026, ~2,5 mil com os não classificados). Traz `CATEGORIE` (Poucet 1 … Minime 2), que é o **ano de nascimento exacto**, coisa que o portal de resultados não dá (ver «Categoria FFG de um jogador», acima, inferida). Ficha: `/merite/merite_details/{AAAAMM}/jeunes?h={CODE}` (index FFG e Moy.SSS por prova).
