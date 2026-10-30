@@ -1,18 +1,18 @@
 {
-  "geradoEm": "2026-10-26T17:58:14.342Z",
+  "geradoEm": "2026-10-30T13:00:38.580Z",
   "manuelFed": "52884",
   "manuelUskidsIds": [
     "630106",
     "605933"
   ],
-  "totalRondas": 161,
+  "totalRondas": 162,
   "totalCompanheirosUnicos": 193,
   "cobertura": {
     "fpg": {
       "rondasJogadas": 140,
-      "rondasComDraw": 126,
+      "rondasComDraw": 127,
       "torneiosJogados": 104,
-      "torneiosComDraw": 98,
+      "torneiosComDraw": 99,
       "torneiosComDrawDetalhe": [
         {
           "torneioId": "007-11081",
@@ -675,6 +675,33 @@
     }
   },
   "rondas": [
+    {
+      "circuito": "FPG",
+      "torneioId": "007-90078",
+      "torneioNome": "TAÇA PRESIDENTE CGSS 2026",
+      "data": "2026-10-31",
+      "ronda": 1,
+      "teeTime": "09:40",
+      "startHole": 1,
+      "campo": "Santo da Serra - Desertas-Serras",
+      "manuelScore": null,
+      "companheiros": [
+        {
+          "nome": "Alexandre Henriques",
+          "fed": "2178",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        },
+        {
+          "nome": "Carlota Braz Gil",
+          "fed": "47374",
+          "clube": "Santo da Serra",
+          "pais": null,
+          "score": null
+        }
+      ]
+    },
     {
       "circuito": "FPG",
       "torneioId": "007-11081",
