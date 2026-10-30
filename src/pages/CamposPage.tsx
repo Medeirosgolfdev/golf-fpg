@@ -4,7 +4,6 @@ import { CamposCompareView } from "./ComparePage";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
 import EmptyState from "../ui/EmptyState";
-import LoadingState from "../ui/LoadingState";
 import Counter from "../ui/Counter";
 import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
 import { useMasterDetail } from "../hooks/useMasterDetail";
@@ -26,13 +25,9 @@ import { useSort } from "../hooks/useSort";
 import SortableHdr from "../ui/SortableHdr";
 import { cachedFetchJson } from "../data/fetchCache";
 import { isTournamentCourse } from "../constants/tournamentCourses";
-import { loadPlayerData } from "../data/playerDataLoader";
-import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
 import { calcSD, round1 } from "../utils/whsCalc";
 import { resolvePlayedTee } from "../utils/playedDistance";
-import { canonicalCourseName, resolveCourseKeyByPar } from "../utils/courseAliases";
-import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
 import TeeBars from "../ui/TeeBars";
 import DetailHeader from "../ui/DetailHeader";
@@ -1168,182 +1163,7 @@ export function CourseComoJogou({ course, sexFilter = "ALL", teeLabel = null, on
       <CourseTeeKpis course={course} sexFilter={sexFilter} teeLabel={teeLabel} onSelectPlayer={onSelectPlayer} />
       {/* Quem jogou + scores, partido por tee (Brancas, Amarelas, …) */}
       <CoursePlayersByTee course={course} teeLabel={teeLabel} onSelectPlayer={onSelectPlayer} />
-      {/* Média por buraco do Manuel — em baixo, secundário */}
-      <CourseHoleAverages course={course} />
     </>
-  );
-}
-
-/* ——— Componente: "Como jogou" — média por buraco do Manuel neste campo ———
- * Cruza as voltas do Manuel (data.json) com o campo seleccionado por nome
- * canónico e calcula a média de pancadas por buraco (formato scorecard,
- * buracos em colunas). Só conta voltas de 18 buracos com scorecard completo. */
-const _ckey = (s: string) => norm(canonicalCourseName(s) || s);
-
-function avgColor(avg: number | null, par: number | null): string {
-  if (avg == null || par == null) return "var(--text-3)";
-  const d = avg - par;
-  if (d <= -0.25) return SC.good;
-  if (d <= 0.25) return "var(--text-1)";
-  if (d <= 1.25) return SC.warn;
-  return SC.danger;
-}
-
-function CourseHoleAverages({ course }: { course: Course }) {
-  const [data, setData] = useState<PlayerPageData | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    let alive = true;
-    setLoading(true);
-    loadPlayerData(MANUEL_FED)
-      .then((d) => { if (alive) { setData(d); setLoading(false); } })
-      .catch(() => { if (alive) { setData(null); setLoading(false); } });
-    return () => { alive = false; };
-  }, []);
-
-  const stats = useMemo(() => {
-    if (!data) return null;
-    const target = _ckey(course.master.name);
-    // Par do campo pela ordem da página (1.º tee com os 18 buracos).
-    const masterPar = (() => {
-      for (const t of course.master.tees ?? []) {
-        const hs = (t.holes ?? []).filter((h) => h.hole >= 1 && h.hole <= 18).sort((a, b) => a.hole - b.hole);
-        if (hs.length === 18 && hs.every((h) => h.par != null)) return hs.map((h) => Number(h.par));
-      }
-      return null;
-    })();
-    // Voltas do Manuel neste campo: pelo par[] quando decide (Santo da Serra e
-    // outros multi-loop — a FPG escreve «Machico+Serras» numa página que é
-    // «Serras-Machico»; é o que os recordes por tee já fazem, via
-    // build-course-players.js), senão pelo nome canónico. 26/10/2026.
-    // `swap`: a volta foi jogada com os nines pela ordem inversa da página.
-    const picked: { sid: string; swap: boolean }[] = [];
-    for (const c of data.DATA) {
-      for (const r of c.rounds) {
-        if (r.holeCount !== 18) continue;
-        const h = data.HOLES[r.scoreId];
-        if (!h) continue;
-        const pars = (h.p ?? []).map(Number);
-        const key = pars.length === 18 ? resolveCourseKeyByPar(c.course, pars) : null;
-        if (key ? key !== course.courseKey : _ckey(c.course) !== target) continue;
-        const same = !!masterPar && pars.every((p, i) => p === masterPar[i]);
-        const swap = !!masterPar && !same && pars.every((p, i) => p === masterPar[(i + 9) % 18]);
-        picked.push({ sid: r.scoreId, swap });
-      }
-    }
-    const scoreIds = picked.map((p) => p.sid);
-    if (scoreIds.length === 0) return { nRounds: 0, holes: [] as { hole: number; par: number | null; si: number | null; avg: number | null; n: number }[] };
-
-    const sum = new Array(18).fill(0);
-    const cnt = new Array(18).fill(0);
-    const parArr = new Array<number | null>(18).fill(null);
-    const siArr = new Array<number | null>(18).fill(null);
-    for (const { sid, swap } of picked) {
-      const h = data.HOLES[sid];
-      for (let i = 0; i < 18; i++) {
-        const j = swap ? (i + 9) % 18 : i; // buraco i da página = buraco j da volta
-        const g = h.g?.[j];
-        if (g != null && Number(g) > 0) { sum[i] += Number(g); cnt[i]++; }
-        if (parArr[i] == null && h.p?.[j] != null) parArr[i] = Number(h.p[j]);
-        if (siArr[i] == null && h.si?.[j] != null) siArr[i] = Number(h.si[j]);
-      }
-    }
-    const holes = Array.from({ length: 18 }, (_, i) => ({
-      hole: i + 1,
-      par: parArr[i],
-      si: siArr[i],
-      avg: cnt[i] > 0 ? sum[i] / cnt[i] : null,
-      n: cnt[i],
-    }));
-    return { nRounds: scoreIds.length, holes };
-  }, [data, course]);
-
-  if (loading) return <LoadingState size="sm" message="A carregar voltas do Manuel…" />;
-  if (!stats || stats.nRounds === 0) {
-    return (
-      <div className="notice notice-info" style={{ marginTop: 14 }}>
-        O Manuel ainda não tem voltas de 18 buracos com scorecard registadas neste campo.
-      </div>
-    );
-  }
-
-  const { holes } = stats;
-  const sumPar = (a: number, b: number) => holes.slice(a, b).reduce((s, h) => s + (h.par ?? 0), 0);
-  const sumAvg = (a: number, b: number) => {
-    const slice = holes.slice(a, b);
-    if (slice.some((h) => h.avg == null)) return null;
-    return slice.reduce((s, h) => s + (h.avg ?? 0), 0);
-  };
-  const cell = (h: typeof holes[number]) => (
-    <td key={h.hole} className="ta-c" style={{ color: avgColor(h.avg, h.par), fontWeight: 600 }}>
-      {h.avg != null ? h.avg.toFixed(1) : "–"}
-    </td>
-  );
-  const vsParCell = (h: typeof holes[number]) => {
-    if (h.avg == null || h.par == null) return <td key={h.hole} className="ta-c muted">–</td>;
-    const d = h.avg - h.par;
-    const txt = d === 0 ? "E" : d > 0 ? `+${d.toFixed(1)}` : d.toFixed(1);
-    return <td key={h.hole} className="ta-c" style={{ color: avgColor(h.avg, h.par) }}>{txt}</td>;
-  };
-  const outAvg = sumAvg(0, 9), inAvg = sumAvg(9, 18), totAvg = sumAvg(0, 18);
-  const outPar = sumPar(0, 9), inPar = sumPar(9, 18), totPar = sumPar(0, 18);
-
-  return (
-    <div>
-      <div className="muted fs-11" style={{ margin: "4px 0 8px" }}>
-        Média de {stats.nRounds} volta{stats.nRounds !== 1 ? "s" : ""} de 18 buracos do Manuel neste campo.
-        Cor: <span style={{ color: SC.good }}>abaixo</span> · <span style={{ color: SC.warn }}>acima</span> · <span style={{ color: SC.danger }}>bem acima</span> do par.
-      </div>
-      <div className="sc-wrap">
-        <table className="sc-table sc-grid">
-          <thead>
-            <tr>
-              <th className="sc-sticky">Buraco</th>
-              {Array.from({ length: 9 }, (_, i) => <th key={i + 1} className="sc-h">{i + 1}</th>)}
-              <th className="sc-h sc-tot">OUT</th>
-              {Array.from({ length: 9 }, (_, i) => <th key={i + 10} className="sc-h">{i + 10}</th>)}
-              <th className="sc-h sc-tot">IN</th>
-              <th className="sc-h sc-tot">TOT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="sc-meta-row sc-par-row">
-              <td className="sc-sticky sc-meta-label">PAR</td>
-              {holes.slice(0, 9).map((h) => <td key={h.hole} className="ta-c">{h.par ?? "–"}</td>)}
-              <td className="ta-c sc-tot-val">{outPar || "–"}</td>
-              {holes.slice(9, 18).map((h) => <td key={h.hole} className="ta-c">{h.par ?? "–"}</td>)}
-              <td className="ta-c sc-tot-val">{inPar || "–"}</td>
-              <td className="ta-c sc-tot-val">{totPar || "–"}</td>
-            </tr>
-            <tr className="sc-meta-row sc-hcp-row">
-              <td className="sc-sticky sc-meta-label">S.I.</td>
-              {holes.slice(0, 9).map((h) => <td key={h.hole} className="ta-c">{h.si ?? "–"}</td>)}
-              <td className="ta-c">–</td>
-              {holes.slice(9, 18).map((h) => <td key={h.hole} className="ta-c">{h.si ?? "–"}</td>)}
-              <td className="ta-c">–</td>
-              <td className="ta-c">–</td>
-            </tr>
-            <tr className="sc-tee-row">
-              <td className="sc-sticky sc-meta-label">Média</td>
-              {holes.slice(0, 9).map(cell)}
-              <td className="ta-c sc-tot-val">{outAvg != null ? outAvg.toFixed(1) : "–"}</td>
-              {holes.slice(9, 18).map(cell)}
-              <td className="ta-c sc-tot-val">{inAvg != null ? inAvg.toFixed(1) : "–"}</td>
-              <td className="ta-c sc-tot-val">{totAvg != null ? totAvg.toFixed(1) : "–"}</td>
-            </tr>
-            <tr className="sc-meta-row">
-              <td className="sc-sticky sc-meta-label">vs Par</td>
-              {holes.slice(0, 9).map(vsParCell)}
-              <td className="ta-c sc-tot-val">{outAvg != null ? (outAvg - outPar >= 0 ? "+" : "") + (outAvg - outPar).toFixed(1) : "–"}</td>
-              {holes.slice(9, 18).map(vsParCell)}
-              <td className="ta-c sc-tot-val">{inAvg != null ? (inAvg - inPar >= 0 ? "+" : "") + (inAvg - inPar).toFixed(1) : "–"}</td>
-              <td className="ta-c sc-tot-val">{totAvg != null ? (totAvg - totPar >= 0 ? "+" : "") + (totAvg - totPar).toFixed(1) : "–"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   );
 }
 
@@ -1733,7 +1553,7 @@ export default function CamposPage() {
                       aria-selected={detailView === "manuel"}
                       className={`seg-btn${detailView === "manuel" ? " active" : ""}`}
                       onClick={() => setDetailView("manuel")}
-                      title="Média por buraco do Manuel neste campo"
+                      title="Como jogaram os nossos neste campo, por tee"
                     >
                       <span className="seg-label">Como jogou</span>
                     </button>
