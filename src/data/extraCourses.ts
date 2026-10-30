@@ -1525,7 +1525,8 @@ const elPratValles = elPratRoute("valles", "El Vallès (9 buracos ×2)", pratVal
    The Vale Resort (Hensol, Gales) — US Kids British Kids Championship 2026
    (27–28/10/2026). Escalões por percurso da página de inscrições: Boys 10–18 no
    Wales National; Boys 9 e raparigas no Lake; os de 9 buracos na volta da frente
-   do Lake. Metros e par dos resultados USKids (jardas × 0,9144) — só rapazes.
+   do Lake. Metros e par dos resultados USKids e dos cartões no Signupanytime
+   (jardas × 0,9144); Girls 11-12 = tee dos Boys 9, Girls 9-10 = tee dos Boys 8.
    Sem CR/Slope: a USKids não publicou (procurado a 30/10/2026; há as regras
    locais local_rules_bkc_2026_-_wales_national.pdf e _-_lake.pdf).
    ───────────────────────────────────────────────────────────────────────── */
@@ -1538,10 +1539,15 @@ const valeLakePar = [3,5,3,4,4,5,5,3,4, 3,4,4,3,5,4,5,4,4]; // par USKids 72
 const valeLakeB9  = [116,307,114,232,229,315,304,115,224, 83,223,197,92,299,197,238,208,205];   // 3698 m
 const valeLakeB8  = [77,254,73,196,194,264,242,82,201]; // 1583 m, buracos 1–9
 const valeLakeB7  = [77,216,69,150,145,212,203,73,161]; // 1306 m, buracos 1–9
+// Escalões que não vinham nos nossos resultados — cartões do Signupanytime (30/10/2026).
+const valeWNB1518 = [306,516,155,479,332,294,315,150,374,484,260,146,390,115,385,358,336,315]; // 5710 m (6243 jd)
+const valeLakeG1518 = [132,307,130,283,317,398,422,128,261,99,293,234,110,406,197,321,262,291]; // 4591 m (5019 jd)
+const valeLakeG1314 = [116,307,114,251,229,340,325,121,239,83,251,234,110,352,197,321,252,248]; // 4090 m (4471 jd)
+const valeLakeG8 = [59,174,55,130,145,187,181,73,105]; // 1109 m (1214 jd)
 
-function valeTee(teeId: string, teeName: string, par: number[], dist: number[]): Tee {
+function valeTee(teeId: string, teeName: string, par: number[], dist: number[], sex: "M" | "F" | "U" = "M"): Tee {
   return {
-    teeId, sex: "M", teeName,
+    teeId, sex, teeName,
     ratings: { holes18: { par: par.slice(0, dist.length).reduce((a, b) => a + b, 0), courseRating: null, slopeRating: null } },
     holes: vHoles(par, dist),
     distances: vDist(dist),
@@ -1560,6 +1566,7 @@ const valeWalesNational: Course = {
     country: "Gales",
     links: { fpg: null, scorecards: "https://www.valeresort.com/the-wales-national-course/", extra: BKC26_LINKS },
     tees: [
+      valeTee("vale-wn-uk-b1518", "USKids Boys 15-18", valeWNPar, valeWNB1518),
       valeTee("vale-wn-uk-b1314", "USKids Boys 13-14", valeWNPar, valeWNB1314),
       valeTee("vale-wn-uk-b12", "USKids Boys 12", valeWNPar, valeWNB12),
       valeTee("vale-wn-uk-b1011", "USKids Boys 11 / 10", valeWNPar, valeWNB1011),
@@ -1575,9 +1582,12 @@ const valeLake: Course = {
     country: "Gales",
     links: { fpg: null, scorecards: "https://www.valeresort.com/the-lake-course/", extra: BKC26_LINKS },
     tees: [
-      valeTee("vale-lake-uk-b9", "USKids Boys 9", valeLakePar, valeLakeB9),
-      valeTee("vale-lake-uk-b8", "USKids Boys 8", valeLakePar, valeLakeB8),
+      valeTee("vale-lake-uk-g1518", "USKids Girls 15-18", valeLakePar, valeLakeG1518, "F"),
+      valeTee("vale-lake-uk-g1314", "USKids Girls 13-14", valeLakePar, valeLakeG1314, "F"),
+      valeTee("vale-lake-uk-b9", "USKids Boys 9 / Girls 11-12", valeLakePar, valeLakeB9, "U"),
+      valeTee("vale-lake-uk-b8", "USKids Boys 8 / Girls 9-10", valeLakePar, valeLakeB8, "U"),
       valeTee("vale-lake-uk-b7", "USKids Boys 7 & Under", valeLakePar, valeLakeB7),
+      valeTee("vale-lake-uk-g8", "USKids Girls 8 & Under", valeLakePar, valeLakeG8, "F"),
     ],
   },
 };
@@ -2301,6 +2311,7 @@ const tdcB12   = [255,442,125,298,293,315,326,379,106, 262,390,239,110,283,301,1
 const tdcB9    = [193,350,119,200,254,247,236,330,90, 200,330,229,91,249,224,114,330,260];   // 4046 m
 const tdcB8    = [180,300,170,91,200,191,70,300,223]; // 1725 m, buracos 10–18
 const tdcB7    = [150,240,142,67,160,160,59,240,160]; // 1378 m, buracos 10–18
+const tdcG8    = [115,185,109,67,123,133,58,185,123]; // 1098 m, buracos 10–18 (cartões do Signupanytime, 30/10/2026)
 
 function tdcTee(id: string, sex: "M" | "F", teeName: string, cr: number, slope: number, dist: number[] | null, teeColor?: string): Tee {
   const back9 = dist?.length === 9 || (!dist && cr < 40);
@@ -2335,8 +2346,9 @@ const terreDeiConsoli: Course = {
         },
       ],
     },
-    // Os 12 escalões do PDF 2026 (= 2025). Raparigas sem distâncias: os resultados
-    // USKids que temos só trazem as dos rapazes.
+    // Os 12 escalões do PDF 2026 (= 2025). Raparigas pelos cartões do Signupanytime:
+    // jogaram os tees dos rapazes (G13-14 = B11/10, G11-12 = B9, G9-10 = B8), as G8 um
+    // tee próprio; Girls 15-18 sem jogadoras em 2026 — sem distâncias.
     tees: [
       tdcTee("tdc-uk-boys1318", "M", "USKids Boys 13-18", 70.9, 124, tdcB1318),
       tdcTee("tdc-uk-boys12", "M", "USKids Boys 12", 67.1, 115, tdcB12),
@@ -2346,10 +2358,10 @@ const terreDeiConsoli: Course = {
       tdcTee("tdc-uk-boys8", "M", "USKids Boys 8", 29.5, 95, tdcB8, "#fbbf24"), // Longleaf Tee 2
       tdcTee("tdc-uk-boys7", "M", "USKids Boys 7 & Under", 27.8, 87, tdcB7),
       tdcTee("tdc-uk-girls1518", "F", "USKids Girls 15-18", 72.2, 121, null),
-      tdcTee("tdc-uk-girls1314", "F", "USKids Girls 13-14", 68.9, 114, null),
-      tdcTee("tdc-uk-girls1112", "F", "USKids Girls 11-12", 66.6, 109, null),
-      tdcTee("tdc-uk-girls910", "F", "USKids Girls 9-10", 31.2, 96, null),
-      tdcTee("tdc-uk-girls8", "F", "USKids Girls 8 & Under", 27.4, 80, null),
+      tdcTee("tdc-uk-girls1314", "F", "USKids Girls 13-14", 68.9, 114, tdcB11),
+      tdcTee("tdc-uk-girls1112", "F", "USKids Girls 11-12", 66.6, 109, tdcB9),
+      tdcTee("tdc-uk-girls910", "F", "USKids Girls 9-10", 31.2, 96, tdcB8),
+      tdcTee("tdc-uk-girls8", "F", "USKids Girls 8 & Under", 27.4, 80, tdcG8),
     ],
   },
 };
