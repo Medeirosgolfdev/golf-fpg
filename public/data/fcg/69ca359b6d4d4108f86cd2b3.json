@@ -1,0 +1,158 @@
+{
+  "gameId": "69ca359b6d4d4108f86cd2b3",
+  "fetchedAt": "2026-10-30T20:50:19.989Z",
+  "game": {
+    "_id": "69ca359b6d4d4108f86cd2b3",
+    "name": "MENSUAL JUVENIL - RODA GOLF COURSE",
+    "status": "finished",
+    "scheduleStartDate": "2026-05-31T10:30:12.118Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "69ca359b6d4d4108f86cd2df",
+      "name": "MENSUAL JUVENIL - RODA GOLF COURSE",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea393b",
+      "name": "RODA GOLF",
+      "city": "RODA (SAN JAVIER)",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a734d36dfe90dea393c",
+      "name": "RODA GOLF",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 68.6,
+        "slope": 126,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd394"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.4,
+        "slope": 131,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd3a7"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.5,
+        "slope": 133,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd36e"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.2,
+        "slope": 111,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd3ba"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 63.7,
+        "slope": 105,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd3f3"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 74.9,
+        "slope": 132,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd3cd"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.7,
+        "slope": 130,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd381"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.7,
+        "slope": 135,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd406"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77,
+        "slope": 132,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd419"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 68.5,
+        "slope": 120,
+        "par": 72,
+        "_id": "69ca359b6d4d4108f86cd3e0"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "69ca359b6d4d4108f86cd2f1",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69ca359b6d4d4108f86cd2f4",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

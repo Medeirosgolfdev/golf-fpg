@@ -328,7 +328,16 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
       const hasScorecard = scores.some((s) => s > 0);
       const r1Total = hasScorecard ? scores.reduce((a, b) => a + b, 0) : (grossTotal ?? 0);
 
-      const rounds: IntlRoundIn[] = hasScorecard ? [{ round: 1, gross: r1Total, scores }] : [];
+      // Prova de várias voltas (um jogo «Ronda 2» com o acumulado): o golfdirecto
+      // só dá o cartão da volta do jogo; as anteriores vêm em `previous[]` só com
+      // o total do dia. Se o `previous` já incluir esta volta (soma = acumulado),
+      // a última sai.
+      const prev: (number | null)[] = (Array.isArray(p.previous) ? p.previous : [])
+        .map((x: { day?: { strokeNumber?: number } | null } | null) => (x && x.day && typeof x.day.strokeNumber === "number" ? x.day.strokeNumber : null));
+      if (prev.length && grossTotal != null && prev.every((g) => g != null) && prev.reduce<number>((a, g) => a + (g ?? 0), 0) === grossTotal) prev.pop();
+      // Volta sem total (não a jogou) não entra — conta como incompleto no Resumo.
+      const rounds: IntlRoundIn[] = prev.map((g, i) => ({ round: i + 1, gross: g })).filter((r) => r.gross != null);
+      if (hasScorecard) rounds.push({ round: prev.length + 1, gross: r1Total, scores });
 
       // Regra comum de Espanha (22/10/2026): coorte de ano (ano do torneio −
       // ano de nascimento) e, sem data de nascimento, o nome da categoria.
@@ -357,6 +366,12 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
   // aparecia toda a gente como WD e a página abria no Scorecard vazio.
   if (!players.some((p) => p.rounds.length > 0 || p.total != null)) return null;
 
+  // Desistentes de uma prova de várias voltas (o golfdirecto dá o cartão como
+  // fechado e o acumulado só da volta que jogaram): menos voltas = WD.
+  const voltas = (p: IntlPlayerIn) => p.rounds.filter((r) => r.gross != null).length;
+  const nVoltas = Math.max(0, ...players.map(voltas));
+  if (nVoltas > 1) for (const p of players) if (voltas(p) < nVoltas) p.wd = true;
+
   // Ordenar por posição (pos), depois por nome
   players.sort((a, b) => {
     const pa = (a.pos as number | null) ?? 999, pb = (b.pos as number | null) ?? 999;
@@ -365,7 +380,7 @@ export function fcgToFPGTournament(detail: MinimalRFEGShape, dobLookup?: DobLook
   });
 
   return buildFPGTournament(
-    { name: detail.meta.name || `FCG ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: 1 },
+    { name: detail.meta.name || `FCG ${detail.compId}`, tcode: String(detail.compId), date: detail.meta.dateStart || "", campo: detail.meta.course || "", rounds: Math.max(1, ...players.map((p) => p.rounds.length)) },
     { par: par18, si: si18, meters: meters18, teeName, holes: par18.length || 18, parTotal: par18.length ? undefined : null },
     players,
     { keepNoRounds: true, raw: true },

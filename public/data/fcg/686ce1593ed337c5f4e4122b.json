@@ -1,0 +1,140 @@
+{
+  "gameId": "686ce1593ed337c5f4e4122b",
+  "fetchedAt": "2026-10-30T20:47:44.647Z",
+  "game": {
+    "_id": "686ce1593ed337c5f4e4122b",
+    "name": "MENSUAL JUVENIL - LA TORRE GOLF",
+    "status": "finished",
+    "scheduleStartDate": "2025-09-21T06:00:09.935Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "686ce1593ed337c5f4e41256",
+      "name": "MENSUAL JUVENIL - LA TORRE GOLF",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea3950",
+      "name": "LA TORRE GOLF",
+      "city": "ROLDÁN",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a734d36dfe90dea3953",
+      "name": "LA TORRE GOLF - La Torre",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 60.4,
+        "slope": 106,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e4132a"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 63.7,
+        "slope": 116,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e41304"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 66.5,
+        "slope": 124,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e412de"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 69.1,
+        "slope": 128,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e412cb"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 71.8,
+        "slope": 131,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e4133d"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 67.4,
+        "slope": 120,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e412f1"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 64.5,
+        "slope": 119,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e41317"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.7,
+        "slope": 128,
+        "par": 68,
+        "_id": "686ce1593ed337c5f4e41350"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "686ce1593ed337c5f4e41268",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "686ce1593ed337c5f4e4126b",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

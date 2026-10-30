@@ -92,6 +92,13 @@ function ronda(playerEntry) {
   // scorecards anteriores, devolvemos só o que conseguimos.
   const rd = [];
   const sc = [];
+  // Voltas anteriores (jogo «Ronda 2»): só o total do dia, sem cartão. Se o
+  // previous[] já incluir a volta do jogo (soma = acumulado), a última sai.
+  const prev = (Array.isArray(playerEntry.previous) ? playerEntry.previous : [])
+    .map((x) => (x && x.day && typeof x.day.strokeNumber === "number" ? x.day.strokeNumber : null));
+  const acc = playerEntry.view && playerEntry.view.acc && playerEntry.view.acc.strokeNumber;
+  if (prev.length && prev.every((g) => g != null) && prev.reduce((a, g) => a + g, 0) === acc) prev.pop();
+  if (prev.every((g) => g != null)) for (const g of prev) { rd.push(g); sc.push(null); }
   if (playerEntry.scorecard && Array.isArray(playerEntry.scorecard.gross)) {
     const g = playerEntry.scorecard.gross.filter((x) => typeof x === "number");
     if (g.length === 18 || g.length === 9) {
@@ -99,12 +106,6 @@ function ronda(playerEntry) {
       rd.push(total);
       sc.push(playerEntry.scorecard.gross);
     }
-  }
-  // previous[] traz os totais (acc/day) de cada ronda anterior, mas não os
-  // scores hbh — acrescentamos só o total nesses casos.
-  if (Array.isArray(playerEntry.previous) && playerEntry.previous.length > 1) {
-    // O previous[] pode duplicar o ronda atual; deixamos como está por agora
-    // — ajustamos em iterações futuras se virmos torneios multi-ronda reais.
   }
   return { rd, sc };
 }
@@ -145,10 +146,16 @@ function build() {
       if (!cat.players || cat.players.length === 0) continue; // skip vazios
       totalCategories++;
 
-      // Categoria só «Scratch» numa prova juvenil de todas as idades (Galicia
-      // Junior Cup): Sub-18, sem faixa de idades — nunca «Other», que sai do Kids 2.
+      // Categoria só «Scratch» (Galicia Junior Cup, Aragão, Extremadura…): o
+      // escalão vem do nome da prova se lá houver UM («PVCE INFANTIL - 2025»);
+      // com vários ou nenhum, numa prova juvenil, Sub-18 sem faixa de idades —
+      // nunca «Other», que sai do Kids 2.
       let ageGroup = ageKeyFromCategory(cat.name);
-      if (ageGroup === "Other" && /junior|juvenil/i.test(tournamentName)) ageGroup = "Sub-18";
+      if (ageGroup === "Other") {
+        const doNome = [/benjam/i, /alev/i, /infantil/i, /cadet|sub[\s-]?16/i, /sub[\s-]?18/i].filter((re) => re.test(tournamentName));
+        if (doNome.length === 1) ageGroup = ageKeyFromCategory(tournamentName);
+        else if (doNome.length > 1 || /junior|juvenil|zonal|sace|pvce|valedera/i.test(tournamentName)) ageGroup = "Sub-18";
+      }
       const tid = `fcg${gameId}_${ageGroup}_${cat._id.slice(-6)}`;
 
       // Determinar par/SI/holes a partir de UM scorecard
@@ -228,7 +235,8 @@ function build() {
         par: par1_18,
         parTotal: parTotal,
         nholes: nholes,
-        nRounds: 1, // golfdirecto game = 1 jornada
+        // Um jogo «Ronda 2» traz as voltas anteriores no previous[].
+        nRounds: Math.max(1, ...players.map((p) => p.rd.length)),
         source: "fcg",
         players: players,
       };

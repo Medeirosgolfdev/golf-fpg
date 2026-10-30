@@ -1,0 +1,158 @@
+{
+  "gameId": "68dd671aca2c58b9726ae0d8",
+  "fetchedAt": "2026-10-30T20:48:18.866Z",
+  "game": {
+    "_id": "68dd671aca2c58b9726ae0d8",
+    "name": "CAMPEONATO ABSOLUTO JUVENIL - HACIENDA DEL ALAMO 2025",
+    "status": "finished",
+    "scheduleStartDate": "2025-12-21T07:09:07.372Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "68dd671aca2c58b9726ae103",
+      "name": "CAMPEONATO ABSOLUTO JUVENIL - HACIENDA DEL ALAMO 2025",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a664d36dfe90dea2a20",
+      "name": "SANTA ELENA GOLF CLUB",
+      "city": "FUENTE ÁLAMO",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a664d36dfe90dea2a21",
+      "name": "HACIENDA ALAMO",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71,
+        "slope": 123,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae197"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 63,
+        "slope": 110,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae215"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 124,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae185"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 68.5,
+        "slope": 119,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae1df"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 71,
+        "slope": 123,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae1bb"
+      },
+      {
+        "gender": "M",
+        "color": "black",
+        "lap": "lap18",
+        "rating": 74.9,
+        "slope": 124,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae1f1"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 77.7,
+        "slope": 137,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae1a9"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 67.6,
+        "slope": 117,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae203"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 74.6,
+        "slope": 130,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae1cd"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77.7,
+        "slope": 137,
+        "par": 72,
+        "_id": "68dd671aca2c58b9726ae227"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68dd671aca2c58b9726ae115",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "68dd671aca2c58b9726ae118",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

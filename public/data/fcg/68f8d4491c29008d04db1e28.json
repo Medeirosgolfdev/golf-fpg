@@ -1,0 +1,2729 @@
+{
+  "gameId": "68f8d4491c29008d04db1e28",
+  "fetchedAt": "2026-10-30T20:47:51.568Z",
+  "game": {
+    "_id": "68f8d4491c29008d04db1e28",
+    "name": "PVCE ALEVIN -2026",
+    "status": "finished",
+    "scheduleStartDate": "2025-10-25T09:40:18.731Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "68f8d4491c29008d04db1e5a",
+      "name": "PVCE ALEVIN -2026 ",
+      "clientName": "Federación Aragonesa de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a664d36dfe90dea2abb",
+      "name": "GOLF LOS LAGOS",
+      "city": "PINSEQUE",
+      "state": "ZARAGOZA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a664d36dfe90dea2abc",
+      "name": "LOS LAGOS",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.7,
+        "slope": 121,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f0e"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 127,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1ee8"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.1,
+        "slope": 120,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f5a"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.8,
+        "slope": 131,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f47"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 61.6,
+        "slope": 111,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f6d"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.9,
+        "slope": 128,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1efb"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 111,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f21"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 74.7,
+        "slope": 133,
+        "par": 72,
+        "_id": "68f8d4491c29008d04db1f34"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68f8d4491c29008d04db1e6c",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [
+        {
+          "_id": "68f8d5ec1c29008d04118fe8",
+          "firstName": "PEDRO",
+          "surname": "DE DIEGO HORNO",
+          "gender": "M",
+          "license": "0102915018",
+          "country": "ESP",
+          "hcpExact": 7.5,
+          "hcpGame": 5,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-10-25T09:40:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": -1,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 1,
+              "ranking": "1",
+              "realRanking": 1,
+              "result": 4,
+              "onlyGross": 4,
+              "onlyNet": -1,
+              "strokeNumber": 76,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": -1,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 1,
+                "ranking": "1",
+                "realRanking": 1,
+                "result": 4,
+                "onlyGross": 4,
+                "onlyNet": -1,
+                "strokeNumber": 76,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              5,
+              5,
+              4,
+              4,
+              3,
+              5,
+              5,
+              3,
+              4,
+              5,
+              4,
+              5,
+              5,
+              3,
+              5,
+              3,
+              5,
+              3
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ec1c29008d04119041",
+          "firstName": "ALVARO",
+          "surname": "DEA LAPUENTE",
+          "gender": "M",
+          "license": "0102946603",
+          "country": "ESP",
+          "hcpExact": 6.5,
+          "hcpGame": 4,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-10-25T09:40:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": 6,
+              "onlyGross": 6,
+              "onlyNet": 2,
+              "strokeNumber": 78,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 2,
+              "ranking": "2",
+              "realRanking": 2,
+              "result": 6,
+              "onlyGross": 6,
+              "onlyNet": 2,
+              "strokeNumber": 78,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": 6,
+                "onlyGross": 6,
+                "onlyNet": 2,
+                "strokeNumber": 78,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 2,
+                "ranking": "2",
+                "realRanking": 2,
+                "result": 6,
+                "onlyGross": 6,
+                "onlyNet": 2,
+                "strokeNumber": 78,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              5,
+              6,
+              5,
+              4,
+              2,
+              5,
+              5,
+              4,
+              6,
+              4,
+              5,
+              4,
+              5,
+              3,
+              4,
+              4,
+              4,
+              3
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d041191fe",
+          "firstName": "JESUS",
+          "surname": "HERRERO VERON",
+          "gender": "M",
+          "license": "0108950400",
+          "country": "ESP",
+          "hcpExact": 17.5,
+          "hcpGame": 16,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-10-25T10:20:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": 15,
+              "onlyGross": 15,
+              "onlyNet": -1,
+              "strokeNumber": 87,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 3,
+              "ranking": "3",
+              "realRanking": 3,
+              "result": 15,
+              "onlyGross": 15,
+              "onlyNet": -1,
+              "strokeNumber": 87,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": 15,
+                "onlyGross": 15,
+                "onlyNet": -1,
+                "strokeNumber": 87,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 3,
+                "ranking": "3",
+                "realRanking": 3,
+                "result": 15,
+                "onlyGross": 15,
+                "onlyNet": -1,
+                "strokeNumber": 87,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              5,
+              6,
+              4,
+              5,
+              4,
+              6,
+              7,
+              4,
+              6,
+              5,
+              5,
+              5,
+              6,
+              3,
+              5,
+              3,
+              5,
+              3
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ec1c29008d04118d6f",
+          "firstName": "MARIA",
+          "surname": "ARES GARCIA",
+          "gender": "F",
+          "license": "0102945376",
+          "country": "ESP",
+          "hcpExact": 17.5,
+          "hcpGame": 21,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-10-25T10:30:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": -1,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 4,
+              "ranking": "4",
+              "realRanking": 4,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": -1,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": -1,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 4,
+                "ranking": "4",
+                "realRanking": 4,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": -1,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              6,
+              5,
+              4,
+              5,
+              3,
+              7,
+              8,
+              3,
+              5,
+              7,
+              6,
+              6,
+              6,
+              4,
+              5,
+              2,
+              6,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d041191a5",
+          "firstName": "YAGO",
+          "surname": "GONZALEZ TARRIO",
+          "gender": "M",
+          "license": "0102927980",
+          "country": "ESP",
+          "hcpExact": 16.7,
+          "hcpGame": 15,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-10-25T10:20:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": 5,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 5,
+              "ranking": "5",
+              "realRanking": 5,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": 5,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": 5,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 5,
+                "ranking": "5",
+                "realRanking": 5,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": 5,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              7,
+              3,
+              6,
+              4,
+              3,
+              4,
+              5,
+              3,
+              5,
+              11,
+              6,
+              5,
+              6,
+              4,
+              5,
+              5,
+              6,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d0411914c",
+          "firstName": "MATEO",
+          "surname": "GONZALEZ TARRIO",
+          "gender": "M",
+          "license": "0102927981",
+          "country": "ESP",
+          "hcpExact": 16,
+          "hcpGame": 14,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "09:40",
+          "teeTime": "2025-10-25T09:40:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": 6,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 6,
+              "ranking": "6",
+              "realRanking": 6,
+              "result": 20,
+              "onlyGross": 20,
+              "onlyNet": 6,
+              "strokeNumber": 92,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": 6,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 6,
+                "ranking": "6",
+                "realRanking": 6,
+                "result": 20,
+                "onlyGross": 20,
+                "onlyNet": 6,
+                "strokeNumber": 92,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              7,
+              6,
+              5,
+              5,
+              4,
+              5,
+              9,
+              3,
+              5,
+              6,
+              4,
+              5,
+              5,
+              4,
+              6,
+              4,
+              5,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ec1c29008d04118e25",
+          "firstName": "MANUEL",
+          "surname": "BEAMONTE ESCARTIN",
+          "gender": "M",
+          "license": "0117915150",
+          "country": "ESP",
+          "hcpExact": 33,
+          "hcpGame": 32,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "11:00",
+          "teeTime": "2025-10-25T11:00:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": 28,
+              "onlyGross": 28,
+              "onlyNet": -4,
+              "strokeNumber": 100,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 7,
+              "ranking": "7",
+              "realRanking": 7,
+              "result": 28,
+              "onlyGross": 28,
+              "onlyNet": -4,
+              "strokeNumber": 100,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": 28,
+                "onlyGross": 28,
+                "onlyNet": -4,
+                "strokeNumber": 100,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 7,
+                "ranking": "7",
+                "realRanking": 7,
+                "result": 28,
+                "onlyGross": 28,
+                "onlyNet": -4,
+                "strokeNumber": 100,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              7,
+              6,
+              6,
+              5,
+              4,
+              5,
+              8,
+              5,
+              6,
+              8,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5,
+              5
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d04119839",
+          "firstName": "MARTINA",
+          "surname": "PARDO GARCIA",
+          "gender": "F",
+          "license": "0102979903",
+          "country": "ESP",
+          "hcpExact": 20.7,
+          "hcpGame": 24,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-10-25T10:30:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": 30,
+              "onlyGross": 30,
+              "onlyNet": 6,
+              "strokeNumber": 102,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 8,
+              "ranking": "8",
+              "realRanking": 8,
+              "result": 30,
+              "onlyGross": 30,
+              "onlyNet": 6,
+              "strokeNumber": 102,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": 30,
+                "onlyGross": 30,
+                "onlyNet": 6,
+                "strokeNumber": 102,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 8,
+                "ranking": "8",
+                "realRanking": 8,
+                "result": 30,
+                "onlyGross": 30,
+                "onlyNet": 6,
+                "strokeNumber": 102,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              8,
+              7,
+              6,
+              5,
+              5,
+              7,
+              6,
+              5,
+              5,
+              6,
+              4,
+              5,
+              6,
+              5,
+              7,
+              5,
+              6,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d0411994d",
+          "firstName": "EMMA",
+          "surname": "REIMONDEZ MAGALLON",
+          "gender": "F",
+          "license": "0102990523",
+          "country": "ESP",
+          "hcpExact": 31.4,
+          "hcpGame": 36,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-10-25T10:50:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 1,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 9,
+              "ranking": "9",
+              "realRanking": 9,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 1,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 1,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 9,
+                "ranking": "9",
+                "realRanking": 9,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 1,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              8,
+              6,
+              8,
+              4,
+              4,
+              6,
+              8,
+              5,
+              5,
+              8,
+              7,
+              6,
+              8,
+              6,
+              5,
+              5,
+              5,
+              5
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ee1c29008d04119bbf",
+          "firstName": "CATALINA",
+          "surname": "TASCON MARTIN",
+          "gender": "F",
+          "license": "0102915142",
+          "country": "ESP",
+          "hcpExact": 24.2,
+          "hcpGame": 28,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:30",
+          "teeTime": "2025-10-25T10:30:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 9,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 10,
+              "ranking": "10",
+              "realRanking": 10,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 9,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 9,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 10,
+                "ranking": "10",
+                "realRanking": 10,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 9,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              7,
+              7,
+              7,
+              6,
+              4,
+              7,
+              10,
+              4,
+              5,
+              8,
+              6,
+              5,
+              7,
+              5,
+              7,
+              5,
+              6,
+              3
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ec1c29008d04118e7e",
+          "firstName": "VENTURA",
+          "surname": "CAMPOS ALONSO",
+          "gender": "M",
+          "license": "0102952380",
+          "country": "ESP",
+          "hcpExact": 27.6,
+          "hcpGame": 26,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:20",
+          "teeTime": "2025-10-25T10:20:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 11,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 11,
+              "ranking": "11",
+              "realRanking": 11,
+              "result": 37,
+              "onlyGross": 37,
+              "onlyNet": 11,
+              "strokeNumber": 109,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 11,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 11,
+                "ranking": "11",
+                "realRanking": 11,
+                "result": 37,
+                "onlyGross": 37,
+                "onlyNet": 11,
+                "strokeNumber": 109,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              7,
+              7,
+              5,
+              8,
+              4,
+              8,
+              7,
+              3,
+              6,
+              10,
+              5,
+              7,
+              7,
+              6,
+              5,
+              5,
+              5,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d04119673",
+          "firstName": "IÑIGO",
+          "surname": "ORTIZ DE ZARATE RUIZ DE LAZCANO",
+          "gender": "M",
+          "license": "0102353421",
+          "country": "ESP",
+          "hcpExact": 34.8,
+          "hcpGame": 34,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "11:00",
+          "teeTime": "2025-10-25T11:00:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": 39,
+              "onlyGross": 39,
+              "onlyNet": 5,
+              "strokeNumber": 111,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 12,
+              "ranking": "12",
+              "realRanking": 12,
+              "result": 39,
+              "onlyGross": 39,
+              "onlyNet": 5,
+              "strokeNumber": 111,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": 39,
+                "onlyGross": 39,
+                "onlyNet": 5,
+                "strokeNumber": 111,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 12,
+                "ranking": "12",
+                "realRanking": 12,
+                "result": 39,
+                "onlyGross": 39,
+                "onlyNet": 5,
+                "strokeNumber": 111,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              8,
+              7,
+              6,
+              7,
+              5,
+              6,
+              7,
+              4,
+              5,
+              9,
+              5,
+              6,
+              7,
+              6,
+              6,
+              6,
+              6,
+              5
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d041194d5",
+          "firstName": "RAFAEL",
+          "surname": "LOPEZ SOBRINO",
+          "gender": "M",
+          "license": "0119955217",
+          "country": "ESP",
+          "hcpExact": 45.6,
+          "hcpGame": 42,
+          "gameTeeColor": "blue",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "11:00",
+          "teeTime": "2025-10-25T11:00:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 13,
+              "ranking": "13",
+              "realRanking": 13,
+              "result": 40,
+              "onlyGross": 40,
+              "onlyNet": -2,
+              "strokeNumber": 112,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 13,
+              "ranking": "13",
+              "realRanking": 13,
+              "result": 40,
+              "onlyGross": 40,
+              "onlyNet": -2,
+              "strokeNumber": 112,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 13,
+                "ranking": "13",
+                "realRanking": 13,
+                "result": 40,
+                "onlyGross": 40,
+                "onlyNet": -2,
+                "strokeNumber": 112,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 13,
+                "ranking": "13",
+                "realRanking": 13,
+                "result": 40,
+                "onlyGross": 40,
+                "onlyNet": -2,
+                "strokeNumber": 112,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "blue",
+              "gender": "M",
+              "lap": "lap18",
+              "rating": 69.1,
+              "slope": 120,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                3,
+                1,
+                15,
+                11,
+                5,
+                7,
+                17,
+                13,
+                4,
+                16,
+                2,
+                10,
+                14,
+                8,
+                18,
+                6,
+                12
+              ],
+              "meters1_18": [
+                400,
+                345,
+                353,
+                262,
+                139,
+                362,
+                457,
+                132,
+                305,
+                418,
+                243,
+                363,
+                434,
+                271,
+                323,
+                122,
+                295,
+                147
+              ]
+            },
+            "gross": [
+              8,
+              6,
+              5,
+              7,
+              4,
+              6,
+              11,
+              4,
+              6,
+              8,
+              5,
+              6,
+              6,
+              6,
+              6,
+              5,
+              8,
+              5
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ee1c29008d04119ccd",
+          "firstName": "MARIA",
+          "surname": "VARGAS PLATO",
+          "gender": "F",
+          "license": "0102914891",
+          "country": "ESP",
+          "hcpExact": 32.8,
+          "hcpGame": 38,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-10-25T10:50:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 14,
+              "ranking": "14",
+              "realRanking": 14,
+              "result": 47,
+              "onlyGross": 47,
+              "onlyNet": 9,
+              "strokeNumber": 119,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 14,
+              "ranking": "14",
+              "realRanking": 14,
+              "result": 47,
+              "onlyGross": 47,
+              "onlyNet": 9,
+              "strokeNumber": 119,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 14,
+                "ranking": "14",
+                "realRanking": 14,
+                "result": 47,
+                "onlyGross": 47,
+                "onlyNet": 9,
+                "strokeNumber": 119,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 14,
+                "ranking": "14",
+                "realRanking": 14,
+                "result": 47,
+                "onlyGross": 47,
+                "onlyNet": 9,
+                "strokeNumber": 119,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              8,
+              8,
+              7,
+              8,
+              4,
+              7,
+              8,
+              5,
+              6,
+              7,
+              7,
+              11,
+              8,
+              6,
+              6,
+              4,
+              5,
+              4
+            ]
+          }
+        },
+        {
+          "_id": "68f8d5ed1c29008d041195bc",
+          "firstName": "NEREA",
+          "surname": "MARIN CORTES",
+          "gender": "F",
+          "license": "0106990541",
+          "country": "ESP",
+          "hcpExact": 41.7,
+          "hcpGame": 48,
+          "gameTeeColor": "red",
+          "isCardFinished": true,
+          "isCardClosed": false,
+          "teeTimeHour": "10:50",
+          "teeTime": "2025-10-25T10:50:18.731Z",
+          "teeNumber": 1,
+          "view": {
+            "day": {
+              "rankingPosition": 15,
+              "ranking": "15",
+              "realRanking": 15,
+              "result": 61,
+              "onlyGross": 61,
+              "onlyNet": 13,
+              "strokeNumber": 133,
+              "matchPlayOffset": null
+            },
+            "acc": {
+              "rankingPosition": 15,
+              "ranking": "15",
+              "realRanking": 15,
+              "result": 61,
+              "onlyGross": 61,
+              "onlyNet": 13,
+              "strokeNumber": 133,
+              "matchPlayOffset": null
+            }
+          },
+          "previous": [
+            {
+              "day": {
+                "rankingPosition": 15,
+                "ranking": "15",
+                "realRanking": 15,
+                "result": 61,
+                "onlyGross": 61,
+                "onlyNet": 13,
+                "strokeNumber": 133,
+                "matchPlayOffset": null
+              },
+              "acc": {
+                "rankingPosition": 15,
+                "ranking": "15",
+                "realRanking": 15,
+                "result": 61,
+                "onlyGross": 61,
+                "onlyNet": 13,
+                "strokeNumber": 133,
+                "matchPlayOffset": null
+              }
+            }
+          ],
+          "scorecard": {
+            "gameTee": {
+              "color": "red",
+              "gender": "F",
+              "lap": "lap18",
+              "rating": 72.9,
+              "slope": 128,
+              "par": 72,
+              "par1_18": [
+                5,
+                4,
+                4,
+                4,
+                3,
+                4,
+                5,
+                3,
+                4,
+                5,
+                4,
+                4,
+                5,
+                4,
+                4,
+                3,
+                4,
+                3
+              ],
+              "hcp1_18": [
+                9,
+                7,
+                3,
+                15,
+                11,
+                5,
+                1,
+                17,
+                13,
+                2,
+                10,
+                4,
+                6,
+                14,
+                8,
+                18,
+                12,
+                16
+              ],
+              "meters1_18": [
+                386,
+                316,
+                343,
+                253,
+                123,
+                334,
+                445,
+                126,
+                286,
+                403,
+                227,
+                343,
+                395,
+                259,
+                312,
+                112,
+                276,
+                144
+              ]
+            },
+            "gross": [
+              9,
+              9,
+              7,
+              6,
+              4,
+              7,
+              9,
+              4,
+              8,
+              9,
+              9,
+              9,
+              9,
+              8,
+              7,
+              6,
+              6,
+              7
+            ]
+          }
+        }
+      ],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": [
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-10-25T09:40:18.731Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "ALVARO",
+          "surname": "DEA LAPUENTE",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 6.5,
+          "hcpGame": 4,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ec1c29008d04119041"
+        },
+        {
+          "firstName": "PEDRO",
+          "surname": "DE DIEGO HORNO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 7.5,
+          "hcpGame": 5,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ec1c29008d04118fe8"
+        },
+        {
+          "firstName": "MATEO",
+          "surname": "GONZALEZ TARRIO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 16,
+          "hcpGame": 14,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ed1c29008d0411914c"
+        }
+      ],
+      "groups": [],
+      "_id": "68fa0cdac2fe7b56179ddae5"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-10-25T10:20:18.731Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "YAGO",
+          "surname": "GONZALEZ TARRIO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 16.7,
+          "hcpGame": 15,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ed1c29008d041191a5"
+        },
+        {
+          "firstName": "JESUS",
+          "surname": "HERRERO VERON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.5,
+          "hcpGame": 16,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ed1c29008d041191fe"
+        },
+        {
+          "firstName": "VENTURA",
+          "surname": "CAMPOS ALONSO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 27.6,
+          "hcpGame": 26,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ec1c29008d04118e7e"
+        }
+      ],
+      "groups": [],
+      "_id": "68fa0d00c2fe7b5617a77b18"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-10-25T10:30:18.731Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "MARIA",
+          "surname": "ARES GARCIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 17.5,
+          "hcpGame": 21,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ec1c29008d04118d6f"
+        },
+        {
+          "firstName": "MARTINA",
+          "surname": "PARDO GARCIA",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 20.7,
+          "hcpGame": 24,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ed1c29008d04119839"
+        },
+        {
+          "firstName": "CATALINA",
+          "surname": "TASCON MARTIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 24.2,
+          "hcpGame": 28,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ee1c29008d04119bbf"
+        }
+      ],
+      "groups": [],
+      "_id": "68fa0d4dc2fe7b5617be020f"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-10-25T10:50:18.731Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "EMMA",
+          "surname": "REIMONDEZ MAGALLON",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 31.4,
+          "hcpGame": 36,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ed1c29008d0411994d"
+        },
+        {
+          "firstName": "MARIA",
+          "surname": "VARGAS PLATO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 32.8,
+          "hcpGame": 38,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ee1c29008d04119ccd"
+        },
+        {
+          "firstName": "NEREA",
+          "surname": "MARIN CORTES",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 41.7,
+          "hcpGame": 48,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "red",
+            "_id": "68f8d4491c29008d04db1efb"
+          },
+          "_id": "68f8d5ed1c29008d041195bc"
+        }
+      ],
+      "groups": [],
+      "_id": "68fa0d6fc2fe7b5617c62e3a"
+    },
+    {
+      "teeNumber": 1,
+      "teeTime": "2025-10-25T11:00:18.731Z",
+      "gameConfig": {
+        "gameMode": "individual",
+        "maxPlayers": 4,
+        "maxGroups": 0,
+        "maxPlayersByGroup": 0,
+        "_id": "5de79a77c09cb5e94be31edd"
+      },
+      "blockedForBooking": false,
+      "players": [
+        {
+          "firstName": "MANUEL",
+          "surname": "BEAMONTE ESCARTIN",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 33,
+          "hcpGame": 32,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ec1c29008d04118e25"
+        },
+        {
+          "firstName": "IÑIGO",
+          "surname": "ORTIZ DE ZARATE RUIZ DE LAZCANO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 34.8,
+          "hcpGame": 34,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ed1c29008d04119673"
+        },
+        {
+          "firstName": "RAFAEL",
+          "surname": "LOPEZ SOBRINO",
+          "nameSufix": null,
+          "country": "ESP",
+          "hcpExact": 45.6,
+          "hcpGame": 42,
+          "saceValue": 9999,
+          "sacePPValue": 9999,
+          "team": null,
+          "gameTee": {
+            "color": "blue",
+            "_id": "68f8d4491c29008d04db1f5a"
+          },
+          "_id": "68f8d5ed1c29008d041194d5"
+        }
+      ],
+      "groups": [],
+      "_id": "68fa0d85c2fe7b5617c8c0c3"
+    }
+  ]
+}

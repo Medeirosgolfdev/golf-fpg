@@ -42,6 +42,15 @@ function seriesFor(name, organizer) {
     if (/Campeonato/i.test(n)) return { id: "fgg-campeonato", label: "Campeonato de Galicia" };
     return { id: "fgg", label: "Federación Gallega" };
   }
+  // As outras federações do golfdirecto (Baleares, Aragão, Múrcia, País Basco,
+  // Cantábria, Extremadura, Valência — scripts/discover-golfdirecto-scope.js):
+  // uma série por federação.
+  const org = String(organizer || "");
+  if (org && !/catal/i.test(org)) {
+    const slug = org.replace(/^Federaci[oó]n\s+(de Golf\s+)?(de la\s+)?/i, "").replace(/\s+de Golf$/i, "")
+      .normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    return { id: `gd-${slug}`, label: org };
+  }
   if (/Copa Catalunya/i.test(n)) return { id: "fcg-copa-catalunya", label: "Copa Catalunya" };
   if (/Campionat|Campeonato/i.test(n)) return { id: "fcg-campionat", label: "Campionat de Catalunya" };
   if (/Circuit/i.test(n)) return { id: "fcg-circuit", label: "Circuit Juvenil FCG" };

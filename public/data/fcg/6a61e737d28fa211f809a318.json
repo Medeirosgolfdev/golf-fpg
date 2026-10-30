@@ -1,0 +1,122 @@
+{
+  "gameId": "6a61e737d28fa211f809a318",
+  "fetchedAt": "2026-10-30T20:51:43.297Z",
+  "game": {
+    "_id": "6a61e737d28fa211f809a318",
+    "name": "Campeonato Regional Individual Infantil, Alevín  2026",
+    "status": "finished",
+    "scheduleStartDate": "2026-08-18T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6a61e737d28fa211f809a342",
+      "name": "Campeonato Regional Individual Infantil, Alevín  2026",
+      "clientName": "Federación Cántabra de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a744d36dfe90dea39a5",
+      "name": "CLUB DE GOLF MATALEÑAS",
+      "city": null,
+      "state": null,
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a744d36dfe90dea39a6",
+      "name": "MATALEÑAS - Mataleñas",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 64.8,
+        "slope": 125,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a3b0"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 62.2,
+        "slope": 109,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a3d6"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 63,
+        "slope": 118,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a3c3"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.2,
+        "slope": 123,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a39d"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.6,
+        "slope": 126,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a3e9"
+      },
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 65,
+        "slope": 119,
+        "par": 68,
+        "_id": "6a61e737d28fa211f809a3fc"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a61e737d28fa211f809a354",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a61e737d28fa211f809a357",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

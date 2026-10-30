@@ -11,6 +11,9 @@ name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
 #   • Federació Catalana de Golf (golfdirecto.com) — scrape-fcg.js
 #   • Federación Gallega de Golf (fggolf.com → golfdirecto.com) — discover-fgg-scope.js + scrape-fcg.js
 #   • Federación Vasca de Golf (fvgolf.com, PDFs) — scrape-fvg.js
+#   • Baleares, Aragão, Múrcia, País Basco, Cantábria, Extremadura, Valência no
+#     golfdirecto — discover-golfdirecto-scope.js + scrape-fcg.js (o PDF regional
+#     da mesma prova sai do índice: scripts/lib/golfdirecto-twins.js)
 #
 # Todos os portais são públicos (sem cookies/secrets). Node puro, sem Playwright.
 #
@@ -144,6 +147,15 @@ jobs:
         timeout-minutes: 5
         run: node scripts/discover-fgg-scope.js || [ $? -eq 2 ]
 
+      # Baleares, Aragão, Múrcia, País Basco, Cantábria, Extremadura e Valência
+      # também publicam no golfdirecto: lista oficial filtrada pelo cliente.
+      - name: Discovery golfdirecto (federações → golfdirecto-scope.json)
+        id: disc_gd
+        if: env.DO_DISCOVERY == 'true'
+        continue-on-error: true
+        timeout-minutes: 10
+        run: node scripts/discover-golfdirecto-scope.js || [ $? -eq 2 ]
+
       - name: Discovery NextCaddy (→ nextcaddy-scope-all.json)
         id: disc_nc
         if: env.DO_DISCOVERY == 'true'
@@ -228,6 +240,12 @@ jobs:
         continue-on-error: true
         timeout-minutes: 20
         run: node scripts/scrape-fcg.js --scope scripts/fgg-scope.json --concurrency 3 $SKIP_FLAG || [ $? -eq 2 ]
+
+      - name: Scrape golfdirecto — outras federações
+        id: gd_fed
+        continue-on-error: true
+        timeout-minutes: 30
+        run: node scripts/scrape-fcg.js --scope scripts/golfdirecto-scope.json --concurrency 3 $SKIP_FLAG || [ $? -eq 2 ]
 
       # ── Enrichment + index + lookups (rápidos, não usam rede excepto enrich-lgs-dates) ──
       - name: Enrich LGS dates
@@ -320,7 +338,7 @@ jobs:
                public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
                public/data/spain-players.json public/data/rfegolf-rivals.json \
                public/data/fcg-rivals.json public/data/spain-player-tournaments.json \
-               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json scripts/fgg-scope.json \
+               public/data/rfegolf-lgs-twins.json scripts/fcg-scope.json scripts/fgg-scope.json scripts/golfdirecto-scope.json \
                scripts/nextcaddy-scope-all.json
 
       # ── Verificação final: falhar ALTO se algum scraper falhou ──
@@ -342,6 +360,8 @@ jobs:
           [ "${{ steps.fcg.outcome }}"         = "failure" ] && FAILED="$FAILED FCG"
           [ "${{ steps.disc_fgg.outcome }}"    = "failure" ] && FAILED="$FAILED discovery-FGG"
           [ "${{ steps.fgg.outcome }}"         = "failure" ] && FAILED="$FAILED FGG"
+          [ "${{ steps.disc_gd.outcome }}"     = "failure" ] && FAILED="$FAILED discovery-golfdirecto"
+          [ "${{ steps.gd_fed.outcome }}"      = "failure" ] && FAILED="$FAILED golfdirecto-federações"
           [ "${{ steps.enrich_lgs.outcome }}"  = "failure" ] && FAILED="$FAILED enrich-LGS"
           [ "${{ steps.enrich_lgs_stats.outcome }}" = "failure" ] && FAILED="$FAILED enrich-LGS-stats"
           [ "${{ steps.lgs_matchplay.outcome }}" = "failure" ] && FAILED="$FAILED match-play-LGS"

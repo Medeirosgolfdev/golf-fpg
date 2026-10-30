@@ -1,0 +1,140 @@
+{
+  "gameId": "6a994f877be6f1e13e401d53",
+  "fetchedAt": "2026-10-30T20:52:09.065Z",
+  "game": {
+    "_id": "6a994f877be6f1e13e401d53",
+    "name": "MENSUAL JUVENIL - NEW SIERRA GOLF",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-29T07:30:25.231Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6a994f877be6f1e13e401d7d",
+      "name": "MENSUAL JUVENIL - NEW SIERRA GOLF",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea3971",
+      "name": "NEW SIERRA GOLF",
+      "city": "AVILESES",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "64f1adf33a9d6513fff660a4",
+      "name": "NEW SIERRA GOLF - New Sierra Golf",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 70,
+        "slope": 128,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402971"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 130,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e40294b"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 68.9,
+        "slope": 124,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402997"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 76,
+        "slope": 133,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402925"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 76,
+        "slope": 135,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402984"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 80.3,
+        "slope": 137,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402938"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 83.8,
+        "slope": 139,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e402912"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 77.2,
+        "slope": 137,
+        "par": 72,
+        "_id": "6a994f877be6f1e13e40295e"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a994f877be6f1e13e401dcb",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a994f877be6f1e13e401dce",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

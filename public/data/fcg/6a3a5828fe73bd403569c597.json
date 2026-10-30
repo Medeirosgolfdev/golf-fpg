@@ -1,0 +1,95 @@
+{
+  "gameId": "6a3a5828fe73bd403569c597",
+  "fetchedAt": "2026-10-30T20:51:09.758Z",
+  "game": {
+    "_id": "6a3a5828fe73bd403569c597",
+    "name": "Copa Comité Juvenil",
+    "status": "finished",
+    "scheduleStartDate": "2026-07-20T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6a3a5828fe73bd403569c5c1",
+      "name": "Copa Comité Juvenil ",
+      "clientName": "Federación Cántabra de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de7af9df7b0e9346a702459",
+      "name": "PEDREÑA PETRIUM GOLF LA JUNQUERA",
+      "city": "PEDREÑA",
+      "state": "CANTABRIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de7af9df7b0e9346a70245a",
+      "name": "SEVE BALLESTEROS LAVIN LA JUNQUERA",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 61.2,
+        "slope": 108,
+        "par": 64,
+        "_id": "6a3a5828fe73bd403569c61d"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 63,
+        "slope": 121,
+        "par": 64,
+        "_id": "6a3a5828fe73bd403569c60b"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 62.8,
+        "slope": 111,
+        "par": 64,
+        "_id": "6a3a5828fe73bd403569c5f9"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a3a5828fe73bd403569c5d3",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a3a5828fe73bd403569c5d6",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

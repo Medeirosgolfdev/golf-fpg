@@ -1,0 +1,140 @@
+{
+  "gameId": "69a96284db65952255b8436e",
+  "fetchedAt": "2026-10-30T20:49:52.100Z",
+  "game": {
+    "_id": "69a96284db65952255b8436e",
+    "name": "MENSUAL JUVENIL - ALTAONA GOLF",
+    "status": "finished",
+    "scheduleStartDate": "2026-04-26T06:30:39.989Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "69a96284db65952255b8439a",
+      "name": "MENSUAL JUVENIL - ALTAONA GOLF",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea390e",
+      "name": "ALTAONA GOLF",
+      "city": "BAÑOS Y MENDIGO",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "6229786f1078255c77ae8e7e",
+      "name": "ALTAONA - Altaona",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 66.6,
+        "slope": 112,
+        "par": 72,
+        "_id": "69a96284db65952255b8444c"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.6,
+        "slope": 134,
+        "par": 72,
+        "_id": "69a96284db65952255b84439"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 63.1,
+        "slope": 104,
+        "par": 72,
+        "_id": "69a96284db65952255b84485"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 69.5,
+        "slope": 121,
+        "par": 72,
+        "_id": "69a96284db65952255b84498"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 74.6,
+        "slope": 126,
+        "par": 72,
+        "_id": "69a96284db65952255b84426"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 72,
+        "slope": 126,
+        "par": 72,
+        "_id": "69a96284db65952255b8445f"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.7,
+        "slope": 121,
+        "par": 72,
+        "_id": "69a96284db65952255b84472"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 77.5,
+        "slope": 128,
+        "par": 72,
+        "_id": "69a96284db65952255b84413"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "69a96284db65952255b843ac",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "69a96284db65952255b843af",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

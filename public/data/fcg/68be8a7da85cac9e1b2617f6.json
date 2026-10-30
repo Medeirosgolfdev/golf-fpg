@@ -1,0 +1,158 @@
+{
+  "gameId": "68be8a7da85cac9e1b2617f6",
+  "fetchedAt": "2026-10-30T20:47:53.358Z",
+  "game": {
+    "_id": "68be8a7da85cac9e1b2617f6",
+    "name": "MENSUAL JUVENIL - ALHAMA SIGNATURE",
+    "status": "finished",
+    "scheduleStartDate": "2025-10-26T08:00:52.280Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "black",
+    "defaultTeeColorFemale": "blue",
+    "tournament": {
+      "_id": "68be8a7da85cac9e1b261821",
+      "name": "MENSUAL JUVENIL - ALHAMA SIGNATURE",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea3977",
+      "name": "ALHAMA SIGNATURE",
+      "city": null,
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a734d36dfe90dea3978",
+      "name": "CONDADO DE ALHAMA",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.1,
+        "slope": 135,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b2618ad"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.8,
+        "slope": 131,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b2618c0"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.4,
+        "slope": 117,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b26190c"
+      },
+      {
+        "gender": "M",
+        "color": "black",
+        "lap": "lap18",
+        "rating": 76.7,
+        "slope": 135,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b261932"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 68.8,
+        "slope": 127,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b2618e6"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.7,
+        "slope": 130,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b2618f9"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 75.2,
+        "slope": 138,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b2618d3"
+      },
+      {
+        "gender": "F",
+        "color": "black",
+        "lap": "lap18",
+        "rating": 83.7,
+        "slope": 148,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b26191f"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77.6,
+        "slope": 140,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b261958"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.4,
+        "slope": 141,
+        "par": 72,
+        "_id": "68be8a7da85cac9e1b261945"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68be8a7da85cac9e1b261833",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "68be8a7da85cac9e1b261836",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

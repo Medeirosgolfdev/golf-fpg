@@ -1,0 +1,140 @@
+{
+  "gameId": "67c829e99125541f8f66c38c",
+  "fetchedAt": "2026-10-30T20:46:44.289Z",
+  "game": {
+    "_id": "67c829e99125541f8f66c38c",
+    "name": "MENSUAL JUVENIL - HACIENDA RIQUELME",
+    "status": "finished",
+    "scheduleStartDate": "2025-06-01T10:30:50.728Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "67c829e99125541f8f66c3ae",
+      "name": "MENSUAL JUVENIL - HACIENDA RIQUELME",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea3962",
+      "name": "HACIENDA RIQUELME GOLF",
+      "city": "SUCINA",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a734d36dfe90dea3963",
+      "name": "HACIENDA RIQUELME GOLF",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 74,
+        "slope": 143,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c41f"
+      },
+      {
+        "gender": "M",
+        "color": "green",
+        "lap": "lap18",
+        "rating": 67.5,
+        "slope": 125,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c4a4"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70.9,
+        "slope": 135,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c432"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.3,
+        "slope": 125,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c458"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 64.6,
+        "slope": 114,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c47e"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 70.3,
+        "slope": 126,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c46b"
+      },
+      {
+        "gender": "F",
+        "color": "green",
+        "lap": "lap18",
+        "rating": 73.9,
+        "slope": 133,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c491"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 76,
+        "slope": 137,
+        "par": 72,
+        "_id": "67c829e99125541f8f66c445"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "67c829e99125541f8f66c3c0",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "67c829e99125541f8f66c3c3",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

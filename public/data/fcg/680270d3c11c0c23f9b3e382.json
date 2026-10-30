@@ -1,0 +1,140 @@
+{
+  "gameId": "680270d3c11c0c23f9b3e382",
+  "fetchedAt": "2026-10-30T20:46:16.883Z",
+  "game": {
+    "_id": "680270d3c11c0c23f9b3e382",
+    "name": "PVCE INFANTIL-ALEVÍN-BENJAMIN - 2025",
+    "status": "finished",
+    "scheduleStartDate": "2025-04-27T07:00:01.465Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "680270d3c11c0c23f9b3e3b3",
+      "name": "PVCE INFANTIL-ALEVÍN-BENJAMIN - 2025 ",
+      "clientName": "Federación Aragonesa de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a664d36dfe90dea2aa7",
+      "name": "REAL CLUB DE GOLF LA PEÑAZA",
+      "city": "ZARAGOZA",
+      "state": "ZARAGOZA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a664d36dfe90dea2aa8",
+      "name": "LA PEÑAZA - La Peñaza",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.1,
+        "slope": 134,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e453"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72,
+        "slope": 139,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e440"
+      },
+      {
+        "gender": "M",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 62.9,
+        "slope": 103,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e466"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 68.3,
+        "slope": 123,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e48c"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.5,
+        "slope": 120,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e4b2"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "orange",
+        "lap": "lap18",
+        "rating": 67.1,
+        "slope": 117,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e479"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.5,
+        "slope": 130,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e49f"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 73.5,
+        "slope": 132,
+        "par": 72,
+        "_id": "680270d3c11c0c23f9b3e4c5"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "680270d3c11c0c23f9b3e3c5",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "680270d3c11c0c23f9b3e3c8",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

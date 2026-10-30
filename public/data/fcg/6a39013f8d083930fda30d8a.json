@@ -1,0 +1,104 @@
+{
+  "gameId": "6a39013f8d083930fda30d8a",
+  "fetchedAt": "2026-10-30T20:51:09.122Z",
+  "game": {
+    "_id": "6a39013f8d083930fda30d8a",
+    "name": "Campeonato Regional Individual Boy-Girl y sub-16",
+    "status": "finished",
+    "scheduleStartDate": "2026-07-18T07:00:00.000Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6a39013f8d083930fda30db4",
+      "name": "Campeonato Regional Individual Boy-Girl y sub-16",
+      "clientName": "Federación Cántabra de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a754d36dfe90dea3b58",
+      "name": "CAMPO DE GOLF NESTARES",
+      "city": null,
+      "state": null,
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a754d36dfe90dea3b59",
+      "name": "GOLF NESTARES",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 70,
+        "slope": 129,
+        "par": 72,
+        "_id": "6a39013f8d083930fda30df5"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66,
+        "slope": 117,
+        "par": 72,
+        "_id": "6a39013f8d083930fda30e19"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 71.3,
+        "slope": 130,
+        "par": 72,
+        "_id": "6a39013f8d083930fda30e07"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 76.4,
+        "slope": 138,
+        "par": 72,
+        "_id": "6a39013f8d083930fda30e2b"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6a39013f8d083930fda30dc6",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6a39013f8d083930fda30dc9",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

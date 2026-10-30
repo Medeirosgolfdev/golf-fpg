@@ -1,0 +1,270 @@
+{
+  "gameId": "6994457a99611b1cda0084ef",
+  "fetchedAt": "2026-10-30T20:52:05.523Z",
+  "game": {
+    "_id": "6994457a99611b1cda0084ef",
+    "name": "IX Prueba Circuito Junior 18 hoyos - Final",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-11-21T08:00:16.979Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6994457a99611b1cda00851a",
+      "name": "IX Prueba Circuito Junior 18 hoyos - Final",
+      "clientName": "Federación Balear de Golf",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a6d4d36dfe90dea31f6",
+      "name": "CLUB DE GOLF SON SERVERA",
+      "city": "SON SERVERA",
+      "state": "MALLORCA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a6d4d36dfe90dea31f7",
+      "name": "SON SERVERA - Son Servera",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.2,
+        "slope": 139,
+        "par": 72,
+        "_id": "6994457a99611b1cda0085bd"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69,
+        "slope": 132,
+        "par": 72,
+        "_id": "6994457a99611b1cda0085e3"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.6,
+        "slope": 143,
+        "par": 72,
+        "_id": "6994457a99611b1cda0085aa"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.5,
+        "slope": 126,
+        "par": 72,
+        "_id": "6994457a99611b1cda008609"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 72.2,
+        "slope": 134,
+        "par": 72,
+        "_id": "6994457a99611b1cda0085f6"
+      },
+      {
+        "gender": "F",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 77.8,
+        "slope": 146,
+        "par": 72,
+        "_id": "6994457a99611b1cda00862f"
+      },
+      {
+        "gender": "F",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 79.6,
+        "slope": 148,
+        "par": 72,
+        "_id": "6994457a99611b1cda00861c"
+      },
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 75.1,
+        "slope": 140,
+        "par": 72,
+        "_id": "6994457a99611b1cda0085d0"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6994457a99611b1cda00852c",
+      "name": "Sub-16 Masculino",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda00852f",
+      "name": "Sub-14 Masculino",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008532",
+      "name": "Sub-12 Masculino",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008535",
+      "name": "Sub-16 Femenino",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008538",
+      "name": "Sub-14 Femenino",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda00853b",
+      "name": "Sub-12 Femenino",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008547",
+      "name": "SCRATCH MASCULINO",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda00854a",
+      "name": "SCRATCH FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda00853e",
+      "name": "handica general",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008541",
+      "name": "General Masculino Sub-21",
+      "gender": "M",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda008544",
+      "name": "General Femenino Sub-21",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6994457a99611b1cda00854d",
+      "name": "HANDICAP GENERAL FEMENINO",
+      "gender": "F",
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

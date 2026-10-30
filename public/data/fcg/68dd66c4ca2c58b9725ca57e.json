@@ -1,0 +1,104 @@
+{
+  "gameId": "68dd66c4ca2c58b9725ca57e",
+  "fetchedAt": "2026-10-30T20:47:57.750Z",
+  "game": {
+    "_id": "68dd66c4ca2c58b9725ca57e",
+    "name": "MENSUAL JUVENIL - SAURINES GOLF",
+    "status": "finished",
+    "scheduleStartDate": "2025-11-16T07:00:18.703Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "68dd66c4ca2c58b9725ca5a9",
+      "name": "MENSUAL JUVENIL - SAURINES GOLF",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": true
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea397f",
+      "name": "SAURINES GOLF",
+      "city": "ROLDÁN",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de7afb8f7b0e9346a70267a",
+      "name": "SAURINES GOLF - Saurines Golf",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 66.2,
+        "slope": 116,
+        "par": 72,
+        "_id": "68dd66c4ca2c58b9725ca62c"
+      },
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.1,
+        "slope": 125,
+        "par": 72,
+        "_id": "68dd66c4ca2c58b9725ca606"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 74,
+        "slope": 130,
+        "par": 72,
+        "_id": "68dd66c4ca2c58b9725ca5f3"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 70.9,
+        "slope": 124,
+        "par": 72,
+        "_id": "68dd66c4ca2c58b9725ca619"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "68dd66c4ca2c58b9725ca5bb",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "68dd66c4ca2c58b9725ca5be",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

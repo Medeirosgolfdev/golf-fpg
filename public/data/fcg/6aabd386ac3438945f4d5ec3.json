@@ -1,0 +1,122 @@
+{
+  "gameId": "6aabd386ac3438945f4d5ec3",
+  "fetchedAt": "2026-10-30T20:52:09.648Z",
+  "game": {
+    "_id": "6aabd386ac3438945f4d5ec3",
+    "name": "Ronda 1",
+    "status": "scheduled",
+    "scheduleStartDate": "2026-12-19T07:00:19.918Z",
+    "scheduleEndDate": null,
+    "federation": "ESP",
+    "lap": "lap18",
+    "pointMode": "strokePlay",
+    "defaultTeeColorMale": "yellow",
+    "defaultTeeColorFemale": "red",
+    "tournament": {
+      "_id": "6aabd386ac3438945f4d5eed",
+      "name": "CAMPEONATO ABSOLUTO JUVENIL - GOLF ALTORREAL",
+      "clientName": "Federación de Golf de la Región de Murcia",
+      "isSingleGame": false
+    },
+    "club": {
+      "_id": "5de79a734d36dfe90dea3906",
+      "name": "CLUB DE GOLF ALTORREAL",
+      "city": "MOLINA DE SEGURA",
+      "state": "MURCIA",
+      "country": "ESP"
+    },
+    "course": {
+      "_id": "5de79a734d36dfe90dea3907",
+      "name": "ALTORREAL",
+      "isShort": false,
+      "isPitchAndPutt": false
+    },
+    "teesMale": [
+      {
+        "gender": "M",
+        "color": "yellow",
+        "lap": "lap18",
+        "rating": 71.6,
+        "slope": 127,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a4b"
+      },
+      {
+        "gender": "M",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 69.8,
+        "slope": 123,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a71"
+      },
+      {
+        "gender": "M",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 67.6,
+        "slope": 115,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a97"
+      },
+      {
+        "gender": "M",
+        "color": "white",
+        "lap": "lap18",
+        "rating": 72.9,
+        "slope": 128,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a38"
+      }
+    ],
+    "teesFemale": [
+      {
+        "gender": "F",
+        "color": "blue",
+        "lap": "lap18",
+        "rating": 76,
+        "slope": 135,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a5e"
+      },
+      {
+        "gender": "F",
+        "color": "red",
+        "lap": "lap18",
+        "rating": 73,
+        "slope": 131,
+        "par": 72,
+        "_id": "6aabd386ac3438945f4d6a84"
+      }
+    ]
+  },
+  "categories": [
+    {
+      "_id": "6aabd386ac3438945f4d5f23",
+      "name": "SCRATCH",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    },
+    {
+      "_id": "6aabd386ac3438945f4d5f26",
+      "name": "HANDICAP",
+      "gender": null,
+      "ageMin": null,
+      "ageMax": null,
+      "hcpMin": null,
+      "hcpMax": null,
+      "teeColor": null,
+      "players": [],
+      "rankingError": null,
+      "scorecardErrors": []
+    }
+  ],
+  "card": []
+}

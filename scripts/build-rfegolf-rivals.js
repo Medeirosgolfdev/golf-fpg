@@ -18,6 +18,7 @@
  */
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
+const { gemeoGolfdirecto, licencasRegional } = require("./lib/golfdirecto-twins");
 const path = require("path");
 
 const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
@@ -355,6 +356,8 @@ for (const { dir, f, src } of rfFiles) {
   try {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf-8"));
     if (!d.ok || !d.compId) { rfSkipped++; continue; }
+    // PDF regional com a mesma prova no golfdirecto → entra pelo fcg-rivals.
+    if (src !== "rfegolf" && gemeoGolfdirecto(d.meta && d.meta.dateStart, licencasRegional(d))) { rfSkipped++; continue; }
     const compId = String(d.compId);
     // Gémeo com versão LGS já incluída → skip (a página /rfeg faz o mesmo)
     if (src === "rfegolf" && twinsData.twins && twinsData.twins[compId] != null) { rfTwinned++; continue; }
