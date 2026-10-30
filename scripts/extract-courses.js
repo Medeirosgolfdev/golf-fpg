@@ -165,7 +165,7 @@ function teeSexFromCounts(c) {
 
 /* ── 2. Carregar course-aliases.json ── */
 
-let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {}, extraLinksMap = {}, parRoutesMap = {};
+let aliasMap = {}, nameOverridesMap = {}, blackSet = new Set(), courseKeyCountryMap = {}, extraLinksMap = {}, parRoutesMap = {}, siOverridesMap = {};
 
 if (fs.existsSync(aliasPath)) {
   try {
@@ -175,6 +175,9 @@ if (fs.existsSync(aliasPath)) {
     // parRoutes: { campo canónico (norm) → { par dos 18 buracos ("443443…") → outro campo (norm) } }
     // Para o mesmo nome usado em dois percursos diferentes (Chantilly Vineuil New vs Old Vineuil).
     parRoutesMap = ad.parRoutes || {};
+    // siOverrides: { courseKey → { par: [18], si: [18], fonte } } — SI oficial para
+    // campos cujos cartões não o trazem; só se aplica aos tees com o MESMO par.
+    siOverridesMap = ad.siOverrides || {};
 
     // ptVariants: nomes alternativos de campos PT → excluir dos away
     const ptv = ad.ptVariants || {};
@@ -581,7 +584,11 @@ for (const [courseKey, { name, country, tees }] of courseMap) {
   const teeArr = [];
   let idx = 0;
 
+  const siOv = siOverridesMap[courseKey];
   for (const [, t] of tees) {
+    if (siOv && t.holes.length === 18 && t.holes.every((h, i) => h.par === siOv.par[i])) {
+      t.holes = t.holes.map((h, i) => ({ ...h, si: siOv.si[i] }));
+    }
     const n         = t.holes.length;
     const is18      = n === 18;
     const parTotal  = sumHoles(t.holes, 1,  18, "par");
