@@ -14,6 +14,7 @@ import { getTeeHex, textOnColor } from "../utils/teeColors";
 import { fmtToPar } from "../utils/format";
 import { SC } from "../utils/scoreDisplay";
 import ScoreCircle from "./ScoreCircle";
+import TeeDots from "./TeeDots";
 
 const soma = (g: (number | null)[]) => g.reduce<number>((s, v) => s + (v ?? 0), 0);
 const corPar = (d: number) => (d > 0 ? SC.danger : d < 0 ? SC.good : SC.muted);
@@ -50,21 +51,10 @@ function CartaoNove({ grupo, l }: { grupo: string; l: LoopEclectic }) {
         <span className="fw-700">{t.total ?? "–"}</span>
         {t.total != null && <span className="fw-700" style={{ color: corPar(t.total - parTot) }}>{fmtToPar(t.total - parTot)}</span>}
         <button type="button" className="fs-12" onClick={() => setAberto(v => !v)} style={{ ...semBorda, color: "var(--accent)" }}>
-          {aberto ? "▾" : "▸"} {nVoltas(t)} voltas
+          {aberto ? "▾" : "▸"} {nVoltas(t)} volta{nVoltas(t) === 1 ? "" : "s"}
         </button>
-        <span style={{ marginLeft: "auto", display: "inline-flex", gap: 5, alignItems: "center" }}>
-          {l.tees.map(x => {
-            const cor = getTeeHex(x.teeName), sel = x.teeKey === t.teeKey;
-            return (
-              <button key={x.teeKey} type="button" onClick={() => setTeeKey(x.teeKey)}
-                title={`${x.teeName} · ${nVoltas(x)} voltas`} aria-label={x.teeName}
-                style={{ ...semBorda, width: 14, height: 14, borderRadius: "50%", background: cor,
-                  border: "1px solid var(--border)",
-                  boxShadow: sel ? "0 0 0 2px var(--bg-card, #fff), 0 0 0 3.5px var(--text-2)" : "none",
-                  opacity: sel ? 1 : 0.55 }} />
-            );
-          })}
-        </span>
+        <TeeDots active={t.teeKey} onSelect={setTeeKey}
+          tees={l.tees.map(x => ({ key: x.teeKey, name: x.teeName, title: `${x.teeName} · ${nVoltas(x)} volta${nVoltas(x) === 1 ? "" : "s"}` }))} />
       </div>
       <div className="scroll-x">
         <table className="sc-table-ec sc-grid">

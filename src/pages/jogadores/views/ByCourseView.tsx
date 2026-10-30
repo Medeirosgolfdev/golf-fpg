@@ -60,11 +60,8 @@ function ByCourseRow({ course, data, openScorecard, openScorecardId }: {
     setActiveTee(best);
   }, [open, activeTee, holeStats]);
 
-  // Handler de clique manual num tee — só muda o filtro (sem scroll automático).
-  // Toggle: clicar no tee já activo limpa o filtro.
-  const handleSelectTee = useCallback((tk: string) => {
-    setActiveTee(prev => (prev === tk ? null : tk));
-  }, []);
+  // Clique numa bolinha de tee do eclético — só muda o filtro (sem scroll automático).
+  const handleSelectTee = useCallback((tk: string) => setActiveTee(tk), []);
 
   return (
     <>

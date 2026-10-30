@@ -959,9 +959,6 @@ th.lb-sortable:hover { background: var(--bg-hover-subtle); color: var(--accent);
 tr.clickable { cursor: pointer; }
 /* Utility: "year" separator label shown between rows/sections */
 .year-label { padding: 5px 12px; font-size: var(--fs-11); font-weight: 600; color: var(--text-3); letter-spacing: 0; }
-/* Highlighted active row in Eclético por tee summary table */
-.dtable tr.tee-row-active,
-.dtable-lg tr.tee-row-active { background: var(--color-good-alpha); box-shadow: inset 3px 0 0 var(--color-good); }
 
 .score-delta { font-size: var(--fs-10); font-weight: 500; margin-left: 3px; }
 .score-delta.pos { color: var(--color-danger); }
@@ -1085,16 +1082,6 @@ tr.cross-current { background: var(--bg-success); }
    sem fundo tingido, só um divisor a separá-las do scorecard. */
 .sc-table-ec .ec-extra { border-left: 1px solid var(--border-light); font-variant-numeric: tabular-nums; min-width: 32px; }
 
-/* Tabela-resumo do Eclético — cabeçalho harmonizado com o scorecard (caixa
-   normal, leve, transparente) e densidade compacta para ocupar menos espaço. */
-.ec-summary th { text-transform: none; letter-spacing: 0; font-weight: 500; background: transparent; color: var(--text-3); padding: 8px 12px; }
-.ec-summary td { padding: 8px 12px; }
-.ec-summary tbody tr { transition: background 0.12s ease; }
-.ec-summary tbody tr:hover { background: var(--bg-hover-subtle); }
-/* Tabela-resumo: variantes 18H/9H empilhadas na mesma célula (par/eclético/vsPar) */
-.ec-summary .ec-sum-var { line-height: 1.35; }
-.ec-summary .ec-sum-hc { font-size: var(--fs-9); color: var(--text-muted); font-weight: 600; margin-right: 2px; }
-
 /* Bloco de cada tee (Eclético por tee) — card plano e quieto: fundo branco,
    apenas uma hairline subtil, sem sombra nem cor de realce. O estado activo
    distingue-se só por uma borda neutra ligeiramente mais escura. */
@@ -1191,8 +1178,6 @@ tr.cross-current { background: var(--bg-success); }
 /* Barra de título de secção (ex.: "Resumo por Tee") limpa: sem fundo pesado, mesmo
    peso/separador dos outros títulos de secção. */
 .pa-content .sc-bar-head { background: transparent; font-weight: 700; font-size: var(--fs-12); color: var(--text-2); }
-/* Tabela-resumo do Eclético com o mesmo tamanho da TeeSummaryTable (lista). */
-.pa-content .ec-summary { font-size: var(--fs-13); }
 
 /* (.kpi-card removido — tudo usa agora o componente <KpiCard> / classe .kpi) */
 
