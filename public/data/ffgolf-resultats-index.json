@@ -1,8 +1,41 @@
 {
-  "generatedAt": "2026-10-29T18:48:20.270Z",
+  "generatedAt": "2026-10-30T01:38:00.191Z",
   "source": "scripts/build-ffgolf-resultats-index.js",
-  "total": 1277,
+  "total": 1278,
   "tournaments": [
+    {
+      "file": "01-00-2601483390.json",
+      "trnId": "2601483390",
+      "partKey": "ecd4e76b328a5c676c4ba0302a374cdc",
+      "name": "Promotion Inter Région Ouest U16 Garçons 2026",
+      "formule": "Simple",
+      "date": "28/10/2026",
+      "dateIso": "2026-10-28",
+      "year": 2026,
+      "typeCompetition": "01",
+      "ligue": "00",
+      "seriesCount": 1,
+      "totalPlayers": 112,
+      "course": "Parcours Rouge",
+      "sex": "M",
+      "roundsPlayed": 1,
+      "divisions": [
+        {
+          "serieId": "11",
+          "label": "Messieurs",
+          "players": 112
+        }
+      ],
+      "pagesFfgolfUrl": "https://pages.ffgolf.org/resultats/",
+      "ffgolfOfficialUrl": null,
+      "ggPage": null,
+      "ffgolfSlug": null,
+      "ffgolfSection": null,
+      "rms9": null,
+      "ligues": [
+        "00"
+      ]
+    },
     {
       "file": "01-00-2601483470.json",
       "trnId": "2601483470",
@@ -19666,7 +19699,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9411",
+        "id": 2053398
+      },
       "ligues": [
         "11"
       ]
@@ -20804,7 +20840,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9406",
+        "id": 2640593
+      },
       "ligues": [
         "00"
       ]
@@ -20837,7 +20876,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9408",
+        "id": 1818317
+      },
       "ligues": [
         "00"
       ]
@@ -21281,7 +21323,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9408",
+        "id": 1783799
+      },
       "ligues": [
         "00"
       ]
@@ -21329,7 +21374,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9406",
+        "id": 2599370
+      },
       "ligues": [
         "00"
       ]
@@ -21944,7 +21992,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9411",
+        "id": 1968218
+      },
       "ligues": [
         "00"
       ]
@@ -21992,7 +22043,10 @@
       "ggPage": null,
       "ffgolfSlug": null,
       "ffgolfSection": null,
-      "rms9": null,
+      "rms9": {
+        "tenant": "9402",
+        "id": 2510258
+      },
       "ligues": [
         "00"
       ]
