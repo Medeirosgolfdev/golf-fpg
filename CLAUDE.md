@@ -165,6 +165,13 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
   `ScorecardLeaderboard`, as colunas extra (`prefixHeaderCells`/
   `postScorecardHeaderCells`) ordenam-se à mão (ver `AdmissionsTab.tsx`, `DrawTab.tsx`).
 - **Sexo: sempre `<SexBadge sex="M|F" />`**, nunca os símbolos ♂/♀.
+- **Trava do aspecto global** (30/10/2026, pedido dela: «todas as páginas
+  parecidas e alimentadas por módulos globais»): `scripts/estilo-global.test.js`
+  falha se um `.tsx` ganhar `style={{}}`, cores hex, letra/cantos em número ou
+  uma `<table>` sem classe global (baseline por ficheiro; ficheiro novo = zero).
+  Usar as peças/classes globais; depois de arrumar,
+  `node scripts/estilo-global-baseline.js` aperta a trava (`--force` só para
+  casos legítimos, ex. eixos dos gráficos).
 - **Cores só via `src/tokens.css`**; `colors.ts` espelha-os para JS. Excepções de
   propósito: `OverlayExport.tsx` (o html-to-image não lê variáveis CSS),
   `--pill-intl-bg: #00FF00` e as cores de tees da FPG em `teeColors.ts`. Um
@@ -197,7 +204,11 @@ GolfBox) · `/ffg` · `/rfeg` · `/global-junior` · `/egr` · `/wagr` ·
 - **Peças únicas, nunca uma tabela própria por página:** inscrições →
   `AdmissionsTab`; draws → `DrawTab` (fontes de fora convertem para `FpgDraw`;
   no CircuitShell vão em `admissions`/`roundDraws` da divisão); barra de filtros
-  de jogadores → `PlayerFilterBar.tsx`; só totais → `TotalsResumo`; lista +
+  de jogadores → `PlayerFilterBar.tsx`; linha «Rótulo: Todos · a · b» →
+  `FilterPillRow`; escolha única → `TabRow`; KPIs → `KpiCard` numa `.kpi-row`;
+  cartão de buracos → `ScorecardTable` ou a grelha `.sc-table-modern`/`.sc-table-ec`
+  + `.sc-grid`; tabela simples → `.dtable` (o aspecto vive no «MODELO ÚNICO DAS
+  TABELAS», fim do `App.css`); só totais → `TotalsResumo`; lista +
   detalhe → `MasterDetail`; **rankings → capacidade `ranking` do CircuitShell**
   (`CircuitConfig.ranking`, `ui/circuit/CircuitRanking.tsx`: vista «Ranking» com
   linhas calculadas dos torneios visíveis, `RankingTable` ordenável, e a
