@@ -98,6 +98,9 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
   const isMulti = (tournament.rounds || 1) > 1 && tournament.players.some(p => (p.roundScores?.length ?? 0) > 1);
   const nRounds = tournament.rounds || 1;
   const hasAnyRounds = (tournament.players?.length ?? 0) > 0;
+  // Uma volta só com totais (classificações em PDF das federações espanholas):
+  // sem cartões o ScorecardLB fica vazio — mostra-se a classificação acumulada.
+  const soTotais = !isMulti && hasAnyRounds && !tournament.players.some(p => (p.scores?.length ?? 0) > 0);
 
   // Dados extra (admissions + draws) — injectados no loader Jovens
   const admissions = tournament._admissions;
@@ -255,7 +258,7 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
       if (hasDraw(1)) out.push({ key: "draw:1", label: "Draw R1" });
       // «R1» também quando já há draw de uma volta seguinte (Faldo Madeira:
       // só a R1 jogada, Draw R2 publicado) — dizia «Scorecard» (16/10/2026).
-      out.push({ key: "round:0", label: roundLabel(0, nRounds > 1 || allDrawRounds.some(r => r >= 2) ? "R1" : "Scorecard") });
+      out.push({ key: "round:0", label: roundLabel(0, nRounds > 1 || allDrawRounds.some(r => r >= 2) ? "R1" : soTotais ? "Classificação" : "Scorecard") });
       // Draws de rondas futuras ainda não jogadas (R2, R3, ...)
       const futureDraws = allDrawRounds.filter(r => r >= 2);
       for (const r of futureDraws) {
@@ -660,6 +663,8 @@ function TournamentDetail({ tournament, escLookup, playersDB, extraTabs, leading
           const accLB = <AccumulatedLB tournament={curT} nRounds={nRounds} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
           return renderAccSection ? <>{renderAccSection(accLB)}{shareRounds}</> : <>{accHeader}{accLB}{accExtra}{shareRounds}</>;
         }
+        if (soTotais)
+          return <AccumulatedLB tournament={curT} nRounds={1} escLookup={escLookup} playersDB={playersDB} showCols={accShowCols} extraColumns={accExtraColumns} renderName={accRenderName} showCourse={options?.showCourse} modalidade={modalidade} />;
         if (isRoundTab || !isMulti) {
           const roundLB = <ScorecardLB tournament={curT} escLookup={escLookup} playersDB={playersDB} siLabel={siLabel} options={lbOptions} />;
           // Volta 2+: análise dessa volta contra a anterior

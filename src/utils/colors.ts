@@ -48,7 +48,7 @@ export const C = {
   major:    "#b8860b",
   majorSrc: { doral: "#c8102e", bjgt: "#1a7f5a", eowagr: "#0a4d8c", job: "#e8731c", fm: "#1a5276", fsga: "#d97706", uajt: "#111827", mexnacional: "#006341", icopa: "#b45309", interzonas: "#0f766e", avtrophy: "#a51931", ebtc2: "#2a7ab0", egtc: "#b5179e", elg: "#7b2cbf", eatc: "#166534", eatc2: "#4d7c0f", eym: "#0891b2", ejo: "#0072ce", ejt: "#155e9c", fcg: "#1d4ed8", jwgc: "#9333ea", coc: "#0e7490", uaworlds: "#7c2d12", reidtrophy: "#384d9f", optimist: "#d4a017", evianjc: "#0b3d91", faldomadeira: "#1b5e20" },
   ffgSrc:   { lgpidf: "#3b5a8c", gg: "#1f7a4d" },
-  rfegSrc:  { livegolfscoring: "#00aa55", golfdirecto: "#0066cc", fgcv: "#e05a1a", fvg: "#6a3d9a" },
+  rfegSrc:  { livegolfscoring: "#00aa55", golfdirecto: "#0066cc", fgcv: "#e05a1a", fvg: "#6a3d9a", fng: "#b8213a", fgclm: "#8a6d0b", frg: "#7a2e5c" },
   purple:       "#9c27b0",  // USKids — categoria especial
   orangeDeep:   "#e65100",  // USKids — não-euro
 

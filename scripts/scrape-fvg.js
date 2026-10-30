@@ -28,8 +28,8 @@
 "use strict";
 const fs = require("fs");
 const path = require("path");
-const pdf = require("pdf-parse");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
+const { itensPdf, linhas, lerClassificacoes, juntarClassificacoes } = require("./lib/pdf-classificacoes");
 
 const OUT_DIR = path.resolve(__dirname, "../public/data/fvg");
 const AJAX = "https://www.fvgolf.com/wp-admin/admin-ajax.php";
@@ -82,152 +82,6 @@ function pdfsResultados(html, base) {
   return [...sec.matchAll(/href="([^"]+\.pdf)"/gi)].map((m) => new URL(m[1], base).toString());
 }
 
-// ── PDF → linhas com coordenadas ──────────────────────────────────────
-async function itensPdf(buf) {
-  const itens = [];
-  await pdf(buf, {
-    pagerender: async (pg) => {
-      const tc = await pg.getTextContent();
-      for (const it of tc.items) {
-        if (!it.str || !it.str.trim()) continue;
-        itens.push({ s: it.str.trim(), x: it.transform[4], y: it.transform[5], p: pg.pageIndex });
-      }
-      return "";
-    },
-  });
-  return itens;
-}
-/** Agrupa itens em linhas (mesma página, |Δy| ≤ 2), de cima para baixo. */
-function linhas(itens) {
-  const ord = [...itens].sort((a, b) => a.p - b.p || b.y - a.y || a.x - b.x);
-  const out = [];
-  for (const it of ord) {
-    const l = out[out.length - 1];
-    if (l && l.p === it.p && Math.abs(l.y - it.y) <= 2) l.itens.push(it);
-    else out.push({ p: it.p, y: it.y, itens: [it] });
-  }
-  for (const l of out) l.itens.sort((a, b) => a.x - b.x);
-  return out;
-}
-
-const CATS = [[/benjam/i, "Benjamín"], [/alev/i, "Alevín"], [/infantil/i, "Infantil"], [/cadet/i, "Cadete"], [/junior|sub-?18/i, "Junior"]];
-const NIVEL = { B: "Benjamín", A: "Alevín", I: "Infantil", C: "Cadete", J: "Junior" };
-const catDe = (s) => { for (const [re, c] of CATS) if (re.test(s || "")) return c; return null; };
-const sexoDe = (s) => (/femen|femin|\bfem\b/i.test(s || "") ? "F" : /mascul|\bmas\b/i.test(s || "") ? "M" : null);
-const num = (s) => { const v = parseFloat(String(s || "").replace(",", ".")); return Number.isFinite(v) ? v : null; };
-/** «+5» → 5, «-2» → −2, «PAR»/«E» → 0; o resto (NP, RET, DESC) → null. */
-const toParDe = (s) => { const t = String(s || "").trim().toUpperCase(); if (t === "PAR" || t === "E") return 0; return /^[+-]?\d+$/.test(t) ? parseInt(t, 10) : null; };
-const LIC = /^[A-Z]{2}\d{8}$|^\d{10}$/;
-
-/**
- * Classificações de um PDF (formatos A e B). Devolve blocos
- * { titulo, categoria, sexo, nRounds, parRonda, players[] } — um por título de
- * secção («RESULTADOS CADETE MASCULINO», «INFANTIL MASCULINO»…).
- */
-function lerClassificacoes(itens) {
-  const blocos = [];
-  let titulo = "", cols = null, bloco = null;
-  for (const l of linhas(itens)) {
-    const txt = l.itens.map((i) => i.s).join(" ");
-    const h = l.itens.map((i) => i.s.toUpperCase().replace(/\.$/, ""));
-    if (h.includes("LICENCIA") && (h.includes("NOMBRE"))) {
-      cols = l.itens.map((i) => ({ n: i.s.toUpperCase().replace(/\.$/, "").replace(/^STR$/, "STRS"), x: i.x }));
-      bloco = null;
-      continue;
-    }
-    const lic = l.itens.find((i) => LIC.test(i.s));
-    if (!lic || !cols) {
-      // Linha de título (sem licença): «RESULTADOS CADETE MASCULINO», «INFANTIL
-      // FEMENINO», «Clasificación Scratch Masculina Acumulada (ASC: 0) 1ª Vuelta».
-      if ((catDe(txt) || sexoDe(txt) || /clasificaci/i.test(txt)) && txt.length < 90 && !/campeonato|puntuable|copa|torneo|cpto/i.test(txt)) { titulo = txt.replace(/^RESULTADOS\s+/i, ""); bloco = null; }
-      continue;
-    }
-    // Cada item vai para a coluna do cabeçalho mais próxima. Formato A tem R1..R4
-    // (±par por volta); nos outros o total é o último número da linha.
-    const v = {};
-    const formatoA = cols.some((c) => c.n === "R1");
-    let ultimo = null;
-    const xNome = Math.min(...cols.filter((c) => c.n === "NOMBRE" || c.n === "LICENCIA").map((c) => c.x));
-    for (const it of l.itens) {
-      if (it === lic) continue;
-      // A posição é o número à esquerda do nome e da licença (no formato B fica
-      // mais perto da coluna «Licencia» do que da «Pos»).
-      if (/^\d+$/.test(it.s) && it.x < xNome - 2 && v.POS == null) { v.POS = it.s; continue; }
-      let melhor = null;
-      for (const c of cols) if (!melhor || Math.abs(c.x - it.x) < Math.abs(melhor.x - it.x)) melhor = c;
-      if (v[melhor.n] == null) v[melhor.n] = it.s;
-      if (/^\d+$/.test(it.s)) ultimo = it.s;   // «G» (vencedor) no fim não conta
-    }
-    const nome = v.NOMBRE || "";
-    if (!nome) continue;
-    const categoria = catDe(v.CATEG || v.CAT) || NIVEL[String(v.NIVEL || v.NIV || "").toUpperCase()] || catDe(titulo);
-    const sx = v.S || v.SEX || "";
-    const sexo = /^[MF]$/i.test(sx) ? sx.toUpperCase() : sexoDe(titulo);
-    if (!bloco || bloco.titulo !== titulo) {
-      bloco = { titulo, formato: formatoA ? "A" : "B", players: [] };
-      blocos.push(bloco);
-    }
-    const p = { pos: /^\d+$/.test(v.POS || "") ? +v.POS : null, licencia: lic.s, name: nome, catEdad: categoria, sexo };
-    if (!formatoA) {
-      p.hcp = num(v.HP ?? v.HEX);
-      const tot = /^\d+$/.test(ultimo || "") ? parseInt(ultimo, 10) : NaN;
-      p.total = Number.isFinite(tot) && tot > 20 ? tot : null;
-      p.rounds = p.total != null ? [p.total] : [];
-      p.toPar = null;
-    } else {
-      p.hcp = num(v.HCE);
-      p.toPar = toParDe(v.TOT);
-      p.strokes = /^\d+$/.test(v.STRS || "") ? +v.STRS : null;
-      p.rtp = ["R1", "R2", "R3", "R4"].map((k) => toParDe(v[k])).filter((x, i, a) => x != null || a.slice(i + 1).some((y) => y != null));
-    }
-    bloco.players.push(p);
-  }
-  // Formato A: ±par por volta → pancadas, com o par da volta tirado da própria
-  // classificação ((STRS − TOT) / voltas): o valor de pelo menos 80% dos
-  // jogadores (um desistente a meio da volta não o estraga). Quem não bate com
-  // ele fica só com o total.
-  for (const b of blocos) {
-    if (b.formato === "A") {
-      const pares = [];
-      for (const p of b.players) if (p.strokes != null && p.toPar != null && p.rtp.length) pares.push((p.strokes - p.toPar) / p.rtp.length);
-      const moda = mais(pares.filter(Number.isInteger));
-      const parRonda = moda != null && pares.filter((x) => x === moda).length >= 0.8 * pares.length ? moda : null;
-      b.parRonda = parRonda;
-      for (const p of b.players) {
-        p.total = p.strokes;
-        const bate = p.strokes != null && p.toPar != null && p.rtp.length && (p.strokes - p.toPar) / p.rtp.length === parRonda;
-        p.rounds = parRonda != null && bate && p.rtp.every((x) => x != null) ? p.rtp.map((x) => parRonda + x) : [];
-        delete p.strokes; delete p.rtp;
-      }
-      b.nRounds = Math.max(1, ...b.players.map((p) => p.rounds.length));
-    } else {
-      b.nRounds = 1;
-    }
-    // Empatados: o PDF deixa a posição em branco — herda a de cima (mesmo total).
-    for (let i = 1; i < b.players.length; i++) {
-      const p = b.players[i], a = b.players[i - 1];
-      if (p.pos == null && p.total != null && p.total === a.total) p.pos = a.pos;
-    }
-    // Escalão do título («RESULTADOS CADETE MASCULINO») ou o da maioria dos
-    // jogadores (coluna Categ./Nivel/Niv); sexo idem.
-    b.categoria = catDe(b.titulo) || mais(b.players.map((p) => p.catEdad));
-    // Rapazes e raparigas na mesma classificação (Interclubes) = mista.
-    const sexos = new Set(b.players.map((p) => p.sexo).filter(Boolean));
-    b.sexo = sexos.size > 1 ? null : (sexoDe(b.titulo) || [...sexos][0] || null);
-    // Classificações que não são a scratch (hándicap, «no nacional», neto).
-    b.fora = /h[aá]ndicap|\bhcp\b|no nacional|neto|stableford/i.test(b.titulo);
-    // 9 buracos: par da volta ≤ 40 (formato A) ou totais típicos de 9 buracos.
-    const tots = b.players.map((p) => p.total).filter((x) => x != null).sort((x, y) => x - y);
-    b.noveBuracos = b.parRonda != null ? b.parRonda <= 40 : (tots.length > 0 && tots[Math.floor(tots.length / 2)] / b.nRounds < 60);
-  }
-  return blocos.filter((b) => b.players.length);
-}
-function mais(arr) {
-  const c = new Map();
-  for (const x of arr) if (x) c.set(x, (c.get(x) || 0) + 1);
-  return [...c].sort((a, b) => b[1] - a[1])[0]?.[0] || null;
-}
-
 const dmyParaIso = (s) => { const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s || ""); return m ? `${m[3]}-${m[2]}-${m[1]}` : null; };
 
 async function lerTorneio(t) {
@@ -241,45 +95,7 @@ async function lerTorneio(t) {
       await sleep(PAUSA_MS);
     } catch (e) { avisos.push(`${url.split("/").pop()}: ${e.message}`); }
   }
-  // Cada jogador fica numa só classificação: primeiro as de mais voltas (o PDF
-  // da última volta é acumulado e substitui o da 1.ª), depois pela ordem da
-  // página; o «acumulado» repetido noutro PDF deixa de contar. Fora: hándicap/
-  // «no nacional», 9 buracos e as de Benjamín (escalões muito novos).
-  const ordemPdf = (b) => urls.indexOf(b.pdfUrl);
-  const vistos = new Set();
-  const usados = [];
-  for (const b of todos.filter((x) => !x.fora && !x.noveBuracos && !/9\s?h(oyos)?(?![a-z])/i.test(decodeURIComponent(x.pdfUrl.split("/").pop())) && x.categoria && x.categoria !== "Benjamín")
-    .sort((a, b2) => b2.nRounds - a.nRounds || ordemPdf(a) - ordemPdf(b2))) {
-    const players = b.players.filter((p) => !vistos.has(p.licencia));
-    if (!players.length) continue;
-    for (const p of players) vistos.add(p.licencia);
-    // Quem só está no PDF de uma volta anterior (desistiu, não passou o corte)
-    // entra na classificação principal do mesmo escalão, sem posição nem total.
-    const principal = usados.find((u) => u.categoria === b.categoria && u.sexo === b.sexo && (u.nRounds > b.nRounds || players.every((p) => p.total == null)));
-    if (principal) {
-      for (const p of players) principal.players.push({ ...p, pos: null, total: null, toPar: null });
-      continue;
-    }
-    usados.push({ ...b, players });
-  }
-  const ordem = ["Alevín", "Infantil", "Cadete", "Junior"];
-  usados.sort((a, b) => ordem.indexOf(a.categoria) - ordem.indexOf(b.categoria) || String(a.sexo).localeCompare(String(b.sexo)));
-  const labels = new Map();
-  const results = usados.map((b) => {
-    let label = `${b.categoria}${b.sexo === "M" ? " Masculino" : b.sexo === "F" ? " Femenino" : ""}`;
-    const n = (labels.get(label) || 0) + 1;
-    labels.set(label, n);
-    // Duas classificações do mesmo escalão (Uraburu: «Nacional» e outra) → o
-    // título do próprio PDF a distinguir.
-    if (n > 1) label += ` — ${b.titulo.replace(/\(ASC:[^)]*\)|\d+ª Vuelta/gi, "").replace(/\s+/g, " ").trim() || n}`;
-    return {
-      label, sexo: b.sexo, categoria: b.categoria, pdfUrl: b.pdfUrl, nRounds: b.nRounds,
-      parTotal: b.parRonda ?? null,
-      players: b.players.map((p) => ({ pos: p.pos, name: p.name, licencia: p.licencia, toPar: p.toPar, rounds: p.rounds, total: p.total, hcp: p.hcp })),
-    };
-  });
-  // Os inscritos são quem jogou (a FVG não publica a lista de inscritos).
-  const admitidos = usados.flatMap((b) => b.players).map((p) => ({ name: p.name, licencia: p.licencia, pais: "ES", hcp: p.hcp, catEdad: p.catEdad, sexo: p.sexo, club: null, dob: null, estado: null }));
+  const { results, admitidos } = juntarClassificacoes(todos, urls);
   const counts = { admitidos: admitidos.length, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 };
   return {
     out: {

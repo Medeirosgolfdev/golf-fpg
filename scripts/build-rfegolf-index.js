@@ -13,7 +13,7 @@
 
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
-const { gemeoGolfdirecto, licencasRegional } = require("./lib/golfdirecto-twins");
+const { gemeo, registar, licencasRegional } = require("./lib/golfdirecto-twins");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "../public/data/rfegolf-resultats");
@@ -529,6 +529,10 @@ for (const file of fcgFiles) {
 const REGIONAIS = [
   { source: "fgcv", root: path.resolve(__dirname, "../public/data/fgcv"), re: /^\d+\.json$/ },
   { source: "fvg", root: path.resolve(__dirname, "../public/data/fvg"), re: /^[0-9a-f-]{36}\.json$/ },
+  // Navarra, Castela-La Mancha e Rioja (scripts/scrape-fed-pdfs.js), pela chave da prova.
+  { source: "fng", root: path.resolve(__dirname, "../public/data/fng"), re: /^[a-z0-9-]+\.json$/ },
+  { source: "fgclm", root: path.resolve(__dirname, "../public/data/fgclm"), re: /^[a-z0-9-]+\.json$/ },
+  { source: "frg", root: path.resolve(__dirname, "../public/data/frg"), re: /^[a-z0-9-]+\.json$/ },
 ];
 let gemeosGd = 0;
 for (const { source, root, re } of REGIONAIS) for (const file of (fs.existsSync(root) ? fs.readdirSync(root).filter((f) => re.test(f)).sort() : [])) {
@@ -542,8 +546,9 @@ for (const { source, root, re } of REGIONAIS) for (const file of (fs.existsSync(
     const insc = (j.inscritos && j.inscritos.admitidos) || [];
     // Sem classificação nem inscritos (PDFs em imagem, ligas por equipas) não há página.
     if (!results.length && !insc.length) { skipped++; continue; }
-    // A mesma prova no golfdirecto (cartões buraco a buraco) → fica essa.
-    if (gemeoGolfdirecto(meta.dateStart, licencasRegional(j))) { skipped++; gemeosGd++; continue; }
+    // A mesma prova no golfdirecto/NextCaddy (cartões, licenças) ou noutro PDF já lido → fica essa.
+    if (gemeo(meta.dateStart, licencasRegional(j))) { skipped++; gemeosGd++; continue; }
+    registar(`${source}${j.compId}`, meta.dateStart, licencasRegional(j));
     const catsInsc = insc.map((p) => p.catEdad).filter(Boolean);
     const ordem = ["Benjamín", "Alevín", "Infantil", "Cadete", "Junior"];
     const escs = [...new Set([...cats, ...catsInsc])].sort((a, b) => ordem.indexOf(a) - ordem.indexOf(b));
@@ -606,6 +611,6 @@ const out = {
 };
 
 writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
-console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}, fgcv=${bySource.fgcv || 0}, fvg=${bySource.fvg || 0}), skipped=${skipped} (${gemeosGd} PDFs regionais já no golfdirecto)`);
+console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}, fgcv=${bySource.fgcv || 0}, fvg=${bySource.fvg || 0}, fng=${bySource.fng || 0}, fgclm=${bySource.fgclm || 0}, frg=${bySource.frg || 0}), skipped=${skipped} (${gemeosGd} PDFs regionais já noutra fonte)`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);

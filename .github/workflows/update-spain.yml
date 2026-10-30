@@ -14,6 +14,7 @@ name: Actualizar Espanha — RFEG + LGS + NextCaddy + FCG (Node puro)
 #   • Baleares, Aragão, Múrcia, País Basco, Cantábria, Extremadura, Valência no
 #     golfdirecto — discover-golfdirecto-scope.js + scrape-fcg.js (o PDF regional
 #     da mesma prova sai do índice: scripts/lib/golfdirecto-twins.js)
+#   • Navarra, Castela-La Mancha e Rioja (PDFs nos sites) — scrape-fed-pdfs.js
 #
 # Todos os portais são públicos (sem cookies/secrets). Node puro, sem Playwright.
 #
@@ -280,6 +281,15 @@ jobs:
         timeout-minutes: 20
         run: node scripts/scrape-fvg.js || [ $? -eq 2 ]
 
+      # Navarra (fnavarragolf.com), Castela-La Mancha (fedgolfclm.com) e Rioja
+      # (frgolf.es): PDFs de classificação → public/data/{fng,fgclm,frg}/ (fontes
+      # «FNG», «FGCLM», «FRG»). Só relê uma prova quando a lista de PDFs muda.
+      - name: Scrape PDFs FNG/FGCLM/FRG (Navarra, Castela-La Mancha, Rioja)
+        id: fed_pdfs
+        continue-on-error: true
+        timeout-minutes: 30
+        run: node scripts/scrape-fed-pdfs.js || [ $? -eq 2 ]
+
       - name: Enrich LGS stats (metros + SI por buraco)
         id: enrich_lgs_stats
         continue-on-error: true
@@ -334,6 +344,7 @@ jobs:
         run: |
           bash scripts/ci/push-generated.sh -m "data: update Espanha (RFEG + LGS + NC + FCG) $(date -u +'%Y-%m-%d %H:%M UTC')" \
             -- public/data/rfegolf-resultats/ public/data/rfegolf-livegolfscoring/ public/data/lgs-matchplay/ public/data/fgcv/ public/data/fvg/ \
+               public/data/fng/ public/data/fgclm/ public/data/frg/ \
                public/data/nextcaddy/ public/data/fcg/ public/data/rfegolf-resultats-index.json \
                public/data/licencia-dob-lookup.json public/data/licencia-hcp-lookup.json \
                public/data/spain-players.json public/data/rfegolf-rivals.json \
@@ -367,6 +378,7 @@ jobs:
           [ "${{ steps.lgs_matchplay.outcome }}" = "failure" ] && FAILED="$FAILED match-play-LGS"
           [ "${{ steps.fgcv.outcome }}" = "failure" ] && FAILED="$FAILED FGCV"
           [ "${{ steps.fvg.outcome }}" = "failure" ] && FAILED="$FAILED FVG"
+          [ "${{ steps.fed_pdfs.outcome }}" = "failure" ] && FAILED="$FAILED PDFs-FNG/FGCLM/FRG"
           [ "${{ steps.infer_par.outcome }}"   = "failure" ] && FAILED="$FAILED infer-par-NC"
           # Os builds e o commit não têm continue-on-error: se falharem o job já
           # está vermelho; aqui só se diz qual foi.

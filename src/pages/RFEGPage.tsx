@@ -429,8 +429,8 @@ const RFEG_CONFIG: CircuitConfig = {
   color: "var(--color-rfeg-red)",
   grouping: "year",
   escalaoSource: "es",
-  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)", fgcv: C.rfegSrc.fgcv, fvg: C.rfegSrc.fvg },
-  sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "GolfDirecto", nextcaddy: "NextCaddy", fgcv: "FGCV", fvg: "FVG" },
+  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)", fgcv: C.rfegSrc.fgcv, fvg: C.rfegSrc.fvg, fng: C.rfegSrc.fng, fgclm: C.rfegSrc.fgclm, frg: C.rfegSrc.frg },
+  sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "GolfDirecto", nextcaddy: "NextCaddy", fgcv: "FGCV", fvg: "FVG", fng: "FNG", fgclm: "FGCLM", frg: "FRG" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },
   veteranoThreshold: 3,
   // "Edições anteriores": família pelo nome do torneio (sem ano) — os

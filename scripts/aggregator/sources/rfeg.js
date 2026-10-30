@@ -223,7 +223,11 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
   else if (cat.includes("alevín") || cat.includes("alevin")) { ageMin = 11; ageMax = 12; }
   else if (cat.includes("infantil")) { ageMin = 13; ageMax = 14; }
   else if (cat.includes("cadete")) { ageMin = 15; ageMax = 16; }
-  else if (cat.includes("juvenil")) { ageMin = 17; ageMax = 18; }
+  else if (cat.includes("juvenil") || cat.includes("junior")) { ageMin = 17; ageMax = 18; }
+  // Escalões por idade dos Zonais da Zona 9 (Navarra/Rioja).
+  else if (/sub-?12/.test(cat)) { ageMin = 9; ageMax = 12; }
+  else if (/sub-?14/.test(cat)) { ageMin = 11; ageMax = 14; }
+  else if (/sub-?16/.test(cat)) { ageMin = 13; ageMax = 16; }
   // Série: agrupar por padrão de nome (Campeonato España, Circuito Juvenil, GP, etc.)
   const tname = String(t.name || "");
   let seriesId = "rfeg-circuit", seriesLabel = "RFEG";
@@ -235,6 +239,12 @@ function normalizeRfegTournament(tid, t, resolvePlayerKey, collectExtraPlayer) {
     seriesId = "rfeg-circuito-juvenil"; seriesLabel = "Circuito Juvenil";
   } else if (/Gran Premio|GP\s/i.test(tname)) {
     seriesId = "rfeg-gran-premio"; seriesLabel = "Gran Premio";
+  }
+  // Federações com PDFs (scrape-fed-pdfs.js): uma série por federação.
+  const fedPdf = /^(fng|fgclm|frg)/.exec(String(tid));
+  if (fedPdf) {
+    seriesId = `rfeg-${fedPdf[1]}`;
+    seriesLabel = { fng: "Federación Navarra", fgclm: "Federación de Castilla-La Mancha", frg: "Federación Riojana" }[fedPdf[1]];
   }
   // Links: derivar do prefix do tid (lgs = LiveGolfScoring, nc = NextCaddy)
   const links = buildRfegLinks(String(tid), t);
@@ -303,8 +313,9 @@ function buildRfegLinks(tid, t = {}) {
       url: `https://golfcv.com/ver-torneo/?torneoid=${fgcvMatch[1]}`,
     }];
   }
-  // Federação Basca (scrape-fvg.js): a página da prova no fvgolf.com.
-  if (/^fvg/i.test(tid) && t.url) return [{ label: "FVG", url: t.url }];
+  // Federações com PDFs (scrape-fvg.js, scrape-fed-pdfs.js): a página da prova.
+  const fed = /^(fvg|fng|fgclm|frg)/i.exec(tid);
+  if (fed && t.url) return [{ label: fed[1].toUpperCase(), url: t.url }];
   return [];
 }
 

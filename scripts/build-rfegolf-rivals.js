@@ -18,7 +18,7 @@
  */
 const fs = require("fs");
 const { writeJsonGuarded } = require("./lib/shrink-guard");
-const { gemeoGolfdirecto, licencasRegional } = require("./lib/golfdirecto-twins");
+const { gemeo, registar, licencasRegional } = require("./lib/golfdirecto-twins");
 const path = require("path");
 
 const LGS_DIR = path.resolve(__dirname, "../public/data/rfegolf-livegolfscoring");
@@ -350,14 +350,19 @@ const FVG_DIR = path.resolve(__dirname, "../public/data/fvg");
 const lerDir = (dir, src, re = /^\d+\.json$/) => (fs.existsSync(dir)
   ? fs.readdirSync(dir).filter(f => re.test(f)).map(f => ({ dir, f, src }))
   : []);
-const rfFiles = [...lerDir(RFEG_DIR, "rfegolf"), ...lerDir(FGCV_DIR, "fgcv"), ...lerDir(FVG_DIR, "fvg", /^[0-9a-f-]{36}\.json$/)];
+// Navarra, Castela-La Mancha e Rioja (scrape-fed-pdfs.js), pela chave da prova.
+const fedPdf = (k) => lerDir(path.resolve(__dirname, `../public/data/${k}`), k, /^[a-z0-9-]+\.json$/);
+const rfFiles = [...lerDir(RFEG_DIR, "rfegolf"), ...lerDir(FGCV_DIR, "fgcv"), ...lerDir(FVG_DIR, "fvg", /^[0-9a-f-]{36}\.json$/), ...fedPdf("fng"), ...fedPdf("fgclm"), ...fedPdf("frg")];
 
 for (const { dir, f, src } of rfFiles) {
   try {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf-8"));
     if (!d.ok || !d.compId) { rfSkipped++; continue; }
     // PDF regional com a mesma prova no golfdirecto → entra pelo fcg-rivals.
-    if (src !== "rfegolf" && gemeoGolfdirecto(d.meta && d.meta.dateStart, licencasRegional(d))) { rfSkipped++; continue; }
+    if (src !== "rfegolf") {
+      if (gemeo(d.meta && d.meta.dateStart, licencasRegional(d))) { rfSkipped++; continue; }
+      registar(`${src}${d.compId}`, d.meta && d.meta.dateStart, licencasRegional(d));
+    }
     const compId = String(d.compId);
     // Gémeo com versão LGS já incluída → skip (a página /rfeg faz o mesmo)
     if (src === "rfegolf" && twinsData.twins && twinsData.twins[compId] != null) { rfTwinned++; continue; }
@@ -408,7 +413,7 @@ for (const { dir, f, src } of rfFiles) {
       const tid = `${pref}${compId}_${catKey}_${sexKey}`;
       out.torneios[tid] = {
         name: metaName || `${pref.toUpperCase()} ${compId}`,
-        url: src === "fvg" ? (d.url || null) : undefined,
+        url: ["fvg", "fng", "fgclm", "frg"].includes(src) ? (d.url || null) : undefined,
         categoryName: b.label || null,
         year,
         ageGroup: cat,

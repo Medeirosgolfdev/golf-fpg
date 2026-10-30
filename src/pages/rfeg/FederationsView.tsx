@@ -100,7 +100,7 @@ const RFEG_FEDERATIONS: RFEGFederation[] = [
   {
     name: "Federación de Golf del Principado de Asturias",
     region: "Asturias",
-    website: "https://www.fgpa.es",
+    website: "https://fedegolfasturias.com",
     rfegPage: "https://rfeg.es/rfeg/federaciones-autonomicas/fg_principado_de_asturias.html?id=979",
     platform: "Próprio",
     licPrefix: "AS",
@@ -124,7 +124,7 @@ const RFEG_FEDERATIONS: RFEGFederation[] = [
   {
     name: "Federación de Golf de Castilla La Mancha",
     region: "Castilla-La Mancha",
-    website: "https://www.fcmgolf.com",
+    website: "https://fedgolfclm.com",
     rfegPage: "https://rfeg.es/rfeg/federaciones-autonomicas/federacion_de_golf_de_castilla_la_mancha.html?id=983",
     platform: "Próprio",
     licPrefix: "CL",
@@ -169,7 +169,7 @@ const RFEG_FEDERATIONS: RFEGFederation[] = [
   {
     name: "Federación Navarra de Golf",
     region: "Navarra",
-    website: "https://www.golfnavarra.com",
+    website: "https://fnavarragolf.com",
     rfegPage: "https://rfeg.es/rfeg/federaciones-autonomicas/federacion_navarra_de_golf.html?id=981",
     platform: "Próprio",
     licPrefix: "NV",
@@ -177,7 +177,7 @@ const RFEG_FEDERATIONS: RFEGFederation[] = [
   {
     name: "Federación de Golf de La Rioja",
     region: "La Rioja",
-    website: "https://www.golflarioja.com",
+    website: "https://frgolf.es",
     rfegPage: "https://rfeg.es/rfeg/federaciones-autonomicas/federacion_de_golf_de_la_rioja.html?id=997",
     platform: "Próprio",
     licPrefix: "RJ",
