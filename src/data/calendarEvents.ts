@@ -487,5 +487,11 @@ export const EVENTS: CalEvent[] = [
   // prova do PJA. É tudo Terras da Comporta — não vale a pena separar campos.
   ev("treino",         "⛳ Treino — Terras da Comporta",           new Date(2026,8,4),  "Terras da Comporta - Torre", "Treino"),
   ev("viag_paris_set", "✈ TP1695 LIS → FNC 22:20–00:10 (+1)",     new Date(2026,8,6),  "TAP", ""),
+
+  // Novembro — sessões com o Dr. Luís Almeida (psicólogo do golfe), marcadas
+  // pelo Calendly. Ficam em «Campo / Treino»: é treino mental, e assim entram
+  // no golfe.ics sem calId novo.
+  ev("treino",         "🧠 Psicólogo — Dr. Luís Almeida 19:00–19:45", new Date(2026,10,11), "Online (Google Meet)", "Sessão online"),
+  ev("treino",         "🧠 Psicólogo — Dr. Luís Almeida 19:00–19:45", new Date(2026,10,25), "Online (Google Meet)", "Sessão online"),
 ];
 
