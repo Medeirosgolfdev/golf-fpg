@@ -29,6 +29,7 @@ import { isTournamentCourse } from "../constants/tournamentCourses";
 import { loadPlayerData } from "../data/playerDataLoader";
 import type { PlayerPageData } from "../data/playerDataLoader";
 import { MANUEL_FED } from "../constants/manuel";
+import { calcSD, round1 } from "../utils/whsCalc";
 import { canonicalCourseName, resolveCourseKeyByPar } from "../utils/courseAliases";
 import { SC } from "../utils/scoreDisplay";
 import { physicalTeeGroups, physicalTeeKey, sexesIn, type SexKey, type PhysTeeGroup } from "../utils/teeGroups";
@@ -189,7 +190,18 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
   const sepThin = "1px solid var(--border-light)"; // separa CR de Slope
   // PAR/SI não têm CR/Slope: o rótulo abrange (merge) a coluna Tee + as colunas
   // de rating, alinhado à direita, junto ao início dos dados (sem riscos).
-  const labelSpan = 1 + sexes.length * 2;
+  // Por sexo: CR · Slope · «SD par» (o SD de quem fizer o par do campo nesse tee).
+  const labelSpan = 1 + sexes.length * 3;
+  const courseParOf = (t: Tee): number | null => {
+    const h = t.holes ?? [];
+    return h.length === 18 && h.every((x) => x.par != null) ? h.reduce((a, x) => a + (x.par as number), 0) : null;
+  };
+  const fallbackPar = sumRange(1, 18, (i) => refByHole.get(i)?.par ?? null);
+  const fmtSdPar = (par: number | null, r: { cr: number; sl: number } | undefined): string => {
+    if (!r || par == null || !r.sl) return "";
+    const v = round1(calcSD(par, r.cr, r.sl));
+    return `${v > 0 ? "+" : ""}${v.toFixed(1).replace(".", ",")}`;
+  };
 
   return (
     <div className="sc-wrap">
@@ -226,7 +238,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
           <tr>
             <th className="sc-sticky" rowSpan={2}>Tee</th>
             {sexes.map((s) => (
-              <th key={`g-${s}`} colSpan={2} className="sc-h" style={{ borderLeft: sepL, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
+              <th key={`g-${s}`} colSpan={3} className="sc-h" style={{ borderLeft: sepL, borderBottom: "none", textAlign: "center", padding: "1px 6px" }}>
                 {(s === "M" || s === "F") ? <SexBadge sex={s} /> : "—"}
               </th>
             ))}
@@ -250,6 +262,7 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
             {sexes.flatMap((s) => [
               <th key={`h-${s}-cr`} className="sc-h" style={{ borderLeft: sepL, padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>CR</th>,
               <th key={`h-${s}-sl`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }}>Slope</th>,
+              <th key={`h-${s}-sd`} className="sc-h" style={{ padding: "2px 6px", fontWeight: 400, color: "var(--text-3)" }} title="Score Differential de quem fizer o par do campo neste tee (sem PCC)">SD par</th>,
             ])}
           </tr>
         </thead>
@@ -273,12 +286,16 @@ function ScorecardGrid({ tees, selKey }: { tees: Tee[]; selKey?: string | null }
                 </td>
                 {sexes.flatMap((s) => {
                   const r = g.h18[s];
+                  const teePar = courseParOf(g.teeHoles) ?? fallbackPar;
                   return [
                     <td key={`r-${s}-cr`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepL }}>
                       {r ? fmtCR(r.cr) : ""}
                     </td>,
                     <td key={`r-${s}-sl`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin }}>
                       {r ? r.sl : ""}
+                    </td>,
+                    <td key={`r-${s}-sd`} className="ta-c" style={{ fontSize: "var(--fs-12)", borderLeft: sepThin, fontWeight: 600 }}>
+                      {fmtSdPar(teePar, r)}
                     </td>,
                   ];
                 })}
