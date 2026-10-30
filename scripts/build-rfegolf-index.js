@@ -133,6 +133,29 @@ function rfegHasPt(j) {
   return false;
 }
 
+// ── Nº de buracos ──────────────────────────────────────────────
+// Provas de 4/5/9 buracos (escalões muito novos) saem da /rfeg — a Mariana não
+// as quer (30/10/2026). Dos dados quando os há (par do campo ou o 1.º cartão),
+// senão do nome («9 HOYOS», «5P3 HOYOS», «18H»). null = desconhecido (fica).
+function buracosDoNome(nome) {
+  const m = /\b(\d{1,2})\s*(?:p3\s*)?(?:hoyos|h)\b/i.exec(nome || "") || /\b(\d)\s*p3\b/i.exec(nome || "");
+  const n = m ? parseInt(m[1], 10) : null;
+  return n && n >= 3 && n <= 18 ? n : null;
+}
+function buracosNC(j, nome) {
+  // O nome manda quando diz menos buracos: os de 4/5 buracos vêm com cartão de 9.
+  const pNome = buracosDoNome(nome);
+  const par = j && j.course && Array.isArray(j.course.par) ? j.course.par.length : 0;
+  let dados = par === 9 || par === 18 ? par : null;
+  if (!dados) {
+    const p = ((j && j.leaderboard) || []).flatMap((c) => (c && c.players) || []).find((x) => (x.roundScores || []).length);
+    const s = p && p.roundScores[0] && p.roundScores[0].scores;
+    if (Array.isArray(s) && (s.length === 9 || s.length === 18)) dados = s.length;
+  }
+  if (pNome && (!dados || pNome < dados)) return pNome;
+  return dados;
+}
+
 // ── Roster fingerprint ────────────────────────────────────────
 // Permite ao buildRfegEntries (src/data/rfeg/entries.ts) confirmar "é o mesmo evento?" por
 // JOGADORES no momento em que constrói a sidebar, sem carregar as divisões.
@@ -207,6 +230,7 @@ for (const file of rfegFiles) {
         noAdmitidos: counts.noAdmitidos || 0,
         provisional: counts.provisional || 0,
       },
+      holes: buracosDoNome(name) || undefined,
       // Resultados publicados (PDF parseado ou injectados do mitarjeta).
       leaderboardPlayers: Array.isArray(j.results)
         ? j.results.reduce((a, r) => a + ((r && r.players) ? r.players.length : 0), 0)
@@ -328,6 +352,7 @@ for (const file of ncFiles) {
         reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0,
       },
       leaderboardPlayers: lbCount,
+      holes: buracosNC(j, name) || undefined,
       roster: rosterFrom((j.leaderboard || []).flatMap((t) => (t && t.players) || [])),
       scrapedAt: j.scrapedAt || null,
     });
@@ -375,6 +400,7 @@ for (const file of lgsFiles) {
       course: j.meta.course || null,
       counts: { admitidos: totalPlayers, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
       leaderboardPlayers: totalPlayers,
+      holes: (j.course && Array.isArray(j.course.par) && j.course.par.length) || buracosDoNome(name) || undefined,
       nRounds: (j.rounds || []).length,
       roster: rosterFrom((j.rounds && j.rounds[0] && j.rounds[0].players) || []),
       // Fase de match play (campeonatos por equipas) — scrape-lgs-matchplay.js.
@@ -445,6 +471,7 @@ for (const file of fcgFiles) {
         reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0,
       },
       leaderboardPlayers: totalPlayers,
+      holes: buracosDoNome(`${tName} ${cats.map((c) => c.name).join(" ")}`) || undefined,
       roster: rosterFrom(cats.flatMap((c) => (c && c.players) || [])),
       nRounds: 1, // 1 game golfdirecto = 1 jornada
       tournamentId: game.tournament && game.tournament._id || null,

@@ -206,8 +206,11 @@ export function buildRfegEntries(
   //  • EXCEPÇÃO: quando o RFEGolf tem mitarjeta com ≥ rondas jogadas que o LGS (live
   //    scoring à frente do scrape LGS — ex: R3 do CEE juvenil só no mitarjeta), é o
   //    LGS que se suprime (`lgsSuppressed[lgsId]`) e fica o RFEGolf+mitarjeta.
+  // Provas de 4/5/9 buracos (escalões muito novos) não interessam (Mariana,
+  // 30/10/2026) — o nº de buracos vem do índice (dados ou nome).
   const visible = index.tournaments.filter(
     (t) => t.category
+      && !(t.holes != null && t.holes < 18)
       && ((t.leaderboardPlayers || 0) > 0 || (t.counts?.admitidos || 0) > 0)
       && !(t.source === "rfegolf" && twins?.[String(t.id)] != null)
       && !(t.source === "livegolfscoring" && lgsSuppressed?.[String(t.id)] != null),

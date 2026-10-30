@@ -52,6 +52,9 @@ export interface RFEGIndexEntry {
    *  build do índice. Permite confirmar "é o mesmo evento?" por JOGADORES no
    *  buildRfegEntries sem carregar as divisões. Vazio p/ torneios só-inscritos. */
   roster?: string[];
+  /** Nº de buracos (dos dados ou do nome — build-rfegolf-index.js). Menos de
+   *  18 = escalões muito novos (4/5/9 buracos): saem da /rfeg. */
+  holes?: number;
   /** LGS por equipas: ficheiro da fase de match play (MatchplayFile), gerado
    *  pelo scrape-lgs-matchplay.js — ex. "lgs-matchplay/393.json". */
   matchplayFile?: string;
