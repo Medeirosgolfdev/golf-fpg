@@ -762,6 +762,33 @@ type TeeInfo = { dist: number; hex: string; group: PhysTeeGroup };
  *  «USKids Boys 12», override do Manuel — resolvePlayedTee) e usa a cor real
  *  desse tee; só sem tee no campo vale a cor do nome gravado. Mesma chave do
  *  useTeeInfoMap. */
+const _courseTeeLabels = new WeakMap<Course, Map<string, string>>();
+/** Rótulo de cada tee físico do campo (chave = physicalTeeKey): a cor canónica
+ *  («Amarelas»), a não ser que haja dois tees DIFERENTES com a mesma cor —
+ *  mesma cor e distâncias diferentes (Marco Simone: Gialli 5757 m e USKids Boys
+ *  11/10 4430 m, ambos amarelos). Aí cada um fica com o seu nome. Mesma cor e
+ *  mesma distância é o mesmo tee (Glen: Red e USKids Boys 12) e fica junto. */
+function courseTeeLabels(course: Course): Map<string, string> {
+  const hit = _courseTeeLabels.get(course);
+  if (hit) return hit;
+  const groups = physicalTeeGroups(course.master.tees || []);
+  const colourOf = (g: PhysTeeGroup) => teeCanonicalLabel(g.label, g.colorHex);
+  const distOf = (g: PhysTeeGroup) => Math.round(g.teeHoles?.distances?.total ?? 0);
+  const distsByColour = new Map<string, Set<number>>();
+  for (const g of groups) {
+    const k = colourOf(g);
+    if (!distsByColour.has(k)) distsByColour.set(k, new Set());
+    distsByColour.get(k)!.add(distOf(g));
+  }
+  const m = new Map<string, string>();
+  for (const g of groups) {
+    const k = colourOf(g);
+    m.set(g.key, (distsByColour.get(k)?.size ?? 0) > 1 ? g.label : k);
+  }
+  _courseTeeLabels.set(course, m);
+  return m;
+}
+
 const _roundTeeLabelCache = new WeakMap<Course, Map<string, string>>();
 function roundTeeLabel(course: Course, tee: string | null, fed: string): string {
   if (!tee) return NO_TEE_LABEL;
@@ -771,7 +798,9 @@ function roundTeeLabel(course: Course, tee: string | null, fed: string): string 
   const hit = cache.get(ck);
   if (hit) return hit;
   const t = resolvePlayedTee(course.master.name, tee, [course], fed);
-  const label = t ? teeCanonicalLabel(titleCase(t.teeName), teeHexFromTee(t)) : teeCanonicalLabel(tee);
+  const label = t
+    ? (courseTeeLabels(course).get(physicalTeeKey(t)) ?? teeCanonicalLabel(titleCase(t.teeName), teeHexFromTee(t)))
+    : teeCanonicalLabel(tee);
   cache.set(ck, label);
   return label;
 }
@@ -783,7 +812,7 @@ function useTeeInfoMap(course: Course): Map<string, TeeInfo> {
       // Pela cor REAL do tee (scorecardMeta): «USKids Boys 12» (marcas Red) e
       // «USKids Boys 14» (Yellow) não têm cor no nome — sem a cor caíam os dois
       // no rótulo por omissão («Júnior») e misturavam-se (Glen, 30/10/2026).
-      const label = teeCanonicalLabel(g.label, g.colorHex);
+      const label = courseTeeLabels(course).get(g.key) ?? teeCanonicalLabel(g.label, g.colorHex);
       const dist = Math.round(g.teeHoles?.distances?.total ?? 0);
       if (!m.has(label)) m.set(label, { dist, hex: g.colorHex, group: g });
     }
@@ -971,7 +1000,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
           </div>
           <div style={{ padding: "6px 12px 9px", display: "grid", gridTemplateColumns: "minmax(120px,auto) auto auto minmax(0,1fr)", gap: "4px 12px", alignItems: "center", background: "var(--bg-card)" }}>
             {manuel.map((mr) => {
-              const hex = mr.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(mr.label);
+              const hex = mr.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(mr.label)?.hex ?? teeGroupHex(mr.label));
               return (
                 <Fragment key={mr.label}>
                   <span style={{ display: "inline-flex", alignItems: "center", gap: 7, fontWeight: 600, minWidth: 0 }}>
@@ -997,7 +1026,7 @@ function CourseTeeKpis({ course, onSelectPlayer, sexFilter = "ALL", teeLabel = n
       ) : (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 12, alignItems: "flex-start" }}>
           {tees.map((c) => {
-            const hex = c.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(c.label);
+            const hex = c.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(c.label)?.hex ?? teeGroupHex(c.label));
             const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra visível
             const rt = ratingFor(c.label);
             const dist = distFor(c.label);
@@ -1093,7 +1122,7 @@ function CoursePlayersByTee({ course, onSelectPlayer, teeLabel = null }: { cours
       <h4 className="course-players-title" style={{ marginBottom: 8 }}>Como jogaram os nossos — por tee</h4>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {groups.map((g) => {
-          const hex = g.label === NO_TEE_LABEL ? "var(--border)" : teeGroupHex(g.label);
+          const hex = g.label === NO_TEE_LABEL ? "var(--border)" : (teeInfo.get(g.label)?.hex ?? teeGroupHex(g.label));
           const stripe = teeBorder(hex) ? "var(--border)" : hex; // tees claros → risca neutra
           const info = teeInfo.get(g.label);
           const dist = info?.dist ?? 0;
