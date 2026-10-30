@@ -429,8 +429,8 @@ const RFEG_CONFIG: CircuitConfig = {
   color: "var(--color-rfeg-red)",
   grouping: "year",
   escalaoSource: "es",
-  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)" },
-  sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy" },
+  sourceColors: { rfegolf: "var(--color-rfeg-red)", livegolfscoring: C.rfegSrc.livegolfscoring, golfdirecto: C.rfegSrc.golfdirecto, nextcaddy: "var(--color-rfeg-yellow)", fgcv: C.rfegSrc.fgcv },
+  sourceLabels: { rfegolf: "RFEGolf", livegolfscoring: "LGS", golfdirecto: "FCG", nextcaddy: "NextCaddy", fgcv: "FGCV" },
   filters: { search: true, year: true, escalao: true, sex: true, source: true, toggles: ["manuel", "pt", "top10", "veteranos", "results"], defaultToggles: ["results"] },
   veteranoThreshold: 3,
   // "Edições anteriores": família pelo nome do torneio (sem ano) — os

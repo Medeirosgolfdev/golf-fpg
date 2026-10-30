@@ -295,6 +295,14 @@ function buildRfegLinks(tid) {
       url: `https://www.rfegolf.es/CompetenciaPaginas/ListaResultados.aspx?CompId=${rfegMatch[1]}`,
     }];
   }
+  // Federação Valenciana (scrape-fgcv.js): a página do torneio no golfcv.com.
+  const fgcvMatch = /^fgcv(\d+)(?:_|$)/i.exec(tid);
+  if (fgcvMatch) {
+    return [{
+      label: "FGCV",
+      url: `https://golfcv.com/ver-torneo/?torneoid=${fgcvMatch[1]}`,
+    }];
+  }
   return [];
 }
 

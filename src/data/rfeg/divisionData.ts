@@ -230,6 +230,8 @@ export async function loadRfegDivisionData(
     ? mitarjetaToFPGTournament(data, dob)
     : rfegolfToFPGTournament(data, dob);
   else if (t.source === "golfdirecto") results = fcgToFPGTournament(data as unknown as MinimalRFEGShape, dob);
+  // FGCV (Federação Valenciana): o mesmo formato do microsite antigo da RFEG.
+  else if (t.source === "fgcv") results = rfegolfToFPGTournament(data, dob);
 
   // NextCaddy sem scorecard hbh: muitas Liguillas TÊM leaderboard real (pos/
   // total/±par) mas sem cartões → ncToFPGTournament devolve null. Nesse caso

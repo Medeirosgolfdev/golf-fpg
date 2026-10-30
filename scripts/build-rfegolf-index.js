@@ -227,6 +227,8 @@ for (const file of rfegFiles) {
       compId,
       file,
       filePath: `rfegolf-resultats/${file}`,
+      // Site novo (scrape-rfeg-competiciones): o microsite antigo já não existe.
+      url: j.url || null,
       name, year, category, sex,
       dateStart: meta.dateStart || null,
       dateEnd: meta.dateEnd || null,
@@ -510,6 +512,52 @@ for (const file of fcgFiles) {
   }
 }
 
+// ── 5) FGCV — Federação Valenciana (golfcv.com, 30/10/2026) ───────────
+// Mesmo formato do microsite antigo da RFEG (results por categoria + inscritos),
+// gerado por scripts/scrape-fgcv.js.
+const FGCV_ROOT = path.resolve(__dirname, "../public/data/fgcv");
+const fgcvFiles = fs.existsSync(FGCV_ROOT) ? fs.readdirSync(FGCV_ROOT).filter(f => /^\d+\.json$/.test(f)).sort() : [];
+for (const file of fgcvFiles) {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(FGCV_ROOT, file), "utf-8"));
+    if (!j || !j.ok || !j.meta) { skipped++; continue; }
+    const meta = j.meta;
+    const name = meta.name || "";
+    const results = Array.isArray(j.results) ? j.results : [];
+    const cats = results.map((r) => r.categoria).filter(Boolean);
+    const insc = (j.inscritos && j.inscritos.admitidos) || [];
+    const catsInsc = insc.map((p) => p.catEdad).filter(Boolean);
+    const ordem = ["Benjamín", "Alevín", "Infantil", "Cadete", "Junior"];
+    const escs = [...new Set([...cats, ...catsInsc])].sort((a, b) => ordem.indexOf(a) - ordem.indexOf(b));
+    const dsIso = parseEsDate(meta.dateStart);
+    tournaments.push({
+      source: "fgcv",
+      id: j.compId, compId: j.compId, file,
+      filePath: `fgcv/${file}`,
+      url: j.url || null,
+      name,
+      year: dsIso ? parseInt(dsIso.slice(0, 4), 10) : extractYearFromName(name),
+      category: extractCategoryFromName(name) || escs[0] || "Juvenil",
+      escaloes: escs.length > 1 ? escs : undefined,
+      sex: extractSexFromName(name) || (meta.sex === "Masculino" ? "M" : meta.sex === "Femenino" ? "F" : "Mixto"),
+      dateStart: meta.dateStart || null, dateEnd: meta.dateEnd || null,
+      dateStartIso: dsIso, dateEndIso: parseEsDate(meta.dateEnd),
+      course: meta.course || null,
+      federation: meta.federation || null,
+      holes: buracosDoNome(name) || undefined,
+      hasPt: rfegHasPt(j) || undefined,
+      counts: { admitidos: insc.length, reservas: 0, bajas: 0, invitados: 0, noAdmitidos: 0, provisional: 0 },
+      leaderboardPlayers: results.reduce((a, r) => a + ((r && r.players) ? r.players.length : 0), 0),
+      nRounds: Math.max(0, ...results.map((r) => r.nRounds || 0)) || undefined,
+      roster: rosterFrom(results.flatMap((r) => (r && r.players) || [])),
+      scrapedAt: j.scrapedAt || null,
+    });
+  } catch (e) {
+    console.warn("skip fgcv " + file + ": " + e.message);
+    skipped++;
+  }
+}
+
 
 tournaments.sort((a, b) => {
   const da = a.dateStartIso || "0";
@@ -540,6 +588,6 @@ const out = {
 };
 
 writeJsonGuarded(OUT, out, { spaces: 2, failOnRefuse: true });
-console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}), skipped=${skipped}`);
+console.log(`Index built: ${tournaments.length} torneios (rfegolf=${bySource.rfegolf || 0}, nextcaddy=${bySource.nextcaddy || 0}, livegolfscoring=${bySource.livegolfscoring || 0}, golfdirecto=${bySource.golfdirecto || 0}, fgcv=${bySource.fgcv || 0}), skipped=${skipped}`);
 console.log(`  -> ${OUT}`);
 console.log(`  byYear: ${JSON.stringify(byYear)}`);

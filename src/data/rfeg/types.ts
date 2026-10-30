@@ -8,7 +8,9 @@
 /* ── Types ──────────────────────────────────────────────── */
 
 export interface RFEGIndexEntry {
-  source: "rfegolf" | "nextcaddy" | "livegolfscoring" | "golfdirecto";
+  source: "rfegolf" | "nextcaddy" | "livegolfscoring" | "golfdirecto" | "fgcv";
+  /** Página oficial da prova, quando o ficheiro a guarda (RFEG site novo, FGCV). */
+  url?: string | null;
   id: number | string;
   compId?: number;
   tourId?: number;

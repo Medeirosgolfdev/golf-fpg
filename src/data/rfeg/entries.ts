@@ -14,6 +14,7 @@ export function rfegSex(s: string | null | undefined): CircuitSex | undefined {
 }
 
 export function rfegSourceUrl(t: RFEGIndexEntry): string {
+  if (t.url) return t.url;   // RFEG site novo e FGCV guardam a página oficial
   return t.source === "rfegolf"
     ? `https://rfegolf.es/CompetenciaPaginas/CompetitionMicrosite.aspx?CompId=${t.compId}`
     : t.source === "nextcaddy"
