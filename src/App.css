@@ -3577,11 +3577,13 @@ td.cell-portuguese { background: color-mix(in srgb, #00FF00 16%, var(--bg-card, 
  background: var(--bg-hover);
  color: var(--text-2);
 }
+/* Pill ligada = verde (accent) em TODAS as páginas (Mariana, 31/10/2026: «Verde»),
+   como os ToggleChip da /jogadores. Antes era o escuro --text-dark. */
 .tourn-tab.active,
 .tourn-tab-sm.active {
- background: var(--text-dark);
+ background: var(--accent);
  color: #fff;
- border-color: var(--text-dark);
+ border-color: var(--accent);
 }
 .tourn-tab-sm {
  padding: 4px 10px;
