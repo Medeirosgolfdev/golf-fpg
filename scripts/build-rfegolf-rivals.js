@@ -187,6 +187,7 @@ function ageSpecificity(ag) {
 }
 
 let ncKept = 0, ncSkipped = 0, ncEntriesAdded = 0;
+const ncNoKids = new Set();   // ids `nc{tourId}` que entram — os gémeos dos PDFs regionais só contam estes
 const ncFiles = fs.existsSync(NC_DIR)
   ? fs.readdirSync(NC_DIR).filter(f => /^\d+\.json$/.test(f))
   : [];
@@ -318,7 +319,7 @@ for (const f of ncFiles) {
       ncEntriesAdded++;
       anyAdded = true;
     }
-    if (anyAdded) ncKept++;
+    if (anyAdded) { ncKept++; ncNoKids.add(`nc${tourId}`); }
     else ncSkipped++;
   } catch (e) {
     ncSkipped++;
@@ -354,13 +355,21 @@ const lerDir = (dir, src, re = /^\d+\.json$/) => (fs.existsSync(dir)
 const fedPdf = (k) => lerDir(path.resolve(__dirname, `../public/data/${k}`), k, /^[a-z0-9-]+\.json$/);
 const rfFiles = [...lerDir(RFEG_DIR, "rfegolf"), ...lerDir(FGCV_DIR, "fgcv"), ...lerDir(FVG_DIR, "fvg", /^[0-9a-f-]{36}\.json$/), ...fedPdf("fng"), ...fedPdf("fgclm"), ...fedPdf("frg")];
 
+// Gémeo só se a outra prova chegar ao Kids 2: NextCaddy que passou acima;
+// golfdirecto que está no fcg-rivals.json (sem ele, todas contam).
+const FCG_RIVALS = path.resolve(__dirname, "../public/data/fcg-rivals.json");
+const fcgNoKids = fs.existsSync(FCG_RIVALS)
+  ? new Set(Object.values(JSON.parse(fs.readFileSync(FCG_RIVALS, "utf-8")).torneios || {}).map(t => t.gameId))
+  : null;
+const noKids = (id) => (id.startsWith("nc") ? ncNoKids.has(id) : !fcgNoKids || fcgNoKids.has(id));
+
 for (const { dir, f, src } of rfFiles) {
   try {
     const d = JSON.parse(fs.readFileSync(path.join(dir, f), "utf-8"));
     if (!d.ok || !d.compId) { rfSkipped++; continue; }
     // PDF regional com a mesma prova no golfdirecto → entra pelo fcg-rivals.
     if (src !== "rfegolf") {
-      if (gemeo(d.meta && d.meta.dateStart, licencasRegional(d))) { rfSkipped++; continue; }
+      if (gemeo(d.meta && d.meta.dateStart, licencasRegional(d), noKids)) { rfSkipped++; continue; }
       registar(`${src}${d.compId}`, d.meta && d.meta.dateStart, licencasRegional(d));
     }
     const compId = String(d.compId);
@@ -375,7 +384,10 @@ for (const { dir, f, src } of rfFiles) {
       const players = Array.isArray(b.players) ? b.players : [];
       if (players.length === 0) continue;
       const cat = b.categoria || metaCat || extractAgeGroup(metaName);
-      if (!cat || ADULT_CAT.test(cat) || ADULT_CAT.test(metaName)) continue;
+      // PDFs regionais: o bloco já traz o escalão — «Sub 21/25» no nome da prova
+      // (Navarra, CLM) não faz dos blocos Alevín…Junior uma prova de adultos.
+      const nomeConta = !(src !== "rfegolf" && b.categoria);
+      if (!cat || ADULT_CAT.test(cat) || (nomeConta && ADULT_CAT.test(metaName))) continue;
       if (!isJuvenil(cat) && !isJuvenil(metaName)) continue;
       // Par/SI/metros: blocos mitarjeta têm perHole; sem isso tenta coursePar do doc
       let par = null, si = null, meters = null;

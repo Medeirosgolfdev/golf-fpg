@@ -64,14 +64,18 @@ function cobertura(lista, dia, a, folga = 86400000) {
   return cobertos.size >= 3 && cobertos.size / a.size >= MIN_SOBREPOSICAO ? ids : null;
 }
 
-/** A prova do PDF já está no golfdirecto/NextCaddy ou noutro PDF já registado? */
-function gemeo(data, licencas) {
+/** A prova do PDF já está no golfdirecto/NextCaddy ou noutro PDF já registado?
+ *  `aceitar(id)` limita as provas golfdirecto/NextCaddy que contam — os rivais
+ *  só aceitam as que lá entram (uma NextCaddy sem par fica de fora do Kids 2 e
+ *  não pode levar o PDF com ela; JJDD Navarra 4.ª jornada 2026, nc72447). */
+function gemeo(data, licencas, aceitar = null) {
   const dia = diaMs(data);
   const a = new Set((licencas || []).filter(Boolean));
   if (dia == null || a.size < 3) return null;
+  const outras = aceitar ? jogos().filter((g) => aceitar(g.id)) : jogos();
   // Entre dois PDFs, só no mesmo dia: as jornadas dos Juegos Deportivos de
   // Navarra e os Puntuables da FGCLM em dias seguidos têm os mesmos jogadores.
-  return cobertura(jogos(), dia, a) || cobertura(regionais, dia, a, 0);
+  return cobertura(outras, dia, a) || cobertura(regionais, dia, a, 0);
 }
 
 /** Um PDF regional que fica: os seguintes da mesma prova passam a ser gémeos. */
