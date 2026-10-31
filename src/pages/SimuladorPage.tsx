@@ -2,6 +2,7 @@
 import { Navigate, useSearchParams } from "react-router-dom";
 import DetailHeader from "../ui/DetailHeader";
 import Counter from "../ui/Counter";
+import TabRow from "../ui/TabRow";
 import type { Course, Hole, SexFilter } from "../data/types";
 import { useAppContext } from "../context/AppContext";
 import { useCourses } from "../context/CoursesContext";
@@ -201,12 +202,10 @@ function HcpStrip({
 
       {/* Inline QuickCalc — Score always left, SD always right */}
       <div className="sim-strip-calc">
-        <div className="sim-strip-calc-tabs">
-          <button className={`sim-strip-tab${calcMode === "score-to-sd" ? " active" : ""}`}
-            onClick={() => { setCalcMode("score-to-sd"); setCalcInput(""); }}>Score → SD</button>
-          <button className={`sim-strip-tab${calcMode === "sd-to-score" ? " active" : ""}`}
-            onClick={() => { setCalcMode("sd-to-score"); setCalcInput(""); }}>SD → Score</button>
-        </div>
+        <TabRow<typeof calcMode> className="seg-sm u-mb-6px" active={calcMode} onChange={(m) => { setCalcMode(m); setCalcInput(""); }} tabs={[
+          { key: "score-to-sd", label: "Score → SD" },
+          { key: "sd-to-score", label: "SD → Score" },
+        ]} />
         <div className="sim-strip-calc-fields">
           {/* Left: always Gross Score */}
           <div className="sim-strip-calc-field">
@@ -443,7 +442,7 @@ function AgsSection({
           Scorecard {hasAgs ? "— Net Double Bogey / AGS" : ""}
         </h3>
         {Object.keys(scores).length > 0 && (
-          <button className="select pointer fs-12" onClick={clearAll} title="Limpar selecção">Limpar</button>
+          <button type="button" className="btn" onClick={clearAll} title="Limpar selecção">Limpar</button>
         )}
       </div>
 
@@ -890,7 +889,7 @@ function RoundImpactCard({ name, hi, score, isAgs, r, onSend }: {
         </div>
       )}
       <div className="sim-target-actions">
-        <button className="select pointer fs-12" onClick={onSend}>
+        <button type="button" className="btn" onClick={onSend}>
           ＋ Juntar ao simulador "E se?"
         </button>
       </div>

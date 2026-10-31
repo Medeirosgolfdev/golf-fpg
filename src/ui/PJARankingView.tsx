@@ -531,7 +531,7 @@ export function PJARankingView({
                 </>
               ),
             }))}
-            summaryGroupTh={<th className="cs-grp u-fw8-fs12" colSpan={2}>
+            summaryGroupTh={<th className="cs-grp u-fw-800 u-fs-fs-12" colSpan={2}>
               Ranking
             </th>}
             summarySubHeaders={<>

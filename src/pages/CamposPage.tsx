@@ -3,6 +3,7 @@ import { SimuladorView } from "./SimuladorPage";
 import { CamposCompareView } from "./ComparePage";
 import SidebarToggle from "../ui/SidebarToggle";
 import KpiCard from "../ui/KpiCard";
+import TabRow from "../ui/TabRow";
 import EmptyState from "../ui/EmptyState";
 import Counter from "../ui/Counter";
 import { Toolbar, ToolbarTitle } from "../ui/Toolbar";
@@ -846,23 +847,9 @@ function roundValue(r: CoursePlayerRound, kind: VoltaKind): { val: number; tp: n
   return r.b9 != null ? { val: r.b9, tp: r.b9tp ?? null } : null;
 }
 
-/** Segmented toggle compacto (sexo / tipo de volta). */
+/** Interruptor compacto (sexo / tipo de volta) — o TabRow global. */
 function Seg<T extends string>({ value, onChange, opts }: { value: T; onChange: (v: T) => void; opts: { v: T; label: ReactNode }[] }) {
-  return (
-    <div className="u-d-inline-flex u-bd-1px-solid-border u-br-var-radius-pill-999px u-ov-hidden">
-      {opts.map((o, i) => {
-        const on = value === o.v;
-        return (
-          <button key={o.v} type="button" onClick={() => onChange(o.v)} style={{
-            border: "none", borderLeft: i > 0 ? "1px solid var(--border)" : "none",
-            padding: "4px 10px", cursor: "pointer", fontSize: "var(--fs-12)", fontWeight: on ? 700 : 500,
-            background: on ? "var(--accent)" : "var(--bg-card)", color: on ? "#fff" : "var(--text)",
-            display: "inline-flex", alignItems: "center", gap: 5,
-          }}>{o.label}</button>
-        );
-      })}
-    </div>
-  );
+  return <TabRow className="seg-sm" active={value} onChange={onChange} tabs={opts.map(o => ({ key: o.v, label: o.label }))} />;
 }
 
 /** KPIs por cor de tee (topo do tab "Como jogou"). Por tee: nº jogadores + voltas
@@ -1543,43 +1530,12 @@ export default function CamposPage() {
                   ))}
                 </>}
                 actions={
-                  <div className="segmented-toggle" role="tablist" aria-label="Vista do campo">
-                    <button
-                      role="tab"
-                      aria-selected={detailView === "scorecard"}
-                      className={`seg-btn${detailView === "scorecard" ? " active" : ""}`}
-                      onClick={() => setDetailView("scorecard")}
-                    >
-                      <span className="seg-label">Scorecard</span>
-                    </button>
-                    <button
-                      role="tab"
-                      aria-selected={detailView === "manuel"}
-                      className={`seg-btn${detailView === "manuel" ? " active" : ""}`}
-                      onClick={() => setDetailView("manuel")}
-                      title="Como jogaram os nossos neste campo, por tee"
-                    >
-                      <span className="seg-label">Como jogou</span>
-                    </button>
-                    <button
-                      role="tab"
-                      aria-selected={detailView === "sim"}
-                      className={`seg-btn${detailView === "sim" ? " active" : ""}`}
-                      onClick={() => setDetailView("sim")}
-                      title="Course/Playing Handicap, Score Differential e impacto de uma volta no HI"
-                    >
-                      <span className="seg-label">Simulador</span>
-                    </button>
-                    <button
-                      role="tab"
-                      aria-selected={detailView === "comparar"}
-                      className={`seg-btn${detailView === "comparar" ? " active" : ""}`}
-                      onClick={() => setDetailView("comparar")}
-                      title="Comparar este campo com outro · Vantagem de Tee"
-                    >
-                      <span className="seg-label">Comparar</span>
-                    </button>
-                  </div>
+                  <TabRow active={detailView} onChange={setDetailView} tabs={[
+                    { key: "scorecard", label: "Scorecard" },
+                    { key: "manuel", label: "Como jogou", title: "Como jogaram os nossos neste campo, por tee" },
+                    { key: "sim", label: "Simulador", title: "Course/Playing Handicap, Score Differential e impacto de uma volta no HI" },
+                    { key: "comparar", label: "Comparar", title: "Comparar este campo com outro · Vantagem de Tee" },
+                  ]} />
                 }
               />
 

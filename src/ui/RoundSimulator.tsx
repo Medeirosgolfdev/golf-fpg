@@ -15,6 +15,7 @@ import TeeDate from "./TeeDate";
 import SexBadge from "./SexBadge";
 import { CourseLink } from "./jogadoresHelpers";
 import SortableHdr from "./SortableHdr";
+import TabRow from "./TabRow";
 import { useSort } from "../hooks/useSort";
 
 type PoolSortKey = "whs" | "date" | "course" | "hcp" | "tee" | "gross" | "sd" | "sdAdj" | "top";
@@ -1130,7 +1131,7 @@ export function RoundSimulator({
           {storageKey && (
             <button
               onClick={saveNow}
-              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-2 u-fw-600"
+              className="btn u-c-text-2"
             >
               💾 Guardar
             </button>
@@ -1138,7 +1139,7 @@ export function RoundSimulator({
           {storageKey && hasSaved && (
             <button
               onClick={loadSaved}
-              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-2"
+              className="btn u-c-text-2"
             >
               📂 Repor
             </button>
@@ -1146,14 +1147,14 @@ export function RoundSimulator({
           {validResults.length > 0 && (
             <button
               onClick={exportPDF}
-              className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-chart-2 u-fw-600"
+              className="btn u-c-chart-2"
             >
               📄 PDF
             </button>
           )}
           <button
             onClick={clearAll}
-            className="u-fs-fs-11 u-p-3px-10px u-br-radius u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-c-text-3"
+            className="btn u-c-text-3"
           >
             ✕ Limpar
           </button>
@@ -1233,37 +1234,18 @@ export function RoundSimulator({
                 </span>
 
                 {/* Toggle SD / Campo / Manual */}
-                <div className="rsim-seg" title="Origem do resultado">
-                  {(["sd", "course", "manual"] as const).map((m) => (
-                    <button
-                      key={m}
-                      className={round.mode === m ? "on" : ""}
-                      onClick={() => updateRound(round.id, { mode: m })}
-                    >
-                      {m === "sd" ? "📊 SD" : m === "course" ? "⛳ Campo" : "✏️ Manual"}
-                    </button>
-                  ))}
-                </div>
+                <span title="Origem do resultado">
+                  <TabRow<typeof round.mode> className="seg-sm" active={round.mode} onChange={(m) => updateRound(round.id, { mode: m })} tabs={[
+                    { key: "sd", label: "📊 SD" }, { key: "course", label: "⛳ Campo" }, { key: "manual", label: "✏️ Manual" },
+                  ]} />
+                </span>
 
                 {/* Toggle 18 / Front 9 / Back 9 */}
-                <div className="rsim-seg" title="Número de buracos jogados">
-                  {(["18", "front9", "back9"] as const).map((hm) => {
-                    const label =
-                      hm === "18" ? "18" : hm === "front9" ? "F9" : "B9";
-                    const active = round.holesMode === hm;
-                    return (
-                      <button
-                        key={hm}
-                        className={active ? "on" : ""}
-                        onClick={() =>
-                          updateRound(round.id, { holesMode: hm })
-                        }
-                      >
-                        {label}
-                      </button>
-                    );
-                  })}
-                </div>
+                <span title="Número de buracos jogados">
+                  <TabRow<typeof round.holesMode> className="seg-sm" active={round.holesMode} onChange={(hm) => updateRound(round.id, { holesMode: hm })} tabs={[
+                    { key: "18", label: "18" }, { key: "front9", label: "F9" }, { key: "back9", label: "B9" },
+                  ]} />
+                </span>
 
                 {/* PCC do dia — só quando o SD sai de um gross */}
                 {round.mode !== "sd" && (
@@ -1910,7 +1892,7 @@ export function RoundSimulator({
             {(impactFull || hidden > 0) && (
               <button
                 onClick={() => setImpactFull((v) => !v)}
-                className="u-ml-auto u-bd-1px-solid-line u-bg-transparent u-cur-pointer u-br-radius u-p-2px-8px u-fs-fs-11 u-c-text-2 u-fw-600"
+                className="btn u-ml-auto u-c-text-2"
               >
                 {impactFull ? "▾ Intervalo focado" : `▸ Ver intervalo completo (+${hidden})`}
               </button>

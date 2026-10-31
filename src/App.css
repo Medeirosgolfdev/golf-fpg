@@ -74,10 +74,6 @@ html, body, #root {
 .rsim-sec::after { content: ""; flex: 1; height: 1px; background: var(--border-light); }
 
 /* Controlo segmentado (SD/Campo, 18/F9/B9) */
-.rsim-seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--bg-detail); }
-.rsim-seg button { padding: 4px 12px; border: none; cursor: pointer; background: transparent; color: var(--text-2); font-size: var(--fs-11); font-weight: 600; line-height: 1.7; transition: background 0.12s, color 0.12s; }
-.rsim-seg button.on { background: var(--chart-2); color: #fff; font-weight: 700; }
-.rsim-seg button:not(.on):hover { background: var(--bg-hover); }
 
 /* Número da ronda */
 .rsim-num { border-radius: 50%; width: 22px; height: 22px; display: inline-flex; align-items: center; justify-content: center; font-size: var(--fs-11); font-weight: 800; flex-shrink: 0; }
@@ -1692,42 +1688,6 @@ tr.cross-current { background: var(--bg-success); }
  align-items: flex-end;
  justify-content: center;
  padding: 4px 0 4px 12px;
-}
-
-/* Toggle Score→SD / SD→Score do Simulador — espelha o segmented global */
-.sim-strip-calc-tabs {
- display: inline-flex;
- gap: 2px;
- padding: 3px;
- margin-bottom: 6px;
- border: 1px solid var(--border);
- border-radius: var(--radius-lg);
- background: var(--bg-muted);
- box-shadow: var(--shadow-inset-sm);
-}
-
-.sim-strip-tab {
- font-size: var(--fs-11);
- font-weight: 600;
- padding: 4px 12px;
- border: none;
- border-radius: calc(var(--radius-lg) - 3px);
- background: transparent;
- color: var(--text-2);
- cursor: pointer;
- white-space: nowrap;
- transition: background 0.15s, color 0.15s, box-shadow 0.15s;
-}
-
-.sim-strip-tab:hover:not(.active) {
- background: var(--bg-active);
- color: var(--text);
-}
-
-.sim-strip-tab.active {
- background: var(--accent);
- color: #fff;
- box-shadow: var(--shadow-accent-sm);
 }
 
 .sim-strip-calc-fields {
@@ -4629,6 +4589,12 @@ table td.lb-col-divider {
 .drive-kpi.is-good { color: var(--color-good); }
 .drive-kpi.is-good-dark { color: var(--color-good-dark); }
 
+/* Overlays (cartões para partilhar): valores fixos de propósito — o html-to-image
+   não lê variáveis CSS. Tinham saído do ficheiro em Abril/2026 («scorecards v4»)
+   e as classes ficaram sem regra; repostas a 31/10/2026. */
+.u-col-flex2 { display: flex; flex-direction: column; gap: 2px; }
+.u-flex-jc   { display: flex; justify-content: center; }
+
 /* ═══════════════ UTILITÁRIOS u-* (30–31/10/2026) ═══════════════
    Os estilos fixos que estavam escritos à mão nas páginas (style={{…}} só com
    valores fixos) passaram a estas classes, uma por propriedade/valor. Têm
@@ -4770,7 +4736,6 @@ table td.lb-col-divider {
 .u-br-radius-sm { border-radius: var(--radius-sm) !important; }
 .u-br-radius-xl { border-radius: var(--radius-xl) !important; }
 .u-br-radius-xs { border-radius: var(--radius-xs) !important; }
-.u-br-var-radius-pill-999px { border-radius: var(--radius-pill, 999px) !important; }
 .u-brd-1px-solid-border-light { border-right: 1px solid var(--border-light) !important; }
 .u-bs-0-10px-40px-overlay-black-30 { box-shadow: 0 10px 40px var(--overlay-black-30) !important; }
 .u-bs-0-20px-50px-rgba-0-0-0-0_3 { box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important; }
